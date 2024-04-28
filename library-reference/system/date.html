@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="The locators Module" href="locators.html" /><link rel="prev" title="The system Library" href="index.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>The date Module - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,14 +463,14 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="the-date-module">
-<h1>The date Module<a class="headerlink" href="#the-date-module" title="Permalink to this heading">#</a></h1>
+<h1>The date Module<a class="headerlink" href="#the-date-module" title="Permalink to this heading">¶</a></h1>
 <p>The <code class="docutils literal notranslate"><span class="pre">date</span></code> module is part of the System library and provides a
 machine-independent facility for representing and manipulating dates and
 date/time intervals.</p>
 <section id="representing-dates-and-times">
-<h2>Representing dates and times<a class="headerlink" href="#representing-dates-and-times" title="Permalink to this heading">#</a></h2>
+<h2>Representing dates and times<a class="headerlink" href="#representing-dates-and-times" title="Permalink to this heading">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">date</span></code> module contains a single class, <code class="docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code>, an instance of which
 can represent any date between 1 Jan 1800 00:00:00 and 31 Dec 2199
 23:59:59, Greenwich Mean Time. You can create a date object by calling
@@ -505,7 +507,7 @@ the value -240 (-4 hours) is U.S. Eastern Daylight Savings Time.</p>
 init-keywords to a call to <em>make</em> on <code class="docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code>.</p>
 </section>
 <section id="representing-durations">
-<h2>Representing durations<a class="headerlink" href="#representing-durations" title="Permalink to this heading">#</a></h2>
+<h2>Representing durations<a class="headerlink" href="#representing-durations" title="Permalink to this heading">¶</a></h2>
 <p>Date/time intervals, called durations, are modeled in a style quite
 similar to that of SQL. There are two, effectively disjoint, classes of
 duration: one with a resolution of months (for example, 3 years, 2
@@ -530,12 +532,12 @@ to the 5th of the following month, whether that is an interval of 28,
 </ul>
 </section>
 <section id="performing-operations-on-dates-and-durations">
-<h2>Performing operations on dates and durations<a class="headerlink" href="#performing-operations-on-dates-and-durations" title="Permalink to this heading">#</a></h2>
+<h2>Performing operations on dates and durations<a class="headerlink" href="#performing-operations-on-dates-and-durations" title="Permalink to this heading">¶</a></h2>
 <p>A number of interfaces are exported from the <code class="docutils literal notranslate"><span class="pre">date</span></code> module that let you
 perform other operations on dates and durations, and extract
 date-specific information from your local machine.</p>
 <section id="comparing-dates">
-<h3>Comparing dates<a class="headerlink" href="#comparing-dates" title="Permalink to this heading">#</a></h3>
+<h3>Comparing dates<a class="headerlink" href="#comparing-dates" title="Permalink to this heading">¶</a></h3>
 <p>The following operations are exported from the <code class="docutils literal notranslate"><span class="pre">date</span></code> module.</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#system:date:=([date])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">=</span></code></a></p></li>
@@ -545,7 +547,7 @@ date-specific information from your local machine.</p>
 test for equality, or to test whether one date occurred before another.</p>
 </section>
 <section id="comparing-durations">
-<h3>Comparing durations<a class="headerlink" href="#comparing-durations" title="Permalink to this heading">#</a></h3>
+<h3>Comparing durations<a class="headerlink" href="#comparing-durations" title="Permalink to this heading">¶</a></h3>
 <p>The following operations are exported from the <code class="docutils literal notranslate"><span class="pre">date</span></code> module.</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#system:date:=([duration])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">=</span></code></a></p></li>
@@ -556,7 +558,7 @@ to test for equality, or to test whether one duration is shorter than
 another.</p>
 </section>
 <section id="performing-arithmetic-operations">
-<h3>Performing arithmetic operations<a class="headerlink" href="#performing-arithmetic-operations" title="Permalink to this heading">#</a></h3>
+<h3>Performing arithmetic operations<a class="headerlink" href="#performing-arithmetic-operations" title="Permalink to this heading">¶</a></h3>
 <p>You can add, subtract, multiply, and divide dates and durations in a
 number of ways to produce a variety of date or duration information.
 Methods are defined for any combination of date and duration, with any
@@ -654,7 +656,7 @@ together with their return values.</p>
 </div>
 </section>
 <section id="dealing-with-time-zones">
-<h3>Dealing with time-zones<a class="headerlink" href="#dealing-with-time-zones" title="Permalink to this heading">#</a></h3>
+<h3>Dealing with time-zones<a class="headerlink" href="#dealing-with-time-zones" title="Permalink to this heading">¶</a></h3>
 <p>The following functions return information about the time-zone that the
 host machine is in.</p>
 <ul class="simple">
@@ -665,7 +667,7 @@ host machine is in.</p>
 </section>
 </section>
 <section id="extracting-information-from-dates">
-<h2>Extracting information from dates<a class="headerlink" href="#extracting-information-from-dates" title="Permalink to this heading">#</a></h2>
+<h2>Extracting information from dates<a class="headerlink" href="#extracting-information-from-dates" title="Permalink to this heading">¶</a></h2>
 <p>A number of functions are available to return discrete pieces of
 information from a specified <code class="docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code> object. These are useful to allow
 you to deconstruct a given date in order to retrieve useful information
@@ -706,7 +708,7 @@ the reference entries of each function. Also see the function
 the time-zone offset of a <code class="docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code> explicitly.</p>
 </section>
 <section id="formatting-dates">
-<h2>Formatting Dates<a class="headerlink" href="#formatting-dates" title="Permalink to this heading">#</a></h2>
+<h2>Formatting Dates<a class="headerlink" href="#formatting-dates" title="Permalink to this heading">¶</a></h2>
 <p>To return an ISO 8601 format date from a <code class="docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code> object, use the
 function <a class="reference internal" href="#system:date:as-iso8601-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">as-iso8601-string</span></code></a>.</p>
 <p>Dates can also be returned in RFC-822 and RFC-1123 formats with the
@@ -714,17 +716,17 @@ function <a class="reference internal" href="#system:date:as-iso8601-string"><co
 <p>More flexible date formatting is available with <a class="reference internal" href="#system:date:format-date"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">format-date</span></code></a>.</p>
 </section>
 <section id="parsing-dates">
-<h2>Parsing Dates<a class="headerlink" href="#parsing-dates" title="Permalink to this heading">#</a></h2>
+<h2>Parsing Dates<a class="headerlink" href="#parsing-dates" title="Permalink to this heading">¶</a></h2>
 <p>Dates can be parsed with <a class="reference internal" href="#system:date:parse-date-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">parse-date-string</span></code></a>. ISO-8601 formatted
 date strings can be parsed with <a class="reference internal" href="#system:date:parse-iso8601-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">parse-iso8601-string</span></code></a>.</p>
 </section>
 <section id="id1">
-<h2>The date module<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<h2>The date module<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
 <p>This section contains a reference entry for each item exported from the
 Date module.</p>
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="system:date:=([date])">
-<span class="sig-name descname"><span class="pre">=(&lt;date&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#system:date:=([date])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">=(&lt;date&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#system:date:=([date])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compares two dates for equality.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -757,7 +759,7 @@ ignored.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="system:date:=([duration])">
-<span class="sig-name descname"><span class="pre">=(&lt;duration&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#system:date:=([duration])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">=(&lt;duration&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#system:date:=([duration])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compares two durations for equality.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -791,7 +793,7 @@ between <em>duration1</em> and <em>duration2</em> are ignored.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="system:date:[([date])">
-<span class="sig-name descname"><span class="pre">&lt;(&lt;date&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#system:date:[([date])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;(&lt;date&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#system:date:[([date])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines whether one date is earlier than another.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -824,7 +826,7 @@ ignored.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="system:date:[([duration])">
-<span class="sig-name descname"><span class="pre">&lt;(&lt;duration&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#system:date:[([duration])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;(&lt;duration&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#system:date:[([duration])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines whether one duration is less than another.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -858,7 +860,7 @@ ignored.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="system:date:+([date])">
-<span class="sig-name descname"><span class="pre">+(&lt;date&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#system:date:+([date])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">+(&lt;date&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#system:date:+([date])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs addition on specific combinations of dates and durations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -924,7 +926,7 @@ the methods that are defined on <a class="reference external" href="https://open
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="system:date:+([duration])">
-<span class="sig-name descname"><span class="pre">+(&lt;duration&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#system:date:+([duration])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">+(&lt;duration&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#system:date:+([duration])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs addition on durations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -992,7 +994,7 @@ that are defined on <a class="reference external" href="https://opendylan.org/bo
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="system:date:-([date])">
-<span class="sig-name descname"><span class="pre">-(&lt;date&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#system:date:-([date])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">-(&lt;date&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#system:date:-([date])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs subtraction on specific combinations of dates and durations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1062,7 +1064,7 @@ table below lists the methods that are defined on <a class="reference external" 
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="system:date:-([duration])">
-<span class="sig-name descname"><span class="pre">-(&lt;duration&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#system:date:-([duration])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">-(&lt;duration&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#system:date:-([duration])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs subtraction on specific combinations of durations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1130,7 +1132,7 @@ methods that are defined on <a class="reference external" href="https://opendyla
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="system:date:*([duration])">
-<span class="sig-name descname"><span class="pre">*(&lt;duration&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#system:date:*([duration])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">*(&lt;duration&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#system:date:*([duration])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Multiplies a duration by a scale factor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1173,7 +1175,7 @@ arguments.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="system:date:/([duration])">
-<span class="sig-name descname"><span class="pre">/(&lt;duration&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#system:date:/([duration])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">/(&lt;duration&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#system:date:/([duration])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Divides a duration by a scale factor</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1208,7 +1210,7 @@ arguments.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:date:as-iso8601-string">
-<span class="sig-name descname"><span class="pre">as-iso8601-string</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:as-iso8601-string" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">as-iso8601-string</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:as-iso8601-string" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a string representation of a date, conforming to the ISO 8601
 standard.</p>
 <dl class="field-list simple">
@@ -1258,7 +1260,7 @@ specifications.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:date:as-rfc822-string">
-<span class="sig-name descname"><span class="pre">as-rfc822-string</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:as-rfc822-string" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">as-rfc822-string</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:as-rfc822-string" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a string representation of a date, conforming to
 <a class="reference external" href="http://www.w3.org/Protocols/rfc822/#z28">RFC 822</a>.</p>
 <dl class="field-list simple">
@@ -1301,7 +1303,7 @@ specifications.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:date:as-rfc1123-string">
-<span class="sig-name descname"><span class="pre">as-rfc1123-string</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:as-rfc1123-string" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">as-rfc1123-string</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:as-rfc1123-string" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a string representation of a date, conforming to
 <a class="reference external" href="http://www.faqs.org/rfcs/rfc1123.html">RFC 1123</a>.</p>
 <dl class="field-list simple">
@@ -1348,7 +1350,7 @@ are used.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:date:current-date">
-<span class="sig-name descname"><span class="pre">current-date</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:current-date" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">current-date</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:current-date" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a date object representing the current date and time.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1367,7 +1369,7 @@ are used.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="system:date:[date]">
-<span class="sig-name descname"><span class="pre">&lt;date&gt;</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:date:[date]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;date&gt;</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:date:[date]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of objects representing dates.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1451,7 +1453,7 @@ for EST, which is 5 hours behind GMT).</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:date:date-day">
-<span class="sig-name descname"><span class="pre">date-day</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:date-day" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">date-day</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:date-day" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the day of the month component of a specified date.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1491,7 +1493,7 @@ example, if passed a <a class="reference internal" href="#system:date:[date]"><c
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:date:date-day-of-week">
-<span class="sig-name descname"><span class="pre">date-day-of-week</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:date-day-of-week" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">date-day-of-week</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:date-day-of-week" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the day of the week of a specified date.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1530,7 +1532,7 @@ example, if passed a <a class="reference internal" href="#system:date:[date]"><c
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:date:date-hours">
-<span class="sig-name descname"><span class="pre">date-hours</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:date-hours" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">date-hours</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:date-hours" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the hour component of a specified date.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1569,7 +1571,7 @@ always expressed in 24 hour format.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:date:date-microseconds">
-<span class="sig-name descname"><span class="pre">date-microseconds</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:date-microseconds" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">date-microseconds</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:date-microseconds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the microseconds component of a specified date.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1611,7 +1613,7 @@ created.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:date:date-minutes">
-<span class="sig-name descname"><span class="pre">date-minutes</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:date-minutes" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">date-minutes</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:date-minutes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the minutes component of a specified date.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1649,7 +1651,7 @@ created.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:date:date-month">
-<span class="sig-name descname"><span class="pre">date-month</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:date-month" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">date-month</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:date-month" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the month of a specified date.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1687,7 +1689,7 @@ created.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:date:date-seconds">
-<span class="sig-name descname"><span class="pre">date-seconds</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:date-seconds" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">date-seconds</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:date-seconds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the seconds component of a specified date.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1728,7 +1730,7 @@ init-keyword when the <a class="reference internal" href="#system:date:[date]"><
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:date:date-time-zone-offset">
-<span class="sig-name descname"><span class="pre">date-time-zone-offset</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:date-time-zone-offset" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">date-time-zone-offset</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:date-time-zone-offset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the time zone offset of a specified date.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1773,7 +1775,7 @@ represents the offset for EST, which is 5 hours behind GMT).</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:date:date-time-zone-offset-setter">
-<span class="sig-name descname"><span class="pre">date-time-zone-offset-setter</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:date-time-zone-offset-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">date-time-zone-offset-setter</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:date-time-zone-offset-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Change the time zone offset of a specified date, while maintaining
 the same point in time.</p>
 <dl class="field-list simple">
@@ -1812,7 +1814,7 @@ representing EST, which is 5 hours behind GMT,
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:date:date-year">
-<span class="sig-name descname"><span class="pre">date-year</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:date-year" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">date-year</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:date-year" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the year of a specified date.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1851,7 +1853,7 @@ representing EST, which is 5 hours behind GMT,
 <p>:: todo Make this a type.</p>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="system:date:[day-of-week]">
-<span class="sig-name descname"><span class="pre">&lt;day-of-week&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#system:date:[day-of-week]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;day-of-week&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#system:date:[day-of-week]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The days of the week.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
@@ -1879,7 +1881,7 @@ representing EST, which is 5 hours behind GMT,
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="system:date:[day/time-duration]">
-<span class="sig-name descname"><span class="pre">&lt;day/time-duration&gt;</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:date:[day/time-duration]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;day/time-duration&gt;</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:date:[day/time-duration]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of objects representing durations in units of microseconds.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1924,7 +1926,7 @@ years, use <a class="reference internal" href="#system:date:[year/month-duration
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:date:decode-date">
-<span class="sig-name descname"><span class="pre">decode-date</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:decode-date" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">decode-date</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:decode-date" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the date and time stored in a date object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1965,7 +1967,7 @@ years, use <a class="reference internal" href="#system:date:[year/month-duration
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="system:date:decode-duration">
-<span class="sig-name descname"><span class="pre">decode-duration</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:date:decode-duration" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">decode-duration</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:date:decode-duration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decodes a duration into its constituent parts.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1999,7 +2001,7 @@ respectively, as described below.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="system:date:decode-duration([day/time-duration])">
-<span class="sig-name descname"><span class="pre">decode-duration(&lt;day/time-duration&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#system:date:decode-duration([day/time-duration])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">decode-duration(&lt;day/time-duration&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#system:date:decode-duration([day/time-duration])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decodes a day/time duration into its constituent parts.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2036,7 +2038,7 @@ constituent parts.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="system:date:decode-duration([year/month-duration])">
-<span class="sig-name descname"><span class="pre">decode-duration(&lt;year/month-duration&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#system:date:decode-duration([year/month-duration])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">decode-duration(&lt;year/month-duration&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#system:date:decode-duration([year/month-duration])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decodes a year/month duration into its constituent parts.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2070,7 +2072,7 @@ constituent parts.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="system:date:[duration]">
-<span class="sig-name descname"><span class="pre">&lt;duration&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:date:[duration]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;duration&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:date:[duration]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of objects representing durations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -2124,7 +2126,7 @@ value: 0.</p></li>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:date:encode-date">
-<span class="sig-name descname"><span class="pre">encode-date</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:encode-date" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">encode-date</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:encode-date" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a date object for the specified date and time.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2165,7 +2167,7 @@ value: <code class="xref dylan dylan-func docutils literal notranslate"><span cl
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:date:encode-day/time-duration">
-<span class="sig-name descname"><span class="pre">encode-day/time-duration</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:encode-day/time-duration" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">encode-day/time-duration</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:encode-day/time-duration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a day/time duration from a set of integer values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2200,7 +2202,7 @@ value: <code class="xref dylan dylan-func docutils literal notranslate"><span cl
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:date:encode-year/month-duration">
-<span class="sig-name descname"><span class="pre">encode-year/month-duration</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:encode-year/month-duration" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">encode-year/month-duration</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:encode-year/month-duration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a year/month duration from a set of integer values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2232,7 +2234,7 @@ value: <code class="xref dylan dylan-func docutils literal notranslate"><span cl
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:date:format-date">
-<span class="sig-name descname"><span class="pre">format-date</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:format-date" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">format-date</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:format-date" title="Permalink to this definition">¶</a></dt>
 <dd><p>Formats a date according to a format string.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2292,7 +2294,7 @@ to create a string representing the <code class="docutils literal notranslate"><
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:date:local-daylight-savings-time?">
-<span class="sig-name descname"><span class="pre">local-daylight-savings-time?</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:local-daylight-savings-time?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">local-daylight-savings-time?</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:local-daylight-savings-time?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks whether the local machine is using Daylight Savings Time.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2312,7 +2314,7 @@ and <a class="reference external" href="https://opendylan.org/books/drm/Other_Bu
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:date:local-time-zone-name">
-<span class="sig-name descname"><span class="pre">local-time-zone-name</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:local-time-zone-name" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">local-time-zone-name</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:local-time-zone-name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the time zone name in use by the local machine.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2333,7 +2335,7 @@ name is unknown.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:date:local-time-zone-offset">
-<span class="sig-name descname"><span class="pre">local-time-zone-offset</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:local-time-zone-offset" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">local-time-zone-offset</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:local-time-zone-offset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the offset of the time-zone from Greenwich Mean Time,
 expressed as a number of minutes.</p>
 <dl class="field-list simple">
@@ -2359,7 +2361,7 @@ when necessary.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="system:date:make([date])">
-<span class="sig-name descname"><span class="pre">make(&lt;date&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#system:date:make([date])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make(&lt;date&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#system:date:make([date])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates an instance of the <a class="reference internal" href="#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a> class.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2421,7 +2423,7 @@ for details.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:date:parse-date-string">
-<span class="sig-name descname"><span class="pre">parse-date-string</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:parse-date-string" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">parse-date-string</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:parse-date-string" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse a date in string form according to a control string, returning
 a date.</p>
 <dl class="field-list simple">
@@ -2455,7 +2457,7 @@ The control string uses the same directives as <a class="reference internal" hre
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:date:parse-iso8601-string">
-<span class="sig-name descname"><span class="pre">parse-iso8601-string</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:parse-iso8601-string" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">parse-iso8601-string</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:date:parse-iso8601-string" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse a variety of variants on ISO-8601 formatted date strings.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2523,7 +2525,7 @@ following differences if strict? = #f:</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="system:date:[year/month-duration]">
-<span class="sig-name descname"><span class="pre">&lt;year/month-duration&gt;</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:date:[year/month-duration]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;year/month-duration&gt;</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:date:[year/month-duration]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of objects representing durations with a coarse resolution.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -2650,6 +2652,6 @@ thereof (to microsecond resolution), use
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

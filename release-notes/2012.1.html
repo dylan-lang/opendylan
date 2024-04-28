@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Open Dylan 2011.1 Release Notes" href="2011.1.html" /><link rel="prev" title="Open Dylan 2013.1 Release Notes" href="2013.1.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Open Dylan 2012.1 Release Notes - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,11 +463,11 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="open-dylan-2012-1-release-notes">
-<h1>Open Dylan 2012.1 Release Notes<a class="headerlink" href="#open-dylan-2012-1-release-notes" title="Permalink to this heading">#</a></h1>
+<h1>Open Dylan 2012.1 Release Notes<a class="headerlink" href="#open-dylan-2012-1-release-notes" title="Permalink to this heading">¶</a></h1>
 <section id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>This document describes the 2012.1 release of Open Dylan, released
 December 19, 2012.</p>
 <ul class="simple">
@@ -475,11 +477,11 @@ December 19, 2012.</p>
 </ul>
 </section>
 <section id="language-specification-changes">
-<h2>Language Specification Changes<a class="headerlink" href="#language-specification-changes" title="Permalink to this heading">#</a></h2>
+<h2>Language Specification Changes<a class="headerlink" href="#language-specification-changes" title="Permalink to this heading">¶</a></h2>
 <p>We try to keep changes to the language definition few and far between
 and limited to things that are either necessary or clear advantages.</p>
 <section id="c3-superclass-linearization">
-<h3>C3 Superclass Linearization<a class="headerlink" href="#c3-superclass-linearization" title="Permalink to this heading">#</a></h3>
+<h3>C3 Superclass Linearization<a class="headerlink" href="#c3-superclass-linearization" title="Permalink to this heading">¶</a></h3>
 <p>Open Dylan now uses the C3 superclass linearization algorithm.  This
 algorithm was originally designed for Dylan but for historical reasons
 was never implemented in Dylan, until now.  In most cases this change
@@ -492,7 +494,7 @@ more details.</p>
 </section>
 </section>
 <section id="library-changes">
-<h2>Library Changes<a class="headerlink" href="#library-changes" title="Permalink to this heading">#</a></h2>
+<h2>Library Changes<a class="headerlink" href="#library-changes" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>The <code class="docutils literal notranslate"><span class="pre">CL-plists</span></code> module in the <code class="docutils literal notranslate"><span class="pre">cl</span></code> library has been removed.
 Any usages of it can be replaced by using the <code class="docutils literal notranslate"><span class="pre">plists</span></code> module
@@ -530,7 +532,7 @@ or pass <code class="docutils literal notranslate"><span class="pre">synchronize
 </ul>
 </section>
 <section id="documentation-improvements">
-<h2>Documentation Improvements<a class="headerlink" href="#documentation-improvements" title="Permalink to this heading">#</a></h2>
+<h2>Documentation Improvements<a class="headerlink" href="#documentation-improvements" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>All documentation has been converted to the Sphinx document
 generator.  This is a huge improvement in our ability to keep the
@@ -546,9 +548,9 @@ Started Guide</a>.</p></li>
 </ul>
 </section>
 <section id="dylan-compiler-improvements">
-<h2>dylan-compiler Improvements<a class="headerlink" href="#dylan-compiler-improvements" title="Permalink to this heading">#</a></h2>
+<h2>dylan-compiler Improvements<a class="headerlink" href="#dylan-compiler-improvements" title="Permalink to this heading">¶</a></h2>
 <section id="relocatable-executables-and-libraries">
-<h3>Relocatable Executables and Libraries<a class="headerlink" href="#relocatable-executables-and-libraries" title="Permalink to this heading">#</a></h3>
+<h3>Relocatable Executables and Libraries<a class="headerlink" href="#relocatable-executables-and-libraries" title="Permalink to this heading">¶</a></h3>
 <p>Previously, the executables and libraries built by the Dylan
 compiler had to reside at a fixed path (set during compilation).</p>
 <p>This has now been loosened up significantly on Linux, Mac OS X
@@ -560,7 +562,7 @@ dynamic linker.  On Mac OS X, this uses <code class="docutils literal notranslat
 in Mac OS X 10.5 and later.</p>
 </section>
 <section id="usability-output-and-locating-libraries">
-<h3>Usability - Output and Locating Libraries<a class="headerlink" href="#usability-output-and-locating-libraries" title="Permalink to this heading">#</a></h3>
+<h3>Usability - Output and Locating Libraries<a class="headerlink" href="#usability-output-and-locating-libraries" title="Permalink to this heading">¶</a></h3>
 <p>To simplify the build process, two changes were made to
 <code class="docutils literal notranslate"><span class="pre">dylan-compiler</span></code>:</p>
 <ol class="arabic simple">
@@ -589,7 +591,7 @@ initially have to build all dependencies, down to and including the
 <code class="docutils literal notranslate"><span class="pre">dylan</span></code> library.</p>
 </section>
 <section id="debug-back-end-improvements">
-<h3>Debug Back-end Improvements<a class="headerlink" href="#debug-back-end-improvements" title="Permalink to this heading">#</a></h3>
+<h3>Debug Back-end Improvements<a class="headerlink" href="#debug-back-end-improvements" title="Permalink to this heading">¶</a></h3>
 <p>The debug back-end is used for printing the internal compiler
 state (the DFM).</p>
 <ul class="simple">
@@ -599,7 +601,7 @@ state (the DFM).</p>
 </ul>
 </section>
 <section id="documentation-generation">
-<h3>Documentation Generation<a class="headerlink" href="#documentation-generation" title="Permalink to this heading">#</a></h3>
+<h3>Documentation Generation<a class="headerlink" href="#documentation-generation" title="Permalink to this heading">¶</a></h3>
 <p>In addition to the documentation updates, we’ve also enhanced the
 documentation generation feature within <code class="docutils literal notranslate"><span class="pre">dylan-compiler</span></code> to output
 the new format.  This can be used by, first loading and compiling
@@ -611,7 +613,7 @@ a library and then:</p>
 documentation will be removed.</p>
 </section>
 <section id="dependency-graph-generation">
-<h3>Dependency Graph Generation<a class="headerlink" href="#dependency-graph-generation" title="Permalink to this heading">#</a></h3>
+<h3>Dependency Graph Generation<a class="headerlink" href="#dependency-graph-generation" title="Permalink to this heading">¶</a></h3>
 <p>You can now generate a dependency graph (at the library level) for a
 project in both text and GraphViz <code class="docutils literal notranslate"><span class="pre">.dot</span></code> format.  Open a project and:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">export</span> <span class="o">-</span><span class="nb">format</span> <span class="n">dot</span> <span class="n">dependency</span><span class="o">-</span><span class="n">graph</span>
@@ -624,9 +626,9 @@ project in both text and GraphViz <code class="docutils literal notranslate"><sp
 </section>
 </section>
 <section id="code-generation-improvements">
-<h2>Code Generation Improvements<a class="headerlink" href="#code-generation-improvements" title="Permalink to this heading">#</a></h2>
+<h2>Code Generation Improvements<a class="headerlink" href="#code-generation-improvements" title="Permalink to this heading">¶</a></h2>
 <section id="limited-collections">
-<h3>Limited Collections<a class="headerlink" href="#limited-collections" title="Permalink to this heading">#</a></h3>
+<h3>Limited Collections<a class="headerlink" href="#limited-collections" title="Permalink to this heading">¶</a></h3>
 <p>There were some bugs and some missed opportunities for optimization in
 the limited collections code.</p>
 <p>Consider the following constant:</p>
@@ -688,7 +690,7 @@ lead towards code which the C compiler could not compile
 <p>This required a fix in the typist.</p>
 </section>
 <section id="miscellaneous-fixes">
-<h3>Miscellaneous Fixes<a class="headerlink" href="#miscellaneous-fixes" title="Permalink to this heading">#</a></h3>
+<h3>Miscellaneous Fixes<a class="headerlink" href="#miscellaneous-fixes" title="Permalink to this heading">¶</a></h3>
 <p>The control flow graph could be incorrect if an unwind-protect without
 a body is optimized.</p>
 <p>Some slot initializer constants (floats in particular) when inherited
@@ -700,9 +702,9 @@ specifications.</p>
 </section>
 </section>
 <section id="c-back-end-changes">
-<h2>C Back-end Changes<a class="headerlink" href="#c-back-end-changes" title="Permalink to this heading">#</a></h2>
+<h2>C Back-end Changes<a class="headerlink" href="#c-back-end-changes" title="Permalink to this heading">¶</a></h2>
 <section id="multi-threading">
-<h3>Multi-threading<a class="headerlink" href="#multi-threading" title="Permalink to this heading">#</a></h3>
+<h3>Multi-threading<a class="headerlink" href="#multi-threading" title="Permalink to this heading">¶</a></h3>
 <p>The C back-end now fully supports multi-threading.  Several bugs
 unrelated to threading were also fixed in this work, which should
 improve the stability of the C back-end in general.</p>
@@ -710,7 +712,7 @@ improve the stability of the C back-end in general.</p>
 performance issues.  Further feedback is welcome.</p>
 </section>
 <section id="performance-improvements">
-<h3>Performance Improvements<a class="headerlink" href="#performance-improvements" title="Permalink to this heading">#</a></h3>
+<h3>Performance Improvements<a class="headerlink" href="#performance-improvements" title="Permalink to this heading">¶</a></h3>
 <p>Previously, the C run-time was allocating unwind-protect control
 structures on the heap using the Garbage Collector. Additionally,
 unwind-protect was preserving signal state on some platforms, notably
@@ -723,13 +725,13 @@ of the I/O libraries which make heavy use of unwind-protect.</p>
 arguments. It now correctly only performs this check once.</p>
 </section>
 <section id="shared-library-initialization">
-<h3>Shared Library Initialization<a class="headerlink" href="#shared-library-initialization" title="Permalink to this heading">#</a></h3>
+<h3>Shared Library Initialization<a class="headerlink" href="#shared-library-initialization" title="Permalink to this heading">¶</a></h3>
 <p>The C back-end now generates shared libraries which can be used with
 <code class="docutils literal notranslate"><span class="pre">dlopen()</span></code>.  This behavior is in line with the libraries generated
 by the native HARP back-end.</p>
 </section>
 <section id="fixes">
-<h3>Fixes<a class="headerlink" href="#fixes" title="Permalink to this heading">#</a></h3>
+<h3>Fixes<a class="headerlink" href="#fixes" title="Permalink to this heading">¶</a></h3>
 <p>Some other bugs that resulted in the generation of invalid C have
 been fixed.</p>
 <p>We now abort when applying too many arguments in C run-time.</p>
@@ -743,13 +745,13 @@ when compiled.</p>
 </section>
 </section>
 <section id="c-ffi-changes">
-<h2>C-FFI Changes<a class="headerlink" href="#c-ffi-changes" title="Permalink to this heading">#</a></h2>
+<h2>C-FFI Changes<a class="headerlink" href="#c-ffi-changes" title="Permalink to this heading">¶</a></h2>
 <section id="c-variable-setters">
-<h3>C-variable setters<a class="headerlink" href="#c-variable-setters" title="Permalink to this heading">#</a></h3>
+<h3>C-variable setters<a class="headerlink" href="#c-variable-setters" title="Permalink to this heading">¶</a></h3>
 <p>Setters should work with C-variables now.</p>
 </section>
 <section id="constant-slot-syntax">
-<h3>Constant Slot Syntax<a class="headerlink" href="#constant-slot-syntax" title="Permalink to this heading">#</a></h3>
+<h3>Constant Slot Syntax<a class="headerlink" href="#constant-slot-syntax" title="Permalink to this heading">¶</a></h3>
 <p>You can now use <code class="docutils literal notranslate"><span class="pre">constant</span> <span class="pre">slot</span></code> when defining a <code class="docutils literal notranslate"><span class="pre">C-struct</span></code> rather than having to set <code class="docutils literal notranslate"><span class="pre">setter:</span> <span class="pre">#f</span></code>.
 This makes the syntax closer to normal class definitions:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="n">C-struct</span><span class="w"> </span><span class="nc">&lt;Point&gt;</span>
@@ -761,9 +763,9 @@ This makes the syntax closer to normal class definitions:</p>
 </section>
 </section>
 <section id="other-changes">
-<h2>Other Changes<a class="headerlink" href="#other-changes" title="Permalink to this heading">#</a></h2>
+<h2>Other Changes<a class="headerlink" href="#other-changes" title="Permalink to this heading">¶</a></h2>
 <section id="running-dylan-compiler-under-gdb-with-fdmake">
-<h3>Running dylan-compiler under gdb with fdmake<a class="headerlink" href="#running-dylan-compiler-under-gdb-with-fdmake" title="Permalink to this heading">#</a></h3>
+<h3>Running dylan-compiler under gdb with fdmake<a class="headerlink" href="#running-dylan-compiler-under-gdb-with-fdmake" title="Permalink to this heading">¶</a></h3>
 <p>Sometimes, it is useful to be able to run <code class="docutils literal notranslate"><span class="pre">dylan-compiler</span></code> under <code class="docutils literal notranslate"><span class="pre">gdb</span></code> while doing a bootstrap build
 using fdmake. This is now easy to do:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">FDMAKE_OPTIONS</span><span class="o">=--</span><span class="n">gdb</span> <span class="mi">3</span><span class="o">-</span><span class="n">stage</span><span class="o">-</span><span class="n">bootstrap</span>
@@ -881,6 +883,6 @@ of <code class="docutils literal notranslate"><span class="pre">dylan-compiler</
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

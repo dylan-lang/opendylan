@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Running and Debugging CORBA Applications" href="rundebug.html" /><link rel="prev" title="The Bank Server" href="bank-server.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Creating CORBA Projects - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,11 +463,11 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="creating-corba-projects">
-<h1>Creating CORBA Projects<a class="headerlink" href="#creating-corba-projects" title="Permalink to this heading">#</a></h1>
+<h1>Creating CORBA Projects<a class="headerlink" href="#creating-corba-projects" title="Permalink to this heading">¶</a></h1>
 <section id="about-corba-projects">
-<h2>About CORBA projects<a class="headerlink" href="#about-corba-projects" title="Permalink to this heading">#</a></h2>
+<h2>About CORBA projects<a class="headerlink" href="#about-corba-projects" title="Permalink to this heading">¶</a></h2>
 <p>CORBA projects, such as those we saw in previous examples, are just
 Dylan projects whose executable or DLL can operate as a CORBA server
 or client. Servers and clients built from CORBA projects use the
@@ -485,7 +487,7 @@ that can communicate with one another across an IDL interface using
 CORBA.</p>
 </section>
 <section id="id1">
-<h2>Creating CORBA projects<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<h2>Creating CORBA projects<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
 <p>To create a CORBA project with the New Project wizard:</p>
 <ol class="arabic">
 <li><p>Choose <span class="menuselection">File ‣ New…</span> from any window or click
@@ -502,7 +504,7 @@ unless you intend your new project to be a subproject.</p>
 <figure class="align-default" id="id2">
 <img alt="../_images/getstart-new-project.png" src="../_images/getstart-new-project.png" />
 <figcaption>
-<p><span class="caption-text">Selecting an IDL file.</span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Selecting an IDL file.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </li>
@@ -583,7 +585,7 @@ details of what projects are generated and where.</p>
 </div>
 </section>
 <section id="setting-orb-options">
-<h2>Setting ORB options<a class="headerlink" href="#setting-orb-options" title="Permalink to this heading">#</a></h2>
+<h2>Setting ORB options<a class="headerlink" href="#setting-orb-options" title="Permalink to this heading">¶</a></h2>
 <p>The Open Dylan ORB is supplied as a Dylan library called
 <code class="docutils literal notranslate"><span class="pre">dylan-orb</span></code>, which both client and server CORBA projects use.</p>
 <p>You can modify the default behavior of the ORB that a client or server
@@ -598,7 +600,7 @@ for a client project.</p>
 <figure class="align-default" id="id3">
 <img alt="../_images/projects-advanced-orb.png" src="../_images/projects-advanced-orb.png" />
 <figcaption>
-<p><span class="caption-text">The Advanced ORB settings dialog</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">The Advanced ORB settings dialog</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The options you set in the Advanced ORB Settings dialog are
@@ -648,7 +650,7 @@ registered with IANA for the Open Dylan ORB is 3672.</p>
 </dl>
 </section>
 <section id="the-role-of-spec-files-in-idl-compilation">
-<h2>The role of spec files in IDL compilation<a class="headerlink" href="#the-role-of-spec-files-in-idl-compilation" title="Permalink to this heading">#</a></h2>
+<h2>The role of spec files in IDL compilation<a class="headerlink" href="#the-role-of-spec-files-in-idl-compilation" title="Permalink to this heading">¶</a></h2>
 <p>Open Dylan Tool Specification files, or spec files (extension:
 <code class="docutils literal notranslate"><span class="pre">.spec</span></code>), allow tools other than the Dylan compiler to be invoked on
 a project at build time. When the build encounters a spec file in a
@@ -680,7 +682,7 @@ Dylan’s project management system, you no longer have to worry about
 keeping the client stubs, server skeletons and protocol libraries up
 to date with any changes to the IDL – Open Dylan takes care of that.</p>
 <section id="how-the-spec-file-affects-idl-compilation">
-<h3>How the spec file affects IDL compilation<a class="headerlink" href="#how-the-spec-file-affects-idl-compilation" title="Permalink to this heading">#</a></h3>
+<h3>How the spec file affects IDL compilation<a class="headerlink" href="#how-the-spec-file-affects-idl-compilation" title="Permalink to this heading">¶</a></h3>
 <p>As we have seen in previous chapters, the IDL compiler is capable of
 generating client stubs, server skeletons, and protocol support
 projects from an IDL file. When there is a spec file in the project
@@ -706,7 +708,7 @@ some control over what the subfolders are called and also where they
 are located.</p>
 </section>
 <section id="header-information-for-corba-spec-files">
-<h3>Header information for CORBA spec files<a class="headerlink" href="#header-information-for-corba-spec-files" title="Permalink to this heading">#</a></h3>
+<h3>Header information for CORBA spec files<a class="headerlink" href="#header-information-for-corba-spec-files" title="Permalink to this heading">¶</a></h3>
 <p>The first line of any spec file must contain the <code class="docutils literal notranslate"><span class="pre">Origin:</span></code>
 keyword. For describing IDL source files to CORBA projects, the value
 of this keyword must be <code class="docutils literal notranslate"><span class="pre">OMG-IDL</span></code>. Thus the first line of a spec
@@ -731,7 +733,7 @@ of the folder containing the spec file.</p>
 </div>
 </section>
 <section id="server-keywords-for-corba-spec-files">
-<h3>Server keywords for CORBA spec files<a class="headerlink" href="#server-keywords-for-corba-spec-files" title="Permalink to this heading">#</a></h3>
+<h3>Server keywords for CORBA spec files<a class="headerlink" href="#server-keywords-for-corba-spec-files" title="Permalink to this heading">¶</a></h3>
 <p>To indicate that the CORBA project contains a server implementation
 for the IDL file, use the keyword <code class="docutils literal notranslate"><span class="pre">Skeletons:</span></code> with the value
 <code class="docutils literal notranslate"><span class="pre">yes</span></code>.</p>
@@ -743,7 +745,7 @@ the IDL source. The server skeletons project is automatically made a
 subproject of the CORBA project.</p>
 </section>
 <section id="client-keywords-for-corba-spec-files">
-<h3>Client keywords for CORBA spec files<a class="headerlink" href="#client-keywords-for-corba-spec-files" title="Permalink to this heading">#</a></h3>
+<h3>Client keywords for CORBA spec files<a class="headerlink" href="#client-keywords-for-corba-spec-files" title="Permalink to this heading">¶</a></h3>
 <p>To indicate that the CORBA project is a client of the service
 described by the IDL file, use the keyword <code class="docutils literal notranslate"><span class="pre">Stubs:</span></code> with the value
 <code class="docutils literal notranslate"><span class="pre">yes</span></code>. This ensures that Scepter compiler generates a client stubs
@@ -763,7 +765,7 @@ with the value <code class="docutils literal notranslate"><span class="pre">yes<
 </div>
 </section>
 <section id="other-keywords-for-corba-spec-files">
-<h3>Other keywords for CORBA spec files<a class="headerlink" href="#other-keywords-for-corba-spec-files" title="Permalink to this heading">#</a></h3>
+<h3>Other keywords for CORBA spec files<a class="headerlink" href="#other-keywords-for-corba-spec-files" title="Permalink to this heading">¶</a></h3>
 <p>The following keywords control other aspects of IDL compilation.</p>
 <dl>
 <dt><code class="docutils literal notranslate"><span class="pre">directory:</span></code> directory</dt><dd><p>By default the IDL compiler puts the Dylan projects it generates
@@ -811,7 +813,7 @@ from the IDL source but not the stubs or skeletons code.</p>
 </section>
 </section>
 <section id="using-idl-for-non-corba-work">
-<h2>Using IDL for non-CORBA work<a class="headerlink" href="#using-idl-for-non-corba-work" title="Permalink to this heading">#</a></h2>
+<h2>Using IDL for non-CORBA work<a class="headerlink" href="#using-idl-for-non-corba-work" title="Permalink to this heading">¶</a></h2>
 <p>By default, when Scepter generates a stubs or skeletons project from
 an IDL file, it also generates a protocol project. The protocol
 project contains Dylan code mapped directly from the IDL file: open
@@ -921,6 +923,6 @@ project.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

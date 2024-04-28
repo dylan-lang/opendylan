@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>The Dylan Macro System - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,10 +463,10 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <p><em>Section author: Dustin Voss &lt;<a class="reference external" href="mailto:d_j_v&#37;&#52;&#48;me&#46;com">d_j_v<span>&#64;</span>me<span>&#46;</span>com</a>&gt;</em></p>
 <section id="the-dylan-macro-system">
-<h1>The Dylan Macro System<a class="headerlink" href="#the-dylan-macro-system" title="Permalink to this heading">#</a></h1>
+<h1>The Dylan Macro System<a class="headerlink" href="#the-dylan-macro-system" title="Permalink to this heading">¶</a></h1>
 <p>Dylan macros simplify boilerplate code and provide syntactic shorthand. They are
 useful in small jobs within a particular file (e.g. making a series of
 repetitive declarations) and for larger jobs (e.g. constructing a GUI through
@@ -475,7 +477,7 @@ can use when writing your own macros. I gloss over some of the implementation
 details and present this information more informally than the <cite>Dylan
 Reference Manual</cite> does.</p>
 <section id="background-and-overview">
-<h2>Background and Overview<a class="headerlink" href="#background-and-overview" title="Permalink to this heading">#</a></h2>
+<h2>Background and Overview<a class="headerlink" href="#background-and-overview" title="Permalink to this heading">¶</a></h2>
 <p>Macros work on the basis of code fragments. The macro system
 does not understand code fragments; it just substitutes some fragments for other
 fragments. Once the macro system has substituted and arranged all the code
@@ -503,7 +505,7 @@ list.size
 </pre></div>
 </div>
 <section id="anatomy-and-terms">
-<h3>Anatomy and terms<a class="headerlink" href="#anatomy-and-terms" title="Permalink to this heading">#</a></h3>
+<h3>Anatomy and terms<a class="headerlink" href="#anatomy-and-terms" title="Permalink to this heading">¶</a></h3>
 <p>Macros have <code class="samp docutils literal notranslate"><span class="pre">main</span> <span class="pre">rules</span></code> and <code class="samp docutils literal notranslate"><span class="pre">auxiliary</span> <span class="pre">rules</span></code>. Each of the main or auxiliary
 rules has a <code class="samp docutils literal notranslate"><span class="pre">pattern</span></code> and a <code class="samp docutils literal notranslate"><span class="pre">template</span></code>. Patterns are matched against the code
 fragments of your source code. A main rule is matched against the code fragment
@@ -595,7 +597,7 @@ in a macro’s expansion). See <a class="reference internal" href="#hygiene">Hyg
 </section>
 </section>
 <section id="macro-types">
-<h2>Macro Types<a class="headerlink" href="#macro-types" title="Permalink to this heading">#</a></h2>
+<h2>Macro Types<a class="headerlink" href="#macro-types" title="Permalink to this heading">¶</a></h2>
 <p>There are four types of macro.</p>
 <dl class="simple">
 <dt><em class="dfn">Body-style definition macro</em></dt><dd><p>This kind of macro lets you create <code class="samp docutils literal notranslate"><span class="pre">define</span> <span class="pre">x</span> <span class="pre">...</span> <span class="pre">end</span></code> syntax. This is the
@@ -617,7 +619,7 @@ needed around a normal function call.</p>
 </dd>
 </dl>
 <section id="macro-definitions">
-<h3>Macro definitions<a class="headerlink" href="#macro-definitions" title="Permalink to this heading">#</a></h3>
+<h3>Macro definitions<a class="headerlink" href="#macro-definitions" title="Permalink to this heading">¶</a></h3>
 <p>All macros are defined by the <a class="reference external" href="https://opendylan.org/books/drm/Definition_Macros#define_macro"><code class="xref drm docutils literal notranslate"><span class="pre">define</span> <span class="pre">macro</span></code></a> macro, which follows this general
 syntax, with optional parts in brackets:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">macro</span><span class="w"> </span><span class="n">MACRO-NAME</span>
@@ -642,7 +644,7 @@ symbol) and one or more pattern/template pairs. The name may be written as
 </dl>
 </section>
 <section id="main-rules">
-<span id="id1"></span><h3>Main Rules<a class="headerlink" href="#main-rules" title="Permalink to this heading">#</a></h3>
+<span id="id1"></span><h3>Main Rules<a class="headerlink" href="#main-rules" title="Permalink to this heading">¶</a></h3>
 <p>The pattern of each main rule of a macro (and thus the way the macro is called)
 must follow a specific syntactic style depending on the type of macro.</p>
 <p>When the Dylan compiler sees a macro call, it first finds the end of the call,
@@ -653,7 +655,7 @@ the end of a macro call, the parser will assume that that code fragment <em>is</
 the end of the macro call. Below, I describe what the end of each type of macro
 call <em>looks</em> like.</p>
 <section id="body-style-definition-macro">
-<h4>Body-style definition macro<a class="headerlink" href="#body-style-definition-macro" title="Permalink to this heading">#</a></h4>
+<h4>Body-style definition macro<a class="headerlink" href="#body-style-definition-macro" title="Permalink to this heading">¶</a></h4>
 <p>The main rules’ patterns must follow this syntax, with optional parts in
 brackets:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"> </span><span class="k">define</span><span class="w"> </span><span class="p">[</span><span class="n">MODIFIERS</span><span class="p">]</span><span class="w"> </span><span class="n">DISTINGUISHING-WORD</span><span class="w"> </span><span class="p">[</span><span class="n">NAME</span><span class="p">]</span>
@@ -680,7 +682,7 @@ in each main rule is the only <code class="samp docutils literal notranslate"><s
 </div>
 </section>
 <section id="list-style-definition-macro">
-<h4>List-style definition macro<a class="headerlink" href="#list-style-definition-macro" title="Permalink to this heading">#</a></h4>
+<h4>List-style definition macro<a class="headerlink" href="#list-style-definition-macro" title="Permalink to this heading">¶</a></h4>
 <p>The main rules’ patterns must follow this syntax, with optional parts in
 brackets:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"> </span><span class="k">define</span><span class="w"> </span><span class="p">[</span><span class="n">MODIFIERS</span><span class="p">]</span><span class="w"> </span><span class="n">DISTINGUISHING-WORD</span><span class="w"> </span><span class="p">[</span><span class="n">LIST-PATTERNS</span><span class="p">]</span><span class="w"> </span><span class="p">}</span>
@@ -698,7 +700,7 @@ enclosing source code. None of the macro’s patterns can have a semicolon, and 
 is probably better to avoid <code class="samp docutils literal notranslate"><span class="pre">?:body</span></code> or <code class="samp docutils literal notranslate"><span class="pre">?:case-body</span></code> pattern variables.</p>
 </section>
 <section id="statement-macro">
-<h4>Statement macro<a class="headerlink" href="#statement-macro" title="Permalink to this heading">#</a></h4>
+<h4>Statement macro<a class="headerlink" href="#statement-macro" title="Permalink to this heading">¶</a></h4>
 <p>The main rules’ patterns must follow this syntax, with optional parts in
 brackets:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"> </span><span class="n">DISTINGUISHING-WORD</span><span class="w"> </span><span class="p">[</span><span class="n">BODY-PATTERNS</span><span class="p">]</span><span class="w"> </span><span class="p">[;]</span><span class="w"> </span><span class="k">end</span><span class="w"> </span><span class="p">}</span>
@@ -718,7 +720,7 @@ in each main rule is the only <code class="samp docutils literal notranslate"><s
 </div>
 </section>
 <section id="function-macro">
-<h4>Function macro<a class="headerlink" href="#function-macro" title="Permalink to this heading">#</a></h4>
+<h4>Function macro<a class="headerlink" href="#function-macro" title="Permalink to this heading">¶</a></h4>
 <p>The main rules’ patterns must follow this syntax, with optional parts in
 brackets:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"> </span><span class="n">DISTINGUISHING-WORD</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">[</span><span class="n">BODY-PATTERNS</span><span class="p">]</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
@@ -740,7 +742,7 @@ these syntaxes.</p>
 </section>
 </section>
 <section id="patterns">
-<h2>Patterns<a class="headerlink" href="#patterns" title="Permalink to this heading">#</a></h2>
+<h2>Patterns<a class="headerlink" href="#patterns" title="Permalink to this heading">¶</a></h2>
 <p>Pattern matching follows these basic rules:</p>
 <ul class="simple">
 <li><p>Pattern-matching starts and ends with the main rule set.</p></li>
@@ -755,7 +757,7 @@ constraint.</p></li>
 compiler does not backtrack and try a different earlier rule.</p></li>
 </ul>
 <section id="subdivisions">
-<h3>Subdivisions<a class="headerlink" href="#subdivisions" title="Permalink to this heading">#</a></h3>
+<h3>Subdivisions<a class="headerlink" href="#subdivisions" title="Permalink to this heading">¶</a></h3>
 <p>A main rule pattern has elements like <code class="samp docutils literal notranslate"><span class="pre">define</span></code> and <code class="samp docutils literal notranslate"><span class="pre">end</span></code> as described in
 <a class="reference internal" href="#macro-types">Macro Types</a>, but in general, a pattern is a list of fragments or
 pattern variables separated at the highest level by semicolons, then by commas.
@@ -797,7 +799,7 @@ second:</p>
 </div>
 </section>
 <section id="final-items">
-<span id="id2"></span><h3>Final items<a class="headerlink" href="#final-items" title="Permalink to this heading">#</a></h3>
+<span id="id2"></span><h3>Final items<a class="headerlink" href="#final-items" title="Permalink to this heading">¶</a></h3>
 <p>A pattern with at least two list items treats the last item specially. For example, the
 pattern <code class="samp docutils literal notranslate"><em> <span class="pre">?item-1:*,</span> <span class="pre">?item-2:*,</span> <span class="pre">?item-3:*</span> </em></code> will match any of these code fragments,</p>
 <blockquote>
@@ -844,7 +846,7 @@ line
 3) match the <code class="samp docutils literal notranslate"><span class="pre">name</span></code> constraint of <code class="samp docutils literal notranslate"><span class="pre">?item-3</span></code>.</p>
 </section>
 <section id="property-lists">
-<h3>Property lists<a class="headerlink" href="#property-lists" title="Permalink to this heading">#</a></h3>
+<h3>Property lists<a class="headerlink" href="#property-lists" title="Permalink to this heading">¶</a></h3>
 <p>The end of a comma-separated list of pattern fragments can include <code class="samp docutils literal notranslate"><span class="pre">#rest</span></code>,
 <code class="samp docutils literal notranslate"><span class="pre">#key</span></code>, and <code class="samp docutils literal notranslate"><span class="pre">#all-keys</span></code>, as in this example:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"> </span><span class="p">...,</span><span class="w"> </span><span class="k">#rest</span><span class="w"> </span><span class="nt">?keys</span><span class="o">:</span><span class="nb">token</span><span class="p">,</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="nt">?alpha</span><span class="o">:</span><span class="nb">token</span><span class="p">,</span><span class="w"> </span><span class="nt">?beta</span><span class="o">:</span><span class="nb">token</span><span class="p">,</span><span class="w"> </span><span class="k">#all-keys</span><span class="w"> </span><span class="p">}</span>
@@ -880,7 +882,7 @@ not</strong> valid to use this syntax in a pattern:</p>
 </section>
 </section>
 <section id="pattern-variables">
-<h2>Pattern Variables<a class="headerlink" href="#pattern-variables" title="Permalink to this heading">#</a></h2>
+<h2>Pattern Variables<a class="headerlink" href="#pattern-variables" title="Permalink to this heading">¶</a></h2>
 <p>A macro pattern variable pulls out and transforms part of a code fragment. This
 partial code fragment is then substituted into the macro’s expansion. The
 substitution can be altered in some ways, or intercepted and more extensively
@@ -896,7 +898,7 @@ a given inner macro. An example of this is given in the discussion of the
 <p>The scope of a pattern variable is the rule that uses it. Other rules or
 auxiliary rule sets cannot use the pattern variable.</p>
 <section id="simple-pattern-variables">
-<h3>Simple pattern variables<a class="headerlink" href="#simple-pattern-variables" title="Permalink to this heading">#</a></h3>
+<h3>Simple pattern variables<a class="headerlink" href="#simple-pattern-variables" title="Permalink to this heading">¶</a></h3>
 <dl class="simple">
 <dt><code class="samp docutils literal notranslate"><span class="pre">?</span><em><span class="pre">name</span></em><span class="pre">:</span><em><span class="pre">constraint</span></em></code></dt><dd><p>This is the basic pattern variable.</p>
 </dd>
@@ -927,7 +929,7 @@ happens to also be a valid type specialization.</p>
 </dl>
 </section>
 <section id="property-list-pattern-variables">
-<span id="proplist-variables"></span><h3>Property list pattern variables<a class="headerlink" href="#property-list-pattern-variables" title="Permalink to this heading">#</a></h3>
+<span id="proplist-variables"></span><h3>Property list pattern variables<a class="headerlink" href="#property-list-pattern-variables" title="Permalink to this heading">¶</a></h3>
 <dl>
 <dt><code class="samp docutils literal notranslate"><span class="pre">#rest</span> <span class="pre">?</span><em><span class="pre">name</span></em><span class="pre">:</span><em><span class="pre">constraint</span></em></code></dt><dd><p>This matches a property list where every value part meets the
 constraint. If the constraint is <code class="samp docutils literal notranslate"><span class="pre">*</span></code>, any value part will match. The
@@ -1004,7 +1006,7 @@ same property list.</p>
 </dl>
 </section>
 <section id="body-and-macro-pattern-variables">
-<h3>Body and macro pattern variables<a class="headerlink" href="#body-and-macro-pattern-variables" title="Permalink to this heading">#</a></h3>
+<h3>Body and macro pattern variables<a class="headerlink" href="#body-and-macro-pattern-variables" title="Permalink to this heading">¶</a></h3>
 <dl>
 <dt><code class="samp docutils literal notranslate"><span class="pre">?</span><em><span class="pre">name</span></em><span class="pre">:body</span></code></dt><dd><p>This matches a series of semicolon-separated statements and expressions.
 If the code fragment does not have any statements or expressions, the
@@ -1083,7 +1085,7 @@ wrapper, and <code class="samp docutils literal notranslate"><span class="pre">?
 </dl>
 </section>
 <section id="wildcard-pattern-variables">
-<span id="wildcard-variables"></span><h3>Wildcard pattern variables<a class="headerlink" href="#wildcard-pattern-variables" title="Permalink to this heading">#</a></h3>
+<span id="wildcard-variables"></span><h3>Wildcard pattern variables<a class="headerlink" href="#wildcard-pattern-variables" title="Permalink to this heading">¶</a></h3>
 <dl>
 <dt><code class="samp docutils literal notranslate"><span class="pre">?</span><em><span class="pre">name</span></em><span class="pre">:*</span></code></dt><dd><p>Wildcard pattern variables match as many code fragments as can be
 matched before the next comma, semicolon, or other pattern fragment in
@@ -1131,7 +1133,7 @@ first comma in the code fragment. <code class="samp docutils literal notranslate
 </dl>
 </section>
 <section id="auxiliary-rule-set-pattern-variables">
-<h3>Auxiliary rule set pattern variables<a class="headerlink" href="#auxiliary-rule-set-pattern-variables" title="Permalink to this heading">#</a></h3>
+<h3>Auxiliary rule set pattern variables<a class="headerlink" href="#auxiliary-rule-set-pattern-variables" title="Permalink to this heading">¶</a></h3>
 <dl class="simple">
 <dt><code class="samp docutils literal notranslate"><span class="pre">?</span><em><span class="pre">aux-rules</span></em></code></dt><dd><p>This syntax can only be used when there is an auxiliary rule set named
 the same as the pattern variable. It is equivalent to <code class="samp docutils literal notranslate"><span class="pre">?</span><em><span class="pre">aux-rules</span></em><span class="pre">:*</span></code>.
@@ -1144,14 +1146,14 @@ set is named <code class="samp docutils literal notranslate"><span class="pre">m
 </section>
 </section>
 <section id="substitutions">
-<h2>Substitutions<a class="headerlink" href="#substitutions" title="Permalink to this heading">#</a></h2>
+<h2>Substitutions<a class="headerlink" href="#substitutions" title="Permalink to this heading">¶</a></h2>
 <p>Pattern variables contain code fragments, which can be inserted into the macro
 expansion via a substitution. A substitution looks much like a pattern variable,
 but it is on the template side of the rule and has different syntax forms.</p>
 <p>A template can only use pattern variables from its corresponding pattern. It
 cannot use pattern variables from other rules’ patterns.</p>
 <section id="finalitems-subst">
-<span id="id3"></span><h3>Final items<a class="headerlink" href="#finalitems-subst" title="Permalink to this heading">#</a></h3>
+<span id="id3"></span><h3>Final items<a class="headerlink" href="#finalitems-subst" title="Permalink to this heading">¶</a></h3>
 <p>As a special case, if the template has a separator followed by any of the
 substitution forms below, and the substituted code fragment is empty, the
 preceding separator is removed. For example, consider this template:</p>
@@ -1163,7 +1165,7 @@ instead be <code class="samp docutils literal notranslate"><span class="pre">a</
 of the comma: <code class="samp docutils literal notranslate"><span class="pre">,</span> <span class="pre">;</span> <span class="pre">+</span> <span class="pre">-</span> <span class="pre">*</span> <span class="pre">/</span> <span class="pre">^</span> <span class="pre">=</span> <span class="pre">==</span> <span class="pre">~=</span> <span class="pre">~==</span> <span class="pre">&lt;</span> <span class="pre">&lt;=</span> <span class="pre">&gt;</span> <span class="pre">&gt;=</span> <span class="pre">&amp;</span> <span class="pre">|</span> <span class="pre">:=</span></code></p>
 </section>
 <section id="simple-substitutions">
-<h3>Simple substitutions<a class="headerlink" href="#simple-substitutions" title="Permalink to this heading">#</a></h3>
+<h3>Simple substitutions<a class="headerlink" href="#simple-substitutions" title="Permalink to this heading">¶</a></h3>
 <dl class="simple">
 <dt><code class="samp docutils literal notranslate"><span class="pre">?</span><em><span class="pre">name</span></em></code></dt><dd><p>This is the basic substitution. The pattern variable’s code fragment is
 inserted into the expansion according to the syntax used in the pattern,
@@ -1172,7 +1174,7 @@ as described in <a class="reference internal" href="#pattern-variables">Pattern 
 </dl>
 </section>
 <section id="conversion-substitutions">
-<h3>Conversion substitutions<a class="headerlink" href="#conversion-substitutions" title="Permalink to this heading">#</a></h3>
+<h3>Conversion substitutions<a class="headerlink" href="#conversion-substitutions" title="Permalink to this heading">¶</a></h3>
 <dl class="simple">
 <dt><code class="samp docutils literal notranslate"><span class="pre">?#&quot;</span><em><span class="pre">name</span></em><span class="pre">&quot;</span></code></dt><dd><p>The code fragment of the pattern variable <code class="samp docutils literal notranslate"><em><span class="pre">name</span></em></code>, which must be a
 simple name, is turned into a symbol and inserted into the expansion.</p>
@@ -1183,7 +1185,7 @@ simple name, is turned into a string and inserted into the expansion.</p>
 </dl>
 </section>
 <section id="concatenation-substitutions">
-<h3>Concatenation substitutions<a class="headerlink" href="#concatenation-substitutions" title="Permalink to this heading">#</a></h3>
+<h3>Concatenation substitutions<a class="headerlink" href="#concatenation-substitutions" title="Permalink to this heading">¶</a></h3>
 <dl>
 <dt><code class="samp docutils literal notranslate"><span class="pre">&quot;</span><em><span class="pre">prefix</span></em><span class="pre">&quot;</span> <span class="pre">##</span> <span class="pre">?</span><em><span class="pre">name</span></em> <span class="pre">##</span> <span class="pre">&quot;</span><em><span class="pre">suffix</span></em><span class="pre">&quot;</span></code></dt><dd><p>The prefix and suffix are added to the pattern variable’s code fragment,
 which must be a simple name. The result is inserted into the expansion.
@@ -1220,7 +1222,7 @@ code fragment would be the following:</p>
 </dl>
 </section>
 <section id="list-substitutions">
-<h3>List substitutions<a class="headerlink" href="#list-substitutions" title="Permalink to this heading">#</a></h3>
+<h3>List substitutions<a class="headerlink" href="#list-substitutions" title="Permalink to this heading">¶</a></h3>
 <dl>
 <dt><code class="samp docutils literal notranslate"><span class="pre">??</span><em><span class="pre">name</span></em> <span class="pre">...</span></code></dt><dd><p>Used with a <code class="samp docutils literal notranslate"><span class="pre">??</span></code>-style pattern variable to make a list. Consider a
 pattern variable, <code class="samp docutils literal notranslate"><span class="pre">??name-parts</span></code>, that contains the following code
@@ -1256,7 +1258,7 @@ the template: <code class="samp docutils literal notranslate"><span class="pre">
 </dl>
 </section>
 <section id="auxiliary-rule-set-substitution">
-<h3>Auxiliary rule set substitution<a class="headerlink" href="#auxiliary-rule-set-substitution" title="Permalink to this heading">#</a></h3>
+<h3>Auxiliary rule set substitution<a class="headerlink" href="#auxiliary-rule-set-substitution" title="Permalink to this heading">¶</a></h3>
 <dl class="simple">
 <dt><code class="samp docutils literal notranslate"><span class="pre">...</span></code></dt><dd><p>This syntax can only be used within an auxiliary rule set. If the rule
 set is named <code class="samp docutils literal notranslate"><span class="pre">my-aux-rules</span></code>, this syntax is equivalent to
@@ -1265,7 +1267,7 @@ set is named <code class="samp docutils literal notranslate"><span class="pre">m
 </dl>
 </section>
 <section id="unhygienic-reference">
-<h3>Unhygienic reference<a class="headerlink" href="#unhygienic-reference" title="Permalink to this heading">#</a></h3>
+<h3>Unhygienic reference<a class="headerlink" href="#unhygienic-reference" title="Permalink to this heading">¶</a></h3>
 <dl class="simple">
 <dt><code class="samp docutils literal notranslate"><span class="pre">?=</span><em><span class="pre">binding</span></em></code></dt><dd><p>This is not a substitution, but a way to refer to a binding in the
 macro’s caller. See <a class="reference internal" href="#hygiene">Hygiene</a>.</p>
@@ -1274,9 +1276,9 @@ macro’s caller. See <a class="reference internal" href="#hygiene">Hygiene</a>.
 </section>
 </section>
 <section id="auxiliary-rules-and-expansions">
-<h2>Auxiliary Rules and Expansions<a class="headerlink" href="#auxiliary-rules-and-expansions" title="Permalink to this heading">#</a></h2>
+<h2>Auxiliary Rules and Expansions<a class="headerlink" href="#auxiliary-rules-and-expansions" title="Permalink to this heading">¶</a></h2>
 <section id="auxiliary-rules">
-<h3>Auxiliary Rules<a class="headerlink" href="#auxiliary-rules" title="Permalink to this heading">#</a></h3>
+<h3>Auxiliary Rules<a class="headerlink" href="#auxiliary-rules" title="Permalink to this heading">¶</a></h3>
 <p>Auxiliary rules transform the code fragment contained in a pattern variable
 before it is substituted into a template.</p>
 <p>Auxiliary rule sets follow the syntax described in <a class="reference internal" href="#patterns">Patterns</a> and have the
@@ -1306,7 +1308,7 @@ process is similar, except each code fragment in the pattern variable is
 individually matched and transformed by the auxiliary rules.</p>
 </section>
 <section id="expansions">
-<h3>Expansions<a class="headerlink" href="#expansions" title="Permalink to this heading">#</a></h3>
+<h3>Expansions<a class="headerlink" href="#expansions" title="Permalink to this heading">¶</a></h3>
 <p>This section discusses expansions through a series of examples. The examples are
 all variations of a function macro named <code class="samp docutils literal notranslate"><span class="pre">version</span></code> that builds a version number
 in a specific format and sets it by calling a function <code class="samp docutils literal notranslate"><span class="pre">set-version</span></code>. The
@@ -1315,7 +1317,7 @@ in a specific format and sets it by calling a function <code class="samp docutil
 </pre></div>
 </div>
 <section id="simple-expansion">
-<h4>Simple expansion<a class="headerlink" href="#simple-expansion" title="Permalink to this heading">#</a></h4>
+<h4>Simple expansion<a class="headerlink" href="#simple-expansion" title="Permalink to this heading">¶</a></h4>
 <p>First, let us consider the <code class="samp docutils literal notranslate"><span class="pre">version</span></code> macro below.</p>
 <blockquote>
 <div><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">define</span><span class="w"> </span><span class="nb">macro</span><span class="w"> </span><span class="n">version</span>
@@ -1354,7 +1356,7 @@ in line 5. The matching rule expands to the string <code class="samp docutils li
 3), the pattern variable (now containing <code class="samp docutils literal notranslate"><span class="pre">&quot;a&quot;</span></code>) is substituted into the
 expansion.</p>
 <section id="effect-of-constraints">
-<h5>Effect of constraints<a class="headerlink" href="#effect-of-constraints" title="Permalink to this heading">#</a></h5>
+<h5>Effect of constraints<a class="headerlink" href="#effect-of-constraints" title="Permalink to this heading">¶</a></h5>
 <p>Now consider if the auxiliary rules were rewritten this way:</p>
 <blockquote>
 <div><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">define</span><span class="w"> </span><span class="nb">macro</span><span class="w"> </span><span class="n">version</span>
@@ -1380,7 +1382,7 @@ and an additional clause. The <code class="samp docutils literal notranslate"><s
 macro expansion will fail.</p>
 </section>
 <section id="empty-and-missing-code-fragments">
-<h5>Empty and missing code fragments<a class="headerlink" href="#empty-and-missing-code-fragments" title="Permalink to this heading">#</a></h5>
+<h5>Empty and missing code fragments<a class="headerlink" href="#empty-and-missing-code-fragments" title="Permalink to this heading">¶</a></h5>
 <p>An auxiliary rule set can match against a missing code fragment. Consider the
 following macro call in relation to the <code class="samp docutils literal notranslate"><span class="pre">version</span></code> macros above.</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">version</span><span class="p">(</span><span class="s">&quot;1.0&quot;</span><span class="p">)</span>
@@ -1423,7 +1425,7 @@ have to add the rule highlighted below:</p>
 </section>
 </section>
 <section id="complex-expansion">
-<h4>Complex expansion<a class="headerlink" href="#complex-expansion" title="Permalink to this heading">#</a></h4>
+<h4>Complex expansion<a class="headerlink" href="#complex-expansion" title="Permalink to this heading">¶</a></h4>
 <p>Now suppose we wanted to support this syntax:</p>
 <blockquote>
 <div><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">version</span><span class="p">(</span><span class="k">major:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="k">rev:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">rev:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="k">rev:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="k">type:</span><span class="w"> </span><span class="n">alpha</span><span class="p">)</span>
@@ -1460,7 +1462,7 @@ have to add the rule highlighted below:</p>
 </div>
 </div></blockquote>
 <section id="property-lists-and-optional-properties">
-<h5>Property lists and optional properties<a class="headerlink" href="#property-lists-and-optional-properties" title="Permalink to this heading">#</a></h5>
+<h5>Property lists and optional properties<a class="headerlink" href="#property-lists-and-optional-properties" title="Permalink to this heading">¶</a></h5>
 <p>The macro call must include the <code class="samp docutils literal notranslate"><span class="pre">major:</span></code> property, but the <code class="samp docutils literal notranslate"><span class="pre">rev:</span></code> and <code class="samp docutils literal notranslate"><span class="pre">type:</span></code>
 properties are optional.</p>
 <p><code class="samp docutils literal notranslate"><span class="pre">rev:</span></code> is optional because it is a <code class="samp docutils literal notranslate"><span class="pre">??</span></code>-type pattern variable and, as described
@@ -1480,7 +1482,7 @@ call. This is because <code class="samp docutils literal notranslate"><span clas
 of properties, not the symbol parts.</p>
 </section>
 <section id="auxiliary-rule-sets-in-auxiliary-rules">
-<h5>Auxiliary rule sets in auxiliary rules<a class="headerlink" href="#auxiliary-rule-sets-in-auxiliary-rules" title="Permalink to this heading">#</a></h5>
+<h5>Auxiliary rule sets in auxiliary rules<a class="headerlink" href="#auxiliary-rule-sets-in-auxiliary-rules" title="Permalink to this heading">¶</a></h5>
 <p>In line 5, <code class="samp docutils literal notranslate"><span class="pre">?rev</span></code> is equivalent to <code class="samp docutils literal notranslate"><span class="pre">?rev:*</span></code>. The code fragment matched by that
 pattern variable is the code fragment initially contained by the <code class="samp docutils literal notranslate"><span class="pre">?major</span></code>
 pattern variable matched in line 2. This code fragment will be an expression.
@@ -1490,7 +1492,7 @@ fragment will be inserted in place of the <code class="samp docutils literal not
 subsequently inserted in place of the <code class="samp docutils literal notranslate"><span class="pre">?major</span></code> substitution in line 3.</p>
 </section>
 <section id="and-pattern-variables">
-<h5><code class="samp docutils literal notranslate"><span class="pre">??</span></code> and <code class="samp docutils literal notranslate"><span class="pre">?</span></code> pattern variables<a class="headerlink" href="#and-pattern-variables" title="Permalink to this heading">#</a></h5>
+<h5><code class="samp docutils literal notranslate"><span class="pre">??</span></code> and <code class="samp docutils literal notranslate"><span class="pre">?</span></code> pattern variables<a class="headerlink" href="#and-pattern-variables" title="Permalink to this heading">¶</a></h5>
 <p>The main rule and the <code class="samp docutils literal notranslate"><span class="pre">major:</span></code> auxiliary rule set both contain a pattern
 variable named <code class="samp docutils literal notranslate"><span class="pre">rev</span></code>, though it is <code class="samp docutils literal notranslate"><span class="pre">??rev:expression</span></code> in the main rule (line 2)
 and <code class="samp docutils literal notranslate"><span class="pre">?rev</span></code> in the auxiliary rule (line 5). Both pattern variables are
@@ -1509,7 +1511,7 @@ includes the entire collection in the main rule expansion, transforming the list
 of revision numbers to a list of calls to <code class="samp docutils literal notranslate"><span class="pre">format-to-string</span></code>.</p>
 </section>
 <section id="empty-pattern-variables">
-<h5>Empty <code class="samp docutils literal notranslate"><span class="pre">??</span></code> pattern variables<a class="headerlink" href="#empty-pattern-variables" title="Permalink to this heading">#</a></h5>
+<h5>Empty <code class="samp docutils literal notranslate"><span class="pre">??</span></code> pattern variables<a class="headerlink" href="#empty-pattern-variables" title="Permalink to this heading">¶</a></h5>
 <p>In line 2, the <code class="samp docutils literal notranslate"><span class="pre">?type</span></code> variable has a default. If the macro call does not
 contain a <code class="samp docutils literal notranslate"><span class="pre">type:</span></code> property, the default provides a code fragment to match
 against the <code class="samp docutils literal notranslate"><span class="pre">type:</span></code> auxiliary rule set.</p>
@@ -1524,7 +1526,7 @@ so its lack of an empty pattern is irrelevant.</p>
 </section>
 </section>
 <section id="recursive-expansion">
-<h4>Recursive expansion<a class="headerlink" href="#recursive-expansion" title="Permalink to this heading">#</a></h4>
+<h4>Recursive expansion<a class="headerlink" href="#recursive-expansion" title="Permalink to this heading">¶</a></h4>
 <p>Any pattern variable named the same as an auxiliary rule is processed by that
 rule. That includes pattern variables in the auxiliary rule referring to the
 auxiliary rule set itself. This recursive behavior is useful for processing
@@ -1628,7 +1630,7 @@ pattern variable.</p></li>
 </section>
 </section>
 <section id="hygiene">
-<h2>Hygiene<a class="headerlink" href="#hygiene" title="Permalink to this heading">#</a></h2>
+<h2>Hygiene<a class="headerlink" href="#hygiene" title="Permalink to this heading">¶</a></h2>
 <p>Macro expansions are hygienic, meaning there can be no name conflict between
 a local binding in scope that calls the macro and a local binding in the macro
 expansion.</p>
@@ -1748,7 +1750,7 @@ B</p></td>
 </table>
 </div>
 <section id="breaking-hygiene">
-<h3>Breaking hygiene<a class="headerlink" href="#breaking-hygiene" title="Permalink to this heading">#</a></h3>
+<h3>Breaking hygiene<a class="headerlink" href="#breaking-hygiene" title="Permalink to this heading">¶</a></h3>
 <p>A template can prefix a binding with <code class="samp docutils literal notranslate"><span class="pre">?=</span></code>. This makes the binding come from
 and be visible in the macro’s caller. This can be illustrated by an example from
 <cite>Dylan Programming</cite>.</p>
@@ -1809,9 +1811,9 @@ the example expands into:</p>
 </section>
 </section>
 <section id="faq-and-tips">
-<h2>FAQ and Tips<a class="headerlink" href="#faq-and-tips" title="Permalink to this heading">#</a></h2>
+<h2>FAQ and Tips<a class="headerlink" href="#faq-and-tips" title="Permalink to this heading">¶</a></h2>
 <section id="general-advice-and-troubleshooting">
-<h3>General advice and troubleshooting<a class="headerlink" href="#general-advice-and-troubleshooting" title="Permalink to this heading">#</a></h3>
+<h3>General advice and troubleshooting<a class="headerlink" href="#general-advice-and-troubleshooting" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><dl class="simple">
 <dt>The best way to design a macro is:</dt><dd><ol class="arabic simple">
@@ -1836,7 +1838,7 @@ developing macros.</p></li>
 </ul>
 </section>
 <section id="how-can-i-combine-multiple-names-into-one">
-<h3>How can I combine multiple names into one?<a class="headerlink" href="#how-can-i-combine-multiple-names-into-one" title="Permalink to this heading">#</a></h3>
+<h3>How can I combine multiple names into one?<a class="headerlink" href="#how-can-i-combine-multiple-names-into-one" title="Permalink to this heading">¶</a></h3>
 <p>There is no real way to do this for names or symbols. The concatenating
 substitution forms do not scale, so this template will not work:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"> </span><span class="k">define</span><span class="w"> </span><span class="nt">?name-1</span><span class="w"> </span><span class="p">##</span><span class="w"> </span><span class="s">&quot;-&quot;</span><span class="w"> </span><span class="p">##</span><span class="w"> </span><span class="nt">?name-2</span><span class="w"> </span><span class="p">##</span><span class="w"> </span><span class="s">&quot;-function&quot;</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">}</span>
@@ -1851,7 +1853,7 @@ of adjacent string concatenation:</p>
 anonymous definitions stored in a table keyed by a string.</p>
 </section>
 <section id="how-can-i-write-macros-that-follow-a-bnf-like-syntax">
-<h3>How can I write macros that follow a BNF-like syntax?<a class="headerlink" href="#how-can-i-write-macros-that-follow-a-bnf-like-syntax" title="Permalink to this heading">#</a></h3>
+<h3>How can I write macros that follow a BNF-like syntax?<a class="headerlink" href="#how-can-i-write-macros-that-follow-a-bnf-like-syntax" title="Permalink to this heading">¶</a></h3>
 <p>Macros are designed to follow Dylan language conventions, so you may not be able
 to support arbitrary BNF-based syntax. But here are some tricks to help with
 common BNF forms.</p>
@@ -1906,7 +1908,7 @@ primary rule.</p>
 </dl>
 </section>
 <section id="i-can-t-make-a-bare-list">
-<h3>I can’t make a bare list!<a class="headerlink" href="#i-can-t-make-a-bare-list" title="Permalink to this heading">#</a></h3>
+<h3>I can’t make a bare list!<a class="headerlink" href="#i-can-t-make-a-bare-list" title="Permalink to this heading">¶</a></h3>
 <p>A macro that makes a bare list (by which I mean a simple list of comma-separated
 names) cannot do anything useful with it. Macros build cohesive code fragments,
 and a bare list is not such a code fragment.</p>
@@ -2061,6 +2063,6 @@ begin…end, resulting in this invalid syntax:</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

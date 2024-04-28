@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Compiler Design (Old)" href="old/design.html" /><link rel="prev" title="DFMC, The Dylan Flow Machine Compiler" href="index.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Notes, Warnings and Errors - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="notes-warnings-and-errors">
-<h1>Notes, Warnings and Errors<a class="headerlink" href="#notes-warnings-and-errors" title="Permalink to this heading">#</a></h1>
+<h1>Notes, Warnings and Errors<a class="headerlink" href="#notes-warnings-and-errors" title="Permalink to this heading">¶</a></h1>
 <p>The compiler provides a framework for handling notes, warnings and
 errors as they’re encountered and created during the compilation
 process.</p>
@@ -474,13 +476,13 @@ skeletal API documentation for this library can be found at
 <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#condition"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;condition&gt;</span></code></a>, so we will often refer to them collectively
 as <em>program conditions</em> or instances of <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[program-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;program-condition&gt;</span></code></a>.</p>
 <section id="status-of-this-library">
-<h2>Status of this Library<a class="headerlink" href="#status-of-this-library" title="Permalink to this heading">#</a></h2>
+<h2>Status of this Library<a class="headerlink" href="#status-of-this-library" title="Permalink to this heading">¶</a></h2>
 <p>This library is interesting (to some) as it is in a half-completed
 state and many things are not yet fully implemented or used. We will
 try to note these things below when we discuss them.</p>
 </section>
 <section id="philosophy">
-<h2>Philosophy<a class="headerlink" href="#philosophy" title="Permalink to this heading">#</a></h2>
+<h2>Philosophy<a class="headerlink" href="#philosophy" title="Permalink to this heading">¶</a></h2>
 <p>The Open Dylan compiler tries hard not to abort compilation when an
 error is noted. This leads to many things that might be <em>fatal errors</em>
 elsewhere being represented as <em>serious warnings</em> here. For example,
@@ -499,14 +501,14 @@ object so that they’re readily accessible from within the debugger,
 rather than only storing the string representations.</p>
 </section>
 <section id="program-condition-hierarchy">
-<h2>Program Condition Hierarchy<a class="headerlink" href="#program-condition-hierarchy" title="Permalink to this heading">#</a></h2>
+<h2>Program Condition Hierarchy<a class="headerlink" href="#program-condition-hierarchy" title="Permalink to this heading">¶</a></h2>
 <p>The root of the condition hierarchy is <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[program-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;program-condition&gt;</span></code></a>.
 This is an abstract class and one of the subclasses such as
 <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[program-note]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;program-note&gt;</span></code></a>, <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[program-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;program-error&gt;</span></code></a> or
 <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[program-restart]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;program-restart&gt;</span></code></a> should be subclassed instead.</p>
 </section>
 <section id="reporting-a-program-condition">
-<h2>Reporting a Program Condition<a class="headerlink" href="#reporting-a-program-condition" title="Permalink to this heading">#</a></h2>
+<h2>Reporting a Program Condition<a class="headerlink" href="#reporting-a-program-condition" title="Permalink to this heading">¶</a></h2>
 <p>The typical way to report that a program condition has arisen
 is to use <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:note"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">note</span></code></a>. There are other mechanisms, such as
 <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:raise"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">raise</span></code></a>, <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:restart"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">restart</span></code></a>, <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:simple-note"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">simple-note</span></code></a> and <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:simple-raise"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">simple-raise</span></code></a>,
@@ -526,7 +528,7 @@ the program condition, and the type of program condition to emit.</p>
 </pre></div>
 </div>
 <section id="source-locations">
-<h3>Source Locations<a class="headerlink" href="#source-locations" title="Permalink to this heading">#</a></h3>
+<h3>Source Locations<a class="headerlink" href="#source-locations" title="Permalink to this heading">¶</a></h3>
 <p>There are a couple of useful rules to follow for getting source
 locations for noting a program condition during compilation.</p>
 <ul class="simple">
@@ -548,7 +550,7 @@ model objects, so keep an eye out for when you need to use
 </section>
 </section>
 <section id="defining-a-new-program-condition">
-<h2>Defining a new Program Condition<a class="headerlink" href="#defining-a-new-program-condition" title="Permalink to this heading">#</a></h2>
+<h2>Defining a new Program Condition<a class="headerlink" href="#defining-a-new-program-condition" title="Permalink to this heading">¶</a></h2>
 <p>Depending on where you are defining your new program condition
 within the <a class="reference internal" href="#program-condition-hierarchy">Program Condition Hierarchy</a>, you will need to use
 the appropriate program condition definer:</p>
@@ -580,7 +582,7 @@ be useful when viewing the condition within the debugger or by other
 programmatic processing such as filtering.</p>
 </section>
 <section id="ppml-pretty-print-markup-language">
-<h2>PPML, Pretty Print Markup Language<a class="headerlink" href="#ppml-pretty-print-markup-language" title="Permalink to this heading">#</a></h2>
+<h2>PPML, Pretty Print Markup Language<a class="headerlink" href="#ppml-pretty-print-markup-language" title="Permalink to this heading">¶</a></h2>
 <p>When conditions are stored, their slots are converted to PPML
 objects. Many objects within the compiler are already configured
 to be able to generate PPML via the many specializations of
@@ -591,24 +593,24 @@ is autogenerated by the various definer macros which create
 a specialization on <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">convert-condition-slots-to-ppml</span></code></a>.</p>
 </section>
 <section id="filtering-of-program-conditions">
-<h2>Filtering of Program Conditions<a class="headerlink" href="#filtering-of-program-conditions" title="Permalink to this heading">#</a></h2>
+<h2>Filtering of Program Conditions<a class="headerlink" href="#filtering-of-program-conditions" title="Permalink to this heading">¶</a></h2>
 <p>This is functionality that has not been completed and is
 currently not entirely in use.</p>
 <p><em>To be written.</em></p>
 </section>
 <section id="how-warnings-are-displayed-and-recorded">
-<h2>How Warnings Are Displayed and Recorded<a class="headerlink" href="#how-warnings-are-displayed-and-recorded" title="Permalink to this heading">#</a></h2>
+<h2>How Warnings Are Displayed and Recorded<a class="headerlink" href="#how-warnings-are-displayed-and-recorded" title="Permalink to this heading">¶</a></h2>
 <p><em>To be written.</em></p>
 </section>
 <section id="responding-to-a-program-condition">
-<h2>Responding to a Program Condition<a class="headerlink" href="#responding-to-a-program-condition" title="Permalink to this heading">#</a></h2>
+<h2>Responding to a Program Condition<a class="headerlink" href="#responding-to-a-program-condition" title="Permalink to this heading">¶</a></h2>
 <p>In Dylan, the condition system allows for responses to conditions
 and can restart a computation with new information. While parts
 of <code class="docutils literal notranslate"><span class="pre">dfmc-conditions</span></code> are designed to permit this, this functionality,
 has never been completed and is not yet working.</p>
 </section>
 <section id="future-work">
-<h2>Future Work<a class="headerlink" href="#future-work" title="Permalink to this heading">#</a></h2>
+<h2>Future Work<a class="headerlink" href="#future-work" title="Permalink to this heading">¶</a></h2>
 <p>Look at cleaning up unused API and things that are no longer
 necessary.</p>
 <ul class="simple">
@@ -637,12 +639,12 @@ filtering to work.</p></li>
 </ul>
 </section>
 <section id="the-dfmc-conditions-api-reference">
-<h2>The DFMC-CONDITIONS API Reference<a class="headerlink" href="#the-dfmc-conditions-api-reference" title="Permalink to this heading">#</a></h2>
+<h2>The DFMC-CONDITIONS API Reference<a class="headerlink" href="#the-dfmc-conditions-api-reference" title="Permalink to this heading">¶</a></h2>
 <section id="definers-for-new-program-conditions">
-<h3>Definers for new Program Conditions<a class="headerlink" href="#definers-for-new-program-conditions" title="Permalink to this heading">#</a></h3>
+<h3>Definers for new Program Conditions<a class="headerlink" href="#definers-for-new-program-conditions" title="Permalink to this heading">¶</a></h3>
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:program-condition-definer">
-<span class="sig-name descname"><span class="pre">program-condition-definer</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-condition-definer" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">program-condition-definer</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-condition-definer" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
 <dd class="field-odd"><p><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="p">[</span><span class="n">modifier*</span><span class="p">]</span><span class="w"> </span><span class="n">program-condition</span><span class="w"> </span><span class="vg">*class-name*</span><span class="w"> </span><span class="p">(</span><span class="vg">*superclasses*</span><span class="p">)</span>
@@ -690,7 +692,7 @@ definer macro would be used instead.</p>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:program-note-definer">
-<span class="sig-name descname"><span class="pre">program-note-definer</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-definer" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">program-note-definer</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-definer" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
 <dd class="field-odd"><p><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="p">[</span><span class="n">modifier*</span><span class="p">]</span><span class="w"> </span><span class="n">program-note</span><span class="w"> </span><span class="vg">*class-name*</span>
@@ -718,7 +720,7 @@ definer macro would be used instead.</p>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:performance-note-definer">
-<span class="sig-name descname"><span class="pre">performance-note-definer</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:performance-note-definer" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">performance-note-definer</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:performance-note-definer" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Create a new <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[performance-note]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;performance-note&gt;</span></code></a> subclass.
@@ -729,7 +731,7 @@ See <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:program
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:portability-note-definer">
-<span class="sig-name descname"><span class="pre">portability-note-definer</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:portability-note-definer" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">portability-note-definer</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:portability-note-definer" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Create a new <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[portability-note]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;portability-note&gt;</span></code></a> subclass.
@@ -740,7 +742,7 @@ See <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:program
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:program-error-definer">
-<span class="sig-name descname"><span class="pre">program-error-definer</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-error-definer" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">program-error-definer</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-error-definer" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Create a new <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[program-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;program-error&gt;</span></code></a> subclass.
@@ -751,7 +753,7 @@ See <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:program
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:program-restart-definer">
-<span class="sig-name descname"><span class="pre">program-restart-definer</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-restart-definer" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">program-restart-definer</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-restart-definer" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Create a new <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[program-restart]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;program-restart&gt;</span></code></a> subclass.
@@ -762,7 +764,7 @@ See <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:program
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:program-warning-definer">
-<span class="sig-name descname"><span class="pre">program-warning-definer</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-warning-definer" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">program-warning-definer</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-warning-definer" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Create a new <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[program-warning]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;program-warning&gt;</span></code></a> subclass.
@@ -773,7 +775,7 @@ See <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:program
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:run-time-error-warning-definer">
-<span class="sig-name descname"><span class="pre">run-time-error-warning-definer</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:run-time-error-warning-definer" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">run-time-error-warning-definer</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:run-time-error-warning-definer" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Create a new <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[run-time-error-warning]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;run-time-error-warning&gt;</span></code></a> subclass.
@@ -784,7 +786,7 @@ See <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:program
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:serious-program-warning-definer">
-<span class="sig-name descname"><span class="pre">serious-program-warning-definer</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:serious-program-warning-definer" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">serious-program-warning-definer</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:serious-program-warning-definer" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Create a new <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[serious-program-warning]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;serious-program-warning&gt;</span></code></a> subclass.
@@ -795,7 +797,7 @@ See <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:program
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:style-warning-definer">
-<span class="sig-name descname"><span class="pre">style-warning-definer</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:style-warning-definer" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">style-warning-definer</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:style-warning-definer" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Create a new <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;style-warning-note&gt;</span></code> subclass.
@@ -806,7 +808,7 @@ See <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:program
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:program-condition-definer-definer">
-<span class="sig-name descname"><span class="pre">program-condition-definer-definer</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-condition-definer-definer" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">program-condition-definer-definer</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-condition-definer-definer" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>This is not commonly used outside of <code class="docutils literal notranslate"><span class="pre">dfmc-conditions</span></code>. It is
@@ -817,10 +819,10 @@ creating new program-conditioner definer macros.</p>
 
 </section>
 <section id="program-conditions">
-<h3>Program Conditions<a class="headerlink" href="#program-conditions" title="Permalink to this heading">#</a></h3>
+<h3>Program Conditions<a class="headerlink" href="#program-conditions" title="Permalink to this heading">¶</a></h3>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:[program-condition]">
-<span class="sig-name descname"><span class="pre">&lt;program-condition&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[program-condition]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;program-condition&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[program-condition]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../../library-reference/common-dylan/common-extensions.html#common-dylan:common-extensions:[format-string-condition]"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">&lt;format-string-condition&gt;</span></code></a></p>
@@ -848,7 +850,7 @@ best to subclass one of <a class="reference internal" href="#dfmc-conditions:dfm
 
 <dl class="dylan type">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:[program-notes]">
-<span class="sig-name descname"><span class="pre">&lt;program-notes&gt;</span></span> <em class="property"><span class="pre">Type</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[program-notes]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;program-notes&gt;</span></span> <em class="property"><span class="pre">Type</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[program-notes]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Supertypes<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a></p>
@@ -858,7 +860,7 @@ best to subclass one of <a class="reference internal" href="#dfmc-conditions:dfm
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:[program-note]">
-<span class="sig-name descname"><span class="pre">&lt;program-note&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Primary</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[program-note]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;program-note&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Primary</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[program-note]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#warning"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;warning&gt;</span></code></a>, <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[program-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;program-condition&gt;</span></code></a></p>
@@ -885,7 +887,7 @@ for example (where <code class="docutils literal notranslate"><span class="pre">
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:[program-error]">
-<span class="sig-name descname"><span class="pre">&lt;program-error&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[program-error]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;program-error&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[program-error]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[program-note]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;program-note&gt;</span></code></a></p>
@@ -900,7 +902,7 @@ an undefined name.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:[program-restart]">
-<span class="sig-name descname"><span class="pre">&lt;program-restart&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Primary</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[program-restart]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;program-restart&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Primary</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[program-restart]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[program-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;program-condition&gt;</span></code></a>, <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#restart"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;restart&gt;</span></code></a></p>
@@ -919,7 +921,7 @@ part of the recovery protocol for some <a class="reference internal" href="#dfmc
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:[program-warning]">
-<span class="sig-name descname"><span class="pre">&lt;program-warning&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[program-warning]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;program-warning&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[program-warning]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[program-note]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;program-note&gt;</span></code></a></p>
@@ -934,7 +936,7 @@ intervention.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:[run-time-error-warning]">
-<span class="sig-name descname"><span class="pre">&lt;run-time-error-warning&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[run-time-error-warning]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;run-time-error-warning&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[run-time-error-warning]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[program-warning]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;program-warning&gt;</span></code></a></p>
@@ -952,7 +954,7 @@ process because of one.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:[serious-program-warning]">
-<span class="sig-name descname"><span class="pre">&lt;serious-program-warning&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[serious-program-warning]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;serious-program-warning&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[serious-program-warning]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[program-warning]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;program-warning&gt;</span></code></a></p>
@@ -962,7 +964,7 @@ process because of one.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:[style-warning]">
-<span class="sig-name descname"><span class="pre">&lt;style-warning&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[style-warning]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;style-warning&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[style-warning]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[program-warning]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;program-warning&gt;</span></code></a></p>
@@ -978,7 +980,7 @@ basis.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:[performance-note]">
-<span class="sig-name descname"><span class="pre">&lt;performance-note&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[performance-note]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;performance-note&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[performance-note]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[program-note]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;program-note&gt;</span></code></a></p>
@@ -994,7 +996,7 @@ type, sealing, or program flow information.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:[portability-note]">
-<span class="sig-name descname"><span class="pre">&lt;portability-note&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[portability-note]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;portability-note&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[portability-note]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[program-note]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;program-note&gt;</span></code></a></p>
@@ -1012,10 +1014,10 @@ support a standards-conforming version of the compiler.</p>
 
 </section>
 <section id="program-condition-slots">
-<h3>Program Condition Slots<a class="headerlink" href="#program-condition-slots" title="Permalink to this heading">#</a></h3>
+<h3>Program Condition Slots<a class="headerlink" href="#program-condition-slots" title="Permalink to this heading">¶</a></h3>
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:condition-compilation-stage">
-<span class="sig-name descname"><span class="pre">condition-compilation-stage</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:condition-compilation-stage" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">condition-compilation-stage</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:condition-compilation-stage" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>condition-compilation-stage (object) =&gt; (value)</p>
@@ -1035,7 +1037,7 @@ support a standards-conforming version of the compiler.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:condition-context-id">
-<span class="sig-name descname"><span class="pre">condition-context-id</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:condition-context-id" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">condition-context-id</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:condition-context-id" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>condition-context-id (object) =&gt; (value)</p>
@@ -1055,7 +1057,7 @@ support a standards-conforming version of the compiler.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:condition-program-note-creator">
-<span class="sig-name descname"><span class="pre">condition-program-note-creator</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:condition-program-note-creator" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">condition-program-note-creator</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:condition-program-note-creator" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>condition-program-note-creator (object) =&gt; (value)</p>
@@ -1075,7 +1077,7 @@ support a standards-conforming version of the compiler.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:condition-source-location">
-<span class="sig-name descname"><span class="pre">condition-source-location</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:condition-source-location" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">condition-source-location</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:condition-source-location" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>condition-source-location (object) =&gt; (value)</p>
@@ -1095,10 +1097,10 @@ support a standards-conforming version of the compiler.</p>
 
 </section>
 <section id="signaling-program-conditions">
-<h3>Signaling Program Conditions<a class="headerlink" href="#signaling-program-conditions" title="Permalink to this heading">#</a></h3>
+<h3>Signaling Program Conditions<a class="headerlink" href="#signaling-program-conditions" title="Permalink to this heading">¶</a></h3>
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:note">
-<span class="sig-name descname"><span class="pre">note</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:note" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">note</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:note" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>note (class #key #all-keys) =&gt; ()</p>
@@ -1126,17 +1128,17 @@ is mainly oriented towards <a class="reference internal" href="#dfmc-conditions:
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:note(subclass([program-condition]))">
-<span class="sig-name descname"><span class="pre">note(subclass(&lt;program-condition&gt;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:note(subclass([program-condition]))" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">note(subclass(&lt;program-condition&gt;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:note(subclass([program-condition]))" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:maybe-note">
-<span class="sig-name descname"><span class="pre">maybe-note</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:maybe-note" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">maybe-note</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:maybe-note" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:raise">
-<span class="sig-name descname"><span class="pre">raise</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:raise" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">raise</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:raise" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>raise (class #key #all-keys) =&gt; ()</p>
@@ -1155,12 +1157,12 @@ function and is guaranteed to not return.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:raise(subclass([program-error]))">
-<span class="sig-name descname"><span class="pre">raise(subclass(&lt;program-error&gt;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:raise(subclass([program-error]))" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">raise(subclass(&lt;program-error&gt;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:raise(subclass([program-error]))" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:restart">
-<span class="sig-name descname"><span class="pre">restart</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:restart" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">restart</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:restart" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>restart (class #key #all-keys) =&gt; ()</p>
@@ -1175,12 +1177,12 @@ function and is guaranteed to not return.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:restart(subclass([program-restart]))">
-<span class="sig-name descname"><span class="pre">restart(subclass(&lt;program-restart&gt;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:restart(subclass([program-restart]))" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">restart(subclass(&lt;program-restart&gt;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:restart(subclass([program-restart]))" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </section>
 <section id="preserving-program-conditions">
-<h3>Preserving Program Conditions<a class="headerlink" href="#preserving-program-conditions" title="Permalink to this heading">#</a></h3>
+<h3>Preserving Program Conditions<a class="headerlink" href="#preserving-program-conditions" title="Permalink to this heading">¶</a></h3>
 <p>Program conditions are tracked in each library. They are stored in
 a table that is associated with each <code class="docutils literal notranslate"><span class="pre">&lt;library-description&gt;</span></code>
 via <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:library-conditions-table"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">library-conditions-table</span></code></a>. There are implementations of
@@ -1189,7 +1191,7 @@ which is commonly invoked during <em>retraction</em>. (What <em>retraction</em>
 is for isn’t clear to me at this point.)</p>
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:add-program-condition">
-<span class="sig-name descname"><span class="pre">add-program-condition</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:add-program-condition" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">add-program-condition</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:add-program-condition" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>add-program-condition (condition) =&gt; ()</p>
@@ -1210,7 +1212,7 @@ program condition.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:add-program-condition([condition])">
-<span class="sig-name descname"><span class="pre">add-program-condition(&lt;condition&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:add-program-condition([condition])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">add-program-condition(&lt;condition&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:add-program-condition([condition])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Runtime errors that are not <a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[program-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;program-condition&gt;</span></code></a> are
@@ -1221,7 +1223,7 @@ not currently tracked. This method doesn’t record them.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:add-program-condition([program-condition])">
-<span class="sig-name descname"><span class="pre">add-program-condition(&lt;program-condition&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:add-program-condition([program-condition])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">add-program-condition(&lt;program-condition&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:add-program-condition([program-condition])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p><p>Preserves a program condition by storing it in the
@@ -1234,7 +1236,7 @@ library being compiled.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:library-conditions-table">
-<span class="sig-name descname"><span class="pre">library-conditions-table</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:library-conditions-table" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">library-conditions-table</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:library-conditions-table" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>library-conditions-table (library) =&gt; (table)</p>
@@ -1254,7 +1256,7 @@ library being compiled.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:remove-program-conditions-from!">
-<span class="sig-name descname"><span class="pre">remove-program-conditions-from!</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:remove-program-conditions-from!" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">remove-program-conditions-from!</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:remove-program-conditions-from!" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>remove-program-conditions-from! (table key stages) =&gt; ()</p>
@@ -1271,20 +1273,20 @@ library being compiled.</p>
 
 </section>
 <section id="recovery-and-restarting">
-<h3>Recovery and Restarting<a class="headerlink" href="#recovery-and-restarting" title="Permalink to this heading">#</a></h3>
+<h3>Recovery and Restarting<a class="headerlink" href="#recovery-and-restarting" title="Permalink to this heading">¶</a></h3>
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:condition-block">
-<span class="sig-name descname"><span class="pre">condition-block</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:condition-block" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">condition-block</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:condition-block" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan variable">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:*error-recovery-model*">
-<span class="sig-name descname"><span class="pre">*error-recovery-model*</span></span> <em class="property"><span class="pre">Variable</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:*error-recovery-model*" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">*error-recovery-model*</span></span> <em class="property"><span class="pre">Variable</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:*error-recovery-model*" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </section>
 <section id="subnotes">
-<h3>Subnotes<a class="headerlink" href="#subnotes" title="Permalink to this heading">#</a></h3>
+<h3>Subnotes<a class="headerlink" href="#subnotes" title="Permalink to this heading">¶</a></h3>
 <p>This is a very rarely used capability within the program condition
 system and isn’t currently well supported by the compiler output
 to standard out and standard error.</p>
@@ -1313,7 +1315,7 @@ build process. (<code class="docutils literal notranslate"><span class="pre">_bu
 </div>
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:subnotes">
-<span class="sig-name descname"><span class="pre">subnotes</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:subnotes" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">subnotes</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:subnotes" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>subnotes (object) =&gt; (value)</p>
@@ -1333,25 +1335,25 @@ build process. (<code class="docutils literal notranslate"><span class="pre">_bu
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:note-during">
-<span class="sig-name descname"><span class="pre">note-during</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:note-during" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">note-during</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:note-during" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:accumulate-subnotes-during">
-<span class="sig-name descname"><span class="pre">accumulate-subnotes-during</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:accumulate-subnotes-during" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">accumulate-subnotes-during</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:accumulate-subnotes-during" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan variable">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:*subnotes-queue*">
-<span class="sig-name descname"><span class="pre">*subnotes-queue*</span></span> <em class="property"><span class="pre">Thread</span> <span class="pre">Variable</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:*subnotes-queue*" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">*subnotes-queue*</span></span> <em class="property"><span class="pre">Thread</span> <span class="pre">Variable</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:*subnotes-queue*" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </section>
 <section id="printing-program-conditions">
-<h3>Printing Program Conditions<a class="headerlink" href="#printing-program-conditions" title="Permalink to this heading">#</a></h3>
+<h3>Printing Program Conditions<a class="headerlink" href="#printing-program-conditions" title="Permalink to this heading">¶</a></h3>
 <dl class="dylan variable">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:*detail-level*">
-<span class="sig-name descname"><span class="pre">*detail-level*</span></span> <em class="property"><span class="pre">Thread</span> <span class="pre">Variable</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:*detail-level*" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">*detail-level*</span></span> <em class="property"><span class="pre">Thread</span> <span class="pre">Variable</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:*detail-level*" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[detail-level]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;detail-level&gt;</span></code></a></p>
@@ -1368,7 +1370,7 @@ build process. (<code class="docutils literal notranslate"><span class="pre">_bu
 
 <dl class="dylan type">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:[detail-level]">
-<span class="sig-name descname"><span class="pre">&lt;detail-level&gt;</span></span> <em class="property"><span class="pre">Type</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[detail-level]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;detail-level&gt;</span></span> <em class="property"><span class="pre">Type</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[detail-level]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Equivalent<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">one-of(#&quot;terse&quot;,</span> <span class="pre">#&quot;normal&quot;,</span> <span class="pre">#&quot;verbose&quot;)</span></code></p>
@@ -1390,7 +1392,7 @@ condition presents.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:format-condition">
-<span class="sig-name descname"><span class="pre">format-condition</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:format-condition" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">format-condition</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:format-condition" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>format-condition (stream condition detail-level) =&gt; ()</p>
@@ -1413,7 +1415,7 @@ respectively.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:print-object([program-condition],[stream])">
-<span class="sig-name descname"><span class="pre">print-object(&lt;program-condition&gt;,</span> <span class="pre">&lt;stream&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:print-object([program-condition],[stream])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">print-object(&lt;program-condition&gt;,</span> <span class="pre">&lt;stream&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:print-object([program-condition],[stream])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>print-object (condition, stream) =&gt; ()</p>
@@ -1442,15 +1444,15 @@ defined in <code class="docutils literal notranslate"><span class="pre">dfmc-deb
 
 </section>
 <section id="unclassified-api">
-<h3>Unclassified API<a class="headerlink" href="#unclassified-api" title="Permalink to this heading">#</a></h3>
+<h3>Unclassified API<a class="headerlink" href="#unclassified-api" title="Permalink to this heading">¶</a></h3>
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:$record-program-note">
-<span class="sig-name descname"><span class="pre">$record-program-note</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:$record-program-note" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$record-program-note</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:$record-program-note" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:$signal-program-error">
-<span class="sig-name descname"><span class="pre">$signal-program-error</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:$signal-program-error" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$signal-program-error</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:$signal-program-error" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>$signal-program-error (c) =&gt; ()</p>
@@ -1465,7 +1467,7 @@ defined in <code class="docutils literal notranslate"><span class="pre">dfmc-deb
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:$signal-program-note">
-<span class="sig-name descname"><span class="pre">$signal-program-note</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:$signal-program-note" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$signal-program-note</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:$signal-program-note" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>$signal-program-note (c) =&gt; ()</p>
@@ -1480,7 +1482,7 @@ defined in <code class="docutils literal notranslate"><span class="pre">dfmc-deb
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:[ignore-serious-note]">
-<span class="sig-name descname"><span class="pre">&lt;ignore-serious-note&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[ignore-serious-note]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;ignore-serious-note&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[ignore-serious-note]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#dfmc-conditions:dfmc-conditions:[program-restart]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;program-restart&gt;</span></code></a></p>
@@ -1496,12 +1498,12 @@ defined in <code class="docutils literal notranslate"><span class="pre">dfmc-deb
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:[program-note-filter]">
-<span class="sig-name descname"><span class="pre">&lt;program-note-filter&gt;</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[program-note-filter]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;program-note-filter&gt;</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:[program-note-filter]" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml">
-<span class="sig-name descname"><span class="pre">convert-condition-slots-to-ppml</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">convert-condition-slots-to-ppml</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>convert-condition-slots-to-ppml (condition) =&gt; ()</p>
@@ -1521,82 +1523,82 @@ macros. It is called from <a class="reference internal" href="#dfmc-conditions:d
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([condition])">
-<span class="sig-name descname"><span class="pre">convert-condition-slots-to-ppml(&lt;condition&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([condition])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">convert-condition-slots-to-ppml(&lt;condition&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([condition])" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml(type-union([simple-condition],[simple-error],[simple-warning]))">
-<span class="sig-name descname"><span class="pre">convert-condition-slots-to-ppml(type-union(&lt;simple-condition&gt;,</span> <span class="pre">&lt;simple-error&gt;,</span> <span class="pre">&lt;simple-warning&gt;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml(type-union([simple-condition],[simple-error],[simple-warning]))" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">convert-condition-slots-to-ppml(type-union(&lt;simple-condition&gt;,</span> <span class="pre">&lt;simple-error&gt;,</span> <span class="pre">&lt;simple-warning&gt;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml(type-union([simple-condition],[simple-error],[simple-warning]))" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([program-note])">
-<span class="sig-name descname"><span class="pre">convert-condition-slots-to-ppml(&lt;program-note&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([program-note])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">convert-condition-slots-to-ppml(&lt;program-note&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([program-note])" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([program-restart])">
-<span class="sig-name descname"><span class="pre">convert-condition-slots-to-ppml(&lt;program-restart&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([program-restart])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">convert-condition-slots-to-ppml(&lt;program-restart&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([program-restart])" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([program-warning])">
-<span class="sig-name descname"><span class="pre">convert-condition-slots-to-ppml(&lt;program-warning&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([program-warning])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">convert-condition-slots-to-ppml(&lt;program-warning&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([program-warning])" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([serious-program-warning])">
-<span class="sig-name descname"><span class="pre">convert-condition-slots-to-ppml(&lt;serious-program-warning&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([serious-program-warning])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">convert-condition-slots-to-ppml(&lt;serious-program-warning&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([serious-program-warning])" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([program-error])">
-<span class="sig-name descname"><span class="pre">convert-condition-slots-to-ppml(&lt;program-error&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([program-error])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">convert-condition-slots-to-ppml(&lt;program-error&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([program-error])" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([run-time-error-warning])">
-<span class="sig-name descname"><span class="pre">convert-condition-slots-to-ppml(&lt;run-time-error-warning&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([run-time-error-warning])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">convert-condition-slots-to-ppml(&lt;run-time-error-warning&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([run-time-error-warning])" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([style-warning])">
-<span class="sig-name descname"><span class="pre">convert-condition-slots-to-ppml(&lt;style-warning&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([style-warning])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">convert-condition-slots-to-ppml(&lt;style-warning&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([style-warning])" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([performance-note])">
-<span class="sig-name descname"><span class="pre">convert-condition-slots-to-ppml(&lt;performance-note&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([performance-note])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">convert-condition-slots-to-ppml(&lt;performance-note&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([performance-note])" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([portability-note])">
-<span class="sig-name descname"><span class="pre">convert-condition-slots-to-ppml(&lt;portability-note&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([portability-note])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">convert-condition-slots-to-ppml(&lt;portability-note&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([portability-note])" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([ignore-serious-note])">
-<span class="sig-name descname"><span class="pre">convert-condition-slots-to-ppml(&lt;ignore-serious-note&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([ignore-serious-note])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">convert-condition-slots-to-ppml(&lt;ignore-serious-note&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([ignore-serious-note])" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:convert-slots-to-ppml">
-<span class="sig-name descname"><span class="pre">convert-slots-to-ppml</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:convert-slots-to-ppml" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">convert-slots-to-ppml</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:convert-slots-to-ppml" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan variable">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:dfmc-continue">
-<span class="sig-name descname"><span class="pre">dfmc-continue</span></span> <em class="property"><span class="pre">Thread</span> <span class="pre">Variable</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:dfmc-continue" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dfmc-continue</span></span> <em class="property"><span class="pre">Thread</span> <span class="pre">Variable</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:dfmc-continue" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan variable">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:dfmc-restart">
-<span class="sig-name descname"><span class="pre">dfmc-restart</span></span> <em class="property"><span class="pre">Thread</span> <span class="pre">Variable</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:dfmc-restart" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dfmc-restart</span></span> <em class="property"><span class="pre">Thread</span> <span class="pre">Variable</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:dfmc-restart" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:do-with-program-conditions">
-<span class="sig-name descname"><span class="pre">do-with-program-conditions</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:do-with-program-conditions" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">do-with-program-conditions</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:do-with-program-conditions" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>do-with-program-conditions (body) =&gt; (#rest results)</p>
@@ -1616,7 +1618,7 @@ macros. It is called from <a class="reference internal" href="#dfmc-conditions:d
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:interesting-note?">
-<span class="sig-name descname"><span class="pre">interesting-note?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:interesting-note?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">interesting-note?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:interesting-note?" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>interesting-note? (note) =&gt; (interesting?)</p>
@@ -1643,7 +1645,7 @@ they are also interesting.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:interesting-note?([program-note])">
-<span class="sig-name descname"><span class="pre">interesting-note?(&lt;program-note&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:interesting-note?([program-note])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">interesting-note?(&lt;program-note&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:interesting-note?([program-note])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1660,7 +1662,7 @@ they are also interesting.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:interesting-note?([performance-note])">
-<span class="sig-name descname"><span class="pre">interesting-note?(&lt;performance-note&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:interesting-note?([performance-note])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">interesting-note?(&lt;performance-note&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:interesting-note?([performance-note])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1677,7 +1679,7 @@ they are also interesting.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:make-program-note-filter">
-<span class="sig-name descname"><span class="pre">make-program-note-filter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:make-program-note-filter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make-program-note-filter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:make-program-note-filter" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>make-program-note-filter (#key file-name from to in class action) =&gt; (filter)</p>
@@ -1702,7 +1704,7 @@ they are also interesting.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:obsolete-condition?">
-<span class="sig-name descname"><span class="pre">obsolete-condition?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:obsolete-condition?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">obsolete-condition?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:obsolete-condition?" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>obsolete-condition? (condition) =&gt; (obsolete?)</p>
@@ -1722,7 +1724,7 @@ they are also interesting.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:obsolete-condition?([program-condition])">
-<span class="sig-name descname"><span class="pre">obsolete-condition?(&lt;program-condition&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:obsolete-condition?([program-condition])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">obsolete-condition?(&lt;program-condition&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:obsolete-condition?([program-condition])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1746,7 +1748,7 @@ they are also interesting.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:present-program-error">
-<span class="sig-name descname"><span class="pre">present-program-error</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:present-program-error" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">present-program-error</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:present-program-error" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>present-program-error (condition) =&gt; ()</p>
@@ -1761,17 +1763,17 @@ they are also interesting.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:present-program-error([condition])">
-<span class="sig-name descname"><span class="pre">present-program-error(&lt;condition&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:present-program-error([condition])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">present-program-error(&lt;condition&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:present-program-error([condition])" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:present-program-error([program-note])">
-<span class="sig-name descname"><span class="pre">present-program-error(&lt;program-note&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:present-program-error([program-note])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">present-program-error(&lt;program-note&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:present-program-error([program-note])" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:present-program-note">
-<span class="sig-name descname"><span class="pre">present-program-note</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:present-program-note" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">present-program-note</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:present-program-note" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>present-program-note (condition) =&gt; ()</p>
@@ -1786,17 +1788,17 @@ they are also interesting.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:present-program-note([condition])">
-<span class="sig-name descname"><span class="pre">present-program-note(&lt;condition&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:present-program-note([condition])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">present-program-note(&lt;condition&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:present-program-note([condition])" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:present-program-note([program-note])">
-<span class="sig-name descname"><span class="pre">present-program-note(&lt;program-note&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:present-program-note([program-note])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">present-program-note(&lt;program-note&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:present-program-note([program-note])" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:program-note-class-=">
-<span class="sig-name descname"><span class="pre">program-note-class-=</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-class-=" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">program-note-class-=</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-class-=" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>program-note-class-= (class) =&gt; (pred)</p>
@@ -1816,7 +1818,7 @@ they are also interesting.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:program-note-file-name-=">
-<span class="sig-name descname"><span class="pre">program-note-file-name-=</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-file-name-=" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">program-note-file-name-=</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-file-name-=" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>program-note-file-name-= (file-name) =&gt; (pred)</p>
@@ -1836,7 +1838,7 @@ they are also interesting.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:program-note-filter">
-<span class="sig-name descname"><span class="pre">program-note-filter</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-filter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">program-note-filter</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-filter" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>program-note-filter (class) =&gt; (filter)</p>
@@ -1856,47 +1858,47 @@ they are also interesting.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:program-note-filter(subclass([program-note]))">
-<span class="sig-name descname"><span class="pre">program-note-filter(subclass(&lt;program-note&gt;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([program-note]))" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">program-note-filter(subclass(&lt;program-note&gt;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([program-note]))" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:program-note-filter(subclass([condition]))">
-<span class="sig-name descname"><span class="pre">program-note-filter(subclass(&lt;condition&gt;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([condition]))" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">program-note-filter(subclass(&lt;condition&gt;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([condition]))" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:program-note-filter(subclass([program-warning]))">
-<span class="sig-name descname"><span class="pre">program-note-filter(subclass(&lt;program-warning&gt;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([program-warning]))" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">program-note-filter(subclass(&lt;program-warning&gt;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([program-warning]))" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:program-note-filter(subclass([serious-program-warning]))">
-<span class="sig-name descname"><span class="pre">program-note-filter(subclass(&lt;serious-program-warning&gt;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([serious-program-warning]))" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">program-note-filter(subclass(&lt;serious-program-warning&gt;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([serious-program-warning]))" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:program-note-filter(subclass([run-time-error-warning]))">
-<span class="sig-name descname"><span class="pre">program-note-filter(subclass(&lt;run-time-error-warning&gt;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([run-time-error-warning]))" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">program-note-filter(subclass(&lt;run-time-error-warning&gt;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([run-time-error-warning]))" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:program-note-filter(subclass([style-warning]))">
-<span class="sig-name descname"><span class="pre">program-note-filter(subclass(&lt;style-warning&gt;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([style-warning]))" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">program-note-filter(subclass(&lt;style-warning&gt;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([style-warning]))" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:program-note-filter(subclass([performance-note]))">
-<span class="sig-name descname"><span class="pre">program-note-filter(subclass(&lt;performance-note&gt;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([performance-note]))" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">program-note-filter(subclass(&lt;performance-note&gt;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([performance-note]))" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:program-note-filter(subclass([portability-note]))">
-<span class="sig-name descname"><span class="pre">program-note-filter(subclass(&lt;portability-note&gt;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([portability-note]))" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">program-note-filter(subclass(&lt;portability-note&gt;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([portability-note]))" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:program-note-filter-setter">
-<span class="sig-name descname"><span class="pre">program-note-filter-setter</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-filter-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">program-note-filter-setter</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-filter-setter" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>program-note-filter-setter (filter class) =&gt; (filter)</p>
@@ -1917,12 +1919,12 @@ they are also interesting.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:program-note-filter-setter([program-note-filter],subclass([program-condition]))">
-<span class="sig-name descname"><span class="pre">program-note-filter-setter(&lt;program-note-filter&gt;,</span> <span class="pre">subclass(&lt;program-condition&gt;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-filter-setter([program-note-filter],subclass([program-condition]))" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">program-note-filter-setter(&lt;program-note-filter&gt;,</span> <span class="pre">subclass(&lt;program-condition&gt;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-filter-setter([program-note-filter],subclass([program-condition]))" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:program-note-in">
-<span class="sig-name descname"><span class="pre">program-note-in</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-in" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">program-note-in</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-in" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>program-note-in (form) =&gt; (pred)</p>
@@ -1942,7 +1944,7 @@ they are also interesting.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:program-note-location-between">
-<span class="sig-name descname"><span class="pre">program-note-location-between</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-location-between" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">program-note-location-between</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:program-note-location-between" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>program-note-location-between (from to) =&gt; (pred)</p>
@@ -1963,7 +1965,7 @@ they are also interesting.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:report-condition">
-<span class="sig-name descname"><span class="pre">report-condition</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:report-condition" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">report-condition</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:report-condition" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>report-condition (condition) =&gt; ()</p>
@@ -1978,7 +1980,7 @@ they are also interesting.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:serious-note?">
-<span class="sig-name descname"><span class="pre">serious-note?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:serious-note?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">serious-note?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:serious-note?" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>serious-note? (note) =&gt; (serious?)</p>
@@ -2010,7 +2012,7 @@ a definition make sense for them.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:serious-note?([program-note])">
-<span class="sig-name descname"><span class="pre">serious-note?(&lt;program-note&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:serious-note?([program-note])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">serious-note?(&lt;program-note&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:serious-note?([program-note])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -2027,7 +2029,7 @@ a definition make sense for them.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:serious-note?([program-error])">
-<span class="sig-name descname"><span class="pre">serious-note?(&lt;program-error&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:serious-note?([program-error])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">serious-note?(&lt;program-error&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:serious-note?([program-error])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -2044,7 +2046,7 @@ a definition make sense for them.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:serious-note?([serious-program-warning])">
-<span class="sig-name descname"><span class="pre">serious-note?(&lt;serious-program-warning&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:serious-note?([serious-program-warning])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">serious-note?(&lt;serious-program-warning&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:serious-note?([serious-program-warning])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -2061,7 +2063,7 @@ a definition make sense for them.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:simple-note">
-<span class="sig-name descname"><span class="pre">simple-note</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:simple-note" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">simple-note</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:simple-note" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>simple-note (class format-string #rest args) =&gt; ()</p>
@@ -2078,7 +2080,7 @@ a definition make sense for them.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:simple-raise">
-<span class="sig-name descname"><span class="pre">simple-raise</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:simple-raise" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">simple-raise</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:simple-raise" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>simple-raise (class format-string #rest args) =&gt; ()</p>
@@ -2095,12 +2097,12 @@ a definition make sense for them.</p>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:with-program-conditions">
-<span class="sig-name descname"><span class="pre">with-program-conditions</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:with-program-conditions" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">with-program-conditions</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:with-program-conditions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dfmc-conditions:dfmc-conditions:with-simple-abort-retry-restart">
-<span class="sig-name descname"><span class="pre">with-simple-abort-retry-restart</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:with-simple-abort-retry-restart" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">with-simple-abort-retry-restart</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dfmc-conditions:dfmc-conditions:with-simple-abort-retry-restart" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </section>
@@ -2202,6 +2204,6 @@ a definition make sense for them.</p>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

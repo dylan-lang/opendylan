@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Single File Libraries" href="dep-0006-single-file-library.html" /><link rel="prev" title="New strings Library" href="dep-0004-strings-library.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Subclass - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="subclass">
-<h1>Subclass<a class="headerlink" href="#subclass" title="Permalink to this heading">#</a></h1>
+<h1>Subclass<a class="headerlink" href="#subclass" title="Permalink to this heading">¶</a></h1>
 <div class="table-wrapper docutils container">
 <table class="docutils align-default">
 <tbody>
@@ -498,7 +500,7 @@
 Format to DEP format with minimal changes for ReStructuredText.  It
 does not fully conform to the new format.</em></p>
 <section id="abstract">
-<h2>Abstract<a class="headerlink" href="#abstract" title="Permalink to this heading">#</a></h2>
+<h2>Abstract<a class="headerlink" href="#abstract" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><p>Methods on generic functions such as Dylan’s standard “make” and “as”
 which take types as arguments are impossible to reuse in Dylan without
@@ -514,7 +516,7 @@ its subtypes.</p>
 </div></blockquote>
 </section>
 <section id="specification">
-<h2>Specification<a class="headerlink" href="#specification" title="Permalink to this heading">#</a></h2>
+<h2>Specification<a class="headerlink" href="#specification" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><p>Define the following:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">subclass</span><span class="w"> </span><span class="p">(</span><span class="nb">class</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">type</span>
@@ -591,7 +593,7 @@ pseudosubtype of Ti, and subclass(Dk) is not a pseudosubtype of Si.</p></li>
 </div></blockquote>
 </section>
 <section id="amendment">
-<h2>Amendment<a class="headerlink" href="#amendment" title="Permalink to this heading">#</a></h2>
+<h2>Amendment<a class="headerlink" href="#amendment" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><p>Specify that a subclass of &lt;class&gt; is considered disjoint from a
 subclass type until a class is created that is a common instance of
@@ -610,7 +612,7 @@ instance classes that are also subclasses of X.</p></li>
 </div></blockquote>
 </section>
 <section id="rationale">
-<h2>Rationale<a class="headerlink" href="#rationale" title="Permalink to this heading">#</a></h2>
+<h2>Rationale<a class="headerlink" href="#rationale" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><p>Subclass types don’t address everything in the problem description,
 particularly limited collection types, but are simpler to understand
@@ -682,7 +684,7 @@ case the situation is analogous to that of limited &lt;integer&gt;.</p>
 </div></blockquote>
 </section>
 <section id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h2>
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="c1">// Common usage:</span>
 
@@ -761,7 +763,7 @@ case the situation is analogous to that of limited &lt;integer&gt;.</p>
 </div></blockquote>
 </section>
 <section id="cost-to-implementors">
-<h2>Cost to implementors<a class="headerlink" href="#cost-to-implementors" title="Permalink to this heading">#</a></h2>
+<h2>Cost to implementors<a class="headerlink" href="#cost-to-implementors" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><p>Another type to implement. Given the number of types Dylan has and
 allows you to specialize on already, any implementation is going to
@@ -770,7 +772,7 @@ reasonable to add in the new rules for &lt;subclass&gt; as specified.</p>
 </div></blockquote>
 </section>
 <section id="cost-to-users">
-<h2>Cost to users<a class="headerlink" href="#cost-to-users" title="Permalink to this heading">#</a></h2>
+<h2>Cost to users<a class="headerlink" href="#cost-to-users" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><p>Another type to understand, although they shouldn’t have to face it
 unless they have need of it, and even then only the “obvious” aspects
@@ -778,7 +780,7 @@ of its behaviour are likely to be necessary in user programs.</p>
 </div></blockquote>
 </section>
 <section id="performance-impact">
-<h2>Performance impact<a class="headerlink" href="#performance-impact" title="Permalink to this heading">#</a></h2>
+<h2>Performance impact<a class="headerlink" href="#performance-impact" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><p>Singleton types, and possibly limited integer types, are likely to be
 implemented through some kind of secondary dispatch scheme
@@ -790,13 +792,13 @@ primary dispatch mechanism in the corresponding argument position.</p>
 </div></blockquote>
 </section>
 <section id="benefits">
-<h2>Benefits<a class="headerlink" href="#benefits" title="Permalink to this heading">#</a></h2>
+<h2>Benefits<a class="headerlink" href="#benefits" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><p>Methods that take classes as arguments become reusable!</p>
 </div></blockquote>
 </section>
 <section id="aesthetics">
-<h2>Aesthetics<a class="headerlink" href="#aesthetics" title="Permalink to this heading">#</a></h2>
+<h2>Aesthetics<a class="headerlink" href="#aesthetics" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><p>Good on balance because it fills a tangible hole in the language in a
 consistent, intuitive way rather than leaving the hole there to be
@@ -804,7 +806,7 @@ fallen into or filled by ad hoc techniques.</p>
 </div></blockquote>
 </section>
 <section id="discussion">
-<h2>Discussion<a class="headerlink" href="#discussion" title="Permalink to this heading">#</a></h2>
+<h2>Discussion<a class="headerlink" href="#discussion" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><p>The subclass relationship definitions don’t spell everything out
 explicitly when it comes to union types - for the definition of new
@@ -813,7 +815,7 @@ definitions of composite types like union, and we do here.</p>
 </div></blockquote>
 </section>
 <section id="from-keith-playford-in-1995">
-<h2>From Keith Playford in 1995<a class="headerlink" href="#from-keith-playford-in-1995" title="Permalink to this heading">#</a></h2>
+<h2>From Keith Playford in 1995<a class="headerlink" href="#from-keith-playford-in-1995" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><p>Subclass specialisation is interesting in that most groups seem to
 recognise the need for it and, in fact, actually implement and use it
@@ -838,7 +840,7 @@ Gwydion’s agreement.</p>
 </div></blockquote>
 </section>
 <section id="from-the-gwydion-docs">
-<h2>From the Gwydion docs<a class="headerlink" href="#from-the-gwydion-docs" title="Permalink to this heading">#</a></h2>
+<h2>From the Gwydion docs<a class="headerlink" href="#from-the-gwydion-docs" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><p>Gwydion compilers supports subclass specializers via the <em>limited</em> function.
 A subclass specializer causes a method to be invoked whenever the generic
@@ -856,14 +858,14 @@ is a subclass of the specified class. The following is an example:</p>
 </div></blockquote>
 </section>
 <section id="revision-history">
-<h2>Revision History<a class="headerlink" href="#revision-history" title="Permalink to this heading">#</a></h2>
+<h2>Revision History<a class="headerlink" href="#revision-history" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Version</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="n">th</span> <span class="n">July</span> <span class="mi">95</span><span class="p">,</span> <span class="n">Keith</span> <span class="n">Playford</span> <span class="p">(</span><span class="n">Harlequin</span><span class="p">)</span>
 <span class="n">Version</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="n">th</span> <span class="n">August</span> <span class="mi">95</span><span class="p">,</span> <span class="n">Keith</span> <span class="n">Playford</span> <span class="p">(</span><span class="n">Harlequin</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="status">
-<h2>Status<a class="headerlink" href="#status" title="Permalink to this heading">#</a></h2>
+<h2>Status<a class="headerlink" href="#status" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><p>Accepted 08 August 1995</p>
 </div></blockquote>
@@ -955,6 +957,6 @@ is a subclass of the specified class. The following is an example:</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

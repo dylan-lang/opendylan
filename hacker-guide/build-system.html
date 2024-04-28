@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="DFMC, The Dylan Flow Machine Compiler" href="compiler/index.html" /><link rel="prev" title="Example documentation" href="documentation/example.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Jam-based Build System - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="jam-based-build-system">
-<h1>Jam-based Build System<a class="headerlink" href="#jam-based-build-system" title="Permalink to this heading">#</a></h1>
+<h1>Jam-based Build System<a class="headerlink" href="#jam-based-build-system" title="Permalink to this heading">¶</a></h1>
 <p>The purpose of the Open Dylan <code class="docutils literal notranslate"><span class="pre">build-system</span></code> is to
 coordinate the final stages in the building of a Dylan library project.
 The Open Dylan compiler takes a Dylan library in the form of
@@ -476,7 +478,7 @@ by an external tool such as the Microsoft or GNU linker. The
 <code class="docutils literal notranslate"><span class="pre">build-system</span></code> component, controlled by a user-specified script file,
 directs the execution of these external tools.</p>
 <section id="why-jam-based">
-<h2>Why Jam-based?<a class="headerlink" href="#why-jam-based" title="Permalink to this heading">#</a></h2>
+<h2>Why Jam-based?<a class="headerlink" href="#why-jam-based" title="Permalink to this heading">¶</a></h2>
 <p>Use of the Jam scripting language increases the flexibility of
 Open Dylan for users, and makes it more maintainable by
 removing hard-coded assumptions spread throughout various layers of the
@@ -518,7 +520,7 @@ as a reusable Dylan library for use in the Open Dylan
 <code class="docutils literal notranslate"><span class="pre">build-system</span></code>.</p>
 </section>
 <section id="choosing-build-scripts">
-<h2>Choosing Build Scripts<a class="headerlink" href="#choosing-build-scripts" title="Permalink to this heading">#</a></h2>
+<h2>Choosing Build Scripts<a class="headerlink" href="#choosing-build-scripts" title="Permalink to this heading">¶</a></h2>
 <p>Normally you can simply use the build script supplied with Open Dylan
 that corresponds to the external linker you will be using. The
 supplied build scripts include the following:</p>
@@ -543,7 +545,7 @@ Open Dylan build system, as described in <a class="reference internal" href="#ad
 and <a class="reference internal" href="#built-in-jam-variables">Built-In Jam Variables</a>.</p>
 </section>
 <section id="how-the-compiler-uses-the-build-system">
-<h2>How the Compiler Uses the Build System<a class="headerlink" href="#how-the-compiler-uses-the-build-system" title="Permalink to this heading">#</a></h2>
+<h2>How the Compiler Uses the Build System<a class="headerlink" href="#how-the-compiler-uses-the-build-system" title="Permalink to this heading">¶</a></h2>
 <p>When you compile a library, the Open Dylan compiler constructs
 a new <code class="docutils literal notranslate"><span class="pre">build</span></code> directory and places the generated object files in it.
 It also constructs a text file called <code class="docutils literal notranslate"><span class="pre">dylanmakefile.mkf</span></code> to be read
@@ -622,7 +624,7 @@ non-system libraries that it uses.</p>
 </dl>
 </section>
 <section id="automatically-invoked-jam-rules">
-<h2>Automatically-invoked Jam Rules<a class="headerlink" href="#automatically-invoked-jam-rules" title="Permalink to this heading">#</a></h2>
+<h2>Automatically-invoked Jam Rules<a class="headerlink" href="#automatically-invoked-jam-rules" title="Permalink to this heading">¶</a></h2>
 <p>When the build system reads a <code class="docutils literal notranslate"><span class="pre">dylanmakefile.mkf</span></code> file, it invokes
 several of the Jam rules (functions) defined in the user’s build script.
 These rules in turn register the necessary targets and their
@@ -682,7 +684,7 @@ gives the name of the other library’s build directory. If <em>dir</em> is
 </dl>
 </section>
 <section id="additional-built-in-jam-rules">
-<h2>Additional Built-In Jam Rules<a class="headerlink" href="#additional-built-in-jam-rules" title="Permalink to this heading">#</a></h2>
+<h2>Additional Built-In Jam Rules<a class="headerlink" href="#additional-built-in-jam-rules" title="Permalink to this heading">¶</a></h2>
 <p>The build system defines the following additional built-in rules.</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">IncludeMKF</span> <span class="pre">*includes*</span> <span class="pre">;</span></code></dt><dd><p>Read each of the given <code class="docutils literal notranslate"><span class="pre">.mkf</span></code> files and invoke Jam rules as described
@@ -696,7 +698,7 @@ variable-name, module-name, and library-name respectively.</p>
 </dl>
 </section>
 <section id="built-in-jam-variables">
-<h2>Built-In Jam Variables<a class="headerlink" href="#built-in-jam-variables" title="Permalink to this heading">#</a></h2>
+<h2>Built-In Jam Variables<a class="headerlink" href="#built-in-jam-variables" title="Permalink to this heading">¶</a></h2>
 <p>By default, the Jam build system is provided with some values. Some of these
 are derived from the base Jam implementation and are documented in the
 <a class="reference external" href="https://swarm.workshop.perforce.com/view/guest/perforce_software/jam/src/Jam.html">Jam manual page</a> while others are Open Dylan extensions.</p>
@@ -737,7 +739,7 @@ like <code class="docutils literal notranslate"><span class="pre">x86-linux</spa
 </dl>
 </section>
 <section id="editing-jam-files">
-<h2>Editing Jam Files<a class="headerlink" href="#editing-jam-files" title="Permalink to this heading">#</a></h2>
+<h2>Editing Jam Files<a class="headerlink" href="#editing-jam-files" title="Permalink to this heading">¶</a></h2>
 <p>There is an <a class="reference external" href="https://web.archive.org/web/20100211015821/http://www.tenfoot.org.uk/index.html">Emacs major mode</a> for editing Jam files.</p>
 </section>
 </section>
@@ -819,6 +821,6 @@ like <code class="docutils literal notranslate"><span class="pre">x86-linux</spa
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

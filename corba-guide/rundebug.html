@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Using the Dylan IDL Compiler" href="scepter.html" /><link rel="prev" title="Creating CORBA Projects" href="projects.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Running and Debugging CORBA Applications - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,11 +463,11 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="running-and-debugging-corba-applications">
-<h1>Running and Debugging CORBA Applications<a class="headerlink" href="#running-and-debugging-corba-applications" title="Permalink to this heading">#</a></h1>
+<h1>Running and Debugging CORBA Applications<a class="headerlink" href="#running-and-debugging-corba-applications" title="Permalink to this heading">¶</a></h1>
 <section id="debugging-client-server-applications-in-the-ide">
-<h2>Debugging client/server applications in the IDE<a class="headerlink" href="#debugging-client-server-applications-in-the-ide" title="Permalink to this heading">#</a></h2>
+<h2>Debugging client/server applications in the IDE<a class="headerlink" href="#debugging-client-server-applications-in-the-ide" title="Permalink to this heading">¶</a></h2>
 <p>The following text is a quotation from the Open Dylan manual Getting
 Started with Open Dylan. See Chapter 6 of that manual for general
 information about running, debugging, and interacting with
@@ -510,7 +512,7 @@ breakpoint in both projects at once. Instead you have to go into each
 project and set the breakpoint separately.</p>
 </section>
 <section id="browsing-for-supported-corba-operations">
-<h2>Browsing for supported CORBA operations<a class="headerlink" href="#browsing-for-supported-corba-operations" title="Permalink to this heading">#</a></h2>
+<h2>Browsing for supported CORBA operations<a class="headerlink" href="#browsing-for-supported-corba-operations" title="Permalink to this heading">¶</a></h2>
 <p>Until we have a CORBA reference manual for Open Dylan, you can work
 out what CORBA PIDL operations are available to Dylan applications
 using the <code class="docutils literal notranslate"><span class="pre">dylan-orb</span></code> library by using the browser in the
@@ -535,9 +537,9 @@ that the browser’s <span class="guilabel">Module</span> column shows were impo
 the <code class="docutils literal notranslate"><span class="pre">corba-protocol</span></code> module of the <code class="docutils literal notranslate"><span class="pre">corba-protocol</span></code> library.</p>
 </section>
 <section id="orb-runtime">
-<h2>ORB runtime<a class="headerlink" href="#orb-runtime" title="Permalink to this heading">#</a></h2>
+<h2>ORB runtime<a class="headerlink" href="#orb-runtime" title="Permalink to this heading">¶</a></h2>
 <section id="implicit-activation">
-<h3>Implicit activation<a class="headerlink" href="#implicit-activation" title="Permalink to this heading">#</a></h3>
+<h3>Implicit activation<a class="headerlink" href="#implicit-activation" title="Permalink to this heading">¶</a></h3>
 <p>Servants may be returned from operations and if the POA ID Assignment
 policy is set to <code class="docutils literal notranslate"><span class="pre">#&quot;System-ID&quot;</span></code>, then they are automatically
 converted to object references. For instance, instead of</p>
@@ -550,7 +552,7 @@ converted to object references. For instance, instead of</p>
 </div>
 </section>
 <section id="port-assignment">
-<h3>Port assignment<a class="headerlink" href="#port-assignment" title="Permalink to this heading">#</a></h3>
+<h3>Port assignment<a class="headerlink" href="#port-assignment" title="Permalink to this heading">¶</a></h3>
 <p>Socket port numbers are assigned dynamically, by default. If you wish
 to use the original (late 1990s era) fixed port number of the Open
 Dylan ORB, specify the following on the command line:</p>
@@ -566,7 +568,7 @@ example:</p>
 </div>
 </section>
 <section id="poa-threading">
-<h3>POA threading<a class="headerlink" href="#poa-threading" title="Permalink to this heading">#</a></h3>
+<h3>POA threading<a class="headerlink" href="#poa-threading" title="Permalink to this heading">¶</a></h3>
 <p>The Open Dylan ORB has one request processing thread per POA, by
 default. You can set the number of request processing threads when
 creating a POA by using the thread policy, for example:</p>
@@ -579,7 +581,7 @@ processed concurrently. In such a situation the underlying application
 code that is called from the POA must be multi-thread safe.</p>
 </section>
 <section id="orb-runtime-switches">
-<h3>ORB runtime switches<a class="headerlink" href="#orb-runtime-switches" title="Permalink to this heading">#</a></h3>
+<h3>ORB runtime switches<a class="headerlink" href="#orb-runtime-switches" title="Permalink to this heading">¶</a></h3>
 <p>The full set of command line arguments that the Dylan ORB supports is
 listed below. When running the application under the control of Open
 Dylan, these command-line options can be set using the
@@ -725,6 +727,6 @@ reference and returned by</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

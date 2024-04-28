@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Multi-line Strings" href="dep-0008-multi-line-strings.html" /><link rel="prev" title="Single File Libraries" href="dep-0006-single-file-library.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Type-Safe Limited Collections - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="type-safe-limited-collections">
-<h1>Type-Safe Limited Collections<a class="headerlink" href="#type-safe-limited-collections" title="Permalink to this heading">#</a></h1>
+<h1>Type-Safe Limited Collections<a class="headerlink" href="#type-safe-limited-collections" title="Permalink to this heading">¶</a></h1>
 <div class="table-wrapper docutils container">
 <table class="docutils align-default">
 <tbody>
@@ -498,14 +500,14 @@
 </table>
 </div>
 <section id="abstract">
-<h2>Abstract<a class="headerlink" href="#abstract" title="Permalink to this heading">#</a></h2>
+<h2>Abstract<a class="headerlink" href="#abstract" title="Permalink to this heading">¶</a></h2>
 <p>To improve type safety of collections and particularly limited collections,
 this DEP adds a <code class="docutils literal notranslate"><span class="pre">default-fill:</span></code> keyword argument to limited collection
 classes and an <code class="docutils literal notranslate"><span class="pre">element-type-fill</span></code> and <code class="docutils literal notranslate"><span class="pre">element-type</span></code> getter to all
 collections.</p>
 </section>
 <section id="specification">
-<h2>Specification<a class="headerlink" href="#specification" title="Permalink to this heading">#</a></h2>
+<h2>Specification<a class="headerlink" href="#specification" title="Permalink to this heading">¶</a></h2>
 <p>The collection classes that allow a <code class="docutils literal notranslate"><span class="pre">fill:</span></code> keyword argument are:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">&lt;array&gt;</span></code></p></li>
@@ -524,7 +526,7 @@ collection classes are comprised of all the direct and indirect subclasses of
 <code class="docutils literal notranslate"><span class="pre">&lt;mutable-sequence&gt;</span></code> excepting <code class="docutils literal notranslate"><span class="pre">&lt;mutable-sequence&gt;</span></code> itself, <code class="docutils literal notranslate"><span class="pre">&lt;pair&gt;</span></code>, and
 <code class="docutils literal notranslate"><span class="pre">&lt;empty-list&gt;</span></code>.</p>
 <section id="limited">
-<h3><code class="docutils literal notranslate"><span class="pre">limited</span></code><a class="headerlink" href="#limited" title="Permalink to this heading">#</a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">limited</span></code><a class="headerlink" href="#limited" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">limited</span></code> methods on fillable collection classes will each add the
 following additional parameter:</p>
 <div class="table-wrapper docutils container">
@@ -565,7 +567,7 @@ default fill value that the collection cannot accommodate, since a call to
 <code class="docutils literal notranslate"><span class="pre">make</span></code> may specify a fill value of the correct type.</p>
 </section>
 <section id="element-type-fill">
-<h3><code class="docutils literal notranslate"><span class="pre">element-type-fill</span></code><a class="headerlink" href="#element-type-fill" title="Permalink to this heading">#</a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">element-type-fill</span></code><a class="headerlink" href="#element-type-fill" title="Permalink to this heading">¶</a></h3>
 <p>A new open generic function will be added to the Dylan library:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">element</span><span class="o">-</span><span class="nb">type</span><span class="o">-</span><span class="n">fill</span> <span class="p">(</span><span class="n">coll</span> <span class="p">::</span> <span class="o">&lt;</span><span class="n">collection</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">fill</span><span class="o">-</span><span class="n">value</span> <span class="p">::</span> <span class="o">&lt;</span><span class="nb">object</span><span class="o">&gt;</span><span class="p">)</span>
 </pre></div>
@@ -605,7 +607,7 @@ that keyword in any subclass) and may return <code class="docutils literal notra
 instead. Portable programs should not rely on this behavior.</p>
 </section>
 <section id="element-type">
-<h3><code class="docutils literal notranslate"><span class="pre">element-type</span></code><a class="headerlink" href="#element-type" title="Permalink to this heading">#</a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">element-type</span></code><a class="headerlink" href="#element-type" title="Permalink to this heading">¶</a></h3>
 <p>A new open generic function will be added to the Dylan library:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">element</span><span class="o">-</span><span class="nb">type</span> <span class="p">(</span><span class="n">coll</span> <span class="p">::</span> <span class="o">&lt;</span><span class="n">collection</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">element</span><span class="o">-</span><span class="nb">type</span> <span class="p">::</span> <span class="o">&lt;</span><span class="nb">type</span><span class="o">&gt;</span><span class="p">)</span>
 </pre></div>
@@ -617,7 +619,7 @@ function will return the element type described in
 </section>
 </section>
 <section id="motivation">
-<h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this heading">#</a></h2>
+<h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this heading">¶</a></h2>
 <p>The second paragraph of the
 <a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations">Collection Operations</a>
 section of the <a class="reference internal" href="#drm" id="id3"><span>[DRM]</span></a> states the following:</p>
@@ -657,7 +659,7 @@ compatibility between the stream’s <code class="docutils literal notranslate">
 element type. Adding the <code class="docutils literal notranslate"><span class="pre">element-type</span></code> method solves that problem.</p>
 </section>
 <section id="rationale">
-<h2>Rationale<a class="headerlink" href="#rationale" title="Permalink to this heading">#</a></h2>
+<h2>Rationale<a class="headerlink" href="#rationale" title="Permalink to this heading">¶</a></h2>
 <p>I named <code class="docutils literal notranslate"><span class="pre">element-type-fill</span></code> as such rather than <code class="docutils literal notranslate"><span class="pre">default-fill</span></code> because the
 latter name is a little more misleading. A user can define a subclass of a
 collection and provide a new default value for the <code class="docutils literal notranslate"><span class="pre">fill:</span></code> init-keyword
@@ -698,16 +700,16 @@ thinking about it, I feel the designers made the right call in leaving that
 information out of each instance. In particular, the implementation of
 <code class="docutils literal notranslate"><span class="pre">&lt;list&gt;</span></code> would be difficult if each instance tracked its <code class="docutils literal notranslate"><span class="pre">fill:</span></code> value.</p>
 <section id="implementation-notes">
-<h3>Implementation Notes<a class="headerlink" href="#implementation-notes" title="Permalink to this heading">#</a></h3>
+<h3>Implementation Notes<a class="headerlink" href="#implementation-notes" title="Permalink to this heading">¶</a></h3>
 <section id="id5">
-<h4><code class="docutils literal notranslate"><span class="pre">element-type</span></code><a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h4>
+<h4><code class="docutils literal notranslate"><span class="pre">element-type</span></code><a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h4>
 <p>The Open Dylan implementation already defines this internally. The name just
 needs to be exported.</p>
 </section>
 </section>
 </section>
 <section id="backwards-compatibility">
-<h2>Backwards Compatibility<a class="headerlink" href="#backwards-compatibility" title="Permalink to this heading">#</a></h2>
+<h2>Backwards Compatibility<a class="headerlink" href="#backwards-compatibility" title="Permalink to this heading">¶</a></h2>
 <p>This DEP does not change the limited collection type relationships described in
 the <a class="reference external" href="https://opendylan.org/books/drm/Limited_Collection_Types">Limited Collection Types</a>
 section of the <a class="reference internal" href="#drm" id="id6"><span>[DRM]</span></a>.</p>
@@ -759,7 +761,7 @@ be correct for that collection’s allowed element types.</p>
 user defines their own unrelated “element-type” or “element-type-fill” bindings.</p>
 </section>
 <section id="reference-implementation">
-<h2>Reference Implementation<a class="headerlink" href="#reference-implementation" title="Permalink to this heading">#</a></h2>
+<h2>Reference Implementation<a class="headerlink" href="#reference-implementation" title="Permalink to this heading">¶</a></h2>
 <p>The reference implementation includes the following implementation-specified
 behavior:</p>
 <blockquote>
@@ -880,6 +882,6 @@ concrete class depending on the <code class="docutils literal notranslate"><span
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

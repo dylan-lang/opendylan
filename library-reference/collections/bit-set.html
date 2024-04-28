@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="The bit-vector Module" href="bit-vector.html" /><link rel="prev" title="The collections Library" href="index.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>The bit-set Module - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,12 +463,12 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="the-bit-set-module">
-<h1>The bit-set Module<a class="headerlink" href="#the-bit-set-module" title="Permalink to this heading">#</a></h1>
+<h1>The bit-set Module<a class="headerlink" href="#the-bit-set-module" title="Permalink to this heading">¶</a></h1>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:[bit-set]">
-<span class="sig-name descname"><span class="pre">&lt;bit-set&gt;</span></span> <em class="property"><span class="pre">Primary</span> <span class="pre">Class</span></em><a class="headerlink" href="#collections:bit-set:[bit-set]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;bit-set&gt;</span></span> <em class="property"><span class="pre">Primary</span> <span class="pre">Class</span></em><a class="headerlink" href="#collections:bit-set:[bit-set]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="set.html#collections:set:[set]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;set&gt;</span></code></a></p>
@@ -500,7 +502,7 @@ complement of a finite set.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:copy-bit-set!">
-<span class="sig-name descname"><span class="pre">copy-bit-set!</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-set:copy-bit-set!" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">copy-bit-set!</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-set:copy-bit-set!" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>copy-bit-set! <em>set1</em> <em>set2</em> =&gt; ()</p>
@@ -521,7 +523,7 @@ any structure.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:empty-bit-set!">
-<span class="sig-name descname"><span class="pre">empty-bit-set!</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-set:empty-bit-set!" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">empty-bit-set!</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-set:empty-bit-set!" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>empty-bit-set! <em>set</em> =&gt; ()</p>
@@ -539,7 +541,7 @@ any structure.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:infinite?">
-<span class="sig-name descname"><span class="pre">infinite?</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:infinite?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">infinite?</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:infinite?" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>infinite? <em>set</em> =&gt; <em>result</em></p>
@@ -562,7 +564,7 @@ any structure.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:member?">
-<span class="sig-name descname"><span class="pre">member?</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:member?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">member?</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:member?" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>member? <em>set</em> <em>element</em> =&gt; <em>result</em></p>
@@ -587,7 +589,7 @@ any structure.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:set-add">
-<span class="sig-name descname"><span class="pre">set-add</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-add" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set-add</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-add" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>set-add <em>set</em> <em>element</em> =&gt; <em>new-set</em></p>
@@ -612,7 +614,7 @@ any structure.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:set-add!">
-<span class="sig-name descname"><span class="pre">set-add!</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-add!" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set-add!</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-add!" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>set-add! <em>set</em> <em>element</em> =&gt; <em>new-set</em></p>
@@ -637,7 +639,7 @@ any structure.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:set-complement">
-<span class="sig-name descname"><span class="pre">set-complement</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-complement" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set-complement</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-complement" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>set-complement <em>set</em> =&gt; <em>new-set</em></p>
@@ -660,7 +662,7 @@ any structure.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:set-complement!">
-<span class="sig-name descname"><span class="pre">set-complement!</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-complement!" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set-complement!</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-complement!" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>set-complement! <em>set</em> =&gt; <em>new-set</em></p>
@@ -684,7 +686,7 @@ any structure.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:set-difference">
-<span class="sig-name descname"><span class="pre">set-difference</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-difference" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set-difference</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-difference" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>set-difference <em>set1</em> <em>set2</em> =&gt; <em>new-set</em></p>
@@ -710,7 +712,7 @@ from <code class="docutils literal notranslate"><span class="pre">set1</span></c
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:set-difference!">
-<span class="sig-name descname"><span class="pre">set-difference!</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-difference!" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set-difference!</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-difference!" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>set-difference! <em>set1</em> <em>set2</em> =&gt; <em>new-set</em></p>
@@ -735,7 +737,7 @@ from <code class="docutils literal notranslate"><span class="pre">set1</span></c
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:set-intersection">
-<span class="sig-name descname"><span class="pre">set-intersection</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-intersection" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set-intersection</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-intersection" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>set-intersection <em>set1</em> <em>set2</em> =&gt; <em>new-set</em></p>
@@ -760,7 +762,7 @@ from <code class="docutils literal notranslate"><span class="pre">set1</span></c
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:set-intersection!">
-<span class="sig-name descname"><span class="pre">set-intersection!</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-intersection!" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set-intersection!</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-intersection!" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>set-intersection! <em>set1</em> <em>set2</em> =&gt; <em>new-set</em></p>
@@ -785,7 +787,7 @@ members of <code class="docutils literal notranslate"><span class="pre">set2</sp
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:set-remove">
-<span class="sig-name descname"><span class="pre">set-remove</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-remove" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set-remove</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-remove" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>set-remove <em>set</em> <em>element</em> =&gt; <em>new-set</em></p>
@@ -810,7 +812,7 @@ for <code class="docutils literal notranslate"><span class="pre">element</span><
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:set-remove!">
-<span class="sig-name descname"><span class="pre">set-remove!</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-remove!" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set-remove!</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-remove!" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>set-remove! <em>set</em> <em>element</em> =&gt; <em>new-set</em></p>
@@ -836,7 +838,7 @@ integer.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:set-union">
-<span class="sig-name descname"><span class="pre">set-union</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-union" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set-union</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-union" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>set-union <em>set1</em> <em>set2</em> =&gt; <em>new-set</em></p>
@@ -861,7 +863,7 @@ integer.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:set-union!">
-<span class="sig-name descname"><span class="pre">set-union!</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-union!" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set-union!</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-union!" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>set-union! <em>set1</em> <em>set2</em> =&gt; <em>new-set</em></p>
@@ -886,7 +888,7 @@ integer.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:size">
-<span class="sig-name descname"><span class="pre">size</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:size" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">size</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:size" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>size <em>set</em> =&gt; <em>false-or-integer</em></p>
@@ -910,7 +912,7 @@ infinite. This operation may be relatively slow.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:universal-bit-set!">
-<span class="sig-name descname"><span class="pre">universal-bit-set!</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-set:universal-bit-set!" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">universal-bit-set!</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-set:universal-bit-set!" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>universal-bit-set! <em>set</em> =&gt; ()</p>
@@ -981,6 +983,6 @@ as members.</p>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="The common-dylan Library" href="../common-dylan/index.html" /><link rel="prev" title="The table-extensions Module" href="../collections/table-extensions.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>The coloring-stream Library - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,15 +463,15 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="the-coloring-stream-library">
-<h1>The coloring-stream Library<a class="headerlink" href="#the-coloring-stream-library" title="Permalink to this heading">#</a></h1>
+<h1>The coloring-stream Library<a class="headerlink" href="#the-coloring-stream-library" title="Permalink to this heading">¶</a></h1>
 <p>The <code class="docutils literal notranslate"><span class="pre">coloring-stream</span></code> module provides a means for writing text to
 the console or terminal with colors and varying intensity.</p>
 <p>On Unix, this is typically done via ANSI codes.  Windows support is
 yet to be implemented.</p>
 <section id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">#</a></h2>
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">¶</a></h2>
 <p>It is implemented as a <a class="reference internal" href="../io/streams.html#io:streams:[wrapper-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;wrapper-stream&gt;</span></code></a>, so it can wrap any
 given stream. While it can be created via <a class="reference external" href="https://opendylan.org/books/drm/Constructing_and_Initializing_Instances#make"><code class="xref drm docutils literal notranslate"><span class="pre">make</span></code></a>, it is easiest
 to just call <a class="reference internal" href="#coloring-stream:coloring-stream:colorize-stream"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">colorize-stream</span></code></a> on a stream to get back a
@@ -516,10 +518,10 @@ specialized on <a class="reference internal" href="#coloring-stream:coloring-str
 </div>
 </section>
 <section id="the-coloring-stream-module">
-<h2>The coloring-stream Module<a class="headerlink" href="#the-coloring-stream-module" title="Permalink to this heading">#</a></h2>
+<h2>The coloring-stream Module<a class="headerlink" href="#the-coloring-stream-module" title="Permalink to this heading">¶</a></h2>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="coloring-stream:coloring-stream:[coloring-stream]">
-<span class="sig-name descname"><span class="pre">&lt;coloring-stream&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:[coloring-stream]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;coloring-stream&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:[coloring-stream]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../io/streams.html#io:streams:[wrapper-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;wrapper-stream&gt;</span></code></a></p>
@@ -534,7 +536,7 @@ color output to avoid having to check at every write.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="coloring-stream:coloring-stream:colorize-stream">
-<span class="sig-name descname"><span class="pre">colorize-stream</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:colorize-stream" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">colorize-stream</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:colorize-stream" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>colorize-stream (stream #key force-ansi?) =&gt; (coloring-stream)</p>
@@ -587,7 +589,7 @@ be created. Otherwise, calling <code class="docutils literal notranslate"><span 
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="coloring-stream:coloring-stream:stream-supports-color?">
-<span class="sig-name descname"><span class="pre">stream-supports-color?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:stream-supports-color?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">stream-supports-color?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:stream-supports-color?" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>stream-supports-color? (stream) =&gt; (well?)</p>
@@ -620,7 +622,7 @@ is true for the stream.)</p></li>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="coloring-stream:coloring-stream:stream-supports-ansi-color?">
-<span class="sig-name descname"><span class="pre">stream-supports-ansi-color?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:stream-supports-ansi-color?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">stream-supports-ansi-color?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:stream-supports-ansi-color?" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>stream-supports-ansi-color? (stream) =&gt; (well?)</p>
@@ -655,10 +657,10 @@ with <a class="reference internal" href="#coloring-stream:coloring-stream:stream
 </dd></dl>
 
 <section id="text-attributes">
-<h3>Text Attributes<a class="headerlink" href="#text-attributes" title="Permalink to this heading">#</a></h3>
+<h3>Text Attributes<a class="headerlink" href="#text-attributes" title="Permalink to this heading">¶</a></h3>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="coloring-stream:coloring-stream:[text-attributes]">
-<span class="sig-name descname"><span class="pre">&lt;text-attributes&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:[text-attributes]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;text-attributes&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:[text-attributes]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a></p>
@@ -686,7 +688,7 @@ constants like <a class="reference internal" href="#coloring-stream:coloring-str
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="coloring-stream:coloring-stream:text-attributes">
-<span class="sig-name descname"><span class="pre">text-attributes</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:text-attributes" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">text-attributes</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:text-attributes" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>text-attributes (#key foreground background intensity) =&gt; (attributes)</p>
@@ -723,7 +725,7 @@ constants like <a class="reference internal" href="#coloring-stream:coloring-str
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="coloring-stream:coloring-stream:$reset-attributes">
-<span class="sig-name descname"><span class="pre">$reset-attributes</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:$reset-attributes" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$reset-attributes</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:$reset-attributes" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#coloring-stream:coloring-stream:[text-attributes]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;text-attributes&gt;</span></code></a></p>
@@ -737,15 +739,15 @@ constants like <a class="reference internal" href="#coloring-stream:coloring-str
 </dd></dl>
 
 <section id="text-intensity">
-<h4>Text Intensity<a class="headerlink" href="#text-intensity" title="Permalink to this heading">#</a></h4>
+<h4>Text Intensity<a class="headerlink" href="#text-intensity" title="Permalink to this heading">¶</a></h4>
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="coloring-stream:coloring-stream:$bright-intensity">
-<span class="sig-name descname"><span class="pre">$bright-intensity</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:$bright-intensity" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$bright-intensity</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:$bright-intensity" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="coloring-stream:coloring-stream:$dim-intensity">
-<span class="sig-name descname"><span class="pre">$dim-intensity</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:$dim-intensity" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$dim-intensity</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:$dim-intensity" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p><div class="admonition note">
@@ -759,55 +761,55 @@ constants like <a class="reference internal" href="#coloring-stream:coloring-str
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="coloring-stream:coloring-stream:$normal-intensity">
-<span class="sig-name descname"><span class="pre">$normal-intensity</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:$normal-intensity" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$normal-intensity</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:$normal-intensity" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </section>
 <section id="text-colors">
-<h4>Text Colors<a class="headerlink" href="#text-colors" title="Permalink to this heading">#</a></h4>
+<h4>Text Colors<a class="headerlink" href="#text-colors" title="Permalink to this heading">¶</a></h4>
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="coloring-stream:coloring-stream:$color-black">
-<span class="sig-name descname"><span class="pre">$color-black</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:$color-black" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$color-black</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:$color-black" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="coloring-stream:coloring-stream:$color-blue">
-<span class="sig-name descname"><span class="pre">$color-blue</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:$color-blue" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$color-blue</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:$color-blue" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="coloring-stream:coloring-stream:$color-cyan">
-<span class="sig-name descname"><span class="pre">$color-cyan</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:$color-cyan" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$color-cyan</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:$color-cyan" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="coloring-stream:coloring-stream:$color-default">
-<span class="sig-name descname"><span class="pre">$color-default</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:$color-default" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$color-default</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:$color-default" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="coloring-stream:coloring-stream:$color-green">
-<span class="sig-name descname"><span class="pre">$color-green</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:$color-green" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$color-green</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:$color-green" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="coloring-stream:coloring-stream:$color-magenta">
-<span class="sig-name descname"><span class="pre">$color-magenta</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:$color-magenta" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$color-magenta</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:$color-magenta" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="coloring-stream:coloring-stream:$color-red">
-<span class="sig-name descname"><span class="pre">$color-red</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:$color-red" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$color-red</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:$color-red" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="coloring-stream:coloring-stream:$color-white">
-<span class="sig-name descname"><span class="pre">$color-white</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:$color-white" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$color-white</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:$color-white" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="coloring-stream:coloring-stream:$color-yellow">
-<span class="sig-name descname"><span class="pre">$color-yellow</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:$color-yellow" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$color-yellow</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#coloring-stream:coloring-stream:$color-yellow" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </section>
@@ -894,6 +896,6 @@ constants like <a class="reference internal" href="#coloring-stream:coloring-str
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

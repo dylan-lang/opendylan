@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="object-with-elements" href="object-with-elements.html" /><link rel="prev" title="Inlining adjectives for methods, constants, functions, and slots" href="inlining.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Integers - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="integers">
-<h1>Integers<a class="headerlink" href="#integers" title="Permalink to this heading">#</a></h1>
+<h1>Integers<a class="headerlink" href="#integers" title="Permalink to this heading">¶</a></h1>
 <p>This document describes the Open Dylan implementation of arithmetic
 functions, especially integer arithmetic. It describes a number of
 extensions to the Dylan language, which are available from the Dylan
@@ -538,7 +540,7 @@ then an error is signaled. This removes fully generic arithmetic from
 the Dylan library. In particular, it removes extended integers, ratios,
 and rectangular complex numbers.</p>
 <section id="extensions-to-the-dylan-library">
-<h2>Extensions to the dylan Library<a class="headerlink" href="#extensions-to-the-dylan-library" title="Permalink to this heading">#</a></h2>
+<h2>Extensions to the dylan Library<a class="headerlink" href="#extensions-to-the-dylan-library" title="Permalink to this heading">¶</a></h2>
 <p>This section describes the extensions to the Dylan library that provide
 the arithmetic operations available as standard to your applications.
 You do not have to explicitly use any additional libraries to have
@@ -549,17 +551,17 @@ Manual</em>.</p>
 <p>Note that the Common-Dylan library also has these extensions because it
 uses the Dylan library.</p>
 <section id="ranges">
-<h3>Ranges<a class="headerlink" href="#ranges" title="Permalink to this heading">#</a></h3>
+<h3>Ranges<a class="headerlink" href="#ranges" title="Permalink to this heading">¶</a></h3>
 <p>The initialization arguments for <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#range"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;range&gt;</span></code></a> must all be instances of
 <code class="docutils literal notranslate"><span class="pre">&lt;machine-number&gt;</span></code> rather than <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#real"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;real&gt;</span></code></a>.</p>
 </section>
 <section id="specific-constructors">
-<h3>Specific constructors<a class="headerlink" href="#specific-constructors" title="Permalink to this heading">#</a></h3>
+<h3>Specific constructors<a class="headerlink" href="#specific-constructors" title="Permalink to this heading">¶</a></h3>
 <p>The following specific constructors are available for use with the class
 <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p>
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:limited">
-<span class="sig-name descname"><span class="pre">limited</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:limited" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">limited</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:limited" title="Permalink to this definition">¶</a></dt>
 <dd><p>Defines a new type that represents a subset of the class <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -583,7 +585,7 @@ bounded by default.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:range">
-<span class="sig-name descname"><span class="pre">range</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:dylan:range" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">range</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:dylan:range" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function is used to specify ranges of numbers.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -597,12 +599,12 @@ bounded by default.</p>
 
 </section>
 <section id="equality-comparisons">
-<h3>Equality comparisons<a class="headerlink" href="#equality-comparisons" title="Permalink to this heading">#</a></h3>
+<h3>Equality comparisons<a class="headerlink" href="#equality-comparisons" title="Permalink to this heading">¶</a></h3>
 <p>The <a class="reference external" href="https://opendylan.org/books/drm/Equality_and_Comparison#equal"><code class="xref drm docutils literal notranslate"><span class="pre">=</span></code></a> function compares two objects and returns <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a> if the values of
 the two objects are equal to each other, that is of the same magnitude.</p>
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:=">
-<span class="sig-name descname"><span class="pre">=</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:=" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">=</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:=" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>= <em>object1</em> <em>object2</em> =&gt; <em>boolean</em></p>
@@ -615,7 +617,7 @@ the two objects are equal to each other, that is of the same magnitude.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:=([complex])">
-<span class="sig-name descname"><span class="pre">=(&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:=([complex])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">=(&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:=([complex])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests its arguments to see if they are of the same magnitude.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -626,7 +628,7 @@ the two objects are equal to each other, that is of the same magnitude.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:=([machine-number])">
-<span class="sig-name descname"><span class="pre">=(&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:=([machine-number])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">=(&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:=([machine-number])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests its arguments to see if they are of the same magnitude.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -637,12 +639,12 @@ the two objects are equal to each other, that is of the same magnitude.</p>
 
 </section>
 <section id="magnitude-comparisons">
-<h3>Magnitude comparisons<a class="headerlink" href="#magnitude-comparisons" title="Permalink to this heading">#</a></h3>
+<h3>Magnitude comparisons<a class="headerlink" href="#magnitude-comparisons" title="Permalink to this heading">¶</a></h3>
 <p>The Dylan library provides the following interfaces for testing the
 magnitude of two numbers:</p>
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:[">
-<span class="sig-name descname"><span class="pre">&lt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:[" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:[" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a> if its first argument is less than its second argument.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -653,7 +655,7 @@ magnitude of two numbers:</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:[([complex])">
-<span class="sig-name descname"><span class="pre">&lt;(&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:[([complex])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;(&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:[([complex])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a> if its first argument is less than its second argument.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -664,7 +666,7 @@ magnitude of two numbers:</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:[([machine-number])">
-<span class="sig-name descname"><span class="pre">&lt;(&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:[([machine-number])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;(&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:[([machine-number])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a> if its first argument is less than its second argument.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -675,12 +677,12 @@ magnitude of two numbers:</p>
 
 </section>
 <section id="properties-of-numbers">
-<h3>Properties of numbers<a class="headerlink" href="#properties-of-numbers" title="Permalink to this heading">#</a></h3>
+<h3>Properties of numbers<a class="headerlink" href="#properties-of-numbers" title="Permalink to this heading">¶</a></h3>
 <p>Various number properties can be tested using the following predicates
 in the Dylan library:</p>
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:odd?">
-<span class="sig-name descname"><span class="pre">odd?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:odd?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">odd?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:odd?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests whether the argument supplied represents an odd value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -691,7 +693,7 @@ in the Dylan library:</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:odd?([complex])">
-<span class="sig-name descname"><span class="pre">odd?(&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:odd?([complex])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">odd?(&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:odd?([complex])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>odd? <em>complex</em> =&gt; <em>boolean</em></p>
@@ -704,7 +706,7 @@ in the Dylan library:</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:odd?([integer])">
-<span class="sig-name descname"><span class="pre">odd?(&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:odd?([integer])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">odd?(&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:odd?([integer])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests whether the argument supplied represents an odd value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -715,7 +717,7 @@ in the Dylan library:</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:even?">
-<span class="sig-name descname"><span class="pre">even?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:even?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">even?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:even?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests whether the argument supplied represents an even value</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -726,7 +728,7 @@ in the Dylan library:</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:even?([complex])">
-<span class="sig-name descname"><span class="pre">even?(&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:even?([complex])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">even?(&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:even?([complex])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests whether the argument supplied represents an even value</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -737,7 +739,7 @@ in the Dylan library:</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:even?([integer])">
-<span class="sig-name descname"><span class="pre">even?(&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:even?([integer])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">even?(&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:even?([integer])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests whether the argument supplied represents an even value</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -748,7 +750,7 @@ in the Dylan library:</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:zero?">
-<span class="sig-name descname"><span class="pre">zero?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:zero?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">zero?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:zero?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests whether the argument supplied represents a zero value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -759,7 +761,7 @@ in the Dylan library:</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:zero?([complex])">
-<span class="sig-name descname"><span class="pre">zero?(&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:zero?([complex])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">zero?(&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:zero?([complex])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests whether the argument supplied represents a zero value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -770,7 +772,7 @@ in the Dylan library:</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:zero?([machine-number])">
-<span class="sig-name descname"><span class="pre">zero?(&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:zero?([machine-number])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">zero?(&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:zero?([machine-number])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests whether the argument supplied represents a zero value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -781,13 +783,13 @@ in the Dylan library:</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:positive?">
-<span class="sig-name descname"><span class="pre">positive?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:positive?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">positive?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:positive?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests whether the argument supplied represents a positive value.</p>
 </dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:positive?([complex])">
-<span class="sig-name descname"><span class="pre">positive?(&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:positive?([complex])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">positive?(&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:positive?([complex])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>positive? <em>complex</em></p>
@@ -800,7 +802,7 @@ in the Dylan library:</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:positive?([machine-number])">
-<span class="sig-name descname"><span class="pre">positive?(&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:positive?([machine-number])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">positive?(&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:positive?([machine-number])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>positive? <em>machine-number</em> =&gt; <em>boolean</em></p>
@@ -813,7 +815,7 @@ in the Dylan library:</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:negative?">
-<span class="sig-name descname"><span class="pre">negative?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:negative?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">negative?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:negative?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests whether the argument supplied represents a negative value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -824,7 +826,7 @@ in the Dylan library:</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:negative?([complex])">
-<span class="sig-name descname"><span class="pre">negative?(&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:negative?([complex])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">negative?(&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:negative?([complex])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests whether the argument supplied represents a negative value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -835,7 +837,7 @@ in the Dylan library:</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:negative?([machine-number])">
-<span class="sig-name descname"><span class="pre">negative?(&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:negative?([machine-number])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">negative?(&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:negative?([machine-number])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests whether the argument supplied represents a negative value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -846,7 +848,7 @@ in the Dylan library:</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:integral?">
-<span class="sig-name descname"><span class="pre">integral?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:integral?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">integral?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:integral?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests whether the argument supplied represents an integral value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -857,7 +859,7 @@ in the Dylan library:</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:integral?([complex])">
-<span class="sig-name descname"><span class="pre">integral?(&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:integral?([complex])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">integral?(&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:integral?([complex])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests whether the argument supplied represents an integral value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -868,7 +870,7 @@ in the Dylan library:</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:integral?([machine-number])">
-<span class="sig-name descname"><span class="pre">integral?(&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:integral?([machine-number])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">integral?(&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:integral?([machine-number])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests whether the argument supplied represents an integral value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -879,11 +881,11 @@ in the Dylan library:</p>
 
 </section>
 <section id="arithmetic-operations">
-<h3>Arithmetic operations<a class="headerlink" href="#arithmetic-operations" title="Permalink to this heading">#</a></h3>
+<h3>Arithmetic operations<a class="headerlink" href="#arithmetic-operations" title="Permalink to this heading">¶</a></h3>
 <p>The following arithmetic operations are available in the Dylan library:</p>
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:+">
-<span class="sig-name descname"><span class="pre">+</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:+" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">+</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:+" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the sum of the two supplied arguments. The actual type of
 the value is determined by the contagion rules when applied to the
 arguments.</p>
@@ -899,7 +901,7 @@ arguments.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:+([complex],[complex])">
-<span class="sig-name descname"><span class="pre">+(&lt;complex&gt;,</span> <span class="pre">&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:+([complex],[complex])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">+(&lt;complex&gt;,</span> <span class="pre">&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:+([complex],[complex])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
@@ -912,7 +914,7 @@ arguments.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:+([integer],[complex])">
-<span class="sig-name descname"><span class="pre">+(&lt;integer&gt;,</span> <span class="pre">&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:+([integer],[complex])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">+(&lt;integer&gt;,</span> <span class="pre">&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:+([integer],[complex])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
@@ -925,7 +927,7 @@ arguments.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:+([machine-number],[machine-number])">
-<span class="sig-name descname"><span class="pre">+(&lt;machine-number&gt;,</span> <span class="pre">&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:+([machine-number],[machine-number])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">+(&lt;machine-number&gt;,</span> <span class="pre">&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:+([machine-number],[machine-number])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
@@ -938,7 +940,7 @@ arguments.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:-">
-<span class="sig-name descname"><span class="pre">-</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:-" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">-</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:-" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the result of subtracting the second argument from the
 first.  The actual type of the value is determined by the contagion
 rules when applied to the arguments.</p>
@@ -954,7 +956,7 @@ rules when applied to the arguments.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:-([complex],[complex])">
-<span class="sig-name descname"><span class="pre">-(&lt;complex&gt;,</span> <span class="pre">&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:-([complex],[complex])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">-(&lt;complex&gt;,</span> <span class="pre">&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:-([complex],[complex])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
@@ -967,7 +969,7 @@ rules when applied to the arguments.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:-([integer],[integer])">
-<span class="sig-name descname"><span class="pre">-(&lt;integer&gt;,</span> <span class="pre">&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:-([integer],[integer])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">-(&lt;integer&gt;,</span> <span class="pre">&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:-([integer],[integer])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
@@ -980,7 +982,7 @@ rules when applied to the arguments.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:-([machine-number],[machine-number])">
-<span class="sig-name descname"><span class="pre">-(&lt;machine-number&gt;,</span> <span class="pre">&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:-([machine-number],[machine-number])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">-(&lt;machine-number&gt;,</span> <span class="pre">&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:-([machine-number],[machine-number])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
@@ -993,7 +995,7 @@ rules when applied to the arguments.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:*">
-<span class="sig-name descname"><span class="pre">*</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:*" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">*</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:*" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the result of multiplying the two arguments. The actual
 type of the value is determined by the contagion rules when applied
 to the arguments.</p>
@@ -1009,7 +1011,7 @@ to the arguments.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:*([complex],[complex])">
-<span class="sig-name descname"><span class="pre">*(&lt;complex&gt;,</span> <span class="pre">&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:*([complex],[complex])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">*(&lt;complex&gt;,</span> <span class="pre">&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:*([complex],[complex])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>* <em>complex1</em> <em>complex2</em></p>
@@ -1019,7 +1021,7 @@ to the arguments.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:*([integer],[integer])">
-<span class="sig-name descname"><span class="pre">*(&lt;integer&gt;,</span> <span class="pre">&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:*([integer],[integer])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">*(&lt;integer&gt;,</span> <span class="pre">&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:*([integer],[integer])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>* <em>integer1</em> <em>integer2</em> =&gt; <em>integer</em></p>
@@ -1029,7 +1031,7 @@ to the arguments.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:*([machine-number],[machine-number])">
-<span class="sig-name descname"><span class="pre">*(&lt;machine-number&gt;,</span> <span class="pre">&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:*([machine-number],[machine-number])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">*(&lt;machine-number&gt;,</span> <span class="pre">&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:*([machine-number],[machine-number])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>* <em>machine-number1</em> <em>machine-number2</em> =&gt; <em>machine-number</em></p>
@@ -1039,7 +1041,7 @@ to the arguments.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:/">
-<span class="sig-name descname"><span class="pre">/</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:/" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">/</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:/" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the result of dividing the first argument by the
 second. The actual type of the value is determined by the contagion
 rules when applied to the arguments.</p>
@@ -1052,7 +1054,7 @@ rules when applied to the arguments.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:/([complex],[complex])">
-<span class="sig-name descname"><span class="pre">/(&lt;complex&gt;,</span> <span class="pre">&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:/([complex],[complex])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">/(&lt;complex&gt;,</span> <span class="pre">&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:/([complex],[complex])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>/ <em>complex1</em> <em>complex2</em></p>
@@ -1062,7 +1064,7 @@ rules when applied to the arguments.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:/([float],[float])">
-<span class="sig-name descname"><span class="pre">/(&lt;float&gt;,</span> <span class="pre">&lt;float&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:/([float],[float])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">/(&lt;float&gt;,</span> <span class="pre">&lt;float&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:/([float],[float])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>/ <em>float1</em> <em>float2</em> =&gt; <em>float</em></p>
@@ -1072,7 +1074,7 @@ rules when applied to the arguments.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:negative">
-<span class="sig-name descname"><span class="pre">negative</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:negative" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">negative</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:negative" title="Permalink to this definition">¶</a></dt>
 <dd><p>Negates the supplied argument. The returned value is of the same float
 format as the supplied argument.</p>
 <dl class="field-list simple">
@@ -1084,7 +1086,7 @@ format as the supplied argument.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:negative([complex])">
-<span class="sig-name descname"><span class="pre">negative(&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:negative([complex])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">negative(&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:negative([complex])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>negative <em>complex</em></p>
@@ -1094,7 +1096,7 @@ format as the supplied argument.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:negative([integer])">
-<span class="sig-name descname"><span class="pre">negative(&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:negative([integer])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">negative(&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:negative([integer])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>negative <em>integer</em> =&gt; <em>negative-integer</em></p>
@@ -1104,7 +1106,7 @@ format as the supplied argument.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:negative([float])">
-<span class="sig-name descname"><span class="pre">negative(&lt;float&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:negative([float])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">negative(&lt;float&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:negative([float])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>negative <em>float</em> =&gt; <em>negative-float</em></p>
@@ -1114,7 +1116,7 @@ format as the supplied argument.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:floor">
-<span class="sig-name descname"><span class="pre">floor</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:floor" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">floor</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:floor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Truncates a number toward negative infinity. The integer part is
 returned as <em>integer</em>, the remainder is of the same float format as
 the argument.</p>
@@ -1127,7 +1129,7 @@ the argument.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:floor([machine-number])">
-<span class="sig-name descname"><span class="pre">floor(&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:floor([machine-number])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">floor(&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:floor([machine-number])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>floor <em>machine-number</em> =&gt; <em>integer</em> <em>machine-number</em></p>
@@ -1137,7 +1139,7 @@ the argument.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:floor([integer])">
-<span class="sig-name descname"><span class="pre">floor(&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:floor([integer])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">floor(&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:floor([integer])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>floor <em>integer</em> =&gt; <em>integer</em> <em>integer</em></p>
@@ -1147,7 +1149,7 @@ the argument.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:floor([float])">
-<span class="sig-name descname"><span class="pre">floor(&lt;float&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:floor([float])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">floor(&lt;float&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:floor([float])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>floor <em>float</em> =&gt; <em>integer</em> <em>float</em></p>
@@ -1157,7 +1159,7 @@ the argument.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:ceiling">
-<span class="sig-name descname"><span class="pre">ceiling</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:ceiling" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ceiling</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:ceiling" title="Permalink to this definition">¶</a></dt>
 <dd><p>Truncates a number toward positive infinity. The integer part is
 returned as <em>integer</em>, the remainder is of the same float format as
 the argument.</p>
@@ -1170,7 +1172,7 @@ the argument.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:ceiling([machine-number])">
-<span class="sig-name descname"><span class="pre">ceiling(&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:ceiling([machine-number])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ceiling(&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:ceiling([machine-number])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>ceiling <em>machine-number</em> =&gt; <em>integer</em> <em>machine-number</em></p>
@@ -1180,7 +1182,7 @@ the argument.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:ceiling([integer])">
-<span class="sig-name descname"><span class="pre">ceiling(&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:ceiling([integer])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ceiling(&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:ceiling([integer])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>ceiling <em>integer</em> =&gt; <em>integer</em> <em>integer</em></p>
@@ -1190,7 +1192,7 @@ the argument.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:ceiling([float])">
-<span class="sig-name descname"><span class="pre">ceiling(&lt;float&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:ceiling([float])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ceiling(&lt;float&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:ceiling([float])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>ceiling <em>float</em> =&gt; <em>integer</em> <em>float</em></p>
@@ -1200,7 +1202,7 @@ the argument.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:round">
-<span class="sig-name descname"><span class="pre">round</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:round" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">round</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:round" title="Permalink to this definition">¶</a></dt>
 <dd><p>Rounds a number toward the nearest mathematical integer. The
 integer part is returned as <em>integer</em>, the remainder is of the same
 float format as the argument. If the argument is exactly between
@@ -1214,7 +1216,7 @@ two integers, then the result <em>integer</em> will be a multiple of two.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:round([machine-number])">
-<span class="sig-name descname"><span class="pre">round(&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:round([machine-number])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">round(&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:round([machine-number])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>round <em>machine-number</em> =&gt; <em>integer</em> <em>machine-number</em></p>
@@ -1224,7 +1226,7 @@ two integers, then the result <em>integer</em> will be a multiple of two.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:round([integer])">
-<span class="sig-name descname"><span class="pre">round(&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:round([integer])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">round(&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:round([integer])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>round <em>integer</em> =&gt; <em>integer</em> <em>integer</em></p>
@@ -1234,7 +1236,7 @@ two integers, then the result <em>integer</em> will be a multiple of two.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:round([float])">
-<span class="sig-name descname"><span class="pre">round(&lt;float&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:round([float])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">round(&lt;float&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:round([float])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>round <em>float</em> =&gt; <em>integer</em> <em>float</em></p>
@@ -1244,7 +1246,7 @@ two integers, then the result <em>integer</em> will be a multiple of two.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:truncate">
-<span class="sig-name descname"><span class="pre">truncate</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:truncate" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">truncate</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:truncate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Truncates a number toward zero. The integer part is returned as
 <em>integer</em>, the remainder is of the same float format as the
 argument.</p>
@@ -1257,7 +1259,7 @@ argument.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:truncate([machine-number])">
-<span class="sig-name descname"><span class="pre">truncate(&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:truncate([machine-number])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">truncate(&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:truncate([machine-number])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>truncate <em>machine-number</em> =&gt; <em>integer</em> <em>machine-number</em></p>
@@ -1267,7 +1269,7 @@ argument.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:truncate([integer])">
-<span class="sig-name descname"><span class="pre">truncate(&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:truncate([integer])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">truncate(&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:truncate([integer])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>truncate <em>integer</em> =&gt; <em>integer</em> <em>integer</em></p>
@@ -1277,7 +1279,7 @@ argument.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:truncate([float])">
-<span class="sig-name descname"><span class="pre">truncate(&lt;float&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:truncate([float])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">truncate(&lt;float&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:truncate([float])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>truncate <em>float</em> =&gt; <em>integer</em> <em>float</em></p>
@@ -1287,7 +1289,7 @@ argument.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:floor/">
-<span class="sig-name descname"><span class="pre">floor/</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:floor/" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">floor/</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:floor/" title="Permalink to this definition">¶</a></dt>
 <dd><p>Divides the first argument into the second and truncates the result
 toward negative infinity. The integer part is returned as
 <em>integer</em>, the type of the remainder is determined by the contagion
@@ -1301,7 +1303,7 @@ rules when applied to the arguments.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:floor/([machine-number],[machine-number])">
-<span class="sig-name descname"><span class="pre">floor/(&lt;machine-number&gt;,</span> <span class="pre">&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:floor/([machine-number],[machine-number])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">floor/(&lt;machine-number&gt;,</span> <span class="pre">&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:floor/([machine-number],[machine-number])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>floor/ <em>machine-number1</em> <em>machine-number2</em> =&gt; <em>integer</em> <em>machine-number</em></p>
@@ -1311,7 +1313,7 @@ rules when applied to the arguments.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:floor/([integer],[integer])">
-<span class="sig-name descname"><span class="pre">floor/(&lt;integer&gt;,</span> <span class="pre">&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:floor/([integer],[integer])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">floor/(&lt;integer&gt;,</span> <span class="pre">&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:floor/([integer],[integer])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>floor/ <em>integer1</em> <em>integer2</em> =&gt; <em>integer</em> <em>integer</em></p>
@@ -1321,7 +1323,7 @@ rules when applied to the arguments.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:ceiling/">
-<span class="sig-name descname"><span class="pre">ceiling/</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:ceiling/" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ceiling/</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:ceiling/" title="Permalink to this definition">¶</a></dt>
 <dd><p>Divides the first argument into the second and truncates the result
 toward positive infinity. The integer part is returned as
 <em>integer</em>, the type of the remainder is determined by the contagion
@@ -1335,7 +1337,7 @@ rules when applied to the arguments.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:ceiling/([machine-number],[machine-number])">
-<span class="sig-name descname"><span class="pre">ceiling/(&lt;machine-number&gt;,</span> <span class="pre">&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:ceiling/([machine-number],[machine-number])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ceiling/(&lt;machine-number&gt;,</span> <span class="pre">&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:ceiling/([machine-number],[machine-number])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>ceiling/ <em>machine-number1</em> <em>machine-number2</em> =&gt; <em>integer</em> <em>machine-number</em></p>
@@ -1345,7 +1347,7 @@ rules when applied to the arguments.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:ceiling/([integer],[integer])">
-<span class="sig-name descname"><span class="pre">ceiling/(&lt;integer&gt;,</span> <span class="pre">&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:ceiling/([integer],[integer])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ceiling/(&lt;integer&gt;,</span> <span class="pre">&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:ceiling/([integer],[integer])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>ceiling/ <em>integer1</em> <em>integer2</em> =&gt; <em>integer</em> <em>integer</em></p>
@@ -1355,7 +1357,7 @@ rules when applied to the arguments.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:round/">
-<span class="sig-name descname"><span class="pre">round/</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:round/" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">round/</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:round/" title="Permalink to this definition">¶</a></dt>
 <dd><p>Divides the first argument into the second and rounds the result
 toward the nearest mathematical integer. The integer part is
 returned as <em>integer</em>, the type of the remainder is determined by
@@ -1369,7 +1371,7 @@ the contagion rules when applied to the arguments.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:round/([machine-number],[machine-number])">
-<span class="sig-name descname"><span class="pre">round/(&lt;machine-number&gt;,</span> <span class="pre">&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:round/([machine-number],[machine-number])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">round/(&lt;machine-number&gt;,</span> <span class="pre">&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:round/([machine-number],[machine-number])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>round/ <em>machine-number1</em> <em>machine-number2</em> =&gt; <em>integer</em> <em>machine-number</em></p>
@@ -1379,7 +1381,7 @@ the contagion rules when applied to the arguments.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:round/([integer],[integer])">
-<span class="sig-name descname"><span class="pre">round/(&lt;integer&gt;,</span> <span class="pre">&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:round/([integer],[integer])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">round/(&lt;integer&gt;,</span> <span class="pre">&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:round/([integer],[integer])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>round/ <em>integer1</em> <em>integer2</em> =&gt; <em>integer</em> <em>integer</em></p>
@@ -1389,7 +1391,7 @@ the contagion rules when applied to the arguments.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:truncate/">
-<span class="sig-name descname"><span class="pre">truncate/</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:truncate/" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">truncate/</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:truncate/" title="Permalink to this definition">¶</a></dt>
 <dd><p>Divides the first argument into the second and truncates the result
 toward zero. The integer part is returned as <em>integer</em>, the type of
 the remainder is determined by the contagion rules when applied to
@@ -1403,7 +1405,7 @@ the arguments.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:truncate/([integer],[integer])">
-<span class="sig-name descname"><span class="pre">truncate/(&lt;integer&gt;,</span> <span class="pre">&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:truncate/([integer],[integer])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">truncate/(&lt;integer&gt;,</span> <span class="pre">&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:truncate/([integer],[integer])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>truncate/ <em>integer1</em> <em>integer2</em> =&gt; <em>integer</em> <em>integer</em></p>
@@ -1413,7 +1415,7 @@ the arguments.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:modulo">
-<span class="sig-name descname"><span class="pre">modulo</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:modulo" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">modulo</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:modulo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the second value of <em>floor/ (</em> <em>arg1</em> <em>,</em> <em>arg2</em> <em>)</em>. The
 actual type of the second value is determined by the contagion
 rules when applied to the arguments.</p>
@@ -1426,7 +1428,7 @@ rules when applied to the arguments.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:modulo([machine-number],[machine-number])">
-<span class="sig-name descname"><span class="pre">modulo(&lt;machine-number&gt;,</span> <span class="pre">&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:modulo([machine-number],[machine-number])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">modulo(&lt;machine-number&gt;,</span> <span class="pre">&lt;machine-number&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:modulo([machine-number],[machine-number])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>modulo <em>machine-number1</em> <em>machine-number2</em> =&gt; <em>machine-number</em></p>
@@ -1436,7 +1438,7 @@ rules when applied to the arguments.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:modulo([integer],[integer])">
-<span class="sig-name descname"><span class="pre">modulo(&lt;integer&gt;,</span> <span class="pre">&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:modulo([integer],[integer])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">modulo(&lt;integer&gt;,</span> <span class="pre">&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:modulo([integer],[integer])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>modulo <em>integer1</em> <em>integer2</em> =&gt; <em>integer</em></p>
@@ -1446,7 +1448,7 @@ rules when applied to the arguments.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:remainder">
-<span class="sig-name descname"><span class="pre">remainder</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:remainder" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">remainder</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:remainder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the second value of <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#truncate_div"><code class="xref drm docutils literal notranslate"><span class="pre">truncate/</span></code></a> (* <em>arg1</em> <em>,</em> <em>arg2</em> <em>)</em>.The
 actual type of the second value is determined by the contagion
 rules when applied to the arguments.</p>
@@ -1459,7 +1461,7 @@ rules when applied to the arguments.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:remainder([integer],[integer])">
-<span class="sig-name descname"><span class="pre">remainder(&lt;integer&gt;,</span> <span class="pre">&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:remainder([integer],[integer])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">remainder(&lt;integer&gt;,</span> <span class="pre">&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:remainder([integer],[integer])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>remainder <em>integer1</em> <em>integer2</em> =&gt; <em>integer</em></p>
@@ -1467,7 +1469,7 @@ rules when applied to the arguments.</p>
 </dl>
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:^">
-<span class="sig-name descname"><span class="pre">^</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:^" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">^</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:^" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the first argument raised to the power of the second
 argument.  The value is of the same float format as the first
 argument. An error is signalled if both arguments are 0.</p>
@@ -1480,7 +1482,7 @@ argument. An error is signalled if both arguments are 0.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:^([complex],[complex])">
-<span class="sig-name descname"><span class="pre">^(&lt;complex&gt;,</span> <span class="pre">&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:^([complex],[complex])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">^(&lt;complex&gt;,</span> <span class="pre">&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:^([complex],[complex])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>^ <em>complex1</em> <em>complex2</em></p>
@@ -1490,7 +1492,7 @@ argument. An error is signalled if both arguments are 0.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:^([integer],[integer])">
-<span class="sig-name descname"><span class="pre">^(&lt;integer&gt;,</span> <span class="pre">&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:^([integer],[integer])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">^(&lt;integer&gt;,</span> <span class="pre">&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:^([integer],[integer])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>^ <em>integer1</em> <em>integer2</em> =&gt; <em>integer</em></p>
@@ -1500,7 +1502,7 @@ argument. An error is signalled if both arguments are 0.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:^([float],[integer])">
-<span class="sig-name descname"><span class="pre">^(&lt;float&gt;,</span> <span class="pre">&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:^([float],[integer])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">^(&lt;float&gt;,</span> <span class="pre">&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:^([float],[integer])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>^ <em>float1</em> <em>integer2</em> =&gt; <em>float</em></p>
@@ -1512,7 +1514,7 @@ argument. An error is signalled if both arguments are 0.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:abs">
-<span class="sig-name descname"><span class="pre">abs</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:abs" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">abs</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:abs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the absolute value of the argument. The value is of the
 same float format as the argument.</p>
 <dl class="field-list simple">
@@ -1524,7 +1526,7 @@ same float format as the argument.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:abs([complex])">
-<span class="sig-name descname"><span class="pre">abs(&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:abs([complex])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">abs(&lt;complex&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:abs([complex])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>abs <em>complex</em></p>
@@ -1534,7 +1536,7 @@ same float format as the argument.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:abs([integer])">
-<span class="sig-name descname"><span class="pre">abs(&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:abs([integer])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">abs(&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:abs([integer])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>abs <em>integer</em> =&gt; <em>integer</em></p>
@@ -1544,7 +1546,7 @@ same float format as the argument.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:abs([float])">
-<span class="sig-name descname"><span class="pre">abs(&lt;float&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:abs([float])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">abs(&lt;float&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dylan:dylan:abs([float])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>abs <em>float</em> =&gt; <em>float</em></p>
@@ -1554,7 +1556,7 @@ same float format as the argument.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:logior">
-<span class="sig-name descname"><span class="pre">logior</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:dylan:logior" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">logior</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:dylan:logior" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the bitwise inclusive <em>OR</em> of its integer arguments.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1565,7 +1567,7 @@ same float format as the argument.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:logxor">
-<span class="sig-name descname"><span class="pre">logxor</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:dylan:logxor" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">logxor</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:dylan:logxor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the bitwise exclusive <em>OR</em> of its integer arguments.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1576,7 +1578,7 @@ same float format as the argument.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:logand">
-<span class="sig-name descname"><span class="pre">logand</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:dylan:logand" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">logand</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:dylan:logand" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the bitwise <em>AND</em> of its integer arguments.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1587,7 +1589,7 @@ same float format as the argument.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:lognot">
-<span class="sig-name descname"><span class="pre">lognot</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:dylan:lognot" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">lognot</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:dylan:lognot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the bitwise <em>NOT</em> of its integer arguments.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1598,7 +1600,7 @@ same float format as the argument.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:logbit?">
-<span class="sig-name descname"><span class="pre">logbit?</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:dylan:logbit?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">logbit?</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:dylan:logbit?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests the value of a particular bit in its integer argument. The
 <em>index</em> argument is an instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p>
 <dl class="field-list simple">
@@ -1610,7 +1612,7 @@ same float format as the argument.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:ash">
-<span class="sig-name descname"><span class="pre">ash</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:dylan:ash" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ash</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:dylan:ash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs an arithmetic shift on its first argument.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1621,7 +1623,7 @@ same float format as the argument.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:lcm">
-<span class="sig-name descname"><span class="pre">lcm</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:dylan:lcm" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">lcm</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:dylan:lcm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the least common multiple of its two arguments.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1632,7 +1634,7 @@ same float format as the argument.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:gcd">
-<span class="sig-name descname"><span class="pre">gcd</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:dylan:gcd" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gcd</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:dylan:gcd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the greatest common divisor of its two arguments.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1643,20 +1645,20 @@ same float format as the argument.</p>
 
 </section>
 <section id="collections">
-<h3>Collections<a class="headerlink" href="#collections" title="Permalink to this heading">#</a></h3>
+<h3>Collections<a class="headerlink" href="#collections" title="Permalink to this heading">¶</a></h3>
 <p>The keys for sequences are always instances of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>. This means
 that certain kinds of collections cannot be sequences; very large (or
 unbounded) sparse arrays are an example.</p>
 </section>
 <section id="the-table-protocol">
-<h3>The Table Protocol<a class="headerlink" href="#the-table-protocol" title="Permalink to this heading">#</a></h3>
+<h3>The Table Protocol<a class="headerlink" href="#the-table-protocol" title="Permalink to this heading">¶</a></h3>
 <p>See <a class="reference internal" href="language-differences.html"><span class="doc">Language Differences</span></a> for a list of changes to the table protocol.</p>
 </section>
 <section id="iteration-constructs">
-<h3>Iteration Constructs<a class="headerlink" href="#iteration-constructs" title="Permalink to this heading">#</a></h3>
+<h3>Iteration Constructs<a class="headerlink" href="#iteration-constructs" title="Permalink to this heading">¶</a></h3>
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:for">
-<span class="sig-name descname"><span class="pre">for</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#dylan:dylan:for" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">for</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#dylan:dylan:for" title="Permalink to this definition">¶</a></dt>
 <dd><p>The <em>start</em>, <em>bound</em>, and <em>increment</em> expressions in a numeric
 clause must evaluate to instances of <code class="docutils literal notranslate"><span class="pre">&lt;machine-number&gt;</span></code> for this
 macro.</p>
@@ -1665,7 +1667,7 @@ macro.</p>
 </section>
 </section>
 <section id="the-generic-arithmetic-library">
-<h2>The generic-arithmetic Library<a class="headerlink" href="#the-generic-arithmetic-library" title="Permalink to this heading">#</a></h2>
+<h2>The generic-arithmetic Library<a class="headerlink" href="#the-generic-arithmetic-library" title="Permalink to this heading">¶</a></h2>
 <p>The Generic-Arithmetic library exports the functions described in this
 section from a module called <em>generic-arithmetic</em>.</p>
 <p>The Generic-Arithmetic library provides a fully extensible version of
@@ -1709,7 +1711,7 @@ is the name of the module it is exported from.</p>
 <p>See <a class="reference internal" href="#using-special-arithmetic-features">Using special arithmetic features</a> for an example of how to use
 an implementation library with Generic-Arithmetic.</p>
 <section id="id1">
-<h3>Ranges<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<h3>Ranges<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <p>The Generic-Arithmetic library defines the class <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;range&gt;</span></code>, which is in
 most respects functionally equivalent to <em>&lt;range&gt;#Dylan</em>, but uses generic
 arithmetic operations in its implementation so that the initialization
@@ -1717,12 +1719,12 @@ arguments can be instances of <a class="reference external" href="https://opendy
 <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-number&gt;</span></code>.</p>
 </section>
 <section id="classes">
-<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this heading">#</a></h3>
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this heading">¶</a></h3>
 <p>The class <code class="docutils literal notranslate"><span class="pre">&lt;abstract-integer&gt;</span></code> is imported and re-exported under the
 name <em>&lt;integer&gt;#generic-arithmetic</em>.</p>
 </section>
 <section id="id2">
-<h3>Specific constructors<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<h3>Specific constructors<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan">
 <span class="sig-name descname"><span class="pre">range</span></span> <em class="property"><span class="pre">Function</span></em></dt>
@@ -1737,7 +1739,7 @@ name <em>&lt;integer&gt;#generic-arithmetic</em>.</p>
 all of the supplied arguments must be instances of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#real"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;real&gt;</span></code></a>.</p>
 </section>
 <section id="id3">
-<h3>Arithmetic operations<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<h3>Arithmetic operations<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
 <p>The following functions all have Generic-Arithmetic implementations that are
 mathematically equivalent to the corresponding implementations defined on
 <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> and documented in the DRM.  See <a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#HEADING-100-49"><code class="xref drm docutils literal notranslate"><span class="pre">Arithmetic</span> <span class="pre">operations</span></code></a> for descriptions of each function as
@@ -1769,7 +1771,7 @@ implemented in the Dylan library.</p>
 <p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#gcd"><code class="xref drm docutils literal notranslate"><span class="pre">gcd</span></code></a> <em>abstract-integer1</em> <em>abstract-integer2</em> =&gt; <em>abstract-integer</em></p>
 </section>
 <section id="id4">
-<h3>Iteration constructs<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<h3>Iteration constructs<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
 <p>While a programmer could make use of generic arithmetic in a <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#for"><code class="xref drm docutils literal notranslate"><span class="pre">for</span></code></a> loop
 by using explicit-step clauses, this approach leads to a loss of
 clarity. The definition of the <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#for"><code class="xref drm docutils literal notranslate"><span class="pre">for</span></code></a> macro is complex, so a version that
@@ -1785,14 +1787,14 @@ Otherwise, this macro is similar to <em>for#Dylan</em>.</p>
 
 </section>
 <section id="exported-modules-from-the-generic-arithmetic-library">
-<h3>Exported Modules from the generic-arithmetic Library<a class="headerlink" href="#exported-modules-from-the-generic-arithmetic-library" title="Permalink to this heading">#</a></h3>
+<h3>Exported Modules from the generic-arithmetic Library<a class="headerlink" href="#exported-modules-from-the-generic-arithmetic-library" title="Permalink to this heading">¶</a></h3>
 <p>The Generic-Arithmetic library exports several modules that are provided
 for the convenience of programmers who wish to create additional modules
 based on the <em>dylan</em> module plus various combinations of the arithmetic
 models.</p>
 </section>
 <section id="the-dylan-excluding-arithmetic-module">
-<h3>The dylan-excluding-arithmetic Module<a class="headerlink" href="#the-dylan-excluding-arithmetic-module" title="Permalink to this heading">#</a></h3>
+<h3>The dylan-excluding-arithmetic Module<a class="headerlink" href="#the-dylan-excluding-arithmetic-module" title="Permalink to this heading">¶</a></h3>
 <p>The Dylan-Excluding-Arithmetic module imports and re-exports all of the
 interfaces exported by the <em>dylan</em> module from the Dylan library, except
 for the following excluded interfaces:</p>
@@ -1814,13 +1816,13 @@ for the following excluded interfaces:</p>
 </ul>
 </section>
 <section id="the-dylan-arithmetic-module">
-<h3>The dylan-arithmetic Module<a class="headerlink" href="#the-dylan-arithmetic-module" title="Permalink to this heading">#</a></h3>
+<h3>The dylan-arithmetic Module<a class="headerlink" href="#the-dylan-arithmetic-module" title="Permalink to this heading">¶</a></h3>
 <p>The Dylan-Arithmetic module imports and re-exports all of the interfaces
 exported by the <em>dylan</em> module from the Dylan library which are excluded
 by the <em>dylan-excluding-arithmetic</em> module.</p>
 </section>
 <section id="the-generic-arithmetic-dylan-module">
-<h3>The generic-arithmetic-dylan Module<a class="headerlink" href="#the-generic-arithmetic-dylan-module" title="Permalink to this heading">#</a></h3>
+<h3>The generic-arithmetic-dylan Module<a class="headerlink" href="#the-generic-arithmetic-dylan-module" title="Permalink to this heading">¶</a></h3>
 <p>The Generic-Arithmetic-Dylan module imports and reexports all of the
 interfaces exported by the <em>dylan-excluding-arithmetic</em> module and the
 <em>generic-arithmetic</em> module.</p>
@@ -1833,7 +1835,7 @@ norm, for those programmers who might want that.</p>
 </section>
 </section>
 <section id="using-special-arithmetic-features">
-<h2>Using Special Arithmetic Features<a class="headerlink" href="#using-special-arithmetic-features" title="Permalink to this heading">#</a></h2>
+<h2>Using Special Arithmetic Features<a class="headerlink" href="#using-special-arithmetic-features" title="Permalink to this heading">¶</a></h2>
 <p>As noted in <a class="reference internal" href="#the-generic-arithmetic-library">The Generic-Arithmetic library</a>, the Generic-Arithmetic
 library provides an extensible protocol for adding specialized arithmetic
 functionality to your applications. By using the Generic-Arithmetic
@@ -1932,14 +1934,14 @@ declaration should contain:</p>
 </div>
 </section>
 <section id="the-big-integers-library">
-<h2>The big-integers Library<a class="headerlink" href="#the-big-integers-library" title="Permalink to this heading">#</a></h2>
+<h2>The big-integers Library<a class="headerlink" href="#the-big-integers-library" title="Permalink to this heading">¶</a></h2>
 <p>The Big-Integers library exports a module called <code class="docutils literal notranslate"><span class="pre">big-integers</span></code>, which
 imports and re-exports all of the interfaces exported by the
 <code class="docutils literal notranslate"><span class="pre">generic-arithmetic</span></code> module of the Generic-Arithmetic library.</p>
 <p>The Big-Integers library modifies the behavior of functions provided by
 the Dylan library as described in this section.</p>
 <section id="id5">
-<h3>Specific Constructors<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<h3>Specific Constructors<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h3>
 <p>The Big-Integers library extends the functionality of specific
 constructors in the Dylan library as follows:</p>
 <dl class="dylan function">
@@ -1965,7 +1967,7 @@ equivalent to <code class="docutils literal notranslate"><span class="pre">&lt;a
 <code class="docutils literal notranslate"><span class="pre">&lt;abstract-integer&gt;</span></code> types.</p>
 </section>
 <section id="instances-and-subtypes-in-the-big-integers-library">
-<h3>Instances and subtypes in the Big-Integers library<a class="headerlink" href="#instances-and-subtypes-in-the-big-integers-library" title="Permalink to this heading">#</a></h3>
+<h3>Instances and subtypes in the Big-Integers library<a class="headerlink" href="#instances-and-subtypes-in-the-big-integers-library" title="Permalink to this heading">¶</a></h3>
 <p>In each of the following code snippets, the expression in the first line is
 true if and only if all of the expressions following it are true.</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">instance?</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nb">limited</span><span class="p">(</span><span class="nc">&lt;abstract-integer&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">min:</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="k">max:</span><span class="w"> </span><span class="n">z</span><span class="p">))</span>
@@ -2008,7 +2010,7 @@ true if and only if all of the expressions following it are true.</p>
 </div>
 </section>
 <section id="type-equivalence-in-the-big-integers-library">
-<h3>Type-equivalence in the Big-Integers library<a class="headerlink" href="#type-equivalence-in-the-big-integers-library" title="Permalink to this heading">#</a></h3>
+<h3>Type-equivalence in the Big-Integers library<a class="headerlink" href="#type-equivalence-in-the-big-integers-library" title="Permalink to this heading">¶</a></h3>
 <p>In each of the following code snippets, the expression on the first line is
 type equivalent to the expression on the second line if and only if the text
 following both expressions is true.</p>
@@ -2038,7 +2040,7 @@ integer type is disjoint from the range of <a class="reference external" href="h
 <em>$minimum-integer</em> to <em>$maximum-integer</em>).</p>
 </section>
 <section id="id6">
-<h3>Equality comparisons<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
+<h3>Equality comparisons<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h3>
 <p>The behavior of equality comparisons in the Dylan library is modified by
 the Big-Integers library as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">=</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer1</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer2</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">boolean</span><span class="o">*</span>
@@ -2048,7 +2050,7 @@ the Big-Integers library as follows:</p>
 </div>
 </section>
 <section id="id7">
-<h3>Magnitude comparisons<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h3>
+<h3>Magnitude comparisons<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h3>
 <p>The behavior of magnitude comparisons in the Dylan library is modified
 by the Big-Integers library as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer1</span><span class="o">*</span> <span class="o">*</span><span class="n">abstract</span><span class="o">-</span><span class="n">integer2</span><span class="o">*</span> <span class="o">=&gt;</span> <span class="o">*</span><span class="n">boolean</span>
@@ -2058,7 +2060,7 @@ by the Big-Integers library as follows:</p>
 </div>
 </section>
 <section id="id8">
-<h3>Properties of Numbers<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
+<h3>Properties of Numbers<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h3>
 <p>The behavior of number property tests in the Dylan library is modified
 by the Big-Integers library as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>odd? *abstract-integer* =&gt; *boolean*
@@ -2071,7 +2073,7 @@ integral? *abstract-integer* =&gt; *boolean*
 </div>
 </section>
 <section id="id9">
-<h3>Arithmetic Operations<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h3>
+<h3>Arithmetic Operations<a class="headerlink" href="#id9" title="Permalink to this heading">¶</a></h3>
 <p>The Big-Integers library modifies the behavior of the functions provided
 by the Generic-Arithmetic library as described below.</p>
 <p>The actual type of the return value for all the following interfaces is
@@ -2269,6 +2271,6 @@ gcd *abstract-integer1* *abstract-integer2* =&gt; *abstract-integer*
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

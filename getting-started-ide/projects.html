@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Learning More About an Application" href="browsing.html" /><link rel="prev" title="Programming in Open Dylan" href="model.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Creating and Using Projects - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,16 +463,16 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="creating-and-using-projects">
-<h1>Creating and Using Projects<a class="headerlink" href="#creating-and-using-projects" title="Permalink to this heading">#</a></h1>
+<h1>Creating and Using Projects<a class="headerlink" href="#creating-and-using-projects" title="Permalink to this heading">¶</a></h1>
 <p>In this chapter we look more closely at projects. We take a break from
 Reversi and develop some new projects of our own. To do this, we use
 Open Dylan’s New Project wizard. We also look at some of the
 options and settings associated with projects, and some of the features
 of the project window.</p>
 <section id="creating-a-new-project">
-<span id="creating-new-project"></span><span id="index-0"></span><h2>Creating a new project<a class="headerlink" href="#creating-a-new-project" title="Permalink to this heading">#</a></h2>
+<span id="creating-new-project"></span><span id="index-0"></span><h2>Creating a new project<a class="headerlink" href="#creating-a-new-project" title="Permalink to this heading">¶</a></h2>
 <p>We now create a new project for a simple “Hello World” application that
 will run in an MS-DOS console window.</p>
 <p>We create the project by clicking the New Project (<img alt="image0" src="../_images/newproj.png" />) button in
@@ -480,7 +482,7 @@ the main window, or by choosing <strong>File &gt; New</strong> in any window.</p
 <figure class="align-center" id="id4">
 <img alt="../_images/pwiz.png" src="../_images/pwiz.png" />
 <figcaption>
-<p><span class="caption-text">The New Project wizard.</span><a class="headerlink" href="#id4" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">The New Project wizard.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The New Project wizard guides us through the process of creating a new
@@ -525,7 +527,7 @@ applications</a>.</p>
 <p>For more information on DUIM, see <em>Building Applications Using DUIM</em> and
 the <em>DUIM Reference</em>.</p>
 <section id="specifying-the-type-of-the-project">
-<h3>Specifying the type of the project<a class="headerlink" href="#specifying-the-type-of-the-project" title="Permalink to this heading">#</a></h3>
+<h3>Specifying the type of the project<a class="headerlink" href="#specifying-the-type-of-the-project" title="Permalink to this heading">¶</a></h3>
 <p>The first page in the New Project wizard asks us to specify the kind of
 target we want to build from the project.</p>
 <p>In the Project type box, the default option is “GUI Application (EXE)”.
@@ -536,14 +538,14 @@ application, so we need to change this option setting from the default.</p>
 <p>We now move to the second page.</p>
 </section>
 <section id="specifying-the-project-name-and-location">
-<h3>Specifying the project name and location<a class="headerlink" href="#specifying-the-project-name-and-location" title="Permalink to this heading">#</a></h3>
+<h3>Specifying the project name and location<a class="headerlink" href="#specifying-the-project-name-and-location" title="Permalink to this heading">¶</a></h3>
 <p>The second page in the New Project wizard asks us to supply a name for
 our project, and to specify a location for the automatically generated
 project and source files.</p>
 <figure class="align-center" id="id5">
 <img alt="../_images/pwiz2.png" src="../_images/pwiz2.png" />
 <figcaption>
-<p><span class="caption-text">The New Project wizard’s second page.</span><a class="headerlink" href="#id5" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">The New Project wizard’s second page.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>When naming projects, remember that Open Dylan uses the name given
@@ -573,7 +575,7 @@ automatically if it does not already exist.</p>
 <p>We now move to the third page.</p>
 </section>
 <section id="choosing-the-libraries-that-the-project-uses">
-<h3>Choosing the libraries that the project uses<a class="headerlink" href="#choosing-the-libraries-that-the-project-uses" title="Permalink to this heading">#</a></h3>
+<h3>Choosing the libraries that the project uses<a class="headerlink" href="#choosing-the-libraries-that-the-project-uses" title="Permalink to this heading">¶</a></h3>
 <p>The next stage in creating our project is to decide which libraries and
 modules it is going to use. The third page of the wizard offers three
 different ways to do this. Each of the three options is described below.</p>
@@ -603,7 +605,7 @@ the wizard.</p>
 <p>We now move to the final page.</p>
 </section>
 <section id="the-final-page-in-the-new-project-wizard">
-<span id="index-1"></span><h3>The final page in the New Project wizard<a class="headerlink" href="#the-final-page-in-the-new-project-wizard" title="Permalink to this heading">#</a></h3>
+<span id="index-1"></span><h3>The final page in the New Project wizard<a class="headerlink" href="#the-final-page-in-the-new-project-wizard" title="Permalink to this heading">¶</a></h3>
 <p>The final page of the New Project wizard gives us the option of
 supplying text for the documentation keywords <em>Synopsis:</em>, <em>Author:</em>,
 <em>Copyright:</em>, and <em>Version:</em>.</p>
@@ -616,7 +618,7 @@ additional one that Open Dylan accepts.</p>
 <figure class="align-center" id="id6">
 <img alt="../_images/pwiz3.png" src="../_images/pwiz3.png" />
 <figcaption>
-<p><span class="caption-text">The New Project wizard’s third page.</span><a class="headerlink" href="#id6" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">The New Project wizard’s third page.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Change the default keyword text as you wish, or turn the keywords off
@@ -626,14 +628,14 @@ altogether.</p>
 the new Hello project and opens it.</p>
 </section>
 <section id="examining-the-files-in-the-hello-project">
-<h3>Examining the files in the Hello project<a class="headerlink" href="#examining-the-files-in-the-hello-project" title="Permalink to this heading">#</a></h3>
+<h3>Examining the files in the Hello project<a class="headerlink" href="#examining-the-files-in-the-hello-project" title="Permalink to this heading">¶</a></h3>
 <p><a class="reference internal" href="#hello-project"><span class="std std-ref">The Hello project.</span></a> shows our new Hello project.</p>
 <p>The default view shows the Sources page, where we can see the files
 <em>library.dylan</em>, <em>module.dylan</em>, and <em>Hello.dylan</em>.</p>
 <figure class="align-center" id="id7">
 <span id="hello-project"></span><img alt="../_images/hellopr.png" src="../_images/hellopr.png" />
 <figcaption>
-<p><span class="caption-text">The Hello project.</span><a class="headerlink" href="#id7" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">The Hello project.</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The <em>library.dylan</em> file defines a Dylan library called <em>Hello</em>, which
@@ -668,14 +670,14 @@ wizard. See <a class="reference internal" href="model.html#projects-on-disk"><sp
 products reside.</p>
 </section>
 <section id="projects-for-gui-applications">
-<h3>Projects for GUI applications<a class="headerlink" href="#projects-for-gui-applications" title="Permalink to this heading">#</a></h3>
+<h3>Projects for GUI applications<a class="headerlink" href="#projects-for-gui-applications" title="Permalink to this heading">¶</a></h3>
 <p>In this section, we define a more typical project. This project will be
 a for GUI application. To do this, we take a different path through the
 New Project wizard. We look at the project files that the wizard
 creates, then build and run our GUI application.</p>
 </section>
 <section id="creating-a-gui-project">
-<h3>Creating a GUI project<a class="headerlink" href="#creating-a-gui-project" title="Permalink to this heading">#</a></h3>
+<h3>Creating a GUI project<a class="headerlink" href="#creating-a-gui-project" title="Permalink to this heading">¶</a></h3>
 <p>First, we create the new project for our GUI application.</p>
 <p>Click the New Project (<img alt="image1" src="../_images/newproj.png" />) button in the main window.</p>
 <p>On the first page, we want to specify the project type.</p>
@@ -733,7 +735,7 @@ wizard saves.</p>
 <p>The wizard creates the new GUI-App project and opens it.</p>
 </section>
 <section id="examining-and-building-the-new-gui-project">
-<h3>Examining and building the new GUI project<a class="headerlink" href="#examining-and-building-the-new-gui-project" title="Permalink to this heading">#</a></h3>
+<h3>Examining and building the new GUI project<a class="headerlink" href="#examining-and-building-the-new-gui-project" title="Permalink to this heading">¶</a></h3>
 <p>Now, we examine the template code that the wizard has set up for us in
 the GUI-App project sources.</p>
 <p>The GUI-App project contains the same basic set of files as Hello. There
@@ -756,7 +758,7 @@ code can be built without requiring any further work.</p>
 <figure class="align-center" id="id8">
 <img alt="../_images/gui-app.png" src="../_images/gui-app.png" />
 <figcaption>
-<p><span class="caption-text">The GUI-App skeleton application.</span><a class="headerlink" href="#id8" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">The GUI-App skeleton application.</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>We can see from the window that the template code creates a skeleton
@@ -769,7 +771,7 @@ identify the application as “GUI-App Version 1.0”.</p>
 </section>
 </section>
 <section id="creating-a-project-using-the-custom-library-option">
-<h2>Creating a project using the Custom library option<a class="headerlink" href="#creating-a-project-using-the-custom-library-option" title="Permalink to this heading">#</a></h2>
+<h2>Creating a project using the Custom library option<a class="headerlink" href="#creating-a-project-using-the-custom-library-option" title="Permalink to this heading">¶</a></h2>
 <p>The New Project wizard’s Use Libraries page has a Custom option which
 allows complete control over the libraries and modules a project will
 use. This section explains how to choose libraries and modules using
@@ -797,7 +799,7 @@ used in a default project.</p>
 <figure class="align-center" id="id9">
 <img alt="../_images/p2frag2-0.png" src="../_images/p2frag2-0.png" />
 <figcaption>
-<p><span class="caption-text">Functional-Dylan is the default library for use in new projects.</span><a class="headerlink" href="#id9" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Functional-Dylan is the default library for use in new projects.</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>So, by default, a project would use the library Functional-Dylan. (Note
@@ -810,7 +812,7 @@ include.</p>
 <figure class="align-center" id="id10">
 <img alt="../_images/p2frag2_2-0.png" src="../_images/p2frag2_2-0.png" />
 <figcaption>
-<p><span class="caption-text">Default modules from Functional-Dylan for use in new projects.</span><a class="headerlink" href="#id10" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Default modules from Functional-Dylan for use in new projects.</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Although the list shows that the Dylan and Functional-Extensions modules
@@ -823,7 +825,7 @@ interfaces into your application, but the delivered application will not
 be any smaller on disk, or in memory when it is running.</p>
 </section>
 <section id="saving-settings-in-the-new-project-wizard">
-<span id="index-2"></span><h2>Saving settings in the New Project wizard<a class="headerlink" href="#saving-settings-in-the-new-project-wizard" title="Permalink to this heading">#</a></h2>
+<span id="index-2"></span><h2>Saving settings in the New Project wizard<a class="headerlink" href="#saving-settings-in-the-new-project-wizard" title="Permalink to this heading">¶</a></h2>
 <p>Whenever you click <strong>Finish</strong> on the last page of the New Project wizard,
 the wizard stores some of the choices and text-field settings you made
 so that they are available next time you create a project. The details
@@ -848,7 +850,7 @@ project.</p>
 <p>Nothing from the first page is saved.</p>
 </section>
 <section id="advanced-project-settings">
-<span id="index-3"></span><h2>Advanced project settings<a class="headerlink" href="#advanced-project-settings" title="Permalink to this heading">#</a></h2>
+<span id="index-3"></span><h2>Advanced project settings<a class="headerlink" href="#advanced-project-settings" title="Permalink to this heading">¶</a></h2>
 <p>The <em>Advanced…</em> button on the first page of the New Project wizard
 leads to the Advanced Project Settings dialog. The dialog has five
 sections.</p>
@@ -861,11 +863,11 @@ here and change after creating a project by choosing <strong>Project &gt;
 Settings…</strong>. See <a class="reference internal" href="#id1">Project settings</a> for details.</p>
 </section>
 <section id="adding-moving-and-deleting-project-sources">
-<h2>Adding, moving, and deleting project sources<a class="headerlink" href="#adding-moving-and-deleting-project-sources" title="Permalink to this heading">#</a></h2>
+<h2>Adding, moving, and deleting project sources<a class="headerlink" href="#adding-moving-and-deleting-project-sources" title="Permalink to this heading">¶</a></h2>
 <p>In this section we discuss how to insert files into a project, how
 re-order them, and how to delete them from the project.</p>
 <section id="inserting-files-into-a-project">
-<span id="index-4"></span><h3>Inserting files into a project<a class="headerlink" href="#inserting-files-into-a-project" title="Permalink to this heading">#</a></h3>
+<span id="index-4"></span><h3>Inserting files into a project<a class="headerlink" href="#inserting-files-into-a-project" title="Permalink to this heading">¶</a></h3>
 <p>To insert a new file or subproject into a project, choose <strong>Project &gt;
 Insert File…</strong> in the project window. The project window prompts you
 with the <em>Insert File into Project</em> dialog, through which you can find a
@@ -883,13 +885,13 @@ need to edit the library and module definitions in your project to
 import from the new subproject.</p>
 </section>
 <section id="moving-the-position-of-a-file-within-a-project">
-<span id="index-5"></span><h3>Moving the position of a file within a project<a class="headerlink" href="#moving-the-position-of-a-file-within-a-project" title="Permalink to this heading">#</a></h3>
+<span id="index-5"></span><h3>Moving the position of a file within a project<a class="headerlink" href="#moving-the-position-of-a-file-within-a-project" title="Permalink to this heading">¶</a></h3>
 <p>To move a file to a new position in a project, select the file in the
 Sources page and use <strong>Project &gt; Move File Up</strong> and <strong>Project &gt; Move File
 Down</strong>.</p>
 </section>
 <section id="deleting-files-from-a-project">
-<span id="index-6"></span><h3>Deleting files from a project<a class="headerlink" href="#deleting-files-from-a-project" title="Permalink to this heading">#</a></h3>
+<span id="index-6"></span><h3>Deleting files from a project<a class="headerlink" href="#deleting-files-from-a-project" title="Permalink to this heading">¶</a></h3>
 <p>To delete a file from a project, select the file in the Sources page and
 choose <strong>Project &gt; Remove File</strong>. You could also select <strong>Edit &gt; Cut</strong>,
 <strong>Edit &gt; Delete</strong>, or the scissors toolbar icon.</p>
@@ -909,7 +911,7 @@ compiler database to be updated.</p>
 </section>
 </section>
 <section id="the-project-start-function">
-<span id="start-function"></span><span id="index-7"></span><h2>The project start function<a class="headerlink" href="#the-project-start-function" title="Permalink to this heading">#</a></h2>
+<span id="start-function"></span><span id="index-7"></span><h2>The project start function<a class="headerlink" href="#the-project-start-function" title="Permalink to this heading">¶</a></h2>
 <p>The New Project wizard always adds a <em>start function</em> to the end of the
 last file in the project.</p>
 <p>The Dylan language does not require that a program define an explicit
@@ -977,19 +979,19 @@ for more information on this topic.</p>
 </div>
 </section>
 <section id="project-settings">
-<span id="id1"></span><h2>Project settings<a class="headerlink" href="#project-settings" title="Permalink to this heading">#</a></h2>
+<span id="id1"></span><h2>Project settings<a class="headerlink" href="#project-settings" title="Permalink to this heading">¶</a></h2>
 <p>The <strong>Project &gt; Settings…</strong> dialog allows you to set options for
 compiling, linking, and debugging projects. There are separate pages for
 each category, each described below.</p>
 <section id="compile-page">
-<h3>Compile page<a class="headerlink" href="#compile-page" title="Permalink to this heading">#</a></h3>
+<h3>Compile page<a class="headerlink" href="#compile-page" title="Permalink to this heading">¶</a></h3>
 <p>The <strong>Project &gt; Settings…</strong> dialog’s Compile page controls the compilation
 mode setting for the current project. Any project can be compiled in one
 of two modes: Interactive Development mode, and Production mode. See
 <a class="reference internal" href="model.html#compilation-modes"><span class="std std-ref">Compilation modes</span></a> for details of the modes.</p>
 </section>
 <section id="link-page">
-<span id="index-8"></span><span id="id2"></span><h3>Link page<a class="headerlink" href="#link-page" title="Permalink to this heading">#</a></h3>
+<span id="index-8"></span><span id="id2"></span><h3>Link page<a class="headerlink" href="#link-page" title="Permalink to this heading">¶</a></h3>
 <p>The <strong>Project &gt; Settings…</strong> dialog’s Link page controls whether a project
 is linked as an executable or as a DLL, and what its name will be. It
 also allows you to specify version information for the target, a base
@@ -1004,7 +1006,7 @@ page.</p>
 </div>
 </section>
 <section id="target-file-section-of-the-link-page">
-<h3>Target File section of the Link page<a class="headerlink" href="#target-file-section-of-the-link-page" title="Permalink to this heading">#</a></h3>
+<h3>Target File section of the Link page<a class="headerlink" href="#target-file-section-of-the-link-page" title="Permalink to this heading">¶</a></h3>
 <p>The <strong>Project &gt; Settings…</strong> dialog’s Link page has a Target File section
 that contains the name of the project target and the type of the target.
 The default target name is derived from the name of the project. Note
@@ -1012,7 +1014,7 @@ that the name will always end in .EXE or .DLL according to the target
 type, regardless of any extension you give to the target’s name.</p>
 </section>
 <section id="base-address-section-of-the-link-page">
-<h3>Base Address section of the Link page<a class="headerlink" href="#base-address-section-of-the-link-page" title="Permalink to this heading">#</a></h3>
+<h3>Base Address section of the Link page<a class="headerlink" href="#base-address-section-of-the-link-page" title="Permalink to this heading">¶</a></h3>
 <p>The <strong>Project &gt; Settings…</strong> dialog’s Link page has a Base Address section
 that allows you to specify a base address for your target file. This is
 the address at which the target will be loaded into memory.</p>
@@ -1024,7 +1026,7 @@ loaded at a particular location. The value should be specified in
 hexadecimal, using Dylan’s <em>#x</em> prefix: for example, <em>#x1000000</em>.</p>
 </section>
 <section id="version-information-section-of-the-link-page">
-<h3>Version Information section of the Link page<a class="headerlink" href="#version-information-section-of-the-link-page" title="Permalink to this heading">#</a></h3>
+<h3>Version Information section of the Link page<a class="headerlink" href="#version-information-section-of-the-link-page" title="Permalink to this heading">¶</a></h3>
 <p>The <strong>Project &gt; Settings…</strong> dialog’s Link page has a Version Information
 section that allows you to add major and minor version numbers to a DLL
 or EXE. The values in this section are recorded in the DLL or EXE that
@@ -1033,7 +1035,7 @@ time to determine if compatible versions of Dylan libraries are in use.
 See <a class="reference internal" href="model.html#versioning"><span class="std std-ref">Versioning</span></a> for details.</p>
 </section>
 <section id="windows-subsystem-section-of-the-link-page">
-<h3>Windows Subsystem section of the Link page<a class="headerlink" href="#windows-subsystem-section-of-the-link-page" title="Permalink to this heading">#</a></h3>
+<h3>Windows Subsystem section of the Link page<a class="headerlink" href="#windows-subsystem-section-of-the-link-page" title="Permalink to this heading">¶</a></h3>
 <p>The <strong>Project &gt; Settings…</strong> dialog’s Link page has a Win32 Subsystem
 section that allows you to specify that the target should run in the
 “Windows GUI” (WINDOWS) subsystem or the “Windows Console” (CONSOLE)
@@ -1045,7 +1047,7 @@ while the default for a project created as a “GUI Application (EXE)” is
 to run in the “Windows GUI” (WINDOWS) subsystem.</p>
 </section>
 <section id="debug-page">
-<span id="index-9"></span><h3>Debug page<a class="headerlink" href="#debug-page" title="Permalink to this heading">#</a></h3>
+<span id="index-9"></span><h3>Debug page<a class="headerlink" href="#debug-page" title="Permalink to this heading">¶</a></h3>
 <p>The <strong>Project &gt; Settings…</strong> dialog’s Debug page allows you to specify a
 command line with which to execute the project target, and the start
 function for the project.</p>
@@ -1064,7 +1066,7 @@ of these debugging techniques.</p>
 </section>
 </section>
 <section id="project-files-and-lid-files">
-<span id="index-10"></span><span id="id3"></span><h2>Project files and LID files<a class="headerlink" href="#project-files-and-lid-files" title="Permalink to this heading">#</a></h2>
+<span id="index-10"></span><span id="id3"></span><h2>Project files and LID files<a class="headerlink" href="#project-files-and-lid-files" title="Permalink to this heading">¶</a></h2>
 <p>Open Dylan’s project files can be exported in a portable library
 interface format called LID (library interchange description). Harlequin
 and other Dylan vendors have chosen LID as the standard interchange
@@ -1073,7 +1075,7 @@ text format for ease of interchange between different Dylan systems. The
 <em>Core Features and Mathematics</em> reference volume describes the LID
 format. LID files must have the extension .LID.</p>
 <section id="opening-a-lid-file-as-a-project">
-<h3>Opening a LID file as a project<a class="headerlink" href="#opening-a-lid-file-as-a-project" title="Permalink to this heading">#</a></h3>
+<h3>Opening a LID file as a project<a class="headerlink" href="#opening-a-lid-file-as-a-project" title="Permalink to this heading">¶</a></h3>
 <p>When you open a LID file in the development environment, it is converted
 into a project file and opened in a project window. (This process does
 not modify the original LID file on disk.)</p>
@@ -1082,7 +1084,7 @@ file using <strong>File &gt; Open</strong> and select the file type filter “Dy
 Interchange Descriptions (as text)” before clicking <strong>Open</strong>.</p>
 </section>
 <section id="exporting-a-project-into-a-lid-file">
-<h3>Exporting a project into a LID file<a class="headerlink" href="#exporting-a-project-into-a-lid-file" title="Permalink to this heading">#</a></h3>
+<h3>Exporting a project into a LID file<a class="headerlink" href="#exporting-a-project-into-a-lid-file" title="Permalink to this heading">¶</a></h3>
 <p>To export a project as a LID file for use in other Dylan
 implementations, use <strong>File &gt; Save As</strong> and choose the file type “Dylan
 Library Interchange Descriptions”.</p>
@@ -1201,6 +1203,6 @@ console application.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

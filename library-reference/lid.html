@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="The c-ffi Library" href="c-ffi/index.html" /><link rel="prev" title="String Literal Syntax" href="language-extensions/string-literals.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>LID File Format - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="lid-file-format">
-<h1>LID File Format<a class="headerlink" href="#lid-file-format" title="Permalink to this heading">#</a></h1>
+<h1>LID File Format<a class="headerlink" href="#lid-file-format" title="Permalink to this heading">¶</a></h1>
 <p>The DRM defines an <a class="reference external" href="https://opendylan.org/books/drm/Dylan_Interchange_Format"><code class="xref drm docutils literal notranslate"><span class="pre">interchange</span> <span class="pre">format</span> <span class="pre">for</span> <span class="pre">Dylan</span> <span class="pre">source</span> <span class="pre">files</span></code></a>, but does not define an interchange format for
 Dylan libraries.  Without such an agreed format, it would be difficult to
 import and build libraries developed using another Dylan implementation.</p>
@@ -483,7 +485,7 @@ files as LID files with the <strong>File &gt; Save As</strong> command in the pr
 window.</p>
 </div>
 <section id="lid-files">
-<h2>LID files<a class="headerlink" href="#lid-files" title="Permalink to this heading">#</a></h2>
+<h2>LID files<a class="headerlink" href="#lid-files" title="Permalink to this heading">¶</a></h2>
 <p>LID works by supplementing each set of library sources with a LID file.
 A <em>LID file</em> describes a Dylan library using a set of keyword
 statements. Together, these statements provide enough information to
@@ -499,10 +501,10 @@ the Dylan <a class="reference external" href="https://opendylan.org/books/drm/Dy
 <p>Note that LID keywords are not case-sensitive.</p>
 </section>
 <section id="standard-lid-keywords">
-<h2>Standard LID Keywords<a class="headerlink" href="#standard-lid-keywords" title="Permalink to this heading">#</a></h2>
+<h2>Standard LID Keywords<a class="headerlink" href="#standard-lid-keywords" title="Permalink to this heading">¶</a></h2>
 <p>In this section, we describe the standard LID keywords.</p>
 <section id="library">
-<h3>Library:<a class="headerlink" href="#library" title="Permalink to this heading">#</a></h3>
+<h3>Library:<a class="headerlink" href="#library" title="Permalink to this heading">¶</a></h3>
 <p>LID file keyword</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Library</span><span class="o">:</span><span class="w"> </span><span class="s">*library-name*</span>
 </pre></div>
@@ -512,7 +514,7 @@ name of the Dylan library that the LID file describes. This keyword is
 required in every LID file, and it may appear only once per LID file.</p>
 </section>
 <section id="files">
-<h3>Files:<a class="headerlink" href="#files" title="Permalink to this heading">#</a></h3>
+<h3>Files:<a class="headerlink" href="#files" title="Permalink to this heading">¶</a></h3>
 <p>LID file keyword</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Files</span><span class="o">:</span><span class="w"> </span><span class="s">*file-designators*</span>
 </pre></div>
@@ -531,7 +533,7 @@ across the files within the defined library.</p>
 the LID file.</p>
 </section>
 <section id="synopsis">
-<h3>Synopsis:<a class="headerlink" href="#synopsis" title="Permalink to this heading">#</a></h3>
+<h3>Synopsis:<a class="headerlink" href="#synopsis" title="Permalink to this heading">¶</a></h3>
 <p>LID file keyword</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Synopsis</span><span class="o">:</span><span class="w"> </span><span class="s">*arbitrary text*</span>
 </pre></div>
@@ -539,7 +541,7 @@ the LID file.</p>
 <p>A concise description of the library.</p>
 </section>
 <section id="keywords">
-<h3>Keywords:<a class="headerlink" href="#keywords" title="Permalink to this heading">#</a></h3>
+<h3>Keywords:<a class="headerlink" href="#keywords" title="Permalink to this heading">¶</a></h3>
 <p>LID file keyword</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Keywords</span><span class="o">:</span><span class="w"> </span><span class="s">*comma-separated phrases*</span>
 </pre></div>
@@ -548,7 +550,7 @@ the LID file.</p>
 description or use of the library.</p>
 </section>
 <section id="author">
-<h3>Author:<a class="headerlink" href="#author" title="Permalink to this heading">#</a></h3>
+<h3>Author:<a class="headerlink" href="#author" title="Permalink to this heading">¶</a></h3>
 <p>LID file keyword</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Author</span><span class="o">:</span><span class="w"> </span><span class="s">*arbitrary text*</span>
 </pre></div>
@@ -556,7 +558,7 @@ description or use of the library.</p>
 <p>The name of the library’s author.</p>
 </section>
 <section id="major-version">
-<h3>Major-Version:<a class="headerlink" href="#major-version" title="Permalink to this heading">#</a></h3>
+<h3>Major-Version:<a class="headerlink" href="#major-version" title="Permalink to this heading">¶</a></h3>
 <p>LID file keyword</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Major-Version</span><span class="o">:</span><span class="w"> </span><span class="s">*number*</span>
 </pre></div>
@@ -564,7 +566,7 @@ description or use of the library.</p>
 <p>The current major version number of the library.</p>
 </section>
 <section id="minor-version">
-<h3>Minor-Version:<a class="headerlink" href="#minor-version" title="Permalink to this heading">#</a></h3>
+<h3>Minor-Version:<a class="headerlink" href="#minor-version" title="Permalink to this heading">¶</a></h3>
 <p>LID file keyword</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Minor-Version</span><span class="o">:</span><span class="w"> </span><span class="s">*number*</span>
 </pre></div>
@@ -572,7 +574,7 @@ description or use of the library.</p>
 <p>The current minor version number of the library.</p>
 </section>
 <section id="description">
-<h3>Description:<a class="headerlink" href="#description" title="Permalink to this heading">#</a></h3>
+<h3>Description:<a class="headerlink" href="#description" title="Permalink to this heading">¶</a></h3>
 <p>LID file keyword</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Description</span><span class="o">:</span><span class="w"> </span><span class="s">*arbitrary text*</span>
 </pre></div>
@@ -582,7 +584,7 @@ provide a fuller, less concise description than that given by the
 <em>Synopsis:</em> keyword.</p>
 </section>
 <section id="comment">
-<h3>Comment:<a class="headerlink" href="#comment" title="Permalink to this heading">#</a></h3>
+<h3>Comment:<a class="headerlink" href="#comment" title="Permalink to this heading">¶</a></h3>
 <p>LID file keyword</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Comment</span><span class="o">:</span><span class="w"> </span><span class="s">*arbitrary text*</span>
 </pre></div>
@@ -591,14 +593,14 @@ provide a fuller, less concise description than that given by the
 </section>
 </section>
 <section id="open-dylan-s-lid-extensions">
-<h2>Open Dylan’s LID extensions<a class="headerlink" href="#open-dylan-s-lid-extensions" title="Permalink to this heading">#</a></h2>
+<h2>Open Dylan’s LID extensions<a class="headerlink" href="#open-dylan-s-lid-extensions" title="Permalink to this heading">¶</a></h2>
 <p>This section contains extensions to LID that Open Dylan supports.</p>
 <section id="specifying-foreign-files-and-resource-files">
-<h3>Specifying foreign files and resource files<a class="headerlink" href="#specifying-foreign-files-and-resource-files" title="Permalink to this heading">#</a></h3>
+<h3>Specifying foreign files and resource files<a class="headerlink" href="#specifying-foreign-files-and-resource-files" title="Permalink to this heading">¶</a></h3>
 <p>The following keywords allow you to specify that files of foreign source
 code and resource files are a part of the library.</p>
 <section id="c-source-files">
-<h4>C-Source-Files:<a class="headerlink" href="#c-source-files" title="Permalink to this heading">#</a></h4>
+<h4>C-Source-Files:<a class="headerlink" href="#c-source-files" title="Permalink to this heading">¶</a></h4>
 <p>LID file keyword</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">C-Source-Files</span><span class="o">:</span><span class="w"> </span><span class="s">*c-source-files*</span>
 </pre></div>
@@ -609,7 +611,7 @@ and ensure that they are compiled by the appropriate batch file. The
 filenames specified must include the <code class="docutils literal notranslate"><span class="pre">.c</span></code> suffix.</p>
 </section>
 <section id="c-header-files">
-<h4>C-Header-Files:<a class="headerlink" href="#c-header-files" title="Permalink to this heading">#</a></h4>
+<h4>C-Header-Files:<a class="headerlink" href="#c-header-files" title="Permalink to this heading">¶</a></h4>
 <p>LID file keyword</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">C-Header-Files</span><span class="o">:</span><span class="w"> </span><span class="s">*c-header-files*</span>
 </pre></div>
@@ -622,7 +624,7 @@ header files in order to decide when they need to be recompiled. The
 file names given here must include the <code class="docutils literal notranslate"><span class="pre">.h</span></code> suffix.</p>
 </section>
 <section id="c-object-files">
-<h4>C-Object-Files:<a class="headerlink" href="#c-object-files" title="Permalink to this heading">#</a></h4>
+<h4>C-Object-Files:<a class="headerlink" href="#c-object-files" title="Permalink to this heading">¶</a></h4>
 <p>LID file keyword</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">C-Object-Files</span><span class="o">:</span><span class="w"> </span><span class="s">*c-object-files*</span>
 </pre></div>
@@ -639,7 +641,7 @@ an external library written in C. In this situation, the <code class="docutils l
 keyword may be useful.</p>
 </section>
 <section id="rc-files">
-<h4>RC-Files:<a class="headerlink" href="#rc-files" title="Permalink to this heading">#</a></h4>
+<h4>RC-Files:<a class="headerlink" href="#rc-files" title="Permalink to this heading">¶</a></h4>
 <p>LID file keyword</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">RC-Files</span><span class="o">:</span><span class="w"> </span><span class="s">*resource-files*</span>
 </pre></div>
@@ -652,7 +654,7 @@ built for the library. The file names given here must include the <code class="d
 suffix.</p>
 </section>
 <section id="c-libraries">
-<span id="lid-c-libraries"></span><h4>C-Libraries:<a class="headerlink" href="#c-libraries" title="Permalink to this heading">#</a></h4>
+<span id="lid-c-libraries"></span><h4>C-Libraries:<a class="headerlink" href="#c-libraries" title="Permalink to this heading">¶</a></h4>
 <p>LID file keyword</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">C-Libraries</span><span class="o">:</span><span class="w"> </span><span class="s">*c-lib-files*</span>
 </pre></div>
@@ -697,10 +699,10 @@ A uses library B, and the LID file for library B specifies</p>
 </section>
 </section>
 <section id="specifying-compilation-details">
-<h3>Specifying compilation details<a class="headerlink" href="#specifying-compilation-details" title="Permalink to this heading">#</a></h3>
+<h3>Specifying compilation details<a class="headerlink" href="#specifying-compilation-details" title="Permalink to this heading">¶</a></h3>
 <p>The following keywords control aspects of compilation for the library.</p>
 <section id="lid">
-<h4>LID:<a class="headerlink" href="#lid" title="Permalink to this heading">#</a></h4>
+<h4>LID:<a class="headerlink" href="#lid" title="Permalink to this heading">¶</a></h4>
 <p>LID keyword</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">LID</span><span class="o">:</span><span class="w"> </span><span class="s">*file-name.lid*</span>
 </pre></div>
@@ -711,7 +713,7 @@ contained in that file into the current LID file.</p>
 OS-specific LID files.</p>
 </section>
 <section id="jam-includes">
-<span id="lid-jam-includes"></span><h4>Jam-Includes:<a class="headerlink" href="#jam-includes" title="Permalink to this heading">#</a></h4>
+<span id="lid-jam-includes"></span><h4>Jam-Includes:<a class="headerlink" href="#jam-includes" title="Permalink to this heading">¶</a></h4>
 <p>LID keyword</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Jam-Includes</span><span class="o">:</span><span class="w"> </span><span class="s">*file-name.jam*</span>
 </pre></div>
@@ -731,7 +733,7 @@ for the C compiler or linker.</p>
 within and return the output of that command.</p>
 </section>
 <section id="target-type">
-<h4>Target-Type:<a class="headerlink" href="#target-type" title="Permalink to this heading">#</a></h4>
+<h4>Target-Type:<a class="headerlink" href="#target-type" title="Permalink to this heading">¶</a></h4>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Target-Type</span><span class="o">:</span><span class="w"> </span><span class="s">*dll or executable*</span>
 </pre></div>
 </div>
@@ -742,7 +744,7 @@ library is specified directly on the compiler command line, or a shared library
 if the library is only pulled in as a dependency.</p>
 </section>
 <section id="executable">
-<h4>Executable:<a class="headerlink" href="#executable" title="Permalink to this heading">#</a></h4>
+<h4>Executable:<a class="headerlink" href="#executable" title="Permalink to this heading">¶</a></h4>
 <p>LID keyword</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Executable</span><span class="o">:</span><span class="w"> </span><span class="s">*name*</span>
 </pre></div>
@@ -758,7 +760,7 @@ this keyword to override the default name and avoid conflicts with other
 DLLs from a third party.</p>
 </section>
 <section id="base-address">
-<h4>Base-Address:<a class="headerlink" href="#base-address" title="Permalink to this heading">#</a></h4>
+<h4>Base-Address:<a class="headerlink" href="#base-address" title="Permalink to this heading">¶</a></h4>
 <p>LID keyword</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Base-Address</span><span class="o">:</span><span class="w"> </span><span class="s">*address*</span>
 </pre></div>
@@ -784,7 +786,7 @@ to give one or more libraries an explicit base address using this
 keyword.</p>
 </section>
 <section id="linker-options">
-<h4>Linker-Options:<a class="headerlink" href="#linker-options" title="Permalink to this heading">#</a></h4>
+<h4>Linker-Options:<a class="headerlink" href="#linker-options" title="Permalink to this heading">¶</a></h4>
 <p>LID keyword</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Linker-Options</span><span class="o">:</span><span class="w"> </span><span class="s">*options*</span>
 </pre></div>
@@ -797,7 +799,7 @@ they are not propagated to any libraries which use this library.</p>
 </section>
 </section>
 <section id="file-naming-conventions">
-<h2>File naming conventions<a class="headerlink" href="#file-naming-conventions" title="Permalink to this heading">#</a></h2>
+<h2>File naming conventions<a class="headerlink" href="#file-naming-conventions" title="Permalink to this heading">¶</a></h2>
 <p>In practice, importing a source distribution into a Dylan program
 involves unpacking the source distribution into its own subtree and then
 informing the environment of the location of the tree root. The
@@ -832,7 +834,7 @@ used to organize multi-library systems as long as the files directly
 associated with each library are in a single directory.</p>
 </section>
 <section id="application-example">
-<h2>Application example<a class="headerlink" href="#application-example" title="Permalink to this heading">#</a></h2>
+<h2>Application example<a class="headerlink" href="#application-example" title="Permalink to this heading">¶</a></h2>
 <p>This section contains an example of a complete Dylan application that
 uses a generic factorial calculation routine to return the value of the
 factorial of 100. Two libraries are defined: the <em>factorial</em> library
@@ -1029,6 +1031,6 @@ resource files can be integrated into a Dylan library:</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

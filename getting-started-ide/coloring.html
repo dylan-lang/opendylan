@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Delivering Dylan Applications" href="delivery.html" /><link rel="prev" title="Remote Debugging" href="remotedbg.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Dispatch Optimization Coloring in the Editor - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="dispatch-optimization-coloring-in-the-editor">
-<h1>Dispatch Optimization Coloring in the Editor<a class="headerlink" href="#dispatch-optimization-coloring-in-the-editor" title="Permalink to this heading">#</a></h1>
+<h1>Dispatch Optimization Coloring in the Editor<a class="headerlink" href="#dispatch-optimization-coloring-in-the-editor" title="Permalink to this heading">¶</a></h1>
 <p>This chapter is about source-code coloring in the editor that shows
 where and how optimizations have taken place.</p>
 <div class="admonition note">
@@ -472,7 +474,7 @@ where and how optimizations have taken place.</p>
 See <a class="reference internal" href="projects.html#project-settings"><span class="std std-ref">Project settings</span></a>.</p>
 </div>
 <section id="about-dispatch-optimizations">
-<span id="index-0"></span><h2>About dispatch optimizations<a class="headerlink" href="#about-dispatch-optimizations" title="Permalink to this heading">#</a></h2>
+<span id="index-0"></span><h2>About dispatch optimizations<a class="headerlink" href="#about-dispatch-optimizations" title="Permalink to this heading">¶</a></h2>
 <p>When you call a generic function in Dylan, the method that will be
 executed has to be selected from the set of methods defined on that
 generic function.</p>
@@ -497,7 +499,7 @@ correct method; replacing the generic function call with a class slot
 access; or inlining the call completely.</p>
 </section>
 <section id="optimization-coloring">
-<span id="index-1"></span><h2>Optimization coloring<a class="headerlink" href="#optimization-coloring" title="Permalink to this heading">#</a></h2>
+<span id="index-1"></span><h2>Optimization coloring<a class="headerlink" href="#optimization-coloring" title="Permalink to this heading">¶</a></h2>
 <p>When you compile a project, the Open Dylan compiler records the
 kinds of optimizations it performed for each source code file in the
 project. It also records cases where compile-time optimization was for
@@ -513,7 +515,7 @@ the compiler worked out the exact method to call and emitted a direct
 call to that method in the compiled code. <a class="reference internal" href="#dispatch-optimization-colors"><span class="std std-ref">Dispatch optimization colors and their meanings</span></a>
 contains a full list of colors and their meanings.</p>
 <section id="editing-colored-source-code">
-<h3>Editing colored source code<a class="headerlink" href="#editing-colored-source-code" title="Permalink to this heading">#</a></h3>
+<h3>Editing colored source code<a class="headerlink" href="#editing-colored-source-code" title="Permalink to this heading">¶</a></h3>
 <p>Dispatch optimization coloring in a file shows only what the compiler
 achieved the last time you compiled the project containing the file. If
 you edit colored source code, the changes you make could affect the
@@ -529,14 +531,14 @@ prefer to turn off coloring altogether once the coloring information for
 part of the file has been invalidated.</p>
 </section>
 <section id="effect-of-compilation-mode-on-dispatch-optimizations">
-<h3>Effect of compilation mode on dispatch optimizations<a class="headerlink" href="#effect-of-compilation-mode-on-dispatch-optimizations" title="Permalink to this heading">#</a></h3>
+<h3>Effect of compilation mode on dispatch optimizations<a class="headerlink" href="#effect-of-compilation-mode-on-dispatch-optimizations" title="Permalink to this heading">¶</a></h3>
 <p>The Open Dylan compiler tries to optimize method dispatch whether
 compiling a project in Interactive Development mode or in Production
 mode. Because the compiler does more optimization in Production mode,
 you will see more coloring information after a Production-mode build.</p>
 </section>
 <section id="dispatch-optimization-colors-and-their-meanings">
-<span id="dispatch-optimization-colors"></span><h3>Dispatch optimization colors and their meanings<a class="headerlink" href="#dispatch-optimization-colors-and-their-meanings" title="Permalink to this heading">#</a></h3>
+<span id="dispatch-optimization-colors"></span><h3>Dispatch optimization colors and their meanings<a class="headerlink" href="#dispatch-optimization-colors-and-their-meanings" title="Permalink to this heading">¶</a></h3>
 <p>The following table shows the colors used to indicate different kinds of
 dispatch optimization.</p>
 <div class="table-wrapper docutils container">
@@ -617,7 +619,7 @@ to the call.</p>
 </section>
 </section>
 <section id="optimizing-the-reversi-application">
-<h2>Optimizing the Reversi application<a class="headerlink" href="#optimizing-the-reversi-application" title="Permalink to this heading">#</a></h2>
+<h2>Optimizing the Reversi application<a class="headerlink" href="#optimizing-the-reversi-application" title="Permalink to this heading">¶</a></h2>
 <p>In this section we look at the dispatch optimization color information
 for part of the Reversi application and see what we can do to optimize
 it.</p>
@@ -873,6 +875,6 @@ improve such a call, turning it blue or even dark gray (inlined).</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

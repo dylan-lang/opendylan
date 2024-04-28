@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="DUIM-Layouts Library" href="layouts.html" /><link rel="prev" title="DUIM-Sheets Library" href="sheets.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>DUIM-Graphics Library - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,11 +463,11 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="duim-graphics-library">
-<h1>DUIM-Graphics Library<a class="headerlink" href="#duim-graphics-library" title="Permalink to this heading">#</a></h1>
+<h1>DUIM-Graphics Library<a class="headerlink" href="#duim-graphics-library" title="Permalink to this heading">¶</a></h1>
 <section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
 <p>The DUIM-Graphics library contains interfaces that define a wide variety
 drawing operations for use in your GUI applications, as well as two
 classes. The library contains a single module, <em>duim-graphics</em>, from
@@ -498,7 +500,7 @@ layers, the adaptive toolkit layer where one specifies the desired
 functionality rather than the desired visual appearance.</p>
 </section>
 <section id="definitions">
-<h2>Definitions<a class="headerlink" href="#definitions" title="Permalink to this heading">#</a></h2>
+<h2>Definitions<a class="headerlink" href="#definitions" title="Permalink to this heading">¶</a></h2>
 <p>This section contains definitions of terms that will be used in this
 chapter.</p>
 <ul class="simple">
@@ -535,7 +537,7 @@ the manual <em>Library Reference: System and I/O</em>.</p></li>
 </ul>
 </section>
 <section id="drawing-is-approximate">
-<h2>Drawing is approximate<a class="headerlink" href="#drawing-is-approximate" title="Permalink to this heading">#</a></h2>
+<h2>Drawing is approximate<a class="headerlink" href="#drawing-is-approximate" title="Permalink to this heading">¶</a></h2>
 <p>Note that although the drawing plane contains an infinite number of
 mathematical points, and drawing can be described as an infinite number
 of color and opacity computations, the drawing plane cannot be viewed
@@ -604,7 +606,7 @@ existence of pixels nor the exact details of scan conversion, which will
 vary from one drawing engine to the next.</p>
 </section>
 <section id="rendering-conventions-for-geometric-shapes">
-<h2>Rendering conventions for geometric shapes<a class="headerlink" href="#rendering-conventions-for-geometric-shapes" title="Permalink to this heading">#</a></h2>
+<h2>Rendering conventions for geometric shapes<a class="headerlink" href="#rendering-conventions-for-geometric-shapes" title="Permalink to this heading">¶</a></h2>
 <p>This section describes the conventions for how DUIM renders a shape on a
 display device.</p>
 <p>When DUIM draws a geometric shape on a display device, the idealized
@@ -667,7 +669,7 @@ identical, but slightly smaller, unfilled shape.</p></li>
 <figure class="align-center" id="id1">
 <span id="how-pixels-are-defined-inside-outside"></span><img alt="../_images/graphics-3.png" src="../_images/graphics-3.png" />
 <figcaption>
-<p><span class="caption-text">How pixels are defined to be “inside” and “outside” shapes</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">How pixels are defined to be “inside” and “outside” shapes</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>It is important to note that these rules imply that the decision point
@@ -684,7 +686,7 @@ which side the inside of the figure is on is used to decide.</p>
 <figure class="align-center" id="id2">
 <span id="two-triangles"></span><img alt="../_images/graphics-4.png" src="../_images/graphics-4.png" />
 <figcaption>
-<p><span class="caption-text">Two triangles</span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Two triangles</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The reason for choosing the decision point half a pixel offset from the
@@ -701,7 +703,7 @@ points, leading to an undesirable lopsided figure.</p>
 <figure class="align-center" id="id3">
 <img alt="../_images/graphics-5.png" src="../_images/graphics-5.png" />
 <figcaption>
-<p><span class="caption-text">Choosing any two of the shaded pixels causes asymmetry</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Choosing any two of the shaded pixels causes asymmetry</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>If all four boundary points had been chosen instead, the result would be
@@ -713,7 +715,7 @@ is at the center of the pixel, but in the right-hand figure, it is not.</p>
 <figure class="align-center" id="id4">
 <span id="two-forms-of-circle-inscribed-in-a-square"></span><img alt="../_images/graphics-6.png" src="../_images/graphics-6.png" />
 <figcaption>
-<p><span class="caption-text">Two forms of a circle inscribed in a square</span><a class="headerlink" href="#id4" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Two forms of a circle inscribed in a square</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>It is for this reason that the decision point is at the center of the
@@ -722,7 +724,7 @@ pixel. This draws circles that look like the one in
 <figure class="align-center" id="id5">
 <span id="an-aesthetically-pleasing-circle"></span><img alt="../_images/graphics-7.png" src="../_images/graphics-7.png" />
 <figcaption>
-<p><span class="caption-text">An aesthetically pleasing circle</span><a class="headerlink" href="#id5" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">An aesthetically pleasing circle</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>A consequence of these rendering conventions is that, when the start or
@@ -739,7 +741,7 @@ corners. Therefore, in order for a path and an area to abut seamlessly,
 the coordinates of the path must be offset from the coordinates of the
 area by half the thickness of the path.</p>
 <section id="permissible-alternatives-during-rendering">
-<h3>Permissible alternatives during rendering<a class="headerlink" href="#permissible-alternatives-during-rendering" title="Permalink to this heading">#</a></h3>
+<h3>Permissible alternatives during rendering<a class="headerlink" href="#permissible-alternatives-during-rendering" title="Permalink to this heading">¶</a></h3>
 <p>Some platforms may distinguish between lines of the minimum thinness
 from lines that are thicker than that. The two rasterizations depicted
 in <a class="reference internal" href="#two-examples-of-lines-of-thickness-1"><span class="std std-ref">Two examples of lines of thickness 1</span></a> are
@@ -749,7 +751,7 @@ rectangle, the left as the “thinnest visible” line.</p>
 <figure class="align-center" id="id6">
 <span id="two-examples-of-lines-of-thickness-1"></span><img alt="../_images/graphics-8.png" src="../_images/graphics-8.png" />
 <figcaption>
-<p><span class="caption-text">Two examples of lines of thickness 1</span><a class="headerlink" href="#id6" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Two examples of lines of thickness 1</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>For thick lines, a platform may choose to draw the exact tilted fractional
@@ -760,7 +762,7 @@ faster on some platforms. The two rasterizations depicted in
 <figure class="align-center" id="id7">
 <span id="two-examples-of-lines-of-thickness-2"></span><img alt="../_images/graphics-9.png" src="../_images/graphics-9.png" />
 <figcaption>
-<p><span class="caption-text">Two examples of lines of thickness 2</span><a class="headerlink" href="#id7" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Two examples of lines of thickness 2</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The decision about which side of the shape to take when a boundary line
@@ -778,13 +780,13 @@ rectilinear borders around rectilinear areas.</p>
 <span id="two-possible-definitions-of-horizontal-lines"></span><img alt="../_images/graphics-10.png" src="../_images/graphics-10.png" />
 <figcaption>
 <p><span class="caption-text">Two possible definitions of horizontal lines.
-Left figure is X11 definition</span><a class="headerlink" href="#id8" title="Permalink to this image">#</a></p>
+Left figure is X11 definition</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
 </section>
 <section id="drawing-using-path-related-functions">
-<h2>Drawing using path related functions<a class="headerlink" href="#drawing-using-path-related-functions" title="Permalink to this heading">#</a></h2>
+<h2>Drawing using path related functions<a class="headerlink" href="#drawing-using-path-related-functions" title="Permalink to this heading">¶</a></h2>
 <p>A number of functions are provided that let you perform a number of
 connected drawing operations by encapsulating all the operations as a
 single path, rendering the graphic itself only when the whole path has
@@ -807,13 +809,13 @@ already used <a class="reference internal" href="#duim-graphics:duim-graphics:cl
 sections. For full details about each individual function, refer to its
 full reference entry in <a class="reference internal" href="#duim-graphics-module">DUIM-Graphics Module</a>.</p>
 <section id="functions-for-controlling-the-definition-of-a-path">
-<h3>Functions for controlling the definition of a path<a class="headerlink" href="#functions-for-controlling-the-definition-of-a-path" title="Permalink to this heading">#</a></h3>
+<h3>Functions for controlling the definition of a path<a class="headerlink" href="#functions-for-controlling-the-definition-of-a-path" title="Permalink to this heading">¶</a></h3>
 <p>The following generic functions provide overall control of the
 definition of a path. In each case, the argument <em>drawable</em> is either a
 sheet or a medium.</p>
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:start-path">
-<span class="sig-name descname"><span class="pre">start-path</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:start-path" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">start-path</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:start-path" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>start-path <em>drawable</em> =&gt; ()</p>
@@ -832,7 +834,7 @@ finish the path, or <a class="reference internal" href="#duim-graphics:duim-grap
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:end-path">
-<span class="sig-name descname"><span class="pre">end-path</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:end-path" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">end-path</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:end-path" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>end-path <em>drawable</em> =&gt; ()</p>
@@ -850,7 +852,7 @@ path.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:close-path">
-<span class="sig-name descname"><span class="pre">close-path</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:close-path" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">close-path</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:close-path" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>close-path <em>drawable</em> =&gt; ()</p>
@@ -868,7 +870,7 @@ in the path to create a closed, five-sided figure.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:abort-path">
-<span class="sig-name descname"><span class="pre">abort-path</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:abort-path" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">abort-path</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:abort-path" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>abort-path <em>drawable</em> =&gt; ()</p>
@@ -882,7 +884,7 @@ performed since the last call to <em>start-path</em> are discarded.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:fill-path">
-<span class="sig-name descname"><span class="pre">fill-path</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:fill-path" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">fill-path</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:fill-path" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>fill-path <em>drawable</em> =&gt; ()</p>
@@ -898,7 +900,7 @@ automatically.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:stroke-path">
-<span class="sig-name descname"><span class="pre">stroke-path</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:stroke-path" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">stroke-path</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:stroke-path" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>stroke-path <em>drawable</em> =&gt; ()</p>
@@ -913,13 +915,13 @@ close the path: you must use <a class="reference internal" href="#duim-graphics:
 
 </section>
 <section id="functions-for-describing-the-appearance-of-a-path">
-<h3>Functions for describing the appearance of a path<a class="headerlink" href="#functions-for-describing-the-appearance-of-a-path" title="Permalink to this heading">#</a></h3>
+<h3>Functions for describing the appearance of a path<a class="headerlink" href="#functions-for-describing-the-appearance-of-a-path" title="Permalink to this heading">¶</a></h3>
 <p>The following generic functions actually perform drawing operations
 within a path. Again, in each case, the argument <em>drawable</em> is either a
 sheet or a medium. All other arguments are instances of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#real"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;real&gt;</span></code></a>.</p>
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:line-to">
-<span class="sig-name descname"><span class="pre">line-to</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:line-to" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">line-to</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:line-to" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>line-to <em>drawable x y</em> =&gt; ()</p>
@@ -932,7 +934,7 @@ sheet or a medium. All other arguments are instances of <a class="reference exte
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:curve-to">
-<span class="sig-name descname"><span class="pre">curve-to</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:curve-to" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">curve-to</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:curve-to" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>curve-to <em>drawable x1 y1 x2 y2 x3 y3</em> =&gt; ()</p>
@@ -947,7 +949,7 @@ current position, and passing through (<em>x1</em>, <em>y1</em>), (<em>x2</em>, 
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:move-to">
-<span class="sig-name descname"><span class="pre">move-to</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:move-to" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">move-to</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:move-to" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>move-to <em>drawable x y</em> =&gt; ()</p>
@@ -964,7 +966,7 @@ sections within the same path.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:arc-to">
-<span class="sig-name descname"><span class="pre">arc-to</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:arc-to" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">arc-to</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:arc-to" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>arc-to <em>drawable center-x center-y radius-1-dx radius-1-dy radius-2-dx radius-2-dy</em> #key <em>start-angle end-angle</em> =&gt; ()</p>
@@ -999,7 +1001,7 @@ entries for each function.</p>
 </section>
 </section>
 <section id="duim-graphics-module">
-<h2>DUIM-Graphics Module<a class="headerlink" href="#duim-graphics-module" title="Permalink to this heading">#</a></h2>
+<h2>DUIM-Graphics Module<a class="headerlink" href="#duim-graphics-module" title="Permalink to this heading">¶</a></h2>
 <p>This section contains a complete reference of all the interfaces that
 are exported from the <em>duim-graphics</em> module.</p>
 <dl class="dylan generic-function">
@@ -1146,7 +1148,7 @@ a non-closed path automatically.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:copy-area">
-<span class="sig-name descname"><span class="pre">copy-area</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:copy-area" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">copy-area</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:copy-area" title="Permalink to this definition">¶</a></dt>
 <dd><p>Copies a rectangle of pixels from a specified medium to the same medium.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1184,7 +1186,7 @@ done by <em>medium-copy-copy</em>.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:copy-from-pixmap">
-<span class="sig-name descname"><span class="pre">copy-from-pixmap</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:copy-from-pixmap" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">copy-from-pixmap</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:copy-from-pixmap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Copies a rectangle of pixels from the specified pixmap to the specified
 medium.</p>
 <dl class="field-list simple">
@@ -1225,7 +1227,7 @@ transformation. The copying must be done by <em>medium-copy-copy</em>.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:copy-to-pixmap">
-<span class="sig-name descname"><span class="pre">copy-to-pixmap</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:copy-to-pixmap" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">copy-to-pixmap</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:copy-to-pixmap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Copies a rectangle of pixels from the specified medium to the specified
 pixmap.</p>
 <dl class="field-list simple">
@@ -1334,7 +1336,7 @@ loss of performance.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:destroy-pixmap">
-<span class="sig-name descname"><span class="pre">destroy-pixmap</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:destroy-pixmap" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">destroy-pixmap</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:destroy-pixmap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Destroys the specified pixmap.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1359,7 +1361,7 @@ loss of performance.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:do-with-output-to-pixmap">
-<span class="sig-name descname"><span class="pre">do-with-output-to-pixmap</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:do-with-output-to-pixmap" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">do-with-output-to-pixmap</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:do-with-output-to-pixmap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a pixmap for the specified medium.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1401,7 +1403,7 @@ enough to contain all of the output done by the body of code executed by
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:draw-arrow">
-<span class="sig-name descname"><span class="pre">draw-arrow</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-arrow" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">draw-arrow</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-arrow" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws an arrow between two specified points.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1470,7 +1472,7 @@ loss of performance.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:draw-bezier-curve">
-<span class="sig-name descname"><span class="pre">draw-bezier-curve</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-bezier-curve" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">draw-bezier-curve</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-bezier-curve" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws a bezier curve through the specified set of points.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1526,7 +1528,7 @@ function may lead to a loss of performance.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:draw-circle">
-<span class="sig-name descname"><span class="pre">draw-circle</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-circle" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">draw-circle</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-circle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws a circle with the specified center and radius.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1586,7 +1588,7 @@ loss of performance.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:draw-ellipse">
-<span class="sig-name descname"><span class="pre">draw-ellipse</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-ellipse" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">draw-ellipse</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-ellipse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws an ellipse with the specified center and radius vectors.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1663,7 +1665,7 @@ a loss of performance.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:draw-image">
-<span class="sig-name descname"><span class="pre">draw-image</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-image" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">draw-image</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws the specified image at the specified position.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1715,7 +1717,7 @@ loss of performance.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:draw-line">
-<span class="sig-name descname"><span class="pre">draw-line</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-line" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">draw-line</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws a line between the specified points.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1774,7 +1776,7 @@ loss of performance.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:draw-lines">
-<span class="sig-name descname"><span class="pre">draw-lines</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-lines" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">draw-lines</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-lines" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws a series of lines between the specified sequence of points.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1835,7 +1837,7 @@ loss of performance.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:draw-oval">
-<span class="sig-name descname"><span class="pre">draw-oval</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-oval" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">draw-oval</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-oval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws an oval with the specified center and radii.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1896,7 +1898,7 @@ loss of performance.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:draw-pixmap">
-<span class="sig-name descname"><span class="pre">draw-pixmap</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-pixmap" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">draw-pixmap</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-pixmap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws the contents of the specified pixmap at the specified point.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1951,7 +1953,7 @@ loss of performance.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:draw-point">
-<span class="sig-name descname"><span class="pre">draw-point</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-point" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">draw-point</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-point" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws a single point at the specified position.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2002,7 +2004,7 @@ loss of performance.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:draw-points">
-<span class="sig-name descname"><span class="pre">draw-points</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-points" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">draw-points</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-points" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws a sequence of points at the specified positions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2053,7 +2055,7 @@ loss of performance.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:draw-polygon">
-<span class="sig-name descname"><span class="pre">draw-polygon</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-polygon" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">draw-polygon</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-polygon" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws a polygon joining the specified points.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2112,7 +2114,7 @@ a loss of performance.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:draw-rectangle">
-<span class="sig-name descname"><span class="pre">draw-rectangle</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-rectangle" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">draw-rectangle</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-rectangle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws a rectangle at the specified position.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2178,7 +2180,7 @@ of performance.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:draw-rectangles">
-<span class="sig-name descname"><span class="pre">draw-rectangles</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-rectangles" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">draw-rectangles</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-rectangles" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws a sequence of rectangles at the specified positions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2234,7 +2236,7 @@ function may lead to a loss of performance.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:draw-regular-polygon">
-<span class="sig-name descname"><span class="pre">draw-regular-polygon</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-regular-polygon" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">draw-regular-polygon</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-regular-polygon" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws a regular polygon that touches the specified points, and has the
 specified number of sides.</p>
 <dl class="field-list simple">
@@ -2301,7 +2303,7 @@ using this function may lead to a loss of performance.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:draw-text">
-<span class="sig-name descname"><span class="pre">draw-text</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-text" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">draw-text</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws text at the specified point, in a specified direction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2388,7 +2390,7 @@ loss of performance.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:draw-triangle">
-<span class="sig-name descname"><span class="pre">draw-triangle</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-triangle" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">draw-triangle</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:draw-triangle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws a triangle between the specified points.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2574,7 +2576,7 @@ loss of performance.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:make-pixmap">
-<span class="sig-name descname"><span class="pre">make-pixmap</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:make-pixmap" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make-pixmap</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:make-pixmap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a pixmap from the specified medium with a specified size.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2668,7 +2670,7 @@ loss of performance.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:[pixmap]">
-<span class="sig-name descname"><span class="pre">&lt;pixmap&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:[pixmap]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;pixmap&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:[pixmap]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of pixmap objects.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -2715,7 +2717,7 @@ as needed.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:pixmap?">
-<span class="sig-name descname"><span class="pre">pixmap?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:pixmap?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">pixmap?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:pixmap?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if the specified object is a pixmap.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2745,7 +2747,7 @@ as needed.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:[pixmap-medium]">
-<span class="sig-name descname"><span class="pre">&lt;pixmap-medium&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:[pixmap-medium]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;pixmap-medium&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:[pixmap-medium]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of pixmap mediums.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -2773,7 +2775,7 @@ a pixmap.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:restore-clipping-region">
-<span class="sig-name descname"><span class="pre">restore-clipping-region</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:restore-clipping-region" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">restore-clipping-region</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:restore-clipping-region" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan generic-function">
@@ -2841,7 +2843,7 @@ you wish to do this.</p>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="duim-graphics:duim-graphics:with-output-to-pixmap">
-<span class="sig-name descname"><span class="pre">with-output-to-pixmap</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:with-output-to-pixmap" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">with-output-to-pixmap</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#duim-graphics:duim-graphics:with-output-to-pixmap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Executes a body of code, returning the results to a pixmap.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
@@ -2966,6 +2968,6 @@ graphics functions.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

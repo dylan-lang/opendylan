@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="The simple-format Module" href="simple-format.html" /><link rel="prev" title="The common-extensions Module" href="common-extensions.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>The machine-words Module - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="the-machine-words-module">
-<h1>The machine-words Module<a class="headerlink" href="#the-machine-words-module" title="Permalink to this heading">#</a></h1>
+<h1>The machine-words Module<a class="headerlink" href="#the-machine-words-module" title="Permalink to this heading">¶</a></h1>
 <p>This document describes a number of extensions to the Dylan language which are
 available from the <code class="docutils literal notranslate"><span class="pre">dylan</span></code> library.</p>
 <p>Throughout this document, arguments are instances of the class specified
@@ -479,7 +481,7 @@ implementation architecture. When running a 32 bit OS, a
 from all other classes specified by the Dylan language.</p>
 <p>The <a class="reference external" href="https://opendylan.org/books/drm/Equality_and_Comparison#identity"><code class="xref drm docutils literal notranslate"><span class="pre">==</span></code></a> function compares instances of <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a> by value.</p>
 <section id="useful-functions-from-the-dylan-module">
-<h2>Useful functions from the Dylan module<a class="headerlink" href="#useful-functions-from-the-dylan-module" title="Permalink to this heading">#</a></h2>
+<h2>Useful functions from the Dylan module<a class="headerlink" href="#useful-functions-from-the-dylan-module" title="Permalink to this heading">¶</a></h2>
 <p>This section describes additional methods defined in the <code class="docutils literal notranslate"><span class="pre">dylan</span></code> module that
 pertain to <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a>. Note that this section only describes
 extensions to the <code class="docutils literal notranslate"><span class="pre">dylan</span></code> library; for complete descriptions, you should also
@@ -488,7 +490,7 @@ refer to the <em>Dylan Reference Manual</em>.</p>
 uses the <code class="docutils literal notranslate"><span class="pre">dylan</span></code> library.</p>
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:odd?">
-<span class="sig-name descname"><span class="pre">odd?</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:odd?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">odd?</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:odd?" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>odd? m =&gt; r</p>
@@ -508,7 +510,7 @@ uses the <code class="docutils literal notranslate"><span class="pre">dylan</spa
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:even?">
-<span class="sig-name descname"><span class="pre">even?</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:even?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">even?</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:even?" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>even? m =&gt; r</p>
@@ -528,7 +530,7 @@ uses the <code class="docutils literal notranslate"><span class="pre">dylan</spa
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:zero?">
-<span class="sig-name descname"><span class="pre">zero?</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:zero?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">zero?</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:zero?" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>zero? m =&gt; r</p>
@@ -552,7 +554,7 @@ uses the <code class="docutils literal notranslate"><span class="pre">dylan</spa
 </div>
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:positive?">
-<span class="sig-name descname"><span class="pre">positive?</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:positive?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">positive?</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:positive?" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>positive? m =&gt; r</p>
@@ -572,7 +574,7 @@ uses the <code class="docutils literal notranslate"><span class="pre">dylan</spa
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:negative?">
-<span class="sig-name descname"><span class="pre">negative?</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:negative?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">negative?</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:negative?" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>negative? m =&gt; r</p>
@@ -594,7 +596,7 @@ uses the <code class="docutils literal notranslate"><span class="pre">dylan</spa
 integer value.</p>
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:\=">
-<span class="sig-name descname"><span class="pre">\=</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:\=" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">\=</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:\=" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>= m1 m2 =&gt; r</p>
@@ -627,7 +629,7 @@ interpreted as signed integer values.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:[">
-<span class="sig-name descname"><span class="pre">&lt;</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:[" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:[" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>&lt; m1 m2 =&gt; r</p>
@@ -660,7 +662,7 @@ interpreted as signed integer values.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:as">
-<span class="sig-name descname"><span class="pre">as</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:as" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">as</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:as" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>as t == &lt;integer&gt; m =&gt; r</p>
@@ -739,7 +741,7 @@ sign of <code class="docutils literal notranslate"><span class="pre">i</span></c
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:limited">
-<span class="sig-name descname"><span class="pre">limited</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:limited" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">limited</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:limited" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>limited t == &lt;machine-word&gt; #key signed? min max =&gt; r</p>
@@ -775,12 +777,12 @@ to instances of <a class="reference internal" href="#common-dylan:machine-words:
 
 </section>
 <section id="id1">
-<h2>The machine-words Module<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<h2>The machine-words Module<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
 <p>This section contains a reference entry for each item exported from the
 <code class="docutils literal notranslate"><span class="pre">machine-words</span></code> module, which is exported by the <code class="docutils literal notranslate"><span class="pre">common-dylan</span></code> library.</p>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:[machine-word]">
-<span class="sig-name descname"><span class="pre">&lt;machine-word&gt;</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#common-dylan:machine-words:[machine-word]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;machine-word&gt;</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#common-dylan:machine-words:[machine-word]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Summary<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The class of objects that can represent a limited range of integral
@@ -803,11 +805,11 @@ and in <a class="reference internal" href="#useful-functions-from-the-dylan-modu
 </dd></dl>
 
 <section id="variables">
-<h3>Variables<a class="headerlink" href="#variables" title="Permalink to this heading">#</a></h3>
+<h3>Variables<a class="headerlink" href="#variables" title="Permalink to this heading">¶</a></h3>
 <p>The following variables are exported from the <code class="docutils literal notranslate"><span class="pre">machine-words</span></code> module.</p>
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:$machine-word-size">
-<span class="sig-name descname"><span class="pre">$machine-word-size</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#common-dylan:machine-words:$machine-word-size" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$machine-word-size</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#common-dylan:machine-words:$machine-word-size" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a></p>
@@ -820,7 +822,7 @@ and in <a class="reference internal" href="#useful-functions-from-the-dylan-modu
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:$maximum-signed-machine-word">
-<span class="sig-name descname"><span class="pre">$maximum-signed-machine-word</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#common-dylan:machine-words:$maximum-signed-machine-word" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$maximum-signed-machine-word</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#common-dylan:machine-words:$maximum-signed-machine-word" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a></p>
@@ -833,7 +835,7 @@ and in <a class="reference internal" href="#useful-functions-from-the-dylan-modu
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:$minimum-signed-machine-word">
-<span class="sig-name descname"><span class="pre">$minimum-signed-machine-word</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#common-dylan:machine-words:$minimum-signed-machine-word" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$minimum-signed-machine-word</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#common-dylan:machine-words:$minimum-signed-machine-word" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a></p>
@@ -846,7 +848,7 @@ and in <a class="reference internal" href="#useful-functions-from-the-dylan-modu
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:$maximum-unsigned-machine-word">
-<span class="sig-name descname"><span class="pre">$maximum-unsigned-machine-word</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#common-dylan:machine-words:$maximum-unsigned-machine-word" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$maximum-unsigned-machine-word</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#common-dylan:machine-words:$maximum-unsigned-machine-word" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a></p>
@@ -859,7 +861,7 @@ and in <a class="reference internal" href="#useful-functions-from-the-dylan-modu
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:$minimum-unsigned-machine-word">
-<span class="sig-name descname"><span class="pre">$minimum-unsigned-machine-word</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#common-dylan:machine-words:$minimum-unsigned-machine-word" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$minimum-unsigned-machine-word</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#common-dylan:machine-words:$minimum-unsigned-machine-word" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a></p>
@@ -873,7 +875,7 @@ value.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:as-unsigned">
-<span class="sig-name descname"><span class="pre">as-unsigned</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:as-unsigned" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">as-unsigned</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:as-unsigned" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>as-unsigned t m =&gt; result</p>
@@ -899,14 +901,14 @@ is converted to type <code class="docutils literal notranslate"><span class="pre
 
 </section>
 <section id="basic-and-signed-single-word-operations">
-<h3>Basic and signed single word operations<a class="headerlink" href="#basic-and-signed-single-word-operations" title="Permalink to this heading">#</a></h3>
+<h3>Basic and signed single word operations<a class="headerlink" href="#basic-and-signed-single-word-operations" title="Permalink to this heading">¶</a></h3>
 <p>For all of the following functions, all arguments that are specified as being
 specialized to <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a> accept an instance of
 <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;abstract-integer&gt;</span></code>, which is then coerced to a <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a>
 before performing the operation.</p>
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:%logior">
-<span class="sig-name descname"><span class="pre">%logior</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%logior" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">%logior</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%logior" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>%logior #rest <em>machine-words</em> =&gt; r</p>
@@ -926,7 +928,7 @@ before performing the operation.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:%logxor">
-<span class="sig-name descname"><span class="pre">%logxor</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%logxor" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">%logxor</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%logxor" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>%logxor #rest <em>machine-words</em> =&gt; r</p>
@@ -946,7 +948,7 @@ before performing the operation.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:%logand">
-<span class="sig-name descname"><span class="pre">%logand</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%logand" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">%logand</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%logand" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>%logand #rest <em>machine-words</em> =&gt; r</p>
@@ -966,7 +968,7 @@ before performing the operation.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:%lognot">
-<span class="sig-name descname"><span class="pre">%lognot</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%lognot" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">%lognot</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%lognot" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>%lognot m =&gt; r</p>
@@ -989,7 +991,7 @@ before performing the operation.</p>
 <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a> instead of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p>
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:%logbit?">
-<span class="sig-name descname"><span class="pre">%logbit?</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%logbit?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">%logbit?</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%logbit?" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>%logbit? index m =&gt; set?</p>
@@ -1015,7 +1017,7 @@ significant bit) of <code class="docutils literal notranslate"><span class="pre"
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:%count-low-zeros">
-<span class="sig-name descname"><span class="pre">%count-low-zeros</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%count-low-zeros" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">%count-low-zeros</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%count-low-zeros" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>%count-low-zeros m =&gt; c</p>
@@ -1045,7 +1047,7 @@ all values of <code class="docutils literal notranslate"><span class="pre">j</sp
 </div>
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:%count-high-zeros">
-<span class="sig-name descname"><span class="pre">%count-high-zeros</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%count-high-zeros" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">%count-high-zeros</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%count-high-zeros" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>%count-high-zeros m =&gt; c</p>
@@ -1073,7 +1075,7 @@ if <code class="docutils literal notranslate"><span class="pre">i</span></code> 
 </div>
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:%count-ones">
-<span class="sig-name descname"><span class="pre">%count-ones</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%count-ones" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">%count-ones</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%count-ones" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>%count-ones m =&gt; c</p>
@@ -1092,7 +1094,7 @@ if <code class="docutils literal notranslate"><span class="pre">i</span></code> 
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:%+">
-<span class="sig-name descname"><span class="pre">%+</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%+" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">%+</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%+" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>%+ m1 m2 =&gt; sum overflow?</p>
@@ -1117,7 +1119,7 @@ if <code class="docutils literal notranslate"><span class="pre">i</span></code> 
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:%-">
-<span class="sig-name descname"><span class="pre">%-</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%-" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">%-</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%-" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>%- m1 m2 =&gt; difference overflow?</p>
@@ -1142,7 +1144,7 @@ if <code class="docutils literal notranslate"><span class="pre">i</span></code> 
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:%\*">
-<span class="sig-name descname"><span class="pre">%\*</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%\*" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">%\*</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%\*" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>%* m1 m2 =&gt; low high overflow?</p>
@@ -1169,7 +1171,7 @@ if <code class="docutils literal notranslate"><span class="pre">i</span></code> 
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:%floor/">
-<span class="sig-name descname"><span class="pre">%floor/</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%floor/" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">%floor/</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%floor/" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>%floor/ dividend divisor =&gt; quotient remainder</p>
@@ -1191,7 +1193,7 @@ if <code class="docutils literal notranslate"><span class="pre">i</span></code> 
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:%ceiling/">
-<span class="sig-name descname"><span class="pre">%ceiling/</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%ceiling/" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">%ceiling/</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%ceiling/" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>%ceiling/ dividend divisor =&gt; quotient remainder</p>
@@ -1213,7 +1215,7 @@ if <code class="docutils literal notranslate"><span class="pre">i</span></code> 
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:%round/">
-<span class="sig-name descname"><span class="pre">%round/</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%round/" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">%round/</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%round/" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>%round/ dividend divisor =&gt; quotient remainder</p>
@@ -1235,7 +1237,7 @@ if <code class="docutils literal notranslate"><span class="pre">i</span></code> 
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:%truncate/">
-<span class="sig-name descname"><span class="pre">%truncate/</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%truncate/" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">%truncate/</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%truncate/" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>%truncate/ dividend divisor =&gt; quotient remainder</p>
@@ -1257,7 +1259,7 @@ if <code class="docutils literal notranslate"><span class="pre">i</span></code> 
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:%divide">
-<span class="sig-name descname"><span class="pre">%divide</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%divide" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">%divide</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%divide" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>%divide/ dividend divisor =&gt; quotient remainder</p>
@@ -1300,7 +1302,7 @@ rounding is unspecified, as is the sign of the remainder.</p></li>
 zero or if the correct value for the quotient exceeds the machine word range.</p>
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:%negative">
-<span class="sig-name descname"><span class="pre">%negative</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%negative" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">%negative</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%negative" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>%negative m =&gt; r overflow?</p>
@@ -1321,7 +1323,7 @@ zero or if the correct value for the quotient exceeds the machine word range.</p
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:%abs">
-<span class="sig-name descname"><span class="pre">%abs</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%abs" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">%abs</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%abs" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>%abs m =&gt; r overflow?</p>
@@ -1342,7 +1344,7 @@ zero or if the correct value for the quotient exceeds the machine word range.</p
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:%shift-left">
-<span class="sig-name descname"><span class="pre">%shift-left</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%shift-left" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">%shift-left</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%shift-left" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>%shift-left m count =&gt; low high overflow?</p>
@@ -1370,7 +1372,7 @@ the high word result is a sign extension of the low word result.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:%shift-right">
-<span class="sig-name descname"><span class="pre">%shift-right</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%shift-right" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">%shift-right</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:%shift-right" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>%shift-right m count =&gt; r</p>
@@ -1395,14 +1397,14 @@ the high word result is a sign extension of the low word result.</p>
 
 </section>
 <section id="overflow-signaling-operations">
-<h3>Overflow signaling operations<a class="headerlink" href="#overflow-signaling-operations" title="Permalink to this heading">#</a></h3>
+<h3>Overflow signaling operations<a class="headerlink" href="#overflow-signaling-operations" title="Permalink to this heading">¶</a></h3>
 <p>For all of the following functions, all arguments that are specified as being
 specialized to <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a> accept an instance of
 <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;abstract-integer&gt;</span></code>, which is then coerced to a <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a>
 before performing the operation.</p>
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:so%+">
-<span class="sig-name descname"><span class="pre">so%+</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:so%+" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">so%+</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:so%+" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>so%+ m1 m2 =&gt; sum</p>
@@ -1426,7 +1428,7 @@ before performing the operation.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:so%-">
-<span class="sig-name descname"><span class="pre">so%-</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:so%-" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">so%-</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:so%-" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>so%- m1 m2 =&gt; difference</p>
@@ -1450,7 +1452,7 @@ before performing the operation.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:so%\*">
-<span class="sig-name descname"><span class="pre">so%\*</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:so%\*" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">so%\*</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:so%\*" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>so%* m1 m2 =&gt; product</p>
@@ -1474,7 +1476,7 @@ before performing the operation.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:so%negative">
-<span class="sig-name descname"><span class="pre">so%negative</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:so%negative" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">so%negative</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:so%negative" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>so%negative m =&gt; r</p>
@@ -1497,7 +1499,7 @@ before performing the operation.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:so%abs">
-<span class="sig-name descname"><span class="pre">so%abs</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:so%abs" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">so%abs</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:so%abs" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>so%abs m =&gt; r</p>
@@ -1520,7 +1522,7 @@ before performing the operation.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:so%shift-left">
-<span class="sig-name descname"><span class="pre">so%shift-left</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:so%shift-left" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">so%shift-left</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:so%shift-left" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>so%shift-left m count =&gt; r</p>
@@ -1545,14 +1547,14 @@ before performing the operation.</p>
 
 </section>
 <section id="signed-double-word-operations">
-<h3>Signed double word operations<a class="headerlink" href="#signed-double-word-operations" title="Permalink to this heading">#</a></h3>
+<h3>Signed double word operations<a class="headerlink" href="#signed-double-word-operations" title="Permalink to this heading">¶</a></h3>
 <p>For all of the following functions, all arguments that are specified as being
 specialized to <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a> accept an instance of
 <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;abstract-integer&gt;</span></code>, which is then coerced to a <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a>
 before performing the operation.</p>
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:d%floor/">
-<span class="sig-name descname"><span class="pre">d%floor/</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:d%floor/" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">d%floor/</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:d%floor/" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>d%floor/ dividend-low dividend-high divisor =&gt; quotient
@@ -1576,7 +1578,7 @@ remainder</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:d%ceiling/">
-<span class="sig-name descname"><span class="pre">d%ceiling/</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:d%ceiling/" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">d%ceiling/</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:d%ceiling/" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>d%ceiling/ dividend-low dividend-high divisor =&gt; quotient
@@ -1600,7 +1602,7 @@ remainder</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:d%round/">
-<span class="sig-name descname"><span class="pre">d%round/</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:d%round/" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">d%round/</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:d%round/" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>d%round/ dividend-low dividend-high divisor =&gt; quotient
@@ -1624,7 +1626,7 @@ remainder</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:d%truncate/">
-<span class="sig-name descname"><span class="pre">d%truncate/</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:d%truncate/" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">d%truncate/</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:d%truncate/" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>d%truncate/ dividend-low dividend-high divisor =&gt; quotient
@@ -1648,7 +1650,7 @@ remainder</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:d%divide">
-<span class="sig-name descname"><span class="pre">d%divide</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:d%divide" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">d%divide</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:d%divide" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>d%divide dividend-low dividend-high divisor =&gt; quotient
@@ -1694,14 +1696,14 @@ rounding is unspecified, as is the sign of the remainder.</p></li>
 zero or if the correct value for the quotient exceeds the machine word range.</p>
 </section>
 <section id="unsigned-single-word-operations">
-<h3>Unsigned single word operations<a class="headerlink" href="#unsigned-single-word-operations" title="Permalink to this heading">#</a></h3>
+<h3>Unsigned single word operations<a class="headerlink" href="#unsigned-single-word-operations" title="Permalink to this heading">¶</a></h3>
 <p>For all of the following functions, all arguments that are specified as being
 specialized to <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a> accept an instance of
 <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;abstract-integer&gt;</span></code>, which is then coerced to a <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a>
 before performing the operation.</p>
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:u%+">
-<span class="sig-name descname"><span class="pre">u%+</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:u%+" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">u%+</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:u%+" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>u%+ m1 m2 =&gt; sum carry</p>
@@ -1726,7 +1728,7 @@ before performing the operation.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:u%-">
-<span class="sig-name descname"><span class="pre">u%-</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:u%-" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">u%-</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:u%-" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>u%- m1 m2 =&gt; sum borrow</p>
@@ -1752,7 +1754,7 @@ before performing the operation.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:u%\*">
-<span class="sig-name descname"><span class="pre">u%\*</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:u%\*" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">u%\*</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:u%\*" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>u%* m1 m2 =&gt; low high</p>
@@ -1777,7 +1779,7 @@ before performing the operation.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:u%divide">
-<span class="sig-name descname"><span class="pre">u%divide</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:u%divide" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">u%divide</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:u%divide" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>u%divide dividend divisor =&gt; quotient remainder</p>
@@ -1808,7 +1810,7 @@ quotient and remainder such that</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:u%rotate-left">
-<span class="sig-name descname"><span class="pre">u%rotate-left</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:u%rotate-left" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">u%rotate-left</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:u%rotate-left" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>u%rotate-left m count =&gt; r</p>
@@ -1833,7 +1835,7 @@ quotient and remainder such that</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:u%rotate-right">
-<span class="sig-name descname"><span class="pre">u%rotate-right</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:u%rotate-right" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">u%rotate-right</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:u%rotate-right" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>u%rotate-right m count =&gt; r</p>
@@ -1858,7 +1860,7 @@ quotient and remainder such that</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:u%shift-left">
-<span class="sig-name descname"><span class="pre">u%shift-left</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:u%shift-left" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">u%shift-left</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:u%shift-left" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>u%shift-left m count =&gt; r</p>
@@ -1883,7 +1885,7 @@ quotient and remainder such that</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:u%shift-right">
-<span class="sig-name descname"><span class="pre">u%shift-right</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:u%shift-right" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">u%shift-right</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:u%shift-right" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>u%shift-right m count =&gt; r</p>
@@ -1908,7 +1910,7 @@ quotient and remainder such that</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:u%[">
-<span class="sig-name descname"><span class="pre">u%&lt;</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:u%[" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">u%&lt;</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:u%[" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>u%&lt; m1 m2 =&gt; smaller?</p>
@@ -1932,14 +1934,14 @@ quotient and remainder such that</p>
 
 </section>
 <section id="unsigned-double-word-operations">
-<h3>Unsigned double word operations<a class="headerlink" href="#unsigned-double-word-operations" title="Permalink to this heading">#</a></h3>
+<h3>Unsigned double word operations<a class="headerlink" href="#unsigned-double-word-operations" title="Permalink to this heading">¶</a></h3>
 <p>For all of the following functions, all arguments that are specified as being
 specialized to <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a> accept an instance of
 <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;abstract-integer&gt;</span></code>, which is then coerced to a <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a>
 before performing the operation.</p>
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:ud%divide">
-<span class="sig-name descname"><span class="pre">ud%divide</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:ud%divide" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ud%divide</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:ud%divide" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>ud%divide dividend-low dividend-high divisor =&gt; quotient remainder</p>
@@ -1972,7 +1974,7 @@ correct value for the <code class="docutils literal notranslate"><span class="pr
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:ud%shift-left">
-<span class="sig-name descname"><span class="pre">ud%shift-left</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:ud%shift-left" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ud%shift-left</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:ud%shift-left" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>ud%shift-left low high count =&gt; low high</p>
@@ -2000,7 +2002,7 @@ correct value for the <code class="docutils literal notranslate"><span class="pr
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:ud%shift-right">
-<span class="sig-name descname"><span class="pre">ud%shift-right</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:ud%shift-right" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ud%shift-right</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:ud%shift-right" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>ud%shift-right low high count =&gt; low high</p>
@@ -2110,6 +2112,6 @@ correct value for the <code class="docutils literal notranslate"><span class="pr
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Release Check-list" href="making-a-release.html" /><link rel="prev" title="Porting to a New Target Platform" href="porting.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>The PPML library - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="the-ppml-library">
-<h1>The PPML library<a class="headerlink" href="#the-ppml-library" title="Permalink to this heading">#</a></h1>
+<h1>The PPML library<a class="headerlink" href="#the-ppml-library" title="Permalink to this heading">¶</a></h1>
 <p>Program notes need to be stored and later displayed in browsers.  This
 presents us with two problems.  At the point of creation we have no way of
 knowing  the column width that will be used when the note is displayed.
@@ -487,7 +489,7 @@ The tokens available and their associated constructor functions are:</p>
 <p>Structure is provided through instances of <a class="reference internal" href="#ppml:ppml:[ppml-block]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;ppml-block&gt;</span></code></a> and
 <a class="reference internal" href="#ppml:ppml:[ppml-separator-block]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;ppml-separator-block&gt;</span></code></a> as they can contain subnodes of PPML.</p>
 <section id="constructing-a-ppml-document">
-<h2>Constructing a PPML Document<a class="headerlink" href="#constructing-a-ppml-document" title="Permalink to this heading">#</a></h2>
+<h2>Constructing a PPML Document<a class="headerlink" href="#constructing-a-ppml-document" title="Permalink to this heading">¶</a></h2>
 <p>Constructing a PPML document is typically done by using the various
 constructor functions:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">compiler-sideways</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="nb">as</span>
@@ -506,19 +508,19 @@ constructor functions:</p>
 </div>
 </section>
 <section id="printing-a-ppml-document">
-<h2>Printing a PPML Document<a class="headerlink" href="#printing-a-ppml-document" title="Permalink to this heading">#</a></h2>
+<h2>Printing a PPML Document<a class="headerlink" href="#printing-a-ppml-document" title="Permalink to this heading">¶</a></h2>
 <p>Given a PPML document, the best way to print it is via <a class="reference internal" href="#ppml:ppml:ppml-print"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">ppml-print</span></code></a>:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">ppml-print</span><span class="p">(</span><span class="n">ppml</span><span class="p">,</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;ppml-printer&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">margin:</span><span class="w"> </span><span class="mi">100</span><span class="p">));</span>
 </pre></div>
 </div>
 </section>
 <section id="the-ppml-module">
-<h2>The PPML module<a class="headerlink" href="#the-ppml-module" title="Permalink to this heading">#</a></h2>
+<h2>The PPML module<a class="headerlink" href="#the-ppml-module" title="Permalink to this heading">¶</a></h2>
 <section id="ppml-tokens-and-constructors">
-<h3>PPML Tokens and Constructors<a class="headerlink" href="#ppml-tokens-and-constructors" title="Permalink to this heading">#</a></h3>
+<h3>PPML Tokens and Constructors<a class="headerlink" href="#ppml-tokens-and-constructors" title="Permalink to this heading">¶</a></h3>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:[ppml]">
-<span class="sig-name descname"><span class="pre">&lt;ppml&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#ppml:ppml:[ppml]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;ppml&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#ppml:ppml:[ppml]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a></p>
@@ -531,7 +533,7 @@ constructor functions:</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:[ppml-block]">
-<span class="sig-name descname"><span class="pre">&lt;ppml-block&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#ppml:ppml:[ppml-block]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;ppml-block&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#ppml:ppml:[ppml-block]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#ppml:ppml:[ppml]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;ppml&gt;</span></code></a></p>
@@ -570,7 +572,7 @@ and truncates the output if it won’t fit on a line.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:ppml-block">
-<span class="sig-name descname"><span class="pre">ppml-block</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#ppml:ppml:ppml-block" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ppml-block</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#ppml:ppml:ppml-block" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>ppml-block (constituents #key offset type) =&gt; (ppml)</p>
@@ -595,7 +597,7 @@ and truncates the output if it won’t fit on a line.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:[ppml-break]">
-<span class="sig-name descname"><span class="pre">&lt;ppml-break&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#ppml:ppml:[ppml-break]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;ppml-break&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#ppml:ppml:[ppml-break]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#ppml:ppml:[ppml]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;ppml&gt;</span></code></a></p>
@@ -618,7 +620,7 @@ current line indent.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:ppml-break">
-<span class="sig-name descname"><span class="pre">ppml-break</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#ppml:ppml:ppml-break" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ppml-break</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#ppml:ppml:ppml-break" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>ppml-break (#key space offset) =&gt; (ppml)</p>
@@ -642,7 +644,7 @@ current line indent.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:[ppml-browser-aware-object]">
-<span class="sig-name descname"><span class="pre">&lt;ppml-browser-aware-object&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#ppml:ppml:[ppml-browser-aware-object]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;ppml-browser-aware-object&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#ppml:ppml:[ppml-browser-aware-object]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#ppml:ppml:[ppml]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;ppml&gt;</span></code></a></p>
@@ -664,7 +666,7 @@ as the representation may depend on browser settings.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:ppml-browser-aware-object">
-<span class="sig-name descname"><span class="pre">ppml-browser-aware-object</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#ppml:ppml:ppml-browser-aware-object" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ppml-browser-aware-object</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#ppml:ppml:ppml-browser-aware-object" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>ppml-browser-aware-object (o) =&gt; (ppml)</p>
@@ -687,7 +689,7 @@ as the representation may depend on browser settings.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:[ppml-separator-block]">
-<span class="sig-name descname"><span class="pre">&lt;ppml-separator-block&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#ppml:ppml:[ppml-separator-block]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;ppml-separator-block&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#ppml:ppml:[ppml-separator-block]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#ppml:ppml:[ppml-block]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;ppml-block&gt;</span></code></a></p>
@@ -710,7 +712,7 @@ to explicitly store the separators between elements.  The
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:ppml-separator-block">
-<span class="sig-name descname"><span class="pre">ppml-separator-block</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#ppml:ppml:ppml-separator-block" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ppml-separator-block</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#ppml:ppml:ppml-separator-block" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>ppml-separator-block (constituents #key separator offset type left-bracket right-bracket) =&gt; (ppml)</p>
@@ -739,7 +741,7 @@ The default value is <code class="docutils literal notranslate"><span class="pre
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:[ppml-string]">
-<span class="sig-name descname"><span class="pre">&lt;ppml-string&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#ppml:ppml:[ppml-string]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;ppml-string&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#ppml:ppml:[ppml-string]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#ppml:ppml:[ppml]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;ppml&gt;</span></code></a></p>
@@ -757,7 +759,7 @@ The default value is <code class="docutils literal notranslate"><span class="pre
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:ppml-string">
-<span class="sig-name descname"><span class="pre">ppml-string</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#ppml:ppml:ppml-string" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ppml-string</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#ppml:ppml:ppml-string" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>ppml-string (str) =&gt; (ppml)</p>
@@ -780,7 +782,7 @@ The default value is <code class="docutils literal notranslate"><span class="pre
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:[ppml-suspension]">
-<span class="sig-name descname"><span class="pre">&lt;ppml-suspension&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#ppml:ppml:[ppml-suspension]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;ppml-suspension&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#ppml:ppml:[ppml-suspension]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#ppml:ppml:[ppml]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;ppml&gt;</span></code></a></p>
@@ -808,7 +810,7 @@ pair by the result.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:ppml-suspension">
-<span class="sig-name descname"><span class="pre">ppml-suspension</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#ppml:ppml:ppml-suspension" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ppml-suspension</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#ppml:ppml:ppml-suspension" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>ppml-suspension (fun #rest args) =&gt; (ppml)</p>
@@ -832,10 +834,10 @@ pair by the result.</p>
 
 </section>
 <section id="conversion-to-ppml">
-<h3>Conversion to PPML<a class="headerlink" href="#conversion-to-ppml" title="Permalink to this heading">#</a></h3>
+<h3>Conversion to PPML<a class="headerlink" href="#conversion-to-ppml" title="Permalink to this heading">¶</a></h3>
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:as(class==[ppml],[object])">
-<span class="sig-name descname"><span class="pre">as(class</span> <span class="pre">==</span> <span class="pre">&lt;ppml&gt;,</span> <span class="pre">&lt;object&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#ppml:ppml:as(class==[ppml],[object])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">as(class</span> <span class="pre">==</span> <span class="pre">&lt;ppml&gt;,</span> <span class="pre">&lt;object&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#ppml:ppml:as(class==[ppml],[object])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -858,7 +860,7 @@ with <code class="docutils literal notranslate"><span class="pre">format-to-stri
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:as(class==[ppml],[byte-string])">
-<span class="sig-name descname"><span class="pre">as(class</span> <span class="pre">==</span> <span class="pre">&lt;ppml&gt;,</span> <span class="pre">&lt;byte-string&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#ppml:ppml:as(class==[ppml],[byte-string])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">as(class</span> <span class="pre">==</span> <span class="pre">&lt;ppml&gt;,</span> <span class="pre">&lt;byte-string&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#ppml:ppml:as(class==[ppml],[byte-string])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -879,7 +881,7 @@ with <code class="docutils literal notranslate"><span class="pre">format-to-stri
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:as(class==[ppml],[symbol])">
-<span class="sig-name descname"><span class="pre">as(class</span> <span class="pre">==</span> <span class="pre">&lt;ppml&gt;,</span> <span class="pre">&lt;symbol&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#ppml:ppml:as(class==[ppml],[symbol])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">as(class</span> <span class="pre">==</span> <span class="pre">&lt;ppml&gt;,</span> <span class="pre">&lt;symbol&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#ppml:ppml:as(class==[ppml],[symbol])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -900,7 +902,7 @@ with <code class="docutils literal notranslate"><span class="pre">format-to-stri
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:as(class==[ppml],[collection])">
-<span class="sig-name descname"><span class="pre">as(class</span> <span class="pre">==</span> <span class="pre">&lt;ppml&gt;,</span> <span class="pre">&lt;collection&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#ppml:ppml:as(class==[ppml],[collection])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">as(class</span> <span class="pre">==</span> <span class="pre">&lt;ppml&gt;,</span> <span class="pre">&lt;collection&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#ppml:ppml:as(class==[ppml],[collection])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -922,7 +924,7 @@ surrounded by <code class="docutils literal notranslate"><span class="pre">#(...
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:as(class==[ppml],[explicit-key-collection])">
-<span class="sig-name descname"><span class="pre">as(class</span> <span class="pre">==</span> <span class="pre">&lt;ppml&gt;,</span> <span class="pre">&lt;explicit-key-collection&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#ppml:ppml:as(class==[ppml],[explicit-key-collection])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">as(class</span> <span class="pre">==</span> <span class="pre">&lt;ppml&gt;,</span> <span class="pre">&lt;explicit-key-collection&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#ppml:ppml:as(class==[ppml],[explicit-key-collection])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -943,7 +945,7 @@ surrounded by <code class="docutils literal notranslate"><span class="pre">#(...
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:as(class==[ppml],[vector])">
-<span class="sig-name descname"><span class="pre">as(class</span> <span class="pre">==</span> <span class="pre">&lt;ppml&gt;,</span> <span class="pre">&lt;vector&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#ppml:ppml:as(class==[ppml],[vector])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">as(class</span> <span class="pre">==</span> <span class="pre">&lt;ppml&gt;,</span> <span class="pre">&lt;vector&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#ppml:ppml:as(class==[ppml],[vector])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -965,7 +967,7 @@ surrounded by <code class="docutils literal notranslate"><span class="pre">#[...
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:as(class==[ppml],[list])">
-<span class="sig-name descname"><span class="pre">as(class</span> <span class="pre">==</span> <span class="pre">&lt;ppml&gt;,</span> <span class="pre">&lt;list&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#ppml:ppml:as(class==[ppml],[list])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">as(class</span> <span class="pre">==</span> <span class="pre">&lt;ppml&gt;,</span> <span class="pre">&lt;list&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#ppml:ppml:as(class==[ppml],[list])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -987,10 +989,10 @@ surrounded by <code class="docutils literal notranslate"><span class="pre">#(...
 
 </section>
 <section id="printing-formatting">
-<h3>Printing / Formatting<a class="headerlink" href="#printing-formatting" title="Permalink to this heading">#</a></h3>
+<h3>Printing / Formatting<a class="headerlink" href="#printing-formatting" title="Permalink to this heading">¶</a></h3>
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:format-to-ppml">
-<span class="sig-name descname"><span class="pre">format-to-ppml</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#ppml:ppml:format-to-ppml" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">format-to-ppml</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#ppml:ppml:format-to-ppml" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>format-to-ppml (string #rest args) =&gt; (ppml)</p>
@@ -1019,7 +1021,7 @@ if the same format expression is used multiple times.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:ppml-format-string">
-<span class="sig-name descname"><span class="pre">ppml-format-string</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#ppml:ppml:ppml-format-string" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ppml-format-string</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#ppml:ppml:ppml-format-string" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>ppml-format-string (string) =&gt; (f)</p>
@@ -1042,7 +1044,7 @@ if the same format expression is used multiple times.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:ppml-print">
-<span class="sig-name descname"><span class="pre">ppml-print</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#ppml:ppml:ppml-print" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ppml-print</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#ppml:ppml:ppml-print" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>ppml-print (t pp) =&gt; ()</p>
@@ -1061,7 +1063,7 @@ if the same format expression is used multiple times.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:ppml-print-one-line">
-<span class="sig-name descname"><span class="pre">ppml-print-one-line</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#ppml:ppml:ppml-print-one-line" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ppml-print-one-line</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#ppml:ppml:ppml-print-one-line" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>ppml-print-one-line (t pp) =&gt; ()</p>
@@ -1082,7 +1084,7 @@ a line-break-type of <code class="docutils literal notranslate"><span class="pre
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:[ppml-printer]">
-<span class="sig-name descname"><span class="pre">&lt;ppml-printer&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#ppml:ppml:[ppml-printer]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;ppml-printer&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#ppml:ppml:[ppml-printer]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a></p>
@@ -1116,10 +1118,10 @@ to <code class="docutils literal notranslate"><span class="pre">#&quot;fit&quot;
 
 </section>
 <section id="type-aliases-and-constants">
-<h3>Type Aliases and Constants<a class="headerlink" href="#type-aliases-and-constants" title="Permalink to this heading">#</a></h3>
+<h3>Type Aliases and Constants<a class="headerlink" href="#type-aliases-and-constants" title="Permalink to this heading">¶</a></h3>
 <dl class="dylan type">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:[nat]">
-<span class="sig-name descname"><span class="pre">&lt;nat&gt;</span></span> <em class="property"><span class="pre">Type</span></em><a class="headerlink" href="#ppml:ppml:[nat]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;nat&gt;</span></span> <em class="property"><span class="pre">Type</span></em><a class="headerlink" href="#ppml:ppml:[nat]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Equivalent<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">limited(&lt;integer&gt;,</span> <span class="pre">min:</span> <span class="pre">0)</span></code></p>
@@ -1129,7 +1131,7 @@ to <code class="docutils literal notranslate"><span class="pre">#&quot;fit&quot;
 
 <dl class="dylan type">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:[ppml-break-type]">
-<span class="sig-name descname"><span class="pre">&lt;ppml-break-type&gt;</span></span> <em class="property"><span class="pre">Type</span></em><a class="headerlink" href="#ppml:ppml:[ppml-break-type]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;ppml-break-type&gt;</span></span> <em class="property"><span class="pre">Type</span></em><a class="headerlink" href="#ppml:ppml:[ppml-break-type]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Equivalent<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">one-of(#&quot;consistent&quot;,</span> <span class="pre">#&quot;inconsistent&quot;,</span> <span class="pre">#&quot;fit&quot;)</span></code></p>
@@ -1139,7 +1141,7 @@ to <code class="docutils literal notranslate"><span class="pre">#&quot;fit&quot;
 
 <dl class="dylan type">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:[ppml-sequence]">
-<span class="sig-name descname"><span class="pre">&lt;ppml-sequence&gt;</span></span> <em class="property"><span class="pre">Type</span></em><a class="headerlink" href="#ppml:ppml:[ppml-sequence]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;ppml-sequence&gt;</span></span> <em class="property"><span class="pre">Type</span></em><a class="headerlink" href="#ppml:ppml:[ppml-sequence]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Equivalent<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a></p>
@@ -1156,7 +1158,7 @@ to <code class="docutils literal notranslate"><span class="pre">#&quot;fit&quot;
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="ppml:ppml:$line-break">
-<span class="sig-name descname"><span class="pre">$line-break</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#ppml:ppml:$line-break" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$line-break</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#ppml:ppml:$line-break" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Value<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">ppml-break(space:</span> <span class="pre">999)</span></code></p>
@@ -1251,6 +1253,6 @@ than the column width.</p>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

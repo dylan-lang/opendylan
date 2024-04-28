@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Dispatch Optimization Coloring in the Editor" href="coloring.html" /><link rel="prev" title="Debugging and Interactive Development" href="debug.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Remote Debugging - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,11 +463,11 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="remote-debugging">
-<span id="index-0"></span><h1>Remote Debugging<a class="headerlink" href="#remote-debugging" title="Permalink to this heading">#</a></h1>
+<span id="index-0"></span><h1>Remote Debugging<a class="headerlink" href="#remote-debugging" title="Permalink to this heading">¶</a></h1>
 <section id="running-a-dylan-application-on-a-remote-machine">
-<h2>Running a Dylan application on a remote machine<a class="headerlink" href="#running-a-dylan-application-on-a-remote-machine" title="Permalink to this heading">#</a></h2>
+<h2>Running a Dylan application on a remote machine<a class="headerlink" href="#running-a-dylan-application-on-a-remote-machine" title="Permalink to this heading">¶</a></h2>
 <p>Open Dylan offers a facility for running, debugging, and interacting
 with a Dylan application, DLL, or OLE control (“program” hereafter)
 running on a remote machine—that is, a networked machine other than
@@ -477,7 +479,7 @@ running, debugging, and interacting with a program are exactly the same
 as for the local machine, but there are a few initial configuration
 issues to cover.</p>
 <section id="installing-the-program-and-debugging-server-on-the-remote-machine">
-<span id="index-1"></span><h3>Installing the program and debugging server on the remote machine<a class="headerlink" href="#installing-the-program-and-debugging-server-on-the-remote-machine" title="Permalink to this heading">#</a></h3>
+<span id="index-1"></span><h3>Installing the program and debugging server on the remote machine<a class="headerlink" href="#installing-the-program-and-debugging-server-on-the-remote-machine" title="Permalink to this heading">¶</a></h3>
 <p>To do anything with a Dylan program on a remote machine, the program has
 to be installed there. It may be there already—if, for instance, you are
 working with another Dylan developer—but if it is not, you must install
@@ -497,7 +499,7 @@ resides in the <em>Extras</em> folder at the top-level of your Dylan CD-ROM.</p>
 </ol>
 </section>
 <section id="starting-the-debugging-server">
-<span id="index-2"></span><h3>Starting the debugging server<a class="headerlink" href="#starting-the-debugging-server" title="Permalink to this heading">#</a></h3>
+<span id="index-2"></span><h3>Starting the debugging server<a class="headerlink" href="#starting-the-debugging-server" title="Permalink to this heading">¶</a></h3>
 <p>Whenever you try to invoke the program on the remote machine, Open
 Dylan expects to be able to talk to the debugging server application on
 the remote machine. If this server is not running on the remote machine,
@@ -528,7 +530,7 @@ the window.</p>
 IDE, where you will be ready to run Dylan programs remotely.</p>
 </section>
 <section id="starting-an-application-remotely">
-<h3>Starting an application remotely<a class="headerlink" href="#starting-an-application-remotely" title="Permalink to this heading">#</a></h3>
+<h3>Starting an application remotely<a class="headerlink" href="#starting-an-application-remotely" title="Permalink to this heading">¶</a></h3>
 <p>Running and debugging an application on a remote machine is identical in
 almost every respect to using your local machine. You can use the three
 menu items <strong>Application &gt; Start</strong>, <strong>Application &gt; Debug</strong> and
@@ -584,7 +586,7 @@ connection automatically when you next open and try to run the project.</p>
 </section>
 </section>
 <section id="attaching-to-running-processes">
-<span id="index-3"></span><h2>Attaching to running processes<a class="headerlink" href="#attaching-to-running-processes" title="Permalink to this heading">#</a></h2>
+<span id="index-3"></span><h2>Attaching to running processes<a class="headerlink" href="#attaching-to-running-processes" title="Permalink to this heading">¶</a></h2>
 <p>The three commands <strong>Application &gt; Start</strong>, <strong>Application &gt; Debug</strong> and
 <strong>Application &gt; Interact</strong> are all used to launch a program from within
 Open Dylan. But if the program is running already, perhaps even
@@ -700,6 +702,6 @@ the same way as described in <a class="reference internal" href="#starting-an-ap
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

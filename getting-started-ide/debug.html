@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Remote Debugging" href="remotedbg.html" /><link rel="prev" title="Learning More About an Application" href="browsing.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Debugging and Interactive Development - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,13 +463,13 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="debugging-and-interactive-development">
-<h1>Debugging and Interactive Development<a class="headerlink" href="#debugging-and-interactive-development" title="Permalink to this heading">#</a></h1>
+<h1>Debugging and Interactive Development<a class="headerlink" href="#debugging-and-interactive-development" title="Permalink to this heading">¶</a></h1>
 <p>In this chapter, we look more closely at Open Dylan’s debugger
 tool.</p>
 <section id="the-debugger">
-<span id="index-0"></span><h2>The debugger<a class="headerlink" href="#the-debugger" title="Permalink to this heading">#</a></h2>
+<span id="index-0"></span><h2>The debugger<a class="headerlink" href="#the-debugger" title="Permalink to this heading">¶</a></h2>
 <p>The debugger is a tool for browsing and interacting with a paused
 application thread. Any thread in an application can be viewed in the
 debugger (or you can use separate debugger windows for different
@@ -482,7 +484,7 @@ paused application thread. Simply enter Dylan code at a prompt, and the
 code is executed in the context of the paused thread.</p>
 </section>
 <section id="debugger-panes">
-<h2>Debugger panes<a class="headerlink" href="#debugger-panes" title="Permalink to this heading">#</a></h2>
+<h2>Debugger panes<a class="headerlink" href="#debugger-panes" title="Permalink to this heading">¶</a></h2>
 <p>We now take a look at the basic debugger window panes.</p>
 <p>The easiest way to bring up the debugger is to choose <strong>Application &gt;
 Debug</strong> in the project tool. This starts the application, then pauses its
@@ -493,13 +495,13 @@ application, exit it now.</p>
 <figure class="align-center" id="id7">
 <img alt="../_images/debugger.png" src="../_images/debugger.png" />
 <figcaption>
-<p><span class="caption-text">The debugger.</span><a class="headerlink" href="#id7" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">The debugger.</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The debugger has four panes: the context pane, the stack pane, the
 source pane, and the interaction pane.</p>
 <section id="context-pane">
-<h3>Context pane<a class="headerlink" href="#context-pane" title="Permalink to this heading">#</a></h3>
+<h3>Context pane<a class="headerlink" href="#context-pane" title="Permalink to this heading">¶</a></h3>
 <p>The pane at the top of the debugger is the <em>context</em> pane. The context
 pane gives an overview of the state of the application thread to which
 the debugger is attached. You can hide the context pane by using <strong>View &gt;
@@ -507,7 +509,7 @@ Context Window</strong>.</p>
 <figure class="align-center" id="id8">
 <img alt="../_images/dbgctxt.png" src="../_images/dbgctxt.png" />
 <figcaption>
-<p><span class="caption-text">The debugger’s context pane.</span><a class="headerlink" href="#id8" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">The debugger’s context pane.</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Here, the application stopped because there is a breakpoint on the call
@@ -535,7 +537,7 @@ will be taken upon them in the Debugger Options dialog. See
 <a class="reference internal" href="#id5">Debugger options</a>.</p>
 </section>
 <section id="stack-pane">
-<h3>Stack pane<a class="headerlink" href="#stack-pane" title="Permalink to this heading">#</a></h3>
+<h3>Stack pane<a class="headerlink" href="#stack-pane" title="Permalink to this heading">¶</a></h3>
 <p>The <em>stack</em> pane shows the thread’s control stack at the moment it was
 paused, with certain call frames filtered out. It depicts the stack in a
 tree view. We call this a <em>stack backtrace</em> or <em>backtrace</em>.</p>
@@ -564,7 +566,7 @@ a pop-up menu. The menu allows you to carry out other operations on
 them, such as browsing their values or editing their source code
 representation. Double-clicking an item opens it in the browser.</p>
 <section id="thread-titles">
-<h4>Thread titles<a class="headerlink" href="#thread-titles" title="Permalink to this heading">#</a></h4>
+<h4>Thread titles<a class="headerlink" href="#thread-titles" title="Permalink to this heading">¶</a></h4>
 <p>The root node in the backtrace is the number and title of the thread.
 Threads are assigned titles using the following scheme:</p>
 <ul class="simple">
@@ -582,7 +584,7 @@ title derived according to the scheme above.</p>
 <p>In Reversi, there is only one thread, the main thread.</p>
 </section>
 <section id="call-frames">
-<span id="id1"></span><h4>Call frames<a class="headerlink" href="#call-frames" title="Permalink to this heading">#</a></h4>
+<span id="id1"></span><h4>Call frames<a class="headerlink" href="#call-frames" title="Permalink to this heading">¶</a></h4>
 <p>Under the root node, at the first level of expansion, the stack pane
 lists the call frames in the backtrace. The most recently executed call
 frame is listed first.</p>
@@ -625,12 +627,12 @@ string. See <a class="reference internal" href="#id6">Stack options</a>.</p>
 <figure class="align-center" id="id9">
 <img alt="../_images/dbgbak.png" src="../_images/dbgbak.png" />
 <figcaption>
-<p><span class="caption-text">The debugger’s stack pane.</span><a class="headerlink" href="#id9" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">The debugger’s stack pane.</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
 <section id="local-variables-and-call-parameters">
-<h4>Local variables and call parameters<a class="headerlink" href="#local-variables-and-call-parameters" title="Permalink to this heading">#</a></h4>
+<h4>Local variables and call parameters<a class="headerlink" href="#local-variables-and-call-parameters" title="Permalink to this heading">¶</a></h4>
 <p>Some call frames shown in the backtrace can be expanded one level
 further. At this final level of expansion, the pane shows the values of
 the local variable bindings, including the values that were passed as
@@ -649,7 +651,7 @@ sequences thereof can be printed literally, but an instance of
 </section>
 </section>
 <section id="source-pane">
-<h3>Source pane<a class="headerlink" href="#source-pane" title="Permalink to this heading">#</a></h3>
+<h3>Source pane<a class="headerlink" href="#source-pane" title="Permalink to this heading">¶</a></h3>
 <p id="index-1">The debugger’s source pane shows a source code definition for the method
 or function that created the call frame that is currently selected in
 the stack pane.</p>
@@ -674,7 +676,7 @@ execution will resume when a function returns.</p>
 <figure class="align-center" id="id10">
 <img alt="../_images/source.png" src="../_images/source.png" />
 <figcaption>
-<p><span class="caption-text">The current location arrow in the debugger’s source pane.</span><a class="headerlink" href="#id10" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">The current location arrow in the debugger’s source pane.</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The line at which the arrow is located is not always precisely correct,
@@ -687,7 +689,7 @@ increased when compiling a project in Production mode.</p>
 of the execution of <em>play-reversi</em>.</p>
 </section>
 <section id="interaction-pane">
-<span id="index-3"></span><h3>Interaction pane<a class="headerlink" href="#interaction-pane" title="Permalink to this heading">#</a></h3>
+<span id="index-3"></span><h3>Interaction pane<a class="headerlink" href="#interaction-pane" title="Permalink to this heading">¶</a></h3>
 <p>The interaction pane allows you to enter Dylan expressions for
 evaluation in the context of the paused thread. (In some language
 implementations, an interaction tool like this is called a <em>listener</em>.)</p>
@@ -702,7 +704,7 @@ as the standard output.</p>
 </section>
 </section>
 <section id="keeping-debugger-windows-up-to-date">
-<h2>Keeping debugger windows up to date<a class="headerlink" href="#keeping-debugger-windows-up-to-date" title="Permalink to this heading">#</a></h2>
+<h2>Keeping debugger windows up to date<a class="headerlink" href="#keeping-debugger-windows-up-to-date" title="Permalink to this heading">¶</a></h2>
 <p>It can be costly to keep all the panes of open debugger windows up to
 date. For this reason, Open Dylan only refreshes the information in
 debugger windows in certain circumstances.</p>
@@ -737,7 +739,7 @@ ignored and every open debugger window is refreshed whenever the
 application pauses.</p>
 </section>
 <section id="controlling-execution">
-<span id="index-4"></span><h2>Controlling execution<a class="headerlink" href="#controlling-execution" title="Permalink to this heading">#</a></h2>
+<span id="index-4"></span><h2>Controlling execution<a class="headerlink" href="#controlling-execution" title="Permalink to this heading">¶</a></h2>
 <p>The <strong>Application</strong> menu, shared by the debugger, editor, and project
 windows, contains a set of commands for controlling the execution of an
 application or DLL. Some toolbar buttons provide shortcuts to these
@@ -753,7 +755,7 @@ is not available in the editor if the source file being edited is not
 part of the active project — the project whose name is visible in the main
 window’s drop-down list. See <a class="reference internal" href="#the-active-project">The active project</a> for more details.)</p>
 <section id="starting-and-stopping-applications">
-<span id="index-5"></span><h3>Starting and stopping applications<a class="headerlink" href="#starting-and-stopping-applications" title="Permalink to this heading">#</a></h3>
+<span id="index-5"></span><h3>Starting and stopping applications<a class="headerlink" href="#starting-and-stopping-applications" title="Permalink to this heading">¶</a></h3>
 <p><strong>Application &gt; Start</strong> (or the toolbar start/resume button (<img alt="image4" src="../_images/start.png" />))
 executes the application with which the window is associated.</p>
 <p>After you have started executing an application, the <strong>Application &gt;
@@ -769,7 +771,7 @@ termination that loses valuable application state.</p>
 again with <strong>Application &gt; Start</strong>.</p>
 </section>
 <section id="pausing-and-resuming-execution-of-applications">
-<span id="index-6"></span><h3>Pausing and resuming execution of applications<a class="headerlink" href="#pausing-and-resuming-execution-of-applications" title="Permalink to this heading">#</a></h3>
+<span id="index-6"></span><h3>Pausing and resuming execution of applications<a class="headerlink" href="#pausing-and-resuming-execution-of-applications" title="Permalink to this heading">¶</a></h3>
 <p><strong>Application &gt; Pause</strong> (or the toolbar pause button (<img alt="image6" src="../_images/pause.png" />)) pauses
 the execution of the application with which the window is associated.</p>
 <p>When an application is paused, you can browse and debug its threads or
@@ -790,7 +792,7 @@ application should still be available, so you can continue by signalling
 a restart as before. See <a class="reference internal" href="#restarts">Restarts</a> for more details.</p>
 </section>
 <section id="restarting-applications">
-<h3>Restarting applications<a class="headerlink" href="#restarting-applications" title="Permalink to this heading">#</a></h3>
+<h3>Restarting applications<a class="headerlink" href="#restarting-applications" title="Permalink to this heading">¶</a></h3>
 <p><strong>Application &gt; Restart</strong> restarts the application with which the window
 is associated. There is no toolbar shortcut button for this command.</p>
 <p>This command is only available if the application is already running.
@@ -799,7 +801,7 @@ starting it again, choosing this command is equivalent to choosing
 <strong>Application &gt; Stop</strong>, then <strong>Application &gt; Start</strong>.</p>
 </section>
 <section id="interacting-with-applications">
-<span id="index-7"></span><h3>Interacting with applications<a class="headerlink" href="#interacting-with-applications" title="Permalink to this heading">#</a></h3>
+<span id="index-7"></span><h3>Interacting with applications<a class="headerlink" href="#interacting-with-applications" title="Permalink to this heading">¶</a></h3>
 <p><strong>Application &gt; Interact</strong> (or the toolbar interact button (<img alt="image8" src="../_images/interact.png" />))
 pauses the execution of the application with which the window is
 associated and opens a debugger window on it. The behavior is exactly
@@ -809,14 +811,14 @@ except the stack and source panes of the debugger window are hidden.</p>
 </section>
 </section>
 <section id="debugging-techniques">
-<span id="id2"></span><h2>Debugging techniques<a class="headerlink" href="#debugging-techniques" title="Permalink to this heading">#</a></h2>
+<span id="id2"></span><h2>Debugging techniques<a class="headerlink" href="#debugging-techniques" title="Permalink to this heading">¶</a></h2>
 <p>Because of the different characteristics of executable (EXE) files,
 DLLs, and OLE components, in each case there is a slightly different
 technique for invoking the debugger. This section covers these
 techniques. Debugging a client/server application is discussed in
 <a class="reference internal" href="#debugging-client-server-applications">Debugging client/server applications</a>.</p>
 <section id="debugging-executables">
-<span id="index-8"></span><h3>Debugging executables<a class="headerlink" href="#debugging-executables" title="Permalink to this heading">#</a></h3>
+<span id="index-8"></span><h3>Debugging executables<a class="headerlink" href="#debugging-executables" title="Permalink to this heading">¶</a></h3>
 <p>Use <strong>Application &gt; Debug</strong> (or the toolbar debug button (<img alt="image9" src="../_images/debug.png" />)) and
 <strong>Application &gt; Interact</strong> (or the toolbar interact button (<img alt="image10" src="../_images/interact.png" />))
 to debug an executable (EXE) application.</p>
@@ -846,7 +848,7 @@ always specify a start function, you can pause the application at a more
 useful point.</p>
 </section>
 <section id="debugging-dlls">
-<span id="index-9"></span><h3>Debugging DLLs<a class="headerlink" href="#debugging-dlls" title="Permalink to this heading">#</a></h3>
+<span id="index-9"></span><h3>Debugging DLLs<a class="headerlink" href="#debugging-dlls" title="Permalink to this heading">¶</a></h3>
 <p>Debugging DLLs is similar to debugging executable (EXE) applications (see
 <a class="reference internal" href="#debugging-executables">Debugging executables</a> above), but there are a couple of differences.</p>
 <p>One difference is that DLLs may not have a start function. Without a
@@ -885,7 +887,7 @@ at which the pause occurs depends on whether you specify a start
 function.)</p>
 </section>
 <section id="debugging-ole-components">
-<h3>Debugging OLE components<a class="headerlink" href="#debugging-ole-components" title="Permalink to this heading">#</a></h3>
+<h3>Debugging OLE components<a class="headerlink" href="#debugging-ole-components" title="Permalink to this heading">¶</a></h3>
 <p>To debug in-process OLE servers and OLE controls, which must be built as
 DLLs, you can use the same debugging processes as described in
 <a class="reference internal" href="#debugging-dlls">Debugging DLLs</a>.</p>
@@ -904,7 +906,7 @@ server object into your test container application.</p>
 </section>
 </section>
 <section id="restarts">
-<span id="index-10"></span><h2>Restarts<a class="headerlink" href="#restarts" title="Permalink to this heading">#</a></h2>
+<span id="index-10"></span><h2>Restarts<a class="headerlink" href="#restarts" title="Permalink to this heading">¶</a></h2>
 <p>The debugger provides a way to signal any restart for which a handler is
 available at a given point in application execution. Restarts are part
 of the Dylan language’s condition system, and are explained in chapter 7
@@ -929,7 +931,7 @@ while processing an event will proceed to process the next event. See
 the DUIM documentation for <em>start-frame</em> and <em>start-dialog</em>.</p>
 </section>
 <section id="choosing-an-application-thread-to-debug">
-<span id="index-11"></span><h2>Choosing an application thread to debug<a class="headerlink" href="#choosing-an-application-thread-to-debug" title="Permalink to this heading">#</a></h2>
+<span id="index-11"></span><h2>Choosing an application thread to debug<a class="headerlink" href="#choosing-an-application-thread-to-debug" title="Permalink to this heading">¶</a></h2>
 <p>As we noted earlier, each application thread can have its own debugger
 or you can use one debugger window to view various threads one at a
 time. The command we have seen so far, <strong>Application &gt; Debug</strong>, debugs
@@ -948,7 +950,7 @@ using the right-click popup menu. This action stops the thread if it is
 running, and opens a debugger window on it.</p>
 </section>
 <section id="changing-the-debugger-layout">
-<span id="index-12"></span><h2>Changing the debugger layout<a class="headerlink" href="#changing-the-debugger-layout" title="Permalink to this heading">#</a></h2>
+<span id="index-12"></span><h2>Changing the debugger layout<a class="headerlink" href="#changing-the-debugger-layout" title="Permalink to this heading">¶</a></h2>
 <p>Open Dylan lays out the debugger window to suit the situation. If
 you choose <strong>Application &gt; Interact</strong>, the debugger uses its interaction
 layout. In this layout, the interaction pane is maximized and the stack
@@ -962,7 +964,7 @@ and <strong>View &gt; Debugging Layout</strong>. You can also hide or show the c
 window using <strong>View &gt; Context Window</strong>.</p>
 </section>
 <section id="interacting-with-an-application">
-<span id="index-13"></span><h2>Interacting with an application<a class="headerlink" href="#interacting-with-an-application" title="Permalink to this heading">#</a></h2>
+<span id="index-13"></span><h2>Interacting with an application<a class="headerlink" href="#interacting-with-an-application" title="Permalink to this heading">¶</a></h2>
 <p>Open Dylan allows you to interact with your applications.
 Interaction consists of executing Dylan expressions and definitions in
 the context of a paused application thread. Open Dylan also offers
@@ -973,7 +975,7 @@ two examples. One uses the Dylan playground and the other uses the
 Reversi application. First, however, we discuss the interaction pane, a
 debugger pane that hosts interactive sessions.</p>
 <section id="about-the-interaction-pane">
-<span id="index-14"></span><h3>About the interaction pane<a class="headerlink" href="#about-the-interaction-pane" title="Permalink to this heading">#</a></h3>
+<span id="index-14"></span><h3>About the interaction pane<a class="headerlink" href="#about-the-interaction-pane" title="Permalink to this heading">¶</a></h3>
 <p>The debugger’s interaction pane provides a prompt (where you can enter
 Dylan expressions and definitions for execution. The prompt is a
 question mark (<em>?</em> ).</p>
@@ -991,7 +993,7 @@ application is still running.</p>
 different layouts and how to change them.</p>
 </section>
 <section id="starting-an-interactive-session-with-an-application">
-<h3>Starting an interactive session with an application<a class="headerlink" href="#starting-an-interactive-session-with-an-application" title="Permalink to this heading">#</a></h3>
+<h3>Starting an interactive session with an application<a class="headerlink" href="#starting-an-interactive-session-with-an-application" title="Permalink to this heading">¶</a></h3>
 <p>The simplest way to start interacting with an application is to choose
 <strong>Application &gt; Interact</strong> or click the interact toolbar button (<img alt="image11" src="../_images/interact.png" />).
 This starts the application if necessary, and then pauses it.</p>
@@ -1001,7 +1003,7 @@ executables</a>). Otherwise the application is paused in
 its current state. A debugger window then opens on the paused thread.</p>
 </section>
 <section id="interaction-basics-using-the-dylan-playground">
-<span id="id3"></span><h3>Interaction basics using the Dylan playground<a class="headerlink" href="#interaction-basics-using-the-dylan-playground" title="Permalink to this heading">#</a></h3>
+<span id="id3"></span><h3>Interaction basics using the Dylan playground<a class="headerlink" href="#interaction-basics-using-the-dylan-playground" title="Permalink to this heading">¶</a></h3>
 <p id="index-15">The Dylan playground allows you to carry out interactive Dylan
 programming experiments. The playground is a pre-built Dylan application
 that you can start from the main window using the Open Playground button
@@ -1117,7 +1119,7 @@ compile time.</p>
 <figure class="align-center" id="id11">
 <img alt="../_images/interact-objs.png" src="../_images/interact-objs.png" />
 <figcaption>
-<p><span class="caption-text">Interactively created definitions alongside a compile-time definition.</span><a class="headerlink" href="#id11" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Interactively created definitions alongside a compile-time definition.</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>We can also use the interactor to make a GUI window by using the Dylan
@@ -1131,14 +1133,14 @@ User Interface Manager (DUIM) capabilities. For example:</p>
 <figure class="align-center" id="id12">
 <img alt="../_images/duimhello.png" src="../_images/duimhello.png" />
 <figcaption>
-<p><span class="caption-text">Window created interactively with the Dylan User Interface Manager.</span><a class="headerlink" href="#id12" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Window created interactively with the Dylan User Interface Manager.</span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>For more information about creating GUI interfaces with Open Dylan,
 see the <em>Building Applications Using DUIM</em> and <em>DUIM Reference</em> manuals.</p>
 </section>
 <section id="an-example-interaction-with-reversi">
-<span id="example-interaction-reversi"></span><h3>An example interaction with Reversi<a class="headerlink" href="#an-example-interaction-with-reversi" title="Permalink to this heading">#</a></h3>
+<span id="example-interaction-reversi"></span><h3>An example interaction with Reversi<a class="headerlink" href="#an-example-interaction-with-reversi" title="Permalink to this heading">¶</a></h3>
 <p>In the following example we interact with the Reversi application after
 first making a few moves.</p>
 <p>Open the Reversi project, and choose <strong>Application &gt; Start</strong>.</p>
@@ -1166,7 +1168,7 @@ moves that have repainted after being obscured by other windows. To see
 only triangular pieces, minimize and restore the board or resize it.</p>
 </section>
 <section id="interactive-access-to-local-variables-and-arguments-on-the-stack">
-<h3>Interactive access to local variables and arguments on the stack<a class="headerlink" href="#interactive-access-to-local-variables-and-arguments-on-the-stack" title="Permalink to this heading">#</a></h3>
+<h3>Interactive access to local variables and arguments on the stack<a class="headerlink" href="#interactive-access-to-local-variables-and-arguments-on-the-stack" title="Permalink to this heading">¶</a></h3>
 <p>Interactive expressions can refer to variables from the debugger’s
 current stack backtrace, simply by using their name. Before referring to
 a variable, you must select the stack frame that contains the variables
@@ -1189,7 +1191,7 @@ frame for the call to <em>set</em>, evaluating the expression <em>x + y</em> yie
 the result 32.</p>
 </section>
 <section id="effects-of-interactive-changes-to-application-threads">
-<h3>Effects of interactive changes to application threads<a class="headerlink" href="#effects-of-interactive-changes-to-application-threads" title="Permalink to this heading">#</a></h3>
+<h3>Effects of interactive changes to application threads<a class="headerlink" href="#effects-of-interactive-changes-to-application-threads" title="Permalink to this heading">¶</a></h3>
 <p>As stated in <a class="reference internal" href="#about-the-interaction-pane">About the interaction pane</a>, because the interaction pane
 compiles and executes the code you enter in the context of the paused
 thread to which the debugger is connected, it is possible to define new
@@ -1212,7 +1214,7 @@ automatically. (This is one of the reasons why you are asked to confirm
 when you choose <strong>Application &gt; Stop</strong>.)</p>
 </section>
 <section id="interaction-pane-commands">
-<span id="index-18"></span><h3>Interaction pane commands<a class="headerlink" href="#interaction-pane-commands" title="Permalink to this heading">#</a></h3>
+<span id="index-18"></span><h3>Interaction pane commands<a class="headerlink" href="#interaction-pane-commands" title="Permalink to this heading">¶</a></h3>
 <p>The debugger’s interaction pane accepts various commands. You can get a
 list of available commands, and documentation for each command, with the
 <em>:help</em> command.</p>
@@ -1237,7 +1239,7 @@ using the context drop-down list on the debugger/interactor toolbar.</p>
 </section>
 </section>
 <section id="the-active-project">
-<span id="active-project"></span><span id="index-19"></span><h2>The active project<a class="headerlink" href="#the-active-project" title="Permalink to this heading">#</a></h2>
+<span id="active-project"></span><span id="index-19"></span><h2>The active project<a class="headerlink" href="#the-active-project" title="Permalink to this heading">¶</a></h2>
 <p>All tools in Open Dylan need to know with which project they are
 associated. A project window is, naturally, always associated with the
 project it describes. A browser window is associated with the project
@@ -1268,7 +1270,7 @@ General page controlling when projects become active automatically:
 application started”.</p>
 </section>
 <section id="breakpoints">
-<span id="index-20"></span><h2>Breakpoints<a class="headerlink" href="#breakpoints" title="Permalink to this heading">#</a></h2>
+<span id="index-20"></span><h2>Breakpoints<a class="headerlink" href="#breakpoints" title="Permalink to this heading">¶</a></h2>
 <p>Open Dylan allows you to set breakpoints on application code from
 within any window. Breakpoints allow you to pause an application at a
 predefined point in execution, in order to examine it in a debugger
@@ -1290,7 +1292,7 @@ or debugger, the set of breakpoints shown is that for the project being
 browsed. Within the editor, the set of breakpoints shown is that for the
 active project.</p>
 <section id="how-breakpoints-work">
-<h3>How breakpoints work<a class="headerlink" href="#how-breakpoints-work" title="Permalink to this heading">#</a></h3>
+<h3>How breakpoints work<a class="headerlink" href="#how-breakpoints-work" title="Permalink to this heading">¶</a></h3>
 <p>A breakpoint forces a pause in application execution, which we call a
 <em>break</em>. When a thread within an application attempts to execute an
 item of code that has a breakpoint on it, Open Dylan pauses the
@@ -1321,7 +1323,7 @@ instead into the project you are browsing — or the active project, if in
 the editor.</p>
 </section>
 <section id="setting-breakpoints-on-functions">
-<h3>Setting breakpoints on functions<a class="headerlink" href="#setting-breakpoints-on-functions" title="Permalink to this heading">#</a></h3>
+<h3>Setting breakpoints on functions<a class="headerlink" href="#setting-breakpoints-on-functions" title="Permalink to this heading">¶</a></h3>
 <p>You can set breakpoints on generic functions and their methods. The
 application will break to the debugger on entry to the function.</p>
 <p>To set a breakpoint on an individual method, select it on either the
@@ -1335,7 +1337,7 @@ will break to the debugger whenever any method on that generic function
 is called.</p>
 </section>
 <section id="setting-breakpoints-on-lines-of-code">
-<h3>Setting breakpoints on lines of code<a class="headerlink" href="#setting-breakpoints-on-lines-of-code" title="Permalink to this heading">#</a></h3>
+<h3>Setting breakpoints on lines of code<a class="headerlink" href="#setting-breakpoints-on-lines-of-code" title="Permalink to this heading">¶</a></h3>
 <p>You can set breakpoints on lines of code in source code files. The
 application will break to the debugger when it executes that line of
 code, or, depending on the way the code has been compiled, as near as
@@ -1354,7 +1356,7 @@ shortcut (right-click) menu to manipulate breakpoints on lines of code.
 See <a class="reference internal" href="#breakpoint-commands-on-the-shortcut-menu">Breakpoint commands on the shortcut menu</a>.</p>
 </section>
 <section id="browsing-a-project-s-breakpoints">
-<h3>Browsing a project’s breakpoints<a class="headerlink" href="#browsing-a-project-s-breakpoints" title="Permalink to this heading">#</a></h3>
+<h3>Browsing a project’s breakpoints<a class="headerlink" href="#browsing-a-project-s-breakpoints" title="Permalink to this heading">¶</a></h3>
 <p>You can see all of a project’s breakpoints in the project window’s
 Breakpoints page. This shows the location of the breakpoint (the name of
 the function or the line of the source code file),</p>
@@ -1363,7 +1365,7 @@ the commands on the shortcut (right-click) menu. See <a class="reference interna
 commands on the shortcut menu</a>.</p>
 </section>
 <section id="breakpoint-commands-on-the-shortcut-menu">
-<h3>Breakpoint commands on the shortcut menu<a class="headerlink" href="#breakpoint-commands-on-the-shortcut-menu" title="Permalink to this heading">#</a></h3>
+<h3>Breakpoint commands on the shortcut menu<a class="headerlink" href="#breakpoint-commands-on-the-shortcut-menu" title="Permalink to this heading">¶</a></h3>
 <p>In some situations you can right-click to produce the shortcut menu,
 which contains several breakpoint manipulation commands. These are:</p>
 <ul class="simple" id="index-21">
@@ -1418,7 +1420,7 @@ the mouse pointer is.</p>
 </dl>
 </section>
 <section id="breakpoint-commands-on-the-application-and-go-menus">
-<h3>Breakpoint commands on the Application and Go menus<a class="headerlink" href="#breakpoint-commands-on-the-application-and-go-menus" title="Permalink to this heading">#</a></h3>
+<h3>Breakpoint commands on the Application and Go menus<a class="headerlink" href="#breakpoint-commands-on-the-application-and-go-menus" title="Permalink to this heading">¶</a></h3>
 <p>The <strong>Application</strong> and <strong>Go</strong> menus available in the project window,
 editor, and debugger contains several breakpoint manipulation commands.</p>
 <p>The <strong>Go &gt; Breakpoints</strong> command, chosen from the project window, shows
@@ -1434,7 +1436,7 @@ disabled breakpoints. <strong>Application &gt; Disable All Breakpoints</strong> 
 all enabled breakpoints.</p>
 </section>
 <section id="breakpoint-options">
-<span id="id4"></span><h3>Breakpoint options<a class="headerlink" href="#breakpoint-options" title="Permalink to this heading">#</a></h3>
+<span id="id4"></span><h3>Breakpoint options<a class="headerlink" href="#breakpoint-options" title="Permalink to this heading">¶</a></h3>
 <p>The <strong>Edit Breakpoint Options…</strong> dialog, available from the shortcut
 (right-click) menu, contains the following sections.</p>
 <ul class="simple">
@@ -1466,7 +1468,7 @@ temporary breakpoints.</p></li>
 </section>
 </section>
 <section id="stepping">
-<span id="index-22"></span><h2>Stepping<a class="headerlink" href="#stepping" title="Permalink to this heading">#</a></h2>
+<span id="index-22"></span><h2>Stepping<a class="headerlink" href="#stepping" title="Permalink to this heading">¶</a></h2>
 <p>After pausing an application, the debugger allows you to continue its
 execution in small steps, after which control returns to the debugger.
 There are three stepping commands: Step Over, Step Out, and Step Into.</p>
@@ -1485,7 +1487,7 @@ the debugger’s <strong>Thread</strong> menu as well as on toolbar buttons.</p>
 <p>The following sections give examples to illustrate what the three
 stepping commands do.</p>
 <section id="step-over">
-<h3>Step over<a class="headerlink" href="#step-over" title="Permalink to this heading">#</a></h3>
+<h3>Step over<a class="headerlink" href="#step-over" title="Permalink to this heading">¶</a></h3>
 <p>Choosing <strong>Thread &gt; Step Over</strong> in a debugger “steps over” the next
 function call that occurs in that debugger’s thread, executing the call
 in full and then returning control to the debugger. The command operates
@@ -1515,7 +1517,7 @@ rather than continuing the application no longer under the debugger. See
 <a class="reference internal" href="#step-out">Step out</a> for details of <strong>Thread &gt; Step Out</strong>.</p>
 </section>
 <section id="step-into">
-<h3>Step into<a class="headerlink" href="#step-into" title="Permalink to this heading">#</a></h3>
+<h3>Step into<a class="headerlink" href="#step-into" title="Permalink to this heading">¶</a></h3>
 <p>Choosing <strong>Thread &gt; Step Into</strong> in a debugger “steps into” the next
 function call that occurs in that debugger’s thread, and then returns
 control to the debugger before the function begins to execute. This
@@ -1530,7 +1532,7 @@ Over</strong> (or a <strong>Thread &gt; Step Out</strong> once you leave the fun
 details of <strong>Thread &gt; Step Out</strong>.</p>
 </section>
 <section id="step-out">
-<h3>Step out<a class="headerlink" href="#step-out" title="Permalink to this heading">#</a></h3>
+<h3>Step out<a class="headerlink" href="#step-out" title="Permalink to this heading">¶</a></h3>
 <p>Choosing <strong>Thread &gt; Step Out</strong> in a debugger “steps out” of the current
 function call, that is, it resumes execution of the application until a
 function returns, and then passes control back to the debugger.</p>
@@ -1552,7 +1554,7 @@ execution of the thread until <em>andante</em> returns.</p>
 </section>
 </section>
 <section id="debugging-client-server-applications">
-<span id="index-23"></span><h2>Debugging client/server applications<a class="headerlink" href="#debugging-client-server-applications" title="Permalink to this heading">#</a></h2>
+<span id="index-23"></span><h2>Debugging client/server applications<a class="headerlink" href="#debugging-client-server-applications" title="Permalink to this heading">¶</a></h2>
 <p>If you have a client/server application, where both the client
 application and server application are written in Dylan, you can debug
 them in parallel.</p>
@@ -1590,7 +1592,7 @@ both projects at once. Instead you have to go into each project and set
 the breakpoint separately.</p>
 </section>
 <section id="exporting-a-bug-report-or-a-compiler-warnings-report">
-<span id="index-24"></span><h2>Exporting a bug report or a compiler warnings report<a class="headerlink" href="#exporting-a-bug-report-or-a-compiler-warnings-report" title="Permalink to this heading">#</a></h2>
+<span id="index-24"></span><h2>Exporting a bug report or a compiler warnings report<a class="headerlink" href="#exporting-a-bug-report-or-a-compiler-warnings-report" title="Permalink to this heading">¶</a></h2>
 <p>You can save a formatted bug report or compiler warnings report for an
 application by choosing <strong>File &gt; Export…</strong> in the debugger or project
 window. The bug report includes a stack backtrace for all threads in the
@@ -1610,19 +1612,19 @@ on the development environment’s threads.</p>
 <figure class="align-center" id="id13">
 <img alt="../_images/export.png" src="../_images/export.png" />
 <figcaption>
-<p><span class="caption-text">The Export… dialog.</span><a class="headerlink" href="#id13" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">The Export… dialog.</span><a class="headerlink" href="#id13" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
 <section id="debugger-options">
-<span id="index-25"></span><span id="id5"></span><h2>Debugger options<a class="headerlink" href="#debugger-options" title="Permalink to this heading">#</a></h2>
+<span id="index-25"></span><span id="id5"></span><h2>Debugger options<a class="headerlink" href="#debugger-options" title="Permalink to this heading">¶</a></h2>
 <p>The <strong>View &gt; Debugger Options</strong> command brings up a dialog that controls
 the options for the debugger. This dialog has three property pages:
 Stack, Exceptions, and Misc. The options on these pages apply on a
 per-thread basis — you can have different settings for different threads’
 debuggers.</p>
 <section id="stack-options">
-<span id="index-26"></span><span id="id6"></span><h3>Stack options<a class="headerlink" href="#stack-options" title="Permalink to this heading">#</a></h3>
+<span id="index-26"></span><span id="id6"></span><h3>Stack options<a class="headerlink" href="#stack-options" title="Permalink to this heading">¶</a></h3>
 <p>The Stack page controls the filtering of stack frames from the
 debugger’s backtrace pane.</p>
 <p>Show stack frames of types</p>
@@ -1656,7 +1658,7 @@ string will be excluded from backtraces.</p></li>
 </ul>
 </section>
 <section id="exceptions-options">
-<h3>Exceptions options<a class="headerlink" href="#exceptions-options" title="Permalink to this heading">#</a></h3>
+<h3>Exceptions options<a class="headerlink" href="#exceptions-options" title="Permalink to this heading">¶</a></h3>
 <p>The Exceptions page controls the action taken when a particular
 exception occurs in the thread. Use the Action list to select an action.</p>
 <p>The possible actions are:</p>
@@ -1673,7 +1675,7 @@ application once <strong>Application &gt; Resume</strong> is selected.</p></li>
 </ul>
 </section>
 <section id="miscellaneous-options">
-<h3>Miscellaneous options<a class="headerlink" href="#miscellaneous-options" title="Permalink to this heading">#</a></h3>
+<h3>Miscellaneous options<a class="headerlink" href="#miscellaneous-options" title="Permalink to this heading">¶</a></h3>
 <p>The Misc page presents miscellaneous, high-level debugger options.</p>
 <ul class="simple">
 <li><p>Use a new debugger for each thread</p></li>
@@ -1714,7 +1716,7 @@ checked by default.</p></li>
 </section>
 </section>
 <section id="just-in-time-debugging">
-<span id="index-27"></span><h2>Just-in-time debugging<a class="headerlink" href="#just-in-time-debugging" title="Permalink to this heading">#</a></h2>
+<span id="index-27"></span><h2>Just-in-time debugging<a class="headerlink" href="#just-in-time-debugging" title="Permalink to this heading">¶</a></h2>
 <p id="index-28">The Windows operating system has the built-in capability to perform
 “just-in-time” debugging. Just-in-time, or JIT, debugging is where an
 application crashes while not running under a debugger, and the
@@ -1898,6 +1900,6 @@ start to debug the application in the normal way.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

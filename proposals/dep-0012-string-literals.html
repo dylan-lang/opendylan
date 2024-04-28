@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="A Quick Tour of Dylan" href="../about/index.html" /><link rel="prev" title="Numeric Literal Syntax" href="dep-0011-numeric-literal-syntax.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>String Literal Syntax - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="string-literal-syntax">
-<h1>String Literal Syntax<a class="headerlink" href="#string-literal-syntax" title="Permalink to this heading">#</a></h1>
+<h1>String Literal Syntax<a class="headerlink" href="#string-literal-syntax" title="Permalink to this heading">¶</a></h1>
 <div class="table-wrapper docutils container">
 <table class="docutils align-default">
 <tbody>
@@ -501,7 +503,7 @@
 </table>
 </div>
 <section id="abstract">
-<h2>Abstract<a class="headerlink" href="#abstract" title="Permalink to this heading">#</a></h2>
+<h2>Abstract<a class="headerlink" href="#abstract" title="Permalink to this heading">¶</a></h2>
 <p>Dylan string literals have two deficiencies when compared to many current
 programming languages, most notably the inability to encode multi-line strings
 into a single source token that crosses multiple source lines and no fully
@@ -511,12 +513,12 @@ one-line raw strings delimited by <code class="docutils literal notranslate"><sp
 <code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">#r&quot;&quot;&quot;</span></code>, and quoted symbols delimited by <code class="docutils literal notranslate"><span class="pre">#&quot;&quot;&quot;</span></code>.</p>
 </section>
 <section id="rationale">
-<h2>Rationale<a class="headerlink" href="#rationale" title="Permalink to this heading">#</a></h2>
+<h2>Rationale<a class="headerlink" href="#rationale" title="Permalink to this heading">¶</a></h2>
 <p>Summary: Literal syntax to address both of these deficiencies would be nice to
 have and is something that people expect to exist in modern programming
 languages.</p>
 <section id="multi-line-string-literals">
-<h3>Multi-line String Literals<a class="headerlink" href="#multi-line-string-literals" title="Permalink to this heading">#</a></h3>
+<h3>Multi-line String Literals<a class="headerlink" href="#multi-line-string-literals" title="Permalink to this heading">¶</a></h3>
 <p>While it should be noted that encoding long string literals into source code is
 not good practice when internationalization is desired, it is convenient to
 have this ability for quick scripts, for encoding test data, and as simple
@@ -540,7 +542,7 @@ and remembering to put the \n at the end of each line.  Having a multi-line
 string literal syntax would alleviate both of these problems.</p>
 </section>
 <section id="raw-string-literals">
-<h3>Raw String Literals<a class="headerlink" href="#raw-string-literals" title="Permalink to this heading">#</a></h3>
+<h3>Raw String Literals<a class="headerlink" href="#raw-string-literals" title="Permalink to this heading">¶</a></h3>
 <p>Raw string literals (that is, strings in which <code class="docutils literal notranslate"><span class="pre">'\\'</span></code> is not a special
 character) are useful for inputting data that needs to contain many <code class="docutils literal notranslate"><span class="pre">'\\'</span></code>
 characters. The primary example of this is regular expressions, which quickly
@@ -572,7 +574,7 @@ problems.</p>
 </section>
 </section>
 <section id="specification">
-<h2>Specification<a class="headerlink" href="#specification" title="Permalink to this heading">#</a></h2>
+<h2>Specification<a class="headerlink" href="#specification" title="Permalink to this heading">¶</a></h2>
 <p>Multi-line string literals are delimited by three double quote characters on
 each end: <code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;</span></code>. Any string literal, whether one-line or multi-line, may be
 prefixed with <code class="docutils literal notranslate"><span class="pre">#r</span></code> or <code class="docutils literal notranslate"><span class="pre">#R</span></code> to disable backslash escape processing, i.e., to
@@ -596,7 +598,7 @@ just <cite>#</cite> followed by any standard string, we also allow <code class="
 multi-line quoted symbol, to be consistent. No new syntax is provided to create
 a “raw” quoted symbols, i.e., quoted symbols without escape processing.</p>
 <section id="the-rectangle-rule">
-<h3>The Rectangle Rule<a class="headerlink" href="#the-rectangle-rule" title="Permalink to this heading">#</a></h3>
+<h3>The Rectangle Rule<a class="headerlink" href="#the-rectangle-rule" title="Permalink to this heading">¶</a></h3>
 <p><a class="reference external" href="https://github.com/google/google-java-format/wiki/The-Rectangle-Rule">The Rectangle Rule</a> states</p>
 <blockquote>
 <div><p>When a source file is formatted, each subtree gets its own bounding
@@ -608,7 +610,7 @@ multi-line string literals need special treatment of leading whitespace. In the
 following two examples the programmer wants to ensure that there is no leading
 whitespace on any line in the resulting string literal token:</p>
 <div class="literal-block-wrapper docutils container" id="id2">
-<div class="code-block-caption"><span class="caption-text">Without support for the Rectangle Rule</span><a class="headerlink" href="#id2" title="Permalink to this code">#</a></div>
+<div class="code-block-caption"><span class="caption-text">Without support for the Rectangle Rule</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="p">()</span>
 <span class="linenos">2</span><span class="w">  </span><span class="k">let</span><span class="w"> </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;&quot;bits on the wire</span>
 <span class="hll"><span class="linenos">3</span><span class="n">protocols</span><span class="w"> </span><span class="n">well</span><span class="w"> </span><span class="n">understood</span>
@@ -623,7 +625,7 @@ whitespace on any line in the resulting string literal token:</p>
 to put the first line of text on the same line with <code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;</span></code> and to left-align
 the highlighted lines, harming readability due to violating the Rectangle Rule.</p>
 <div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-text">With support for the Rectangle Rule</span><a class="headerlink" href="#id3" title="Permalink to this code">#</a></div>
+<div class="code-block-caption"><span class="caption-text">With support for the Rectangle Rule</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="p">()</span>
 <span class="linenos">2</span><span class="w">  </span><span class="k">let</span><span class="w"> </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;&quot;</span>
 <span class="hll"><span class="linenos">3</span><span class="w">             </span><span class="n">bits</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">wire</span>
@@ -660,7 +662,7 @@ delimiter are included in the string literal.</p></li>
 </ul>
 </section>
 <section id="bnf">
-<h3>BNF<a class="headerlink" href="#bnf" title="Permalink to this heading">#</a></h3>
+<h3>BNF<a class="headerlink" href="#bnf" title="Permalink to this heading">¶</a></h3>
 <p>In the Dylan Reference Manual, in the section <a class="reference external" href="https://opendylan.org/books/drm/Lexical_Grammar#HEADING-117-3">Tokens</a>, <code class="docutils literal notranslate"><span class="pre">#r</span></code> is
 added to the <code class="docutils literal notranslate"><span class="pre">#-word</span></code> production.</p>
 <p>The BNF, which augments <a class="reference external" href="https://opendylan.org/books/drm/Lexical_Grammar#HEADING-117-38">Character and String Literals</a> in the DRM,
@@ -732,7 +734,7 @@ is shown below.</p>
 </div>
 </section>
 <section id="examples">
-<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h3>
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">¶</a></h3>
 <p>Strings equivalent to <code class="docutils literal notranslate"><span class="pre">&quot;abc&quot;</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;abc&quot;&quot;&quot;</span>
 <span class="c1">#r&quot;abc&quot;</span>
@@ -793,11 +795,11 @@ removed:</p>
 </section>
 </section>
 <section id="reference-implementation">
-<h2>Reference Implementation<a class="headerlink" href="#reference-implementation" title="Permalink to this heading">#</a></h2>
+<h2>Reference Implementation<a class="headerlink" href="#reference-implementation" title="Permalink to this heading">¶</a></h2>
 <p>A reference implementation is underway <a class="reference external" href="https://github.com/cgay/opendylan/commits/dep12">on github</a>.</p>
 </section>
 <section id="revision-history">
-<h2>Revision History<a class="headerlink" href="#revision-history" title="Permalink to this heading">#</a></h2>
+<h2>Revision History<a class="headerlink" href="#revision-history" title="Permalink to this heading">¶</a></h2>
 <p>The revision history of this document is available here:
 <a class="reference external" href="https://github.com/dylan-lang/website/commits/master/source/proposals/dep-0012-string-literals.rst">https://github.com/dylan-lang/website/commits/master/source/proposals/dep-0012-string-literals.rst</a></p>
 </section>
@@ -887,6 +889,6 @@ removed:</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

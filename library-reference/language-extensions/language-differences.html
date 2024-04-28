@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Function Definition" href="define-function.html" /><link rel="prev" title="Dylan Language Extensions" href="index.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Language Differences - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,14 +463,14 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="language-differences">
-<h1>Language Differences<a class="headerlink" href="#language-differences" title="Permalink to this heading">#</a></h1>
+<h1>Language Differences<a class="headerlink" href="#language-differences" title="Permalink to this heading">¶</a></h1>
 <p>Note that in addition to the intentional differences documented below, there
 are several <a class="reference external" href="https://github.com/dylan-lang/opendylan/issues?q=is%3Aissue+is%3Aopen+label%3ADRM">known bugs</a>
 related to compliance with the language standard as documented in the DRM.</p>
 <section id="table-protocol">
-<h2>Table Protocol<a class="headerlink" href="#table-protocol" title="Permalink to this heading">#</a></h2>
+<h2>Table Protocol<a class="headerlink" href="#table-protocol" title="Permalink to this heading">¶</a></h2>
 <p>For efficiency, Open Dylan adopts a slightly different table protocol
 to that described by the DRM. Hashing functions take an additional
 hash-state argument and merge it into the hash-state result. The
@@ -483,7 +485,7 @@ a Table-extensions module, which you can read about in
 <a class="reference internal" href="../collections/table-extensions.html"><span class="doc">The table-extensions Module</span></a>.</p>
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:table-protocol">
-<span class="sig-name descname"><span class="pre">table-protocol</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:table-protocol" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">table-protocol</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:dylan:table-protocol" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns functions used to implement the iteration protocol for tables.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -530,7 +532,7 @@ The <em>result-state</em> may or may not be == to <em>initial-state</em>. The
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:merge-hash-ids">
-<span class="sig-name descname"><span class="pre">merge-hash-ids</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:dylan:merge-hash-ids" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">merge-hash-ids</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:dylan:merge-hash-ids" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a hash ID created by merging two hash IDs.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -573,7 +575,7 @@ violate the second constraint on hash functions, described on page
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:dylan:object-hash">
-<span class="sig-name descname"><span class="pre">object-hash</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:dylan:object-hash" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">object-hash</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:dylan:object-hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>The hash function for the equivalence predicate <a class="reference external" href="https://opendylan.org/books/drm/Equality_and_Comparison#identity"><code class="xref drm docutils literal notranslate"><span class="pre">==</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -679,6 +681,6 @@ computed in some implementation-dependent manner.</p>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

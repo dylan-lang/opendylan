@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Type-Safe Limited Collections" href="dep-0007-collection-type-safety.html" /><link rel="prev" title="Subclass" href="dep-0005-subclass-function.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Single File Libraries - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="single-file-libraries">
-<h1>Single File Libraries<a class="headerlink" href="#single-file-libraries" title="Permalink to this heading">#</a></h1>
+<h1>Single File Libraries<a class="headerlink" href="#single-file-libraries" title="Permalink to this heading">¶</a></h1>
 <div class="table-wrapper docutils container">
 <table class="docutils align-default">
 <tbody>
@@ -495,12 +497,12 @@
 </table>
 </div>
 <section id="revision-history">
-<h2>Revision History<a class="headerlink" href="#revision-history" title="Permalink to this heading">#</a></h2>
+<h2>Revision History<a class="headerlink" href="#revision-history" title="Permalink to this heading">¶</a></h2>
 <p>The revision history of this document is available on GitHub:
 <a class="reference external" href="https://github.com/dylan-lang/website/commits/master/source/proposals/dep-0006-single-file-library.rst">https://github.com/dylan-lang/website/commits/master/source/proposals/dep-0006-single-file-library.rst</a></p>
 </section>
 <section id="abstract">
-<h2>Abstract<a class="headerlink" href="#abstract" title="Permalink to this heading">#</a></h2>
+<h2>Abstract<a class="headerlink" href="#abstract" title="Permalink to this heading">¶</a></h2>
 <p>Open Dylan currently requires users to create three source files to
 define a simple library like hello-world:</p>
 <ol class="arabic simple">
@@ -516,7 +518,7 @@ propose a change to the Dylan language itself.  In particular it is
 proposed as an enhancement for Open Dylan.</p>
 </section>
 <section id="rationale">
-<h2>Rationale<a class="headerlink" href="#rationale" title="Permalink to this heading">#</a></h2>
+<h2>Rationale<a class="headerlink" href="#rationale" title="Permalink to this heading">¶</a></h2>
 <p>The three files described above are a lot of overhead for new users
 who want to get a feel for the language, who are generally used to
 creating a single file and running it directly, perhaps after
@@ -552,7 +554,7 @@ but it has limitations that this DEP removes, specifically the
 inability to deal with import conflicts.</p>
 </section>
 <section id="goals">
-<h2>Goals<a class="headerlink" href="#goals" title="Permalink to this heading">#</a></h2>
+<h2>Goals<a class="headerlink" href="#goals" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Make it possible to use the full power of the Dylan module system to
 define a library in a single file.</p></li>
@@ -563,7 +565,7 @@ already used to Dylan what’s going on.</p></li>
 </ul>
 </section>
 <section id="background">
-<h2>Background<a class="headerlink" href="#background" title="Permalink to this heading">#</a></h2>
+<h2>Background<a class="headerlink" href="#background" title="Permalink to this heading">¶</a></h2>
 <p>A typical hello-world application written in Dylan might look like
 this:</p>
 <p><strong>hello-world.lid</strong></p>
@@ -616,9 +618,9 @@ in the DRM, with a set of headers, followed by a blank line, followed
 by a <em>code body</em>.</p>
 </section>
 <section id="specification">
-<h2>Specification<a class="headerlink" href="#specification" title="Permalink to this heading">#</a></h2>
+<h2>Specification<a class="headerlink" href="#specification" title="Permalink to this heading">¶</a></h2>
 <section id="replacing-the-lid-file">
-<h3>Replacing the LID File<a class="headerlink" href="#replacing-the-lid-file" title="Permalink to this heading">#</a></h3>
+<h3>Replacing the LID File<a class="headerlink" href="#replacing-the-lid-file" title="Permalink to this heading">¶</a></h3>
 <p>LID files have the same format as the header section of a Dylan
 Interchange Format source file.  When defining a Dylan library in a
 single source file, all LID keywords may appear in the header section.
@@ -628,11 +630,11 @@ between the keywords used in LID files and those used in Dylan source
 files.  See <a class="reference external" href="https://opendylan.org/documentation/library-reference/lid.html">https://opendylan.org/documentation/library-reference/lid.html</a>
 for existing Open Dylan LID file keywords.</p>
 <section id="module-header">
-<h4>Module Header<a class="headerlink" href="#module-header" title="Permalink to this heading">#</a></h4>
+<h4>Module Header<a class="headerlink" href="#module-header" title="Permalink to this heading">¶</a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">Module</span></code> header is required in a single-source library.</p>
 </section>
 <section id="library-header">
-<h4>Library Header<a class="headerlink" href="#library-header" title="Permalink to this heading">#</a></h4>
+<h4>Library Header<a class="headerlink" href="#library-header" title="Permalink to this heading">¶</a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">Library</span></code> header is optional. If missing, the library name is the same as
 the module name specified by the <code class="docutils literal notranslate"><span class="pre">Module</span></code> header.</p>
 <div class="admonition note">
@@ -644,7 +646,7 @@ already, so this is consistent with current practice.</p>
 </div>
 </section>
 <section id="files-header">
-<h4>Files Header<a class="headerlink" href="#files-header" title="Permalink to this heading">#</a></h4>
+<h4>Files Header<a class="headerlink" href="#files-header" title="Permalink to this heading">¶</a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">Files</span></code> header should not appear in a single-file library.  If
 present, the behavior is undefined.</p>
 <div class="admonition note">
@@ -659,7 +661,7 @@ proposal.</p>
 </section>
 </section>
 <section id="replacing-library-dylan">
-<h3>Replacing library.dylan<a class="headerlink" href="#replacing-library-dylan" title="Permalink to this heading">#</a></h3>
+<h3>Replacing library.dylan<a class="headerlink" href="#replacing-library-dylan" title="Permalink to this heading">¶</a></h3>
 <p>A single-file Dylan library is divided into three logical sections:</p>
 <ol class="arabic simple">
 <li><p>Dylan Interchange Format headers, including all headers that are allowed in
@@ -688,7 +690,7 @@ etc.</p>
 </section>
 </section>
 <section id="model-implementation">
-<h2>Model Implementation<a class="headerlink" href="#model-implementation" title="Permalink to this heading">#</a></h2>
+<h2>Model Implementation<a class="headerlink" href="#model-implementation" title="Permalink to this heading">¶</a></h2>
 <p>A simple way to implement this proposal would be via the following source
 transformations. (Such a simplistic implementation is not recommended because
 it would cause problems mapping error messages back to the original source
@@ -737,7 +739,7 @@ add “library.dylan” and “main.dylan” to the <code class="docutils litera
 </ol>
 </section>
 <section id="alternatives-considered">
-<h2>Alternatives Considered<a class="headerlink" href="#alternatives-considered" title="Permalink to this heading">#</a></h2>
+<h2>Alternatives Considered<a class="headerlink" href="#alternatives-considered" title="Permalink to this heading">¶</a></h2>
 <p>The initial version of this DEP considered adding special Dylan Interchange
 Format headers (<code class="docutils literal notranslate"><span class="pre">Use-library</span></code>, <code class="docutils literal notranslate"><span class="pre">Use-module</span></code>, etc.) in which the library and
 module imports would be specified. That version was rejected because it did not
@@ -833,6 +835,6 @@ of this file for more detail.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

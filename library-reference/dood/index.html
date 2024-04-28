@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="The dylan Library" href="../dylan/index.html" /><link rel="prev" title="The transcendentals Module" href="../common-dylan/transcendentals.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>The DOOD library - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,11 +463,11 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="the-dood-library">
-<h1>The DOOD library<a class="headerlink" href="#the-dood-library" title="Permalink to this heading">#</a></h1>
+<h1>The DOOD library<a class="headerlink" href="#the-dood-library" title="Permalink to this heading">¶</a></h1>
 <section id="the-dylan-object-oriented-database">
-<h2>The Dylan Object Oriented Database<a class="headerlink" href="#the-dylan-object-oriented-database" title="Permalink to this heading">#</a></h2>
+<h2>The Dylan Object Oriented Database<a class="headerlink" href="#the-dylan-object-oriented-database" title="Permalink to this heading">¶</a></h2>
 <p>The Dylan Object Oriented Database (DOOD) is a simple mechanism for
 storing arbitrary objects and lazily loading them. During dump time,
 DOOD traverses a graph of objects and encodes the objects as a
@@ -517,10 +519,10 @@ completely different format on disk. The former technique is described
 in the schema section below and the latter technique is described in
 the proxy section below.</p>
 <section id="the-dood-module">
-<h3>The DOOD module<a class="headerlink" href="#the-dood-module" title="Permalink to this heading">#</a></h3>
+<h3>The DOOD module<a class="headerlink" href="#the-dood-module" title="Permalink to this heading">¶</a></h3>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="dood:dood:[dood]">
-<span class="sig-name descname"><span class="pre">&lt;dood&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Primary</span> <span class="pre">Class</span></em><a class="headerlink" href="#dood:dood:[dood]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;dood&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Primary</span> <span class="pre">Class</span></em><a class="headerlink" href="#dood:dood:[dood]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></p>
@@ -565,7 +567,7 @@ loading and dumping behavior.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="dood:dood:[dood-opening-warning]">
-<span class="sig-name descname"><span class="pre">&lt;dood-opening-warning&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#dood:dood:[dood-opening-warning]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;dood-opening-warning&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#dood:dood:[dood-opening-warning]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;dood-warning&gt;</span></code></p>
@@ -581,7 +583,7 @@ loading and dumping behavior.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="dood:dood:[dood-corruption-warning]">
-<span class="sig-name descname"><span class="pre">&lt;dood-corruption-warning&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#dood:dood:[dood-corruption-warning]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;dood-corruption-warning&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#dood:dood:[dood-corruption-warning]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#dood:dood:[dood-opening-warning]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;dood-opening-warning&gt;</span></code></a></p>
@@ -592,7 +594,7 @@ loading and dumping behavior.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="dood:dood:[dood-version-warning]">
-<span class="sig-name descname"><span class="pre">&lt;dood-version-warning&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#dood:dood:[dood-version-warning]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;dood-version-warning&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#dood:dood:[dood-version-warning]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#dood:dood:[dood-opening-warning]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;dood-opening-warning&gt;</span></code></a></p>
@@ -604,7 +606,7 @@ DOOD version.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="dood:dood:[dood-user-version-warning]">
-<span class="sig-name descname"><span class="pre">&lt;dood-user-version-warning&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#dood:dood:[dood-user-version-warning]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;dood-user-version-warning&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#dood:dood:[dood-user-version-warning]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#dood:dood:[dood-version-warning]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;dood-version-warning&gt;</span></code></a></p>
@@ -616,13 +618,13 @@ user version.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dood:dood:dood-name([dood])">
-<span class="sig-name descname"><span class="pre">dood-name(&lt;dood&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dood:dood:dood-name([dood])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dood-name(&lt;dood&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dood:dood:dood-name([dood])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the name of the specified dood.</p>
 </dd></dl>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dood:dood:dood-root">
-<span class="sig-name descname"><span class="pre">dood-root</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dood:dood:dood-root" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dood-root</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dood:dood:dood-root" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dood-root (object) =&gt; (value)</p>
@@ -644,7 +646,7 @@ defaulted to be <a class="reference external" href="https://opendylan.org/books/
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dood:dood:dood-root-setter">
-<span class="sig-name descname"><span class="pre">dood-root-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dood:dood:dood-root-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dood-root-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dood:dood:dood-root-setter" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dood-root-setter (value object) =&gt; (value)</p>
@@ -666,7 +668,7 @@ defaulted to be <a class="reference external" href="https://opendylan.org/books/
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dood:dood:dood-commit">
-<span class="sig-name descname"><span class="pre">dood-commit</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dood:dood:dood-commit" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dood-commit</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dood:dood:dood-commit" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dood-commit (dood #key flush? dump? break? parents? clear? stats? size) =&gt; ()</p>
@@ -694,7 +696,7 @@ is just removed and the original data file is untouched.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dood:dood:dood-size">
-<span class="sig-name descname"><span class="pre">dood-size</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dood:dood:dood-size" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dood-size</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dood:dood:dood-size" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dood-size (dood) =&gt; (res)</p>
@@ -715,7 +717,7 @@ is just removed and the original data file is untouched.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dood:dood:dood-close">
-<span class="sig-name descname"><span class="pre">dood-close</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dood:dood:dood-close" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dood-close</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dood:dood:dood-close" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dood-close (dood #rest all-keys #key abort?) =&gt; ()</p>
@@ -736,14 +738,14 @@ stream. Abort is passed through to close an underlying file stream.</p>
 
 </section>
 <section id="schemas">
-<h3>Schemas<a class="headerlink" href="#schemas" title="Permalink to this heading">#</a></h3>
+<h3>Schemas<a class="headerlink" href="#schemas" title="Permalink to this heading">¶</a></h3>
 <p>Schemas are declarative descriptions of how objects are persistently
 dumped and loaded. In the current version of DOOD, schemas are not
 themselves persistently stored. User versions can be used to manually
 ensure compatible schemas.</p>
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dood:dood:dood-class-definer">
-<span class="sig-name descname"><span class="pre">dood-class-definer</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dood:dood:dood-class-definer" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dood-class-definer</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#dood:dood:dood-class-definer" title="Permalink to this definition">¶</a></dt>
 <dd><p>The <code class="docutils literal notranslate"><span class="pre">dood-class-definer</span></code> macro defines a dylan class with extra
 slot adjectives specifying the dumping and loading behavior of the
 corresponding slot. The default DOOD treatment of a slot, called
@@ -782,14 +784,14 @@ closed database will signal a <code class="docutils literal notranslate"><span c
 </div>
 </section>
 <section id="reading">
-<h3>Reading<a class="headerlink" href="#reading" title="Permalink to this heading">#</a></h3>
+<h3>Reading<a class="headerlink" href="#reading" title="Permalink to this heading">¶</a></h3>
 <p>Internally DOOD loads objects by instantiation and slot assignment. An
 object is instantiated via the internal system allocator, which
 returns an uninitialized instance, and then initialized by applying
 the setters of an object’s class.</p>
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dood:dood:dood-reinitialize">
-<span class="sig-name descname"><span class="pre">dood-reinitialize</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dood:dood:dood-reinitialize" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dood-reinitialize</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dood:dood:dood-reinitialize" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dood-reinitialize (dood object) =&gt; ()</p>
@@ -829,10 +831,10 @@ been loaded from disk.</p>
 </div>
 </section>
 <section id="tables">
-<h3>Tables<a class="headerlink" href="#tables" title="Permalink to this heading">#</a></h3>
+<h3>Tables<a class="headerlink" href="#tables" title="Permalink to this heading">¶</a></h3>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="dood:dood:[dood-lazy-symbol-table]">
-<span class="sig-name descname"><span class="pre">&lt;dood-lazy-symbol-table&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#dood:dood:[dood-lazy-symbol-table]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;dood-lazy-symbol-table&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#dood:dood:[dood-lazy-symbol-table]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;dood-lazy-key-table&gt;</span></code></p>
@@ -846,7 +848,7 @@ future.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dood:dood:dood-lazy-forward-iteration-protocol">
-<span class="sig-name descname"><span class="pre">dood-lazy-forward-iteration-protocol</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dood:dood:dood-lazy-forward-iteration-protocol" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dood-lazy-forward-iteration-protocol</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dood:dood:dood-lazy-forward-iteration-protocol" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dood-lazy-forward-iteration-protocol (table) =&gt; (#rest results)</p>
@@ -869,7 +871,7 @@ into memory.</p>
 
 </section>
 <section id="proxies">
-<h3>Proxies<a class="headerlink" href="#proxies" title="Permalink to this heading">#</a></h3>
+<h3>Proxies<a class="headerlink" href="#proxies" title="Permalink to this heading">¶</a></h3>
 <p>Sometimes users need more control over how objects are dumped to
 disk. DOOD provide a general mechanism called a proxy, which provides
 both a disk representation of an object and a reconstruction
@@ -881,7 +883,7 @@ for mapping objects back to unique runtime objects, for compressing
 objects, for looking up objects in external databases, etc.</p>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="dood:dood:[dood-proxy]">
-<span class="sig-name descname"><span class="pre">&lt;dood-proxy&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Class</span></em><a class="headerlink" href="#dood:dood:[dood-proxy]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;dood-proxy&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Class</span></em><a class="headerlink" href="#dood:dood:[dood-proxy]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;dood-mapped-and-owned-object&gt;</span></code></p>
@@ -893,7 +895,7 @@ this class in order to define a new kind of proxy.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dood:dood:dood-disk-object">
-<span class="sig-name descname"><span class="pre">dood-disk-object</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dood:dood:dood-disk-object" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dood-disk-object</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dood:dood:dood-disk-object" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dood-disk-object (dood object) =&gt; (disk-object)</p>
@@ -917,37 +919,37 @@ the memory-object.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dood:dood:dood-disk-object([dood],[object])">
-<span class="sig-name descname"><span class="pre">dood-disk-object(&lt;dood&gt;,</span> <span class="pre">&lt;object&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dood:dood:dood-disk-object([dood],[object])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dood-disk-object(&lt;dood&gt;,</span> <span class="pre">&lt;object&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dood:dood:dood-disk-object([dood],[object])" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dood:dood:dood-disk-object([dood],[dood-mapped-and-owned-object])">
-<span class="sig-name descname"><span class="pre">dood-disk-object(&lt;dood&gt;,</span> <span class="pre">&lt;dood-mapped-and-owned-object&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dood:dood:dood-disk-object([dood],[dood-mapped-and-owned-object])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dood-disk-object(&lt;dood&gt;,</span> <span class="pre">&lt;dood-mapped-and-owned-object&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dood:dood:dood-disk-object([dood],[dood-mapped-and-owned-object])" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dood:dood:dood-disk-object([dood],[generic-function])">
-<span class="sig-name descname"><span class="pre">dood-disk-object(&lt;dood&gt;,</span> <span class="pre">&lt;generic-function&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dood:dood:dood-disk-object([dood],[generic-function])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dood-disk-object(&lt;dood&gt;,</span> <span class="pre">&lt;generic-function&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dood:dood:dood-disk-object([dood],[generic-function])" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dood:dood:dood-disk-object([dood],[function])">
-<span class="sig-name descname"><span class="pre">dood-disk-object(&lt;dood&gt;,</span> <span class="pre">&lt;function&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dood:dood:dood-disk-object([dood],[function])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dood-disk-object(&lt;dood&gt;,</span> <span class="pre">&lt;function&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dood:dood:dood-disk-object([dood],[function])" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dood:dood:dood-disk-object([dood],[class])">
-<span class="sig-name descname"><span class="pre">dood-disk-object(&lt;dood&gt;,</span> <span class="pre">&lt;class&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dood:dood:dood-disk-object([dood],[class])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dood-disk-object(&lt;dood&gt;,</span> <span class="pre">&lt;class&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dood:dood:dood-disk-object([dood],[class])" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dood:dood:dood-disk-object([dood],[integer])">
-<span class="sig-name descname"><span class="pre">dood-disk-object(&lt;dood&gt;,</span> <span class="pre">&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dood:dood:dood-disk-object([dood],[integer])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dood-disk-object(&lt;dood&gt;,</span> <span class="pre">&lt;integer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dood:dood:dood-disk-object([dood],[integer])" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dood:dood:dood-restore-proxy">
-<span class="sig-name descname"><span class="pre">dood-restore-proxy</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dood:dood:dood-restore-proxy" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dood-restore-proxy</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dood:dood:dood-restore-proxy" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dood-restore-proxy (dood proxy) =&gt; (memory-object)</p>
@@ -971,22 +973,22 @@ disk-object back to its memory-object.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dood:dood:dood-restore-proxy([dood],[dood-program-module-proxy])">
-<span class="sig-name descname"><span class="pre">dood-restore-proxy(&lt;dood&gt;,</span> <span class="pre">&lt;dood-program-module-proxy&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dood:dood:dood-restore-proxy([dood],[dood-program-module-proxy])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dood-restore-proxy(&lt;dood&gt;,</span> <span class="pre">&lt;dood-program-module-proxy&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dood:dood:dood-restore-proxy([dood],[dood-program-module-proxy])" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dood:dood:dood-restore-proxy([dood],[dood-program-binding-proxy])">
-<span class="sig-name descname"><span class="pre">dood-restore-proxy(&lt;dood&gt;,</span> <span class="pre">&lt;dood-program-binding-proxy&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dood:dood:dood-restore-proxy([dood],[dood-program-binding-proxy])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dood-restore-proxy(&lt;dood&gt;,</span> <span class="pre">&lt;dood-program-binding-proxy&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dood:dood:dood-restore-proxy([dood],[dood-program-binding-proxy])" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dood:dood:dood-restore-proxy([dood],[dood-class-program-binding-proxy])">
-<span class="sig-name descname"><span class="pre">dood-restore-proxy(&lt;dood&gt;,</span> <span class="pre">&lt;dood-class-program-binding-proxy&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dood:dood:dood-restore-proxy([dood],[dood-class-program-binding-proxy])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dood-restore-proxy(&lt;dood&gt;,</span> <span class="pre">&lt;dood-class-program-binding-proxy&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#dood:dood:dood-restore-proxy([dood],[dood-class-program-binding-proxy])" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="dood:dood:[dood-proxy-error]">
-<span class="sig-name descname"><span class="pre">&lt;dood-proxy-error&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Class</span></em><a class="headerlink" href="#dood:dood:[dood-proxy-error]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;dood-proxy-error&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Class</span></em><a class="headerlink" href="#dood:dood:[dood-proxy-error]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;error&gt;</span></code></p>
@@ -997,9 +999,9 @@ disk-object back to its memory-object.</p>
 
 </section>
 <section id="proxy-examples">
-<h3>Proxy examples<a class="headerlink" href="#proxy-examples" title="Permalink to this heading">#</a></h3>
+<h3>Proxy examples<a class="headerlink" href="#proxy-examples" title="Permalink to this heading">¶</a></h3>
 <section id="dump-by-reference">
-<h4>Dump by Reference<a class="headerlink" href="#dump-by-reference" title="Permalink to this heading">#</a></h4>
+<h4>Dump by Reference<a class="headerlink" href="#dump-by-reference" title="Permalink to this heading">¶</a></h4>
 <p>The first example shows how proxies can be used to dump objects by
 reference back to objects in a user’s program. This is necessary when
 the data can not be dumped by DOOD (e.g., functions).</p>
@@ -1031,7 +1033,7 @@ the data can not be dumped by DOOD (e.g., functions).</p>
 </div>
 </section>
 <section id="compression">
-<h4>Compression<a class="headerlink" href="#compression" title="Permalink to this heading">#</a></h4>
+<h4>Compression<a class="headerlink" href="#compression" title="Permalink to this heading">¶</a></h4>
 <p>The second example shows how proxies can be used to compress an object’s
 disk representation.</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">class</span><span class="w"> </span><span class="nc">&lt;person&gt;</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;object&gt;</span><span class="p">)</span>
@@ -1070,7 +1072,7 @@ disk representation.</p>
 </div>
 </section>
 <section id="multiple-databases">
-<h4>Multiple Databases<a class="headerlink" href="#multiple-databases" title="Permalink to this heading">#</a></h4>
+<h4>Multiple Databases<a class="headerlink" href="#multiple-databases" title="Permalink to this heading">¶</a></h4>
 <p>The third example demonstrates how to use proxies for interdatabase
 references. Suppose that each database is registered in a symbol-table
 of databases and that each object stored in these databases knows both
@@ -1208,6 +1210,6 @@ root.</p>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

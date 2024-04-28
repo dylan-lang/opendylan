@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="The streams Module" href="streams.html" /><link rel="prev" title="The format-out Module" href="format-out.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>The print and pprint Modules - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="the-print-and-pprint-modules">
-<h1>The print and pprint Modules<a class="headerlink" href="#the-print-and-pprint-modules" title="Permalink to this heading">#</a></h1>
+<h1>The print and pprint Modules<a class="headerlink" href="#the-print-and-pprint-modules" title="Permalink to this heading">¶</a></h1>
 <p>The IO library’s printing modules provide an interface that outputs an object
 in Dylan literal syntax if the object can be represented as a Dylan literal,
 and otherwise, outputs the object in an implementation-dependent manner.</p>
@@ -487,7 +489,7 @@ exported from the <em>pprint</em> module are in <a class="reference internal" hr
 <p>These modules use the Streams module. See <a class="reference internal" href="streams.html"><span class="doc">The streams Module</span></a> for
 full details of the Streams module.</p>
 <section id="print-functions">
-<h2>Print functions<a class="headerlink" href="#print-functions" title="Permalink to this heading">#</a></h2>
+<h2>Print functions<a class="headerlink" href="#print-functions" title="Permalink to this heading">¶</a></h2>
 <p>The Print module offers functions for users to call to print objects,
 <a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a> and <a class="reference internal" href="#io:print:print-to-string"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print-to-string</span></code></a>, along with interfaces that allow you
 to modify the way your own objects are printed: <a class="reference internal" href="#io:print:print-object"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print-object</span></code></a> and
@@ -504,7 +506,7 @@ implementation-dependent.</p>
 </ul>
 </section>
 <section id="pretty-printing">
-<h2>Pretty printing<a class="headerlink" href="#pretty-printing" title="Permalink to this heading">#</a></h2>
+<h2>Pretty printing<a class="headerlink" href="#pretty-printing" title="Permalink to this heading">¶</a></h2>
 <p>When writing <a class="reference internal" href="#io:print:print-object"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print-object</span></code></a> methods, you can ignore whether pretty
 printing is in effect. If you write your <a class="reference internal" href="#io:print:print-object"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">print-object</span></code></a> method using
 pretty printing functions, then when pretty printing is in effect, the
@@ -525,12 +527,12 @@ printing functions are no-ops.</p>
 </ul>
 </section>
 <section id="the-print-module">
-<h2>The print Module<a class="headerlink" href="#the-print-module" title="Permalink to this heading">#</a></h2>
+<h2>The print Module<a class="headerlink" href="#the-print-module" title="Permalink to this heading">¶</a></h2>
 <p>This section contains a reference entry for each item exported from the
 IO library’s <em>print</em> module.</p>
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="io:print:print">
-<span class="sig-name descname"><span class="pre">print</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#io:print:print" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">print</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#io:print:print" title="Permalink to this definition">¶</a></dt>
 <dd><p>Prints <em>object</em> to the specified stream.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -623,7 +625,7 @@ printed with additional identifying information.</p>
 
 <dl class="dylan variable">
 <dt class="sig sig-object dylan-api dylan" id="io:print:*print-circle?*">
-<span class="sig-name descname"><span class="pre">*print-circle?*</span></span> <em class="property"><span class="pre">Thread</span> <span class="pre">Variable</span></em><a class="headerlink" href="#io:print:*print-circle?*" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">*print-circle?*</span></span> <em class="property"><span class="pre">Thread</span> <span class="pre">Variable</span></em><a class="headerlink" href="#io:print:*print-circle?*" title="Permalink to this definition">¶</a></dt>
 <dd><p>Controls whether or not to detect circular structures when printing.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -655,7 +657,7 @@ structures may result in failure to terminate.</p>
 
 <dl class="dylan variable">
 <dt class="sig sig-object dylan-api dylan" id="io:print:*print-escape?*">
-<span class="sig-name descname"><span class="pre">*print-escape?*</span></span> <em class="property"><span class="pre">Thread</span> <span class="pre">Variable</span></em><a class="headerlink" href="#io:print:*print-escape?*" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">*print-escape?*</span></span> <em class="property"><span class="pre">Thread</span> <span class="pre">Variable</span></em><a class="headerlink" href="#io:print:*print-escape?*" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Whether to print objects for debugging or for display to the end user.</p>
 </div></blockquote>
@@ -689,7 +691,7 @@ trailing newline.</p>
 
 <dl class="dylan variable">
 <dt class="sig sig-object dylan-api dylan" id="io:print:*print-length*">
-<span class="sig-name descname"><span class="pre">*print-length*</span></span> <em class="property"><span class="pre">Thread</span> <span class="pre">Variable</span></em><a class="headerlink" href="#io:print:*print-length*" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">*print-length*</span></span> <em class="property"><span class="pre">Thread</span> <span class="pre">Variable</span></em><a class="headerlink" href="#io:print:*print-length*" title="Permalink to this definition">¶</a></dt>
 <dd><p>Controls the number of elements of an expression to print.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -713,7 +715,7 @@ expression. The default is unlimited (<a class="reference external" href="https:
 
 <dl class="dylan variable">
 <dt class="sig sig-object dylan-api dylan" id="io:print:*print-level*">
-<span class="sig-name descname"><span class="pre">*print-level*</span></span> <em class="property"><span class="pre">Thread</span> <span class="pre">Variable</span></em><a class="headerlink" href="#io:print:*print-level*" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">*print-level*</span></span> <em class="property"><span class="pre">Thread</span> <span class="pre">Variable</span></em><a class="headerlink" href="#io:print:*print-level*" title="Permalink to this definition">¶</a></dt>
 <dd><p>Controls how deeply into a nested expression to print.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -736,7 +738,7 @@ expression. The default is unlimited (<a class="reference external" href="https:
 
 <dl class="dylan variable">
 <dt class="sig sig-object dylan-api dylan" id="io:print:*print-pretty?*">
-<span class="sig-name descname"><span class="pre">*print-pretty?*</span></span> <em class="property"><span class="pre">Thread</span> <span class="pre">Variable</span></em><a class="headerlink" href="#io:print:*print-pretty?*" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">*print-pretty?*</span></span> <em class="property"><span class="pre">Thread</span> <span class="pre">Variable</span></em><a class="headerlink" href="#io:print:*print-pretty?*" title="Permalink to this definition">¶</a></dt>
 <dd><p>Controls whether or not pretty printing is used.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -760,7 +762,7 @@ May be overridden via the <code class="docutils literal notranslate"><span class
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:print:print-object">
-<span class="sig-name descname"><span class="pre">print-object</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:print:print-object" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">print-object</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:print:print-object" title="Permalink to this definition">¶</a></dt>
 <dd><p>Prints an object to a stream.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -794,7 +796,7 @@ methods.</p></li>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="io:print:print-to-string">
-<span class="sig-name descname"><span class="pre">print-to-string</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#io:print:print-to-string" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">print-to-string</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#io:print:print-to-string" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calls <a class="reference internal" href="#io:print:print"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">print</span></code></a> on <em>object</em> and returns the result as a string.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -830,7 +832,7 @@ string.</p>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="io:print:printing-object">
-<span class="sig-name descname"><span class="pre">printing-object</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#io:print:printing-object" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">printing-object</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#io:print:printing-object" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper around <code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">printing-logical-block</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
@@ -858,12 +860,12 @@ own classes. Example:</p>
 
 </section>
 <section id="the-pprint-module">
-<h2>The pprint Module<a class="headerlink" href="#the-pprint-module" title="Permalink to this heading">#</a></h2>
+<h2>The pprint Module<a class="headerlink" href="#the-pprint-module" title="Permalink to this heading">¶</a></h2>
 <p>This section contains a reference entry for each item exported from the
 IO library’s <em>pprint</em> module.</p>
 <dl class="dylan variable">
 <dt class="sig sig-object dylan-api dylan" id="io:pprint:*default-line-length*">
-<span class="sig-name descname"><span class="pre">*default-line-length*</span></span> <em class="property"><span class="pre">Variable</span></em><a class="headerlink" href="#io:pprint:*default-line-length*" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">*default-line-length*</span></span> <em class="property"><span class="pre">Variable</span></em><a class="headerlink" href="#io:pprint:*default-line-length*" title="Permalink to this definition">¶</a></dt>
 <dd><p>Controls the default line length used by the pretty printer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -882,7 +884,7 @@ integer.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="io:pprint:pprint-indent">
-<span class="sig-name descname"><span class="pre">pprint-indent</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#io:pprint:pprint-indent" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">pprint-indent</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#io:pprint:pprint-indent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Specifies the indentation to use within the current logical block.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -908,7 +910,7 @@ block plus <em>n</em>. When <em>relative-to</em> is <code class="docutils litera
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="io:pprint:pprint-logical-block">
-<span class="sig-name descname"><span class="pre">pprint-logical-block</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#io:pprint:pprint-logical-block" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">pprint-logical-block</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#io:pprint:pprint-logical-block" title="Permalink to this definition">¶</a></dt>
 <dd><p>Groups printing into a logical block.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -958,7 +960,7 @@ pretty printing functions are no-ops.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="io:pprint:pprint-newline">
-<span class="sig-name descname"><span class="pre">pprint-newline</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#io:pprint:pprint-newline" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">pprint-newline</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#io:pprint:pprint-newline" title="Permalink to this definition">¶</a></dt>
 <dd><p>Announces a conditional newline to the pretty printer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1000,7 +1002,7 @@ appropriate.</p></li>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="io:pprint:pprint-tab">
-<span class="sig-name descname"><span class="pre">pprint-tab</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#io:pprint:pprint-tab" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">pprint-tab</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#io:pprint:pprint-tab" title="Permalink to this definition">¶</a></dt>
 <dd><p>Announces a tab to the pretty printer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1043,7 +1045,7 @@ the line.</p></li>
 
 <dl class="dylan variable">
 <dt class="sig sig-object dylan-api dylan" id="io:pprint:*print-miser-width*">
-<span class="sig-name descname"><span class="pre">*print-miser-width*</span></span> <em class="property"><span class="pre">Variable</span></em><a class="headerlink" href="#io:pprint:*print-miser-width*" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">*print-miser-width*</span></span> <em class="property"><span class="pre">Variable</span></em><a class="headerlink" href="#io:pprint:*print-miser-width*" title="Permalink to this definition">¶</a></dt>
 <dd><p>Controls miser mode.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -1145,6 +1147,6 @@ indicates that the pretty printer should never enter miser mode.</p>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

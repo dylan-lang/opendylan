@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Setting up the Bank Example" href="bank-setup.html" /><link rel="prev" title="About Open Dylan CORBA" href="intro.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Quick Start Tutorial - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,11 +463,11 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="quick-start-tutorial">
-<h1>Quick Start Tutorial<a class="headerlink" href="#quick-start-tutorial" title="Permalink to this heading">#</a></h1>
+<h1>Quick Start Tutorial<a class="headerlink" href="#quick-start-tutorial" title="Permalink to this heading">¶</a></h1>
 <section id="about-this-chapter">
-<h2>About this chapter<a class="headerlink" href="#about-this-chapter" title="Permalink to this heading">#</a></h2>
+<h2>About this chapter<a class="headerlink" href="#about-this-chapter" title="Permalink to this heading">¶</a></h2>
 <p>In this chapter, we develop a simple example application that
 illustrates the basics of writing CORBA-based applications using Open
 Dylan.</p>
@@ -477,7 +479,7 @@ deeper example, and explaining the approach we have taken to
 implementing the CORBA architecture for Dylan.</p>
 </section>
 <section id="a-corba-based-hello-world">
-<h2>A CORBA-based Hello World<a class="headerlink" href="#a-corba-based-hello-world" title="Permalink to this heading">#</a></h2>
+<h2>A CORBA-based Hello World<a class="headerlink" href="#a-corba-based-hello-world" title="Permalink to this heading">¶</a></h2>
 <p>This chapter’s example is an implementation of the standard Hello
 World application, using Dylan and CORBA. In this version of Hello
 World, a client application asks a server application for a
@@ -499,7 +501,7 @@ Definition Language (IDL).</p>
 </ol>
 </section>
 <section id="creating-the-projects">
-<h2>Creating the projects<a class="headerlink" href="#creating-the-projects" title="Permalink to this heading">#</a></h2>
+<h2>Creating the projects<a class="headerlink" href="#creating-the-projects" title="Permalink to this heading">¶</a></h2>
 <p>In this section we create projects for the client and server parts of
 our CORBA-based Hello World application.</p>
 <p>To create these projects we use the New Project wizard. For CORBA
@@ -523,7 +525,7 @@ accesses, written in OMG’s Interface Definition Language.</p>
 <figure class="align-default" id="id1">
 <img alt="../_images/getstart-new-project.png" src="../_images/getstart-new-project.png" />
 <figcaption>
-<p><span class="caption-text">The CORBA project page in the New Project wizard</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">The CORBA project page in the New Project wizard</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The second page, shown in Figure 2.1, has several options for
@@ -615,7 +617,7 @@ My-Hello-World-Client, and one for the server project,
 My-Hello-World-Server.</p>
 </section>
 <section id="defining-the-interface">
-<h2>Defining the interface<a class="headerlink" href="#defining-the-interface" title="Permalink to this heading">#</a></h2>
+<h2>Defining the interface<a class="headerlink" href="#defining-the-interface" title="Permalink to this heading">¶</a></h2>
 <p>In this section we declare the IDL interface that the Hello World
 client and server will communicate across. This is the usual first
 step in developing a CORBA-based application in Dylan.</p>
@@ -682,7 +684,7 @@ file.</p></li>
 to produce stub, skeleton, and protocol code for the client and server
 parts of the application.</p>
 <section id="generating-stub-skeleton-protocol-code-from-idl">
-<h3>Generating stub, skeleton, protocol code from IDL<a class="headerlink" href="#generating-stub-skeleton-protocol-code-from-idl" title="Permalink to this heading">#</a></h3>
+<h3>Generating stub, skeleton, protocol code from IDL<a class="headerlink" href="#generating-stub-skeleton-protocol-code-from-idl" title="Permalink to this heading">¶</a></h3>
 <p>There are two ways of generating the stub, skeleton, and protocol code
 for a CORBA application. We can either run the IDL compiler on the
 command-line, or we can run it within the Open Dylan development
@@ -737,7 +739,7 @@ objects.</p>
 </dl>
 </section>
 <section id="a-browsing-detour">
-<h3>A browsing detour<a class="headerlink" href="#a-browsing-detour" title="Permalink to this heading">#</a></h3>
+<h3>A browsing detour<a class="headerlink" href="#a-browsing-detour" title="Permalink to this heading">¶</a></h3>
 <p>The next step would be to implement the client and server. But it is
 instructive to take a brief detour and look at what is inside the new
 projects that we gained by compiling our small IDL file.</p>
@@ -759,7 +761,7 @@ Hello World.</p>
 <figure class="align-default" id="id2">
 <img alt="../_images/getstart-browsing.png" src="../_images/getstart-browsing.png" />
 <figcaption>
-<p><span class="caption-text">A Dylan generic function mapped from an IDL declaration.</span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">A Dylan generic function mapped from an IDL declaration.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Notice how the Dylan code has been mapped from the IDL. An IDL
@@ -785,7 +787,7 @@ changed, you should not edit them by hand.</p>
 </section>
 </section>
 <section id="implementing-the-client">
-<h2>Implementing the client<a class="headerlink" href="#implementing-the-client" title="Permalink to this heading">#</a></h2>
+<h2>Implementing the client<a class="headerlink" href="#implementing-the-client" title="Permalink to this heading">¶</a></h2>
 <p>In this section we implement the client side of the Hello World
 application.</p>
 <p>The basic requirements for a client are to initialize an ORB, then
@@ -794,7 +796,7 @@ operations upon. The client can then proceed with execution in the
 normal way; as necessary, it can invoke the operations on the CORBA
 objects to which it has references.</p>
 <section id="initializing-the-orb">
-<h3>Initializing the ORB<a class="headerlink" href="#initializing-the-orb" title="Permalink to this heading">#</a></h3>
+<h3>Initializing the ORB<a class="headerlink" href="#initializing-the-orb" title="Permalink to this heading">¶</a></h3>
 <p>The first thing our client needs to do is to initialize the Open Dylan
 ORB. CORBA provides a standard operation for this, called
 <code class="docutils literal notranslate"><span class="pre">orb_init</span></code>. This is just one of many operations that ORBs must
@@ -813,7 +815,7 @@ to keep our ORB reference around, so we bind this value to the name
 <code class="docutils literal notranslate"><span class="pre">orb</span></code>.</p>
 </section>
 <section id="obtaining-an-object-reference">
-<h3>Obtaining an object reference<a class="headerlink" href="#obtaining-an-object-reference" title="Permalink to this heading">#</a></h3>
+<h3>Obtaining an object reference<a class="headerlink" href="#obtaining-an-object-reference" title="Permalink to this heading">¶</a></h3>
 <p>The next thing our client needs to do is to get a reference to a CORBA
 object implementing Hello World. Recall from <a class="reference internal" href="#defining-the-interface">Defining the interface</a>
 that our IDL defined CORBA objects of a kind called <code class="docutils literal notranslate"><span class="pre">world</span></code>:</p>
@@ -870,7 +872,7 @@ coerced to be an instance of an internal concrete subclass of
 characters.</p>
 </section>
 <section id="invoking-an-operation">
-<h3>Invoking an operation<a class="headerlink" href="#invoking-an-operation" title="Permalink to this heading">#</a></h3>
+<h3>Invoking an operation<a class="headerlink" href="#invoking-an-operation" title="Permalink to this heading">¶</a></h3>
 <p>Our client has now initialized the ORB and obtained the <code class="docutils literal notranslate"><span class="pre">world</span></code>
 object reference it required. It is ready to invoke the <code class="docutils literal notranslate"><span class="pre">hello</span></code>
 operation and receive the string that it needs to print out.</p>
@@ -896,7 +898,7 @@ following call:</p>
 <p>This code gets the string and then prints it to the standard output.</p>
 </section>
 <section id="complete-code-for-the-client">
-<h3>Complete code for the client<a class="headerlink" href="#complete-code-for-the-client" title="Permalink to this heading">#</a></h3>
+<h3>Complete code for the client<a class="headerlink" href="#complete-code-for-the-client" title="Permalink to this heading">¶</a></h3>
 <p>The following code is the complete implementation of the client. Enter
 it into the file my-hello-world-client.dylan in the
 My-Hello-World-Client project.</p>
@@ -924,14 +926,14 @@ My-Hello-World-Client project.</p>
 </section>
 </section>
 <section id="implementing-the-server">
-<h2>Implementing the server<a class="headerlink" href="#implementing-the-server" title="Permalink to this heading">#</a></h2>
+<h2>Implementing the server<a class="headerlink" href="#implementing-the-server" title="Permalink to this heading">¶</a></h2>
 <p>In this section we implement the server side of the Hello World application.</p>
 <p>There are two parts to implementing a server. We need to implement the
 CORBA objects that the server offers, and we also need to perform ORB
 initialization and other administrative tasks that get the server
 ready to service potential clients.</p>
 <section id="a-note-on-terminology">
-<h3>A note on terminology<a class="headerlink" href="#a-note-on-terminology" title="Permalink to this heading">#</a></h3>
+<h3>A note on terminology<a class="headerlink" href="#a-note-on-terminology" title="Permalink to this heading">¶</a></h3>
 <p>CORBA objects are what CORBA servers implement and provide to CORBA
 clients. In CORBA, an object is basically a collection of code that
 supports an interface declared as an IDL interface .</p>
@@ -943,7 +945,7 @@ occasionally use the term “CORBA object” where “server” might also be
 applicable.</p>
 </section>
 <section id="implementing-the-servers-corba-objects">
-<h3>Implementing the server’s CORBA objects<a class="headerlink" href="#implementing-the-servers-corba-objects" title="Permalink to this heading">#</a></h3>
+<h3>Implementing the server’s CORBA objects<a class="headerlink" href="#implementing-the-servers-corba-objects" title="Permalink to this heading">¶</a></h3>
 <p>According to the IDL we wrote, the server is supposed to provide
 <code class="docutils literal notranslate"><span class="pre">world</span></code> objects, which have an operation called <code class="docutils literal notranslate"><span class="pre">hello</span></code>. How do we
 implement <code class="docutils literal notranslate"><span class="pre">world</span></code> and <code class="docutils literal notranslate"><span class="pre">hello</span></code> in the server?</p>
@@ -984,7 +986,7 @@ client. With this, the Dylan implementation of the <code class="docutils literal
 object type we described in IDL is complete.</p>
 </section>
 <section id="orb-and-object-initialization">
-<h3>ORB and object initialization<a class="headerlink" href="#orb-and-object-initialization" title="Permalink to this heading">#</a></h3>
+<h3>ORB and object initialization<a class="headerlink" href="#orb-and-object-initialization" title="Permalink to this heading">¶</a></h3>
 <p>The other part of writing the server is to perform the initializations
 necessary for the server to ready itself for CORBA-based interactions
 with a client.</p>
@@ -1061,7 +1063,7 @@ client requests:</p>
 </div>
 </section>
 <section id="complete-code-for-the-server">
-<h3>Complete code for the server<a class="headerlink" href="#complete-code-for-the-server" title="Permalink to this heading">#</a></h3>
+<h3>Complete code for the server<a class="headerlink" href="#complete-code-for-the-server" title="Permalink to this heading">¶</a></h3>
 <p>The following code is the complete implementation of the server. Enter
 it into the file <code class="file docutils literal notranslate"><span class="pre">my-hello-world-server.dylan</span></code> in the
 My-Hello-World-Server project.</p>
@@ -1102,7 +1104,7 @@ My-Hello-World-Server project.</p>
 </section>
 </section>
 <section id="building-and-testing-the-application">
-<h2>Building and testing the application<a class="headerlink" href="#building-and-testing-the-application" title="Permalink to this heading">#</a></h2>
+<h2>Building and testing the application<a class="headerlink" href="#building-and-testing-the-application" title="Permalink to this heading">¶</a></h2>
 <p>In this section we build and test the completed CORBA-based Hello
 World application.</p>
 <p>Once you have replaced the dummy code in
@@ -1232,6 +1234,6 @@ passes from client to server.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

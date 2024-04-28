@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Source Code For The Task List Manager" href="source.html" /><link rel="prev" title="Using Command Tables" href="commands.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>A Tour of the DUIM Libraries - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,11 +463,11 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="a-tour-of-the-duim-libraries">
-<span id="index-0"></span><h1>A Tour of the DUIM Libraries<a class="headerlink" href="#a-tour-of-the-duim-libraries" title="Permalink to this heading">#</a></h1>
+<span id="index-0"></span><h1>A Tour of the DUIM Libraries<a class="headerlink" href="#a-tour-of-the-duim-libraries" title="Permalink to this heading">¶</a></h1>
 <section id="introduction">
-<span id="index-1"></span><h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<span id="index-1"></span><h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>This chapter provides an overview of the gadgets and functionality that
 are provided by DUIM. Of necessity, it covers a lot of ground in as
 short a space as possible, and does not attempt to place any information
@@ -515,13 +517,13 @@ presented in this chapter, you must pass them to <code class="docutils literal n
 details).</p>
 </section>
 <section id="a-tour-of-gadgets">
-<span id="index-2"></span><h2>A tour of gadgets<a class="headerlink" href="#a-tour-of-gadgets" title="Permalink to this heading">#</a></h2>
+<span id="index-2"></span><h2>A tour of gadgets<a class="headerlink" href="#a-tour-of-gadgets" title="Permalink to this heading">¶</a></h2>
 <p>The DUIM-Gadgets library provides you with all the controls you can use
 to create an interface. Objects like buttons, menus, boxes, and other
 common interface elements are defined as subclasses of the base class
 <code class="docutils literal notranslate"><span class="pre">&lt;gadget&gt;</span></code>.</p>
 <section id="general-properties-of-gadgets">
-<span id="index-3"></span><h3>General properties of gadgets<a class="headerlink" href="#general-properties-of-gadgets" title="Permalink to this heading">#</a></h3>
+<span id="index-3"></span><h3>General properties of gadgets<a class="headerlink" href="#general-properties-of-gadgets" title="Permalink to this heading">¶</a></h3>
 <p>Each class of gadget has a set of associated slots that help define the
 properties for that class. Different classes of gadget have different
 sets of slots. This section describes some of the more important slots
@@ -574,14 +576,14 @@ callback types available. For an introduction to callbacks, see
 <a class="reference internal" href="#assigning-callbacks-to-gadgets">Assigning callbacks to gadgets</a>.</p>
 </section>
 <section id="button-gadgets">
-<span id="index-4"></span><h3>Button gadgets<a class="headerlink" href="#button-gadgets" title="Permalink to this heading">#</a></h3>
+<span id="index-4"></span><h3>Button gadgets<a class="headerlink" href="#button-gadgets" title="Permalink to this heading">¶</a></h3>
 <p>Broadly speaking, these are gadgets whose value can be changed, or for
 which some user-defined functionality can be invoked, by clicking on the
 gadget. Button gadgets encompass obvious controls such as push buttons,
 radio buttons, and check boxes, and, less obviously, menu items.</p>
 </section>
 <section id="standard-buttons">
-<span id="index-5"></span><h3>Standard buttons<a class="headerlink" href="#standard-buttons" title="Permalink to this heading">#</a></h3>
+<span id="index-5"></span><h3>Standard buttons<a class="headerlink" href="#standard-buttons" title="Permalink to this heading">¶</a></h3>
 <p id="index-6">DUIM provides three standard button gadget classes:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">&lt;push-button&gt;</span></code> Sometimes referred to as <em>command button</em> in
@@ -594,7 +596,7 @@ documentation.</p></li>
 <figure class="align-center" id="id1">
 <span id="three-buttons"></span><img alt="../_images/tour-3.png" src="../_images/tour-3.png" />
 <figcaption>
-<p><span class="caption-text">A push button, a radio button, and a check button</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">A push button, a radio button, and a check button</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The chapters covering the task list manager application (chapters
@@ -677,7 +679,7 @@ and will still have the same minimum width, so it cannot be resized too
 small.</p>
 </section>
 <section id="menu-buttons">
-<span id="index-7"></span><h3>Menu buttons<a class="headerlink" href="#menu-buttons" title="Permalink to this heading">#</a></h3>
+<span id="index-7"></span><h3>Menu buttons<a class="headerlink" href="#menu-buttons" title="Permalink to this heading">¶</a></h3>
 <p id="index-8"><a class="reference internal" href="#standard-buttons">Standard buttons</a> described buttons that are all
 displayed in windows on the screen. For each of those buttons, there is
 an analogous type of button that is displayed as an item in a menu.</p>
@@ -706,7 +708,7 @@ check mark to the left of the command name on the menu.</p>
 <p>For more information about creating menus, see <a class="reference internal" href="menus.html"><span class="doc">Adding Menus To The Application</span></a>.</p>
 </section>
 <section id="collection-gadgets">
-<span id="index-9"></span><h3>Collection gadgets<a class="headerlink" href="#collection-gadgets" title="Permalink to this heading">#</a></h3>
+<span id="index-9"></span><h3>Collection gadgets<a class="headerlink" href="#collection-gadgets" title="Permalink to this heading">¶</a></h3>
 <p>Collection gadgets are gadgets whose items can consist of any Dylan
 collection. They are typically used to group together a number of
 related objects, such as items in a list or a group of buttons. All
@@ -720,7 +722,7 @@ visually, collection gadgets often look like groups of individual
 gadgets.</p>
 </section>
 <section id="useful-properties-of-collection-gadgets">
-<span id="index-10"></span><h3>Useful properties of collection gadgets<a class="headerlink" href="#useful-properties-of-collection-gadgets" title="Permalink to this heading">#</a></h3>
+<span id="index-10"></span><h3>Useful properties of collection gadgets<a class="headerlink" href="#useful-properties-of-collection-gadgets" title="Permalink to this heading">¶</a></h3>
 <p>All collection gadgets share certain essential properties. These can
 either be specified when an instance of a gadget is created, using an
 init-keyword, or set interactively via a slot value.</p>
@@ -758,7 +760,7 @@ and a check box is multiple selection.</p>
 <code class="docutils literal notranslate"><span class="pre">value-key:</span></code> init-keyword.</p>
 </section>
 <section id="button-boxes">
-<span id="index-11"></span><h3>Button boxes<a class="headerlink" href="#button-boxes" title="Permalink to this heading">#</a></h3>
+<span id="index-11"></span><h3>Button boxes<a class="headerlink" href="#button-boxes" title="Permalink to this heading">¶</a></h3>
 <p>Groups of functionally related buttons are placed in button boxes. The
 superclass for button boxes is the <code class="docutils literal notranslate"><span class="pre">&lt;button-box&gt;</span></code> class. The two most
 common types of button box are <code class="docutils literal notranslate"><span class="pre">&lt;check-box&gt;</span></code> (groups of check buttons)
@@ -767,7 +769,7 @@ and <code class="docutils literal notranslate"><span class="pre">&lt;radio-box&g
 <figure class="align-center" id="id2">
 <img alt="../_images/pushbox.png" src="../_images/pushbox.png" />
 <figcaption>
-<p><span class="caption-text">A push box</span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">A push box</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <div class="admonition note">
@@ -839,7 +841,7 @@ value is a sequence consisting of the values of all the selected items.
 The value of any given item is calculated using the value key.</p>
 </section>
 <section id="menu-boxes">
-<span id="index-12"></span><h3>Menu boxes<a class="headerlink" href="#menu-boxes" title="Permalink to this heading">#</a></h3>
+<span id="index-12"></span><h3>Menu boxes<a class="headerlink" href="#menu-boxes" title="Permalink to this heading">¶</a></h3>
 <p>In addition to groups of buttons, groups of menu items can be created.
 All of these are subclasses of the class <code class="docutils literal notranslate"><span class="pre">&lt;menu-box&gt;</span></code>.</p>
 <p><img alt="image5" src="../_images/pushmbox.png" /> A <code class="docutils literal notranslate"><span class="pre">&lt;push-menu-box&gt;</span></code> is a group of several standard menu items.
@@ -859,7 +861,7 @@ as a group. Note that you can also use command tables to create and
 group related menu commands. See <a class="reference internal" href="commands.html"><span class="doc">Using Command Tables</span></a> for more details.</p>
 </section>
 <section id="lists">
-<h3>Lists<a class="headerlink" href="#lists" title="Permalink to this heading">#</a></h3>
+<h3>Lists<a class="headerlink" href="#lists" title="Permalink to this heading">¶</a></h3>
 <p>A <code class="docutils literal notranslate"><span class="pre">&lt;list-box&gt;</span></code>, although it has a different appearance than a
 <code class="docutils literal notranslate"><span class="pre">&lt;radio-box&gt;</span></code>, shares many of the same characteristics:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;list-box&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">items:</span><span class="w"> </span><span class="p">#(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">));</span>
@@ -868,7 +870,7 @@ group related menu commands. See <a class="reference internal" href="commands.ht
 <figure class="align-center" id="id3">
 <span id="index-13"></span><img alt="../_images/lbox.png" src="../_images/lbox.png" />
 <figcaption>
-<p><span class="caption-text">A list box</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">A list box</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>As with other boxes, <code class="docutils literal notranslate"><span class="pre">gadget-value</span></code> is used to return and set the
@@ -932,7 +934,7 @@ for future use.</p>
 <code class="docutils literal notranslate"><span class="pre">scroll-bars:</span></code> init-keywords.</p>
 </section>
 <section id="display-controls">
-<span id="index-15"></span><h3>Display controls<a class="headerlink" href="#display-controls" title="Permalink to this heading">#</a></h3>
+<span id="index-15"></span><h3>Display controls<a class="headerlink" href="#display-controls" title="Permalink to this heading">¶</a></h3>
 <p>Display controls describe a set of collection gadgets that provide a
 richer set of features for displaying more complex objects, such as
 files on disk, that may have properties such as icons associated with
@@ -941,7 +943,7 @@ them.</p>
 display information in a variety of ways.</p>
 </section>
 <section id="tree-controls">
-<span id="index-16"></span><h3>Tree controls<a class="headerlink" href="#tree-controls" title="Permalink to this heading">#</a></h3>
+<span id="index-16"></span><h3>Tree controls<a class="headerlink" href="#tree-controls" title="Permalink to this heading">¶</a></h3>
 <p id="index-17">The <code class="docutils literal notranslate"><span class="pre">&lt;tree-control&gt;</span></code> class (also known as a tree view control in
 Microsoft documentation) is a special list control that displays a set
 of objects in an indented outline based on the logical hierarchical
@@ -951,7 +953,7 @@ appearance of that information.</p>
 <figure class="align-center" id="id4">
 <img alt="../_images/tree.png" src="../_images/tree.png" />
 <figcaption>
-<p><span class="caption-text">A tree control</span><a class="headerlink" href="#id4" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">A tree control</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The <code class="docutils literal notranslate"><span class="pre">tree-control-children-generator</span></code> slot contains a function that is
@@ -987,7 +989,7 @@ been defined.</p>
 <code class="docutils literal notranslate"><span class="pre">scroll-bars:</span></code> init-keyword.</p>
 </section>
 <section id="list-controls">
-<h3>List controls<a class="headerlink" href="#list-controls" title="Permalink to this heading">#</a></h3>
+<h3>List controls<a class="headerlink" href="#list-controls" title="Permalink to this heading">¶</a></h3>
 <p id="index-18"><img alt="image9" src="../_images/listcont.png" /> The <code class="docutils literal notranslate"><span class="pre">&lt;list-control&gt;</span></code> class is used to display a collection of
 items, each item consisting of an icon and a label. In Microsoft
 documentation, this control corresponds to the List View control in its
@@ -1041,7 +1043,7 @@ if any, scroll bars are added to the control.</p>
 and <code class="docutils literal notranslate"><span class="pre">scroll-bars:</span></code> init-keywords.</p>
 </section>
 <section id="table-controls">
-<span id="index-19"></span><h3>Table controls<a class="headerlink" href="#table-controls" title="Permalink to this heading">#</a></h3>
+<span id="index-19"></span><h3>Table controls<a class="headerlink" href="#table-controls" title="Permalink to this heading">¶</a></h3>
 <p id="index-20"><img alt="image10" src="../_images/tablecnt.png" /> The <code class="docutils literal notranslate"><span class="pre">&lt;table-control&gt;</span></code> class (which corresponds to the List
 View control in its “report” view in Microsoft documentation) allows you
 to display items in a table, with information divided into a number of
@@ -1067,7 +1069,7 @@ and so on for each element in each sequence, as shown here:</p>
 <figure class="align-center" id="id5">
 <img alt="../_images/table-headings-and-contents.png" src="../_images/table-headings-and-contents.png" />
 <figcaption>
-<p><span class="caption-text">Defining column headings and contents in table controls</span><a class="headerlink" href="#id5" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Defining column headings and contents in table controls</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Note that the sequences passed to both of these init-keywords should
@@ -1084,7 +1086,7 @@ integers, each of which represents the width in pixels of its respective
 column in the control.</p>
 </section>
 <section id="spin-boxes">
-<span id="index-21"></span><h3>Spin boxes<a class="headerlink" href="#spin-boxes" title="Permalink to this heading">#</a></h3>
+<span id="index-21"></span><h3>Spin boxes<a class="headerlink" href="#spin-boxes" title="Permalink to this heading">¶</a></h3>
 <p>A <code class="docutils literal notranslate"><span class="pre">&lt;spin-box&gt;</span></code> is a collection gadget that only accepts a limited set of
 ordered values as input. To the right of the text field are a pair of
 buttons depicting an upward pointing|image11| arrow and a downward
@@ -1104,7 +1106,7 @@ spin box can accept.</p>
 and 24.</p>
 </section>
 <section id="text-gadgets">
-<span id="index-22"></span><h3>Text gadgets<a class="headerlink" href="#text-gadgets" title="Permalink to this heading">#</a></h3>
+<span id="index-22"></span><h3>Text gadgets<a class="headerlink" href="#text-gadgets" title="Permalink to this heading">¶</a></h3>
 <p>Several text gadgets are provided by the DUIM-Gadgets library. These
 represent gadgets into which the user of your application can type
 information. The superclass of all text gadgets is the <code class="docutils literal notranslate"><span class="pre">&lt;text-gadget&gt;</span></code>
@@ -1113,7 +1115,7 @@ class.</p>
 editors, and password fields.</p>
 </section>
 <section id="useful-properties-of-text-gadgets">
-<span id="index-23"></span><h3>Useful properties of text gadgets<a class="headerlink" href="#useful-properties-of-text-gadgets" title="Permalink to this heading">#</a></h3>
+<span id="index-23"></span><h3>Useful properties of text gadgets<a class="headerlink" href="#useful-properties-of-text-gadgets" title="Permalink to this heading">¶</a></h3>
 <p>You an initialize the text string in a text gadget using the <code class="docutils literal notranslate"><span class="pre">text:</span></code>
 init-keyword. The <code class="docutils literal notranslate"><span class="pre">gadget-text</span></code> slot can then be used to manipulate this
 text after the gadget has been created.</p>
@@ -1139,7 +1141,7 @@ returns <code class="docutils literal notranslate"><span class="pre">#f</span></
 element, though they are not themselves text gadgets.</p>
 </section>
 <section id="text-fields">
-<span id="index-24"></span><h3>Text fields<a class="headerlink" href="#text-fields" title="Permalink to this heading">#</a></h3>
+<span id="index-24"></span><h3>Text fields<a class="headerlink" href="#text-fields" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">&lt;text-field&gt;</span></code> class is a single line edit control, and is the most
 basic type of text gadget, consisting of a single line into which you
 can type text.</p>
@@ -1154,7 +1156,7 @@ field should be aligned. This can be either <code class="docutils literal notran
 <code class="docutils literal notranslate"><span class="pre">#&quot;right&quot;</span></code>, the default being <code class="docutils literal notranslate"><span class="pre">#&quot;left&quot;</span></code>.</p>
 </section>
 <section id="text-editors">
-<span id="index-25"></span><h3>Text editors<a class="headerlink" href="#text-editors" title="Permalink to this heading">#</a></h3>
+<span id="index-25"></span><h3>Text editors<a class="headerlink" href="#text-editors" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">&lt;text-editor&gt;</span></code> class is a multiple line edit control, used when
 more complex editing controls and several lines of text are needed by
 the user.</p>
@@ -1172,7 +1174,7 @@ described in <a class="reference internal" href="#lists">Lists</a>.</p>
 </div>
 </section>
 <section id="password-fields">
-<span id="index-26"></span><h3>Password fields<a class="headerlink" href="#password-fields" title="Permalink to this heading">#</a></h3>
+<span id="index-26"></span><h3>Password fields<a class="headerlink" href="#password-fields" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">&lt;password-field&gt;</span></code> class provides a specialized type of single line
 edit control for use in situations where the user is required to type
 some text that should not be seen by anyone else, such as when typing in
@@ -1185,14 +1187,14 @@ used instead.</p>
 </figure>
 </section>
 <section id="range-gadgets">
-<span id="index-27"></span><h3>Range gadgets<a class="headerlink" href="#range-gadgets" title="Permalink to this heading">#</a></h3>
+<span id="index-27"></span><h3>Range gadgets<a class="headerlink" href="#range-gadgets" title="Permalink to this heading">¶</a></h3>
 <p>Range gadgets are gadgets whose <code class="docutils literal notranslate"><span class="pre">gadget-value</span></code> can be any value on a
 sliding scale. The most obvious examples of range gadgets are scroll
 bars and sliders. The protocol class of all range gadgets is the class
 <code class="docutils literal notranslate"><span class="pre">&lt;value-range-gadget&gt;</span></code>.</p>
 </section>
 <section id="useful-properties-of-range-gadgets">
-<span id="index-28"></span><h3>Useful properties of range gadgets<a class="headerlink" href="#useful-properties-of-range-gadgets" title="Permalink to this heading">#</a></h3>
+<span id="index-28"></span><h3>Useful properties of range gadgets<a class="headerlink" href="#useful-properties-of-range-gadgets" title="Permalink to this heading">¶</a></h3>
 <p>When creating a range gadget, you must specify the range of values over
 which the <code class="docutils literal notranslate"><span class="pre">gadget-value</span></code> of the gadget can vary, using the
 <code class="docutils literal notranslate"><span class="pre">gadget-value-range</span></code> slot. An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#range"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;range&gt;</span></code></a> must be passed
@@ -1207,12 +1209,12 @@ illustrates this behavior for a scroll bar.</p>
 <figure class="align-center" id="id6">
 <span id="gadget-value-scroll-bar"></span><img alt="../_images/tour-24.png" src="../_images/tour-24.png" />
 <figcaption>
-<p><span class="caption-text">Returning or setting the gadget-value of a scroll-bar</span><a class="headerlink" href="#id6" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Returning or setting the gadget-value of a scroll-bar</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
 <section id="scroll-bars">
-<span id="index-29"></span><h3>Scroll bars<a class="headerlink" href="#scroll-bars" title="Permalink to this heading">#</a></h3>
+<span id="index-29"></span><h3>Scroll bars<a class="headerlink" href="#scroll-bars" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">&lt;scroll-bar&gt;</span></code> class is the most common type of value range gadget.
 Interestingly, it is probably also the class that is explicitly used the
 least. Because most gadgets that make use of scroll bars support the
@@ -1234,7 +1236,7 @@ explicitly, use the <code class="docutils literal notranslate"><span class="pre"
 </div>
 </section>
 <section id="sliders">
-<span id="index-30"></span><h3>Sliders<a class="headerlink" href="#sliders" title="Permalink to this heading">#</a></h3>
+<span id="index-30"></span><h3>Sliders<a class="headerlink" href="#sliders" title="Permalink to this heading">¶</a></h3>
 <p>Sliders can be created in much the same way as scroll bars. By default,
 the gadget value is displayed alongside the slider itself.</p>
 <p><img alt="image12" src="../_images/slider.png" /> You can display tick marks along the slider using the
@@ -1255,7 +1257,7 @@ reason to do so.</p>
 </div>
 </section>
 <section id="progress-bars">
-<span id="index-31"></span><h3>Progress bars<a class="headerlink" href="#progress-bars" title="Permalink to this heading">#</a></h3>
+<span id="index-31"></span><h3>Progress bars<a class="headerlink" href="#progress-bars" title="Permalink to this heading">¶</a></h3>
 <p><img alt="image13" src="../_images/progress.png" /> The <code class="docutils literal notranslate"><span class="pre">&lt;progress-bar&gt;</span></code> class is used to display a dialog that
 provides a gauge illustrating the progress of a particular task.
 Possible uses for progress bars include the progress of an installation
@@ -1265,7 +1267,7 @@ situation in which the user may have to wait for a task to complete is a
 good candidate for a progress bar.</p>
 </section>
 <section id="assigning-callbacks-to-gadgets">
-<span id="index-32"></span><h3>Assigning callbacks to gadgets<a class="headerlink" href="#assigning-callbacks-to-gadgets" title="Permalink to this heading">#</a></h3>
+<span id="index-32"></span><h3>Assigning callbacks to gadgets<a class="headerlink" href="#assigning-callbacks-to-gadgets" title="Permalink to this heading">¶</a></h3>
 <p>To make gadgets actually do something, you have to assign them callback
 functions. A callback is a function that is invoked when a particular
 event occurs on a gadget, such as pressing a button. When the user
@@ -1296,7 +1298,7 @@ button!”</p>
 <figure class="align-center" id="id7">
 <img alt="../_images/notify.png" src="../_images/notify.png" />
 <figcaption>
-<p><span class="caption-text">Simple behavior of notify-user</span><a class="headerlink" href="#id7" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Simple behavior of notify-user</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Two callbacks are unique to general instances of <code class="docutils literal notranslate"><span class="pre">&lt;value-gadget&gt;</span></code> : the
@@ -1325,7 +1327,7 @@ callback is usually more useful than the value-changing callback.</p>
 </section>
 </section>
 <section id="a-tour-of-layouts">
-<span id="index-33"></span><h2>A tour of layouts<a class="headerlink" href="#a-tour-of-layouts" title="Permalink to this heading">#</a></h2>
+<span id="index-33"></span><h2>A tour of layouts<a class="headerlink" href="#a-tour-of-layouts" title="Permalink to this heading">¶</a></h2>
 <p>Layouts determine how the elements that make a GUI are presented on the
 screen. Together with gadgets, layouts are an important type of sheet
 that you need to be familiar with in order to develop basic DUIM
@@ -1365,7 +1367,7 @@ a specified number of rows and columns.</p>
 </dd>
 </dl>
 <section id="row-layouts-and-column-layouts">
-<span id="index-34"></span><h3>Row layouts and column layouts<a class="headerlink" href="#row-layouts-and-column-layouts" title="Permalink to this heading">#</a></h3>
+<span id="index-34"></span><h3>Row layouts and column layouts<a class="headerlink" href="#row-layouts-and-column-layouts" title="Permalink to this heading">¶</a></h3>
 <p id="index-35">Create a column layout containing three buttons as follows:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">contain</span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;column-layout&gt;</span><span class="p">,</span>
 <span class="w">             </span><span class="k">children:</span><span class="w"> </span><span class="nb">vector</span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;One&quot;</span><span class="p">),</span>
@@ -1376,7 +1378,7 @@ a specified number of rows and columns.</p>
 <figure class="align-center" id="id8">
 <img alt="../_images/column.png" src="../_images/column.png" />
 <figcaption>
-<p><span class="caption-text">Three button arranged in a column layout</span><a class="headerlink" href="#id8" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Three button arranged in a column layout</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Similarly, <code class="docutils literal notranslate"><span class="pre">&lt;row-layout&gt;</span></code> can be used to lay out any number of children
@@ -1420,7 +1422,7 @@ the children of the column layout are aligned appropriately. By default,
 the children of a row layout are aligned along the top.</p>
 </section>
 <section id="stack-layouts">
-<span id="index-36"></span><h3>Stack layouts<a class="headerlink" href="#stack-layouts" title="Permalink to this heading">#</a></h3>
+<span id="index-36"></span><h3>Stack layouts<a class="headerlink" href="#stack-layouts" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">&lt;stack-layout&gt;</span></code> class is provided to let you create layout classes
 in which only one child is visible at a time. They are used to implement
 tab controls and wizards. In a stack layout, all children are placed on
@@ -1438,7 +1440,7 @@ default.</p>
 </div>
 </section>
 <section id="pinboard-layouts-and-fixed-layouts">
-<span id="index-37"></span><h3>Pinboard layouts and fixed layouts<a class="headerlink" href="#pinboard-layouts-and-fixed-layouts" title="Permalink to this heading">#</a></h3>
+<span id="index-37"></span><h3>Pinboard layouts and fixed layouts<a class="headerlink" href="#pinboard-layouts-and-fixed-layouts" title="Permalink to this heading">¶</a></h3>
 <p>A pinboard layout is a framework that serves as a place to locate any
 number of child gadgets. It has no built in layout information, so,
 unless you specify coordinates explicitly, any object placed in a
@@ -1461,7 +1463,7 @@ coordinates, as shown in the following example:</p>
 <figure class="align-center" id="id9">
 <span id="three-buttons-pinboard-layout"></span><img alt="../_images/pinboard.png" src="../_images/pinboard.png" />
 <figcaption>
-<p><span class="caption-text">Three buttons arranged in a pinboard layout</span><a class="headerlink" href="#id9" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Three buttons arranged in a pinboard layout</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Any child in a pinboard layout obeys any size constraints that may apply
@@ -1480,7 +1482,7 @@ code from this database. For most situations, however, you will not need to
 use the <code class="docutils literal notranslate"><span class="pre">&lt;fixed-layout&gt;</span></code> class.</p>
 </section>
 <section id="using-horizontally-and-vertically-macros">
-<span id="index-38"></span><h3>Using horizontally and vertically macros<a class="headerlink" href="#using-horizontally-and-vertically-macros" title="Permalink to this heading">#</a></h3>
+<span id="index-38"></span><h3>Using horizontally and vertically macros<a class="headerlink" href="#using-horizontally-and-vertically-macros" title="Permalink to this heading">¶</a></h3>
 <p>The macros <code class="docutils literal notranslate"><span class="pre">horizontally</span></code> and <code class="docutils literal notranslate"><span class="pre">vertically</span></code> are provided to position
 objects sequentially in a column layout or row layout. Using these
 macros, rather than creating layout objects explicitly, can lead to
@@ -1495,7 +1497,7 @@ shorter and more readable code.</p>
 <figure class="align-center" id="id10">
 <img alt="../_images/row.png" src="../_images/row.png" />
 <figcaption>
-<p><span class="caption-text">Three buttons arranged in a horizontal layout</span><a class="headerlink" href="#id10" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Three buttons arranged in a horizontal layout</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">vertically</span><span class="w"> </span><span class="p">()</span>
@@ -1526,7 +1528,7 @@ the entire width of the row layout.</p>
 </section>
 </section>
 <section id="a-tour-of-sheets">
-<span id="index-39"></span><h2>A tour of sheets<a class="headerlink" href="#a-tour-of-sheets" title="Permalink to this heading">#</a></h2>
+<span id="index-39"></span><h2>A tour of sheets<a class="headerlink" href="#a-tour-of-sheets" title="Permalink to this heading">¶</a></h2>
 <p>Each unique piece of a window is a sheet. Thus, a sheet creates a
 visible element of some sort on the screen. In any frame, sheets are
 nested in a parent-child hierarchy. The DUIM-Sheets library provides
@@ -1538,7 +1540,7 @@ most of the sheet classes you need to use have been implemented for you
 in the form of gadgets (<a class="reference internal" href="#a-tour-of-gadgets">A tour of gadgets</a>) and layouts
 (<a class="reference internal" href="#a-tour-of-layouts">A tour of layouts</a>).</p>
 <section id="basic-properties-of-sheets">
-<span id="index-40"></span><h3>Basic properties of sheets<a class="headerlink" href="#basic-properties-of-sheets" title="Permalink to this heading">#</a></h3>
+<span id="index-40"></span><h3>Basic properties of sheets<a class="headerlink" href="#basic-properties-of-sheets" title="Permalink to this heading">¶</a></h3>
 <p>All sheets, including gadgets and layouts, have a number of properties
 that deal with the fairly low level implementation behavior of sheet
 classes. When developing basic DUIM applications, you do not need to be
@@ -1607,7 +1609,7 @@ repainted or display output.</p>
 </section>
 </section>
 <section id="a-tour-of-frames">
-<span id="index-41"></span><h2>A tour of frames<a class="headerlink" href="#a-tour-of-frames" title="Permalink to this heading">#</a></h2>
+<span id="index-41"></span><h2>A tour of frames<a class="headerlink" href="#a-tour-of-frames" title="Permalink to this heading">¶</a></h2>
 <p>As you will have seen if you worked through the task list manager
 example application, frames are the basic components used to display
 DUIM objects on-screen. Every window in your application is a general
@@ -1628,7 +1630,7 @@ windows, as well as dialog boxes (both modal and modeless), property
 pages and wizards.</p>
 <p>Support for frames is provided by the DUIM-Frames library.</p>
 <section id="creating-frames-and-displaying-them-on-screen">
-<span id="index-42"></span><h3>Creating frames and displaying them on-screen<a class="headerlink" href="#creating-frames-and-displaying-them-on-screen" title="Permalink to this heading">#</a></h3>
+<span id="index-42"></span><h3>Creating frames and displaying them on-screen<a class="headerlink" href="#creating-frames-and-displaying-them-on-screen" title="Permalink to this heading">¶</a></h3>
 <p>To create an instance of a frame class, use <code class="docutils literal notranslate"><span class="pre">make</span></code>, as you would any
 other class. To display an instance of a frame on the screen, use the
 function <code class="docutils literal notranslate"><span class="pre">start-frame</span></code>. This takes as an argument a name bound to an
@@ -1646,7 +1648,7 @@ the following code:</p>
 <figure class="align-center" id="id11">
 <img alt="../_images/frame.png" src="../_images/frame.png" />
 <figcaption>
-<p><span class="caption-text">A simple frame</span><a class="headerlink" href="#id11" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">A simple frame</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Note that normally you should define your own subclasses or
@@ -1654,7 +1656,7 @@ the following code:</p>
 than creating direct instances of <code class="docutils literal notranslate"><span class="pre">&lt;simple-frame&gt;</span></code>.</p>
 </section>
 <section id="useful-properties-of-frames">
-<span id="index-43"></span><h3>Useful properties of frames<a class="headerlink" href="#useful-properties-of-frames" title="Permalink to this heading">#</a></h3>
+<span id="index-43"></span><h3>Useful properties of frames<a class="headerlink" href="#useful-properties-of-frames" title="Permalink to this heading">¶</a></h3>
 <p>You can specify a wide variety of properties for any instance or class
 of frame. This section describes some of the most common properties you
 might want to use. Naturally, when you create your own classes of frame
@@ -1695,7 +1697,7 @@ of which take a boolean value. Setting <code class="docutils literal notranslate
 both the width and height of a frame.</p>
 </section>
 <section id="defining-new-classes-of-frame">
-<span id="index-44"></span><h3>Defining new classes of frame<a class="headerlink" href="#defining-new-classes-of-frame" title="Permalink to this heading">#</a></h3>
+<span id="index-44"></span><h3>Defining new classes of frame<a class="headerlink" href="#defining-new-classes-of-frame" title="Permalink to this heading">¶</a></h3>
 <p>As described in <a class="reference external" href="improve.html#defining-a-new-frame-class">Defining a new frame class</a>, the <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">frame</span></code>
 macro is used to create new classes of frame. The bulk of the
 definition of any new frame is split into several parts:</p>
@@ -1714,7 +1716,7 @@ that are created.</p>
 to define panes for any GUI elements you wish to place in the frame.</p>
 </section>
 <section id="specifying-slots-for-a-new-class-of-frame">
-<span id="index-45"></span><h3>Specifying slots for a new class of frame<a class="headerlink" href="#specifying-slots-for-a-new-class-of-frame" title="Permalink to this heading">#</a></h3>
+<span id="index-45"></span><h3>Specifying slots for a new class of frame<a class="headerlink" href="#specifying-slots-for-a-new-class-of-frame" title="Permalink to this heading">¶</a></h3>
 <p>As with any other Dylan class, you can use standard slot options to
 define slots for any new class of frame. This includes techniques such
 as setting default values, specifying init-keyword names, and specifying
@@ -1733,7 +1735,7 @@ it is defined with an init-keyword of the same name.</p>
 </div>
 </section>
 <section id="specifying-panes-for-a-new-class-of-frame">
-<span id="index-46"></span><h3>Specifying panes for a new class of frame<a class="headerlink" href="#specifying-panes-for-a-new-class-of-frame" title="Permalink to this heading">#</a></h3>
+<span id="index-46"></span><h3>Specifying panes for a new class of frame<a class="headerlink" href="#specifying-panes-for-a-new-class-of-frame" title="Permalink to this heading">¶</a></h3>
 <p>In the same way that you can define slots, you can define panes for a
 frame class using pane options. Panes may be used to define all the
 visual aspects of a frame class, including such things as:</p>
@@ -1827,7 +1829,7 @@ the Task List Manager in this manual (Chapters <a class="reference internal" hre
 <a class="reference internal" href="commands.html"><span class="doc">Using Command Tables</span></a>).</p>
 </section>
 <section id="overview-of-dialogs">
-<span id="index-47"></span><h3>Overview of dialogs<a class="headerlink" href="#overview-of-dialogs" title="Permalink to this heading">#</a></h3>
+<span id="index-47"></span><h3>Overview of dialogs<a class="headerlink" href="#overview-of-dialogs" title="Permalink to this heading">¶</a></h3>
 <p>Dialog boxes are a standard way of requesting more information from the
 user in order to proceed with an operation. Typically, dialog boxes are
 modal — that is, the operation cannot be continued until the dialog is
@@ -1902,7 +1904,7 @@ building it using DUIM classes.</p>
 </section>
 </section>
 <section id="where-to-go-from-here">
-<h2>Where to go from here<a class="headerlink" href="#where-to-go-from-here" title="Permalink to this heading">#</a></h2>
+<h2>Where to go from here<a class="headerlink" href="#where-to-go-from-here" title="Permalink to this heading">¶</a></h2>
 <p>This concludes a fairly basic tour of the major functionality provided
 by DUIM. Other topics that have not been covered in this tour include
 colors, fonts, images, generic drawing properties, and the functionality
@@ -2048,6 +2050,6 @@ hierarchy.</p></li>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

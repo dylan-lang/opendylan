@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Copyright" href="copyright.html" /><link rel="prev" title="Modules &amp; Libraries" href="modules-libraries.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Conditions - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="conditions">
-<h1>Conditions<a class="headerlink" href="#conditions" title="Permalink to this heading">#</a></h1>
+<h1>Conditions<a class="headerlink" href="#conditions" title="Permalink to this heading">¶</a></h1>
 <p>Dylan offers sophisticated exception handling, allowing programs
 to recover smoothly from error conditions. Like C++, Dylan represents
 errors with objects. Dylan also supports advisory warnings and
@@ -472,7 +474,7 @@ potentially correctable errors.</p>
 <a class="reference external" href="https://opendylan.org/books/drm/Signalers_Conditions_and_Handlers"><code class="xref drm docutils literal notranslate"><span class="pre">condition</span></code></a>. <a class="reference external" href="https://opendylan.org/books/drm/Signalers_Conditions_and_Handlers"><code class="xref drm docutils literal notranslate"><span class="pre">Handlers</span></code></a> specify how to react to various
 sorts of conditions.</p>
 <section id="signaling">
-<h2>Signaling<a class="headerlink" href="#signaling" title="Permalink to this heading">#</a></h2>
+<h2>Signaling<a class="headerlink" href="#signaling" title="Permalink to this heading">¶</a></h2>
 <p>Unlike the exceptions of C++ or Java, signaling a condition does <em>not</em> itself
 cause the current function or block to exit. Instead, calling the <a class="reference external" href="https://opendylan.org/books/drm/Operations_on_Conditions#signal"><code class="xref drm docutils literal notranslate"><span class="pre">signal</span></code></a>
 function is just like calling any other function. The <a class="reference external" href="https://opendylan.org/books/drm/Operations_on_Conditions#signal"><code class="xref drm docutils literal notranslate"><span class="pre">signal</span></code></a> function just
@@ -498,7 +500,7 @@ backs out of a function call; it just keeps going, leaving the history of
 conditions for you to examine.</p>
 </section>
 <section id="handlers">
-<h2>Handlers<a class="headerlink" href="#handlers" title="Permalink to this heading">#</a></h2>
+<h2>Handlers<a class="headerlink" href="#handlers" title="Permalink to this heading">¶</a></h2>
 <p>A function establishes a handler with the <a class="reference external" href="https://opendylan.org/books/drm/Local_Declaration_Macros#let_handler"><code class="xref drm docutils literal notranslate"><span class="pre">let</span> <span class="pre">handler</span></code></a>
 statement. The handler remains in effect until the function exits. Other
 functions called by the first can establish new handlers. When the
@@ -519,11 +521,11 @@ was established later, it was the one chosen and called by <a class="reference e
 method, complete with access to local variables.</p>
 </section>
 <section id="recovery">
-<h2>Recovery<a class="headerlink" href="#recovery" title="Permalink to this heading">#</a></h2>
+<h2>Recovery<a class="headerlink" href="#recovery" title="Permalink to this heading">¶</a></h2>
 <p>Dylan’s condition system allows it to offer a couple of useful error recovery
 techniques.</p>
 <section id="returning-from-signal">
-<h3>Returning from <code class="docutils literal notranslate"><span class="pre">signal</span></code><a class="headerlink" href="#returning-from-signal" title="Permalink to this heading">#</a></h3>
+<h3>Returning from <code class="docutils literal notranslate"><span class="pre">signal</span></code><a class="headerlink" href="#returning-from-signal" title="Permalink to this heading">¶</a></h3>
 <p>Because a <a class="reference external" href="https://opendylan.org/books/drm/Operations_on_Conditions#signal"><code class="xref drm docutils literal notranslate"><span class="pre">signal</span></code></a> call is just like any other function call, it can return
 values. It returns whatever values the handler function returns. In the above
 example, <a class="reference external" href="https://opendylan.org/books/drm/Operations_on_Conditions#signal"><code class="xref drm docutils literal notranslate"><span class="pre">signal</span></code></a> never returns because we break into the debugger, and the
@@ -535,7 +537,7 @@ deeply nested function could retrieve that value if needed by signaling that
 condition and then taking the return value of the <a class="reference external" href="https://opendylan.org/books/drm/Operations_on_Conditions#signal"><code class="xref drm docutils literal notranslate"><span class="pre">signal</span></code></a> function.</p>
 </section>
 <section id="restart-handlers">
-<h3>Restart handlers<a class="headerlink" href="#restart-handlers" title="Permalink to this heading">#</a></h3>
+<h3>Restart handlers<a class="headerlink" href="#restart-handlers" title="Permalink to this heading">¶</a></h3>
 <p>You can recover from a problem by returning a fall-back value from the
 <a class="reference external" href="https://opendylan.org/books/drm/Operations_on_Conditions#signal"><code class="xref drm docutils literal notranslate"><span class="pre">signal</span></code></a> function, but that technique has limitations. It does not provide
 much encapsulation or allow for complicated recovery information, and the
@@ -561,7 +563,7 @@ Dylan offers blocks.</p>
 </section>
 </section>
 <section id="blocks">
-<h2>Blocks<a class="headerlink" href="#blocks" title="Permalink to this heading">#</a></h2>
+<h2>Blocks<a class="headerlink" href="#blocks" title="Permalink to this heading">¶</a></h2>
 <p>A <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#block"><code class="xref drm docutils literal notranslate"><span class="pre">block</span></code></a> is a group of statements. As with
 other control structures, it may return a value. A simple block
 might appear as follows:</p>
@@ -609,7 +611,7 @@ nonlocal exit.</p>
 </pre></div>
 </div>
 <section id="blocks-and-conditions">
-<h3>Blocks and conditions<a class="headerlink" href="#blocks-and-conditions" title="Permalink to this heading">#</a></h3>
+<h3>Blocks and conditions<a class="headerlink" href="#blocks-and-conditions" title="Permalink to this heading">¶</a></h3>
 <p>In addition to the <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#block"><code class="xref drm docutils literal notranslate"><span class="pre">afterwards</span></code></a> and <code class="docutils literal notranslate"><span class="pre">cleanup</span></code> clauses, a block may also
 contain any number of <code class="docutils literal notranslate"><span class="pre">exception</span></code> clauses. The exception clauses establish handlers for
 a condition much like the <a class="reference external" href="https://opendylan.org/books/drm/Local_Declaration_Macros#let_handler"><code class="xref drm docutils literal notranslate"><span class="pre">let</span> <span class="pre">handler</span></code></a> statement, but before they run the
@@ -729,6 +731,6 @@ at the end of the <a class="reference internal" href="#restart-handlers">Restart
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

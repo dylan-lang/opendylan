@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Subclass" href="dep-0005-subclass-function.html" /><link rel="prev" title="C3 superclass linearization" href="dep-0003-c3-linearization.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>New strings Library - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="new-strings-library">
-<h1>New strings Library<a class="headerlink" href="#new-strings-library" title="Permalink to this heading">#</a></h1>
+<h1>New strings Library<a class="headerlink" href="#new-strings-library" title="Permalink to this heading">¶</a></h1>
 <div class="table-wrapper docutils container">
 <table class="docutils align-default">
 <tbody>
@@ -495,13 +497,13 @@
 </table>
 </div>
 <section id="abstract">
-<h2>Abstract<a class="headerlink" href="#abstract" title="Permalink to this heading">#</a></h2>
+<h2>Abstract<a class="headerlink" href="#abstract" title="Permalink to this heading">¶</a></h2>
 <p>This proposal is an attempt to provide a simpler, more consistent
 strings API than is currently available via string-extensions, that is
 available from a single library (and a single module).</p>
 </section>
 <section id="goals">
-<h2>Goals<a class="headerlink" href="#goals" title="Permalink to this heading">#</a></h2>
+<h2>Goals<a class="headerlink" href="#goals" title="Permalink to this heading">¶</a></h2>
 <ol class="arabic simple">
 <li><p>Comprehensive string APIs available via the <code class="docutils literal notranslate"><span class="pre">strings</span></code> module
 exported from the <code class="docutils literal notranslate"><span class="pre">strings</span></code> library.</p></li>
@@ -519,7 +521,7 @@ retained (on GitHub) so as not to break Gwydion Dylan unnecessarily.
 </ol>
 </section>
 <section id="non-goals">
-<h2>Non Goals<a class="headerlink" href="#non-goals" title="Permalink to this heading">#</a></h2>
+<h2>Non Goals<a class="headerlink" href="#non-goals" title="Permalink to this heading">¶</a></h2>
 <ol class="arabic simple">
 <li><p>Unicode</p></li>
 <li><p>Immutable strings</p></li>
@@ -530,7 +532,7 @@ such as <em>pluralize</em>.</p></li>
 </ol>
 </section>
 <section id="proposal">
-<h2>Proposal<a class="headerlink" href="#proposal" title="Permalink to this heading">#</a></h2>
+<h2>Proposal<a class="headerlink" href="#proposal" title="Permalink to this heading">¶</a></h2>
 <p>Open Dylan currently has a hodge-podge of string manipulation
 functionality.  A few functions (concatenate, subsequence-position,
 as-lowercase, …) are built into the <code class="docutils literal notranslate"><span class="pre">dylan</span></code> library, some
@@ -544,7 +546,7 @@ applicable to generalized sequences.</p>
 will be replaced by this API.</p>
 <p>I first present the entire API and then later discuss it in detail.</p>
 <section id="api-summary">
-<h3>API Summary<a class="headerlink" href="#api-summary" title="Permalink to this heading">#</a></h3>
+<h3>API Summary<a class="headerlink" href="#api-summary" title="Permalink to this heading">¶</a></h3>
 <p>Export the following functions from the “strings” module of the
 “strings” library.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>control?      (char-or-string, #key start, end) =&gt; (boolean)
@@ -619,7 +621,7 @@ other functions.</p></li>
 discussion interspersed.</p>
 </section>
 <section id="discussion">
-<h3>Discussion<a class="headerlink" href="#discussion" title="Permalink to this heading">#</a></h3>
+<h3>Discussion<a class="headerlink" href="#discussion" title="Permalink to this heading">¶</a></h3>
 <p>All comparisons default to being case-sensitive unless the function
 name ends with “-ic” or “-ic?” (meaning ignore case).</p>
 <p>In all cases, <code class="docutils literal notranslate"><span class="pre">start</span></code> (or start1 or start2) parameters default to 0.</p>
@@ -776,7 +778,7 @@ occurrences (moving left to right through <em>string</em>) are replaced.
 <em>ignore-case?</em> defaults to #f.</p>
 </section>
 <section id="dropped-string-extensions-names">
-<h3>Dropped string-extensions Names<a class="headerlink" href="#dropped-string-extensions-names" title="Permalink to this heading">#</a></h3>
+<h3>Dropped string-extensions Names<a class="headerlink" href="#dropped-string-extensions-names" title="Permalink to this heading">¶</a></h3>
 <p>A few names exported from <em>string-extensions</em> have no equivalent in this
 library:</p>
 <ul class="simple">
@@ -874,6 +876,6 @@ into <em>common-dylan</em> alongside <em>string-to-integer</em> et al.</p></li>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

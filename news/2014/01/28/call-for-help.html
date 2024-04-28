@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" />
 
-    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>A Call For Help - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="a-call-for-help">
-<h1>A Call For Help<a class="headerlink" href="#a-call-for-help" title="Permalink to this heading">#</a></h1>
+<h1>A Call For Help<a class="headerlink" href="#a-call-for-help" title="Permalink to this heading">¶</a></h1>
 <p>Dylan is a multi-paradigm functional and object-oriented programming
 language. It is dynamic while providing a programming model designed
 to support efficient machine code generation, including fine-grained
@@ -508,7 +510,7 @@ the projects below sound interesting, feel free to check out the list
 on the wiki to see the others.</p>
 <p>Read on to see how you can help!</p>
 <section id="cocoa-bindings">
-<h2>Cocoa Bindings<a class="headerlink" href="#cocoa-bindings" title="Permalink to this heading">#</a></h2>
+<h2>Cocoa Bindings<a class="headerlink" href="#cocoa-bindings" title="Permalink to this heading">¶</a></h2>
 <p>We’ve recently made substantial progress on our Objective C / Dylan
 bridge and the development branch of our compiler will soon support
 sending Objective C messages. With this, we can begin to wrap the
@@ -530,7 +532,7 @@ libraries so that programming experience is more pleasurable
 and less verbose.</p>
 </section>
 <section id="duim">
-<h2>DUIM<a class="headerlink" href="#duim" title="Permalink to this heading">#</a></h2>
+<h2>DUIM<a class="headerlink" href="#duim" title="Permalink to this heading">¶</a></h2>
 <p>DUIM is the Dylan User Interface Manager. It is a cross-platform
 GUI library that inherits some of the design from Common Lisp’s CLIM
 and descends from the Symbolics Open Genera Lisp Machine OS.</p>
@@ -540,19 +542,19 @@ functional backend for DUIM is the Windows version.</p>
 systems is key to the future of the Open Dylan IDE (which is
 currently only available on Windows).</p>
 <section id="duim-windows">
-<h3>DUIM/Windows<a class="headerlink" href="#duim-windows" title="Permalink to this heading">#</a></h3>
+<h3>DUIM/Windows<a class="headerlink" href="#duim-windows" title="Permalink to this heading">¶</a></h3>
 <p>DUIM currently runs on Windows, but it is quite dated and doesn’t
 fully respect modern interface standards. The port needs to be
 updated to properly use the theming mechanisms available.</p>
 </section>
 <section id="duim-cocoa">
-<h3>DUIM/Cocoa<a class="headerlink" href="#duim-cocoa" title="Permalink to this heading">#</a></h3>
+<h3>DUIM/Cocoa<a class="headerlink" href="#duim-cocoa" title="Permalink to this heading">¶</a></h3>
 <p>We would like to have a Cocoa backend to DUIM. This work has
 not yet been started and would need to progress in parallel with
 the creation of Cocoa bindings for Dylan.</p>
 </section>
 <section id="duim-gtk">
-<h3>DUIM/Gtk<a class="headerlink" href="#duim-gtk" title="Permalink to this heading">#</a></h3>
+<h3>DUIM/Gtk<a class="headerlink" href="#duim-gtk" title="Permalink to this heading">¶</a></h3>
 <p>We have a good start on a GTK+ backend to DUIM in the Open Dylan
 repository, but it needs a good bit of work, especially from
 someone that knows GTK+ well.</p>
@@ -562,7 +564,7 @@ APIs.</p>
 </section>
 </section>
 <section id="code-mirror-editor-support">
-<h2>Code Mirror Editor Support<a class="headerlink" href="#code-mirror-editor-support" title="Permalink to this heading">#</a></h2>
+<h2>Code Mirror Editor Support<a class="headerlink" href="#code-mirror-editor-support" title="Permalink to this heading">¶</a></h2>
 <p>Code Mirror is a great editor that runs in the web browser. It is written
 in JavaScript and supports over 60 languages. It is also a key element
 of the <a class="reference external" href="http://lighttable.com/">Light Table IDE</a>.</p>
@@ -573,11 +575,11 @@ Code Mirror features.</p>
 <p>This would involve writing JavaScript code.</p>
 </section>
 <section id="networking-library">
-<h2>Networking Library<a class="headerlink" href="#networking-library" title="Permalink to this heading">#</a></h2>
+<h2>Networking Library<a class="headerlink" href="#networking-library" title="Permalink to this heading">¶</a></h2>
 <p>We need to add IPv6 support to our networking library.</p>
 </section>
 <section id="packaging">
-<h2>Packaging<a class="headerlink" href="#packaging" title="Permalink to this heading">#</a></h2>
+<h2>Packaging<a class="headerlink" href="#packaging" title="Permalink to this heading">¶</a></h2>
 <p>We need assistance with packaging on pretty much every operating
 system / distribution apart from FreeBSD, Gentoo Linux and ArchLinux.
 We would particularly appreciate support in producing Debian, Ubuntu,
@@ -650,6 +652,6 @@ for Windows users.</p>
 </div><script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

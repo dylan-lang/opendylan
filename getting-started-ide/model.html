@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Creating and Using Projects" href="projects.html" /><link rel="prev" title="Fixing Bugs" href="expanding.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Programming in Open Dylan - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,15 +463,15 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="programming-in-open-dylan">
-<h1>Programming in Open Dylan<a class="headerlink" href="#programming-in-open-dylan" title="Permalink to this heading">#</a></h1>
+<h1>Programming in Open Dylan<a class="headerlink" href="#programming-in-open-dylan" title="Permalink to this heading">¶</a></h1>
 <p>Now we have taken a tour of Open Dylan using the pre-written
 Reversi application, we take a step back to look at the programming
 model in Open Dylan, and to review the features of the development
 environment and the Dylan compiler.</p>
 <section id="projects">
-<span id="index-0"></span><h2>Projects<a class="headerlink" href="#projects" title="Permalink to this heading">#</a></h2>
+<span id="index-0"></span><h2>Projects<a class="headerlink" href="#projects" title="Permalink to this heading">¶</a></h2>
 <p>In Open Dylan, all development work is done in terms of <em>projects</em>.
 Projects are the development environment and compiler’s way of
 representing Dylan libraries.</p>
@@ -479,7 +481,7 @@ library, but also contains information about how to compile the library.</p>
 project, nearly all other programming tasks in Open Dylan take
 place within the context of a project.</p>
 <section id="projects-and-libraries">
-<h3>Projects and libraries<a class="headerlink" href="#projects-and-libraries" title="Permalink to this heading">#</a></h3>
+<h3>Projects and libraries<a class="headerlink" href="#projects-and-libraries" title="Permalink to this heading">¶</a></h3>
 <p>A project represents a single Dylan library. Think of a project as
 something that gathers together all the information Open Dylan
 needs to be able to compile a particular library.</p>
@@ -487,7 +489,7 @@ needs to be able to compile a particular library.</p>
 The Reversi project represents a single Dylan library, called Reversi.</p>
 </section>
 <section id="projects-and-deliverables">
-<h3>Projects and deliverables<a class="headerlink" href="#projects-and-deliverables" title="Permalink to this heading">#</a></h3>
+<h3>Projects and deliverables<a class="headerlink" href="#projects-and-deliverables" title="Permalink to this heading">¶</a></h3>
 <p id="index-1">You can create deliverable applications, libraries, and components from
 projects. Projects can be built into executable (.EXE) or dynamic-link
 library (.DLL) files.</p>
@@ -498,7 +500,7 @@ but we could just as easily have built a DLL. See <a class="reference internal" 
 for details.</p>
 </section>
 <section id="creating-new-projects">
-<span id="index-2"></span><h3>Creating new projects<a class="headerlink" href="#creating-new-projects" title="Permalink to this heading">#</a></h3>
+<span id="index-2"></span><h3>Creating new projects<a class="headerlink" href="#creating-new-projects" title="Permalink to this heading">¶</a></h3>
 <p>Open Dylan includes a New Project wizard for creating new projects.</p>
 <p>The New Project wizard asks questions about what you are going to
 develop, and then creates a new project configured to help you get
@@ -511,7 +513,7 @@ modify the original LID file on disk.) See
 <a class="reference internal" href="projects.html#project-files-and-lid-files"><span class="std std-ref">Project files and LID files</span></a>.</p>
 </section>
 <section id="project-files">
-<span id="index-3"></span><h3>Project files<a class="headerlink" href="#project-files" title="Permalink to this heading">#</a></h3>
+<span id="index-3"></span><h3>Project files<a class="headerlink" href="#project-files" title="Permalink to this heading">¶</a></h3>
 <p>Open Dylan stores projects on disk in <em>project files</em>. Project
 files have the same name as the project, with the extension <em>.</em> HDP.
 Thus a project called Hello is stored in the file <em>Hello.hdp</em>.
@@ -525,7 +527,7 @@ files. For example, if you add a new source file to a project, the
 change is saved to disk immediately.</p>
 </section>
 <section id="project-components">
-<span id="index-4"></span><h3>Project components<a class="headerlink" href="#project-components" title="Permalink to this heading">#</a></h3>
+<span id="index-4"></span><h3>Project components<a class="headerlink" href="#project-components" title="Permalink to this heading">¶</a></h3>
 <p>We now describe the components of a project in more detail. Every
 project consists of:</p>
 <dl>
@@ -574,7 +576,7 @@ affect the build process for projects. See <a class="reference internal" href="p
 </dl>
 </section>
 <section id="projects-on-disk">
-<span id="index-5"></span><span id="id1"></span><h3>Projects on disk<a class="headerlink" href="#projects-on-disk" title="Permalink to this heading">#</a></h3>
+<span id="index-5"></span><span id="id1"></span><h3>Projects on disk<a class="headerlink" href="#projects-on-disk" title="Permalink to this heading">¶</a></h3>
 <p>A project consists of several files and folders on disk.</p>
 <p>First, all the information necessary to build the project is stored in a
 <em>project file</em> (.HDP file). Then there are the Dylan source files, and
@@ -624,7 +626,7 @@ the <strong>Project &gt; Make Release</strong> command.</p>
 </ul>
 </section>
 <section id="projects-in-the-development-environment">
-<h3>Projects in the development environment<a class="headerlink" href="#projects-in-the-development-environment" title="Permalink to this heading">#</a></h3>
+<h3>Projects in the development environment<a class="headerlink" href="#projects-in-the-development-environment" title="Permalink to this heading">¶</a></h3>
 <p>The Open Dylan development environment offers a variety of ways to
 examine and manipulate projects. You can view a single project in
 multiple windows at the same time. You can also have more than one
@@ -653,7 +655,7 @@ of a project.</p></li>
 </section>
 </section>
 <section id="development-models">
-<h2>Development models<a class="headerlink" href="#development-models" title="Permalink to this heading">#</a></h2>
+<h2>Development models<a class="headerlink" href="#development-models" title="Permalink to this heading">¶</a></h2>
 <p>The process of development in Open Dylan can be much the same as in
 interactive development environments for other languages. Applications
 written in Dylan can be developed in the same way as applications
@@ -661,7 +663,7 @@ written in static languages like C and C++, for instance.</p>
 <figure class="align-center" id="id6">
 <img alt="../_images/model-2.png" src="../_images/model-2.png" />
 <figcaption>
-<p><span class="caption-text">“Static” development model.</span><a class="headerlink" href="#id6" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">“Static” development model.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>You can also develop applications in a more dynamic fashion, using
@@ -672,11 +674,11 @@ before committing to a rebuild.</p>
 <figure class="align-center" id="id7">
 <img alt="../_images/model-4.png" src="../_images/model-4.png" />
 <figcaption>
-<p><span class="caption-text">“Dynamic” development model.</span><a class="headerlink" href="#id7" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">“Dynamic” development model.</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <section id="interactive-and-incremental-development">
-<h3>Interactive and incremental development<a class="headerlink" href="#interactive-and-incremental-development" title="Permalink to this heading">#</a></h3>
+<h3>Interactive and incremental development<a class="headerlink" href="#interactive-and-incremental-development" title="Permalink to this heading">¶</a></h3>
 <p>Open Dylan offers both interactive and incremental development
 features. It is important to distinguish them clearly:</p>
 <p>Incremental development is the ability to recompile portions of a
@@ -695,12 +697,12 @@ object code is lost when the program terminates.</p>
 </section>
 </section>
 <section id="compilation">
-<h2>Compilation<a class="headerlink" href="#compilation" title="Permalink to this heading">#</a></h2>
+<h2>Compilation<a class="headerlink" href="#compilation" title="Permalink to this heading">¶</a></h2>
 <p>This section discusses compilation modes, compiler databases,
 optimization (including loose and tight binding), the build cycle
 algorithm, and linkers.</p>
 <section id="compiler-databases">
-<span id="index-6"></span><span id="id2"></span><h3>Compiler databases<a class="headerlink" href="#compiler-databases" title="Permalink to this heading">#</a></h3>
+<span id="index-6"></span><span id="id2"></span><h3>Compiler databases<a class="headerlink" href="#compiler-databases" title="Permalink to this heading">¶</a></h3>
 <p>When compiling a project, Open Dylan produces a compiler database
 which models the project. The database provides a rich source of
 information to Open Dylan tools about the contents, properties, and
@@ -725,7 +727,7 @@ database is read into memory from the disk file, if it exists.</p>
 <p>Compiler database files have a .DDB suffix.</p>
 </section>
 <section id="compilation-modes">
-<span id="index-7"></span><span id="id3"></span><h3>Compilation modes<a class="headerlink" href="#compilation-modes" title="Permalink to this heading">#</a></h3>
+<span id="index-7"></span><span id="id3"></span><h3>Compilation modes<a class="headerlink" href="#compilation-modes" title="Permalink to this heading">¶</a></h3>
 <p>The Dylan language encourages programmers to write programs that can be
 compiled as efficiently as programs written in static languages. By
 adding type declarations and sealing to your project code, the Open
@@ -770,7 +772,7 @@ refreshing the coloring after rebuilding the project. See
 <a class="reference internal" href="coloring.html"><span class="doc">Dispatch Optimization Coloring in the Editor</span></a>.</p>
 </section>
 <section id="versioning">
-<span id="id4"></span><h3>Versioning<a class="headerlink" href="#versioning" title="Permalink to this heading">#</a></h3>
+<span id="id4"></span><h3>Versioning<a class="headerlink" href="#versioning" title="Permalink to this heading">¶</a></h3>
 <p>A project can have major and minor version numbers that will be recorded
 in the DLL or EXE that the project builds. You can enter these numbers
 on the <strong>Project &gt; Settings…</strong> dialog’s Link page.</p>
@@ -790,7 +792,7 @@ was used at compile time. If the library is different, a run-time error
 is signalled even if the version is the same.</p>
 </section>
 <section id="binding">
-<span id="index-10"></span><h3>Binding<a class="headerlink" href="#binding" title="Permalink to this heading">#</a></h3>
+<span id="index-10"></span><h3>Binding<a class="headerlink" href="#binding" title="Permalink to this heading">¶</a></h3>
 <p>Interactive Development mode and Production mode are in fact
 combinations of some lower-level compiler modes. Open Dylan
 presents these two compilation modes to make development simpler, but
@@ -826,7 +828,7 @@ they are tightly bound internally, and therefore libraries that use them
 are tightly bound to them.</p>
 </section>
 <section id="the-build-cycle">
-<span id="index-11"></span><h3>The build cycle<a class="headerlink" href="#the-build-cycle" title="Permalink to this heading">#</a></h3>
+<span id="index-11"></span><h3>The build cycle<a class="headerlink" href="#the-build-cycle" title="Permalink to this heading">¶</a></h3>
 <p>Building an application or DLL from a project consists of up to three
 phases:</p>
 <ol class="arabic simple">
@@ -868,7 +870,7 @@ altering any macro definitions in it.</p>
 </div>
 </section>
 <section id="linkers">
-<span id="index-12"></span><h3>Linkers<a class="headerlink" href="#linkers" title="Permalink to this heading">#</a></h3>
+<span id="index-12"></span><h3>Linkers<a class="headerlink" href="#linkers" title="Permalink to this heading">¶</a></h3>
 <p>Open Dylan offers you a choice of linkers to use to link your Dylan
 programs. The default linker is a GNU linker. If you own Microsoft
 Developer Studio, you can use Microsoft’s linker instead. See the Linker
@@ -876,12 +878,12 @@ page of the main window’s <strong>Options &gt; Environment Options…</strong>
 </section>
 </section>
 <section id="executing-programs">
-<h2>Executing programs<a class="headerlink" href="#executing-programs" title="Permalink to this heading">#</a></h2>
+<h2>Executing programs<a class="headerlink" href="#executing-programs" title="Permalink to this heading">¶</a></h2>
 <p>This section discusses running applications within Open Dylan (and
 the benefits of doing so), and the process of library initialization in
 an application.</p>
 <section id="starting-applications-up-from-within-open-dylan">
-<span id="index-13"></span><h3>Starting applications up from within Open Dylan<a class="headerlink" href="#starting-applications-up-from-within-open-dylan" title="Permalink to this heading">#</a></h3>
+<span id="index-13"></span><h3>Starting applications up from within Open Dylan<a class="headerlink" href="#starting-applications-up-from-within-open-dylan" title="Permalink to this heading">¶</a></h3>
 <p>An application written in Dylan cannot be started and later connected to
 Open Dylan and its project. If you want to be able to debug an
 application and browse its compiler database within Open Dylan, you
@@ -892,7 +894,7 @@ application and the capabilities necessary to control its execution and
 to interact with it.</p>
 </section>
 <section id="application-and-library-initialization">
-<span id="index-14"></span><span id="id5"></span><h3>Application and library initialization<a class="headerlink" href="#application-and-library-initialization" title="Permalink to this heading">#</a></h3>
+<span id="index-14"></span><span id="id5"></span><h3>Application and library initialization<a class="headerlink" href="#application-and-library-initialization" title="Permalink to this heading">¶</a></h3>
 <p>When a Dylan application starts up, it begins by loading the libraries
 that it uses. Each library performs its own initialization when it is
 loaded. In general, libraries are loaded in a demand-driven, depth-first
@@ -917,7 +919,7 @@ call to a project’s start function.</p>
 </section>
 </section>
 <section id="source-database-and-run-time-views">
-<span id="source-database-runtime-views"></span><span id="index-15"></span><h2>Source, database, and run-time views<a class="headerlink" href="#source-database-and-run-time-views" title="Permalink to this heading">#</a></h2>
+<span id="source-database-runtime-views"></span><span id="index-15"></span><h2>Source, database, and run-time views<a class="headerlink" href="#source-database-and-run-time-views" title="Permalink to this heading">¶</a></h2>
 <p>We have seen that Open Dylan provides several tools to allow us to
 view projects in different ways. Some tools can look at the source
 representation of a project, while others can look at the run-time
@@ -1060,6 +1062,6 @@ project again.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

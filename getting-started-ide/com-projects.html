@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Copyright" href="copyright.html" /><link rel="prev" title="The Interactive Editor" href="editopt.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Creating COM Projects - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,11 +463,11 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="creating-com-projects">
-<h1>Creating COM Projects<a class="headerlink" href="#creating-com-projects" title="Permalink to this heading">#</a></h1>
+<h1>Creating COM Projects<a class="headerlink" href="#creating-com-projects" title="Permalink to this heading">¶</a></h1>
 <section id="working-with-com-type-libraries">
-<h2>Working with COM type libraries<a class="headerlink" href="#working-with-com-type-libraries" title="Permalink to this heading">#</a></h2>
+<h2>Working with COM type libraries<a class="headerlink" href="#working-with-com-type-libraries" title="Permalink to this heading">¶</a></h2>
 <p>Microsoft COM interfaces and implementations of those interfaces are
 described on disk by <em>type libraries</em>. Type libraries can reside in
 stand-alone files with the extension .TLB, or within files containing
@@ -486,7 +488,7 @@ tool and specification files</a>.</p>
 create a project containing a specification file.</p>
 </section>
 <section id="an-example-com-server-and-client">
-<h2>An example COM server and client<a class="headerlink" href="#an-example-com-server-and-client" title="Permalink to this heading">#</a></h2>
+<h2>An example COM server and client<a class="headerlink" href="#an-example-com-server-and-client" title="Permalink to this heading">¶</a></h2>
 <p>The following example explains how the type library tool works and how
 to use the New Project wizard features that support it.</p>
 <p>In the example, we will create COM server and client applications. We
@@ -494,7 +496,7 @@ will write a simple encryption engine as a COM server, and write a
 simple client to that interface. In order to make things simpler, we
 have provided a COM type library describing the encryption interface.</p>
 <section id="creating-the-server-stubs-library">
-<h3>Creating the server stubs library<a class="headerlink" href="#creating-the-server-stubs-library" title="Permalink to this heading">#</a></h3>
+<h3>Creating the server stubs library<a class="headerlink" href="#creating-the-server-stubs-library" title="Permalink to this heading">¶</a></h3>
 <p>First we use the New Project wizard to create a Dylan library defining
 server-side stubs for the encryption interface.</p>
 <p>Choose <strong>File &gt; New…</strong> from the main window.</p>
@@ -515,7 +517,7 @@ library file from disk.</p>
 <figure class="align-center" id="id1">
 <img alt="../_images/motwiz.png" src="../_images/motwiz.png" />
 <figcaption>
-<p><span class="caption-text">Choosing a type library file to convert.</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Choosing a type library file to convert.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>In this case, we use a type library supplied with Open Dylan.</p>
@@ -533,7 +535,7 @@ Open Dylan folder.</p>
 <figure class="align-center" id="id2">
 <img alt="../_images/motstub.png" src="../_images/motstub.png" />
 <figcaption>
-<p><span class="caption-text">Choosing the kind of skeleton code to generate.</span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Choosing the kind of skeleton code to generate.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The next page allows you to choose what kind of stubs to generate from
@@ -556,7 +558,7 @@ generate dispatch server skeleton code.</p>
 <figure class="align-center" id="id3">
 <img alt="../_images/motinters.png" src="../_images/motinters.png" />
 <figcaption>
-<p><span class="caption-text">Choosing interfaces and classes from the type library.</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Choosing interfaces and classes from the type library.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The next page presents a list of COM classes and interfaces contained in
@@ -601,7 +603,7 @@ the server, so we do not need any unusual libraries.</p>
 <figure class="align-center" id="id4">
 <img alt="../_images/motproj.png" src="../_images/motproj.png" />
 <figcaption>
-<p><span class="caption-text">The server stubs project.</span><a class="headerlink" href="#id4" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">The server stubs project.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>In addition to the usual files, this project contains a file named
@@ -692,7 +694,7 @@ from the type library:</p>
 to define a COM class based on a subclass of <code class="docutils literal notranslate"><span class="pre">&lt;IRotNExample&gt;</span></code>.</p>
 </section>
 <section id="creating-the-server">
-<h3>Creating the server<a class="headerlink" href="#creating-the-server" title="Permalink to this heading">#</a></h3>
+<h3>Creating the server<a class="headerlink" href="#creating-the-server" title="Permalink to this heading">¶</a></h3>
 <p>Now we create the actual server application.</p>
 <p>Choose <strong>File &gt; New…</strong> from the main window.</p>
 <ol class="arabic simple">
@@ -893,7 +895,7 @@ the main event loop) to return <code class="docutils literal notranslate"><span 
 file <em>RotNExample-server-stubs.hdp</em>.</p>
 </section>
 <section id="creating-the-client-stubs-library">
-<h3>Creating the client stubs library<a class="headerlink" href="#creating-the-client-stubs-library" title="Permalink to this heading">#</a></h3>
+<h3>Creating the client stubs library<a class="headerlink" href="#creating-the-client-stubs-library" title="Permalink to this heading">¶</a></h3>
 <p>Now we create a project for the client-side stubs of the encryption
 interface.</p>
 <p>Choose <strong>File &gt; New…</strong> from the main window.</p>
@@ -995,7 +997,7 @@ from the type library:</p>
 returns its default (and only) interface.</p>
 </section>
 <section id="creating-the-client">
-<h3>Creating the client<a class="headerlink" href="#creating-the-client" title="Permalink to this heading">#</a></h3>
+<h3>Creating the client<a class="headerlink" href="#creating-the-client" title="Permalink to this heading">¶</a></h3>
 <p>Now we create the actual client application.</p>
 <p>Choose <strong>File &gt; New…</strong> from the main window.</p>
 <ol class="arabic simple">
@@ -1070,7 +1072,7 @@ exit.</p>
 file <em>RotNExample-client-stubs.hdp</em>.</p>
 </section>
 <section id="testing-the-client-and-server-pair">
-<h3>Testing the client and server pair<a class="headerlink" href="#testing-the-client-and-server-pair" title="Permalink to this heading">#</a></h3>
+<h3>Testing the client and server pair<a class="headerlink" href="#testing-the-client-and-server-pair" title="Permalink to this heading">¶</a></h3>
 <p>The best way to test the client and server pair is from within the
 Open Dylan environment, so that we can use the debugger if either
 application fails.</p>
@@ -1127,7 +1129,7 @@ click <strong>OK</strong>.</p></li>
 </section>
 </section>
 <section id="creating-vtable-and-dual-interfaces">
-<h2>Creating vtable and dual interfaces<a class="headerlink" href="#creating-vtable-and-dual-interfaces" title="Permalink to this heading">#</a></h2>
+<h2>Creating vtable and dual interfaces<a class="headerlink" href="#creating-vtable-and-dual-interfaces" title="Permalink to this heading">¶</a></h2>
 <p>The New Project wizard can generate custom (vtable) and dual (vtable and
 dispatch) COM interfaces. They are available on the wizard’s
 stub-selection page, from the options “Custom (vtable) interfaces” and
@@ -1140,7 +1142,7 @@ generated interfaces.</p>
 <figure class="align-center" id="id5">
 <img alt="../_images/motcust.png" src="../_images/motcust.png" />
 <figcaption>
-<p><span class="caption-text">Custom and dual interface class suffix selection.</span><a class="headerlink" href="#id5" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Custom and dual interface class suffix selection.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The server class suffix is appended to the name of the interface when
@@ -1153,7 +1155,7 @@ classes with suffix” box is not checked, no client classes are
 generated, and client methods specialize on <code class="docutils literal notranslate"><span class="pre">&lt;C-Interface&gt;</span></code> instead.</p>
 </section>
 <section id="the-type-library-tool-and-specification-files">
-<span id="index-0"></span><h2>The type library tool and specification files<a class="headerlink" href="#the-type-library-tool-and-specification-files" title="Permalink to this heading">#</a></h2>
+<span id="index-0"></span><h2>The type library tool and specification files<a class="headerlink" href="#the-type-library-tool-and-specification-files" title="Permalink to this heading">¶</a></h2>
 <p>The type library tool is invoked any time you build a project which
 includes a a type library tool specification, or .SPEC, file. This is a
 text file, where the first line must be:</p>
@@ -1350,6 +1352,6 @@ example:</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Improving The Design" href="improve.html" /><link rel="prev" title="Introduction" href="intro.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Designing A Simple DUIM Application - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,11 +463,11 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="designing-a-simple-duim-application">
-<span id="index-0"></span><h1>Designing A Simple DUIM Application<a class="headerlink" href="#designing-a-simple-duim-application" title="Permalink to this heading">#</a></h1>
+<span id="index-0"></span><h1>Designing A Simple DUIM Application<a class="headerlink" href="#designing-a-simple-duim-application" title="Permalink to this heading">¶</a></h1>
 <section id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>The next few chapters of the manual introduce you to some of the most
 important DUIM concepts, and show you how to go about designing and
 implementing a simple DUIM application. On a first read through, you
@@ -473,7 +475,7 @@ should work through each chapter in turn, since each chapter relies
 heavily on the information in the previous chapters.</p>
 </section>
 <section id="design-of-the-application">
-<span id="index-1"></span><h2>Design of the application<a class="headerlink" href="#design-of-the-application" title="Permalink to this heading">#</a></h2>
+<span id="index-1"></span><h2>Design of the application<a class="headerlink" href="#design-of-the-application" title="Permalink to this heading">¶</a></h2>
 <p>For the purposes of this example, the application developed is a simple
 task list manager. The design of the application attempts to achieve the
 following goals:</p>
@@ -500,7 +502,7 @@ project from the Documentation category of the Open Example Project dialog.</p>
 <figure class="align-center" id="id1">
 <img alt="../_images/tasklist.png" src="../_images/tasklist.png" />
 <figcaption>
-<p><span class="caption-text">The Task List Manager Application</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">The Task List Manager Application</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The task list manager is very simple to use. You create a list of things
@@ -512,14 +514,14 @@ of the same type.</p>
 button, list, and text controls.</p>
 </section>
 <section id="creating-the-basic-sheet-hierarchy">
-<span id="index-2"></span><h2>Creating the basic sheet hierarchy<a class="headerlink" href="#creating-the-basic-sheet-hierarchy" title="Permalink to this heading">#</a></h2>
+<span id="index-2"></span><h2>Creating the basic sheet hierarchy<a class="headerlink" href="#creating-the-basic-sheet-hierarchy" title="Permalink to this heading">¶</a></h2>
 <p>This section shows you how to create gadgets and sheets that make up the
 overall visual design of the interface. It shows you how to improve upon
 an initial design, but does not go into any details on the callbacks
 necessary for the application; at the end of this section you have an
 initial visual design.</p>
 <section id="placing-all-the-elements-in-a-single-layout">
-<h3>Placing all the elements in a single layout<a class="headerlink" href="#placing-all-the-elements-in-a-single-layout" title="Permalink to this heading">#</a></h3>
+<h3>Placing all the elements in a single layout<a class="headerlink" href="#placing-all-the-elements-in-a-single-layout" title="Permalink to this heading">¶</a></h3>
 <p>The main part of the task list manager is a list box that is used for
 displaying the tasks that you add in the course of using the program.
 For the initial design, there are buttons that let you add and remove
@@ -548,7 +550,7 @@ application has more of the feel of a dialog box, than a main
 application window. These issues are addressed later on in the example.</p>
 </section>
 <section id="redesigning-the-layout">
-<h3>Redesigning the layout<a class="headerlink" href="#redesigning-the-layout" title="Permalink to this heading">#</a></h3>
+<h3>Redesigning the layout<a class="headerlink" href="#redesigning-the-layout" title="Permalink to this heading">¶</a></h3>
 <p>To address the issue of layout first, you should group the text field
 and the <em>Add task</em> button in a row; since the two elements are
 inherently connected (the task you add is the one whose text is
@@ -601,7 +603,7 @@ explicitly using <code class="docutils literal notranslate"><span class="pre">ma
 </div>
 </section>
 <section id="adding-a-radio-box">
-<span id="index-3"></span><h3>Adding a radio box<a class="headerlink" href="#adding-a-radio-box" title="Permalink to this heading">#</a></h3>
+<span id="index-3"></span><h3>Adding a radio box<a class="headerlink" href="#adding-a-radio-box" title="Permalink to this heading">¶</a></h3>
 <p>There is one aspect of the initial design that you have not yet
 incorporated into the structure: the radio box. This serves two purposes
 in the application:</p>
@@ -636,7 +638,7 @@ box at the appropriate position in the call to <code class="docutils literal not
 </div>
 </section>
 <section id="using-contain-to-run-examples-interactively">
-<span id="index-4"></span><h3>Using contain to run examples interactively<a class="headerlink" href="#using-contain-to-run-examples-interactively" title="Permalink to this heading">#</a></h3>
+<span id="index-4"></span><h3>Using contain to run examples interactively<a class="headerlink" href="#using-contain-to-run-examples-interactively" title="Permalink to this heading">¶</a></h3>
 <p>You can use the function <code class="docutils literal notranslate"><span class="pre">contain</span></code> to run any of the examples above
 using the interactor available in the Dylan environment. This function
 lets you see the results of your work immediately, without the need to
@@ -743,6 +745,6 @@ been discussed.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

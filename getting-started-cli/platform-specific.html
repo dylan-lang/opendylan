@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Copyright" href="copyright.html" /><link rel="prev" title="Cross Compilation" href="cross-compilation.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Platform Specific Projects - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="platform-specific-projects">
-<h1>Platform Specific Projects<a class="headerlink" href="#platform-specific-projects" title="Permalink to this heading">#</a></h1>
+<h1>Platform Specific Projects<a class="headerlink" href="#platform-specific-projects" title="Permalink to this heading">¶</a></h1>
 <p id="index-0">When a project involves platform-specific code, some consideration needs to be
 made to the LID file and registry, as well as the layout of code.  As an
 example, consider the <a class="reference external" href="https://github.com/dylan-lang/opendylan/tree/master/sources/io/">io</a> and <a class="reference external" href="https://github.com/dylan-lang/opendylan/tree/master/sources/system/">system</a>
@@ -472,7 +474,7 @@ libraries.</p>
 needs some platform-specific code, and a platform-specific registry file that
 points to the appropriate LID file.</p>
 <section id="lid-file">
-<h2>LID File<a class="headerlink" href="#lid-file" title="Permalink to this heading">#</a></h2>
+<h2>LID File<a class="headerlink" href="#lid-file" title="Permalink to this heading">¶</a></h2>
 <p>For further details of the LID file format, see <a class="reference internal" href="../library-reference/lid.html"><span class="doc">LID File Format</span></a>.</p>
 <ol class="arabic">
 <li><p>The <code class="docutils literal notranslate"><span class="pre">Library</span></code> keyword</p>
@@ -604,7 +606,7 @@ command which registry files to create.</p>
 </ol>
 </section>
 <section id="lid-file-inheritance">
-<h2>LID File Inheritance<a class="headerlink" href="#lid-file-inheritance" title="Permalink to this heading">#</a></h2>
+<h2>LID File Inheritance<a class="headerlink" href="#lid-file-inheritance" title="Permalink to this heading">¶</a></h2>
 <p>When LID files are almost identical, it can be useful to create
 a base LID file and inherit it, overriding whatever is necessary
 for each platform. A per-platform LID file might look like:</p>
@@ -615,7 +617,7 @@ for each platform. A per-platform LID file might look like:</p>
 </div>
 </section>
 <section id="registry">
-<h2>Registry<a class="headerlink" href="#registry" title="Permalink to this heading">#</a></h2>
+<h2>Registry<a class="headerlink" href="#registry" title="Permalink to this heading">¶</a></h2>
 <p>For further details of setting up the registry entries, see
 <a class="reference internal" href="source-registries.html"><span class="doc">Using Source Registries</span></a>.</p>
 <p>Normally, when a reference to a platform-independent project is placed in the
@@ -625,7 +627,7 @@ are placed in subdirectories named for the platform. For example,
 and <code class="file docutils literal notranslate"><span class="pre">opendylan/sources/registry/x86-win32/io</span></code> points to <code class="docutils literal notranslate"><span class="pre">win32-io.lid</span></code>.</p>
 </section>
 <section id="code-layout">
-<h2>Code Layout<a class="headerlink" href="#code-layout" title="Permalink to this heading">#</a></h2>
+<h2>Code Layout<a class="headerlink" href="#code-layout" title="Permalink to this heading">¶</a></h2>
 <p>The “io” library is laid out in the following manner:</p>
 <ol class="arabic simple">
 <li><p>All platform-specific code is inside a single module (io-internals).</p></li>
@@ -718,6 +720,6 @@ modules.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

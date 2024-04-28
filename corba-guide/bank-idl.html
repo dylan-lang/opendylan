@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="The Bank Client" href="bank-client.html" /><link rel="prev" title="Setting up the Bank Example" href="bank-setup.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Writing and Compiling IDL - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,11 +463,11 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="writing-and-compiling-idl">
-<h1>Writing and Compiling IDL<a class="headerlink" href="#writing-and-compiling-idl" title="Permalink to this heading">#</a></h1>
+<h1>Writing and Compiling IDL<a class="headerlink" href="#writing-and-compiling-idl" title="Permalink to this heading">¶</a></h1>
 <section id="writing-idl-for-a-corba-application">
-<h2>Writing IDL for a CORBA application<a class="headerlink" href="#writing-idl-for-a-corba-application" title="Permalink to this heading">#</a></h2>
+<h2>Writing IDL for a CORBA application<a class="headerlink" href="#writing-idl-for-a-corba-application" title="Permalink to this heading">¶</a></h2>
 <p>The first step in developing a CORBA application is to define the
 interfaces to its distributed application objects. You define these
 interfaces using OMG’s Interface Definition Language (IDL).</p>
@@ -499,7 +501,7 @@ the three interfaces. You can find the complete IDL description for
 the bank demo in the Open Dylan Examples folder, under
 <code class="file docutils literal notranslate"><span class="pre">Examples\corba\bank\bank\bank.idl</span></code>.</p>
 <section id="idl-for-the-account-interface">
-<h3>IDL for the account interface<a class="headerlink" href="#idl-for-the-account-interface" title="Permalink to this heading">#</a></h3>
+<h3>IDL for the account interface<a class="headerlink" href="#idl-for-the-account-interface" title="Permalink to this heading">¶</a></h3>
 <p>This is the IDL definition of the interface to an <code class="docutils literal notranslate"><span class="pre">account</span></code> object.</p>
 <div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>in<span class="w"> </span>module<span class="w"> </span>BankingDemo
 interface<span class="w"> </span>account<span class="w"> </span>{
@@ -546,7 +548,7 @@ raise.</p>
 <p>This completes the IDL declaration of the <code class="docutils literal notranslate"><span class="pre">account</span></code> interface.</p>
 </section>
 <section id="idl-for-the-checkingaccount-interface">
-<h3>IDL for the checkingAccount interface<a class="headerlink" href="#idl-for-the-checkingaccount-interface" title="Permalink to this heading">#</a></h3>
+<h3>IDL for the checkingAccount interface<a class="headerlink" href="#idl-for-the-checkingaccount-interface" title="Permalink to this heading">¶</a></h3>
 <p>Our application manages a second sort of bank account, called a
 checking account . While an ordinary <code class="docutils literal notranslate"><span class="pre">account</span></code> must maintain a
 positive balance, a <code class="docutils literal notranslate"><span class="pre">checkingAccount</span></code> may be overdrawn up to an
@@ -570,7 +572,7 @@ operations need to be inherited too. We will exploit this flexibility
 to provide a specialized <code class="docutils literal notranslate"><span class="pre">debit</span></code> method for <code class="docutils literal notranslate"><span class="pre">checkingAccount</span></code>s.</p>
 </section>
 <section id="idl-for-the-bank-interface">
-<h3>IDL for the bank interface<a class="headerlink" href="#idl-for-the-bank-interface" title="Permalink to this heading">#</a></h3>
+<h3>IDL for the bank interface<a class="headerlink" href="#idl-for-the-bank-interface" title="Permalink to this heading">¶</a></h3>
 <p>We can now design the interface of a bank object. The intention is
 that a bank associates customer names with accounts, with each name
 identifying at most one account. A client is able to open accounts for
@@ -636,7 +638,7 @@ as <code class="docutils literal notranslate"><span class="pre">account</span></
 </section>
 </section>
 <section id="compiling-idl-for-a-corba-application">
-<h2>Compiling IDL for a CORBA application<a class="headerlink" href="#compiling-idl-for-a-corba-application" title="Permalink to this heading">#</a></h2>
+<h2>Compiling IDL for a CORBA application<a class="headerlink" href="#compiling-idl-for-a-corba-application" title="Permalink to this heading">¶</a></h2>
 <p>Open Dylan includes an IDL compiler, Scepter, that it uses to check
 and compile IDL files into Dylan libraries. These libraries provide
 essential infrastructure for CORBA-based applications in Dylan.</p>
@@ -654,7 +656,7 @@ specification states that:</p>
 <p>IDL declarations are mapped to Dylan according to these rules. The
 resulting libraries provide a Dylan protocol equivalent to the IDL.</p>
 <section id="libraries-created-by-compiling-idl">
-<h3>Libraries created by compiling IDL<a class="headerlink" href="#libraries-created-by-compiling-idl" title="Permalink to this heading">#</a></h3>
+<h3>Libraries created by compiling IDL<a class="headerlink" href="#libraries-created-by-compiling-idl" title="Permalink to this heading">¶</a></h3>
 <p>The IDL compiler can produce <em>skeleton</em>, <em>stub</em>, and <em>protocol</em>
 libraries from an IDL file. This, again, is as specified in
 <a class="reference internal" href="idl-app.html"><span class="doc">An IDL Binding for Dylan</span></a>. The purpose of these libraries is to make writing
@@ -682,7 +684,7 @@ server to make callbacks to the client.</p>
 </div>
 </section>
 <section id="idl-files-in-dylan-projects">
-<h3>IDL files in Dylan projects<a class="headerlink" href="#idl-files-in-dylan-projects" title="Permalink to this heading">#</a></h3>
+<h3>IDL files in Dylan projects<a class="headerlink" href="#idl-files-in-dylan-projects" title="Permalink to this heading">¶</a></h3>
 <p>IDL files can be treated as part of Dylan projects, allowing the IDL
 interface to be compiled at the same time as the project’s Dylan
 sources. This is in fact the simplest way to manage a Dylan project
@@ -722,7 +724,7 @@ the projects of both.</p>
 </dl>
 </section>
 <section id="compilation-steps">
-<h3>Compilation steps<a class="headerlink" href="#compilation-steps" title="Permalink to this heading">#</a></h3>
+<h3>Compilation steps<a class="headerlink" href="#compilation-steps" title="Permalink to this heading">¶</a></h3>
 <p>If you have not built the Bank-Client and Bank-Server projects yet,
 you should do so now.</p>
 <ol class="arabic">
@@ -740,7 +742,7 @@ server projects.</p>
 </section>
 </section>
 <section id="mapping-idl-to-dylan">
-<h2>Mapping IDL to Dylan<a class="headerlink" href="#mapping-idl-to-dylan" title="Permalink to this heading">#</a></h2>
+<h2>Mapping IDL to Dylan<a class="headerlink" href="#mapping-idl-to-dylan" title="Permalink to this heading">¶</a></h2>
 <p>To get an impression of the mapping from IDL to Dylan, we can take a
 look at the result of applying the mapping to the file
 <code class="file docutils literal notranslate"><span class="pre">bank.idl</span></code>. The following Dylan definitions are taken from
@@ -801,7 +803,7 @@ subsections examine the Dylan counterparts of some of the more
 representative IDL declarations from the file <code class="file docutils literal notranslate"><span class="pre">bank.idl</span></code>. See
 <a class="reference internal" href="idl-app.html"><span class="doc">An IDL Binding for Dylan</span></a> for the full mapping description.</p>
 <section id="mapping-for-interfaces">
-<h3>Mapping for interfaces<a class="headerlink" href="#mapping-for-interfaces" title="Permalink to this heading">#</a></h3>
+<h3>Mapping for interfaces<a class="headerlink" href="#mapping-for-interfaces" title="Permalink to this heading">¶</a></h3>
 <p>The IDL interfaces <code class="docutils literal notranslate"><span class="pre">account</span></code>, <code class="docutils literal notranslate"><span class="pre">checkingAccount</span></code> and <code class="docutils literal notranslate"><span class="pre">bank</span></code> map
 to the Dylan abstract classes <code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;account&gt;</span></code>,
 <code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;checkingAccount&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;bank&gt;</span></code> .</p>
@@ -816,7 +818,7 @@ maps naturally onto Dylan class inheritance: the class
 <code class="docutils literal notranslate"><span class="pre">BankingDemo/&lt;account&gt;</span></code>).</p>
 </section>
 <section id="mapping-for-basic-types">
-<h3>Mapping for basic types<a class="headerlink" href="#mapping-for-basic-types" title="Permalink to this heading">#</a></h3>
+<h3>Mapping for basic types<a class="headerlink" href="#mapping-for-basic-types" title="Permalink to this heading">¶</a></h3>
 <p>The IDL types <code class="docutils literal notranslate"><span class="pre">string</span></code>, <code class="docutils literal notranslate"><span class="pre">long</span></code>, and <code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">long</span></code> are mapped
 to the Dylan classes <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;string&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;long&gt;</span></code> and
 <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;unsigned-long&gt;</span></code>, which are simply aliases for the Dylan
@@ -824,7 +826,7 @@ classes <a class="reference external" href="https://opendylan.org/books/drm/Coll
 <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p>
 </section>
 <section id="mapping-for-attributes">
-<h3>Mapping for attributes<a class="headerlink" href="#mapping-for-attributes" title="Permalink to this heading">#</a></h3>
+<h3>Mapping for attributes<a class="headerlink" href="#mapping-for-attributes" title="Permalink to this heading">¶</a></h3>
 <p>The read-only <code class="docutils literal notranslate"><span class="pre">balance</span></code> attribute of an IDL <code class="docutils literal notranslate"><span class="pre">account</span></code> gives rise
 to the Dylan generic function:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">open</span><span class="w"> </span><span class="nb">generic</span><span class="w"> </span><span class="n">BankingDemo/account/balance</span>
@@ -857,7 +859,7 @@ identifier itself, separating the identifiers by forward slashes
 </div>
 </section>
 <section id="mapping-for-operations">
-<h3>Mapping for operations<a class="headerlink" href="#mapping-for-operations" title="Permalink to this heading">#</a></h3>
+<h3>Mapping for operations<a class="headerlink" href="#mapping-for-operations" title="Permalink to this heading">¶</a></h3>
 <p>The IDL operation <code class="docutils literal notranslate"><span class="pre">credit</span></code> is mapped to the Dylan generic function:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">open</span><span class="w"> </span><span class="nb">generic</span><span class="w"> </span><span class="n">BankingDemo/account/credit</span>
 <span class="w">    </span><span class="p">(</span><span class="n">object</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">BankingDemo/&lt;account&gt;</span><span class="p">,</span>
@@ -885,7 +887,7 @@ is <code class="docutils literal notranslate"><span class="pre">void</span></cod
 parameters, <code class="docutils literal notranslate"><span class="pre">BankingDemo/account/credit</span></code> has an empty result list.</p>
 </section>
 <section id="mapping-for-exceptions">
-<h3>Mapping for exceptions<a class="headerlink" href="#mapping-for-exceptions" title="Permalink to this heading">#</a></h3>
+<h3>Mapping for exceptions<a class="headerlink" href="#mapping-for-exceptions" title="Permalink to this heading">¶</a></h3>
 <p>The IDL exception <code class="docutils literal notranslate"><span class="pre">refusal</span></code> maps onto the Dylan class
 <code class="docutils literal notranslate"><span class="pre">BankingDemo/account/&lt;refusal&gt;</span></code> . Its member, <code class="docutils literal notranslate"><span class="pre">string</span> <span class="pre">reason;</span></code>,
 maps onto a slot <code class="docutils literal notranslate"><span class="pre">BankingDemo/account/refusal/reason</span> <span class="pre">::</span>
@@ -989,6 +991,6 @@ condition mechanism.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Adding Menus To The Application" href="menus.html" /><link rel="prev" title="Designing A Simple DUIM Application" href="design.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Improving The Design - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="improving-the-design">
-<h1>Improving The Design<a class="headerlink" href="#improving-the-design" title="Permalink to this heading">#</a></h1>
+<h1>Improving The Design<a class="headerlink" href="#improving-the-design" title="Permalink to this heading">¶</a></h1>
 <p>The simple layout hierarchy described in <a class="reference external" href="design.html#creating-the-basic-sheet-hierarchy">Creating the basic sheet
 hierarchy</a> has a
 number of problems associated with it, all of which revolve around the
@@ -482,7 +484,7 @@ fine for code that you want to evaluate once only, perhaps using the
 interactor, but for permanent code, a more rigorous framework is
 preferable.</p>
 <section id="defining-a-project">
-<span id="index-0"></span><h2>Defining a project<a class="headerlink" href="#defining-a-project" title="Permalink to this heading">#</a></h2>
+<span id="index-0"></span><h2>Defining a project<a class="headerlink" href="#defining-a-project" title="Permalink to this heading">¶</a></h2>
 <p>From this point on, you should put the code for the task list manager
 into a project, rather than evaluating pieces of code using the
 interactor. Please refer to the <em>Getting Started with Open Dylan</em>
@@ -528,7 +530,7 @@ Make sure that this file is the last one listed in the project window.</p>
 </dl>
 </section>
 <section id="starting-the-application">
-<span id="index-1"></span><h2>Starting the application<a class="headerlink" href="#starting-the-application" title="Permalink to this heading">#</a></h2>
+<span id="index-1"></span><h2>Starting the application<a class="headerlink" href="#starting-the-application" title="Permalink to this heading">¶</a></h2>
 <p>As you add source code to the files in your project, there will be times
 when you want to build the project to test it. This section defines some
 methods that let you run the application in a clean way. Add these
@@ -581,7 +583,7 @@ already knows its own size, you do not need to pass the number of
 arguments as an additional parameter.</p>
 </section>
 <section id="adding-a-default-callback">
-<span id="index-2"></span><h2>Adding a default callback<a class="headerlink" href="#adding-a-default-callback" title="Permalink to this heading">#</a></h2>
+<span id="index-2"></span><h2>Adding a default callback<a class="headerlink" href="#adding-a-default-callback" title="Permalink to this heading">¶</a></h2>
 <p>Nothing is more frustrating than designing a user interface that does
 not respond to user input. Although, in the early stages at least, the
 user interface does nothing particularly useful, you can at least define
@@ -604,7 +606,7 @@ is given in <a class="reference internal" href="callbacks.html"><span class="doc
 defined, to make the task list manager do something more substantial.</p>
 </section>
 <section id="defining-a-new-frame-class">
-<span id="index-3"></span><h2>Defining a new frame class<a class="headerlink" href="#defining-a-new-frame-class" title="Permalink to this heading">#</a></h2>
+<span id="index-3"></span><h2>Defining a new frame class<a class="headerlink" href="#defining-a-new-frame-class" title="Permalink to this heading">¶</a></h2>
 <p>To begin with, define a frame class using the layout hierarchy you have
 already created. Although it might seem redundant to implement an
 inelegant layout again, it is easier to illustrate the basic techniques
@@ -786,7 +788,7 @@ can create running versions of each successive generation of the
 application as it is developed.</p>
 </section>
 <section id="adding-a-tool-bar">
-<span id="index-5"></span><h2>Adding a tool bar<a class="headerlink" href="#adding-a-tool-bar" title="Permalink to this heading">#</a></h2>
+<span id="index-5"></span><h2>Adding a tool bar<a class="headerlink" href="#adding-a-tool-bar" title="Permalink to this heading">¶</a></h2>
 <p>So far, you have seen how to experiment interactively to create an
 initial interface design. You have also seen how you can take that
 initial design and turn it into a more rigorous definition, for use
@@ -868,7 +870,7 @@ of the commands already available from the application’s menu system. A
 menu system is added to the task list manager in <a class="reference internal" href="menus.html"><span class="doc">Adding Menus To The Application</span></a>.</p>
 </section>
 <section id="adding-a-status-bar">
-<span id="index-6"></span><h2>Adding a status bar<a class="headerlink" href="#adding-a-status-bar" title="Permalink to this heading">#</a></h2>
+<span id="index-6"></span><h2>Adding a status bar<a class="headerlink" href="#adding-a-status-bar" title="Permalink to this heading">¶</a></h2>
 <p>As well as a tool bar, most applications have a status bar. This is a
 bar that runs along the bottom edge of the main application window, and
 displays information about the current status of the application. At its
@@ -896,7 +898,7 @@ glue all the pieces together once again to create your modified frame
 design.</p>
 </section>
 <section id="gluing-the-new-design-together">
-<span id="index-7"></span><h2>Gluing the new design together<a class="headerlink" href="#gluing-the-new-design-together" title="Permalink to this heading">#</a></h2>
+<span id="index-7"></span><h2>Gluing the new design together<a class="headerlink" href="#gluing-the-new-design-together" title="Permalink to this heading">¶</a></h2>
 <p>In improving the initial design of the application, you have added a
 tool bar and a status bar. Adding a tool bar, in particular, has
 obviated the need for some of the elements that you added to the earlier
@@ -1033,7 +1035,7 @@ original interface is handled differently in the final design, and is
 re-implemented in <a class="reference internal" href="#creating-a-dialog-for-adding-new-items">Creating a dialog for adding new items</a>.</p>
 </section>
 <section id="creating-a-dialog-for-adding-new-items">
-<span id="index-8"></span><h2>Creating a dialog for adding new items<a class="headerlink" href="#creating-a-dialog-for-adding-new-items" title="Permalink to this heading">#</a></h2>
+<span id="index-8"></span><h2>Creating a dialog for adding new items<a class="headerlink" href="#creating-a-dialog-for-adding-new-items" title="Permalink to this heading">¶</a></h2>
 <p>You may be wondering what has happened to <code class="docutils literal notranslate"><span class="pre">task-text</span></code>, the text field
 in which you typed the text of each new task. In the new design, this is
 moved to a new dialog box that is popped up whenever you choose a
@@ -1047,7 +1049,7 @@ dialog, rather than calling the <code class="docutils literal notranslate"><span
 <figure class="align-center" id="id4">
 <span id="index-9"></span><img alt="../_images/new-task.png" src="../_images/new-task.png" />
 <figcaption>
-<p><span class="caption-text">The dialog box created by the prompt-for-task method</span><a class="headerlink" href="#id4" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">The dialog box created by the prompt-for-task method</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The method takes two keyword arguments: a title, which is assigned a
@@ -1189,6 +1191,6 @@ calls this method, then inserts the return value into the list
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

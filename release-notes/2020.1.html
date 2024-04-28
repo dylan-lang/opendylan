@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Open Dylan 2019.1" href="2019.1.html" /><link rel="prev" title="Open Dylan 2022.1" href="2022.1.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Open Dylan 2020.1 - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="open-dylan-2020-1">
-<h1>Open Dylan 2020.1<a class="headerlink" href="#open-dylan-2020-1" title="Permalink to this heading">#</a></h1>
+<h1>Open Dylan 2020.1<a class="headerlink" href="#open-dylan-2020-1" title="Permalink to this heading">¶</a></h1>
 <p>This document describes the 2020.1 release of Open Dylan, released 10
 October, 2020.  This release contains many enhancements and bug fixes, highlights
 of which are listed below.  For complete details see <a class="reference external" href="https://github.com/dylan-lang/opendylan/compare/v2019.1.0...v2020.1.0">the opendylan commit logs</a>. (Note
@@ -475,7 +477,7 @@ included in Open Dylan as git submodules, may be in other repositories.)</p>
 <li><p>Report problems: <a class="reference external" href="https://github.com/dylan-lang/opendylan/issues">https://github.com/dylan-lang/opendylan/issues</a></p></li>
 </ul>
 <section id="compiler">
-<h2>Compiler<a class="headerlink" href="#compiler" title="Permalink to this heading">#</a></h2>
+<h2>Compiler<a class="headerlink" href="#compiler" title="Permalink to this heading">¶</a></h2>
 <ul>
 <li><p>The default compiler-back-end is now selected by querying the
 <code class="docutils literal notranslate"><span class="pre">SUPPORTED_COMPILER_BACK_ENDS</span></code> build system variable, normally set
@@ -541,7 +543,7 @@ has been fixed.</p></li>
 </ul>
 </section>
 <section id="run-time">
-<h2>Run-time<a class="headerlink" href="#run-time" title="Permalink to this heading">#</a></h2>
+<h2>Run-time<a class="headerlink" href="#run-time" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>An error in the LLVM run-time which prevented call-site method
 dispatch caches from being used has been fixed. This change
@@ -565,7 +567,7 @@ stack.</p></li>
 </ul>
 </section>
 <section id="platform-support">
-<h2>Platform Support<a class="headerlink" href="#platform-support" title="Permalink to this heading">#</a></h2>
+<h2>Platform Support<a class="headerlink" href="#platform-support" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>The AArch64 (64-bit ARM) platform is now supported on Linux.</p></li>
 <li><p>The 32-bit x86-darwin platform is no longer supported, since macOS 10.15
@@ -574,14 +576,14 @@ applications.</p></li>
 </ul>
 </section>
 <section id="ide">
-<h2>IDE<a class="headerlink" href="#ide" title="Permalink to this heading">#</a></h2>
+<h2>IDE<a class="headerlink" href="#ide" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>The Visual SourceSafe source control interface for the Windows
 environment has been removed.</p></li>
 </ul>
 </section>
 <section id="corba">
-<h2>CORBA<a class="headerlink" href="#corba" title="Permalink to this heading">#</a></h2>
+<h2>CORBA<a class="headerlink" href="#corba" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>The Scepter IDL compiler can now <code class="docutils literal notranslate"><span class="pre">#include</span></code> files via symbolic
 links.</p></li>
@@ -608,14 +610,14 @@ are now updated to “Open Dylan ORB”.</p></li>
 </ul>
 </section>
 <section id="duim">
-<h2>DUIM<a class="headerlink" href="#duim" title="Permalink to this heading">#</a></h2>
+<h2>DUIM<a class="headerlink" href="#duim" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>The obsolete <code class="docutils literal notranslate"><span class="pre">GDK_SOLID</span></code> constant is no longer referenced from the
 DUIM back-end for GTK.</p></li>
 </ul>
 </section>
 <section id="gtk">
-<h2>GTK<a class="headerlink" href="#gtk" title="Permalink to this heading">#</a></h2>
+<h2>GTK<a class="headerlink" href="#gtk" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>The obsolete <code class="docutils literal notranslate"><span class="pre">gdk-pixbuf-gettext</span></code> function is no longer included
 in the GTK bindings.</p></li>
@@ -624,14 +626,14 @@ been fixed.</p></li>
 </ul>
 </section>
 <section id="debugging">
-<h2>Debugging<a class="headerlink" href="#debugging" title="Permalink to this heading">#</a></h2>
+<h2>Debugging<a class="headerlink" href="#debugging" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>The LLDB debugger support has been updated to work with Python 3.  For more
 information, see <a class="reference external" href="https://opendylan.org/documentation/getting-started-cli/debugging-with-gdb-lldb.html">Debugging with GDB or LLDB</a>.</p></li>
 </ul>
 </section>
 <section id="documentation">
-<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading">#</a></h2>
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Dylan Reference Manual links were added to <a class="reference external" href="https://opendylan.org/documentation/intro-dylan/index.html">An Introduction to Dylan</a></p></li>
 <li><p>Index sections were added to <a class="reference external" href="https://opendylan.org/documentation/getting-started-ide/index.html">Getting Started with the Open Dylan
@@ -640,7 +642,7 @@ IDE</a>,
 </ul>
 </section>
 <section id="build-system">
-<h2>Build System<a class="headerlink" href="#build-system" title="Permalink to this heading">#</a></h2>
+<h2>Build System<a class="headerlink" href="#build-system" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>The build system now reliably detects when changes have been made to
 Jamfile sources while the environment is running.</p></li>
@@ -651,15 +653,15 @@ to do bootstrap builds.</p></li>
 </ul>
 </section>
 <section id="library-changes">
-<h2>Library Changes<a class="headerlink" href="#library-changes" title="Permalink to this heading">#</a></h2>
+<h2>Library Changes<a class="headerlink" href="#library-changes" title="Permalink to this heading">¶</a></h2>
 <section id="dylan-library">
-<h3>dylan Library<a class="headerlink" href="#dylan-library" title="Permalink to this heading">#</a></h3>
+<h3>dylan Library<a class="headerlink" href="#dylan-library" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>A bug that broke <code class="docutils literal notranslate"><span class="pre">limited(&lt;array&gt;)</span></code> instantiation has been fixed.</p></li>
 </ul>
 </section>
 <section id="common-dylan-library">
-<h3>common-dylan Library<a class="headerlink" href="#common-dylan-library" title="Permalink to this heading">#</a></h3>
+<h3>common-dylan Library<a class="headerlink" href="#common-dylan-library" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>The simple-io module has been removed.  This module was deprecated in Open
 Dylan 2014.1 and is replaced by the simple-format module.</p></li>
@@ -670,7 +672,7 @@ returns start/end indices that are equal.</p></li>
 </ul>
 </section>
 <section id="io-library">
-<h3>io Library<a class="headerlink" href="#io-library" title="Permalink to this heading">#</a></h3>
+<h3>io Library<a class="headerlink" href="#io-library" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>A longstanding bug in the tab position computation used by the
 <code class="docutils literal notranslate"><span class="pre">pprint-tab</span></code> function is now fixed.</p></li>
@@ -681,7 +683,7 @@ have been documented.</p></li>
 </ul>
 </section>
 <section id="system-library">
-<h3>system Library<a class="headerlink" href="#system-library" title="Permalink to this heading">#</a></h3>
+<h3>system Library<a class="headerlink" href="#system-library" title="Permalink to this heading">¶</a></h3>
 <ul>
 <li><p>Library initialization under the LLVM back-end has been changed to
 enable using the <code class="docutils literal notranslate"><span class="pre">load-library</span></code> function on all supported
@@ -718,7 +720,7 @@ to end-user code to decide whether and how to do it.</p></li>
 </ul>
 </section>
 <section id="c-ffi-library">
-<h3>c-ffi Library<a class="headerlink" href="#c-ffi-library" title="Permalink to this heading">#</a></h3>
+<h3>c-ffi Library<a class="headerlink" href="#c-ffi-library" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>The import mapping for types such as <code class="docutils literal notranslate"><span class="pre">&lt;C-int&gt;</span></code> has been changed to
 return a <code class="docutils literal notranslate"><span class="pre">&lt;abstract-integer&gt;</span></code> (as per the original design) rather
@@ -729,7 +731,7 @@ sign extension has been fixed.</p></li>
 </ul>
 </section>
 <section id="network-library">
-<h3>network library<a class="headerlink" href="#network-library" title="Permalink to this heading">#</a></h3>
+<h3>network library<a class="headerlink" href="#network-library" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>A deadlock that occurred when shutting down listening socket threads
 has been fixed.</p></li>
@@ -737,7 +739,7 @@ has been fixed.</p></li>
 </ul>
 </section>
 <section id="testworks-library">
-<h3>testworks Library<a class="headerlink" href="#testworks-library" title="Permalink to this heading">#</a></h3>
+<h3>testworks Library<a class="headerlink" href="#testworks-library" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>A new executable library, testworks-run, can be used to run any test library
 compiled as a shared library. On Linux, <code class="docutils literal notranslate"><span class="pre">testworks-run</span> <span class="pre">--load</span>
@@ -775,27 +777,27 @@ unimplemented are not very useful.</p></li>
 </ul>
 </section>
 <section id="collections-library">
-<h3>collections Library<a class="headerlink" href="#collections-library" title="Permalink to this heading">#</a></h3>
+<h3>collections Library<a class="headerlink" href="#collections-library" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>A warning displayed when compiling the collections library with the
 LLVM back-end has been fixed.</p></li>
 </ul>
 </section>
 <section id="big-integers-library">
-<h3>big-integers library<a class="headerlink" href="#big-integers-library" title="Permalink to this heading">#</a></h3>
+<h3>big-integers library<a class="headerlink" href="#big-integers-library" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>The <code class="docutils literal notranslate"><span class="pre">integer-length</span></code> function is now implemented for <code class="docutils literal notranslate"><span class="pre">&lt;double-integer&gt;</span></code>.</p></li>
 </ul>
 </section>
 <section id="progress-stream-library">
-<h3>progress-stream library<a class="headerlink" href="#progress-stream-library" title="Permalink to this heading">#</a></h3>
+<h3>progress-stream library<a class="headerlink" href="#progress-stream-library" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p><a class="reference external" href="https://opendylan.org/documentation/library-reference/progress-stream/index.html">A new library</a>
 for displaying text mode progress bars is provided.</p></li>
 </ul>
 </section>
 <section id="gabriel-benchmarks-library">
-<h3>gabriel-benchmarks library<a class="headerlink" href="#gabriel-benchmarks-library" title="Permalink to this heading">#</a></h3>
+<h3>gabriel-benchmarks library<a class="headerlink" href="#gabriel-benchmarks-library" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>The Gabriel benchmarks have been improved and brought in line with
 the Common Lisp <a class="reference external" href="https://gitlab.common-lisp.net/ansi-test/cl-bench">cl-bench</a> project, and
@@ -804,7 +806,7 @@ now make use of the Testworks benchmarking facilities.</p></li>
 </section>
 </section>
 <section id="contributors">
-<h2>Contributors<a class="headerlink" href="#contributors" title="Permalink to this heading">#</a></h2>
+<h2>Contributors<a class="headerlink" href="#contributors" title="Permalink to this heading">¶</a></h2>
 <p>We’d like to thank all the people that made contributions to this release and
 to surrounding libraries in the Dylan ecosystem. This list is probably
 incomplete…</p>
@@ -915,6 +917,6 @@ incomplete…</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

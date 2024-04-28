@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Numeric Literal Syntax" href="numeric-literals.html" /><link rel="prev" title="Parser Expansions" href="parser-expansions.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Alternative Curry Syntax - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="alternative-curry-syntax">
-<h1>Alternative Curry Syntax<a class="headerlink" href="#alternative-curry-syntax" title="Permalink to this heading">#</a></h1>
+<h1>Alternative Curry Syntax<a class="headerlink" href="#alternative-curry-syntax" title="Permalink to this heading">¶</a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This is an experimental extension. It is not
@@ -472,16 +474,16 @@ This documentation is largely in the format of a DEP in
 case we want to propose it in the future.</p>
 </div>
 <section id="abstract">
-<h2>Abstract<a class="headerlink" href="#abstract" title="Permalink to this heading">#</a></h2>
+<h2>Abstract<a class="headerlink" href="#abstract" title="Permalink to this heading">¶</a></h2>
 <p>An alternative syntax for currying functions has been provided
 within Open Dylan.</p>
 </section>
 <section id="copyright">
-<h2>Copyright<a class="headerlink" href="#copyright" title="Permalink to this heading">#</a></h2>
+<h2>Copyright<a class="headerlink" href="#copyright" title="Permalink to this heading">¶</a></h2>
 <p>This document is public domain.</p>
 </section>
 <section id="specification">
-<h2>Specification<a class="headerlink" href="#specification" title="Permalink to this heading">#</a></h2>
+<h2>Specification<a class="headerlink" href="#specification" title="Permalink to this heading">¶</a></h2>
 <p>Functions called with an “omitted” or placeholder parameter return
 a curried function as if <a class="reference external" href="https://opendylan.org/books/drm/Functional_Operations#curry"><code class="xref drm docutils literal notranslate"><span class="pre">curry</span></code></a> and <a class="reference external" href="https://opendylan.org/books/drm/Functional_Operations#rcurry"><code class="xref drm docutils literal notranslate"><span class="pre">rcurry</span></code></a> had been
 used.</p>
@@ -491,20 +493,20 @@ parameters will need 2 parameters when called.</p>
 <p>This can be used with operators as well.</p>
 </section>
 <section id="motivation">
-<h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this heading">#</a></h2>
+<h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this heading">¶</a></h2>
 <p>There are situations in which using <a class="reference external" href="https://opendylan.org/books/drm/Functional_Operations#curry"><code class="xref drm docutils literal notranslate"><span class="pre">curry</span></code></a> and <a class="reference external" href="https://opendylan.org/books/drm/Functional_Operations#rcurry"><code class="xref drm docutils literal notranslate"><span class="pre">rcurry</span></code></a>
 can result in confusing code that is difficult to understand at
 a quick glance. The alternative syntax provides an easy to understand
 way to set up a curried function.</p>
 </section>
 <section id="rationale">
-<h2>Rationale<a class="headerlink" href="#rationale" title="Permalink to this heading">#</a></h2>
+<h2>Rationale<a class="headerlink" href="#rationale" title="Permalink to this heading">¶</a></h2>
 <p>The alternative curry syntax was implemented in 1999 by Keith Playford
 and has been in the compiler since then. It does not break any existing
 code.</p>
 </section>
 <section id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h2>
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">¶</a></h2>
 <p>In this example, the two curried functions will have the same result:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="n">to-string-1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">curry</span><span class="p">(</span><span class="nb">as</span><span class="p">,</span><span class="w"> </span><span class="nc">&lt;byte-string&gt;</span><span class="p">);</span>
 <span class="k">let</span><span class="w"> </span><span class="n">to-string-2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">as</span><span class="p">(</span><span class="nc">&lt;byte-string&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">_</span><span class="p">);</span>
@@ -547,13 +549,13 @@ possible:</p>
 </div>
 </section>
 <section id="backwards-compatibility">
-<h2>Backwards Compatibility<a class="headerlink" href="#backwards-compatibility" title="Permalink to this heading">#</a></h2>
+<h2>Backwards Compatibility<a class="headerlink" href="#backwards-compatibility" title="Permalink to this heading">¶</a></h2>
 <p>There are no backwards compatibility considerations for this functionality
 as the <code class="docutils literal notranslate"><span class="pre">_</span></code> is not a valid variable name in the language as specified by
 the DRM.</p>
 </section>
 <section id="reference-implementation">
-<h2>Reference Implementation<a class="headerlink" href="#reference-implementation" title="Permalink to this heading">#</a></h2>
+<h2>Reference Implementation<a class="headerlink" href="#reference-implementation" title="Permalink to this heading">¶</a></h2>
 <p>This functionality has been present within Open Dylan since 1999. The code
 is largely focused in these methods in <code class="docutils literal notranslate"><span class="pre">dfmc/conversion/convert.dylan</span></code>:</p>
 <ul class="simple">
@@ -641,6 +643,6 @@ is largely focused in these methods in <code class="docutils literal notranslate
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

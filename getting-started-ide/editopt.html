@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Creating COM Projects" href="com-projects.html" /><link rel="prev" title="Delivering Dylan Applications" href="delivery.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>The Interactive Editor - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="the-interactive-editor">
-<span id="index-0"></span><h1>The Interactive Editor<a class="headerlink" href="#the-interactive-editor" title="Permalink to this heading">#</a></h1>
+<span id="index-0"></span><h1>The Interactive Editor<a class="headerlink" href="#the-interactive-editor" title="Permalink to this heading">¶</a></h1>
 <p>The Open Dylan environment has a text editor that is specifically
 designed to make it easy to write and interact with your Dylan code. One
 of its most unique features is that it actually lets you compile
@@ -487,7 +489,7 @@ presumed.</p>
 with the menus and options, you can more effectively use the editor to
 perform advanced operations.</p>
 <section id="invoking-the-editor-and-displaying-files">
-<h2>Invoking the editor and displaying files<a class="headerlink" href="#invoking-the-editor-and-displaying-files" title="Permalink to this heading">#</a></h2>
+<h2>Invoking the editor and displaying files<a class="headerlink" href="#invoking-the-editor-and-displaying-files" title="Permalink to this heading">¶</a></h2>
 <p>The editor window lets you read and edit text files stored in your
 filesystem. You can invoke the Open Dylan editor in a variety of
 ways:</p>
@@ -509,11 +511,11 @@ file opened in an editor window.</p>
 <figure class="align-center" id="id1">
 <span id="editor-window-with-reversi"></span><img alt="../_images/editorgm.png" src="../_images/editorgm.png" />
 <figcaption>
-<p><span class="caption-text">Editor window showing the game.dylan file from the Reversi project.</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Editor window showing the game.dylan file from the Reversi project.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <section id="display-conventions">
-<h3>Display conventions<a class="headerlink" href="#display-conventions" title="Permalink to this heading">#</a></h3>
+<h3>Display conventions<a class="headerlink" href="#display-conventions" title="Permalink to this heading">¶</a></h3>
 <p>The editor separates each definition in a source file with a gray line.
 Printed in the middle of each line is the name of the definition below
 it. These code separators also appear above top-level expressions
@@ -536,7 +538,7 @@ binding and you have opened the source from the project window’s
 Warnings tab page, the binding in question is highlighted.</p>
 </section>
 <section id="changing-the-editor-options-and-layout">
-<h3>Changing the editor options and layout<a class="headerlink" href="#changing-the-editor-options-and-layout" title="Permalink to this heading">#</a></h3>
+<h3>Changing the editor options and layout<a class="headerlink" href="#changing-the-editor-options-and-layout" title="Permalink to this heading">¶</a></h3>
 <p>By default the editor uses Windows-style defaults and therefore
 associates each opened file with a new editor window. However, you can
 change this and edit many different files at once in the same editor by
@@ -559,7 +561,7 @@ your code and is controlled by <strong>View &gt; Color Dispatch Optimizations</s
 </ul>
 </section>
 <section id="the-editor-window-s-context-the-active-project">
-<h3>The editor window’s context: the active project<a class="headerlink" href="#the-editor-window-s-context-the-active-project" title="Permalink to this heading">#</a></h3>
+<h3>The editor window’s context: the active project<a class="headerlink" href="#the-editor-window-s-context-the-active-project" title="Permalink to this heading">¶</a></h3>
 <p>In an editor window, the toolbar and menu commands act upon the
 application of the active project. For instance, the <strong>Project</strong>,
 <strong>Build</strong>, and <strong>Application</strong> menus are not available in the editor
@@ -569,7 +571,7 @@ project whose name is visible in the main window’s drop-down list. See
 </section>
 </section>
 <section id="menu-commands-and-special-features">
-<h2>Menu commands and special features<a class="headerlink" href="#menu-commands-and-special-features" title="Permalink to this heading">#</a></h2>
+<h2>Menu commands and special features<a class="headerlink" href="#menu-commands-and-special-features" title="Permalink to this heading">¶</a></h2>
 <p>The editor offers all of the standard <strong>File</strong> and <strong>Edit</strong> menu commands a
 user expects to find on a text editing window (such as New, Open, Cut,
 Copy, Paste, Find/Replace, and so forth). The editor also has the
@@ -614,7 +616,7 @@ breakpoint commands are also part of the shortcut menu. See
 a <strong>SourceSafe</strong> menu. This menu is Open Dylan’s interface to source
 control. For more information, see <a class="reference internal" href="#source-control-with-visual-sourcesafe">Source control with Visual SourceSafe</a>.</p>
 <section id="shortcut-menus">
-<h3>Shortcut menus<a class="headerlink" href="#shortcut-menus" title="Permalink to this heading">#</a></h3>
+<h3>Shortcut menus<a class="headerlink" href="#shortcut-menus" title="Permalink to this heading">¶</a></h3>
 <p>The editor provides a shortcut menu whose items vary depending on where
 your cursor is when you right-click. The most basic shortcut menu pops
 up if you right-click in a file when the cursor is <strong>not</strong> in the middle
@@ -656,7 +658,7 @@ column indicate lines where you could add a breakpoint (see
 </section>
 </section>
 <section id="using-the-editor-for-interactive-development">
-<span id="index-1"></span><h2>Using the editor for interactive development<a class="headerlink" href="#using-the-editor-for-interactive-development" title="Permalink to this heading">#</a></h2>
+<span id="index-1"></span><h2>Using the editor for interactive development<a class="headerlink" href="#using-the-editor-for-interactive-development" title="Permalink to this heading">¶</a></h2>
 <p>You will recall from <a class="reference internal" href="debug.html#example-interaction-reversi"><span class="std std-ref">An example interaction with Reversi</span></a> that we were
 able to change the shapes of the Reversi game pieces while the
 application was running simply by providing new definitions in the
@@ -691,14 +693,14 @@ interaction thread that it chooses automatically. This prevents
 unnecessary tampering with user threads.</p>
 </section>
 <section id="source-control-with-visual-sourcesafe">
-<span id="index-2"></span><h2>Source control with Visual SourceSafe<a class="headerlink" href="#source-control-with-visual-sourcesafe" title="Permalink to this heading">#</a></h2>
+<span id="index-2"></span><h2>Source control with Visual SourceSafe<a class="headerlink" href="#source-control-with-visual-sourcesafe" title="Permalink to this heading">¶</a></h2>
 <p>To simplify the process of working with files under source control, the
 Open Dylan editor provides an interface to Microsoft’s Visual
 SourceSafe, an external source code control system. This section
 describes the editor interface to Visual SourceSafe. (For information on
 using Visual SourceSafe, see Visual SourceSafe documentation.)</p>
 <section id="what-is-the-editor-s-source-control-interface">
-<span id="index-3"></span><h3>What is the editor’s source control interface?<a class="headerlink" href="#what-is-the-editor-s-source-control-interface" title="Permalink to this heading">#</a></h3>
+<span id="index-3"></span><h3>What is the editor’s source control interface?<a class="headerlink" href="#what-is-the-editor-s-source-control-interface" title="Permalink to this heading">¶</a></h3>
 <p>A source code control system provides one or more repositories
 (databases) where developers place source code and related files for a
 project. Files in the database can be accessed by several developers
@@ -721,12 +723,12 @@ installed in order to see the <strong>SourceSafe</strong> menu.</p>
 <figure class="align-center" id="id2">
 <span id="sourcesafe-menu"></span><img alt="../_images/menu.png" src="../_images/menu.png" />
 <figcaption>
-<p><span class="caption-text">The SourceSafe menu on a Open Dylan editor window.</span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">The SourceSafe menu on a Open Dylan editor window.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
 <section id="the-sourcesafe-menu-commands">
-<h3>The SourceSafe menu commands<a class="headerlink" href="#the-sourcesafe-menu-commands" title="Permalink to this heading">#</a></h3>
+<h3>The SourceSafe menu commands<a class="headerlink" href="#the-sourcesafe-menu-commands" title="Permalink to this heading">¶</a></h3>
 <p id="index-4">The <strong>SourceSafe</strong> menu provides the following commands:</p>
 <dl class="simple">
 <dt>Get Latest Version…</dt><dd><p>Copies the latest version of a file in the database onto the
@@ -768,14 +770,14 @@ is checked into the database.</p>
 </dl>
 </section>
 <section id="using-the-editor-s-source-control-interface">
-<h3>Using the editor’s source control interface<a class="headerlink" href="#using-the-editor-s-source-control-interface" title="Permalink to this heading">#</a></h3>
+<h3>Using the editor’s source control interface<a class="headerlink" href="#using-the-editor-s-source-control-interface" title="Permalink to this heading">¶</a></h3>
 <p>The first time you choose one of the <strong>SourceSafe</strong> menu items, the editor
 prompts you for the name of the SourceSafe database, as shown in
 <a class="reference internal" href="#select-database-dialog"><span class="std std-ref">The Select Database dialog.</span></a>.</p>
 <figure class="align-center" id="id3">
 <span id="select-database-dialog"></span><img alt="../_images/login.png" src="../_images/login.png" />
 <figcaption>
-<p><span class="caption-text">The Select Database dialog.</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">The Select Database dialog.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Your site’s Visual SourceSafe administrator supplies the name of your
@@ -788,7 +790,7 @@ manipulated by a source control operation, as shown in
 <figure class="align-center" id="id4">
 <span id="select-project-file-dialog"></span><img alt="../_images/checkout.png" src="../_images/checkout.png" />
 <figcaption>
-<p><span class="caption-text">The Select Project and File dialog.</span><a class="headerlink" href="#id4" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">The Select Project and File dialog.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>SourceSafe organizes its database into a hierarchical collection of
@@ -897,6 +899,6 @@ may be left blank.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

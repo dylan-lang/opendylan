@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Special Features" href="special-features.html" /><link rel="prev" title="Object Representation" href="object-representation.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Calling Convention - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,11 +463,11 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="calling-convention">
-<h1>Calling Convention<a class="headerlink" href="#calling-convention" title="Permalink to this heading">#</a></h1>
+<h1>Calling Convention<a class="headerlink" href="#calling-convention" title="Permalink to this heading">¶</a></h1>
 <section id="some-terminology">
-<h2>Some terminology<a class="headerlink" href="#some-terminology" title="Permalink to this heading">#</a></h2>
+<h2>Some terminology<a class="headerlink" href="#some-terminology" title="Permalink to this heading">¶</a></h2>
 <p>Arguments passed to a function at the implementation level fall into 2
 different groups. <em>Language parameters</em> correspond to the explicit
 arguments in the source code. <em>Implementation parameters</em> correspond to
@@ -479,7 +481,7 @@ entry point to the next may be obliged to rearrange parameters (e.g. on
 the stack). This process is called <em>stack fixing</em>.</p>
 </section>
 <section id="the-register-model">
-<h2>The register model<a class="headerlink" href="#the-register-model" title="Permalink to this heading">#</a></h2>
+<h2>The register model<a class="headerlink" href="#the-register-model" title="Permalink to this heading">¶</a></h2>
 <p>Three registers are used within the calling convention to support the
 passing of <em>implementation parameters</em>: Note that for the C back-end,
 global (or thread-local) variables might be used instead of real
@@ -506,7 +508,7 @@ registers to pass these parameters.</p>
 </div>
 </section>
 <section id="the-argument-passing-conventions">
-<h2>The argument passing conventions<a class="headerlink" href="#the-argument-passing-conventions" title="Permalink to this heading">#</a></h2>
+<h2>The argument passing conventions<a class="headerlink" href="#the-argument-passing-conventions" title="Permalink to this heading">¶</a></h2>
 <p>For each of the conventions, arguments are pushed onto the stack in
 reverse order (i.e. the rightmost argument is pushed first). The
 leftmost (or leftmost few) arguments are passed in registers. This has a
@@ -538,7 +540,7 @@ back-end - and this is the only substantial difference from the C arg
 passing convention.</p>
 </section>
 <section id="calling-convention-goals">
-<h2>Calling Convention Goals<a class="headerlink" href="#calling-convention-goals" title="Permalink to this heading">#</a></h2>
+<h2>Calling Convention Goals<a class="headerlink" href="#calling-convention-goals" title="Permalink to this heading">¶</a></h2>
 <p><em>Internal entry points</em> should be as efficient as possible. I.e. there
 should not be any constraints on them because Dylan is a dynamic
 language.</p>
@@ -553,7 +555,7 @@ internal entry point as simple as is reasonably possible.</p></li>
 </ol>
 </section>
 <section id="the-external-entry-point-convention">
-<h2>The External Entry Point Convention<a class="headerlink" href="#the-external-entry-point-convention" title="Permalink to this heading">#</a></h2>
+<h2>The External Entry Point Convention<a class="headerlink" href="#the-external-entry-point-convention" title="Permalink to this heading">¶</a></h2>
 <p>All Dylan function objects support the <em>external</em> convention. Each
 function object has an <em>XEP</em> slot containing the code to support this
 convention. External entry points are used for all unoptimized, normal
@@ -620,7 +622,7 @@ following table:</p>
 </div>
 </section>
 <section id="internal-entry-point-convention">
-<h2>Internal Entry Point Convention<a class="headerlink" href="#internal-entry-point-convention" title="Permalink to this heading">#</a></h2>
+<h2>Internal Entry Point Convention<a class="headerlink" href="#internal-entry-point-convention" title="Permalink to this heading">¶</a></h2>
 <p>The IEP convention uses a fixed number of language parameters,
 corresponding to each of the parameters of the function (5 in the case
 of <em>func1</em>, above, corresponding to a, b, optionals, key1, key2). In
@@ -672,7 +674,7 @@ corresponding to <code class="docutils literal notranslate"><span class="pre">ke
 that value.</p>
 </section>
 <section id="the-method-entry-point-convention">
-<h2>The Method Entry Point Convention<a class="headerlink" href="#the-method-entry-point-convention" title="Permalink to this heading">#</a></h2>
+<h2>The Method Entry Point Convention<a class="headerlink" href="#the-method-entry-point-convention" title="Permalink to this heading">¶</a></h2>
 <p>All <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#method"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;method&gt;</span></code></a> objects support the <em>method entry point</em> convention. Each
 method object has an <em>MEP</em> slot containing the code to support this
 convention. When a method is called by a generic function (or via next
@@ -766,6 +768,6 @@ same as the internal entry point.</p>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="The Bank Server" href="bank-server.html" /><link rel="prev" title="Writing and Compiling IDL" href="bank-idl.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>The Bank Client - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,11 +463,11 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="the-bank-client">
-<h1>The Bank Client<a class="headerlink" href="#the-bank-client" title="Permalink to this heading">#</a></h1>
+<h1>The Bank Client<a class="headerlink" href="#the-bank-client" title="Permalink to this heading">¶</a></h1>
 <section id="id1">
-<h2>The bank client<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<h2>The bank client<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
 <p>In this chapter, we design and implement a CORBA client, using Dylan
 and the Open Dylan ORB.</p>
 <p>Our client presents a graphical user interface to a bank object and
@@ -476,7 +478,7 @@ focus less on the design of the graphical interface, and more on the
 method for interacting with CORBA objects.</p>
 </section>
 <section id="the-clients-perspective">
-<h2>The client’s perspective<a class="headerlink" href="#the-clients-perspective" title="Permalink to this heading">#</a></h2>
+<h2>The client’s perspective<a class="headerlink" href="#the-clients-perspective" title="Permalink to this heading">¶</a></h2>
 <p>From the client’s perspective, the IDL definition of a bank’s
 interface, together with some documentation, fully determines its
 functionality. This means that in writing the client we need only rely
@@ -519,7 +521,7 @@ can then be handled by the client code using standard Dylan
 constructs.</p>
 </section>
 <section id="requirements-for-implementing-the-bank-client">
-<h2>Requirements for implementing the bank client<a class="headerlink" href="#requirements-for-implementing-the-bank-client" title="Permalink to this heading">#</a></h2>
+<h2>Requirements for implementing the bank client<a class="headerlink" href="#requirements-for-implementing-the-bank-client" title="Permalink to this heading">¶</a></h2>
 <p>There are two parts to implementing the bank client:</p>
 <ul class="simple">
 <li><p>Write the code to initialize the CORBA ORB, and obtain a reference
@@ -529,7 +531,7 @@ to a bank server object.</p></li>
 <p>We start with the GUI implementation.</p>
 </section>
 <section id="implementing-the-bank-clients-gui">
-<h2>Implementing the bank client’s GUI<a class="headerlink" href="#implementing-the-bank-clients-gui" title="Permalink to this heading">#</a></h2>
+<h2>Implementing the bank client’s GUI<a class="headerlink" href="#implementing-the-bank-clients-gui" title="Permalink to this heading">¶</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This section assumes some basic knowledge of DUIM (Dylan User
@@ -586,7 +588,7 @@ enclosing frame of a gadget.</p>
 <p>The source code for the client GUI is in file <code class="file docutils literal notranslate"><span class="pre">bank-client.dylan</span></code>.</p>
 </section>
 <section id="implementing-corba-initialization-for-the-bank-client">
-<h2>Implementing CORBA initialization for the bank client<a class="headerlink" href="#implementing-corba-initialization-for-the-bank-client" title="Permalink to this heading">#</a></h2>
+<h2>Implementing CORBA initialization for the bank client<a class="headerlink" href="#implementing-corba-initialization-for-the-bank-client" title="Permalink to this heading">¶</a></h2>
 <p>Having written the client GUI we are now ready to set up the client’s
 CORBA environment. A client can only communicate with a CORBA object
 if it possesses a reference to that object. This raises the question
@@ -866,6 +868,6 @@ displaying the initial GUI to the user.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="The t-lists Library" href="../t-lists/index.html" /><link rel="prev" title="The file-system Module" href="file-system.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>The operating-system Module - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,13 +463,13 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="the-operating-system-module">
-<h1>The operating-system Module<a class="headerlink" href="#the-operating-system-module" title="Permalink to this heading">#</a></h1>
+<h1>The operating-system Module<a class="headerlink" href="#the-operating-system-module" title="Permalink to this heading">¶</a></h1>
 <p>The operating-system module is part of the System library. It provides
 an interface to some features of the host machine’s operating system.</p>
 <section id="manipulating-environment-information">
-<h2>Manipulating environment information<a class="headerlink" href="#manipulating-environment-information" title="Permalink to this heading">#</a></h2>
+<h2>Manipulating environment information<a class="headerlink" href="#manipulating-environment-information" title="Permalink to this heading">¶</a></h2>
 <p>The operating-system module contains a number of interfaces for
 examining and specifying information about the operating system
 environment of the host machine. As well as providing constants that you
@@ -505,7 +507,7 @@ the current machine, where available.</p>
 </ul>
 </section>
 <section id="running-and-introspecting-applications">
-<h2>Running and Introspecting Applications<a class="headerlink" href="#running-and-introspecting-applications" title="Permalink to this heading">#</a></h2>
+<h2>Running and Introspecting Applications<a class="headerlink" href="#running-and-introspecting-applications" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="#system:operating-system:run-application"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">run-application</span></code></a></p></li>
 <li><p><a class="reference internal" href="#system:operating-system:current-process-id"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">current-process-id</span></code></a></p></li>
@@ -523,18 +525,18 @@ module:</p>
 </ul>
 </section>
 <section id="working-with-shared-libraries">
-<h2>Working with shared libraries<a class="headerlink" href="#working-with-shared-libraries" title="Permalink to this heading">#</a></h2>
+<h2>Working with shared libraries<a class="headerlink" href="#working-with-shared-libraries" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="#system:operating-system:load-library"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">load-library</span></code></a></p></li>
 </ul>
 </section>
 <section id="id1">
-<h2>The operating-system module<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<h2>The operating-system module<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
 <p>This section contains a reference entry for each item exported from the
 System library’s operating-system module.</p>
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="system:operating-system:$architecture-little-endian?">
-<span class="sig-name descname"><span class="pre">$architecture-little-endian?</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#system:operating-system:$architecture-little-endian?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$architecture-little-endian?</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#system:operating-system:$architecture-little-endian?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constant specifying whether the processor architecture is little-endian.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -562,7 +564,7 @@ architecture this value is <a class="reference external" href="https://opendylan
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:operating-system:current-process-id">
-<span class="sig-name descname"><span class="pre">current-process-id</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:operating-system:current-process-id" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">current-process-id</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:operating-system:current-process-id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the integer value for the current process ID.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -588,7 +590,7 @@ architecture this value is <a class="reference external" href="https://opendylan
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:operating-system:environment-variable">
-<span class="sig-name descname"><span class="pre">environment-variable</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:operating-system:environment-variable" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">environment-variable</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:operating-system:environment-variable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the value of a specified environment variable.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -619,7 +621,7 @@ or <a class="reference external" href="https://opendylan.org/books/drm/Other_Bui
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:operating-system:environment-variable-setter">
-<span class="sig-name descname"><span class="pre">environment-variable-setter</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:operating-system:environment-variable-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">environment-variable-setter</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:operating-system:environment-variable-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the value of an environment variable.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -663,7 +665,7 @@ See the relevant Windows 95 documentation for more details.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:operating-system:load-library">
-<span class="sig-name descname"><span class="pre">load-library</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:operating-system:load-library" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">load-library</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:operating-system:load-library" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads a shared library into the current process.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -702,7 +704,7 @@ back-end, and on Windows using the HARP back-end.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:operating-system:login-name">
-<span class="sig-name descname"><span class="pre">login-name</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:operating-system:login-name" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">login-name</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:operating-system:login-name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns as an instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> the name of the user logged on
 to the current machine, or <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> if unavailable.</p>
 <dl class="field-list simple">
@@ -729,7 +731,7 @@ on to the current machine, or <a class="reference external" href="https://opendy
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:operating-system:login-group">
-<span class="sig-name descname"><span class="pre">login-group</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:operating-system:login-group" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">login-group</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:operating-system:login-group" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>login-group () =&gt; <em>group-or-false</em></p>
@@ -755,7 +757,7 @@ current machine is a member, or <a class="reference external" href="https://open
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="system:operating-system:$machine-architecture">
-<span class="sig-name descname"><span class="pre">$machine-architecture</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#system:operating-system:$machine-architecture" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$machine-architecture</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#system:operating-system:$machine-architecture" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constant specifying the type of hardware installed in the host machine.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -787,7 +789,7 @@ on Apple Silicon the value is <code class="docutils literal notranslate"><span c
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="system:operating-system:$machine-name">
-<span class="sig-name descname"><span class="pre">$machine-name</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#system:operating-system:$machine-name" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$machine-name</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#system:operating-system:$machine-name" title="Permalink to this definition">¶</a></dt>
 <dd><div class="deprecated">
 <p><span class="versionmodified deprecated">Deprecated since version 2024.2: </span>Use <a class="reference internal" href="#system:operating-system:$machine-architecture"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$machine-architecture</span></code></a> instead.</p>
 </div>
@@ -796,7 +798,7 @@ on Apple Silicon the value is <code class="docutils literal notranslate"><span c
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="system:operating-system:$os-name">
-<span class="sig-name descname"><span class="pre">$os-name</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#system:operating-system:$os-name" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$os-name</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#system:operating-system:$os-name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constant specifying the operating system running on the host machine.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -824,7 +826,7 @@ running on the host machine.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="system:operating-system:$os-variant">
-<span class="sig-name descname"><span class="pre">$os-variant</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#system:operating-system:$os-variant" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$os-variant</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#system:operating-system:$os-variant" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constant specifying which variant of an operating system the current
 machine is running, where relevant.</p>
 <dl class="field-list simple">
@@ -853,7 +855,7 @@ possible values are <code class="docutils literal notranslate"><span class="pre"
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="system:operating-system:$os-version">
-<span class="sig-name descname"><span class="pre">$os-version</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#system:operating-system:$os-version" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$os-version</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#system:operating-system:$os-version" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constant specifying which version of an operating system the current
 machine is running.</p>
 <dl class="field-list simple">
@@ -881,7 +883,7 @@ value would be <em>“4.0.1212 B”</em>.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:operating-system:owner-name">
-<span class="sig-name descname"><span class="pre">owner-name</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:operating-system:owner-name" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">owner-name</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:operating-system:owner-name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the name of the user who owns the current machine, if available.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -902,7 +904,7 @@ machine was registered), or <a class="reference external" href="https://opendyla
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:operating-system:owner-organization">
-<span class="sig-name descname"><span class="pre">owner-organization</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:operating-system:owner-organization" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">owner-organization</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:operating-system:owner-organization" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the organization to which the user who owns the current
 machine belongs, if available.</p>
 <dl class="field-list simple">
@@ -924,7 +926,7 @@ name is unavailable.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:operating-system:parent-process-id">
-<span class="sig-name descname"><span class="pre">parent-process-id</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:operating-system:parent-process-id" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">parent-process-id</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:operating-system:parent-process-id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the integer value for the parent process ID.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -955,7 +957,7 @@ name is unavailable.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="system:operating-system:$platform-name">
-<span class="sig-name descname"><span class="pre">$platform-name</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#system:operating-system:$platform-name" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$platform-name</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#system:operating-system:$platform-name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constant specifying the operating system running on and the type of
 hardware installed in the host machine.</p>
 <dl class="field-list simple">
@@ -986,7 +988,7 @@ constants to determine the full list of possible values.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:operating-system:machine-concurrent-thread-count">
-<span class="sig-name descname"><span class="pre">machine-concurrent-thread-count</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:operating-system:machine-concurrent-thread-count" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">machine-concurrent-thread-count</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:operating-system:machine-concurrent-thread-count" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the number of concurrent execution threads available.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1008,7 +1010,7 @@ of the program.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:operating-system:run-application">
-<span class="sig-name descname"><span class="pre">run-application</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:operating-system:run-application" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">run-application</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:operating-system:run-application" title="Permalink to this definition">¶</a></dt>
 <dd><p>Launches an application in a new process, using the specified name and
 arguments.</p>
 <dl class="field-list simple">
@@ -1150,7 +1152,7 @@ status return value:</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:operating-system:wait-for-application-process">
-<span class="sig-name descname"><span class="pre">wait-for-application-process</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:operating-system:wait-for-application-process" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">wait-for-application-process</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:operating-system:wait-for-application-process" title="Permalink to this definition">¶</a></dt>
 <dd><p>Waits for a process to terminate.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1249,6 +1251,6 @@ was terminated by a signal this value is the signal number.</p></li>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

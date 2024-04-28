@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="The file-system Module" href="file-system.html" /><link rel="prev" title="The date Module" href="date.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>The locators Module - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,16 +463,16 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="the-locators-module">
-<h1>The locators Module<a class="headerlink" href="#the-locators-module" title="Permalink to this heading">#</a></h1>
+<h1>The locators Module<a class="headerlink" href="#the-locators-module" title="Permalink to this heading">¶</a></h1>
 <p>The Locators module provides Dylan programs with a portable, flexible, and
 uniform facility for locating files and other objects on the internet.</p>
 <section id="id1">
-<h2>The locators Module<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<h2>The locators Module<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:[locator]">
-<span class="sig-name descname"><span class="pre">&lt;locator&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[locator]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;locator&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[locator]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a></p>
@@ -489,7 +491,7 @@ the desired URL locator class.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:[physical-locator]">
-<span class="sig-name descname"><span class="pre">&lt;physical-locator&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[physical-locator]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;physical-locator&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[physical-locator]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#system:locators:[locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;locator&gt;</span></code></a></p>
@@ -508,7 +510,7 @@ in <a class="reference internal" href="file-system.html"><span class="doc">The f
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:[directory-locator]">
-<span class="sig-name descname"><span class="pre">&lt;directory-locator&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[directory-locator]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;directory-locator&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[directory-locator]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#system:locators:[physical-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;physical-locator&gt;</span></code></a></p>
@@ -530,7 +532,7 @@ to a file in a directory).</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:[native-directory-locator]">
-<span class="sig-name descname"><span class="pre">&lt;native-directory-locator&gt;</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#system:locators:[native-directory-locator]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;native-directory-locator&gt;</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#system:locators:[native-directory-locator]" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is bound to the native directory locator type for the host
 platform. On Windows, this is typically <a class="reference internal" href="file-system.html#system:file-system:[microsoft-directory-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;microsoft-directory-locator&gt;</span></code></a>
 while on POSIX platforms, it is <a class="reference internal" href="file-system.html#system:file-system:[posix-directory-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;posix-directory-locator&gt;</span></code></a>.</p>
@@ -538,7 +540,7 @@ while on POSIX platforms, it is <a class="reference internal" href="file-system.
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:[file-locator]">
-<span class="sig-name descname"><span class="pre">&lt;file-locator&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[file-locator]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;file-locator&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[file-locator]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#system:locators:[physical-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;physical-locator&gt;</span></code></a></p>
@@ -553,7 +555,7 @@ manipulated as a file.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:[native-file-locator]">
-<span class="sig-name descname"><span class="pre">&lt;native-file-locator&gt;</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#system:locators:[native-file-locator]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;native-file-locator&gt;</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#system:locators:[native-file-locator]" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is bound to the native file locator type for the host
 platform. On Windows, this is typically <a class="reference internal" href="file-system.html#system:file-system:[microsoft-file-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;microsoft-file-locator&gt;</span></code></a>
 while on POSIX platforms, it is <a class="reference internal" href="file-system.html#system:file-system:[posix-file-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;posix-file-locator&gt;</span></code></a>.</p>
@@ -561,7 +563,7 @@ while on POSIX platforms, it is <a class="reference internal" href="file-system.
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:[locator-error]">
-<span class="sig-name descname"><span class="pre">&lt;locator-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[locator-error]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;locator-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[locator-error]" title="Permalink to this definition">¶</a></dt>
 <dd><p>All errors raised by the locator system should be instances of
 this error.</p>
 <dl class="field-list simple">
@@ -573,7 +575,7 @@ this error.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:[server-locator]">
-<span class="sig-name descname"><span class="pre">&lt;server-locator&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[server-locator]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;server-locator&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[server-locator]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The abstract superclass of  locators for servers.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -591,7 +593,7 @@ this error.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:list-locator">
-<span class="sig-name descname"><span class="pre">list-locator</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:list-locator" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">list-locator</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:list-locator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a sequence of locators that are children of the given
 locator.</p>
 <dl class="field-list simple">
@@ -626,7 +628,7 @@ locator.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:list-locator([file-system-directory-locator])">
-<span class="sig-name descname"><span class="pre">list-locator(&lt;file-system-directory-locator&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#system:locators:list-locator([file-system-directory-locator])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">list-locator(&lt;file-system-directory-locator&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#system:locators:list-locator([file-system-directory-locator])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a sequence of locators for the files and directories within
 the directory specified by the directory locator.</p>
 <dl class="field-list simple">
@@ -660,7 +662,7 @@ any directories.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:locator-address">
-<span class="sig-name descname"><span class="pre">locator-address</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:locator-address" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">locator-address</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:locator-address" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>locator-address (mailto) =&gt; (address)</p>
@@ -683,7 +685,7 @@ any directories.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:locator-as-string">
-<span class="sig-name descname"><span class="pre">locator-as-string</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:locator-as-string" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">locator-as-string</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:locator-as-string" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>locator-as-string (class locator) =&gt; (string)</p>
@@ -704,7 +706,7 @@ any directories.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:locator-base">
-<span class="sig-name descname"><span class="pre">locator-base</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:locator-base" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">locator-base</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:locator-base" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>locator-base (locator) =&gt; (base)</p>
@@ -728,7 +730,7 @@ path was <code class="docutils literal notranslate"><span class="pre">a/b/c.txt<
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:locator-directory">
-<span class="sig-name descname"><span class="pre">locator-directory</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:locator-directory" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">locator-directory</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:locator-directory" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>locator-directory (locator) =&gt; (directory)</p>
@@ -752,7 +754,7 @@ is not in a directory.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:locator-error">
-<span class="sig-name descname"><span class="pre">locator-error</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:locators:locator-error" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">locator-error</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:locators:locator-error" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>locator-error (format-string #rest format-arguments) =&gt; (#rest results)</p>
@@ -773,7 +775,7 @@ is not in a directory.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:locator-extension">
-<span class="sig-name descname"><span class="pre">locator-extension</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:locator-extension" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">locator-extension</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:locator-extension" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>locator-extension (locator) =&gt; (extension)</p>
@@ -798,7 +800,7 @@ Returns <a class="reference external" href="https://opendylan.org/books/drm/Othe
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:locator-file">
-<span class="sig-name descname"><span class="pre">locator-file</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:locator-file" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">locator-file</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:locator-file" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>locator-file (url) =&gt; (file)</p>
@@ -823,7 +825,7 @@ would be <code class="docutils literal notranslate"><span class="pre">http://exa
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:locator-host">
-<span class="sig-name descname"><span class="pre">locator-host</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:locator-host" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">locator-host</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:locator-host" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the host name.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -848,7 +850,7 @@ would be <code class="docutils literal notranslate"><span class="pre">http://exa
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:locator-name">
-<span class="sig-name descname"><span class="pre">locator-name</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:locator-name" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">locator-name</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:locator-name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the name of this locator.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -873,7 +875,7 @@ different for some specializations.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:locator-name([mailto-locator])">
-<span class="sig-name descname"><span class="pre">locator-name(&lt;mailto-locator&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#system:locators:locator-name([mailto-locator])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">locator-name(&lt;mailto-locator&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#system:locators:locator-name([mailto-locator])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the email address of this locator.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -909,7 +911,7 @@ different for some specializations.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:locator-name([microsoft-volume-locator])">
-<span class="sig-name descname"><span class="pre">locator-name(&lt;microsoft-volume-locator&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#system:locators:locator-name([microsoft-volume-locator])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">locator-name(&lt;microsoft-volume-locator&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#system:locators:locator-name([microsoft-volume-locator])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the drive letter of this locator.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -930,7 +932,7 @@ different for some specializations.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:locator-name([microsoft-unc-locator])">
-<span class="sig-name descname"><span class="pre">locator-name(&lt;microsoft-unc-locator&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#system:locators:locator-name([microsoft-unc-locator])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">locator-name(&lt;microsoft-unc-locator&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#system:locators:locator-name([microsoft-unc-locator])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the server name of this locator.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -948,7 +950,7 @@ different for some specializations.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:locator-path">
-<span class="sig-name descname"><span class="pre">locator-path</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:locator-path" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">locator-path</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:locator-path" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the directory path of a locator.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -978,7 +980,7 @@ of a path element.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:locator-relative?">
-<span class="sig-name descname"><span class="pre">locator-relative?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:locator-relative?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">locator-relative?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:locator-relative?" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>locator-relative? (locator) =&gt; (relative?)</p>
@@ -998,7 +1000,7 @@ of a path element.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:locator-server">
-<span class="sig-name descname"><span class="pre">locator-server</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:locator-server" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">locator-server</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:locator-server" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>locator-server (locator) =&gt; (server)</p>
@@ -1018,7 +1020,7 @@ of a path element.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:locator-volume">
-<span class="sig-name descname"><span class="pre">locator-volume</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:locator-volume" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">locator-volume</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:locator-volume" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>locator-volume (locator) =&gt; (volume)</p>
@@ -1038,7 +1040,7 @@ of a path element.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:merge-locators">
-<span class="sig-name descname"><span class="pre">merge-locators</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:merge-locators" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">merge-locators</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:merge-locators" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>merge-locators (locator from-locator) =&gt; (merged-locator)</p>
@@ -1059,7 +1061,7 @@ of a path element.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:open-locator">
-<span class="sig-name descname"><span class="pre">open-locator</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:open-locator" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">open-locator</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:open-locator" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>open-locator (locator #key #all-keys) =&gt; (stream)</p>
@@ -1079,7 +1081,7 @@ of a path element.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:relative-locator">
-<span class="sig-name descname"><span class="pre">relative-locator</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:relative-locator" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">relative-locator</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:relative-locator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a locator relative to another locator which references the
 same file as this locator.</p>
 <dl class="field-list">
@@ -1109,7 +1111,7 @@ same file as this locator.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:simplify-locator">
-<span class="sig-name descname"><span class="pre">simplify-locator</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:simplify-locator" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">simplify-locator</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:simplify-locator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Simplifies a locator by removing redundant elements from its
 path.</p>
 <dl class="field-list simple">
@@ -1131,7 +1133,7 @@ path.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:resolve-locator">
-<span class="sig-name descname"><span class="pre">resolve-locator</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:resolve-locator" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">resolve-locator</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:resolve-locator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resolves all links, parent references (<code class="docutils literal notranslate"><span class="pre">..</span></code>), self references (<code class="docutils literal notranslate"><span class="pre">.</span></code>), and
 removes unnecessary path separators. Similar to <a class="reference internal" href="#system:locators:simplify-locator"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">simplify-locator</span></code></a>
 except that it consults the file system to resolve links. A
@@ -1158,7 +1160,7 @@ I/O error, etc.  In short, this function follows the semantics of POSIX
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:string-as-locator">
-<span class="sig-name descname"><span class="pre">string-as-locator</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:string-as-locator" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">string-as-locator</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:string-as-locator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse a string and create a locator.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1185,7 +1187,7 @@ raise a condition of type <a class="reference internal" href="#system:locators:[
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:subdirectory-locator">
-<span class="sig-name descname"><span class="pre">subdirectory-locator</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:subdirectory-locator" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">subdirectory-locator</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:subdirectory-locator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a directory locator for a subdirectory of a given directory.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1212,7 +1214,7 @@ raise a condition of type <a class="reference internal" href="#system:locators:[
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:file-locator">
-<span class="sig-name descname"><span class="pre">file-locator</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:file-locator" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">file-locator</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:file-locator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a file locator for a file in a subdirectory of the given directory.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1241,7 +1243,7 @@ raise a condition of type <a class="reference internal" href="#system:locators:[
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:supports-list-locator?">
-<span class="sig-name descname"><span class="pre">supports-list-locator?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:supports-list-locator?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">supports-list-locator?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:supports-list-locator?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns whether or not a given locator supports the <a class="reference internal" href="#system:locators:list-locator"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">list-locator</span></code></a>
 operation.</p>
 <dl class="field-list simple">
@@ -1269,7 +1271,7 @@ operation.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:supports-list-locator?([file-system-directory-locator])">
-<span class="sig-name descname"><span class="pre">supports-list-locator?(&lt;file-system-directory-locator&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#system:locators:supports-list-locator?([file-system-directory-locator])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">supports-list-locator?(&lt;file-system-directory-locator&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#system:locators:supports-list-locator?([file-system-directory-locator])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if the directory locator is not relative.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1293,7 +1295,7 @@ operation.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:supports-open-locator?">
-<span class="sig-name descname"><span class="pre">supports-open-locator?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:supports-open-locator?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">supports-open-locator?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:supports-open-locator?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns whether or not a given locator supports the <a class="reference internal" href="#system:locators:open-locator"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">open-locator</span></code></a>
 operation.</p>
 <dl class="field-list simple">
@@ -1315,7 +1317,7 @@ operation.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:[web-locator]">
-<span class="sig-name descname"><span class="pre">&lt;web-locator&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[web-locator]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;web-locator&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[web-locator]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#system:locators:[locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;locator&gt;</span></code></a></p>
@@ -1327,7 +1329,7 @@ web protocols, such as ftp or http.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:[url]">
-<span class="sig-name descname"><span class="pre">&lt;url&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[url]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;url&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[url]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#system:locators:[web-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;web-locator&gt;</span></code></a>, <a class="reference internal" href="#system:locators:[physical-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;physical-locator&gt;</span></code></a></p>
@@ -1347,7 +1349,7 @@ Use <code class="docutils literal notranslate"><span class="pre">as(&lt;url&gt;,
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:[directory-url]">
-<span class="sig-name descname"><span class="pre">&lt;directory-url&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[directory-url]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;directory-url&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[directory-url]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#system:locators:[url]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;url&gt;</span></code></a>, <a class="reference internal" href="#system:locators:[directory-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;directory-locator&gt;</span></code></a></p>
@@ -1358,7 +1360,7 @@ Use <code class="docutils literal notranslate"><span class="pre">as(&lt;url&gt;,
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:[file-url]">
-<span class="sig-name descname"><span class="pre">&lt;file-url&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[file-url]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;file-url&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[file-url]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#system:locators:[url]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;url&gt;</span></code></a>, <a class="reference internal" href="#system:locators:[file-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-locator&gt;</span></code></a></p>
@@ -1369,7 +1371,7 @@ Use <code class="docutils literal notranslate"><span class="pre">as(&lt;url&gt;,
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:[file-index-url]">
-<span class="sig-name descname"><span class="pre">&lt;file-index-url&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[file-index-url]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;file-index-url&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[file-index-url]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#system:locators:[url]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;url&gt;</span></code></a></p>
@@ -1381,7 +1383,7 @@ example <code class="docutils literal notranslate"><span class="pre">http://www.
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:[cgi-url]">
-<span class="sig-name descname"><span class="pre">&lt;cgi-url&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[cgi-url]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;cgi-url&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[cgi-url]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#system:locators:[url]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;url&gt;</span></code></a></p>
@@ -1393,7 +1395,7 @@ example <code class="docutils literal notranslate"><span class="pre">http://www.
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:locator-cgi-string">
-<span class="sig-name descname"><span class="pre">locator-cgi-string</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:locators:locator-cgi-string" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">locator-cgi-string</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:locators:locator-cgi-string" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the query part of a <code class="docutils literal notranslate"><span class="pre">&lt;cgi-url&gt;</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1414,7 +1416,7 @@ example <code class="docutils literal notranslate"><span class="pre">http://www.
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:locator-index">
-<span class="sig-name descname"><span class="pre">locator-index</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:locators:locator-index" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">locator-index</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:locators:locator-index" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the fragment part of a :class:<code class="docutils literal notranslate"><span class="pre">&lt;file-index-url&gt;</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1435,7 +1437,7 @@ example <code class="docutils literal notranslate"><span class="pre">http://www.
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:[mail-to-locator]">
-<span class="sig-name descname"><span class="pre">&lt;mail-to-locator&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[mail-to-locator]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;mail-to-locator&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[mail-to-locator]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#system:locators:[url]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;url&gt;</span></code></a></p>
@@ -1446,7 +1448,7 @@ example <code class="docutils literal notranslate"><span class="pre">http://www.
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:[server-url]">
-<span class="sig-name descname"><span class="pre">&lt;server-url&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[server-url]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;server-url&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[server-url]" title="Permalink to this definition">¶</a></dt>
 <dd><p>Represents a locator which is a machine accessible via web
 protocols.</p>
 <dl class="field-list simple">
@@ -1478,7 +1480,7 @@ protocols.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:[http-server]">
-<span class="sig-name descname"><span class="pre">&lt;http-server&gt;</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[http-server]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;http-server&gt;</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[http-server]" title="Permalink to this definition">¶</a></dt>
 <dd><p>A server for the http protocol.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1489,7 +1491,7 @@ protocols.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:[https-server]">
-<span class="sig-name descname"><span class="pre">&lt;https-server&gt;</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[https-server]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;https-server&gt;</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[https-server]" title="Permalink to this definition">¶</a></dt>
 <dd><p>A server for the https protocol.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1500,7 +1502,7 @@ protocols.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:[ftp-server]">
-<span class="sig-name descname"><span class="pre">&lt;ftp-server&gt;</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[ftp-server]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;ftp-server&gt;</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[ftp-server]" title="Permalink to this definition">¶</a></dt>
 <dd><p>A server for the ftp protocol.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1511,7 +1513,7 @@ protocols.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:[file-server]">
-<span class="sig-name descname"><span class="pre">&lt;file-server&gt;</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[file-server]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;file-server&gt;</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#system:locators:[file-server]" title="Permalink to this definition">¶</a></dt>
 <dd><p>A locator using the file protocol.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1522,7 +1524,7 @@ protocols.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:locator-default-port">
-<span class="sig-name descname"><span class="pre">locator-default-port</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:locator-default-port" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">locator-default-port</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:locator-default-port" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the default port associated with the locator’s protocol.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1622,6 +1624,6 @@ protocols.</p>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

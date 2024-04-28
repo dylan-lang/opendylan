@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="The io Library" href="../io/index.html" /><link rel="prev" title="The dylan-primitives Module" href="primitives.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>The threads Module - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,16 +463,16 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="the-threads-module">
-<h1>The threads Module<a class="headerlink" href="#the-threads-module" title="Permalink to this heading">#</a></h1>
+<h1>The threads Module<a class="headerlink" href="#the-threads-module" title="Permalink to this heading">¶</a></h1>
 <p>The Threads module provides a portable threads interface for Dylan. The Threads
 module is designed to map easily and efficiently onto the threads facilities
 provided by all common operating systems.</p>
 <p>All documented bindings are exported from the module <em>threads</em> in the <em>dylan</em>
 and <em>common-dylan</em> libraries.</p>
 <section id="multi-thread-semantics">
-<h2>Multi-thread semantics<a class="headerlink" href="#multi-thread-semantics" title="Permalink to this heading">#</a></h2>
+<h2>Multi-thread semantics<a class="headerlink" href="#multi-thread-semantics" title="Permalink to this heading">¶</a></h2>
 <p>The Threads module provides multiple threads of control within a single
 space of objects and module variables. Each thread runs in its own
 independent stack. The mechanism by which the threads are scheduled is
@@ -480,7 +482,7 @@ provided to call a function on an existing thread other than the current
 thread. Neither is there a mechanism to signal an exception on a thread
 other than the current thread.</p>
 <section id="atomicity">
-<h3>Atomicity<a class="headerlink" href="#atomicity" title="Permalink to this heading">#</a></h3>
+<h3>Atomicity<a class="headerlink" href="#atomicity" title="Permalink to this heading">¶</a></h3>
 <p>In general, the Threads module guarantees that assignments to slots and
 variables are atomic. That is, after an assignment, but before
 synchronization, another thread will see either the old value or the new
@@ -511,7 +513,7 @@ inter-thread synchronization.</p>
 using explicit inter-thread synchronization.</p>
 </section>
 <section id="ordering">
-<h3>Ordering<a class="headerlink" href="#ordering" title="Permalink to this heading">#</a></h3>
+<h3>Ordering<a class="headerlink" href="#ordering" title="Permalink to this heading">¶</a></h3>
 <p>The ordering of visibility of side effects performed in other threads is
 undefined, unless explicit synchronization is used. Implementations of
 the module may guarantee that the visibility of side-effects performed
@@ -530,7 +532,7 @@ effects on other threads — for example, common sub-expression
 elimination, or changing the order of evaluation.</p>
 </section>
 <section id="explicit-synchronization">
-<h3>Explicit synchronization<a class="headerlink" href="#explicit-synchronization" title="Permalink to this heading">#</a></h3>
+<h3>Explicit synchronization<a class="headerlink" href="#explicit-synchronization" title="Permalink to this heading">¶</a></h3>
 <p>The Threads module provides low-level synchronization functions which
 control the ordering of operations with respect to other threads, and
 control when the side effects that have been performed within one thread
@@ -554,7 +556,7 @@ low-level libraries, are discussed in <a class="reference internal" href="#threa
 libraries</a>.</p>
 </section>
 <section id="conditional-update">
-<h3>Conditional update<a class="headerlink" href="#conditional-update" title="Permalink to this heading">#</a></h3>
+<h3>Conditional update<a class="headerlink" href="#conditional-update" title="Permalink to this heading">¶</a></h3>
 <p>In addition to the synchronization primitives, the module provides a
 conditional update mechanism which is not synchronized, but which tests
 whether the value in a variable or slot has changed and atomically
@@ -579,7 +581,7 @@ blocking function from the Threads module should be used within the
 loop.</p>
 </section>
 <section id="the-dynamic-environment">
-<h3>The dynamic environment<a class="headerlink" href="#the-dynamic-environment" title="Permalink to this heading">#</a></h3>
+<h3>The dynamic environment<a class="headerlink" href="#the-dynamic-environment" title="Permalink to this heading">¶</a></h3>
 <p>Dylan has an implicit notion of a <em>dynamic environment</em>, corresponding
 to language constructs with <em>dynamic extent</em>. For example, the <em>block</em>
 construct can introduce <em>cleanup-clauses</em>, and the <em>body</em> of the block
@@ -604,7 +606,7 @@ variables are in general potentially global, you may need to explicitly
 synchronize accesses to them.</p>
 </section>
 <section id="thread-variables">
-<h3>Thread variables<a class="headerlink" href="#thread-variables" title="Permalink to this heading">#</a></h3>
+<h3>Thread variables<a class="headerlink" href="#thread-variables" title="Permalink to this heading">¶</a></h3>
 <p>The Threads module provides a new type of variable: a <em>thread</em>
 variable, also known as a <em>thread-local</em> variable. These variables are
 similar to normal module variables in the sense that they are visible
@@ -620,7 +622,7 @@ definition.</p>
 <a class="reference external" href="https://opendylan.org/books/drm/Definition_Macros#define_variable"><code class="xref drm docutils literal notranslate"><span class="pre">define</span> <span class="pre">variable</span></code></a>.</p>
 </section>
 <section id="dynamic-binding">
-<h3>Dynamic binding<a class="headerlink" href="#dynamic-binding" title="Permalink to this heading">#</a></h3>
+<h3>Dynamic binding<a class="headerlink" href="#dynamic-binding" title="Permalink to this heading">¶</a></h3>
 <p>The Threads module exports a macro for dynamic binding. A <em>binding</em> is a
 mapping between a variable and a*value-cell* which holds the variable’s
 value. A <em>dynamic</em> binding is a binding which has dynamic extent, and
@@ -641,7 +643,7 @@ future research.</p>
 </section>
 </section>
 <section id="thread-safety-in-client-libraries">
-<h2>Thread safety in client libraries<a class="headerlink" href="#thread-safety-in-client-libraries" title="Permalink to this heading">#</a></h2>
+<h2>Thread safety in client libraries<a class="headerlink" href="#thread-safety-in-client-libraries" title="Permalink to this heading">¶</a></h2>
 <p>If an application uses multiple threads, then there may be thread safety
 requirements for any library that can be called simultaneously by
 multiple threads, even if the called library does not use the Threads
@@ -649,7 +651,7 @@ library directly.</p>
 <p>This section is about thread safety in any library that is designed to
 be used in a multi-threaded application.</p>
 <section id="general-requirements">
-<h3>General requirements<a class="headerlink" href="#general-requirements" title="Permalink to this heading">#</a></h3>
+<h3>General requirements<a class="headerlink" href="#general-requirements" title="Permalink to this heading">¶</a></h3>
 <p>A library’s designer is responsible for documenting which features of
 the library offer built-in synchronization and which do not. While there
 is no definitive rule that can assist designers in this documentation,
@@ -670,7 +672,7 @@ it may be more efficient to rely on explicit synchronization by the
 client. Library designers should always document the choice they make.</p>
 </section>
 <section id="effects-on-the-dylan-library">
-<h3>Effects on the Dylan library<a class="headerlink" href="#effects-on-the-dylan-library" title="Permalink to this heading">#</a></h3>
+<h3>Effects on the Dylan library<a class="headerlink" href="#effects-on-the-dylan-library" title="Permalink to this heading">¶</a></h3>
 <p>The definition of the Dylan library is not changed with the addition of
 the Threads module. The implementation ensures that all hidden global
 state (such as the symbol table and any generic function caches) is
@@ -695,11 +697,11 @@ explicit synchronization, as appropriate.</p>
 </section>
 </section>
 <section id="the-threads-class-hierarchy">
-<h2>The Threads class hierarchy<a class="headerlink" href="#the-threads-class-hierarchy" title="Permalink to this heading">#</a></h2>
+<h2>The Threads class hierarchy<a class="headerlink" href="#the-threads-class-hierarchy" title="Permalink to this heading">¶</a></h2>
 <figure class="align-center" id="id5">
 <img alt="../../_images/threads.png" src="../../_images/threads.png" />
 <figcaption>
-<p><span class="caption-text">Threads class hierarchy.</span><a class="headerlink" href="#id5" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Threads class hierarchy.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <ul class="simple">
@@ -710,14 +712,14 @@ explicit synchronization, as appropriate.</p>
 </ul>
 </section>
 <section id="basic-features">
-<h2>Basic features<a class="headerlink" href="#basic-features" title="Permalink to this heading">#</a></h2>
+<h2>Basic features<a class="headerlink" href="#basic-features" title="Permalink to this heading">¶</a></h2>
 <p>This section documents basic features of the Threads module: operations
 on threads and low-level synchronization.</p>
 <section id="low-level-synchronization">
-<h3>Low-level synchronization<a class="headerlink" href="#low-level-synchronization" title="Permalink to this heading">#</a></h3>
+<h3>Low-level synchronization<a class="headerlink" href="#low-level-synchronization" title="Permalink to this heading">¶</a></h3>
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:sequence-point">
-<span class="sig-name descname"><span class="pre">sequence-point</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:threads:sequence-point" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">sequence-point</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:threads:sequence-point" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tells the compiler that it must consider the possibility of visible side
 effects from other threads at the point of the call.</p>
 <dl class="field-list simple">
@@ -742,7 +744,7 @@ ordered machines.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:synchronize-side-effects">
-<span class="sig-name descname"><span class="pre">synchronize-side-effects</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:threads:synchronize-side-effects" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">synchronize-side-effects</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:threads:synchronize-side-effects" title="Permalink to this definition">¶</a></dt>
 <dd><p>As <a class="reference internal" href="#dylan:threads:sequence-point"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">sequence-point</span></code></a>, with the addition that all side effects
 that have been performed within the calling thread are made visible
 within all other threads.</p>
@@ -832,10 +834,10 @@ happen.</p>
 
 </section>
 <section id="operations-on-threads">
-<h3>Operations on threads<a class="headerlink" href="#operations-on-threads" title="Permalink to this heading">#</a></h3>
+<h3>Operations on threads<a class="headerlink" href="#operations-on-threads" title="Permalink to this heading">¶</a></h3>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:[thread]">
-<span class="sig-name descname"><span class="pre">&lt;thread&gt;</span></span> <em class="property"><span class="pre">Instantiable</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#dylan:threads:[thread]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;thread&gt;</span></span> <em class="property"><span class="pre">Instantiable</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#dylan:threads:[thread]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of threads.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -892,7 +894,7 @@ and returns the values of its function.</p></li>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:thread-name">
-<span class="sig-name descname"><span class="pre">thread-name</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:threads:thread-name" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">thread-name</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:threads:thread-name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the name of a thread.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -917,7 +919,7 @@ a name, this function returns <a class="reference external" href="https://opendy
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:thread-id">
-<span class="sig-name descname"><span class="pre">thread-id</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:threads:thread-id" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">thread-id</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:threads:thread-id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the thread ID of a thread.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -946,7 +948,7 @@ other tools.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:join-thread">
-<span class="sig-name descname"><span class="pre">join-thread</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:threads:join-thread" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">join-thread</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:threads:join-thread" title="Permalink to this definition">¶</a></dt>
 <dd><p>Waits for another, existing, thread to terminate, and then returns the
 values of its function.</p>
 <dl class="field-list simple">
@@ -1006,7 +1008,7 @@ another thread.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:thread-yield">
-<span class="sig-name descname"><span class="pre">thread-yield</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:threads:thread-yield" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">thread-yield</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:threads:thread-yield" title="Permalink to this definition">¶</a></dt>
 <dd><p>Force the current thread to yield control to the part of the
 implementation responsible for scheduling threads.</p>
 <dl class="field-list simple">
@@ -1025,7 +1027,7 @@ environment.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:current-thread">
-<span class="sig-name descname"><span class="pre">current-thread</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:threads:current-thread" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">current-thread</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:threads:current-thread" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the current thread.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1044,7 +1046,7 @@ environment.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:current-thread-id">
-<span class="sig-name descname"><span class="pre">current-thread-id</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:threads:current-thread-id" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">current-thread-id</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:threads:current-thread-id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the ID of the current thread.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1070,12 +1072,12 @@ environment.</p>
 </section>
 </section>
 <section id="synchronization-protocol">
-<h2>Synchronization protocol<a class="headerlink" href="#synchronization-protocol" title="Permalink to this heading">#</a></h2>
+<h2>Synchronization protocol<a class="headerlink" href="#synchronization-protocol" title="Permalink to this heading">¶</a></h2>
 <section id="id1">
-<h3>Basic features<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<h3>Basic features<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:[synchronization]">
-<span class="sig-name descname"><span class="pre">&lt;synchronization&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#dylan:threads:[synchronization]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;synchronization&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#dylan:threads:[synchronization]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of objects that are used for inter-thread synchronization.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1114,7 +1116,7 @@ synchronization object.</p></li>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:wait-for">
-<span class="sig-name descname"><span class="pre">wait-for</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:threads:wait-for" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">wait-for</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:threads:wait-for" title="Permalink to this definition">¶</a></dt>
 <dd><p>Blocks until a synchronization object is available.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1151,7 +1153,7 @@ elapses; otherwise it returns <a class="reference external" href="https://opendy
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:release">
-<span class="sig-name descname"><span class="pre">release</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:threads:release" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">release</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:threads:release" title="Permalink to this definition">¶</a></dt>
 <dd><p>Releases a synchronization object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1174,7 +1176,7 @@ does not block for any of the subclasses of
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:synchronization-name">
-<span class="sig-name descname"><span class="pre">synchronization-name</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:threads:synchronization-name" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">synchronization-name</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:threads:synchronization-name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the name of a synchronization object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1200,10 +1202,10 @@ created with the <em>name</em> init-keyword. Otherwise <a class="reference exter
 
 </section>
 <section id="locks">
-<h3>Locks<a class="headerlink" href="#locks" title="Permalink to this heading">#</a></h3>
+<h3>Locks<a class="headerlink" href="#locks" title="Permalink to this heading">¶</a></h3>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:[lock]">
-<span class="sig-name descname"><span class="pre">&lt;lock&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#dylan:threads:[lock]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;lock&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#dylan:threads:[lock]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of locks.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1239,7 +1241,7 @@ returns an instance of <a class="reference internal" href="#dylan:threads:[simpl
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:with-lock">
-<span class="sig-name descname"><span class="pre">with-lock</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#dylan:threads:with-lock" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">with-lock</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#dylan:threads:with-lock" title="Permalink to this definition">¶</a></dt>
 <dd><p>Holds a lock while executing a body of code.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
@@ -1301,10 +1303,10 @@ equivalent to the following:</p>
 
 </section>
 <section id="semaphores">
-<h3>Semaphores<a class="headerlink" href="#semaphores" title="Permalink to this heading">#</a></h3>
+<h3>Semaphores<a class="headerlink" href="#semaphores" title="Permalink to this heading">¶</a></h3>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:[semaphore]">
-<span class="sig-name descname"><span class="pre">&lt;semaphore&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Primary</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#dylan:threads:[semaphore]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;semaphore&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Primary</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#dylan:threads:[semaphore]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of traditional counting semaphores.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1343,7 +1345,7 @@ locks if they do.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:wait-for([semaphore])">
-<span class="sig-name descname"><span class="pre">wait-for(&lt;semaphore&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:threads:wait-for([semaphore])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">wait-for(&lt;semaphore&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:threads:wait-for([semaphore])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Claims a semaphore object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1379,7 +1381,7 @@ the count is zero.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:release([semaphore])">
-<span class="sig-name descname"><span class="pre">release(&lt;semaphore&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:threads:release([semaphore])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">release(&lt;semaphore&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:threads:release([semaphore])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Releases a semaphore object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1416,10 +1418,10 @@ maximum count.</p>
 
 </section>
 <section id="exclusive-locks">
-<h3>Exclusive locks<a class="headerlink" href="#exclusive-locks" title="Permalink to this heading">#</a></h3>
+<h3>Exclusive locks<a class="headerlink" href="#exclusive-locks" title="Permalink to this heading">¶</a></h3>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:[exclusive-lock]">
-<span class="sig-name descname"><span class="pre">&lt;exclusive-lock&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#dylan:threads:[exclusive-lock]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;exclusive-lock&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#dylan:threads:[exclusive-lock]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of locks which prohibit unlocking by threads that do not own
 the lock.</p>
 <dl class="field-list simple">
@@ -1453,7 +1455,7 @@ current thread.</p></li>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:release([exclusive-lock])">
-<span class="sig-name descname"><span class="pre">release(&lt;exclusive-lock&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:threads:release([exclusive-lock])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">release(&lt;exclusive-lock&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:threads:release([exclusive-lock])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Releases an exclusive lock.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1490,7 +1492,7 @@ errors according to the protocol described above.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:owned?">
-<span class="sig-name descname"><span class="pre">owned?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:threads:owned?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">owned?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dylan:threads:owned?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests whether an exclusive lock has been claimed by the current thread.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1515,10 +1517,10 @@ thread.</p>
 
 </section>
 <section id="recursive-locks">
-<h3>Recursive locks<a class="headerlink" href="#recursive-locks" title="Permalink to this heading">#</a></h3>
+<h3>Recursive locks<a class="headerlink" href="#recursive-locks" title="Permalink to this heading">¶</a></h3>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:[recursive-lock]">
-<span class="sig-name descname"><span class="pre">&lt;recursive-lock&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Primary</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#dylan:threads:[recursive-lock]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;recursive-lock&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Primary</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#dylan:threads:[recursive-lock]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of locks that can be locked recursively.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1534,7 +1536,7 @@ times. The lock will be freed on the last of these releases.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:wait-for([recursive-lock])">
-<span class="sig-name descname"><span class="pre">wait-for(&lt;recursive-lock&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:threads:wait-for([recursive-lock])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">wait-for(&lt;recursive-lock&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:threads:wait-for([recursive-lock])" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Summary<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Claims a recursive lock.</p>
@@ -1570,7 +1572,7 @@ interval in seconds.</p></li>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:release([recursive-lock])">
-<span class="sig-name descname"><span class="pre">release(&lt;recursive-lock&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:threads:release([recursive-lock])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">release(&lt;recursive-lock&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:threads:release([recursive-lock])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Releases a recursive lock.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1590,7 +1592,7 @@ released as many times as it was claimed with <a class="reference internal" href
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:owned?([recursive-lock])">
-<span class="sig-name descname"><span class="pre">owned?(&lt;recursive-lock&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:threads:owned?([recursive-lock])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">owned?(&lt;recursive-lock&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:threads:owned?([recursive-lock])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests whether a recursive lock has been claimed by the current thread.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1615,10 +1617,10 @@ thread.</p>
 
 </section>
 <section id="simple-locks">
-<h3>Simple locks<a class="headerlink" href="#simple-locks" title="Permalink to this heading">#</a></h3>
+<h3>Simple locks<a class="headerlink" href="#simple-locks" title="Permalink to this heading">¶</a></h3>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:[simple-lock]">
-<span class="sig-name descname"><span class="pre">&lt;simple-lock&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Primary</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#dylan:threads:[simple-lock]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;simple-lock&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Primary</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#dylan:threads:[simple-lock]" title="Permalink to this definition">¶</a></dt>
 <dd><p>A simple and efficient lock.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1635,7 +1637,7 @@ might result in an error being signalled, or deadlock occurring.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:wait-for([simple-lock])">
-<span class="sig-name descname"><span class="pre">wait-for(&lt;simple-lock&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:threads:wait-for([simple-lock])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">wait-for(&lt;simple-lock&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:threads:wait-for([simple-lock])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Claims a simple lock.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1669,7 +1671,7 @@ in seconds.</p></li>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:release([simple-lock])">
-<span class="sig-name descname"><span class="pre">release(&lt;simple-lock&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:threads:release([simple-lock])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">release(&lt;simple-lock&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:threads:release([simple-lock])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Releases a simple lock.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1694,7 +1696,7 @@ in seconds.</p></li>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:owned?([simple-lock])">
-<span class="sig-name descname"><span class="pre">owned?(&lt;simple-lock&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:threads:owned?([simple-lock])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">owned?(&lt;simple-lock&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:threads:owned?([simple-lock])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests whether a simple lock has been claimed by the current thread.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1718,10 +1720,10 @@ in seconds.</p></li>
 
 </section>
 <section id="multiple-reader-single-writer-locks">
-<h3>Multiple reader / single writer locks<a class="headerlink" href="#multiple-reader-single-writer-locks" title="Permalink to this heading">#</a></h3>
+<h3>Multiple reader / single writer locks<a class="headerlink" href="#multiple-reader-single-writer-locks" title="Permalink to this heading">¶</a></h3>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:[read-write-lock]">
-<span class="sig-name descname"><span class="pre">&lt;read-write-lock&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Primary</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#dylan:threads:[read-write-lock]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;read-write-lock&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Primary</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#dylan:threads:[read-write-lock]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of locks that can have multiple readers but only one writer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1757,7 +1759,7 @@ threads.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:wait-for([read-write-lock])">
-<span class="sig-name descname"><span class="pre">wait-for(&lt;read-write-lock&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:threads:wait-for([read-write-lock])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">wait-for(&lt;read-write-lock&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:threads:wait-for([read-write-lock])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Claims a read-write lock.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1800,7 +1802,7 @@ returns false.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:release([read-write-lock])">
-<span class="sig-name descname"><span class="pre">release(&lt;read-write-lock&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:threads:release([read-write-lock])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">release(&lt;read-write-lock&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:threads:release([read-write-lock])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Releases a read-write-lock.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1825,7 +1827,7 @@ is permitted to signal a <code class="xref dylan dylan-class docutils literal no
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:owned?([read-write-lock])">
-<span class="sig-name descname"><span class="pre">owned?(&lt;read-write-lock&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:threads:owned?([read-write-lock])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">owned?(&lt;read-write-lock&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:threads:owned?([read-write-lock])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests whether a read-write lock is owned — that is, has been locked
 in write mode — by the current thread.</p>
 <dl class="field-list simple">
@@ -1851,10 +1853,10 @@ in write mode — by the current thread.</p>
 
 </section>
 <section id="notifications">
-<h3>Notifications<a class="headerlink" href="#notifications" title="Permalink to this heading">#</a></h3>
+<h3>Notifications<a class="headerlink" href="#notifications" title="Permalink to this heading">¶</a></h3>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:[notification]">
-<span class="sig-name descname"><span class="pre">&lt;notification&gt;</span></span> <em class="property"><span class="pre">Instantiable</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#dylan:threads:[notification]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;notification&gt;</span></span> <em class="property"><span class="pre">Instantiable</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#dylan:threads:[notification]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of objects that can be used to notify threads of a change
 of state elsewhere in the program.</p>
 <dl class="field-list">
@@ -1954,7 +1956,7 @@ was popped by another thread.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:associated-lock">
-<span class="sig-name descname"><span class="pre">associated-lock</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:threads:associated-lock" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">associated-lock</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:threads:associated-lock" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the lock associated with the notification object supplied.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1978,7 +1980,7 @@ was popped by another thread.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:wait-for([notification])">
-<span class="sig-name descname"><span class="pre">wait-for(&lt;notification&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:threads:wait-for([notification])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">wait-for(&lt;notification&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:threads:wait-for([notification])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wait for another thread to release a notification.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2031,7 +2033,7 @@ the current thread.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:release([notification])">
-<span class="sig-name descname"><span class="pre">release(&lt;notification&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:threads:release([notification])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">release(&lt;notification&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#dylan:threads:release([notification])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Releases a notification to one of the threads that are blocked and
 waiting for it.</p>
 <dl class="field-list simple">
@@ -2067,7 +2069,7 @@ claim ownership of the notification’s associated lock.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:release-all">
-<span class="sig-name descname"><span class="pre">release-all</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:threads:release-all" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">release-all</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:threads:release-all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Release a notification to all the threads that are blocked and waiting
 for it.</p>
 <dl class="field-list simple">
@@ -2102,10 +2104,10 @@ notification.</p>
 </section>
 </section>
 <section id="timers">
-<h2>Timers<a class="headerlink" href="#timers" title="Permalink to this heading">#</a></h2>
+<h2>Timers<a class="headerlink" href="#timers" title="Permalink to this heading">¶</a></h2>
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:sleep">
-<span class="sig-name descname"><span class="pre">sleep</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:threads:sleep" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">sleep</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#dylan:threads:sleep" title="Permalink to this definition">¶</a></dt>
 <dd><p>Blocks the current thread for a specified number of seconds.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2125,10 +2127,10 @@ notification.</p>
 
 </section>
 <section id="id2">
-<h2>Thread variables<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<h2>Thread variables<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:thread">
-<span class="sig-name descname"><span class="pre">thread</span></span> <em class="property"><span class="pre">Variable</span> <span class="pre">definition</span> <span class="pre">adjective</span> <span class="pre">Macro</span></em><a class="headerlink" href="#dylan:threads:thread" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">thread</span></span> <em class="property"><span class="pre">Variable</span> <span class="pre">definition</span> <span class="pre">adjective</span> <span class="pre">Macro</span></em><a class="headerlink" href="#dylan:threads:thread" title="Permalink to this definition">¶</a></dt>
 <dd><p>An adjective to <a class="reference external" href="https://opendylan.org/books/drm/Definition_Macros#define_variable"><code class="xref drm docutils literal notranslate"><span class="pre">define</span> <span class="pre">variable</span></code></a> for defining thread variables.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
@@ -2155,10 +2157,10 @@ assignment is not visible in other threads.</p>
 
 </section>
 <section id="id3">
-<h2>Dynamic binding<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<h2>Dynamic binding<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h2>
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:dynamic-bind">
-<span class="sig-name descname"><span class="pre">dynamic-bind</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#dylan:threads:dynamic-bind" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dynamic-bind</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#dylan:threads:dynamic-bind" title="Permalink to this definition">¶</a></dt>
 <dd><p>Executes a body of code in a context in which variables are dynamically
 rebound.</p>
 <dl class="field-list">
@@ -2204,7 +2206,7 @@ variable in the module scope.</p>
 </dd></dl>
 
 <section id="an-extended-form-of-dynamic-bind">
-<h3>An extended form of dynamic-bind<a class="headerlink" href="#an-extended-form-of-dynamic-bind" title="Permalink to this heading">#</a></h3>
+<h3>An extended form of dynamic-bind<a class="headerlink" href="#an-extended-form-of-dynamic-bind" title="Permalink to this heading">¶</a></h3>
 <p>Some implementations of the Threads module may provide an extended form
 of <a class="reference internal" href="#dylan:threads:dynamic-bind"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">dynamic-bind</span></code></a> for binding places other than variables. The
 implementation of this extended form requires the use of non-standard
@@ -2217,7 +2219,7 @@ portable code should not depend upon this feature.</p>
 <p>The extended form is described below.</p>
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:dynamic-bind(extended)">
-<span class="sig-name descname"><span class="pre">dynamic-bind</span> <span class="pre">(extended)</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#dylan:threads:dynamic-bind(extended)" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dynamic-bind</span> <span class="pre">(extended)</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#dylan:threads:dynamic-bind(extended)" title="Permalink to this definition">¶</a></dt>
 <dd><p>Executes a body of code in a context in which variables or other places
 are dynamically rebound.</p>
 <dl class="field-list">
@@ -2265,10 +2267,10 @@ which make use of the extended form of <a class="reference internal" href="#dyla
 </section>
 </section>
 <section id="locked-variables">
-<h2>Locked variables<a class="headerlink" href="#locked-variables" title="Permalink to this heading">#</a></h2>
+<h2>Locked variables<a class="headerlink" href="#locked-variables" title="Permalink to this heading">¶</a></h2>
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:locked">
-<span class="sig-name descname"><span class="pre">locked</span></span> <em class="property"><span class="pre">Variable</span> <span class="pre">definition</span> <span class="pre">adjective</span> <span class="pre">Macro</span></em><a class="headerlink" href="#dylan:threads:locked" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">locked</span></span> <em class="property"><span class="pre">Variable</span> <span class="pre">definition</span> <span class="pre">adjective</span> <span class="pre">Macro</span></em><a class="headerlink" href="#dylan:threads:locked" title="Permalink to this definition">¶</a></dt>
 <dd><p>Defines a locked variable.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
@@ -2303,10 +2305,10 @@ assign to the variable.</p></li>
 
 </section>
 <section id="id4">
-<h2>Conditional update<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
+<h2>Conditional update<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h2>
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:conditional-update!">
-<span class="sig-name descname"><span class="pre">conditional-update!</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#dylan:threads:conditional-update!" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">conditional-update!</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#dylan:threads:conditional-update!" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs an atomic test-and-set operation.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
@@ -2385,7 +2387,7 @@ supplied.</p>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:atomic-increment!">
-<span class="sig-name descname"><span class="pre">atomic-increment!</span></span> <em class="property"><span class="pre">Function</span> <span class="pre">Macro</span></em><a class="headerlink" href="#dylan:threads:atomic-increment!" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">atomic-increment!</span></span> <em class="property"><span class="pre">Function</span> <span class="pre">Macro</span></em><a class="headerlink" href="#dylan:threads:atomic-increment!" title="Permalink to this definition">¶</a></dt>
 <dd><p>Atomically increments a place containing a numeric value.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
@@ -2436,7 +2438,7 @@ by 2, and returns the incremented value.</p>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:atomic-decrement!">
-<span class="sig-name descname"><span class="pre">atomic-decrement!</span></span> <em class="property"><span class="pre">Function</span> <span class="pre">Macro</span></em><a class="headerlink" href="#dylan:threads:atomic-decrement!" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">atomic-decrement!</span></span> <em class="property"><span class="pre">Function</span> <span class="pre">Macro</span></em><a class="headerlink" href="#dylan:threads:atomic-decrement!" title="Permalink to this definition">¶</a></dt>
 <dd><p>Atomically decrements a place containing a numeric value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
@@ -2467,7 +2469,7 @@ that the <em>place</em> is decremented.</p>
 </dd></dl>
 
 <section id="an-extended-form-of-conditional-update">
-<h3>An extended form of conditional-update!<a class="headerlink" href="#an-extended-form-of-conditional-update" title="Permalink to this heading">#</a></h3>
+<h3>An extended form of conditional-update!<a class="headerlink" href="#an-extended-form-of-conditional-update" title="Permalink to this heading">¶</a></h3>
 <p>Some implementations of the Threads module may provide an extended form
 of <a class="reference internal" href="#dylan:threads:conditional-update!"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">conditional-update!</span></code></a> for updating places other than locked
 variables. The implementation of this extended form requires the use of
@@ -2480,7 +2482,7 @@ implementations are not mandated to implement the extended form of
 feature.</p>
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dylan:threads:conditional-update!(extended)">
-<span class="sig-name descname"><span class="pre">conditional-update!</span> <span class="pre">(extended)</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#dylan:threads:conditional-update!(extended)" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">conditional-update!</span> <span class="pre">(extended)</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#dylan:threads:conditional-update!(extended)" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs an atomic test-and-set operation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
@@ -2634,6 +2636,6 @@ deemed to have failed.</p>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

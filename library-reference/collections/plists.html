@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="The set Module" href="set.html" /><link rel="prev" title="The collectors Module" href="collectors.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>The plists Module - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,11 +463,11 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="the-plists-module">
-<h1>The plists Module<a class="headerlink" href="#the-plists-module" title="Permalink to this heading">#</a></h1>
+<h1>The plists Module<a class="headerlink" href="#the-plists-module" title="Permalink to this heading">¶</a></h1>
 <section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
 <p>Property lists associate values with keys, but without the overhead of a
 <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#table"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;table&gt;</span></code></a>.  These are generally useful for a small number of keys or
 where memory usage is a concern.</p>
@@ -481,13 +483,13 @@ a single sequence:</p>
 using <code class="docutils literal notranslate"><span class="pre">#rest</span></code> in conjunction with keyword arguments and <code class="docutils literal notranslate"><span class="pre">#all-keys</span></code>
 as can be seen in the example using <a class="reference internal" href="#collections:plists:with-keywords-removed"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-keywords-removed</span></code></a>.</p>
 <section id="reading">
-<h3>Reading<a class="headerlink" href="#reading" title="Permalink to this heading">#</a></h3>
+<h3>Reading<a class="headerlink" href="#reading" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p><a class="reference internal" href="#collections:plists:get-property"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">get-property</span></code></a></p></li>
 </ul>
 </section>
 <section id="modifying">
-<h3>Modifying<a class="headerlink" href="#modifying" title="Permalink to this heading">#</a></h3>
+<h3>Modifying<a class="headerlink" href="#modifying" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p><a class="reference internal" href="#collections:plists:put-property!"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">put-property!</span></code></a></p></li>
 <li><p><a class="reference internal" href="#collections:plists:remove-keywords"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">remove-keywords</span></code></a></p></li>
@@ -496,7 +498,7 @@ as can be seen in the example using <a class="reference internal" href="#collect
 </ul>
 </section>
 <section id="iterating">
-<h3>Iterating<a class="headerlink" href="#iterating" title="Permalink to this heading">#</a></h3>
+<h3>Iterating<a class="headerlink" href="#iterating" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p><a class="reference internal" href="#collections:plists:keyword-sequence"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">keyword-sequence</span></code></a></p></li>
 <li><p><a class="reference internal" href="#collections:plists:value-sequence"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">value-sequence</span></code></a></p></li>
@@ -504,10 +506,10 @@ as can be seen in the example using <a class="reference internal" href="#collect
 </section>
 </section>
 <section id="reference">
-<h2>Reference<a class="headerlink" href="#reference" title="Permalink to this heading">#</a></h2>
+<h2>Reference<a class="headerlink" href="#reference" title="Permalink to this heading">¶</a></h2>
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:plists:get-property">
-<span class="sig-name descname"><span class="pre">get-property</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:plists:get-property" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get-property</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:plists:get-property" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the value for an indicator, with a default should it not exist.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -530,7 +532,7 @@ as can be seen in the example using <a class="reference internal" href="#collect
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:plists:keyword-sequence">
-<span class="sig-name descname"><span class="pre">keyword-sequence</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:plists:keyword-sequence" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">keyword-sequence</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:plists:keyword-sequence" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a sequence containing the indicators in the <em>plist</em>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -557,7 +559,7 @@ as can be seen in the example using <a class="reference internal" href="#collect
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="collections:plists:put-property!">
-<span class="sig-name descname"><span class="pre">put-property!</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#collections:plists:put-property!" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">put-property!</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#collections:plists:put-property!" title="Permalink to this definition">¶</a></dt>
 <dd><p>Modify the <em>plist</em>, adding <em>indicator</em> with the given <em>value</em>.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
@@ -588,7 +590,7 @@ as can be seen in the example using <a class="reference internal" href="#collect
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:plists:remove-keywords">
-<span class="sig-name descname"><span class="pre">remove-keywords</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:plists:remove-keywords" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">remove-keywords</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:plists:remove-keywords" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a copy of the <em>plist</em> with <em>keywords</em> removed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -617,7 +619,7 @@ as can be seen in the example using <a class="reference internal" href="#collect
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="collections:plists:remove-property!">
-<span class="sig-name descname"><span class="pre">remove-property!</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#collections:plists:remove-property!" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">remove-property!</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#collections:plists:remove-property!" title="Permalink to this definition">¶</a></dt>
 <dd><p>Modify the <em>plist</em>, removing <em>indicator</em>, returning the old value,
 if any.</p>
 <dl class="field-list">
@@ -654,7 +656,7 @@ if any.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:plists:value-sequence">
-<span class="sig-name descname"><span class="pre">value-sequence</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:plists:value-sequence" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">value-sequence</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:plists:value-sequence" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a sequence containing the values in the <em>plist</em>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -681,7 +683,7 @@ if any.</p>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="collections:plists:with-keywords-removed">
-<span class="sig-name descname"><span class="pre">with-keywords-removed</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#collections:plists:with-keywords-removed" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">with-keywords-removed</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#collections:plists:with-keywords-removed" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
 <dd class="field-odd"><p><pre class="literal-block">with-keywords-removed(<cite>var</cite> = <cite>plist</cite>, <cite>keywords</cite>) <cite>body</cite> end</pre>
@@ -814,6 +816,6 @@ the modified plist available as <em>var</em>.</p>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="String Literal Syntax" href="dep-0012-string-literals.html" /><link rel="prev" title="Defaulted Element Reference Syntax" href="dep-0010-element-otherwise.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Numeric Literal Syntax - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="numeric-literal-syntax">
-<h1>Numeric Literal Syntax<a class="headerlink" href="#numeric-literal-syntax" title="Permalink to this heading">#</a></h1>
+<h1>Numeric Literal Syntax<a class="headerlink" href="#numeric-literal-syntax" title="Permalink to this heading">¶</a></h1>
 <div class="table-wrapper docutils container">
 <table class="docutils align-default">
 <tbody>
@@ -495,13 +497,13 @@
 </table>
 </div>
 <section id="abstract">
-<h2>Abstract<a class="headerlink" href="#abstract" title="Permalink to this heading">#</a></h2>
+<h2>Abstract<a class="headerlink" href="#abstract" title="Permalink to this heading">¶</a></h2>
 <p>This DEP proposes to change the literal syntax for Dylan integers and
 floating point numbers by allowing the underscore character to be used
 between any two digits.</p>
 </section>
 <section id="motivation">
-<h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this heading">#</a></h2>
+<h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this heading">¶</a></h2>
 <p>This change is designed to aid readability of large integers and large
 or high precision floats.</p>
 <p>Consider</p>
@@ -516,7 +518,7 @@ or high precision floats.</p>
 certain you’re reading it correctly.</p>
 </section>
 <section id="proposal">
-<h2>Proposal<a class="headerlink" href="#proposal" title="Permalink to this heading">#</a></h2>
+<h2>Proposal<a class="headerlink" href="#proposal" title="Permalink to this heading">¶</a></h2>
 <p>The Dylan lexical grammar is changed as follows:</p>
 <ul>
 <li><p>For clarity, a new character class is introduced with a single
@@ -591,12 +593,12 @@ production.</p>
 </div>
 </section>
 <section id="reference-implementation">
-<h2>Reference Implementation<a class="headerlink" href="#reference-implementation" title="Permalink to this heading">#</a></h2>
+<h2>Reference Implementation<a class="headerlink" href="#reference-implementation" title="Permalink to this heading">¶</a></h2>
 <p>This was incorporated into Open Dylan 2020.1 in this commit
 <a class="reference external" href="https://github.com/dylan-lang/opendylan/commit/0b3c60e279c21b137c05051153738bc4034072e4">https://github.com/dylan-lang/opendylan/commit/0b3c60e279c21b137c05051153738bc4034072e4</a>.</p>
 </section>
 <section id="backward-compatibility">
-<h2>Backward Compatibility<a class="headerlink" href="#backward-compatibility" title="Permalink to this heading">#</a></h2>
+<h2>Backward Compatibility<a class="headerlink" href="#backward-compatibility" title="Permalink to this heading">¶</a></h2>
 <p>Dylan code that uses the new syntax is not compatible with older
 versions of Dylan compilers. Any code that uses the new syntax creates
 a dependency on the Open Dylan version in which this feature is
@@ -605,7 +607,7 @@ code (or supporting libraries) until it is supported by the oldest
 bootstrapping compiler.</p>
 </section>
 <section id="copyright">
-<h2>Copyright<a class="headerlink" href="#copyright" title="Permalink to this heading">#</a></h2>
+<h2>Copyright<a class="headerlink" href="#copyright" title="Permalink to this heading">¶</a></h2>
 <p>This document may be freely redistributed.</p>
 </section>
 </section>
@@ -686,6 +688,6 @@ bootstrapping compiler.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

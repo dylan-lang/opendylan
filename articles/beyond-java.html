@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Beyond Java? - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,15 +463,15 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="beyond-java">
-<h1>Beyond Java?<a class="headerlink" href="#beyond-java" title="Permalink to this heading">#</a></h1>
+<h1>Beyond Java?<a class="headerlink" href="#beyond-java" title="Permalink to this heading">¶</a></h1>
 <p><em>Some experiences from building two CORBA IDL compilers.</em></p>
 <p>by Dr Jason Trenouth</p>
 <p>(<a class="reference external" href="http://web.archive.org/web/20030409041302/http://fun-o.com/resources/beyond-java.phtml">Originally published</a> in 2001.)</p>
 <hr class="docutils" />
 <section id="the-java-age">
-<h2>The Java Age<a class="headerlink" href="#the-java-age" title="Permalink to this heading">#</a></h2>
+<h2>The Java Age<a class="headerlink" href="#the-java-age" title="Permalink to this heading">¶</a></h2>
 <p>We have been living through the Java age. It is somewhat of an understatement
 to say that there has been a great deal of interest in the <a class="reference external" href="http://web.archive.org/web/20030409041302/http://java.sun.com/docs/books/jls/html/index.html">Java programming
 language</a>
@@ -490,7 +492,7 @@ the background of services needed for many kinds of business applications.</p>
 </section>
 <hr class="docutils" />
 <section id="the-problems">
-<h2>The Problems<a class="headerlink" href="#the-problems" title="Permalink to this heading">#</a></h2>
+<h2>The Problems<a class="headerlink" href="#the-problems" title="Permalink to this heading">¶</a></h2>
 <p>Java may not be up to the job. Linguistically it has a number of faults which
 all seem minor on their own but that add up to awkward and hard to maintain
 code. Some of these faults are born out of engineering compromises and some of
@@ -509,7 +511,7 @@ problems:</p>
 </section>
 <hr class="docutils" />
 <section id="the-solutions">
-<h2>The Solutions<a class="headerlink" href="#the-solutions" title="Permalink to this heading">#</a></h2>
+<h2>The Solutions<a class="headerlink" href="#the-solutions" title="Permalink to this heading">¶</a></h2>
 <p>The solution is to adopt a more advanced programming language instead of
 Java. This need not mean going back to C++. After all, Java’s popularization of
 garbage collection and pointer-free programming has probably significantly
@@ -529,7 +531,7 @@ Dylan. Dylan already has solutions to the problems listed above for Java:</p>
 </section>
 <hr class="docutils" />
 <section id="an-example">
-<h2>An Example<a class="headerlink" href="#an-example" title="Permalink to this heading">#</a></h2>
+<h2>An Example<a class="headerlink" href="#an-example" title="Permalink to this heading">¶</a></h2>
 <p>Since, according to <a class="reference external" href="http://web.archive.org/web/20030409041302/http://www.samueljohnson.com/">Samuel Johnson</a>,
 “example is always more efficacious than precept”, I will examine a real
 programming task that is made more awkward by Java and more elegant by Dylan.</p>
@@ -541,7 +543,7 @@ the sections that follow I will use IDL compiler examples while looking at the
 points I listed above where I contend that Dylan is an improvement over Java.</p>
 <hr class="docutils" />
 <section id="single-implementation-inheritance">
-<h3>Single Implementation Inheritance<a class="headerlink" href="#single-implementation-inheritance" title="Permalink to this heading">#</a></h3>
+<h3>Single Implementation Inheritance<a class="headerlink" href="#single-implementation-inheritance" title="Permalink to this heading">¶</a></h3>
 <p>While Java supports multiple inheritance of interfaces, it only offers single
 inheritance of implementations. Partly, this is because single inheritance is
 easier to implement efficiently and partly this is because multiple inheritance
@@ -651,7 +653,7 @@ development time and eases later maintenance.</p>
 </section>
 <hr class="docutils" />
 <section id="single-argument-method-dispatch">
-<h3>Single Argument Method Dispatch<a class="headerlink" href="#single-argument-method-dispatch" title="Permalink to this heading">#</a></h3>
+<h3>Single Argument Method Dispatch<a class="headerlink" href="#single-argument-method-dispatch" title="Permalink to this heading">¶</a></h3>
 <p>Now lets look at another of Java’s drawbacks: single argument dispatch. Now,
 many programmers many not even be aware of this limitation if they have only
 programmed in single-dispatch or message-passing OO languages. It can be a case
@@ -743,7 +745,7 @@ Java we have to modify the existing definition:</p>
 </div>
 </section>
 <section id="single-argument-method-dispatch-part-ii-the-visitor-horror">
-<h3>Single Argument Method Dispatch (Part II : The Visitor Horror)<a class="headerlink" href="#single-argument-method-dispatch-part-ii-the-visitor-horror" title="Permalink to this heading">#</a></h3>
+<h3>Single Argument Method Dispatch (Part II : The Visitor Horror)<a class="headerlink" href="#single-argument-method-dispatch-part-ii-the-visitor-horror" title="Permalink to this heading">¶</a></h3>
 <p>The situation gets even more complicated when you want to walk the nodes as
 part of backends that are responsible for emitting stubs and skeletons for all
 the supported languages in your CORBA framework. In Java, one way of doing this
@@ -852,7 +854,7 @@ the classes.</p></li>
 </section>
 <hr class="docutils" />
 <section id="primitive-types-distinct-from-objects">
-<h3>Primitive Types Distinct From Objects<a class="headerlink" href="#primitive-types-distinct-from-objects" title="Permalink to this heading">#</a></h3>
+<h3>Primitive Types Distinct From Objects<a class="headerlink" href="#primitive-types-distinct-from-objects" title="Permalink to this heading">¶</a></h3>
 <p>Java has primitive types that lie outside its object system. This can make
 intuitively simple operations into complex nightmares.</p>
 <p>In an IDL compiler you have to process arithmetic expressions. Suppose that
@@ -954,7 +956,7 @@ code.</p>
 </section>
 <hr class="docutils" />
 <section id="casting-required">
-<h3>Casting Required<a class="headerlink" href="#casting-required" title="Permalink to this heading">#</a></h3>
+<h3>Casting Required<a class="headerlink" href="#casting-required" title="Permalink to this heading">¶</a></h3>
 <p>In static languages casting seems to be a necessary evil. You have to tell the
 compiler things that it needs to know. In unsafe languages, if you break that
 promise, the computation can become corrupt and go awry. In a safe language
@@ -994,7 +996,7 @@ methods.</p>
 </section>
 <hr class="docutils" />
 <section id="no-extensible-syntax">
-<h3>No Extensible Syntax<a class="headerlink" href="#no-extensible-syntax" title="Permalink to this heading">#</a></h3>
+<h3>No Extensible Syntax<a class="headerlink" href="#no-extensible-syntax" title="Permalink to this heading">¶</a></h3>
 <p>Java has no macros. After the C preprocessor this was seen as a step
 forward. The two main uses of C preprocessor in C and C++ programs has been for
 naming constants and conditionalizing code. In Java constants can be declared
@@ -1173,7 +1175,7 @@ instance allocation for each call.</p>
 </section>
 <hr class="docutils" />
 <section id="poor-iteration-collection-integration">
-<h3>Poor Iteration/Collection Integration<a class="headerlink" href="#poor-iteration-collection-integration" title="Permalink to this heading">#</a></h3>
+<h3>Poor Iteration/Collection Integration<a class="headerlink" href="#poor-iteration-collection-integration" title="Permalink to this heading">¶</a></h3>
 <p>Let’s suppose we are implementing <code class="docutils literal notranslate"><span class="pre">dumpInherits</span></code> from the above emitter
 code. We need to iterate over the inherited interfaces and dump out their
 names. Suppose also that we want to maintain a degree of abstraction over how
@@ -1292,7 +1294,7 @@ require more propagation of rare syntax from our macro to the the Dylan one.</p>
 </section>
 <hr class="docutils" />
 <section id="conclusion">
-<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h2>
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h2>
 <p>We’ve covered some of the awkwardnesses of Java with respect to Dylan, but what
 is the point? Java is clearly here to stay isn’t it?  There’s been too much
 investment in Java to stop now hasn’t there? We don’t need another new
@@ -1324,7 +1326,7 @@ for the 21st Century?</p>
 </section>
 <hr class="docutils" />
 <section id="acknowledgements">
-<h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Permalink to this heading">#</a></h2>
+<h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Permalink to this heading">¶</a></h2>
 <p>Thanks to Carl L. Gay, Hugh Greene, Scott McKay, and others associated
 with Functional Objects for feedback on drafts of this article.</p>
 <p>Copyright; 1999-2001 Functional Objects, Inc.
@@ -1400,6 +1402,6 @@ All product and brand names are the registered trademarks or trademarks of their
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

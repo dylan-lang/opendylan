@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Building Applications With DUIM" href="../building-with-duim/index.html" /><link rel="prev" title="Using the Dylan IDL Compiler" href="scepter.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>An IDL Binding for Dylan - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,15 +463,15 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="an-idl-binding-for-dylan">
-<h1>An IDL Binding for Dylan<a class="headerlink" href="#an-idl-binding-for-dylan" title="Permalink to this heading">#</a></h1>
+<h1>An IDL Binding for Dylan<a class="headerlink" href="#an-idl-binding-for-dylan" title="Permalink to this heading">¶</a></h1>
 <section id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>This chapter proposes an IDL binding for Dylan. It is based on the
 draft OMG Request For Comment submission.</p>
 <section id="document-conventions">
-<h3>Document conventions<a class="headerlink" href="#document-conventions" title="Permalink to this heading">#</a></h3>
+<h3>Document conventions<a class="headerlink" href="#document-conventions" title="Permalink to this heading">¶</a></h3>
 <p>The requirements of this specification are indicated by the verb
 “shall”. All other statements are either explanatory, amplifying, or
 relaxing. All implementation notes are so labeled.</p>
@@ -477,7 +479,7 @@ relaxing. All implementation notes are so labeled.</p>
 fixed-point font, <code class="docutils literal notranslate"><span class="pre">like</span> <span class="pre">this</span></code>.</p>
 </section>
 <section id="bibliography">
-<h3>Bibliography<a class="headerlink" href="#bibliography" title="Permalink to this heading">#</a></h3>
+<h3>Bibliography<a class="headerlink" href="#bibliography" title="Permalink to this heading">¶</a></h3>
 <p>This specification mentions the following documents.</p>
 <dl class="simple">
 <dt>[DP 97]</dt><dd><p>Neal Feinberg, S. E. Keene, R.O. Mathews, P. T. Withington,
@@ -497,17 +499,17 @@ Revision 2.2, formal/98-07-01,
 </section>
 </section>
 <section id="design-rationale">
-<h2>Design rationale<a class="headerlink" href="#design-rationale" title="Permalink to this heading">#</a></h2>
+<h2>Design rationale<a class="headerlink" href="#design-rationale" title="Permalink to this heading">¶</a></h2>
 <section id="glossary-of-terms">
-<h3>Glossary of terms<a class="headerlink" href="#glossary-of-terms" title="Permalink to this heading">#</a></h3>
+<h3>Glossary of terms<a class="headerlink" href="#glossary-of-terms" title="Permalink to this heading">¶</a></h3>
 <p>This document uses terms from both the CORBA 2.2 specification [OMG
 98.7.1] and the Dylan Reference Manual [DRM 96]. Any additional
 terminology is described below.</p>
 </section>
 <section id="design-philosophy">
-<h3>Design philosophy<a class="headerlink" href="#design-philosophy" title="Permalink to this heading">#</a></h3>
+<h3>Design philosophy<a class="headerlink" href="#design-philosophy" title="Permalink to this heading">¶</a></h3>
 <section id="linguistic-requirements">
-<h4>Linguistic requirements<a class="headerlink" href="#linguistic-requirements" title="Permalink to this heading">#</a></h4>
+<h4>Linguistic requirements<a class="headerlink" href="#linguistic-requirements" title="Permalink to this heading">¶</a></h4>
 <p>The design should be:</p>
 <dl class="simple">
 <dt>Conformant</dt><dd><p>Provide a mapping that conforms to the CORBA 2.0 specification.</p>
@@ -533,7 +535,7 @@ syntax can be traded off and absorb the linguistic fallout.</p>
 </dl>
 </section>
 <section id="engineering-requirements">
-<h4>Engineering requirements<a class="headerlink" href="#engineering-requirements" title="Permalink to this heading">#</a></h4>
+<h4>Engineering requirements<a class="headerlink" href="#engineering-requirements" title="Permalink to this heading">¶</a></h4>
 <p>The design should be:</p>
 <dl class="simple">
 <dt>Extension-free</dt><dd><p>Do not require extensions to CORBA.</p>
@@ -553,7 +555,7 @@ provided by other language bindings.</p>
 </dl>
 </section>
 <section id="miscellaneous-requirements">
-<h4>Miscellaneous requirements<a class="headerlink" href="#miscellaneous-requirements" title="Permalink to this heading">#</a></h4>
+<h4>Miscellaneous requirements<a class="headerlink" href="#miscellaneous-requirements" title="Permalink to this heading">¶</a></h4>
 <p>The design should also be:</p>
 <dl class="simple">
 <dt>Rationalized</dt><dd><p>Provide a rationale for key design decisions.</p>
@@ -562,7 +564,7 @@ provided by other language bindings.</p>
 </section>
 </section>
 <section id="mapping-summary">
-<h3>Mapping summary<a class="headerlink" href="#mapping-summary" title="Permalink to this heading">#</a></h3>
+<h3>Mapping summary<a class="headerlink" href="#mapping-summary" title="Permalink to this heading">¶</a></h3>
 <p>The following table summarizes the mapping of IDL constructs to Dylan constructs.</p>
 <p>IDL constructs mapped to Dylan constructs.</p>
 <div class="table-wrapper docutils container">
@@ -642,12 +644,12 @@ provided by other language bindings.</p>
 </section>
 </section>
 <section id="lexical-mapping">
-<h2>Lexical mapping<a class="headerlink" href="#lexical-mapping" title="Permalink to this heading">#</a></h2>
+<h2>Lexical mapping<a class="headerlink" href="#lexical-mapping" title="Permalink to this heading">¶</a></h2>
 <p>This section specifies the mapping of IDL identifiers, literals, and constant expressions.</p>
 <section id="identifiers">
-<h3>Identifiers<a class="headerlink" href="#identifiers" title="Permalink to this heading">#</a></h3>
+<h3>Identifiers<a class="headerlink" href="#identifiers" title="Permalink to this heading">¶</a></h3>
 <section id="background">
-<h4>Background<a class="headerlink" href="#background" title="Permalink to this heading">#</a></h4>
+<h4>Background<a class="headerlink" href="#background" title="Permalink to this heading">¶</a></h4>
 <p>IDL identifiers are defined as follows [OMG 98.7.1]:</p>
 <blockquote>
 <div><p>An identifier is an arbitrarily long sequence of alphabetic, digit,
@@ -688,7 +690,7 @@ alphabet in upper and lower case.</p></li>
 </div></blockquote>
 </section>
 <section id="specification">
-<h4>Specification<a class="headerlink" href="#specification" title="Permalink to this heading">#</a></h4>
+<h4>Specification<a class="headerlink" href="#specification" title="Permalink to this heading">¶</a></h4>
 <p>From Section A.3.1.1 it can be seen that Dylan identifiers are a
 superset of IDL identifiers, and therefore they shall be left
 unmodified in the mapping except as follows.</p>
@@ -714,7 +716,7 @@ functions mapped from IDL attributes.</p>
 scope and convention described <a class="reference internal" href="#the-mapping-of-idl-to-dylan">The mapping of IDL to Dylan</a>.</p>
 </section>
 <section id="examples">
-<h4>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h4>
+<h4>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">¶</a></h4>
 <p>Some example mappings of IDL identifiers to Dylan identifiers:</p>
 <p>IDL identifiers mapped to Dylan identifiers.</p>
 <div class="table-wrapper docutils container">
@@ -760,15 +762,15 @@ boundaries in order to avoid mistaken translations like
 </section>
 </section>
 <section id="literals">
-<h3>Literals<a class="headerlink" href="#literals" title="Permalink to this heading">#</a></h3>
+<h3>Literals<a class="headerlink" href="#literals" title="Permalink to this heading">¶</a></h3>
 <p>IDL literals shall be mapped to lexically equivalent Dylan literals or
 semantically equivalent Dylan expressions. The following subsections
 describe the mapping for integers, floating-point numbers, and
 characters.</p>
 <section id="integers">
-<h4>Integers<a class="headerlink" href="#integers" title="Permalink to this heading">#</a></h4>
+<h4>Integers<a class="headerlink" href="#integers" title="Permalink to this heading">¶</a></h4>
 <section id="id1">
-<h5>Background<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h5>
+<h5>Background<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h5>
 <p>Integer literals are defined as follows in IDL [OMG 98.7.1]:</p>
 <blockquote>
 <div><p>An integer literal consisting of a sequence of digits is taken to
@@ -790,7 +792,7 @@ digits denote a hexadecimal number.</p>
 </div></blockquote>
 </section>
 <section id="id2">
-<h5>Specification<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h5>
+<h5>Specification<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h5>
 <p>A mapping shall therefore prepend the characters “<code class="docutils literal notranslate"><span class="pre">#o</span></code>” to the
 beginning of an octal literal. For a hexadecimal literal a mapping
 shall therefore remove the characters “<code class="docutils literal notranslate"><span class="pre">0x</span></code>” or “<code class="docutils literal notranslate"><span class="pre">0X</span></code>” from the
@@ -798,9 +800,9 @@ beginning and prepend the characters “<code class="docutils literal notranslat
 </section>
 </section>
 <section id="floating-point-numbers">
-<h4>Floating point numbers<a class="headerlink" href="#floating-point-numbers" title="Permalink to this heading">#</a></h4>
+<h4>Floating point numbers<a class="headerlink" href="#floating-point-numbers" title="Permalink to this heading">¶</a></h4>
 <section id="id3">
-<h5>Background<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h5>
+<h5>Background<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h5>
 <p>Floating point literals are defined as follows in IDL [OMG 98.7.1]:</p>
 <blockquote>
 <div><p>A floating-point literal consists of an integer part, a decimal
@@ -816,15 +818,15 @@ Dylan; see <a class="reference external" href="https://opendylan.org/books/drm/L
 <cite>Dylan Reference Manual</cite>.</p>
 </section>
 <section id="id4">
-<h5>Specification<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h5>
+<h5>Specification<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h5>
 <p>No modification shall be made to floating point literals during
 translation.</p>
 </section>
 </section>
 <section id="character-literals">
-<h4>Character literals<a class="headerlink" href="#character-literals" title="Permalink to this heading">#</a></h4>
+<h4>Character literals<a class="headerlink" href="#character-literals" title="Permalink to this heading">¶</a></h4>
 <section id="id5">
-<h5>Background<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h5>
+<h5>Background<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h5>
 <p>IDL character literals are single printing characters, or escape
 sequences, enclosed by single quotes. The escape sequences are as
 follows:</p>
@@ -883,7 +885,7 @@ follows:</p>
 the <cite>Dylan Reference Manual</cite>.</p>
 </section>
 <section id="id6">
-<h5>Specification<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h5>
+<h5>Specification<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h5>
 <p>A mapping shall leave a single printing character unmodified during
 translation. A mapping shall leave escape sequences unmodified except
 as follows:</p>
@@ -923,9 +925,9 @@ as follows:</p>
 </section>
 </section>
 <section id="string-literals">
-<h4>String Literals<a class="headerlink" href="#string-literals" title="Permalink to this heading">#</a></h4>
+<h4>String Literals<a class="headerlink" href="#string-literals" title="Permalink to this heading">¶</a></h4>
 <section id="id7">
-<h5>Background<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h5>
+<h5>Background<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h5>
 <p>IDL defines a string literal as follows:</p>
 <blockquote>
 <div><p>A string literal is a sequence of characters (as defined in
@@ -936,7 +938,7 @@ in concatenated strings are kept distinct.</p>
 <p>Dylan defines a string literal as follows:</p>
 </section>
 <section id="id8">
-<h5>Specification<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h5>
+<h5>Specification<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h5>
 <p>A mapping shall leave string literals unmodified during translation
 except as follows. Escape sequences shall be modified in accordance
 with the specification for character literals, with one exception:
@@ -945,9 +947,9 @@ with the specification for character literals, with one exception:
 </section>
 </section>
 <section id="fixed-point-decimals">
-<h3>Fixed point decimals<a class="headerlink" href="#fixed-point-decimals" title="Permalink to this heading">#</a></h3>
+<h3>Fixed point decimals<a class="headerlink" href="#fixed-point-decimals" title="Permalink to this heading">¶</a></h3>
 <section id="id9">
-<h4>Background<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h4>
+<h4>Background<a class="headerlink" href="#id9" title="Permalink to this heading">¶</a></h4>
 <p>IDL defines a fixed point decimal literal as follows:</p>
 <blockquote>
 <div><p>A fixed point decimal literal consists of an integer part, a
@@ -960,18 +962,18 @@ both) may be missing; the decimal point (but not the letter <code class="docutil
 <p>Dylan has no defined fixed point decimal literal format.</p>
 </section>
 <section id="id10">
-<h4>Specification<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h4>
+<h4>Specification<a class="headerlink" href="#id10" title="Permalink to this heading">¶</a></h4>
 <p>A fixed point decimal literal shall be mapped to any available Dylan
 representation of the value.</p>
 </section>
 </section>
 <section id="constant-expressions">
-<h3>Constant expressions<a class="headerlink" href="#constant-expressions" title="Permalink to this heading">#</a></h3>
+<h3>Constant expressions<a class="headerlink" href="#constant-expressions" title="Permalink to this heading">¶</a></h3>
 <p>A mapping shall either interpret the IDL constant expression yielding
 an equivalent Dylan literal or build a Dylan constant expression that
 will yield the same value.</p>
 <section id="operators">
-<h4>Operators<a class="headerlink" href="#operators" title="Permalink to this heading">#</a></h4>
+<h4>Operators<a class="headerlink" href="#operators" title="Permalink to this heading">¶</a></h4>
 <p>The IDL operators shall be interpreted as, or translated to, Dylan as
 defined by the following table. Note that the Dylan expressions will
 necessarily have whitespace around the operators even if the IDL
@@ -1049,22 +1051,22 @@ expressions do not.</p>
 </section>
 </section>
 <section id="the-mapping-of-idl-to-dylan">
-<h2>The mapping of IDL to Dylan<a class="headerlink" href="#the-mapping-of-idl-to-dylan" title="Permalink to this heading">#</a></h2>
+<h2>The mapping of IDL to Dylan<a class="headerlink" href="#the-mapping-of-idl-to-dylan" title="Permalink to this heading">¶</a></h2>
 <p>This section specifies the syntactic and semantic mapping of OMG IDL
 to Dylan. Unless otherwise noted, the mapping is applicable to both
 client-side and server-side interfaces. Issues specific to the
 server-side only are covered in clearly marked subsections.</p>
 <section id="names">
-<h3>Names<a class="headerlink" href="#names" title="Permalink to this heading">#</a></h3>
+<h3>Names<a class="headerlink" href="#names" title="Permalink to this heading">¶</a></h3>
 <section id="id11">
-<h4>Identifiers<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h4>
+<h4>Identifiers<a class="headerlink" href="#id11" title="Permalink to this heading">¶</a></h4>
 <p>The lexical mapping of identifiers shall be as specified in Section
 A.3.1.2, “Specification”</p>
 </section>
 <section id="scoped-names">
-<h4>Scoped names<a class="headerlink" href="#scoped-names" title="Permalink to this heading">#</a></h4>
+<h4>Scoped names<a class="headerlink" href="#scoped-names" title="Permalink to this heading">¶</a></h4>
 <section id="id12">
-<h5>Specification<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h5>
+<h5>Specification<a class="headerlink" href="#id12" title="Permalink to this heading">¶</a></h5>
 <p>Dylan has very different scoping rules from IDL. In particular, Dylan
 is not able to introduce new subordinate namespaces at all the
 linguistic points that IDL allows: files, modules, interfaces,
@@ -1075,7 +1077,7 @@ forward slashes. See Section A.4.2, “IDL Files” for the mapping of IDL
 files to Dylan.</p>
 </section>
 <section id="rationale">
-<h5>Rationale<a class="headerlink" href="#rationale" title="Permalink to this heading">#</a></h5>
+<h5>Rationale<a class="headerlink" href="#rationale" title="Permalink to this heading">¶</a></h5>
 <p>This is basically what several other languages have done [OMG
 98.7.1]. Dylan has the concept of modules, but these are more
 linguistically heavyweight than the nested scopes they would be trying
@@ -1090,7 +1092,7 @@ after translation:</p>
 </div>
 </section>
 <section id="id13">
-<h5>Examples<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h5>
+<h5>Examples<a class="headerlink" href="#id13" title="Permalink to this heading">¶</a></h5>
 <div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>IDL
 eco<span class="o">::</span>umberto
 SOCIETIES<span class="o">::</span>Secret<span class="o">::</span>knights_templar
@@ -1105,9 +1107,9 @@ SOCIETIES<span class="o">::</span>Secret<span class="o">::</span>knights_templar
 </section>
 </section>
 <section id="idl-files">
-<h3>IDL Files<a class="headerlink" href="#idl-files" title="Permalink to this heading">#</a></h3>
+<h3>IDL Files<a class="headerlink" href="#idl-files" title="Permalink to this heading">¶</a></h3>
 <section id="id14">
-<h4>Specification<a class="headerlink" href="#id14" title="Permalink to this heading">#</a></h4>
+<h4>Specification<a class="headerlink" href="#id14" title="Permalink to this heading">¶</a></h4>
 <p>An IDL file shall be mapped to three Dylan libraries each exporting a
 single module with the same name as its respective library.</p>
 <p>The three libraries shall be given the same name as the original IDL
@@ -1122,7 +1124,7 @@ and shall re-export the latter’s bindings.</p>
 IDL mapping shall be created in the protocol library.</p>
 </section>
 <section id="id15">
-<h4>Rationale<a class="headerlink" href="#id15" title="Permalink to this heading">#</a></h4>
+<h4>Rationale<a class="headerlink" href="#id15" title="Permalink to this heading">¶</a></h4>
 <p>The advantages of a mandatory mapping of a complete IDL description to
 a particular structure of Dylan libraries is:</p>
 <ul class="simple">
@@ -1152,7 +1154,7 @@ on the clients and servers can proceed in parallel using dummy local
 implementations of the other components.</p>
 </section>
 <section id="implementation-notes">
-<h4>Implementation notes<a class="headerlink" href="#implementation-notes" title="Permalink to this heading">#</a></h4>
+<h4>Implementation notes<a class="headerlink" href="#implementation-notes" title="Permalink to this heading">¶</a></h4>
 <p>An implementation is free to map an IDL file to as many Dylan source
 files as is convenient.</p>
 <p>An implementation is encouraged to transfer comments from IDL source
@@ -1160,7 +1162,7 @@ files to the generated Dylan files.</p>
 </section>
 </section>
 <section id="the-dylan-orb-library">
-<h3>The DYLAN-ORB library<a class="headerlink" href="#the-dylan-orb-library" title="Permalink to this heading">#</a></h3>
+<h3>The DYLAN-ORB library<a class="headerlink" href="#the-dylan-orb-library" title="Permalink to this heading">¶</a></h3>
 <p>The Dylan mapping relies on some runtime support, for example the
 built in types like <code class="docutils literal notranslate"><span class="pre">corba/&lt;short&gt;</span></code>, and this shall be provided in a
 Dylan library called Dylan-ORB that shall be used by a Dylan library
@@ -1172,25 +1174,25 @@ from IDL files to build generic applications without specific
 knowledge of particular services.</p>
 </section>
 <section id="mapping-modules">
-<h3>Mapping modules<a class="headerlink" href="#mapping-modules" title="Permalink to this heading">#</a></h3>
+<h3>Mapping modules<a class="headerlink" href="#mapping-modules" title="Permalink to this heading">¶</a></h3>
 <section id="id16">
-<h4>Background<a class="headerlink" href="#id16" title="Permalink to this heading">#</a></h4>
+<h4>Background<a class="headerlink" href="#id16" title="Permalink to this heading">¶</a></h4>
 <p>IDL modules define a name scope for other declarations including subordinate modules.</p>
 </section>
 <section id="id17">
-<h4>Specification<a class="headerlink" href="#id17" title="Permalink to this heading">#</a></h4>
+<h4>Specification<a class="headerlink" href="#id17" title="Permalink to this heading">¶</a></h4>
 <p>An IDL module shall be mapped to a Dylan identifier prefix for
 identifiers declared in the scope of the module declaration as defined
 by Section A.4.1.2, “Scoped names”.</p>
 </section>
 <section id="id18">
-<h4>Rationale<a class="headerlink" href="#id18" title="Permalink to this heading">#</a></h4>
+<h4>Rationale<a class="headerlink" href="#id18" title="Permalink to this heading">¶</a></h4>
 <p>Although mapping an IDL module to a Dylan module would seem to be more
 natural, Dylan modules do not support out-of-scope references to
 identifiers, for example, in IDL, <code class="docutils literal notranslate"><span class="pre">foo::bar</span></code>.</p>
 </section>
 <section id="id19">
-<h4>Examples<a class="headerlink" href="#id19" title="Permalink to this heading">#</a></h4>
+<h4>Examples<a class="headerlink" href="#id19" title="Permalink to this heading">¶</a></h4>
 <div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>IDL
 module<span class="w"> </span>physics<span class="w"> </span>{
 <span class="w">  </span>module<span class="w"> </span>quantum_mechanics<span class="w"> </span>{
@@ -1207,9 +1209,9 @@ module<span class="w"> </span>physics<span class="w"> </span>{
 </section>
 </section>
 <section id="mapping-for-interfaces">
-<h3>Mapping for interfaces<a class="headerlink" href="#mapping-for-interfaces" title="Permalink to this heading">#</a></h3>
+<h3>Mapping for interfaces<a class="headerlink" href="#mapping-for-interfaces" title="Permalink to this heading">¶</a></h3>
 <section id="id20">
-<h4>Background<a class="headerlink" href="#id20" title="Permalink to this heading">#</a></h4>
+<h4>Background<a class="headerlink" href="#id20" title="Permalink to this heading">¶</a></h4>
 <p>The CORBA standard [OMG 98.7.1] states:</p>
 <blockquote>
 <div><p>An interface is a description of a set of possible operations that
@@ -1221,7 +1223,7 @@ defines a set of operations on, and attributes of, the interface.</p>
 </div></blockquote>
 </section>
 <section id="id21">
-<h4>Specification<a class="headerlink" href="#id21" title="Permalink to this heading">#</a></h4>
+<h4>Specification<a class="headerlink" href="#id21" title="Permalink to this heading">¶</a></h4>
 <p>An IDL interface shall be mapped to an open, abstract, Dylan class
 with no superclasses other than <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a> and classes generated
 from inherited IDL interfaces.</p>
@@ -1239,7 +1241,7 @@ conventions.</p>
 anything.</p>
 </section>
 <section id="id22">
-<h4>Rationale<a class="headerlink" href="#id22" title="Permalink to this heading">#</a></h4>
+<h4>Rationale<a class="headerlink" href="#id22" title="Permalink to this heading">¶</a></h4>
 <p>Dylan classes are the natural focus of protocol definition and also
 allow IDL interface inheritance to be modeled by Dylan class
 inheritance (see below).</p>
@@ -1268,7 +1270,7 @@ definitions, to ensure that mapped Dylan classes can be compiled by
 all Dylan implementations.</p>
 </section>
 <section id="id23">
-<h4>Examples<a class="headerlink" href="#id23" title="Permalink to this heading">#</a></h4>
+<h4>Examples<a class="headerlink" href="#id23" title="Permalink to this heading">¶</a></h4>
 <div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>IDL
 interface<span class="w"> </span>T34<span class="w"> </span>{};
 </pre></div>
@@ -1281,9 +1283,9 @@ interface<span class="w"> </span>T34<span class="w"> </span>{};
 </section>
 </section>
 <section id="mapping-for-interface-inheritance">
-<h3>Mapping for interface inheritance<a class="headerlink" href="#mapping-for-interface-inheritance" title="Permalink to this heading">#</a></h3>
+<h3>Mapping for interface inheritance<a class="headerlink" href="#mapping-for-interface-inheritance" title="Permalink to this heading">¶</a></h3>
 <section id="id24">
-<h4>Background<a class="headerlink" href="#id24" title="Permalink to this heading">#</a></h4>
+<h4>Background<a class="headerlink" href="#id24" title="Permalink to this heading">¶</a></h4>
 <p>The CORBA standard [OMG 98.7.1] states:</p>
 <p>Interface inheritance provides the composition mechanism for
 permitting an object to support multiple interfaces. The principal
@@ -1297,14 +1299,14 @@ consistent. That is, any pair of classes must be in the same order
 with respect to each other wherever they occur together.</p>
 </section>
 <section id="id25">
-<h4>Specification<a class="headerlink" href="#id25" title="Permalink to this heading">#</a></h4>
+<h4>Specification<a class="headerlink" href="#id25" title="Permalink to this heading">¶</a></h4>
 <p>Interface inheritance shall be mapped to class inheritance in
 Dylan. The superclass list for the resulting Dylan class shall be
 canonicalized using lexicographic order. That is, the order shall be
 alphabetic on the character set used for Dylan identifiers.</p>
 </section>
 <section id="id26">
-<h4>Rationale<a class="headerlink" href="#id26" title="Permalink to this heading">#</a></h4>
+<h4>Rationale<a class="headerlink" href="#id26" title="Permalink to this heading">¶</a></h4>
 <p>Class inheritance is the natural means of sharing protocols in Dylan.</p>
 <p>The superclass list needs to be canonicalized to avoid legal IDL
 interface inheritance lists mapping to illegal Dylan class precedence
@@ -1313,7 +1315,7 @@ because IDL explicitly prohibits this kind of overloading. An
 alphabetic order is as good as any.</p>
 </section>
 <section id="id27">
-<h4>Examples<a class="headerlink" href="#id27" title="Permalink to this heading">#</a></h4>
+<h4>Examples<a class="headerlink" href="#id27" title="Permalink to this heading">¶</a></h4>
 <div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>IDL
 interface<span class="w"> </span>T34<span class="w"> </span><span class="o">:</span><span class="w"> </span>tank<span class="w"> </span>soviet_made<span class="w"> </span>{};
 interface<span class="w"> </span>T48<span class="w"> </span><span class="o">:</span><span class="w"> </span>soviet_made<span class="w"> </span>tank<span class="w"> </span>{};
@@ -1334,9 +1336,9 @@ interface<span class="w"> </span>T1000<span class="w"> </span><span class="o">:<
 </section>
 </section>
 <section id="mapping-for-constants">
-<h3>Mapping for constants<a class="headerlink" href="#mapping-for-constants" title="Permalink to this heading">#</a></h3>
+<h3>Mapping for constants<a class="headerlink" href="#mapping-for-constants" title="Permalink to this heading">¶</a></h3>
 <section id="id28">
-<h4>Specification<a class="headerlink" href="#id28" title="Permalink to this heading">#</a></h4>
+<h4>Specification<a class="headerlink" href="#id28" title="Permalink to this heading">¶</a></h4>
 <p>IDL constant declarations shall be mapped to Dylan constant
 definitions. IDL constant expressions are mapped as defined in Section
 A.2.3, “Mapping summary”. In addition, a dollar character shall be
@@ -1344,7 +1346,7 @@ added to front of the main identifier, but after the scope prefix, in
 accordance with Dylan programming conventions.</p>
 </section>
 <section id="id29">
-<h4>Examples<a class="headerlink" href="#id29" title="Permalink to this heading">#</a></h4>
+<h4>Examples<a class="headerlink" href="#id29" title="Permalink to this heading">¶</a></h4>
 <div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>IDL
 module<span class="w"> </span>time<span class="w"> </span>{
 <span class="w">  </span>const<span class="w"> </span>unsigned<span class="w"> </span><span class="nb">long</span><span class="w"> </span>SECS_IN_100_YRS
@@ -1364,14 +1366,14 @@ module<span class="w"> </span>time<span class="w"> </span>{
 </section>
 </section>
 <section id="mapping-for-basic-types">
-<h3>Mapping for basic types<a class="headerlink" href="#mapping-for-basic-types" title="Permalink to this heading">#</a></h3>
+<h3>Mapping for basic types<a class="headerlink" href="#mapping-for-basic-types" title="Permalink to this heading">¶</a></h3>
 <section id="overall-background">
-<h4>Overall Background<a class="headerlink" href="#overall-background" title="Permalink to this heading">#</a></h4>
+<h4>Overall Background<a class="headerlink" href="#overall-background" title="Permalink to this heading">¶</a></h4>
 <p>IDL and Dylan both provide a number of basic built in types and the
 means of constructing and naming new types.</p>
 </section>
 <section id="id30">
-<h4>Specification<a class="headerlink" href="#id30" title="Permalink to this heading">#</a></h4>
+<h4>Specification<a class="headerlink" href="#id30" title="Permalink to this heading">¶</a></h4>
 <p>The mapping shall introduce new Dylan types for each CORBA type. The
 mapping of the new Dylan types to the built-in Dylan types shall be
 constrained as specified in the following sections, but within these
@@ -1382,7 +1384,7 @@ types. That is, it shall not be necessary to call a constructor
 function on these values.</p>
 </section>
 <section id="id31">
-<h4>Rationale<a class="headerlink" href="#id31" title="Permalink to this heading">#</a></h4>
+<h4>Rationale<a class="headerlink" href="#id31" title="Permalink to this heading">¶</a></h4>
 <p>This allows implementations of the mapping some latitude, but also
 allows CORBA applications written in Dylan to succinctly and portably
 declare their data types and gain such efficiency as is provided by
@@ -1394,9 +1396,9 @@ automatically benefits from any improvements.</p>
 to use, say, the literal “2” where a CORBA <code class="docutils literal notranslate"><span class="pre">short</span></code> is expected.</p>
 </section>
 <section id="id32">
-<h4>Integers<a class="headerlink" href="#id32" title="Permalink to this heading">#</a></h4>
+<h4>Integers<a class="headerlink" href="#id32" title="Permalink to this heading">¶</a></h4>
 <section id="id33">
-<h5>Background<a class="headerlink" href="#id33" title="Permalink to this heading">#</a></h5>
+<h5>Background<a class="headerlink" href="#id33" title="Permalink to this heading">¶</a></h5>
 <p>IDL defines six types of integer with the following ranges:</p>
 <div class="table-wrapper docutils container">
 <table class="docutils align-default">
@@ -1431,7 +1433,7 @@ to use, say, the literal “2” where a CORBA <code class="docutils literal not
 28 bits of precision. Overflow behavior is implementation defined.</p>
 </section>
 <section id="id34">
-<h5>Specification<a class="headerlink" href="#id34" title="Permalink to this heading">#</a></h5>
+<h5>Specification<a class="headerlink" href="#id34" title="Permalink to this heading">¶</a></h5>
 <p>All IDL integer types shall be mapped to the following Dylan classes.</p>
 <p>IDL and Dylan integer types.</p>
 <div class="table-wrapper docutils container">
@@ -1468,7 +1470,7 @@ of, some Dylan implementation’s integer classes, and shall be capable
 of representing the specified range of values.</p>
 </section>
 <section id="id35">
-<h5>Rationale<a class="headerlink" href="#id35" title="Permalink to this heading">#</a></h5>
+<h5>Rationale<a class="headerlink" href="#id35" title="Permalink to this heading">¶</a></h5>
 <p>The rationale is as given for the general case above. In this
 particular instance, although an individual Dylan compiler could
 convert a <a class="reference external" href="https://opendylan.org/books/drm/Constructing_and_Initializing_Instances#limited"><code class="xref drm docutils literal notranslate"><span class="pre">limited</span></code></a> expression to the best concrete class that the
@@ -1480,7 +1482,7 @@ runtime class was guaranteed, the expressions are quite long an
 cumbersome to use repeatedly in code, and an alias is convenient.</p>
 </section>
 <section id="id36">
-<h5>Examples<a class="headerlink" href="#id36" title="Permalink to this heading">#</a></h5>
+<h5>Examples<a class="headerlink" href="#id36" title="Permalink to this heading">¶</a></h5>
 <div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>IDL
 const<span class="w"> </span><span class="nb">long</span><span class="w"> </span>DIM_OF_UNIV<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">11</span>;
 </pre></div>
@@ -1498,9 +1500,9 @@ const<span class="w"> </span><span class="nb">long</span><span class="w"> </span
 </section>
 </section>
 <section id="id37">
-<h4>Floating-point numbers<a class="headerlink" href="#id37" title="Permalink to this heading">#</a></h4>
+<h4>Floating-point numbers<a class="headerlink" href="#id37" title="Permalink to this heading">¶</a></h4>
 <section id="id38">
-<h5>Background<a class="headerlink" href="#id38" title="Permalink to this heading">#</a></h5>
+<h5>Background<a class="headerlink" href="#id38" title="Permalink to this heading">¶</a></h5>
 <p>IDL defines three types of floating-point numbers:</p>
 <p>IDL floating point number types.</p>
 <div class="table-wrapper docutils container">
@@ -1528,7 +1530,7 @@ const<span class="w"> </span><span class="nb">long</span><span class="w"> </span
 but may not.</p>
 </section>
 <section id="id39">
-<h5>Specification<a class="headerlink" href="#id39" title="Permalink to this heading">#</a></h5>
+<h5>Specification<a class="headerlink" href="#id39" title="Permalink to this heading">¶</a></h5>
 <p>The IDL floating-point types shall be mapped to Dylan as follows:</p>
 <p>IDL floating point types mapped to Dylan.</p>
 <div class="table-wrapper docutils container">
@@ -1556,11 +1558,11 @@ Dylan <a class="reference external" href="https://opendylan.org/books/drm/Number
 range of values.</p>
 </section>
 <section id="id40">
-<h5>Rationale<a class="headerlink" href="#id40" title="Permalink to this heading">#</a></h5>
+<h5>Rationale<a class="headerlink" href="#id40" title="Permalink to this heading">¶</a></h5>
 <p>As above.</p>
 </section>
 <section id="id41">
-<h5>Examples<a class="headerlink" href="#id41" title="Permalink to this heading">#</a></h5>
+<h5>Examples<a class="headerlink" href="#id41" title="Permalink to this heading">¶</a></h5>
 <div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>IDL
 const<span class="w"> </span><span class="nb">double</span><span class="w"> </span>E<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.71828182845904523536</span>;
 const<span class="w"> </span><span class="nb">float</span><span class="w"> </span>LYRS_TO_ALPHA_CENTAURI<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">4.35</span>;
@@ -1574,9 +1576,9 @@ const<span class="w"> </span><span class="nb">float</span><span class="w"> </spa
 </section>
 </section>
 <section id="id42">
-<h4>Fixed-point decimals<a class="headerlink" href="#id42" title="Permalink to this heading">#</a></h4>
+<h4>Fixed-point decimals<a class="headerlink" href="#id42" title="Permalink to this heading">¶</a></h4>
 <section id="id43">
-<h5>Background<a class="headerlink" href="#id43" title="Permalink to this heading">#</a></h5>
+<h5>Background<a class="headerlink" href="#id43" title="Permalink to this heading">¶</a></h5>
 <p>IDL fixed-point decimals are defined as follows:</p>
 <blockquote>
 <div><p>The <code class="docutils literal notranslate"><span class="pre">fixed</span></code> data type represents a fixed-point decimal number of
@@ -1590,7 +1592,7 @@ scale or scale greater then than the number of digits.</p>
 <p>Dylan has no defined fixed-point decimal type, but does have a rational type.</p>
 </section>
 <section id="id44">
-<h5>Specification<a class="headerlink" href="#id44" title="Permalink to this heading">#</a></h5>
+<h5>Specification<a class="headerlink" href="#id44" title="Permalink to this heading">¶</a></h5>
 <p>The IDL <code class="docutils literal notranslate"><span class="pre">fixed</span></code> type shall be mapped to the Dylan class
 <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;fixed&gt;</span></code>, which shall be a subtype of the Dylan type
 <code class="docutils literal notranslate"><span class="pre">&lt;rational&gt;</span></code>.</p>
@@ -1625,12 +1627,12 @@ following functions:</p>
 </div>
 </section>
 <section id="id45">
-<h5>Rationale<a class="headerlink" href="#id45" title="Permalink to this heading">#</a></h5>
+<h5>Rationale<a class="headerlink" href="#id45" title="Permalink to this heading">¶</a></h5>
 <p>This seems to be the natural mapping to Dylan and approximately
 mirrors the C++ mapping.</p>
 </section>
 <section id="id46">
-<h5>Examples<a class="headerlink" href="#id46" title="Permalink to this heading">#</a></h5>
+<h5>Examples<a class="headerlink" href="#id46" title="Permalink to this heading">¶</a></h5>
 <div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>IDL
 const<span class="w"> </span>fixed<span class="o">&lt;</span><span class="mi">6</span>,<span class="mi">2</span><span class="o">&gt;</span><span class="w"> </span>salary_increment<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0100.50d</span>;
 </pre></div>
@@ -1645,9 +1647,9 @@ const<span class="w"> </span>fixed<span class="o">&lt;</span><span class="mi">6<
 </section>
 </section>
 <section id="characters">
-<h4>Characters<a class="headerlink" href="#characters" title="Permalink to this heading">#</a></h4>
+<h4>Characters<a class="headerlink" href="#characters" title="Permalink to this heading">¶</a></h4>
 <section id="id47">
-<h5>Background<a class="headerlink" href="#id47" title="Permalink to this heading">#</a></h5>
+<h5>Background<a class="headerlink" href="#id47" title="Permalink to this heading">¶</a></h5>
 <p>IDL characters are elements of the 8 bit ISO Latin-1 (8859.1)
 character set. Dylan’s characters are unspecified. Dylan has a
 <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#character"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;character&gt;</span></code></a> class and has three string classes:
@@ -1656,17 +1658,17 @@ character set. Dylan’s characters are unspecified. Dylan has a
 that are subtypes of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#character"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;character&gt;</span></code></a>.</p>
 </section>
 <section id="id48">
-<h5>Specification<a class="headerlink" href="#id48" title="Permalink to this heading">#</a></h5>
+<h5>Specification<a class="headerlink" href="#id48" title="Permalink to this heading">¶</a></h5>
 <p>The IDL <code class="docutils literal notranslate"><span class="pre">char</span></code> type shall be mapped to the Dylan class
 <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;char&gt;</span></code>, which will be an alias for or a subclass of the
 Dylan class <code class="docutils literal notranslate"><span class="pre">&lt;character&gt;</span></code>.</p>
 </section>
 <section id="id49">
-<h5>Rationale<a class="headerlink" href="#id49" title="Permalink to this heading">#</a></h5>
+<h5>Rationale<a class="headerlink" href="#id49" title="Permalink to this heading">¶</a></h5>
 <p>As above.</p>
 </section>
 <section id="id50">
-<h5>Examples<a class="headerlink" href="#id50" title="Permalink to this heading">#</a></h5>
+<h5>Examples<a class="headerlink" href="#id50" title="Permalink to this heading">¶</a></h5>
 <div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>IDL
 const<span class="w"> </span>char<span class="w"> </span>ALEPH<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;a&#39;</span>;
 </pre></div>
@@ -1678,24 +1680,24 @@ const<span class="w"> </span>char<span class="w"> </span>ALEPH<span class="w"> <
 </section>
 </section>
 <section id="wide-characters">
-<h4>Wide characters<a class="headerlink" href="#wide-characters" title="Permalink to this heading">#</a></h4>
+<h4>Wide characters<a class="headerlink" href="#wide-characters" title="Permalink to this heading">¶</a></h4>
 <section id="id51">
-<h5>Background<a class="headerlink" href="#id51" title="Permalink to this heading">#</a></h5>
+<h5>Background<a class="headerlink" href="#id51" title="Permalink to this heading">¶</a></h5>
 <p>IDL wide characters are implementation defined.</p>
 <p>Dylan defines a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#unicode-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;unicode-string&gt;</span></code></a> type.</p>
 </section>
 <section id="id52">
-<h5>Specification<a class="headerlink" href="#id52" title="Permalink to this heading">#</a></h5>
+<h5>Specification<a class="headerlink" href="#id52" title="Permalink to this heading">¶</a></h5>
 <p>The IDL <code class="docutils literal notranslate"><span class="pre">wchar</span></code> type shall be mapped to <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;wchar&gt;</span></code>, which
 shall be a subclass of <code class="docutils literal notranslate"><span class="pre">&lt;character&gt;</span></code>. Instances of <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;wchar&gt;</span></code>
 shall be allowed as elements of instances of <code class="docutils literal notranslate"><span class="pre">&lt;unicode-string&gt;</span></code>.</p>
 </section>
 <section id="id53">
-<h5>Rationale<a class="headerlink" href="#id53" title="Permalink to this heading">#</a></h5>
+<h5>Rationale<a class="headerlink" href="#id53" title="Permalink to this heading">¶</a></h5>
 <p>The natural mapping to Dylan.</p>
 </section>
 <section id="id54">
-<h5>Examples<a class="headerlink" href="#id54" title="Permalink to this heading">#</a></h5>
+<h5>Examples<a class="headerlink" href="#id54" title="Permalink to this heading">¶</a></h5>
 <div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>IDL
 const<span class="w"> </span>wchar<span class="w"> </span>ALEPH<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;a&#39;</span>;
 </pre></div>
@@ -1707,27 +1709,27 @@ const<span class="w"> </span>wchar<span class="w"> </span>ALEPH<span class="w"> 
 </section>
 </section>
 <section id="boolean-values">
-<h4>Boolean values<a class="headerlink" href="#boolean-values" title="Permalink to this heading">#</a></h4>
+<h4>Boolean values<a class="headerlink" href="#boolean-values" title="Permalink to this heading">¶</a></h4>
 <section id="id55">
-<h5>Background<a class="headerlink" href="#id55" title="Permalink to this heading">#</a></h5>
+<h5>Background<a class="headerlink" href="#id55" title="Permalink to this heading">¶</a></h5>
 <p>IDL <code class="docutils literal notranslate"><span class="pre">boolean</span></code> type can take the values <code class="docutils literal notranslate"><span class="pre">TRUE</span></code> or <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>.</p>
 <p>Dylan’s <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a> class similarly can take the values <code class="docutils literal notranslate"><span class="pre">#t</span></code>,
 and <code class="docutils literal notranslate"><span class="pre">#f</span></code>.</p>
 </section>
 <section id="id56">
-<h5>Specification<a class="headerlink" href="#id56" title="Permalink to this heading">#</a></h5>
+<h5>Specification<a class="headerlink" href="#id56" title="Permalink to this heading">¶</a></h5>
 <p>The IDL <code class="docutils literal notranslate"><span class="pre">boolean</span></code> type shall be mapped onto the Dylan
 <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;boolean&gt;</span></code> class which shall be an alias for the Dylan
 <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a> class.</p>
 </section>
 <section id="id57">
-<h5>Rationale<a class="headerlink" href="#id57" title="Permalink to this heading">#</a></h5>
+<h5>Rationale<a class="headerlink" href="#id57" title="Permalink to this heading">¶</a></h5>
 <p>The extra CORBA prefix class is introduced for completeness and
 consistency, but there is no need to allow it to be a subclass of the
 built-in class.</p>
 </section>
 <section id="id58">
-<h5>Examples<a class="headerlink" href="#id58" title="Permalink to this heading">#</a></h5>
+<h5>Examples<a class="headerlink" href="#id58" title="Permalink to this heading">¶</a></h5>
 <div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>IDL
 const<span class="w"> </span>boolean<span class="w"> </span>CANTORS_HYPOTHESIS<span class="w"> </span><span class="o">=</span><span class="w"> </span>TRUE;
 </pre></div>
@@ -1739,25 +1741,25 @@ const<span class="w"> </span>boolean<span class="w"> </span>CANTORS_HYPOTHESIS<s
 </section>
 </section>
 <section id="octets">
-<h4>Octets<a class="headerlink" href="#octets" title="Permalink to this heading">#</a></h4>
+<h4>Octets<a class="headerlink" href="#octets" title="Permalink to this heading">¶</a></h4>
 <section id="id59">
-<h5>Background<a class="headerlink" href="#id59" title="Permalink to this heading">#</a></h5>
+<h5>Background<a class="headerlink" href="#id59" title="Permalink to this heading">¶</a></h5>
 <p>An IDL octet is an 8-bit quantity that undergoes no conversion of
 representation during transmission.</p>
 </section>
 <section id="id60">
-<h5>Specification<a class="headerlink" href="#id60" title="Permalink to this heading">#</a></h5>
+<h5>Specification<a class="headerlink" href="#id60" title="Permalink to this heading">¶</a></h5>
 <p>The IDL <code class="docutils literal notranslate"><span class="pre">octet</span></code> type shall be mapped to the Dylan class
 <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;octet&gt;</span></code> which shall be an alias for or a subclass of some
 Dylan implementation’s integer class allowing values in the range 0
 to 255.</p>
 </section>
 <section id="id61">
-<h5>Rationale<a class="headerlink" href="#id61" title="Permalink to this heading">#</a></h5>
+<h5>Rationale<a class="headerlink" href="#id61" title="Permalink to this heading">¶</a></h5>
 <p>As above.</p>
 </section>
 <section id="id62">
-<h5>Examples<a class="headerlink" href="#id62" title="Permalink to this heading">#</a></h5>
+<h5>Examples<a class="headerlink" href="#id62" title="Permalink to this heading">¶</a></h5>
 <div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>IDL
 const<span class="w"> </span>octet<span class="w"> </span>BOND_ID<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">007</span>;
 </pre></div>
@@ -1769,15 +1771,15 @@ const<span class="w"> </span>octet<span class="w"> </span>BOND_ID<span class="w"
 </section>
 </section>
 <section id="the-any-type">
-<h4>The “any” type<a class="headerlink" href="#the-any-type" title="Permalink to this heading">#</a></h4>
+<h4>The “any” type<a class="headerlink" href="#the-any-type" title="Permalink to this heading">¶</a></h4>
 <section id="id63">
-<h5>Background<a class="headerlink" href="#id63" title="Permalink to this heading">#</a></h5>
+<h5>Background<a class="headerlink" href="#id63" title="Permalink to this heading">¶</a></h5>
 <p>The IDL <code class="docutils literal notranslate"><span class="pre">any</span></code> type permits the specification of values that can
 express any OMG IDL type.</p>
 <p>Dylan is a dynamic language with runtime type information.</p>
 </section>
 <section id="id64">
-<h5>Specification<a class="headerlink" href="#id64" title="Permalink to this heading">#</a></h5>
+<h5>Specification<a class="headerlink" href="#id64" title="Permalink to this heading">¶</a></h5>
 <p>The IDL <code class="docutils literal notranslate"><span class="pre">any</span></code> type shall be mapped to a sealed Dylan class
 <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;any&gt;</span></code> with sealed getter and setter generic functions and
 initialization keywords for the underlying value and the associated
@@ -1812,7 +1814,7 @@ cannot be coerced to a native Dylan type corresponding to a mapped IDL
 type.</p>
 </section>
 <section id="id65">
-<h5>Rationale<a class="headerlink" href="#id65" title="Permalink to this heading">#</a></h5>
+<h5>Rationale<a class="headerlink" href="#id65" title="Permalink to this heading">¶</a></h5>
 <p>Although it is awkward for the Dylan programmer to have to deal with
 an explicit <code class="docutils literal notranslate"><span class="pre">Any</span></code> type, it allows the typecode to be preserved
 across requests and replies in cases where it matters.</p>
@@ -1823,7 +1825,7 @@ these cases the <code class="docutils literal notranslate"><span class="pre">Dyn
 data inside the <code class="docutils literal notranslate"><span class="pre">Any</span></code>.</p>
 </section>
 <section id="id66">
-<h5>Examples<a class="headerlink" href="#id66" title="Permalink to this heading">#</a></h5>
+<h5>Examples<a class="headerlink" href="#id66" title="Permalink to this heading">¶</a></h5>
 <div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>IDL
 <span class="nb">long</span><span class="w"> </span>goedel_number(in<span class="w"> </span>any<span class="w"> </span>thing);
 </pre></div>
@@ -1841,23 +1843,23 @@ data inside the <code class="docutils literal notranslate"><span class="pre">Any
 </section>
 </section>
 <section id="mapping-for-constructed-types">
-<h3>Mapping for constructed types<a class="headerlink" href="#mapping-for-constructed-types" title="Permalink to this heading">#</a></h3>
+<h3>Mapping for constructed types<a class="headerlink" href="#mapping-for-constructed-types" title="Permalink to this heading">¶</a></h3>
 <section id="mapping-for-typedefs">
-<h4>Mapping for typedefs<a class="headerlink" href="#mapping-for-typedefs" title="Permalink to this heading">#</a></h4>
+<h4>Mapping for typedefs<a class="headerlink" href="#mapping-for-typedefs" title="Permalink to this heading">¶</a></h4>
 <section id="id67">
-<h5>Background<a class="headerlink" href="#id67" title="Permalink to this heading">#</a></h5>
+<h5>Background<a class="headerlink" href="#id67" title="Permalink to this heading">¶</a></h5>
 <p>An IDL <code class="docutils literal notranslate"><span class="pre">typedef</span></code> declaration introduces aliases for a given type.</p>
 <p>Dylan has a single namespace for identifiers and so no separate
 defining form is needed to introduce a new alias for a class.</p>
 </section>
 <section id="id68">
-<h5>Specification<a class="headerlink" href="#id68" title="Permalink to this heading">#</a></h5>
+<h5>Specification<a class="headerlink" href="#id68" title="Permalink to this heading">¶</a></h5>
 <p>An IDL <code class="docutils literal notranslate"><span class="pre">typedef</span></code> declaration shall be mapped to as many Dylan
 <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">constant</span></code> definitions as there are declarators being
 introduced by the IDL declaration.</p>
 </section>
 <section id="id69">
-<h5>Examples<a class="headerlink" href="#id69" title="Permalink to this heading">#</a></h5>
+<h5>Examples<a class="headerlink" href="#id69" title="Permalink to this heading">¶</a></h5>
 <div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>IDL
 typedef<span class="w"> </span>short<span class="w"> </span>mozart_symphony_no,<span class="w"> </span>layston_park_house_no;
 </pre></div>
@@ -1870,13 +1872,13 @@ typedef<span class="w"> </span>short<span class="w"> </span>mozart_symphony_no,<
 </section>
 </section>
 <section id="mapping-for-enumeration-types">
-<h4>Mapping for enumeration types<a class="headerlink" href="#mapping-for-enumeration-types" title="Permalink to this heading">#</a></h4>
+<h4>Mapping for enumeration types<a class="headerlink" href="#mapping-for-enumeration-types" title="Permalink to this heading">¶</a></h4>
 <section id="id70">
-<h5>Background<a class="headerlink" href="#id70" title="Permalink to this heading">#</a></h5>
+<h5>Background<a class="headerlink" href="#id70" title="Permalink to this heading">¶</a></h5>
 <p>An IDL enumerated type consists of ordered lists of identifiers.</p>
 </section>
 <section id="id71">
-<h5>Specification<a class="headerlink" href="#id71" title="Permalink to this heading">#</a></h5>
+<h5>Specification<a class="headerlink" href="#id71" title="Permalink to this heading">¶</a></h5>
 <p>An IDL enumerated type shall be mapped to a type union of singleton
 symbol types. In addition, four sealed generic functions shall be
 defined on the enumerated type (as if in its scope) for traversing and
@@ -1886,7 +1888,7 @@ comparing the enumerated values: <code class="docutils literal notranslate"><spa
 enumeration.</p>
 </section>
 <section id="id72">
-<h5>Rationale<a class="headerlink" href="#id72" title="Permalink to this heading">#</a></h5>
+<h5>Rationale<a class="headerlink" href="#id72" title="Permalink to this heading">¶</a></h5>
 <p>This is the straightforward implementation of enumerated types
 described in [DP 97]. We retain this basic format with a view to
 benefiting from the compiler optimizations encouraged in [DP
@@ -1894,7 +1896,7 @@ benefiting from the compiler optimizations encouraged in [DP
 functions for convenience.</p>
 </section>
 <section id="id73">
-<h5>Examples<a class="headerlink" href="#id73" title="Permalink to this heading">#</a></h5>
+<h5>Examples<a class="headerlink" href="#id73" title="Permalink to this heading">¶</a></h5>
 <div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>IDL
 enum<span class="w"> </span>planet<span class="w"> </span>{Mercury,<span class="w"> </span>Venus,<span class="w"> </span>Earth,<span class="w"> </span>Mars,
 <span class="w">             </span>Jupiter,<span class="w"> </span>Saturn,<span class="w"> </span>Uranus,<span class="w"> </span>Neptune,<span class="w"> </span>Pluto};
@@ -1923,15 +1925,15 @@ enum<span class="w"> </span>planet<span class="w"> </span>{Mercury,<span class="
 </section>
 </section>
 <section id="mapping-for-structure-types">
-<h4>Mapping for structure types<a class="headerlink" href="#mapping-for-structure-types" title="Permalink to this heading">#</a></h4>
+<h4>Mapping for structure types<a class="headerlink" href="#mapping-for-structure-types" title="Permalink to this heading">¶</a></h4>
 <section id="id74">
-<h5>Background<a class="headerlink" href="#id74" title="Permalink to this heading">#</a></h5>
+<h5>Background<a class="headerlink" href="#id74" title="Permalink to this heading">¶</a></h5>
 <p>IDL defines a <code class="docutils literal notranslate"><span class="pre">structure</span></code> type that aggregates together multiple
 pieces of data of potentially heterogeneous types.</p>
 <p>Dylan programmers define new classes for this purpose.</p>
 </section>
 <section id="id75">
-<h5>Specification<a class="headerlink" href="#id75" title="Permalink to this heading">#</a></h5>
+<h5>Specification<a class="headerlink" href="#id75" title="Permalink to this heading">¶</a></h5>
 <p>An IDL structure shall be mapped to a sealed, concrete, Dylan subclass
 of <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;struct&gt;</span></code> together with pairs of sealed getter and setter
 generic functions and a required initialization keyword for each
@@ -1943,7 +1945,7 @@ structure. Furthermore the Dylan protocol functions <a class="reference external
 <a class="reference external" href="https://opendylan.org/books/drm/Constructing_and_Initializing_Instances#initialize"><code class="xref drm docutils literal notranslate"><span class="pre">initialize</span></code></a> shall be sealed over the domain of the mapped class.</p>
 </section>
 <section id="id76">
-<h5>Rationale<a class="headerlink" href="#id76" title="Permalink to this heading">#</a></h5>
+<h5>Rationale<a class="headerlink" href="#id76" title="Permalink to this heading">¶</a></h5>
 <p>The Dylan class, the getters, the setters, and initializers, are
 defined to be sealed in the anticipation that operations on structures
 are expected to be as efficient as possible without any need for
@@ -1958,7 +1960,7 @@ complicated defaulting rules.</p>
 <code class="docutils literal notranslate"><span class="pre">instance?</span></code> tests.</p>
 </section>
 <section id="id77">
-<h5>Examples<a class="headerlink" href="#id77" title="Permalink to this heading">#</a></h5>
+<h5>Examples<a class="headerlink" href="#id77" title="Permalink to this heading">¶</a></h5>
 <div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>IDL
 struct<span class="w"> </span>meeting<span class="w"> </span>{
 <span class="w">  </span><span class="nb">string</span><span class="w"> </span>topic,<span class="w"> </span>venue,<span class="w"> </span>convenor;
@@ -2009,9 +2011,9 @@ struct<span class="w"> </span>meeting<span class="w"> </span>{
 </section>
 </section>
 <section id="mapping-for-discriminated-union-type">
-<h4>Mapping for discriminated union type<a class="headerlink" href="#mapping-for-discriminated-union-type" title="Permalink to this heading">#</a></h4>
+<h4>Mapping for discriminated union type<a class="headerlink" href="#mapping-for-discriminated-union-type" title="Permalink to this heading">¶</a></h4>
 <section id="id78">
-<h5>Background<a class="headerlink" href="#id78" title="Permalink to this heading">#</a></h5>
+<h5>Background<a class="headerlink" href="#id78" title="Permalink to this heading">¶</a></h5>
 <p>IDL defines a <code class="docutils literal notranslate"><span class="pre">union</span></code> type that allows data of heterogeneous types
 used interchangeably in places like parameters, results, arrays, and
 sequences. An explicit tag called a discriminator is used to determine
@@ -2020,7 +2022,7 @@ the type of the data in a given object that is of the union type.</p>
 explicit tagging mechanism.</p>
 </section>
 <section id="id79">
-<h5>Specification<a class="headerlink" href="#id79" title="Permalink to this heading">#</a></h5>
+<h5>Specification<a class="headerlink" href="#id79" title="Permalink to this heading">¶</a></h5>
 <p>An IDL union type shall be mapped to a sealed, concrete, Dylan
 subclass of <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;union&gt;</span></code> with pairs of sealed getter and setter
 functions and an initialization keyword for each union branch. Every
@@ -2054,7 +2056,7 @@ sealed methods on the Dylan <a class="reference external" href="https://opendyla
 undefined which discriminator is used in ambiguous cases.</p>
 </section>
 <section id="id80">
-<h5>Rationale<a class="headerlink" href="#id80" title="Permalink to this heading">#</a></h5>
+<h5>Rationale<a class="headerlink" href="#id80" title="Permalink to this heading">¶</a></h5>
 <p>Although it is unnatural for a Dylan programmer to have to manipulate
 explicit union discriminators, there are ambiguous cases that require
 this explicit treatment. By reifying the union the Dylan programmer is
@@ -2067,7 +2069,7 @@ are implemented by slots.</p>
 <code class="docutils literal notranslate"><span class="pre">instance?</span></code> tests.</p>
 </section>
 <section id="id81">
-<h5>Examples<a class="headerlink" href="#id81" title="Permalink to this heading">#</a></h5>
+<h5>Examples<a class="headerlink" href="#id81" title="Permalink to this heading">¶</a></h5>
 <div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>IDL
 union<span class="w"> </span>RLE_entity<span class="w"> </span><span class="k">switch</span><span class="w"> </span>(short)<span class="w"> </span>{
 <span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="w"> </span><span class="nb">long</span><span class="w"> </span>length;
@@ -2115,9 +2117,9 @@ union<span class="w"> </span>RLE_entity<span class="w"> </span><span class="k">s
 </section>
 </section>
 <section id="mapping-for-sequence-type">
-<h4>Mapping for sequence type<a class="headerlink" href="#mapping-for-sequence-type" title="Permalink to this heading">#</a></h4>
+<h4>Mapping for sequence type<a class="headerlink" href="#mapping-for-sequence-type" title="Permalink to this heading">¶</a></h4>
 <section id="id82">
-<h5>Background<a class="headerlink" href="#id82" title="Permalink to this heading">#</a></h5>
+<h5>Background<a class="headerlink" href="#id82" title="Permalink to this heading">¶</a></h5>
 <p>IDL defines a <code class="docutils literal notranslate"><span class="pre">sequence</span></code> type. A sequence is a one-dimensional array
 with an element type, an optional maximum size (fixed at compile
 time), and a current length (determined at run time).</p>
@@ -2125,7 +2127,7 @@ time), and a current length (determined at run time).</p>
 itself.</p>
 </section>
 <section id="id83">
-<h5>Specification<a class="headerlink" href="#id83" title="Permalink to this heading">#</a></h5>
+<h5>Specification<a class="headerlink" href="#id83" title="Permalink to this heading">¶</a></h5>
 <p>The IDL <code class="docutils literal notranslate"><span class="pre">sequence</span></code> type shall be mapped onto the a new Dylan
 <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;sequence&gt;</span></code> class that shall be an alias for or a subclass of
 the Dylan <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#stretchy-vector"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;stretchy-vector&gt;</span></code></a> class. An element type shall be
@@ -2133,12 +2135,12 @@ mapped to a <code class="docutils literal notranslate"><span class="pre">limited
 size is not modeled in Dylan and must be checked on marshalling.</p>
 </section>
 <section id="id84">
-<h5>Rationale<a class="headerlink" href="#id84" title="Permalink to this heading">#</a></h5>
+<h5>Rationale<a class="headerlink" href="#id84" title="Permalink to this heading">¶</a></h5>
 <p>Dylan’s <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#stretchy-vector"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;stretchy-vector&gt;</span></code></a> class appears closest in intent to
 IDL’s <code class="docutils literal notranslate"><span class="pre">sequence</span></code> type.</p>
 </section>
 <section id="id85">
-<h5>Examples<a class="headerlink" href="#id85" title="Permalink to this heading">#</a></h5>
+<h5>Examples<a class="headerlink" href="#id85" title="Permalink to this heading">¶</a></h5>
 <div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>IDL
 typedef<span class="w"> </span>sequence<span class="o">&lt;</span><span class="nb">long</span>,<span class="w"> </span>CHAIN<span class="o">-</span><span class="nb">MAX</span><span class="o">&gt;</span><span class="w"> </span>chromosomes;
 </pre></div>
@@ -2151,9 +2153,9 @@ typedef<span class="w"> </span>sequence<span class="o">&lt;</span><span class="n
 </section>
 </section>
 <section id="mapping-for-string-type">
-<h4>Mapping for string type<a class="headerlink" href="#mapping-for-string-type" title="Permalink to this heading">#</a></h4>
+<h4>Mapping for string type<a class="headerlink" href="#mapping-for-string-type" title="Permalink to this heading">¶</a></h4>
 <section id="id86">
-<h5>Background<a class="headerlink" href="#id86" title="Permalink to this heading">#</a></h5>
+<h5>Background<a class="headerlink" href="#id86" title="Permalink to this heading">¶</a></h5>
 <p>IDL defines a <code class="docutils literal notranslate"><span class="pre">string</span></code> type. A string is a one-dimensional array of
 all possible 8-bit quantities except NUL, with an optional maximum
 size.</p>
@@ -2162,20 +2164,20 @@ size.</p>
 <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#unicode-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;unicode-string&gt;</span></code></a> classes.</p>
 </section>
 <section id="id87">
-<h5>Specification<a class="headerlink" href="#id87" title="Permalink to this heading">#</a></h5>
+<h5>Specification<a class="headerlink" href="#id87" title="Permalink to this heading">¶</a></h5>
 <p>The IDL <code class="docutils literal notranslate"><span class="pre">string</span></code> type shall be mapped onto a Dylan
 <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;string&gt;</span></code> class that shall be an alias for or a subclass of
 the Dylan <code class="docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code> class.</p>
 </section>
 <section id="id88">
-<h5>Rationale<a class="headerlink" href="#id88" title="Permalink to this heading">#</a></h5>
+<h5>Rationale<a class="headerlink" href="#id88" title="Permalink to this heading">¶</a></h5>
 <p>The <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a> class is not mandated in the mapping to
 retain the flexibility and efficiency of the underlying Dylan
 implementation. The effect of storing a NUL in a <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;string&gt;</span></code>
 that is passed as an argument to a request is undefined.</p>
 </section>
 <section id="id89">
-<h5>Examples<a class="headerlink" href="#id89" title="Permalink to this heading">#</a></h5>
+<h5>Examples<a class="headerlink" href="#id89" title="Permalink to this heading">¶</a></h5>
 <div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>IDL
 typedef<span class="w"> </span><span class="nb">string</span><span class="w"> </span>constellation;
 </pre></div>
@@ -2187,24 +2189,24 @@ typedef<span class="w"> </span><span class="nb">string</span><span class="w"> </
 </section>
 </section>
 <section id="mapping-for-wide-string-type">
-<h4>Mapping for wide string type<a class="headerlink" href="#mapping-for-wide-string-type" title="Permalink to this heading">#</a></h4>
+<h4>Mapping for wide string type<a class="headerlink" href="#mapping-for-wide-string-type" title="Permalink to this heading">¶</a></h4>
 <section id="id90">
-<h5>Background<a class="headerlink" href="#id90" title="Permalink to this heading">#</a></h5>
+<h5>Background<a class="headerlink" href="#id90" title="Permalink to this heading">¶</a></h5>
 <p>The IDL <code class="docutils literal notranslate"><span class="pre">wstring</span></code> data type represents a sequence of <code class="docutils literal notranslate"><span class="pre">wchar</span></code> elements.</p>
 <p>Dylan defines a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#unicode-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;unicode-string&gt;</span></code></a> type.</p>
 </section>
 <section id="id91">
-<h5>Specification<a class="headerlink" href="#id91" title="Permalink to this heading">#</a></h5>
+<h5>Specification<a class="headerlink" href="#id91" title="Permalink to this heading">¶</a></h5>
 <p>The <code class="docutils literal notranslate"><span class="pre">wstring</span></code> type shall be mapped to the Dylan type
 <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;wstring&gt;</span></code> which shall be an alias for
 <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#unicode-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;unicode-string&gt;</span></code></a>.</p>
 </section>
 <section id="id92">
-<h5>Rationale<a class="headerlink" href="#id92" title="Permalink to this heading">#</a></h5>
+<h5>Rationale<a class="headerlink" href="#id92" title="Permalink to this heading">¶</a></h5>
 <p>The natural mapping to Dylan.</p>
 </section>
 <section id="id93">
-<h5>Examples<a class="headerlink" href="#id93" title="Permalink to this heading">#</a></h5>
+<h5>Examples<a class="headerlink" href="#id93" title="Permalink to this heading">¶</a></h5>
 <div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>IDL
 typedef<span class="w"> </span>wstring<span class="w"> </span>local_name;
 </pre></div>
@@ -2216,28 +2218,28 @@ typedef<span class="w"> </span>wstring<span class="w"> </span>local_name;
 </section>
 </section>
 <section id="mapping-for-array-type">
-<h4>Mapping for array type<a class="headerlink" href="#mapping-for-array-type" title="Permalink to this heading">#</a></h4>
+<h4>Mapping for array type<a class="headerlink" href="#mapping-for-array-type" title="Permalink to this heading">¶</a></h4>
 <section id="id94">
-<h5>Background<a class="headerlink" href="#id94" title="Permalink to this heading">#</a></h5>
+<h5>Background<a class="headerlink" href="#id94" title="Permalink to this heading">¶</a></h5>
 <p>IDL defines an <code class="docutils literal notranslate"><span class="pre">array</span></code> type for multidimensional fixed-size arrays,
 with explicit sizes for each dimension.</p>
 <p>Dylan has a similar <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#array"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;array&gt;</span></code></a> class.</p>
 </section>
 <section id="id95">
-<h5>Specification<a class="headerlink" href="#id95" title="Permalink to this heading">#</a></h5>
+<h5>Specification<a class="headerlink" href="#id95" title="Permalink to this heading">¶</a></h5>
 <p>The IDL array type shall be mapped onto the Dylan <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;array&gt;</span></code>
 class. The new class shall be an alias for or a subclass of the Dylan
 <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#array"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;array&gt;</span></code></a> class. An element type shall be mapped to a limited
 type of <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;array&gt;</span></code>.</p>
 </section>
 <section id="id96">
-<h5>Rationale<a class="headerlink" href="#id96" title="Permalink to this heading">#</a></h5>
+<h5>Rationale<a class="headerlink" href="#id96" title="Permalink to this heading">¶</a></h5>
 <p>This is the straightforward, natural mapping, albeit hidden behind a
 CORBA-specific class for portability across implementations and
 versions.</p>
 </section>
 <section id="id97">
-<h5>Examples<a class="headerlink" href="#id97" title="Permalink to this heading">#</a></h5>
+<h5>Examples<a class="headerlink" href="#id97" title="Permalink to this heading">¶</a></h5>
 <div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>IDL
 typedef<span class="w"> </span><span class="nb">long</span><span class="w"> </span>tensor[<span class="mi">3</span>][<span class="mi">3</span>][<span class="mi">3</span>];
 </pre></div>
@@ -2252,9 +2254,9 @@ typedef<span class="w"> </span><span class="nb">long</span><span class="w"> </sp
 </section>
 </section>
 <section id="mapping-for-exceptions">
-<h3>Mapping for exceptions<a class="headerlink" href="#mapping-for-exceptions" title="Permalink to this heading">#</a></h3>
+<h3>Mapping for exceptions<a class="headerlink" href="#mapping-for-exceptions" title="Permalink to this heading">¶</a></h3>
 <section id="id98">
-<h4>Background<a class="headerlink" href="#id98" title="Permalink to this heading">#</a></h4>
+<h4>Background<a class="headerlink" href="#id98" title="Permalink to this heading">¶</a></h4>
 <p>IDL defines exceptions as:</p>
 <blockquote>
 <div><p>… struct-like data structures which may be returned to indicate
@@ -2265,7 +2267,7 @@ of a request.</p>
 handling facility.</p>
 </section>
 <section id="id99">
-<h4>Specification<a class="headerlink" href="#id99" title="Permalink to this heading">#</a></h4>
+<h4>Specification<a class="headerlink" href="#id99" title="Permalink to this heading">¶</a></h4>
 <p>IDL exceptions shall be mapped onto sealed Dylan conditions that are
 subclasses of <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;user-exception&gt;</span></code>, which shall be a subtype of
 <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;exception&gt;</span></code>, which itself shall be a subtype of the Dylan
@@ -2283,11 +2285,11 @@ CORBA runtime and not returned or passed as arguments.</p>
 <code class="docutils literal notranslate"><span class="pre">CORBA/&lt;exception&gt;</span></code>.</p>
 </section>
 <section id="id100">
-<h4>Rationale<a class="headerlink" href="#id100" title="Permalink to this heading">#</a></h4>
+<h4>Rationale<a class="headerlink" href="#id100" title="Permalink to this heading">¶</a></h4>
 <p>This is the natural mapping of IDL exceptions into the Dylan language.</p>
 </section>
 <section id="id101">
-<h4>Examples<a class="headerlink" href="#id101" title="Permalink to this heading">#</a></h4>
+<h4>Examples<a class="headerlink" href="#id101" title="Permalink to this heading">¶</a></h4>
 <div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>IDL
 exception<span class="w"> </span>melt_down<span class="w"> </span>{
 <span class="w">  </span>short<span class="w"> </span>seconds_remaining;
@@ -2307,9 +2309,9 @@ exception<span class="w"> </span>melt_down<span class="w"> </span>{
 </section>
 </section>
 <section id="mapping-for-operations">
-<h3>Mapping for operations<a class="headerlink" href="#mapping-for-operations" title="Permalink to this heading">#</a></h3>
+<h3>Mapping for operations<a class="headerlink" href="#mapping-for-operations" title="Permalink to this heading">¶</a></h3>
 <section id="id102">
-<h4>Background<a class="headerlink" href="#id102" title="Permalink to this heading">#</a></h4>
+<h4>Background<a class="headerlink" href="#id102" title="Permalink to this heading">¶</a></h4>
 <p>IDL uses operations as the basic means by which CORBA-compliant
 programs communicate with each other. Operation declarations are akin
 to C function declarations, but they also have to deal with parameter
@@ -2319,7 +2321,7 @@ defined within the scope of an interface.</p>
 programs. The generic functions are implemented by methods.</p>
 </section>
 <section id="id103">
-<h4>Specification<a class="headerlink" href="#id103" title="Permalink to this heading">#</a></h4>
+<h4>Specification<a class="headerlink" href="#id103" title="Permalink to this heading">¶</a></h4>
 <p>An IDL operation shall be mapped to an open Dylan generic
 function. The generic function name is subject to the usual identifier
 translation specified earlier. It shall be an error to call the
@@ -2352,16 +2354,16 @@ invoked, an operation’s context keyword argument shall be filled by
 applying the proper names to the given client context.</p>
 </section>
 <section id="id104">
-<h4>Rationale<a class="headerlink" href="#id104" title="Permalink to this heading">#</a></h4>
+<h4>Rationale<a class="headerlink" href="#id104" title="Permalink to this heading">¶</a></h4>
 <p>This is the natural mapping. The generic function is open to allow the
 server module to implement the function by adding methods.</p>
 <p>Contexts are mapped are keyword arguments so that client code does not
 have to worry about them by default.</p>
 </section>
 <section id="id105">
-<h4>Examples<a class="headerlink" href="#id105" title="Permalink to this heading">#</a></h4>
+<h4>Examples<a class="headerlink" href="#id105" title="Permalink to this heading">¶</a></h4>
 <section id="in-parameters">
-<h5>In Parameters<a class="headerlink" href="#in-parameters" title="Permalink to this heading">#</a></h5>
+<h5>In Parameters<a class="headerlink" href="#in-parameters" title="Permalink to this heading">¶</a></h5>
 <div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>IDL
 interface<span class="w"> </span>stealth<span class="w"> </span>{
 <span class="w">  </span>exception<span class="w"> </span>power_failure<span class="w"> </span>{};
@@ -2387,7 +2389,7 @@ interface<span class="w"> </span>stealth<span class="w"> </span>{
 </div>
 </section>
 <section id="out-parameters">
-<h5>Out Parameters<a class="headerlink" href="#out-parameters" title="Permalink to this heading">#</a></h5>
+<h5>Out Parameters<a class="headerlink" href="#out-parameters" title="Permalink to this heading">¶</a></h5>
 <div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>IDL
 interface<span class="w"> </span>fuel_cell<span class="w"> </span><span class="o">:</span><span class="w"> </span>power_source<span class="w"> </span>{
 <span class="w">  </span>short<span class="w"> </span>burn_hydrogen
@@ -2407,7 +2409,7 @@ interface<span class="w"> </span>fuel_cell<span class="w"> </span><span class="o
 </div>
 </section>
 <section id="inout-parameters">
-<h5>InOut Parameters<a class="headerlink" href="#inout-parameters" title="Permalink to this heading">#</a></h5>
+<h5>InOut Parameters<a class="headerlink" href="#inout-parameters" title="Permalink to this heading">¶</a></h5>
 <div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>IDL
 interface<span class="w"> </span>frame<span class="w"> </span>{
 <span class="w">  </span>void<span class="w"> </span>request<span class="o">-</span>sizes<span class="w"> </span>(inout<span class="w"> </span><span class="nb">long</span><span class="w"> </span>width,<span class="w"> </span>inout<span class="w"> </span><span class="nb">long</span><span class="w"> </span>height);
@@ -2430,9 +2432,9 @@ interface<span class="w"> </span>frame<span class="w"> </span>{
 </section>
 </section>
 <section id="mapping-for-attributes">
-<h3>Mapping for attributes<a class="headerlink" href="#mapping-for-attributes" title="Permalink to this heading">#</a></h3>
+<h3>Mapping for attributes<a class="headerlink" href="#mapping-for-attributes" title="Permalink to this heading">¶</a></h3>
 <section id="id106">
-<h4>Background<a class="headerlink" href="#id106" title="Permalink to this heading">#</a></h4>
+<h4>Background<a class="headerlink" href="#id106" title="Permalink to this heading">¶</a></h4>
 <p>IDL attributes implicitly define a pair of accessor functions, one for
 retrieving the value of the attribute, and another for setting its
 value. The names of the accessor functions are language-mapping
@@ -2442,7 +2444,7 @@ in IDL. Attributes may be defined as <code class="docutils literal notranslate">
 slots.</p>
 </section>
 <section id="id107">
-<h4>Specification<a class="headerlink" href="#id107" title="Permalink to this heading">#</a></h4>
+<h4>Specification<a class="headerlink" href="#id107" title="Permalink to this heading">¶</a></h4>
 <p>IDL attributes shall be mapped to a pair of open generic functions,
 one getter and one setter. The names of the functions shall be derived
 by the usual identifier translation rules, with the addition that the
@@ -2454,7 +2456,7 @@ from the IDL attribute definition.</p>
 then the mapped attribute name shall have <code class="docutils literal notranslate"><span class="pre">%</span></code> prepended.</p>
 </section>
 <section id="id108">
-<h4>Rationale<a class="headerlink" href="#id108" title="Permalink to this heading">#</a></h4>
+<h4>Rationale<a class="headerlink" href="#id108" title="Permalink to this heading">¶</a></h4>
 <p>It is not necessary to specify whether the generic functions are
 defined by virtual slots.</p>
 <p>The identifier translation rules prevent potential name collisions
@@ -2468,7 +2470,7 @@ probably then have to be rewritten in order to continue to get at the
 old attribute.</p>
 </section>
 <section id="id109">
-<h4>Examples<a class="headerlink" href="#id109" title="Permalink to this heading">#</a></h4>
+<h4>Examples<a class="headerlink" href="#id109" title="Permalink to this heading">¶</a></h4>
 <div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>IDL
 interface<span class="w"> </span>prisoners_dilemma<span class="w"> </span>{
 <span class="w">  </span>attribute<span class="w"> </span>short<span class="w"> </span>mutual_cooperation_reward;
@@ -2496,7 +2498,7 @@ interface<span class="w"> </span>prisoners_dilemma<span class="w"> </span>{
 </section>
 </section>
 <section id="memory-management-considerations">
-<h3>Memory management considerations<a class="headerlink" href="#memory-management-considerations" title="Permalink to this heading">#</a></h3>
+<h3>Memory management considerations<a class="headerlink" href="#memory-management-considerations" title="Permalink to this heading">¶</a></h3>
 <p>Dylan is a garbage-collected language, however a Dylan program may be
 interacting, via an ORB, with remote data in another address space,
 and/or with local data not built using the same Dylan implementation
@@ -2514,7 +2516,7 @@ management protocol will be explicitly described in IDL as part of the
 contract between the interoperating programs.</p>
 </section>
 <section id="multi-threading-considerations">
-<h3>Multi-threading considerations<a class="headerlink" href="#multi-threading-considerations" title="Permalink to this heading">#</a></h3>
+<h3>Multi-threading considerations<a class="headerlink" href="#multi-threading-considerations" title="Permalink to this heading">¶</a></h3>
 <p>It should be assumed that invocation of a CORBA operation from Dylan
 is not thread-safe. That is, if two threads in a Dylan program invoke
 the same operation it is not guaranteed that they will be properly
@@ -2525,11 +2527,11 @@ program or just the thread is blocked.</p>
 </section>
 </section>
 <section id="the-mapping-of-pseudo-objects-to-dylan">
-<h2>The mapping of pseudo-objects to Dylan<a class="headerlink" href="#the-mapping-of-pseudo-objects-to-dylan" title="Permalink to this heading">#</a></h2>
+<h2>The mapping of pseudo-objects to Dylan<a class="headerlink" href="#the-mapping-of-pseudo-objects-to-dylan" title="Permalink to this heading">¶</a></h2>
 <section id="id110">
-<h3>Introduction<a class="headerlink" href="#id110" title="Permalink to this heading">#</a></h3>
+<h3>Introduction<a class="headerlink" href="#id110" title="Permalink to this heading">¶</a></h3>
 <section id="id111">
-<h4>Background<a class="headerlink" href="#id111" title="Permalink to this heading">#</a></h4>
+<h4>Background<a class="headerlink" href="#id111" title="Permalink to this heading">¶</a></h4>
 <p>In addition to defining how application objects and data are accessed,
 a language mapping must describe how to access some services
 implemented directly by the ORB. These services are concerned with
@@ -2550,7 +2552,7 @@ access methods.</p>
 particularly clumsy for a given programming language.</p>
 </section>
 <section id="id112">
-<h4>Specification<a class="headerlink" href="#id112" title="Permalink to this heading">#</a></h4>
+<h4>Specification<a class="headerlink" href="#id112" title="Permalink to this heading">¶</a></h4>
 <p>The IDL pseudo-object interfaces shall be mapped according to the
 Dylan language binding as specified in the earlier parts of this
 document, except where it explicitly deviates. In some cases, also
@@ -2559,7 +2561,7 @@ that is more convenient for Dylan programmers. A conforming Dylan
 language mapping shall support both interfaces.</p>
 </section>
 <section id="id113">
-<h4>Rationale<a class="headerlink" href="#id113" title="Permalink to this heading">#</a></h4>
+<h4>Rationale<a class="headerlink" href="#id113" title="Permalink to this heading">¶</a></h4>
 <p>The pseudo object approach is taken so that experienced CORBA
 developers can leverage more of their knowledge and so that any new
 pseudo-object services defined by the OMG will automatically be
@@ -2573,26 +2575,26 @@ the following sections.</p>
 </section>
 </section>
 <section id="orb-interface">
-<h3>ORB Interface<a class="headerlink" href="#orb-interface" title="Permalink to this heading">#</a></h3>
+<h3>ORB Interface<a class="headerlink" href="#orb-interface" title="Permalink to this heading">¶</a></h3>
 <section id="object-references">
-<h4>Object references<a class="headerlink" href="#object-references" title="Permalink to this heading">#</a></h4>
+<h4>Object references<a class="headerlink" href="#object-references" title="Permalink to this heading">¶</a></h4>
 <section id="id114">
-<h5>Background<a class="headerlink" href="#id114" title="Permalink to this heading">#</a></h5>
+<h5>Background<a class="headerlink" href="#id114" title="Permalink to this heading">¶</a></h5>
 <p>All CORBA interfaces inherit from the <code class="docutils literal notranslate"><span class="pre">CORBA::Object</span></code> interface.</p>
 </section>
 <section id="id115">
-<h5>Specification<a class="headerlink" href="#id115" title="Permalink to this heading">#</a></h5>
+<h5>Specification<a class="headerlink" href="#id115" title="Permalink to this heading">¶</a></h5>
 <p>An IDL interface shall be mapped to a reference class that is a direct
 or indirect subclass of both the interface class itself and
 <code class="docutils literal notranslate"><span class="pre">corba/&lt;object&gt;</span></code>.</p>
 </section>
 <section id="id116">
-<h5>Rationale<a class="headerlink" href="#id116" title="Permalink to this heading">#</a></h5>
+<h5>Rationale<a class="headerlink" href="#id116" title="Permalink to this heading">¶</a></h5>
 <p>This allows object references and servants to inherit from the same
 protocol class and yet retain their own separate behaviors.</p>
 </section>
 <section id="example">
-<h5>Example<a class="headerlink" href="#example" title="Permalink to this heading">#</a></h5>
+<h5>Example<a class="headerlink" href="#example" title="Permalink to this heading">¶</a></h5>
 <div class="highlight-idl notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="w"> </span>IDL
 interface<span class="w"> </span>ion<span class="w"> </span>{};
 </pre></div>
@@ -2609,25 +2611,25 @@ interface<span class="w"> </span>ion<span class="w"> </span>{};
 </section>
 </section>
 <section id="object-reference-equality">
-<h4>Object reference equality<a class="headerlink" href="#object-reference-equality" title="Permalink to this heading">#</a></h4>
+<h4>Object reference equality<a class="headerlink" href="#object-reference-equality" title="Permalink to this heading">¶</a></h4>
 <section id="id117">
-<h5>Background<a class="headerlink" href="#id117" title="Permalink to this heading">#</a></h5>
+<h5>Background<a class="headerlink" href="#id117" title="Permalink to this heading">¶</a></h5>
 <p>CORBA allows for (imprecise) equality testing via
 <code class="docutils literal notranslate"><span class="pre">corba::object::is_equivalent</span></code>.</p>
 </section>
 <section id="id118">
-<h5>Specification<a class="headerlink" href="#id118" title="Permalink to this heading">#</a></h5>
+<h5>Specification<a class="headerlink" href="#id118" title="Permalink to this heading">¶</a></h5>
 <p>In addition to mapping the PIDL function above to
 <code class="docutils literal notranslate"><span class="pre">corba/object/is-equivalent</span></code>, a Dylan ORB shall provide a method on
 <code class="docutils literal notranslate"><span class="pre">=</span></code> that performs the same function.</p>
 </section>
 <section id="id119">
-<h5>Rationale<a class="headerlink" href="#id119" title="Permalink to this heading">#</a></h5>
+<h5>Rationale<a class="headerlink" href="#id119" title="Permalink to this heading">¶</a></h5>
 <p>It is natural for Dylan programmers to want to use <code class="docutils literal notranslate"><span class="pre">=</span></code> on object
 references.</p>
 </section>
 <section id="id120">
-<h5>Example<a class="headerlink" href="#id120" title="Permalink to this heading">#</a></h5>
+<h5>Example<a class="headerlink" href="#id120" title="Permalink to this heading">¶</a></h5>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="c1">// Dylan</span>
 <span class="c1">// ...</span>
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">corba/object/is-equivalent</span><span class="p">(</span><span class="n">grid1</span><span class="p">,</span><span class="w"> </span><span class="n">grid2</span><span class="p">))</span>
@@ -2644,9 +2646,9 @@ references.</p>
 </section>
 </section>
 <section id="nil-object-references">
-<h4>Nil object references<a class="headerlink" href="#nil-object-references" title="Permalink to this heading">#</a></h4>
+<h4>Nil object references<a class="headerlink" href="#nil-object-references" title="Permalink to this heading">¶</a></h4>
 <section id="id121">
-<h5>Background<a class="headerlink" href="#id121" title="Permalink to this heading">#</a></h5>
+<h5>Background<a class="headerlink" href="#id121" title="Permalink to this heading">¶</a></h5>
 <p>CORBA allows for nil object references. These are returned from some
 operations to indicate situations where, for example, no real object
 reference could be found.</p>
@@ -2655,14 +2657,14 @@ rogue value <code class="docutils literal notranslate"><span class="pre">#f</spa
 <code class="docutils literal notranslate"><span class="pre">false-or(&lt;some-type&gt;)</span></code>.</p>
 </section>
 <section id="id122">
-<h5>Specification<a class="headerlink" href="#id122" title="Permalink to this heading">#</a></h5>
+<h5>Specification<a class="headerlink" href="#id122" title="Permalink to this heading">¶</a></h5>
 <p>NIL object references shall be mapped to interface-specific values
 that can be tested with <code class="docutils literal notranslate"><span class="pre">CORBA::is_nil</span></code>. A nil object reference for
 a particular interface shall be obtainable by calling the function
 <code class="docutils literal notranslate"><span class="pre">make-nil</span></code> on the associated protocol class.</p>
 </section>
 <section id="id123">
-<h5>Rationale<a class="headerlink" href="#id123" title="Permalink to this heading">#</a></h5>
+<h5>Rationale<a class="headerlink" href="#id123" title="Permalink to this heading">¶</a></h5>
 <p>Using <code class="docutils literal notranslate"><span class="pre">#f</span></code> to represent nil object references would be natural and
 convenient in some respects, notably during testing. However, all
 object reference type declarations would have to be wrapped with
@@ -2679,7 +2681,7 @@ is more easily passed to, or returned from, an operation than a more
 explicit nil reference.</p>
 </section>
 <section id="id124">
-<h5>Example<a class="headerlink" href="#id124" title="Permalink to this heading">#</a></h5>
+<h5>Example<a class="headerlink" href="#id124" title="Permalink to this heading">¶</a></h5>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="c1">// Dylan</span>
 <span class="k">let</span><span class="w"> </span><span class="n">philosopher</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">make-nil</span><span class="p">(</span><span class="nc">&lt;philosopher&gt;</span><span class="p">);</span>
 <span class="n">corba/object/is-nil</span><span class="p">(</span><span class="n">philosopher</span><span class="p">);</span><span class="w"> </span><span class="c1">// returns #t</span>
@@ -2689,21 +2691,21 @@ explicit nil reference.</p>
 </section>
 </section>
 <section id="dynamic-invocation-interface">
-<h3>Dynamic Invocation Interface<a class="headerlink" href="#dynamic-invocation-interface" title="Permalink to this heading">#</a></h3>
+<h3>Dynamic Invocation Interface<a class="headerlink" href="#dynamic-invocation-interface" title="Permalink to this heading">¶</a></h3>
 <section id="nvlist">
-<h4>NVList<a class="headerlink" href="#nvlist" title="Permalink to this heading">#</a></h4>
+<h4>NVList<a class="headerlink" href="#nvlist" title="Permalink to this heading">¶</a></h4>
 <section id="id125">
-<h5>Background<a class="headerlink" href="#id125" title="Permalink to this heading">#</a></h5>
+<h5>Background<a class="headerlink" href="#id125" title="Permalink to this heading">¶</a></h5>
 <p>CORBA NVLists are partially opaque in that they can normally only be
 created by the ORB <code class="docutils literal notranslate"><span class="pre">create_list</span></code> operation and added to by the
 <code class="docutils literal notranslate"><span class="pre">add_item</span></code> operation.</p>
 </section>
 <section id="id126">
-<h5>Specification<a class="headerlink" href="#id126" title="Permalink to this heading">#</a></h5>
+<h5>Specification<a class="headerlink" href="#id126" title="Permalink to this heading">¶</a></h5>
 <p>NVLists shall be mapped to CORBA sequences of NamedValues.</p>
 </section>
 <section id="id127">
-<h5>Rationale<a class="headerlink" href="#id127" title="Permalink to this heading">#</a></h5>
+<h5>Rationale<a class="headerlink" href="#id127" title="Permalink to this heading">¶</a></h5>
 <p>Since CORBA sequences shall be mapped to a type that supports the
 <code class="docutils literal notranslate"><span class="pre">&lt;stretchy-vector&gt;</span></code> protocol, they can be created and added to using
 the normal Dylan calls.</p>
@@ -2711,7 +2713,7 @@ the normal Dylan calls.</p>
 <code class="docutils literal notranslate"><span class="pre">add_item</span></code>.</p>
 </section>
 <section id="id128">
-<h5>Example<a class="headerlink" href="#id128" title="Permalink to this heading">#</a></h5>
+<h5>Example<a class="headerlink" href="#id128" title="Permalink to this heading">¶</a></h5>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="c1">// Dylan</span>
 <span class="k">let</span><span class="w"> </span><span class="n">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="n">corba/&lt;nvlist&gt;</span><span class="p">);</span>
 <span class="n">args</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">add!</span><span class="p">(</span><span class="n">args</span><span class="p">,</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="n">corba/&lt;namedvalue&gt;</span><span class="p">,</span>
@@ -2725,11 +2727,11 @@ the normal Dylan calls.</p>
 </section>
 </section>
 <section id="dynamic-skeleton-interface">
-<h3>Dynamic Skeleton Interface<a class="headerlink" href="#dynamic-skeleton-interface" title="Permalink to this heading">#</a></h3>
+<h3>Dynamic Skeleton Interface<a class="headerlink" href="#dynamic-skeleton-interface" title="Permalink to this heading">¶</a></h3>
 <section id="dynamic-implementation-routine">
-<h4>Dynamic Implementation Routine<a class="headerlink" href="#dynamic-implementation-routine" title="Permalink to this heading">#</a></h4>
+<h4>Dynamic Implementation Routine<a class="headerlink" href="#dynamic-implementation-routine" title="Permalink to this heading">¶</a></h4>
 <section id="id129">
-<h5>Background<a class="headerlink" href="#id129" title="Permalink to this heading">#</a></h5>
+<h5>Background<a class="headerlink" href="#id129" title="Permalink to this heading">¶</a></h5>
 <p>The Dynamic Implementation Routine (DIR) is intended to support a
 variety of uses, including dynamic programming/scripting languages,
 bridge building, debugging, monitoring, and so on.</p>
@@ -2741,7 +2743,7 @@ POA of the repository-ID of the most derived interface supported by
 the dynamic servant.</p>
 </section>
 <section id="id130">
-<h5>Specification<a class="headerlink" href="#id130" title="Permalink to this heading">#</a></h5>
+<h5>Specification<a class="headerlink" href="#id130" title="Permalink to this heading">¶</a></h5>
 <p>There shall be a subclass of <code class="docutils literal notranslate"><span class="pre">portableserver/&lt;servant&gt;</span></code> called
 <code class="docutils literal notranslate"><span class="pre">portableserver/&lt;dynamic-servant&gt;</span></code>. Instances of subclasses of this
 class registered with the adapter as servants for objects shall have
@@ -2773,13 +2775,13 @@ module<span class="w"> </span>PortableServer<span class="w"> </span>{
 </div>
 </section>
 <section id="id131">
-<h5>Rationale<a class="headerlink" href="#id131" title="Permalink to this heading">#</a></h5>
+<h5>Rationale<a class="headerlink" href="#id131" title="Permalink to this heading">¶</a></h5>
 <p>We just need to specify the function that is called on the registered
 servant for all operations, plus the auxiliary function for
 determining the repository-ID.</p>
 </section>
 <section id="id132">
-<h5>Example<a class="headerlink" href="#id132" title="Permalink to this heading">#</a></h5>
+<h5>Example<a class="headerlink" href="#id132" title="Permalink to this heading">¶</a></h5>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="c1">// Dylan</span>
 <span class="w"> </span><span class="k">define</span><span class="w"> </span><span class="nb">class</span><span class="w"> </span><span class="nc">&lt;buckstop&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">portableserver/&lt;dynamic-servant&gt;</span><span class="p">)</span>
 <span class="w"> </span><span class="k">end</span><span class="w"> </span><span class="nb">class</span><span class="p">;</span>
@@ -2803,16 +2805,16 @@ determining the repository-ID.</p>
 </section>
 </section>
 <section id="the-portable-object-adapter">
-<h3>The Portable Object Adapter<a class="headerlink" href="#the-portable-object-adapter" title="Permalink to this heading">#</a></h3>
+<h3>The Portable Object Adapter<a class="headerlink" href="#the-portable-object-adapter" title="Permalink to this heading">¶</a></h3>
 <section id="servants">
-<h4>Servants<a class="headerlink" href="#servants" title="Permalink to this heading">#</a></h4>
+<h4>Servants<a class="headerlink" href="#servants" title="Permalink to this heading">¶</a></h4>
 <section id="id133">
-<h5>Background<a class="headerlink" href="#id133" title="Permalink to this heading">#</a></h5>
+<h5>Background<a class="headerlink" href="#id133" title="Permalink to this heading">¶</a></h5>
 <p>The <code class="docutils literal notranslate"><span class="pre">PortableServer</span></code> module for the Portable Object Adapter (POA)
 defines the native <code class="docutils literal notranslate"><span class="pre">Servant</span></code> type.</p>
 </section>
 <section id="id134">
-<h5>Specification<a class="headerlink" href="#id134" title="Permalink to this heading">#</a></h5>
+<h5>Specification<a class="headerlink" href="#id134" title="Permalink to this heading">¶</a></h5>
 <p>The Dylan mapping for the Servant type shall be the open abstract
 class <code class="docutils literal notranslate"><span class="pre">portableserver/&lt;servant&gt;</span></code>.</p>
 <p>An IDL interface shall be mapped to a skeleton class that is a direct
@@ -2825,14 +2827,14 @@ mapping rules.</p>
 generated from the IDL.</p>
 </section>
 <section id="id135">
-<h5>Rationale<a class="headerlink" href="#id135" title="Permalink to this heading">#</a></h5>
+<h5>Rationale<a class="headerlink" href="#id135" title="Permalink to this heading">¶</a></h5>
 <dl class="simple">
 <dt>Only instances of subclasses of <code class="docutils literal notranslate"><span class="pre">portableserver/&lt;servant&gt;</span></code> should be</dt><dd><p>created.</p>
 </dd>
 </dl>
 </section>
 <section id="id136">
-<h5>Examples<a class="headerlink" href="#id136" title="Permalink to this heading">#</a></h5>
+<h5>Examples<a class="headerlink" href="#id136" title="Permalink to this heading">¶</a></h5>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="c1">// Dylan Skeleton (generated from IDL)</span>
 <span class="k">define</span><span class="w"> </span><span class="nb">class</span><span class="w"> </span><span class="nc">&lt;grid-servant&gt;</span>
 <span class="w">    </span><span class="p">(</span><span class="nc">&lt;grid&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">portableserver/&lt;servant&gt;</span><span class="p">)</span>
@@ -3233,6 +3235,6 @@ generated from the IDL.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Copyright" href="copyright.html" /><link rel="prev" title="A Tour of the DUIM Libraries" href="tour.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Source Code For The Task List Manager - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="source-code-for-the-task-list-manager">
-<span id="index-0"></span><h1>Source Code For The Task List Manager<a class="headerlink" href="#source-code-for-the-task-list-manager" title="Permalink to this heading">#</a></h1>
+<span id="index-0"></span><h1>Source Code For The Task List Manager<a class="headerlink" href="#source-code-for-the-task-list-manager" title="Permalink to this heading">¶</a></h1>
 <p>For completeness, here is the full source code for both versions of the
 task list manager. If you have followed the example given in <a class="reference internal" href="design.html"><span class="doc">Designing A Simple DUIM Application</span></a>
 through <a class="reference internal" href="commands.html"><span class="doc">Using Command Tables</span></a> from the beginning, then your code should be the
@@ -471,7 +473,7 @@ same as the code given in <a class="reference internal" href="#a-task-list-manag
 source code for the second version of the task list manager, using command
 tables, is given in <a class="reference internal" href="#a-task-list-manager-using-command-tables">A task list manager using command tables</a>.</p>
 <section id="a-task-list-manager-using-menu-gadgets">
-<span id="index-1"></span><h2>A task list manager using menu gadgets<a class="headerlink" href="#a-task-list-manager-using-menu-gadgets" title="Permalink to this heading">#</a></h2>
+<span id="index-1"></span><h2>A task list manager using menu gadgets<a class="headerlink" href="#a-task-list-manager-using-menu-gadgets" title="Permalink to this heading">¶</a></h2>
 <p>This section contains the complete source code to the first complete
 design of the task list manager, described in Chapters <a class="reference internal" href="improve.html"><span class="doc">Improving The Design</span></a>
 to <a class="reference internal" href="callbacks.html"><span class="doc">Adding Callbacks to the Application</span></a>. To load this code into the environment, choose
@@ -479,7 +481,7 @@ to <a class="reference internal" href="callbacks.html"><span class="doc">Adding 
 code in this section can be loaded by choosing Task List 1 in the
 Documentation category of the Open Example Project dialog.</p>
 <section id="contents-of-the-file-frame-dylan">
-<h3>Contents of the file <em>frame.dylan</em> :<a class="headerlink" href="#contents-of-the-file-frame-dylan" title="Permalink to this heading">#</a></h3>
+<h3>Contents of the file <em>frame.dylan</em> :<a class="headerlink" href="#contents-of-the-file-frame-dylan" title="Permalink to this heading">¶</a></h3>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Module</span><span class="o">:</span><span class="w">    </span><span class="s">task-list</span>
 <span class="na">Synopsis</span><span class="o">:</span><span class="w">  </span><span class="s">Task List Manager.</span>
 <span class="na">Author</span><span class="o">:</span><span class="w">    </span><span class="s">Functional Objects, Inc.</span>
@@ -920,7 +922,7 @@ Documentation category of the Open Example Project dialog.</p>
 </section>
 </section>
 <section id="a-task-list-manager-using-command-tables">
-<span id="index-2"></span><h2>A task list manager using command tables<a class="headerlink" href="#a-task-list-manager-using-command-tables" title="Permalink to this heading">#</a></h2>
+<span id="index-2"></span><h2>A task list manager using command tables<a class="headerlink" href="#a-task-list-manager-using-command-tables" title="Permalink to this heading">¶</a></h2>
 <p>This section contains the complete source code of the task list manager
 when command tables have been used to implement the menu system, rather
 than explicit menu gadgets. To load this code into the environment,
@@ -934,7 +936,7 @@ apart from code specific to command tables and callbacks, the code listed
 in this section is a repeat of code listed in <a class="reference internal" href="#a-task-list-manager-using-menu-gadgets">A task list manager using
 menu gadgets</a>.</p>
 <section id="id1">
-<h3>Contents of the file <em>frame.dylan</em> :<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<h3>Contents of the file <em>frame.dylan</em> :<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Module</span><span class="o">:</span><span class="w">    </span><span class="s">task-list</span>
 <span class="na">Synopsis</span><span class="o">:</span><span class="w">  </span><span class="s">Task List Manager.</span>
 <span class="na">Author</span><span class="o">:</span><span class="w">    </span><span class="s">Functional Objects, Inc.</span>
@@ -1264,7 +1266,7 @@ menu gadgets</a>.</p>
 </div>
 </section>
 <section id="contents-of-the-file-task-list-dylan">
-<h3>Contents of the file <em>task-list.dylan</em> :<a class="headerlink" href="#contents-of-the-file-task-list-dylan" title="Permalink to this heading">#</a></h3>
+<h3>Contents of the file <em>task-list.dylan</em> :<a class="headerlink" href="#contents-of-the-file-task-list-dylan" title="Permalink to this heading">¶</a></h3>
 <p>The file <em>task-list.dylan</em> is identical to the listing shown in <a class="reference internal" href="#a-task-list-manager-using-menu-gadgets">A
 task list manager using menu gadgets</a>, and so is not repeated here.</p>
 </section>
@@ -1350,6 +1352,6 @@ task list manager using menu gadgets</a>, and so is not repeated here.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

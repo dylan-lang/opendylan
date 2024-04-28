@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Copyright" href="copyright.html" /><link rel="prev" title="DUIM-Gadgets Library" href="gadgets.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>DUIM-Frames Library - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,11 +463,11 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="duim-frames-library">
-<h1>DUIM-Frames Library<a class="headerlink" href="#duim-frames-library" title="Permalink to this heading">#</a></h1>
+<h1>DUIM-Frames Library<a class="headerlink" href="#duim-frames-library" title="Permalink to this heading">¶</a></h1>
 <section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
 <p>The DUIM-Frames library contains interfaces that define a wide variety
 of frames for use in your GUI applications, as well as the necessary
 functions, generic functions, and macros for creating and manipulating
@@ -487,12 +489,12 @@ instance of a subclass of <a class="reference internal" href="sheets.html#duim-s
 provided in <a class="reference internal" href="#subclasses-of-frame-event">Subclasses of &lt;frame-event&gt;</a>.</p>
 </section>
 <section id="the-class-hierarchy-for-duim-frames">
-<h2>The class hierarchy for DUIM-Frames<a class="headerlink" href="#the-class-hierarchy-for-duim-frames" title="Permalink to this heading">#</a></h2>
+<h2>The class hierarchy for DUIM-Frames<a class="headerlink" href="#the-class-hierarchy-for-duim-frames" title="Permalink to this heading">¶</a></h2>
 <p>This section presents an overview of the available classes of frame,
 frame event, and command-related classes, and describes the class
 hierarchy present.</p>
 <section id="the-frame-class-and-its-subclasses">
-<h3>The &lt;frame&gt; class and its subclasses<a class="headerlink" href="#the-frame-class-and-its-subclasses" title="Permalink to this heading">#</a></h3>
+<h3>The &lt;frame&gt; class and its subclasses<a class="headerlink" href="#the-frame-class-and-its-subclasses" title="Permalink to this heading">¶</a></h3>
 <p>The base class for all DUIM frames is the <a class="reference internal" href="#duim:duim-frames:[frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;frame&gt;</span></code></a> class, which is
 itself a subclass of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>. In addition, there are a number of
 classes related to commands that are subclasses of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>, together
@@ -556,7 +558,7 @@ table.</p>
 </dl>
 </section>
 <section id="subclasses-of-frame">
-<h3>Subclasses of &lt;frame&gt;<a class="headerlink" href="#subclasses-of-frame" title="Permalink to this heading">#</a></h3>
+<h3>Subclasses of &lt;frame&gt;<a class="headerlink" href="#subclasses-of-frame" title="Permalink to this heading">¶</a></h3>
 <p>A number of subclasses of <a class="reference internal" href="#duim:duim-frames:[frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;frame&gt;</span></code></a> are provided to allow you to create
 a variety of common types of frame.</p>
 <ul class="simple">
@@ -589,7 +591,7 @@ to the next or previous steps in the process.</p>
 </dl>
 </section>
 <section id="subclasses-of-frame-event">
-<h3>Subclasses of &lt;frame-event&gt;<a class="headerlink" href="#subclasses-of-frame-event" title="Permalink to this heading">#</a></h3>
+<h3>Subclasses of &lt;frame-event&gt;<a class="headerlink" href="#subclasses-of-frame-event" title="Permalink to this heading">¶</a></h3>
 <p>The <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[frame-event]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;frame-event&gt;</span></code></a> class provides a number of subclasses that describe
 various events that can occur in frames.</p>
 <ul class="simple">
@@ -633,7 +635,7 @@ a frame may be iconized).</p>
 </div>
 </section>
 <section id="subclasses-of-page">
-<h3>Subclasses of &lt;page&gt;<a class="headerlink" href="#subclasses-of-page" title="Permalink to this heading">#</a></h3>
+<h3>Subclasses of &lt;page&gt;<a class="headerlink" href="#subclasses-of-page" title="Permalink to this heading">¶</a></h3>
 <p>Although the <a class="reference internal" href="gadgets.html#duim:duim-gadgets:[page]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;page&gt;</span></code></a> class is itself a subclass of <a class="reference internal" href="gadgets.html#duim:duim-gadgets:[gadget]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;gadget&gt;</span></code></a>, and is
 exposed by the DUIM-Gadgets library, two of its subclasses are exposed
 by the DUIM-Frames library: <a class="reference internal" href="#duim:duim-frames:[wizard-page]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;wizard-page&gt;</span></code></a> and <a class="reference internal" href="#duim:duim-frames:[property-page]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;property-page&gt;</span></code></a>. See
@@ -642,7 +644,7 @@ these classes.</p>
 </section>
 </section>
 <section id="duim-commands-library">
-<h2>DUIM-Commands Library<a class="headerlink" href="#duim-commands-library" title="Permalink to this heading">#</a></h2>
+<h2>DUIM-Commands Library<a class="headerlink" href="#duim-commands-library" title="Permalink to this heading">¶</a></h2>
 <p>All commands-related interfaces are now defined directly in the Commands
 library. However, these same interfaces are imported to and re-exported
 from DUIM-Frames, so they can be used in almost the same way as for
@@ -661,12 +663,12 @@ specified by either of the following:</p>
 This may require you to change some of your code.</p>
 </section>
 <section id="duim-frames-module">
-<h2>DUIM-Frames Module<a class="headerlink" href="#duim-frames-module" title="Permalink to this heading">#</a></h2>
+<h2>DUIM-Frames Module<a class="headerlink" href="#duim-frames-module" title="Permalink to this heading">¶</a></h2>
 <p>This section contains a complete reference of all the interfaces that
 are exported from the <em>duim-frames</em> module.</p>
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:=([command])">
-<span class="sig-name descname"><span class="pre">=(&lt;command&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#duim:duim-frames:=([command])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">=(&lt;command&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#duim:duim-frames:=([command])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if the specified commands are the same.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -691,7 +693,7 @@ are exported from the <em>duim-frames</em> module.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:add-command">
-<span class="sig-name descname"><span class="pre">add-command</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:add-command" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">add-command</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:add-command" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a command to the specified command table.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -764,7 +766,7 @@ before creating the new one.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:add-command-table-menu-item">
-<span class="sig-name descname"><span class="pre">add-command-table-menu-item</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:add-command-table-menu-item" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">add-command-table-menu-item</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:add-command-table-menu-item" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a menu item to the specified command table.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -895,7 +897,7 @@ character case of <em>string</em> is ignored when searching the command table.</
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:[application-exited-event]">
-<span class="sig-name descname"><span class="pre">&lt;application-exited-event&gt;</span></span> <em class="property"><span class="pre">Instantiable</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[application-exited-event]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;application-exited-event&gt;</span></span> <em class="property"><span class="pre">Instantiable</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[application-exited-event]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of events signalled when an application exits.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -918,7 +920,7 @@ by choosing <em>File &gt; Exit</em> from its main menu bar.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:apply-in-frame">
-<span class="sig-name descname"><span class="pre">apply-in-frame</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:apply-in-frame" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">apply-in-frame</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:apply-in-frame" title="Permalink to this definition">¶</a></dt>
 <dd><p>Applies the specified function to the given arguments in the main thread
 of the frame.</p>
 <dl class="field-list simple">
@@ -949,7 +951,7 @@ optionally supply as many additional arguments as you like.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:call-in-frame">
-<span class="sig-name descname"><span class="pre">call-in-frame</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:call-in-frame" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">call-in-frame</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:call-in-frame" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calls the specified function with the given arguments in the main thread
 of the frame.</p>
 <dl class="field-list simple">
@@ -977,7 +979,7 @@ of the frame.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:cancel-dialog">
-<span class="sig-name descname"><span class="pre">cancel-dialog</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:cancel-dialog" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">cancel-dialog</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:cancel-dialog" title="Permalink to this definition">¶</a></dt>
 <dd><p>Cancels the specified dialog.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1037,7 +1039,7 @@ defined dialog. Note that the example assumes the existence of a similar
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:clear-progress-note">
-<span class="sig-name descname"><span class="pre">clear-progress-note</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:clear-progress-note" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">clear-progress-note</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:clear-progress-note" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clears the specified progress note.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1057,7 +1059,7 @@ defined dialog. Note that the example assumes the existence of a similar
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:[command]">
-<span class="sig-name descname"><span class="pre">&lt;command&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[command]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;command&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[command]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of commands.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1120,7 +1122,7 @@ function.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:command?">
-<span class="sig-name descname"><span class="pre">command?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:command?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">command?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:command?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if the specified object is a command.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1150,7 +1152,7 @@ function.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:command-arguments">
-<span class="sig-name descname"><span class="pre">command-arguments</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:command-arguments" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">command-arguments</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:command-arguments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the arguments to the specified command.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1180,7 +1182,7 @@ function.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:command-enabled?">
-<span class="sig-name descname"><span class="pre">command-enabled?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:command-enabled?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">command-enabled?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:command-enabled?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if the specified command is enabled.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1212,7 +1214,7 @@ function.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:command-enabled?-setter">
-<span class="sig-name descname"><span class="pre">command-enabled?-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:command-enabled?-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">command-enabled?-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:command-enabled?-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enables or disables the specified command.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1252,7 +1254,7 @@ has been modified.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:command-function">
-<span class="sig-name descname"><span class="pre">command-function</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:command-function" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">command-function</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:command-function" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the function associated with the specified command.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1287,7 +1289,7 @@ one argument: a <a class="reference internal" href="#duim:duim-frames:[frame]"><
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:[command-table]">
-<span class="sig-name descname"><span class="pre">&lt;command-table&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[command-table]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;command-table&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[command-table]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of command tables.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1362,7 +1364,7 @@ sufficient unique identifier.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:command-table?">
-<span class="sig-name descname"><span class="pre">command-table?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:command-table?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">command-table?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:command-table?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if the specified object is a command table.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1392,7 +1394,7 @@ sufficient unique identifier.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:command-table-accelerators">
-<span class="sig-name descname"><span class="pre">command-table-accelerators</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:command-table-accelerators" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">command-table-accelerators</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:command-table-accelerators" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the keyboard accelerators for the specified command table.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1422,7 +1424,7 @@ sufficient unique identifier.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:command-table-commands">
-<span class="sig-name descname"><span class="pre">command-table-commands</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:command-table-commands" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">command-table-commands</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:command-table-commands" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the commands for the specified command table.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1453,7 +1455,7 @@ sufficient unique identifier.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:command-table-menu">
-<span class="sig-name descname"><span class="pre">command-table-menu</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:command-table-menu" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">command-table-menu</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:command-table-menu" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the menu items in the specified command table.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1484,7 +1486,7 @@ sufficient unique identifier.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:[command-table-menu-item]">
-<span class="sig-name descname"><span class="pre">&lt;command-table-menu-item&gt;</span></span> <em class="property"><span class="pre">Instantiable</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[command-table-menu-item]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;command-table-menu-item&gt;</span></span> <em class="property"><span class="pre">Instantiable</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[command-table-menu-item]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of menu items in command tables.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1563,7 +1565,7 @@ keyboard accelerator and mnemonic for the menu item.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:command-table-name">
-<span class="sig-name descname"><span class="pre">command-table-name</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:command-table-name" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">command-table-name</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:command-table-name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the name of the specified command table.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1595,7 +1597,7 @@ init-keyword for <a class="reference internal" href="#duim:duim-frames:[command-
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:command-undoable?">
-<span class="sig-name descname"><span class="pre">command-undoable?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:command-undoable?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">command-undoable?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:command-undoable?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if the specified command is undoable.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1623,7 +1625,7 @@ Undo</em>) that will reverse the effects of command.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:complete-from-generator">
-<span class="sig-name descname"><span class="pre">complete-from-generator</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:complete-from-generator" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">complete-from-generator</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:complete-from-generator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Completes a string based on a generated list of completions.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1703,7 +1705,7 @@ of the possible completions.</p></li>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:complete-from-sequence">
-<span class="sig-name descname"><span class="pre">complete-from-sequence</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:complete-from-sequence" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">complete-from-sequence</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:complete-from-sequence" title="Permalink to this definition">¶</a></dt>
 <dd><p>Completes a string based on a list of possible completions.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1784,7 +1786,7 @@ the possible completions.</p></li>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:compute-next-page">
-<span class="sig-name descname"><span class="pre">compute-next-page</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:compute-next-page" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">compute-next-page</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:compute-next-page" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the next page in the specified wizard frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1813,7 +1815,7 @@ the possible completions.</p></li>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:compute-previous-page">
-<span class="sig-name descname"><span class="pre">compute-previous-page</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:compute-previous-page" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">compute-previous-page</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:compute-previous-page" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the previous page in the specified wizard frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1844,7 +1846,7 @@ the possible completions.</p></li>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:contain">
-<span class="sig-name descname"><span class="pre">contain</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:contain" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">contain</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:contain" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates and returns a frame containing the specified object.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1923,7 +1925,7 @@ contained DUIM objects</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:current-frame">
-<span class="sig-name descname"><span class="pre">current-frame</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim:duim-frames:current-frame" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">current-frame</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim:duim-frames:current-frame" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the current frame</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1942,7 +1944,7 @@ contained DUIM objects</p>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:definecommand-table">
-<span class="sig-name descname"><span class="pre">define</span> <span class="pre">command-table</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#duim:duim-frames:definecommand-table" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">define</span> <span class="pre">command-table</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#duim:duim-frames:definecommand-table" title="Permalink to this definition">¶</a></dt>
 <dd><p>Defines a new class of command table with the specified name and
 properties.</p>
 <dl class="field-list">
@@ -2066,7 +2068,7 @@ command table.</p>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:defineframe">
-<span class="sig-name descname"><span class="pre">define</span> <span class="pre">frame</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#duim:duim-frames:defineframe" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">define</span> <span class="pre">frame</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#duim:duim-frames:defineframe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Defines a new class of frame with the specified properties.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
@@ -2230,7 +2232,7 @@ of each of the options are evaluated.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:deiconify-frame">
-<span class="sig-name descname"><span class="pre">deiconify-frame</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:deiconify-frame" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">deiconify-frame</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:deiconify-frame" title="Permalink to this definition">¶</a></dt>
 <dd><p>Displays a frame that has previously been iconified on screen.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2270,7 +2272,7 @@ iconifies it and deiconifies it.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:destroy-frame">
-<span class="sig-name descname"><span class="pre">destroy-frame</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:destroy-frame" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">destroy-frame</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:destroy-frame" title="Permalink to this definition">¶</a></dt>
 <dd><p>Unmaps the specified frame and destroys it.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2304,7 +2306,7 @@ argument to <a class="reference internal" href="#duim:duim-frames:exit-frame"><c
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-apply-button">
-<span class="sig-name descname"><span class="pre">dialog-apply-button</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-apply-button" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-apply-button</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-apply-button" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the Apply button in the specified dialog.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2340,7 +2342,7 @@ dialog from the screen itself.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-apply-button-setter">
-<span class="sig-name descname"><span class="pre">dialog-apply-button-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-apply-button-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-apply-button-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-apply-button-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Specifies the Apply button in the specified dialog.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2377,7 +2379,7 @@ dialog from the screen itself.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-apply-callback">
-<span class="sig-name descname"><span class="pre">dialog-apply-callback</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-apply-callback" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-apply-callback</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-apply-callback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the callback invoked when the Apply button is clicked in the
 specified dialog.</p>
 <dl class="field-list simple">
@@ -2420,7 +2422,7 @@ appear.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-back-button">
-<span class="sig-name descname"><span class="pre">dialog-back-button</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-back-button" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-back-button</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-back-button" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the Back button in the specified multi-page dialog.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2456,7 +2458,7 @@ through the sequence of pages that comprise the dialog.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-back-button-setter">
-<span class="sig-name descname"><span class="pre">dialog-back-button-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-back-button-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-back-button-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-back-button-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Specifies the Back button in the specified multi-page dialog.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2493,7 +2495,7 @@ comprise the dialog.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-back-callback">
-<span class="sig-name descname"><span class="pre">dialog-back-callback</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-back-callback" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-back-callback</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-back-callback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the callback invoked when the Back button is clicked in the
 specified multi-page dialog.</p>
 <dl class="field-list simple">
@@ -2539,7 +2541,7 @@ the dialog.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-cancel-button">
-<span class="sig-name descname"><span class="pre">dialog-cancel-button</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-cancel-button" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-cancel-button</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-cancel-button" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the Cancel button in the specified dialog.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2572,7 +2574,7 @@ the dialog.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-cancel-button-setter">
-<span class="sig-name descname"><span class="pre">dialog-cancel-button-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-cancel-button-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-cancel-button-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-cancel-button-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Specifies the Cancel button in the specified dialog.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2627,7 +2629,7 @@ cancel button is redefined before the dialog is displayed on screen.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-cancel-callback">
-<span class="sig-name descname"><span class="pre">dialog-cancel-callback</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-cancel-callback" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-cancel-callback</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-cancel-callback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the function invoked when the cancel button is clicked in the
 specified dialog.</p>
 <dl class="field-list simple">
@@ -2663,7 +2665,7 @@ specified dialog.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-cancel-callback-setter">
-<span class="sig-name descname"><span class="pre">dialog-cancel-callback-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-cancel-callback-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-cancel-callback-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-cancel-callback-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the function invoked when the cancel button is clicked in the
 specified dialog.</p>
 <dl class="field-list simple">
@@ -2700,7 +2702,7 @@ Default value: <a class="reference internal" href="#duim:duim-frames:cancel-dial
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-current-page">
-<span class="sig-name descname"><span class="pre">dialog-current-page</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-current-page" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-current-page</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-current-page" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the current page in the specified multi-page dialog.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2730,7 +2732,7 @@ Default value: <a class="reference internal" href="#duim:duim-frames:cancel-dial
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-current-page-setter">
-<span class="sig-name descname"><span class="pre">dialog-current-page-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-current-page-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-current-page-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-current-page-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the current page in the specified multi-page dialog.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2761,7 +2763,7 @@ Default value: <a class="reference internal" href="#duim:duim-frames:cancel-dial
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-exit-button">
-<span class="sig-name descname"><span class="pre">dialog-exit-button</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-exit-button" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-exit-button</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-exit-button" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the Exit button in the specified dialog.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2798,7 +2800,7 @@ Next and Back buttons).</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-exit-button-setter">
-<span class="sig-name descname"><span class="pre">dialog-exit-button-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-exit-button-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-exit-button-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-exit-button-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Specifies the Exit button in the specified dialog.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2857,7 +2859,7 @@ exit button is redefined before the dialog is displayed on screen.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-exit-callback">
-<span class="sig-name descname"><span class="pre">dialog-exit-callback</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-exit-callback" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-exit-callback</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-exit-callback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the callback invoked when the Exit button is clicked in the
 specified dialog.</p>
 <dl class="field-list simple">
@@ -2896,7 +2898,7 @@ navigate through the sequence using Next and Back buttons).</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-exit-callback-setter">
-<span class="sig-name descname"><span class="pre">dialog-exit-callback-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-exit-callback-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-exit-callback-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-exit-callback-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the callback invoked when the Exit button is clicked in the
 specified dialog.</p>
 <dl class="field-list simple">
@@ -2942,7 +2944,7 @@ all.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-exit-enabled?">
-<span class="sig-name descname"><span class="pre">dialog-exit-enabled?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-exit-enabled?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-exit-enabled?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-exit-enabled?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if the Exit button has been enabled for the specified
 dialog.</p>
 <dl class="field-list simple">
@@ -2979,7 +2981,7 @@ through the sequence using Next and Back buttons).</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-exit-enabled?-setter">
-<span class="sig-name descname"><span class="pre">dialog-exit-enabled?-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-exit-enabled?-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-exit-enabled?-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-exit-enabled?-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enables or disables the Exit button for the specified dialog.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3036,7 +3038,7 @@ and you cannot click on it.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:[dialog-frame]">
-<span class="sig-name descname"><span class="pre">&lt;dialog-frame&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[dialog-frame]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;dialog-frame&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[dialog-frame]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of dialog frames.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -3077,7 +3079,7 @@ right-aligned.</p>
 <figure class="align-center" id="id2">
 <img alt="../_images/frames-4.png" src="../_images/frames-4.png" />
 <figcaption>
-<p><span class="caption-text">A typical dialog</span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">A typical dialog</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>By default, all dialogs are modal, that is, when displayed, they take
@@ -3197,7 +3199,7 @@ callback to the help button.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-help-button">
-<span class="sig-name descname"><span class="pre">dialog-help-button</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-help-button" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-help-button</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-help-button" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the Help button in the specified dialog.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3232,7 +3234,7 @@ system for the application.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-help-button-setter">
-<span class="sig-name descname"><span class="pre">dialog-help-button-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-help-button-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-help-button-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-help-button-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Specifies the Help button in the specified dialog.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3297,7 +3299,7 @@ help button is redefined before the dialog is displayed on screen.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-help-callback">
-<span class="sig-name descname"><span class="pre">dialog-help-callback</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-help-callback" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-help-callback</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-help-callback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the callback invoked when the Help button is clicked in the
 specified dialog.</p>
 <dl class="field-list simple">
@@ -3340,7 +3342,7 @@ button present in the dialog.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-next-button">
-<span class="sig-name descname"><span class="pre">dialog-next-button</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-next-button" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-next-button</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-next-button" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the Next button in the specified multi-page dialog.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3376,7 +3378,7 @@ through the sequence of pages that comprise the dialog.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-next-button-setter">
-<span class="sig-name descname"><span class="pre">dialog-next-button-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-next-button-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-next-button-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-next-button-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Specifies the Next button in the specified multi-page dialog.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3413,7 +3415,7 @@ and backward through the sequence of pages that comprise the dialog.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-next-callback">
-<span class="sig-name descname"><span class="pre">dialog-next-callback</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-next-callback" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-next-callback</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-next-callback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the callback invoked when the Next button is clicked in the
 specified multi-page dialog.</p>
 <dl class="field-list simple">
@@ -3462,7 +3464,7 @@ the dialog.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-next-enabled?">
-<span class="sig-name descname"><span class="pre">dialog-next-enabled?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-next-enabled?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-next-enabled?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-next-enabled?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if the Next button has been enabled for the specified
 multi-page dialog.</p>
 <dl class="field-list simple">
@@ -3501,7 +3503,7 @@ comprise the dialog.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-next-enabled?-setter">
-<span class="sig-name descname"><span class="pre">dialog-next-enabled?-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-next-enabled?-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-next-enabled?-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-next-enabled?-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enables or disables the Next button for the specified multi-page dialog.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3546,7 +3548,7 @@ or disabling the Next button as appropriate.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-next-page">
-<span class="sig-name descname"><span class="pre">dialog-next-page</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-next-page" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-next-page</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-next-page" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the next page in sequence for the specified multi-page dialog.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3588,7 +3590,7 @@ dynamically change it as the state of the dialog changes.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-next-page-setter">
-<span class="sig-name descname"><span class="pre">dialog-next-page-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-next-page-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-next-page-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-next-page-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Specifies the next page in sequence for the specified multi-page dialog.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3631,7 +3633,7 @@ dynamically change it as the state of the dialog changes.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-page-changed-callback">
-<span class="sig-name descname"><span class="pre">dialog-page-changed-callback</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-page-changed-callback" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-page-changed-callback</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-page-changed-callback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the page-changed callback of the specified multi-page dialog.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3668,7 +3670,7 @@ dialog is displayed.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-page-changed-callback-setter">
-<span class="sig-name descname"><span class="pre">dialog-page-changed-callback-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-page-changed-callback-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-page-changed-callback-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-page-changed-callback-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the page-changed callback of the specified multi-page dialog.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3706,7 +3708,7 @@ dialog is displayed.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-page-complete?">
-<span class="sig-name descname"><span class="pre">dialog-page-complete?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-page-complete?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-page-complete?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-page-complete?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if all the information required on the current page of the
 specified multi-page dialog has been specified.</p>
 <dl class="field-list simple">
@@ -3748,7 +3750,7 @@ apply any changes.</p></li>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-page-complete?-setter">
-<span class="sig-name descname"><span class="pre">dialog-page-complete?-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-page-complete?-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-page-complete?-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-page-complete?-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the slot that indicates all the information required on the current
 page of the specified multi-page dialog has been specified.</p>
 <dl class="field-list simple">
@@ -3791,7 +3793,7 @@ changes.</p></li>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-pages">
-<span class="sig-name descname"><span class="pre">dialog-pages</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-pages" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-pages</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-pages" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the pages of the specified multi-page dialog.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3825,7 +3827,7 @@ instance of <a class="reference internal" href="gadgets.html#duim:duim-gadgets:[
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-pages-setter">
-<span class="sig-name descname"><span class="pre">dialog-pages-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-pages-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-pages-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-pages-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the pages of the specified multi-page dialog.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3860,7 +3862,7 @@ instance of <a class="reference internal" href="gadgets.html#duim:duim-gadgets:[
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-previous-page">
-<span class="sig-name descname"><span class="pre">dialog-previous-page</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-previous-page" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-previous-page</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-previous-page" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the previous page in sequence for the specified multi-page
 dialog.</p>
 <dl class="field-list simple">
@@ -3903,7 +3905,7 @@ dynamically change it as the state of the dialog changes.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:dialog-previous-page-setter">
-<span class="sig-name descname"><span class="pre">dialog-previous-page-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-previous-page-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dialog-previous-page-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:dialog-previous-page-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Specifies the previous page in sequence for the specified multi-page
 dialog.</p>
 <dl class="field-list simple">
@@ -3947,7 +3949,7 @@ dynamically change it as the state of the dialog changes.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:display-progress-note">
-<span class="sig-name descname"><span class="pre">display-progress-note</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:display-progress-note" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">display-progress-note</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:display-progress-note" title="Permalink to this definition">¶</a></dt>
 <dd><p>Displays the specified progress note.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3967,7 +3969,7 @@ dynamically change it as the state of the dialog changes.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:event-destroy-frame?">
-<span class="sig-name descname"><span class="pre">event-destroy-frame?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:event-destroy-frame?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">event-destroy-frame?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:event-destroy-frame?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns information about the frame was destroyed in the specified
 event.</p>
 <dl class="field-list simple">
@@ -3998,7 +4000,7 @@ event.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:event-status-code">
-<span class="sig-name descname"><span class="pre">event-status-code</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:event-status-code" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">event-status-code</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:event-status-code" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the status code of the specified event.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4028,7 +4030,7 @@ event.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:execute-command">
-<span class="sig-name descname"><span class="pre">execute-command</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:execute-command" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">execute-command</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:execute-command" title="Permalink to this definition">¶</a></dt>
 <dd><p>Executes a command for the specified frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4054,7 +4056,7 @@ returned as a result of evaluating the command function of <em>command</em>.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:exit-dialog">
-<span class="sig-name descname"><span class="pre">exit-dialog</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:exit-dialog" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">exit-dialog</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:exit-dialog" title="Permalink to this definition">¶</a></dt>
 <dd><p>Exits the specified dialog.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4119,7 +4121,7 @@ defined dialog. Note that the example assumes the existence of a similar
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:exit-frame">
-<span class="sig-name descname"><span class="pre">exit-frame</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:exit-frame" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">exit-frame</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:exit-frame" title="Permalink to this definition">¶</a></dt>
 <dd><p>Unmaps the specified frame destroying it required.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4166,7 +4168,7 @@ at the points indicated.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:find-frame">
-<span class="sig-name descname"><span class="pre">find-frame</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim:duim-frames:find-frame" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">find-frame</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim:duim-frames:find-frame" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a frame of the specified type, creating one if necessary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4221,7 +4223,7 @@ frame to match successfully.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:[frame]">
-<span class="sig-name descname"><span class="pre">&lt;frame&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[frame]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;frame&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[frame]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The base class of all frames.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -4386,7 +4388,7 @@ be resized.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame?">
-<span class="sig-name descname"><span class="pre">frame?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if the specified object is a frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4419,7 +4421,7 @@ on it.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-accelerators">
-<span class="sig-name descname"><span class="pre">frame-accelerators</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-accelerators" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-accelerators</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-accelerators" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the keyboard accelerators defined for the specified frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4449,7 +4451,7 @@ on it.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-accelerators-setter">
-<span class="sig-name descname"><span class="pre">frame-accelerators-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-accelerators-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-accelerators-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-accelerators-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Defines the keyboard accelerators for the specified frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4477,7 +4479,7 @@ on it.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-can-exit?">
-<span class="sig-name descname"><span class="pre">frame-can-exit?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-can-exit?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-can-exit?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-can-exit?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if the specified frame can be exited dynamically.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4520,7 +4522,7 @@ decision about whether a frame should exit.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-command-table">
-<span class="sig-name descname"><span class="pre">frame-command-table</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-command-table" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-command-table</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-command-table" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the command table associated with the specified frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4550,7 +4552,7 @@ decision about whether a frame should exit.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-command-table-setter">
-<span class="sig-name descname"><span class="pre">frame-command-table-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-command-table-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-command-table-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-command-table-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Specifies the command table associated with the specified frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4581,7 +4583,7 @@ decision about whether a frame should exit.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:[frame-created-event]">
-<span class="sig-name descname"><span class="pre">&lt;frame-created-event&gt;</span></span> <em class="property"><span class="pre">Instantiable</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[frame-created-event]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;frame-created-event&gt;</span></span> <em class="property"><span class="pre">Instantiable</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[frame-created-event]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of events that indicate a frame has been created.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -4604,7 +4606,7 @@ of these events is passed during the lifetime of any frame.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:[frame-destroyed-event]">
-<span class="sig-name descname"><span class="pre">&lt;frame-destroyed-event&gt;</span></span> <em class="property"><span class="pre">Instantiable</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[frame-destroyed-event]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;frame-destroyed-event&gt;</span></span> <em class="property"><span class="pre">Instantiable</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[frame-destroyed-event]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of events that indicate a frame has been destroyed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -4628,7 +4630,7 @@ Only one of these events is passed during the lifetime of any frame.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-default-button">
-<span class="sig-name descname"><span class="pre">frame-default-button</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-default-button" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-default-button</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-default-button" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the default button associated with the specified frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4658,7 +4660,7 @@ Only one of these events is passed during the lifetime of any frame.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-default-button-setter">
-<span class="sig-name descname"><span class="pre">frame-default-button-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-default-button-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-default-button-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-default-button-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the default button associated with the specified frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4689,7 +4691,7 @@ Only one of these events is passed during the lifetime of any frame.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-event-queue">
-<span class="sig-name descname"><span class="pre">frame-event-queue</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-event-queue" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-event-queue</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-event-queue" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the event queue that the specified frame is running in.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4719,7 +4721,7 @@ Only one of these events is passed during the lifetime of any frame.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:[frame-exited-event]">
-<span class="sig-name descname"><span class="pre">&lt;frame-exited-event&gt;</span></span> <em class="property"><span class="pre">Instantiable</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[frame-exited-event]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;frame-exited-event&gt;</span></span> <em class="property"><span class="pre">Instantiable</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[frame-exited-event]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of events that indicate a frame has been exited.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -4758,7 +4760,7 @@ exited.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:[frame-exit-event]">
-<span class="sig-name descname"><span class="pre">&lt;frame-exit-event&gt;</span></span> <em class="property"><span class="pre">Instantiable</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[frame-exit-event]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;frame-exit-event&gt;</span></span> <em class="property"><span class="pre">Instantiable</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[frame-exit-event]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of events distributed when a frame is about to exit.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -4792,7 +4794,7 @@ decide whether or not to exit.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:[frame-focus-event]">
-<span class="sig-name descname"><span class="pre">&lt;frame-focus-event&gt;</span></span> <em class="property"><span class="pre">Instantiable</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[frame-focus-event]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;frame-focus-event&gt;</span></span> <em class="property"><span class="pre">Instantiable</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[frame-focus-event]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of events distributed when a frame receives focus.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -4814,7 +4816,7 @@ decide whether or not to exit.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-fixed-height?">
-<span class="sig-name descname"><span class="pre">frame-fixed-height?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-fixed-height?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-fixed-height?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-fixed-height?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if the height of the specified frame is not resizable.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4845,7 +4847,7 @@ decide whether or not to exit.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-fixed-width?">
-<span class="sig-name descname"><span class="pre">frame-fixed-width?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-fixed-width?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-fixed-width?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-fixed-width?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if the width of the specified frame is not resizable.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4876,7 +4878,7 @@ decide whether or not to exit.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-icon">
-<span class="sig-name descname"><span class="pre">frame-icon</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-icon" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-icon</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-icon" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the icon associated with the specified frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4911,7 +4913,7 @@ bar of the frame when it is not iconized.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-icon-setter">
-<span class="sig-name descname"><span class="pre">frame-icon-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-icon-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-icon-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-icon-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Specifies the icon associated with the specified frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4944,7 +4946,7 @@ on the left hand side of the title bar of the frame.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-input-focus">
-<span class="sig-name descname"><span class="pre">frame-input-focus</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-input-focus" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-input-focus</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-input-focus" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the sheet in the specified frame that has the input focus.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4974,7 +4976,7 @@ on the left hand side of the title bar of the frame.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-input-focus-setter">
-<span class="sig-name descname"><span class="pre">frame-input-focus-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-input-focus-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-input-focus-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-input-focus-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets which sheet in the specified frame has the input focus.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5005,7 +5007,7 @@ on the left hand side of the title bar of the frame.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-layout">
-<span class="sig-name descname"><span class="pre">frame-layout</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-layout" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-layout</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-layout" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the layout used in the specified frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5035,7 +5037,7 @@ on the left hand side of the title bar of the frame.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-layout-setter">
-<span class="sig-name descname"><span class="pre">frame-layout-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-layout-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-layout-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-layout-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Specifies the layout used in the specified frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5066,7 +5068,7 @@ on the left hand side of the title bar of the frame.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-mapped?">
-<span class="sig-name descname"><span class="pre">frame-mapped?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-mapped?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-mapped?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-mapped?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if the specified frame is mapped.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5118,7 +5120,7 @@ key at the points indicated.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:[frame-mapped-event]">
-<span class="sig-name descname"><span class="pre">&lt;frame-mapped-event&gt;</span></span> <em class="property"><span class="pre">Instantiable</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[frame-mapped-event]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;frame-mapped-event&gt;</span></span> <em class="property"><span class="pre">Instantiable</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[frame-mapped-event]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of events that indicate a frame has been mapped.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -5153,7 +5155,7 @@ instance of a class of frame you have defined is mapped.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-mapped?-setter">
-<span class="sig-name descname"><span class="pre">frame-mapped?-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-mapped?-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-mapped?-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-mapped?-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Maps or unmaps the specified frame.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5203,7 +5205,7 @@ interactor, pressing the RETURN key at the points indicated.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-menu-bar">
-<span class="sig-name descname"><span class="pre">frame-menu-bar</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-menu-bar" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-menu-bar</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-menu-bar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the menu bar used in the specified frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5233,7 +5235,7 @@ interactor, pressing the RETURN key at the points indicated.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-menu-bar-setter">
-<span class="sig-name descname"><span class="pre">frame-menu-bar-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-menu-bar-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-menu-bar-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-menu-bar-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the menu bar used in the specified frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5264,7 +5266,7 @@ interactor, pressing the RETURN key at the points indicated.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-mode">
-<span class="sig-name descname"><span class="pre">frame-mode</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-mode" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-mode</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-mode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the mode of the specified frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5314,7 +5316,7 @@ The mode cannot subsequently be changed.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-owner">
-<span class="sig-name descname"><span class="pre">frame-owner</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-owner" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-owner</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-owner" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the controlling frame for the specified frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5342,7 +5344,7 @@ owner, and so on, depending on the depth of the hierarchy.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-palette">
-<span class="sig-name descname"><span class="pre">frame-palette</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-palette" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-palette</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-palette" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the palette used in the specified frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5372,7 +5374,7 @@ owner, and so on, depending on the depth of the hierarchy.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-palette-setter">
-<span class="sig-name descname"><span class="pre">frame-palette-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-palette-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-palette-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-palette-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the palette used in the specified frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5403,7 +5405,7 @@ owner, and so on, depending on the depth of the hierarchy.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-position">
-<span class="sig-name descname"><span class="pre">frame-position</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-position" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-position</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-position" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the position on the screen of the specified frame.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5450,7 +5452,7 @@ RETURN key at the points indicated.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-resizable?">
-<span class="sig-name descname"><span class="pre">frame-resizable?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-resizable?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-resizable?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-resizable?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if the specified frame is resizable.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5482,7 +5484,7 @@ its width and height modified by the user.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-size">
-<span class="sig-name descname"><span class="pre">frame-size</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-size" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-size</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-size" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the size of the specified frame.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5527,7 +5529,7 @@ RETURN key at the points indicated.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-state">
-<span class="sig-name descname"><span class="pre">frame-state</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-state" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-state</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-state" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the visible state of the specified frame.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5575,7 +5577,7 @@ RETURN key at the points indicated.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-status-bar">
-<span class="sig-name descname"><span class="pre">frame-status-bar</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-status-bar" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-status-bar</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-status-bar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the status bar used in the specified frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5605,7 +5607,7 @@ RETURN key at the points indicated.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-status-bar-setter">
-<span class="sig-name descname"><span class="pre">frame-status-bar-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-status-bar-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-status-bar-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-status-bar-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the status bar used in the specified frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5636,7 +5638,7 @@ RETURN key at the points indicated.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-status-message">
-<span class="sig-name descname"><span class="pre">frame-status-message</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-status-message" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-status-message</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-status-message" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the status message for the specified frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5670,7 +5672,7 @@ not set, this this function returns false.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-status-message-setter">
-<span class="sig-name descname"><span class="pre">frame-status-message-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-status-message-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-status-message-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-status-message-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the status message for the specified frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5705,7 +5707,7 @@ set the label fails silently.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-thread">
-<span class="sig-name descname"><span class="pre">frame-thread</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-thread" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-thread</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-thread" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the thread with which the specified frame is associated.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5732,7 +5734,7 @@ Reference: Core Features</em>.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-title">
-<span class="sig-name descname"><span class="pre">frame-title</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-title" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-title</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-title" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the title of the specified frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5765,7 +5767,7 @@ removed from the frame or not is platform dependent.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-title-setter">
-<span class="sig-name descname"><span class="pre">frame-title-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-title-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-title-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-title-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the title of the specified frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5798,7 +5800,7 @@ to remove the title bar from the frame, if possible.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-tool-bar">
-<span class="sig-name descname"><span class="pre">frame-tool-bar</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-tool-bar" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-tool-bar</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-tool-bar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the tool bar used in the specified frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5828,7 +5830,7 @@ to remove the title bar from the frame, if possible.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-tool-bar-setter">
-<span class="sig-name descname"><span class="pre">frame-tool-bar-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-tool-bar-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-tool-bar-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-tool-bar-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the tool bar used in the specified frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5859,7 +5861,7 @@ to remove the title bar from the frame, if possible.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:frame-top-level">
-<span class="sig-name descname"><span class="pre">frame-top-level</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-top-level" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">frame-top-level</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:frame-top-level" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the top level loop function for the specified frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5893,7 +5895,7 @@ and then <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:[frame-unmapped-event]">
-<span class="sig-name descname"><span class="pre">&lt;frame-unmapped-event&gt;</span></span> <em class="property"><span class="pre">Instantiable</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[frame-unmapped-event]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;frame-unmapped-event&gt;</span></span> <em class="property"><span class="pre">Instantiable</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[frame-unmapped-event]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of events that indicate a frame has been unmapped.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -5930,7 +5932,7 @@ instance of a class of frame you have defined is unmapped.</p>
 
 <dl class="dylan variable">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:*global-command-table*">
-<span class="sig-name descname"><span class="pre">*global-command-table*</span></span> <em class="property"><span class="pre">Variable</span></em><a class="headerlink" href="#duim:duim-frames:*global-command-table*" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">*global-command-table*</span></span> <em class="property"><span class="pre">Variable</span></em><a class="headerlink" href="#duim:duim-frames:*global-command-table*" title="Permalink to this definition">¶</a></dt>
 <dd><p>The command table inherited by all new command tables.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -5955,7 +5957,7 @@ translators into this command table.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:iconify-frame">
-<span class="sig-name descname"><span class="pre">iconify-frame</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:iconify-frame" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">iconify-frame</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:iconify-frame" title="Permalink to this definition">¶</a></dt>
 <dd><p>Iconifies the specified frame.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6000,7 +6002,7 @@ RETURN key at the points indicated.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:layout-frame">
-<span class="sig-name descname"><span class="pre">layout-frame</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:layout-frame" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">layout-frame</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:layout-frame" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resizes the specified frame and lays out the current pane hierarchy
 inside it.</p>
 <dl class="field-list simple">
@@ -6032,7 +6034,7 @@ the layout protocol is invoked on the top-level pane.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:lower-frame">
-<span class="sig-name descname"><span class="pre">lower-frame</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:lower-frame" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">lower-frame</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:lower-frame" title="Permalink to this definition">¶</a></dt>
 <dd><p>Lowers the specified frame to the bottom of the stack of visible
 windows.</p>
 <dl class="field-list">
@@ -6075,7 +6077,7 @@ it.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:make([frame])">
-<span class="sig-name descname"><span class="pre">make(&lt;frame&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#duim:duim-frames:make([frame])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make(&lt;frame&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#duim:duim-frames:make([frame])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates an instance of a <a class="reference internal" href="#duim:duim-frames:[frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;frame&gt;</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6172,7 +6174,7 @@ frame, and <em>palette</em> specifies a color palette for the frame.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:make-menu-from-command-table-menu">
-<span class="sig-name descname"><span class="pre">make-menu-from-command-table-menu</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:make-menu-from-command-table-menu" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make-menu-from-command-table-menu</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:make-menu-from-command-table-menu" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a menu from the menu definition in the specified command table.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6227,7 +6229,7 @@ created.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:make-menus-from-command-table">
-<span class="sig-name descname"><span class="pre">make-menus-from-command-table</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:make-menus-from-command-table" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make-menus-from-command-table</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:make-menus-from-command-table" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a set of menus from the menu definitions in the specified
 command table.</p>
 <dl class="field-list simple">
@@ -6262,7 +6264,7 @@ in which the menus are to be placed.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:menu-item-accelerator">
-<span class="sig-name descname"><span class="pre">menu-item-accelerator</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:menu-item-accelerator" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">menu-item-accelerator</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:menu-item-accelerator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the accelerator for the specified command table menu item.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6293,7 +6295,7 @@ must be defined in a command table.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:menu-item-mnemonic">
-<span class="sig-name descname"><span class="pre">menu-item-mnemonic</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:menu-item-mnemonic" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">menu-item-mnemonic</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:menu-item-mnemonic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the mnemonic for the specified menu item.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6323,7 +6325,7 @@ must be defined in a command table.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:menu-item-name">
-<span class="sig-name descname"><span class="pre">menu-item-name</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:menu-item-name" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">menu-item-name</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:menu-item-name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the name of the specified menu item.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6355,7 +6357,7 @@ must be defined in a command table.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:menu-item-options">
-<span class="sig-name descname"><span class="pre">menu-item-options</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:menu-item-options" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">menu-item-options</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:menu-item-options" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the options for the specified menu item.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6387,7 +6389,7 @@ must be defined in a command table.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:menu-item-type">
-<span class="sig-name descname"><span class="pre">menu-item-type</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:menu-item-type" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">menu-item-type</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:menu-item-type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the type of the specified menu item.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6419,7 +6421,7 @@ must be defined in a command table.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:menu-item-value">
-<span class="sig-name descname"><span class="pre">menu-item-value</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:menu-item-value" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">menu-item-value</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:menu-item-value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the value of the specified menu item.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6451,7 +6453,7 @@ must be defined in a command table.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:move-to-next-page">
-<span class="sig-name descname"><span class="pre">move-to-next-page</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:move-to-next-page" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">move-to-next-page</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:move-to-next-page" title="Permalink to this definition">¶</a></dt>
 <dd><p>Moves to the next page of the specified multi-page dialog.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6478,7 +6480,7 @@ callback for the Next button in a wizard frame.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:move-to-previous-page">
-<span class="sig-name descname"><span class="pre">move-to-previous-page</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:move-to-previous-page" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">move-to-previous-page</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:move-to-previous-page" title="Permalink to this definition">¶</a></dt>
 <dd><p>Moves to the previous page of the specified multi-page dialog.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6505,7 +6507,7 @@ callback for the Back button in a wizard frame.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:note-progress">
-<span class="sig-name descname"><span class="pre">note-progress</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:note-progress" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">note-progress</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:note-progress" title="Permalink to this definition">¶</a></dt>
 <dd><p>Note the progress of an event in the specified progress note.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6542,7 +6544,7 @@ is placed over the owner frame.</p>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:noting-progress">
-<span class="sig-name descname"><span class="pre">noting-progress</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#duim:duim-frames:noting-progress" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">noting-progress</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#duim:duim-frames:noting-progress" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs a body of code, noting its progress.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
@@ -6576,7 +6578,7 @@ that evaluates to an instance of <a class="reference external" href="https://ope
 
 <dl class="dylan variable">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:*progress-note*">
-<span class="sig-name descname"><span class="pre">*progress-note*</span></span> <em class="property"><span class="pre">Thread</span> <span class="pre">Variable</span></em><a class="headerlink" href="#duim:duim-frames:*progress-note*" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">*progress-note*</span></span> <em class="property"><span class="pre">Thread</span> <span class="pre">Variable</span></em><a class="headerlink" href="#duim:duim-frames:*progress-note*" title="Permalink to this definition">¶</a></dt>
 <dd><p>Specifies a default progress note that can be used.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -6600,7 +6602,7 @@ progress note is explicitly specified.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:[property-frame]">
-<span class="sig-name descname"><span class="pre">&lt;property-frame&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[property-frame]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;property-frame&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[property-frame]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of property frames.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -6634,7 +6636,7 @@ several pages, each presented as a label in a tab control.</p>
 <figure class="align-center" id="id3">
 <img alt="../_images/frames-5.png" src="../_images/frames-5.png" />
 <figcaption>
-<p><span class="caption-text">A property frame</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">A property frame</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The <code class="docutils literal notranslate"><span class="pre">pages:</span></code> init-keyword defines the pages available for the property
@@ -6679,7 +6681,7 @@ on a different page tab.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:[property-page]">
-<span class="sig-name descname"><span class="pre">&lt;property-page&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[property-page]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;property-page&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[property-page]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of property pages.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -6691,7 +6693,7 @@ instance of <a class="reference internal" href="#duim:duim-frames:[property-fram
 <figure class="align-center" id="id4">
 <img alt="../_images/frames-6.png" src="../_images/frames-6.png" />
 <figcaption>
-<p><span class="caption-text">A property page</span><a class="headerlink" href="#id4" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">A property page</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Internally, this class maps into the Windows property page control.</p>
@@ -6712,7 +6714,7 @@ instance of <a class="reference internal" href="#duim:duim-frames:[property-fram
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:raise-frame">
-<span class="sig-name descname"><span class="pre">raise-frame</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:raise-frame" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">raise-frame</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:raise-frame" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raises the specified frame to the top of the stack of visible windows.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6756,7 +6758,7 @@ RETURN key at the points indicated.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:redo-command">
-<span class="sig-name descname"><span class="pre">redo-command</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:redo-command" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">redo-command</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:redo-command" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs the last performed command again.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6787,7 +6789,7 @@ executed using <a class="reference internal" href="#duim:duim-frames:execute-com
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:remove-command">
-<span class="sig-name descname"><span class="pre">remove-command</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:remove-command" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">remove-command</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:remove-command" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes a command from the specified command table.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6813,7 +6815,7 @@ executed using <a class="reference internal" href="#duim:duim-frames:execute-com
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:remove-command-table">
-<span class="sig-name descname"><span class="pre">remove-command-table</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim:duim-frames:remove-command-table" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">remove-command-table</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim:duim-frames:remove-command-table" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes the specified command table.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6832,7 +6834,7 @@ executed using <a class="reference internal" href="#duim:duim-frames:execute-com
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:remove-command-table-menu-item">
-<span class="sig-name descname"><span class="pre">remove-command-table-menu-item</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:remove-command-table-menu-item" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">remove-command-table-menu-item</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:remove-command-table-menu-item" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes a menu item from the specified command table.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6858,7 +6860,7 @@ executed using <a class="reference internal" href="#duim:duim-frames:execute-com
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:set-frame-position">
-<span class="sig-name descname"><span class="pre">set-frame-position</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:set-frame-position" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set-frame-position</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:set-frame-position" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the position of the specified frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6887,7 +6889,7 @@ from the top left of the screen, measured in pixels.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:set-frame-size">
-<span class="sig-name descname"><span class="pre">set-frame-size</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:set-frame-size" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set-frame-size</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:set-frame-size" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the size of the specified frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6920,7 +6922,7 @@ at the points indicated.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:[simple-command]">
-<span class="sig-name descname"><span class="pre">&lt;simple-command&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[simple-command]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;simple-command&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[simple-command]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of simple commands.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -6949,7 +6951,7 @@ function and some arguments. Simple commands are not undoable.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:[simple-frame]">
-<span class="sig-name descname"><span class="pre">&lt;simple-frame&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[simple-frame]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;simple-frame&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[simple-frame]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of simple frames.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -7007,7 +7009,7 @@ frame.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:[simple-undoable-command]">
-<span class="sig-name descname"><span class="pre">&lt;simple-undoable-command&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[simple-undoable-command]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;simple-undoable-command&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[simple-undoable-command]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of simple commands that can contain an undo action.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -7035,7 +7037,7 @@ init-keyword.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:start-dialog">
-<span class="sig-name descname"><span class="pre">start-dialog</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:start-dialog" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">start-dialog</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:start-dialog" title="Permalink to this definition">¶</a></dt>
 <dd><p>Displays a DUIM frame as a dialog box.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -7077,7 +7079,7 @@ debuggers.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:start-frame">
-<span class="sig-name descname"><span class="pre">start-frame</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:start-frame" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">start-frame</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:start-frame" title="Permalink to this definition">¶</a></dt>
 <dd><p>Starts the specified frame.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -7134,7 +7136,7 @@ points indicated.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:undo-command">
-<span class="sig-name descname"><span class="pre">undo-command</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:undo-command" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">undo-command</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-frames:undo-command" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calls the undo command for the specified command.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -7169,7 +7171,7 @@ specialize it.</p>
 
 <dl class="dylan variable">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:*user-command-table*">
-<span class="sig-name descname"><span class="pre">*user-command-table*</span></span> <em class="property"><span class="pre">Variable</span></em><a class="headerlink" href="#duim:duim-frames:*user-command-table*" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">*user-command-table*</span></span> <em class="property"><span class="pre">Variable</span></em><a class="headerlink" href="#duim:duim-frames:*user-command-table*" title="Permalink to this definition">¶</a></dt>
 <dd><p>A user-defined command table that can be inherited by other command
 tables.</p>
 <dl class="field-list simple">
@@ -7196,7 +7198,7 @@ specified by this variable.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:[wizard-frame]">
-<span class="sig-name descname"><span class="pre">&lt;wizard-frame&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[wizard-frame]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;wizard-frame&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[wizard-frame]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Open<span class="colon">:</span></dt>
 <dd class="field-odd"><p></p></dd>
@@ -7235,7 +7237,7 @@ through a structured task, such as installing an application.</p>
 <figure class="align-center" id="id5">
 <img alt="../_images/frames-7.png" src="../_images/frames-7.png" />
 <figcaption>
-<p><span class="caption-text">A wizard frame</span><a class="headerlink" href="#id5" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">A wizard frame</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>A wizard frame is a multi-page dialog, in which the user specifies
@@ -7339,7 +7341,7 @@ Apply button is clicked.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-frames:[wizard-page]">
-<span class="sig-name descname"><span class="pre">&lt;wizard-page&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[wizard-page]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;wizard-page&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-frames:[wizard-page]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of wizard pages.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -7353,7 +7355,7 @@ through.</p>
 <figure class="align-center" id="id6">
 <img alt="../_images/frames-8.png" src="../_images/frames-8.png" />
 <figcaption>
-<p><span class="caption-text">A wizard page</span><a class="headerlink" href="#id6" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">A wizard page</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </p>
@@ -7453,6 +7455,6 @@ through.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

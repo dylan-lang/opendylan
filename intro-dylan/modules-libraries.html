@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Conditions" href="conditions.html" /><link rel="prev" title="Multiple Dispatch" href="multiple-dispatch.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Modules &amp; Libraries - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,15 +463,15 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="modules-libraries">
-<h1>Modules &amp; Libraries<a class="headerlink" href="#modules-libraries" title="Permalink to this heading">#</a></h1>
+<h1>Modules &amp; Libraries<a class="headerlink" href="#modules-libraries" title="Permalink to this heading">¶</a></h1>
 <p>Modules and libraries provide the structure of a Dylan program. Modules
 represent namespaces and control access to objects and functions.
 Libraries contain modules, and act as units of compilation in a Dylan
 program.</p>
 <section id="simple-modules">
-<h2>Simple Modules<a class="headerlink" href="#simple-modules" title="Permalink to this heading">#</a></h2>
+<h2>Simple Modules<a class="headerlink" href="#simple-modules" title="Permalink to this heading">¶</a></h2>
 <p>Modules import names (or bindings) from other modules and export names
 for use by other modules. The names that may be imported/exported are
 the module-level (also called “global”) variables such as those created
@@ -509,7 +511,7 @@ originally defined the generic function may prevent this behavior by
 “sealing” it over specific argument types.</p>
 </section>
 <section id="import-options">
-<h2>Import Options<a class="headerlink" href="#import-options" title="Permalink to this heading">#</a></h2>
+<h2>Import Options<a class="headerlink" href="#import-options" title="Permalink to this heading">¶</a></h2>
 <p>Dylan allows very precise control over how bindings are imported from
 other modules. For example, individual bindings may be imported by
 name. They may be renamed, either one at a time, or by adding a prefix
@@ -523,7 +525,7 @@ exports a complete interface, which another module imports, redefines
 and re-exports.</p>
 </section>
 <section id="libraries">
-<h2>Libraries<a class="headerlink" href="#libraries" title="Permalink to this heading">#</a></h2>
+<h2>Libraries<a class="headerlink" href="#libraries" title="Permalink to this heading">¶</a></h2>
 <p>Libraries contain modules. For example, the <code class="docutils literal notranslate"><span class="pre">dylan</span></code>
 library contains the <code class="docutils literal notranslate"><span class="pre">dylan</span></code> module
 described earlier, the <code class="docutils literal notranslate"><span class="pre">extensions</span></code> module, and
@@ -576,7 +578,7 @@ example, could belong to the <code class="docutils literal notranslate"><span cl
 </div>
 </section>
 <section id="sealing">
-<h2>Sealing<a class="headerlink" href="#sealing" title="Permalink to this heading">#</a></h2>
+<h2>Sealing<a class="headerlink" href="#sealing" title="Permalink to this heading">¶</a></h2>
 <p>Classes and generic functions may be <a class="reference external" href="https://opendylan.org/books/drm/Sealing"><code class="xref drm docutils literal notranslate"><span class="pre">sealed</span></code></a>, preventing code
 in other libraries from subclassing objects or adding methods to generic
 functions. This allows the compiler optimize more effectively. Both classes and
@@ -672,6 +674,6 @@ a library.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

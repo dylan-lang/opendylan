@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Debugging" href="debugging.html" /><link rel="prev" title="Topics" href="index.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Method Dispatch - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="method-dispatch">
-<h1>Method Dispatch<a class="headerlink" href="#method-dispatch" title="Permalink to this heading">#</a></h1>
+<h1>Method Dispatch<a class="headerlink" href="#method-dispatch" title="Permalink to this heading">¶</a></h1>
 <p>Method dispatch is a critical area for compile time and runtime optimization
 in Dylan. Since nearly everything appears to involve a method dispatch including
 slot access, it is very important that the compiler be able to optimize much
@@ -486,14 +488,14 @@ dependencies between the compiler and the runtime).</p>
 <li><p><a class="reference external" href="https://github.com/dylan-lang/opendylan/tree/master/sources/dfmc/optimization/dispatch.dylan">sources/dfmc/optimization/dispatch.dylan</a></p></li>
 </ul>
 <section id="publications">
-<h2>Publications<a class="headerlink" href="#publications" title="Permalink to this heading">#</a></h2>
+<h2>Publications<a class="headerlink" href="#publications" title="Permalink to this heading">¶</a></h2>
 <p>One paper has been written about the implementation of dispatch in Open Dylan:</p>
 <ul class="simple">
 <li><p><strong>Partial Dispatch: Optimizing Dynamically-Dispatched Multimethod Calls with Compile-Time Types and Runtime Feedback</strong> (by Jonathan Bachrach and Glenn Burke - Technical Report 2000 <a class="reference external" href="http://people.csail.mit.edu/jrb/Projects/pd.pdf">pdf</a>)</p></li>
 </ul>
 </section>
 <section id="generic-function-representation">
-<h2>Generic Function Representation<a class="headerlink" href="#generic-function-representation" title="Permalink to this heading">#</a></h2>
+<h2>Generic Function Representation<a class="headerlink" href="#generic-function-representation" title="Permalink to this heading">¶</a></h2>
 <p>In Dylan, a generic function looks like (from
 <a class="reference external" href="https://github.com/dylan-lang/opendylan/tree/master/sources/dfmc/modeling/functions.dylan">sources/dfmc/modeling/functions.dylan</a>):</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">abstract</span><span class="w"> </span><span class="nb">primary</span><span class="w"> </span><span class="n">&amp;class</span><span class="w"> </span><span class="nc">&lt;generic-function&gt;</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;function&gt;</span><span class="p">)</span>
@@ -559,11 +561,11 @@ in this area are worth considering as they would improve the debugging
 experience.)</p>
 </section>
 <section id="runtime-dispatch">
-<h2>Runtime Dispatch<a class="headerlink" href="#runtime-dispatch" title="Permalink to this heading">#</a></h2>
+<h2>Runtime Dispatch<a class="headerlink" href="#runtime-dispatch" title="Permalink to this heading">¶</a></h2>
 <p>Much of the technical report by Bachrach and Burke remains accurate with
 respect to the basics of dispatch.</p>
 <section id="discriminators-at-runtime">
-<h3>Discriminators at Runtime<a class="headerlink" href="#discriminators-at-runtime" title="Permalink to this heading">#</a></h3>
+<h3>Discriminators at Runtime<a class="headerlink" href="#discriminators-at-runtime" title="Permalink to this heading">¶</a></h3>
 <p>The initial discriminator of a generic function is <code class="docutils literal notranslate"><span class="pre">$absent-engine-node</span></code>
 (or in C, <code class="docutils literal notranslate"><span class="pre">RSINGULAR_absent_engine_node</span></code>). When this is encountered when
 performing a dispatch, <code class="docutils literal notranslate"><span class="pre">gf-dispatch-absent</span></code> is invoked, which calls
@@ -580,7 +582,7 @@ it can be upgraded to become a hashed discriminator.</p>
 (defined in <a class="reference external" href="https://github.com/dylan-lang/opendylan/tree/master/sources/dylan/discrimination.dylan">sources/dylan/discrimination.dylan</a>).</p>
 </section>
 <section id="discriminator-structure">
-<h3>Discriminator Structure<a class="headerlink" href="#discriminator-structure" title="Permalink to this heading">#</a></h3>
+<h3>Discriminator Structure<a class="headerlink" href="#discriminator-structure" title="Permalink to this heading">¶</a></h3>
 <p>The classes that dictate the in-memory layout of the discriminators are
 defined within the compiler in <a class="reference external" href="https://github.com/dylan-lang/opendylan/tree/master/sources/dfmc/modeling/functions.dylan">sources/dfmc/modeling/functions.dylan</a>.</p>
 <p>Of particular interest are the <code class="docutils literal notranslate"><span class="pre">&lt;linear-by-class-discriminator&gt;</span></code> and
@@ -608,13 +610,13 @@ the code for adding new methods to the discriminator.</p>
 </section>
 </section>
 <section id="compile-time-optimization">
-<h2>Compile Time Optimization<a class="headerlink" href="#compile-time-optimization" title="Permalink to this heading">#</a></h2>
+<h2>Compile Time Optimization<a class="headerlink" href="#compile-time-optimization" title="Permalink to this heading">¶</a></h2>
 <p><em>Discuss the impact of sealing and other things here.</em></p>
 </section>
 <section id="analysis">
-<h2>Analysis<a class="headerlink" href="#analysis" title="Permalink to this heading">#</a></h2>
+<h2>Analysis<a class="headerlink" href="#analysis" title="Permalink to this heading">¶</a></h2>
 <section id="performance-highlighting">
-<h3>Performance Highlighting<a class="headerlink" href="#performance-highlighting" title="Permalink to this heading">#</a></h3>
+<h3>Performance Highlighting<a class="headerlink" href="#performance-highlighting" title="Permalink to this heading">¶</a></h3>
 <p>The compiler records dispatch decisions as they’re made within
 the optimizer. This work is performed within <a class="reference external" href="https://github.com/dylan-lang/opendylan/tree/master/sources/dfmc/optimization/dispatch.dylan">sources/dfmc/optimization/dispatch.dylan</a>
 (look for calls to <code class="docutils literal notranslate"><span class="pre">color-dispatch</span></code>). It is worth noting
@@ -644,13 +646,13 @@ are:</p>
 some screenshots.</em></p>
 </section>
 <section id="dispatch-profiler">
-<h3>Dispatch Profiler<a class="headerlink" href="#dispatch-profiler" title="Permalink to this heading">#</a></h3>
+<h3>Dispatch Profiler<a class="headerlink" href="#dispatch-profiler" title="Permalink to this heading">¶</a></h3>
 <p>There is a dispatch profiler in <a class="reference external" href="https://github.com/dylan-lang/opendylan/tree/master/sources/lib/dispatch-profiler">sources/lib/dispatch-profiler</a>
 but no one knows how to use it.</p>
 </section>
 </section>
 <section id="future-work">
-<h2>Future Work<a class="headerlink" href="#future-work" title="Permalink to this heading">#</a></h2>
+<h2>Future Work<a class="headerlink" href="#future-work" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Learn more about partial dispatch and possibly enable it.</p></li>
 <li><p>Look at the effectiveness of call site caching.</p></li>
@@ -747,6 +749,6 @@ but that aren’t understood well (like dispatch profiling).</p></li>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

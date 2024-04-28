@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="A Dylan Primer for Scheme Programmers" href="scheme.html" /><link rel="prev" title="Collections Cheat Sheet" href="collections.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Iteration Cheat Sheet - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,11 +463,11 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="iteration-cheat-sheet">
-<h1>Iteration Cheat Sheet<a class="headerlink" href="#iteration-cheat-sheet" title="Permalink to this heading">#</a></h1>
+<h1>Iteration Cheat Sheet<a class="headerlink" href="#iteration-cheat-sheet" title="Permalink to this heading">¶</a></h1>
 <section id="simple-iteration-with-while-and-until">
-<h2>Simple iteration with <code class="docutils literal notranslate"><span class="pre">while</span></code> and <code class="docutils literal notranslate"><span class="pre">until</span></code><a class="headerlink" href="#simple-iteration-with-while-and-until" title="Permalink to this heading">#</a></h2>
+<h2>Simple iteration with <code class="docutils literal notranslate"><span class="pre">while</span></code> and <code class="docutils literal notranslate"><span class="pre">until</span></code><a class="headerlink" href="#simple-iteration-with-while-and-until" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">condition?</span><span class="p">)</span>
 <span class="w">  </span><span class="c1">// do something while the test condition? is true</span>
 <span class="k">end</span><span class="p">;</span>
@@ -479,11 +481,11 @@
 <p>Read more in the DRM: <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#while"><code class="xref drm docutils literal notranslate"><span class="pre">while</span></code></a> and <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#until"><code class="xref drm docutils literal notranslate"><span class="pre">until</span></code></a>.</p>
 </section>
 <section id="the-for-loop">
-<h2>The <code class="docutils literal notranslate"><span class="pre">for</span></code> loop<a class="headerlink" href="#the-for-loop" title="Permalink to this heading">#</a></h2>
+<h2>The <code class="docutils literal notranslate"><span class="pre">for</span></code> loop<a class="headerlink" href="#the-for-loop" title="Permalink to this heading">¶</a></h2>
 <p>The <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#for"><code class="xref drm docutils literal notranslate"><span class="pre">for</span></code></a> loop can be used in many different ways. We demonstrate some of the
 most commonly used features here:</p>
 <section id="iterating-over-a-collection">
-<h3>Iterating over a collection<a class="headerlink" href="#iterating-over-a-collection" title="Permalink to this heading">#</a></h3>
+<h3>Iterating over a collection<a class="headerlink" href="#iterating-over-a-collection" title="Permalink to this heading">¶</a></h3>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="nb">element</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">collection</span><span class="p">)</span>
 <span class="w">  </span><span class="c1">// do something with element</span>
 <span class="k">end</span><span class="p">;</span>
@@ -491,7 +493,7 @@ most commonly used features here:</p>
 </div>
 </section>
 <section id="iterating-over-a-range">
-<h3>Iterating over a range<a class="headerlink" href="#iterating-over-a-range" title="Permalink to this heading">#</a></h3>
+<h3>Iterating over a range<a class="headerlink" href="#iterating-over-a-range" title="Permalink to this heading">¶</a></h3>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">below</span><span class="w"> </span><span class="n">num</span><span class="p">)</span>
 <span class="w">  </span><span class="c1">// do work</span>
 <span class="w">  </span><span class="c1">// count ranges from 0 to the integer below num</span>
@@ -512,7 +514,7 @@ most commonly used features here:</p>
 </div>
 </section>
 <section id="iterating-over-a-table">
-<h3>Iterating over a table<a class="headerlink" href="#iterating-over-a-table" title="Permalink to this heading">#</a></h3>
+<h3>Iterating over a table<a class="headerlink" href="#iterating-over-a-table" title="Permalink to this heading">¶</a></h3>
 <p>The easiest way to iterate over a table is to use an extension to
 the standard <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#for"><code class="xref drm docutils literal notranslate"><span class="pre">for</span></code></a> loop that Open Dylan supports:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="n">keyed-by</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">table</span><span class="p">)</span>
@@ -530,7 +532,7 @@ the standard <a class="reference external" href="https://opendylan.org/books/drm
 </section>
 </section>
 <section id="breaking-out-of-a-loop">
-<h2>Breaking out of a loop<a class="headerlink" href="#breaking-out-of-a-loop" title="Permalink to this heading">#</a></h2>
+<h2>Breaking out of a loop<a class="headerlink" href="#breaking-out-of-a-loop" title="Permalink to this heading">¶</a></h2>
 <p>Breaking out of a loop is just like any other non-local exit in Dylan.
 Combine any loop with a <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#block"><code class="xref drm docutils literal notranslate"><span class="pre">block</span></code></a> expression:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">block</span><span class="w"> </span><span class="p">(</span><span class="n">exit-block</span><span class="p">)</span>
@@ -549,7 +551,7 @@ is the last expression in the block. If <code class="docutils literal notranslat
 result is <code class="docutils literal notranslate"><span class="pre">1</span></code> because that was the value passed to <code class="docutils literal notranslate"><span class="pre">exit-block</span></code>.</p>
 </section>
 <section id="collection-functions">
-<h2>Collection Functions<a class="headerlink" href="#collection-functions" title="Permalink to this heading">#</a></h2>
+<h2>Collection Functions<a class="headerlink" href="#collection-functions" title="Permalink to this heading">¶</a></h2>
 <p>When working with a collection, some additional operations are available
 that remove the need for explicit iteration over the collection.</p>
 <p>In all of these, the function passed in can be any of:</p>
@@ -561,7 +563,7 @@ that remove the need for explicit iteration over the collection.</p>
 <a class="reference external" href="https://opendylan.org/books/drm/Functional_Operations#rcurry"><code class="xref drm docutils literal notranslate"><span class="pre">rcurry</span></code></a> or other <a class="reference external" href="https://opendylan.org/books/drm/Functional_Operations">functional operations</a>.</p></li>
 </ul>
 <section id="do">
-<h3><code class="docutils literal notranslate"><span class="pre">do</span></code><a class="headerlink" href="#do" title="Permalink to this heading">#</a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">do</span></code><a class="headerlink" href="#do" title="Permalink to this heading">¶</a></h3>
 <p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#do"><code class="xref drm docutils literal notranslate"><span class="pre">do</span></code></a> iterates over one or more collections, performing side effects:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">do</span><span class="p">(</span><span class="nb">method</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="w">     </span><span class="n">format-out</span><span class="p">(</span><span class="s">&quot;%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
@@ -571,7 +573,7 @@ that remove the need for explicit iteration over the collection.</p>
 </div>
 </section>
 <section id="map-map-as-map-into">
-<h3><code class="docutils literal notranslate"><span class="pre">map</span></code>, <code class="docutils literal notranslate"><span class="pre">map-as</span></code>, <code class="docutils literal notranslate"><span class="pre">map-into</span></code><a class="headerlink" href="#map-map-as-map-into" title="Permalink to this heading">#</a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">map</span></code>, <code class="docutils literal notranslate"><span class="pre">map-as</span></code>, <code class="docutils literal notranslate"><span class="pre">map-into</span></code><a class="headerlink" href="#map-map-as-map-into" title="Permalink to this heading">¶</a></h3>
 <p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#map"><code class="xref drm docutils literal notranslate"><span class="pre">map</span></code></a> iterates over one or more collections, applying a function and
 returns the results in a new collection.  <a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#map-as"><code class="xref drm docutils literal notranslate"><span class="pre">map-as</span></code></a> and <a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#map-into"><code class="xref drm docutils literal notranslate"><span class="pre">map-into</span></code></a>
 allow control over the way that the results are returned.</p>
@@ -587,7 +589,7 @@ allow control over the way that the results are returned.</p>
 <p>Read more in the DRM: <a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#map"><code class="xref drm docutils literal notranslate"><span class="pre">map</span></code></a>, <a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#map-as"><code class="xref drm docutils literal notranslate"><span class="pre">map-as</span></code></a>, <a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#map-into"><code class="xref drm docutils literal notranslate"><span class="pre">map-into</span></code></a>.</p>
 </section>
 <section id="reduce-reduce1">
-<h3><code class="docutils literal notranslate"><span class="pre">reduce</span></code>, <code class="docutils literal notranslate"><span class="pre">reduce1</span></code><a class="headerlink" href="#reduce-reduce1" title="Permalink to this heading">#</a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">reduce</span></code>, <code class="docutils literal notranslate"><span class="pre">reduce1</span></code><a class="headerlink" href="#reduce-reduce1" title="Permalink to this heading">¶</a></h3>
 <p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#reduce"><code class="xref drm docutils literal notranslate"><span class="pre">reduce</span></code></a> combines the elements of a collection and a seed value into
 a single value by repeatedly applying a binary function.</p>
 <p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#reduce1"><code class="xref drm docutils literal notranslate"><span class="pre">reduce1</span></code></a> is similar to <a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#reduce"><code class="xref drm docutils literal notranslate"><span class="pre">reduce</span></code></a>, except that the first value of
@@ -605,7 +607,7 @@ the collection is used as the seed value.</p>
 </section>
 </section>
 <section id="iteration-with-tail-recursion">
-<h2>Iteration with Tail Recursion<a class="headerlink" href="#iteration-with-tail-recursion" title="Permalink to this heading">#</a></h2>
+<h2>Iteration with Tail Recursion<a class="headerlink" href="#iteration-with-tail-recursion" title="Permalink to this heading">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">iterate</span></code> macro in the <code class="docutils literal notranslate"><span class="pre">common-dylan</span></code> library is another powerful way to do
 iteration. It relies on the fact that Dylan implementations are required to optimize
 tail recursion.</p>
@@ -713,6 +715,6 @@ macro makes it more concise.</p>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

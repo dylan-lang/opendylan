@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Creating CORBA Projects" href="projects.html" /><link rel="prev" title="The Bank Client" href="bank-client.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>The Bank Server - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,11 +463,11 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="the-bank-server">
-<h1>The Bank Server<a class="headerlink" href="#the-bank-server" title="Permalink to this heading">#</a></h1>
+<h1>The Bank Server<a class="headerlink" href="#the-bank-server" title="Permalink to this heading">¶</a></h1>
 <section id="the-server">
-<h2>The server<a class="headerlink" href="#the-server" title="Permalink to this heading">#</a></h2>
+<h2>The server<a class="headerlink" href="#the-server" title="Permalink to this heading">¶</a></h2>
 <p>In this chapter, we design and implement a CORBA server, using Dylan
 and the Open Dylan ORB.</p>
 <p>Our server presents an object-oriented interface to a bank object and
@@ -482,7 +484,7 @@ available to the CORBA environment.</p>
 this chapter.</p>
 </section>
 <section id="the-odbc-database">
-<h2>The ODBC database<a class="headerlink" href="#the-odbc-database" title="Permalink to this heading">#</a></h2>
+<h2>The ODBC database<a class="headerlink" href="#the-odbc-database" title="Permalink to this heading">¶</a></h2>
 <p>The folder <code class="file docutils literal notranslate"><span class="pre">Examplescorbabankbank-server</span></code> contains a prepared
 Microsoft Access database file <code class="file docutils literal notranslate"><span class="pre">bankDB.mdb</span></code> that the server uses
 to record account details.</p>
@@ -529,7 +531,7 @@ checking accounts can have negative balances while ordinary accounts
 cannot.)</p>
 </section>
 <section id="overview-of-the-open-dylan-sql-odbc-library">
-<h2>Overview of the Open Dylan SQL-ODBC library<a class="headerlink" href="#overview-of-the-open-dylan-sql-odbc-library" title="Permalink to this heading">#</a></h2>
+<h2>Overview of the Open Dylan SQL-ODBC library<a class="headerlink" href="#overview-of-the-open-dylan-sql-odbc-library" title="Permalink to this heading">¶</a></h2>
 <p>The SQL-ODBC library is built on top of a generic SQL library. The SQL
 library does not include the low-level code necessary to communicate
 with any particular database management system (DBMS): it simply
@@ -670,7 +672,7 @@ that might be used to extract the entries in the <code class="docutils literal n
 </div>
 </section>
 <section id="implementing-corba-objects-in-a-server">
-<h2>Implementing CORBA objects in a server<a class="headerlink" href="#implementing-corba-objects-in-a-server" title="Permalink to this heading">#</a></h2>
+<h2>Implementing CORBA objects in a server<a class="headerlink" href="#implementing-corba-objects-in-a-server" title="Permalink to this heading">¶</a></h2>
 <p>A CORBA server has to provide an implementation object, called a
 servant, for each of the proxy objects that might be manipulated by a
 client. Our server needs to implement the initial <code class="docutils literal notranslate"><span class="pre">bank</span></code> servant,
@@ -683,7 +685,7 @@ servant.</p>
 <p>In CORBA, the primary means for an object implementation to access ORB
 services such as object reference generation is via an object adapter.</p>
 <section id="object-adapters">
-<h3>Object adapters<a class="headerlink" href="#object-adapters" title="Permalink to this heading">#</a></h3>
+<h3>Object adapters<a class="headerlink" href="#object-adapters" title="Permalink to this heading">¶</a></h3>
 <p>An object adapter is responsible for the following functions:</p>
 <ul class="simple">
 <li><p>Generation and interpretation of object references</p></li>
@@ -783,7 +785,7 @@ not created by this POA, the operation raises the <code class="docutils literal 
 exception.</p>
 </section>
 <section id="the-servers-perspective">
-<h3>The server’s perspective<a class="headerlink" href="#the-servers-perspective" title="Permalink to this heading">#</a></h3>
+<h3>The server’s perspective<a class="headerlink" href="#the-servers-perspective" title="Permalink to this heading">¶</a></h3>
 <p>From the perspective of the server, the Bank-Protocol library
 specifies the protocol that its servants must implement in order to
 satisfy the interfaces in the IDL <code class="file docutils literal notranslate"><span class="pre">bank.idl</span></code>. A partial
@@ -816,7 +818,7 @@ skeleton method sends the CORBA exception back to the client.</p>
 </section>
 </section>
 <section id="requirements-for-implementing-the-bank-server">
-<h2>Requirements for implementing the bank server<a class="headerlink" href="#requirements-for-implementing-the-bank-server" title="Permalink to this heading">#</a></h2>
+<h2>Requirements for implementing the bank server<a class="headerlink" href="#requirements-for-implementing-the-bank-server" title="Permalink to this heading">¶</a></h2>
 <p>As there were for the bank client, there are three parts to
 implementing the bank server:</p>
 <ul class="simple">
@@ -828,7 +830,7 @@ manager, and get an initial object reference.</p></li>
 <p>We start by writing the CORBA object code. As noted in Section 6.4,
 this entails writing concrete servant implementations.</p>
 <section id="the-bank-server-gui">
-<h3>The bank server GUI<a class="headerlink" href="#the-bank-server-gui" title="Permalink to this heading">#</a></h3>
+<h3>The bank server GUI<a class="headerlink" href="#the-bank-server-gui" title="Permalink to this heading">¶</a></h3>
 <p>Since this demonstration principally concerns CORBA, and because we
 would like to revamp the look-and-feel of the demonstration
 occasionally, we do not describe the GUI implementation in great
@@ -841,7 +843,7 @@ implementation of the server GUI can be found in the file
 <code class="file docutils literal notranslate"><span class="pre">server-frame.dylan</span></code>.</p>
 </section>
 <section id="the-bank-server-library-and-module">
-<h3>The bank server library and module<a class="headerlink" href="#the-bank-server-library-and-module" title="Permalink to this heading">#</a></h3>
+<h3>The bank server library and module<a class="headerlink" href="#the-bank-server-library-and-module" title="Permalink to this heading">¶</a></h3>
 <p>The bank server is implemented as a library:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">library</span><span class="w"> </span><span class="n">bank-server</span>
 <span class="w">  </span><span class="k">use</span><span class="w"> </span><span class="n">common-dylan</span><span class="p">;</span>
@@ -877,7 +879,7 @@ dialog to shutdown the server. The full source code for the server is
 in the <code class="file docutils literal notranslate"><span class="pre">bank-server.dylan</span></code> file.</p>
 </section>
 <section id="implementing-the-servant-classes">
-<h3>Implementing the servant classes<a class="headerlink" href="#implementing-the-servant-classes" title="Permalink to this heading">#</a></h3>
+<h3>Implementing the servant classes<a class="headerlink" href="#implementing-the-servant-classes" title="Permalink to this heading">¶</a></h3>
 <p>The Bank-Skeletons library defines three abstract servant classes:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BankingDemo</span><span class="o">&lt;</span><span class="n">account</span><span class="o">-</span><span class="n">servant</span><span class="o">&gt;</span>
 <span class="n">BankingDemo</span><span class="o">/&lt;</span><span class="n">checkingAccount</span><span class="o">-</span><span class="n">servant</span><span class="o">&gt;</span>
@@ -939,7 +941,7 @@ record. The <code class="docutils literal notranslate"><span class="pre">name</s
 </div>
 </section>
 <section id="implementing-the-servant-methods">
-<h3>Implementing the servant methods<a class="headerlink" href="#implementing-the-servant-methods" title="Permalink to this heading">#</a></h3>
+<h3>Implementing the servant methods<a class="headerlink" href="#implementing-the-servant-methods" title="Permalink to this heading">¶</a></h3>
 <p>The next step in implementing the server is to define methods,
 specialized on the implementation classes, for each of the protocol
 functions corresponding to an IDL attribute or operation.</p>
@@ -1222,7 +1224,7 @@ in general.</p>
 </section>
 </section>
 <section id="implementing-corba-initialization-for-the-bank-server">
-<h2>Implementing CORBA initialization for the bank server<a class="headerlink" href="#implementing-corba-initialization-for-the-bank-server" title="Permalink to this heading">#</a></h2>
+<h2>Implementing CORBA initialization for the bank server<a class="headerlink" href="#implementing-corba-initialization-for-the-bank-server" title="Permalink to this heading">¶</a></h2>
 <p>To complete the implementation of the bank server we need to write the
 code that enters it into the CORBA environment. In detail, we need to:</p>
 <ul class="simple">
@@ -1459,6 +1461,6 @@ connection to the bank, and exits, terminating the server application.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

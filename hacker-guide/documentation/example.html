@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Jam-based Build System" href="../build-system.html" /><link rel="prev" title="Doctower" href="doctower.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Example documentation - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,23 +463,23 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="example-documentation">
-<h1>Example documentation<a class="headerlink" href="#example-documentation" title="Permalink to this heading">#</a></h1>
+<h1>Example documentation<a class="headerlink" href="#example-documentation" title="Permalink to this heading">¶</a></h1>
 <p>Here is an example of documentation to get a feel for how it works. Use the
 “View page source” link at the top of the page to see it in RST markup form.</p>
 <section id="skip-lists">
-<h2>Skip Lists<a class="headerlink" href="#skip-lists" title="Permalink to this heading">#</a></h2>
+<h2>Skip Lists<a class="headerlink" href="#skip-lists" title="Permalink to this heading">¶</a></h2>
 <p>A skip-list is a data type equivalent to a balanced (binary) tree.</p>
 <dl class="dylan library">
 <dt class="sig sig-object dylan-api dylan" id="skip-list">
-<span class="sig-name descname"><span class="pre">skip-list</span></span> <em class="property"><span class="pre">Library</span></em><a class="headerlink" href="#skip-list" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">skip-list</span></span> <em class="property"><span class="pre">Library</span></em><a class="headerlink" href="#skip-list" title="Permalink to this definition">¶</a></dt>
 <dd><p>The skip list library may be found in the <a class="reference external" href="http://github.com/dylan-lang/skip-list">“skip-list” repository</a>.</p>
 </dd></dl>
 
 <dl class="dylan module">
 <dt class="sig sig-object dylan-api dylan" id="skip-list:skip-list">
-<span class="sig-name descname"><span class="pre">skip-list</span></span> <em class="property"><span class="pre">Module</span></em><a class="headerlink" href="#skip-list:skip-list" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">skip-list</span></span> <em class="property"><span class="pre">Module</span></em><a class="headerlink" href="#skip-list:skip-list" title="Permalink to this definition">¶</a></dt>
 <dd><p>The skip-list module exports a number of symbols. Two new symbols are of
 interest:</p>
 <ul class="simple">
@@ -493,7 +495,7 @@ methods is:</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="skip-list:skip-list:[skip-list]">
-<span class="sig-name descname"><span class="pre">&lt;skip-list&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Primary</span> <span class="pre">Class</span></em><a class="headerlink" href="#skip-list:skip-list:[skip-list]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;skip-list&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Primary</span> <span class="pre">Class</span></em><a class="headerlink" href="#skip-list:skip-list:[skip-list]" title="Permalink to this definition">¶</a></dt>
 <dd><p>A skip-list is a data type equivalent to a balanced (binary) tree. All keys
 must be comparable by some kind of ordering function, e.g., <a class="reference external" href="https://opendylan.org/books/drm/Equality_and_Comparison#less_than"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;</span></code></a>.</p>
 <dl class="field-list simple">
@@ -526,7 +528,7 @@ library defines <code class="docutils literal notranslate"><span class="pre">for
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="skip-list:skip-list:element-sequence">
-<span class="sig-name descname"><span class="pre">element-sequence</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#skip-list:skip-list:element-sequence" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">element-sequence</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#skip-list:skip-list:element-sequence" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -550,7 +552,7 @@ elements have been added or removed from the skip list, only reordered.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="skip-list:skip-list:element([skip-list])">
-<span class="sig-name descname"><span class="pre">element(&lt;skip-list&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#skip-list:skip-list:element([skip-list])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">element(&lt;skip-list&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#skip-list:skip-list:element([skip-list])" title="Permalink to this definition">¶</a></dt>
 <dd><p>A specialization of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#element"><code class="xref drm docutils literal notranslate"><span class="pre">element</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -643,6 +645,6 @@ omitted and element not found, signals an error.</p></li>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

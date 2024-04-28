@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="The simple-random Module" href="simple-random.html" /><link rel="prev" title="The simple-format Module" href="simple-format.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>The simple-profiling Module - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,16 +463,16 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="the-simple-profiling-module">
-<h1>The simple-profiling Module<a class="headerlink" href="#the-simple-profiling-module" title="Permalink to this heading">#</a></h1>
+<h1>The simple-profiling Module<a class="headerlink" href="#the-simple-profiling-module" title="Permalink to this heading">¶</a></h1>
 <p>This module provides an easy to use interface for measuring application
 performance.</p>
 <section id="simple-profiling">
-<h2>Simple Profiling<a class="headerlink" href="#simple-profiling" title="Permalink to this heading">#</a></h2>
+<h2>Simple Profiling<a class="headerlink" href="#simple-profiling" title="Permalink to this heading">¶</a></h2>
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:simple-profiling:timing">
-<span class="sig-name descname"><span class="pre">timing</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#common-dylan:simple-profiling:timing" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">timing</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#common-dylan:simple-profiling:timing" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the time, in seconds and microseconds, spent executing the body
 of code it is wrapped around.</p>
 <dl class="field-list">
@@ -512,7 +514,7 @@ spent in <em>body</em> in addition to <em>seconds</em>.</p>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:simple-profiling:profiling">
-<span class="sig-name descname"><span class="pre">profiling</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#common-dylan:simple-profiling:profiling" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">profiling</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#common-dylan:simple-profiling:profiling" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gives access to the CPU time, in seconds and microseconds, as well as
 some memory allocation statistics, spent executing the body of code
 it is wrapped around.</p>
@@ -569,12 +571,12 @@ run-times and platforms.</p>
 
 </section>
 <section id="internals">
-<h2>Internals<a class="headerlink" href="#internals" title="Permalink to this heading">#</a></h2>
+<h2>Internals<a class="headerlink" href="#internals" title="Permalink to this heading">¶</a></h2>
 <p>These functions don’t typically need to be called directly but
 may be useful in some scenarios.</p>
 <dl class="dylan type">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:simple-profiling:[profiling-state]">
-<span class="sig-name descname"><span class="pre">&lt;profiling-state&gt;</span></span> <em class="property"><span class="pre">Type</span></em><a class="headerlink" href="#common-dylan:simple-profiling:[profiling-state]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;profiling-state&gt;</span></span> <em class="property"><span class="pre">Type</span></em><a class="headerlink" href="#common-dylan:simple-profiling:[profiling-state]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Equivalent<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#object-table"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object-table&gt;</span></code></a></p>
@@ -584,7 +586,7 @@ may be useful in some scenarios.</p>
 
 <dl class="dylan type">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:simple-profiling:[cpu-profiling-type]">
-<span class="sig-name descname"><span class="pre">&lt;cpu-profiling-type&gt;</span></span> <em class="property"><span class="pre">Type</span></em><a class="headerlink" href="#common-dylan:simple-profiling:[cpu-profiling-type]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;cpu-profiling-type&gt;</span></span> <em class="property"><span class="pre">Type</span></em><a class="headerlink" href="#common-dylan:simple-profiling:[cpu-profiling-type]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Equivalent<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">one-of(#&quot;cpu-time-seconds&quot;,</span> <span class="pre">#&quot;cpu-time-microseconds&quot;)</span></code></p>
@@ -594,7 +596,7 @@ may be useful in some scenarios.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:simple-profiling:profiling-type-result">
-<span class="sig-name descname"><span class="pre">profiling-type-result</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#common-dylan:simple-profiling:profiling-type-result" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">profiling-type-result</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#common-dylan:simple-profiling:profiling-type-result" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>profiling-type-result (state keyword #key #all-keys) =&gt; (value)</p>
@@ -615,22 +617,22 @@ may be useful in some scenarios.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:simple-profiling:profiling-type-result([profiling-state],[cpu-profiling-type])">
-<span class="sig-name descname"><span class="pre">profiling-type-result(&lt;profiling-state&gt;,</span> <span class="pre">&lt;cpu-profiling-type&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:simple-profiling:profiling-type-result([profiling-state],[cpu-profiling-type])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">profiling-type-result(&lt;profiling-state&gt;,</span> <span class="pre">&lt;cpu-profiling-type&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:simple-profiling:profiling-type-result([profiling-state],[cpu-profiling-type])" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:simple-profiling:profiling-type-result([profiling-state],singleton(#&quot;allocation&quot;))">
-<span class="sig-name descname"><span class="pre">profiling-type-result(&lt;profiling-state&gt;,</span> <span class="pre">singleton(#&quot;allocation&quot;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:simple-profiling:profiling-type-result([profiling-state],singleton(#"allocation"))" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">profiling-type-result(&lt;profiling-state&gt;,</span> <span class="pre">singleton(#&quot;allocation&quot;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:simple-profiling:profiling-type-result([profiling-state],singleton(#"allocation"))" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:simple-profiling:profiling-type-result([profiling-state],singleton(#&quot;allocation-stats&quot;))">
-<span class="sig-name descname"><span class="pre">profiling-type-result(&lt;profiling-state&gt;,</span> <span class="pre">singleton(#&quot;allocation-stats&quot;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:simple-profiling:profiling-type-result([profiling-state],singleton(#"allocation-stats"))" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">profiling-type-result(&lt;profiling-state&gt;,</span> <span class="pre">singleton(#&quot;allocation-stats&quot;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:simple-profiling:profiling-type-result([profiling-state],singleton(#"allocation-stats"))" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:simple-profiling:start-profiling">
-<span class="sig-name descname"><span class="pre">start-profiling</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:simple-profiling:start-profiling" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">start-profiling</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:simple-profiling:start-profiling" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>start-profiling (profiling-types) =&gt; (state)</p>
@@ -654,7 +656,7 @@ than using the <a class="reference internal" href="#common-dylan:simple-profilin
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:simple-profiling:start-profiling-type">
-<span class="sig-name descname"><span class="pre">start-profiling-type</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#common-dylan:simple-profiling:start-profiling-type" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">start-profiling-type</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#common-dylan:simple-profiling:start-profiling-type" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>start-profiling-type (state keyword) =&gt; ()</p>
@@ -670,22 +672,22 @@ than using the <a class="reference internal" href="#common-dylan:simple-profilin
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:simple-profiling:start-profiling-type([profiling-state],[cpu-profiling-type])">
-<span class="sig-name descname"><span class="pre">start-profiling-type(&lt;profiling-state&gt;,</span> <span class="pre">&lt;cpu-profiling-type&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:simple-profiling:start-profiling-type([profiling-state],[cpu-profiling-type])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">start-profiling-type(&lt;profiling-state&gt;,</span> <span class="pre">&lt;cpu-profiling-type&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:simple-profiling:start-profiling-type([profiling-state],[cpu-profiling-type])" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:simple-profiling:start-profiling-type([profiling-state],singleton(#&quot;allocation&quot;))">
-<span class="sig-name descname"><span class="pre">start-profiling-type(&lt;profiling-state&gt;,</span> <span class="pre">singleton(#&quot;allocation&quot;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:simple-profiling:start-profiling-type([profiling-state],singleton(#"allocation"))" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">start-profiling-type(&lt;profiling-state&gt;,</span> <span class="pre">singleton(#&quot;allocation&quot;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:simple-profiling:start-profiling-type([profiling-state],singleton(#"allocation"))" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:simple-profiling:start-profiling-type([profiling-state],singleton(#&quot;allocation-stats&quot;))">
-<span class="sig-name descname"><span class="pre">start-profiling-type(&lt;profiling-state&gt;,</span> <span class="pre">singleton(#&quot;allocation-stats&quot;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:simple-profiling:start-profiling-type([profiling-state],singleton(#"allocation-stats"))" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">start-profiling-type(&lt;profiling-state&gt;,</span> <span class="pre">singleton(#&quot;allocation-stats&quot;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:simple-profiling:start-profiling-type([profiling-state],singleton(#"allocation-stats"))" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:simple-profiling:stop-profiling">
-<span class="sig-name descname"><span class="pre">stop-profiling</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:simple-profiling:stop-profiling" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">stop-profiling</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:simple-profiling:stop-profiling" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>stop-profiling (state profiling-types) =&gt; ()</p>
@@ -702,7 +704,7 @@ symbols should be the same as those passed to <a class="reference internal" href
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:simple-profiling:stop-profiling-type">
-<span class="sig-name descname"><span class="pre">stop-profiling-type</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#common-dylan:simple-profiling:stop-profiling-type" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">stop-profiling-type</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#common-dylan:simple-profiling:stop-profiling-type" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>stop-profiling-type (state keyword) =&gt; ()</p>
@@ -718,17 +720,17 @@ symbols should be the same as those passed to <a class="reference internal" href
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:simple-profiling:stop-profiling-type([profiling-state],[cpu-profiling-type])">
-<span class="sig-name descname"><span class="pre">stop-profiling-type(&lt;profiling-state&gt;,</span> <span class="pre">&lt;cpu-profiling-type&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:simple-profiling:stop-profiling-type([profiling-state],[cpu-profiling-type])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">stop-profiling-type(&lt;profiling-state&gt;,</span> <span class="pre">&lt;cpu-profiling-type&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:simple-profiling:stop-profiling-type([profiling-state],[cpu-profiling-type])" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:simple-profiling:stop-profiling-type([profiling-state],singleton(#&quot;allocation&quot;))">
-<span class="sig-name descname"><span class="pre">stop-profiling-type(&lt;profiling-state&gt;,</span> <span class="pre">singleton(#&quot;allocation&quot;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:simple-profiling:stop-profiling-type([profiling-state],singleton(#"allocation"))" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">stop-profiling-type(&lt;profiling-state&gt;,</span> <span class="pre">singleton(#&quot;allocation&quot;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:simple-profiling:stop-profiling-type([profiling-state],singleton(#"allocation"))" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:simple-profiling:stop-profiling-type([profiling-state],singleton(#&quot;allocation-stats&quot;))">
-<span class="sig-name descname"><span class="pre">stop-profiling-type(&lt;profiling-state&gt;,</span> <span class="pre">singleton(#&quot;allocation-stats&quot;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:simple-profiling:stop-profiling-type([profiling-state],singleton(#"allocation-stats"))" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">stop-profiling-type(&lt;profiling-state&gt;,</span> <span class="pre">singleton(#&quot;allocation-stats&quot;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:simple-profiling:stop-profiling-type([profiling-state],singleton(#"allocation-stats"))" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </section>
@@ -806,6 +808,6 @@ symbols should be the same as those passed to <a class="reference internal" href
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="The collections Library" href="../collections/index.html" /><link rel="prev" title="LID File Format" href="../lid.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>The c-ffi Library - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="the-c-ffi-library">
-<span id="index-0"></span><h1>The c-ffi Library<a class="headerlink" href="#the-c-ffi-library" title="Permalink to this heading">#</a></h1>
+<span id="index-0"></span><h1>The c-ffi Library<a class="headerlink" href="#the-c-ffi-library" title="Permalink to this heading">¶</a></h1>
 <p id="index-1">The C-FFI (<em>C foreign function interface</em>) library provides a means of
 interfacing a Dylan application with code written in the C language. The
 C-FFI library is available to applications as the module C-FFI in the
@@ -476,7 +478,7 @@ and call its functions. Interface descriptions can also allow C code to
 call into Dylan; compiling such a description generates entry points
 compatible with C’s calling conventions.</p>
 <section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
 <p>This section is an overview of the C-FFI library, introducing the most
 commonly used constructs as the basis for examples.</p>
 <p>The C-FFI library provides a set of macros that can be used to describe
@@ -494,7 +496,7 @@ destroying instances of C data structures. For example, using these
 facilities you can allocate C structs and arrays, and access and set
 their elements.</p>
 <section id="c-types-in-dylan">
-<span id="index-2"></span><h3>C types in Dylan<a class="headerlink" href="#c-types-in-dylan" title="Permalink to this heading">#</a></h3>
+<span id="index-2"></span><h3>C types in Dylan<a class="headerlink" href="#c-types-in-dylan" title="Permalink to this heading">¶</a></h3>
 <p>When you use the interface definition language to describe a C type to
 the Dylan compiler, the compiler generates a new Dylan class. This class
 is said to <em>designate</em> the C type, which means that it carries with it
@@ -637,7 +639,7 @@ the raw C pointer value.</p>
 and the functions available for manipulating them.</p>
 </section>
 <section id="c-functions-in-dylan">
-<span id="index-9"></span><h3>C functions in Dylan<a class="headerlink" href="#c-functions-in-dylan" title="Permalink to this heading">#</a></h3>
+<span id="index-9"></span><h3>C functions in Dylan<a class="headerlink" href="#c-functions-in-dylan" title="Permalink to this heading">¶</a></h3>
 <p>When you use the interface definition language to describe a C function
 to the Dylan compiler, the compiler generates a new Dylan function. This
 <em>wrapper function</em> accepts Dylan arguments and returns Dylan results. It
@@ -732,7 +734,7 @@ reference allows the C-callable wrapper to be passed to a C function
 expecting a callback argument.</p>
 </section>
 <section id="c-variables-in-dylan">
-<span id="index-15"></span><h3>C variables in Dylan<a class="headerlink" href="#c-variables-in-dylan" title="Permalink to this heading">#</a></h3>
+<span id="index-15"></span><h3>C variables in Dylan<a class="headerlink" href="#c-variables-in-dylan" title="Permalink to this heading">¶</a></h3>
 <p>When you use the interface definition language to describe a C variable
 to the Dylan compiler, the compiler generates new Dylan getter and
 setter functions for reading and setting the variable’s value from
@@ -796,14 +798,14 @@ storage allocated for the C variable.</p>
 </section>
 </section>
 <section id="notes-on-linking">
-<h2>Notes on Linking<a class="headerlink" href="#notes-on-linking" title="Permalink to this heading">#</a></h2>
+<h2>Notes on Linking<a class="headerlink" href="#notes-on-linking" title="Permalink to this heading">¶</a></h2>
 <p>When using C-FFI, you will typically need to link in an existing library
 or framework.</p>
 <p><a class="reference internal" href="../lid.html"><span class="doc">LID files</span></a> provide many options for controlling
 the compilation and linking of the project depending on what exactly
 is required.</p>
 <section id="linking-against-a-library">
-<h3>Linking against a Library<a class="headerlink" href="#linking-against-a-library" title="Permalink to this heading">#</a></h3>
+<h3>Linking against a Library<a class="headerlink" href="#linking-against-a-library" title="Permalink to this heading">¶</a></h3>
 <p>This can be done in a <a class="reference internal" href="../lid.html"><span class="doc">LID file</span></a> using the <a class="reference internal" href="../lid.html#lid-c-libraries"><span class="std std-ref">C-Libraries</span></a>
 keyword.  This supports both static and shared libraries. It also supports
 specifying a search path.  For example:</p>
@@ -812,7 +814,7 @@ specifying a search path.  For example:</p>
 </div>
 </section>
 <section id="linking-against-a-macos-framework">
-<h3>Linking against a macOS Framework<a class="headerlink" href="#linking-against-a-macos-framework" title="Permalink to this heading">#</a></h3>
+<h3>Linking against a macOS Framework<a class="headerlink" href="#linking-against-a-macos-framework" title="Permalink to this heading">¶</a></h3>
 <p>Just as with a regular shared library, the <a class="reference internal" href="../lid.html#lid-c-libraries"><span class="std std-ref">C-Libraries</span></a>
 keyword in a <a class="reference internal" href="../lid.html"><span class="doc">LID file</span></a>.  For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="o">-</span><span class="n">Libraries</span><span class="p">:</span> <span class="o">-</span><span class="n">framework</span> <span class="n">OpenGL</span>
@@ -820,7 +822,7 @@ keyword in a <a class="reference internal" href="../lid.html"><span class="doc">
 </div>
 </section>
 <section id="using-pkg-config">
-<h3>Using pkg-config<a class="headerlink" href="#using-pkg-config" title="Permalink to this heading">#</a></h3>
+<h3>Using pkg-config<a class="headerlink" href="#using-pkg-config" title="Permalink to this heading">¶</a></h3>
 <p>Libraries that use “pkg-config” are slightly more complicated to work with in
 that they require using the <a class="reference internal" href="../lid.html#lid-jam-includes"><span class="std std-ref">Jam-Includes</span></a> keyword and
 an additional file within the project.  The GTK+ bindings provide multiple
@@ -840,7 +842,7 @@ examples of this.</p>
 </section>
 </section>
 <section id="tracing-ffi-calls">
-<h2>Tracing FFI Calls<a class="headerlink" href="#tracing-ffi-calls" title="Permalink to this heading">#</a></h2>
+<h2>Tracing FFI Calls<a class="headerlink" href="#tracing-ffi-calls" title="Permalink to this heading">¶</a></h2>
 <p>When working with the C-FFI, it is very useful to be able to trace what
 is happening, what is getting called, what the arguments are, and what
 the return value is. To aid in this, C-FFI enables the programmer to
@@ -890,7 +892,7 @@ scope as the <code class="docutils literal notranslate"><span class="pre">C-func
 </div>
 </section>
 <section id="terminology">
-<span id="index-18"></span><h2>Terminology<a class="headerlink" href="#terminology" title="Permalink to this heading">#</a></h2>
+<span id="index-18"></span><h2>Terminology<a class="headerlink" href="#terminology" title="Permalink to this heading">¶</a></h2>
 <p>For the rest of this chapter, we adopt the following terminology,
 hopefully not too inconsistent with common C terminology:</p>
 <ul class="simple">
@@ -904,7 +906,7 @@ This does not include pointer types, structure types, or union types.</p></li>
 </ul>
 </section>
 <section id="basic-options-in-c-ffi-macros">
-<span id="index-19"></span><h2>Basic options in C-FFI macros<a class="headerlink" href="#basic-options-in-c-ffi-macros" title="Permalink to this heading">#</a></h2>
+<span id="index-19"></span><h2>Basic options in C-FFI macros<a class="headerlink" href="#basic-options-in-c-ffi-macros" title="Permalink to this heading">¶</a></h2>
 <p>The defining macros of the C-FFI share a consistent core set of options
 which are worth describing here:</p>
 <ul>
@@ -928,7 +930,7 @@ option.</p></li>
 </ul>
 </section>
 <section id="designator-classes">
-<span id="index-20"></span><h2>Designator classes<a class="headerlink" href="#designator-classes" title="Permalink to this heading">#</a></h2>
+<span id="index-20"></span><h2>Designator classes<a class="headerlink" href="#designator-classes" title="Permalink to this heading">¶</a></h2>
 <p>As <a class="reference internal" href="#overview">Overview</a> explained, the C-FFI defines some Dylan classes to designate
 C types and to describe how they are passed to and from Dylan. These
 <em>designator classes</em> carry with them static information about the C type
@@ -967,7 +969,7 @@ types.</p>
 to a specific kind of pointer. For example, you can define methods that
 specialize on different kinds of pointer on the same generic function.</p>
 <section id="designator-type-properties">
-<span id="index-22"></span><h3>Designator type properties<a class="headerlink" href="#designator-type-properties" title="Permalink to this heading">#</a></h3>
+<span id="index-22"></span><h3>Designator type properties<a class="headerlink" href="#designator-type-properties" title="Permalink to this heading">¶</a></h3>
 <p>To understand how designator classes work, it is useful to know about
 their properties. A few of these properties are accessible
 programmatically, but others are implicit and only really exist in the
@@ -1005,10 +1007,10 @@ and back. The <em>import</em> and <em>export</em> functions are inherited when y
 define a subclass for a designator.</p>
 </section>
 <section id="designator-class-basics">
-<span id="index-24"></span><h3>Designator class basics<a class="headerlink" href="#designator-class-basics" title="Permalink to this heading">#</a></h3>
+<span id="index-24"></span><h3>Designator class basics<a class="headerlink" href="#designator-class-basics" title="Permalink to this heading">¶</a></h3>
 <span class="target" id="index-25"></span><dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:[c-value]">
-<span class="sig-name descname"><span class="pre">&lt;C-value&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-value]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;C-value&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-value]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The abstract superclass of all designator classes. It is a subclass
@@ -1021,7 +1023,7 @@ between C and Dylan.</p>
 
 <span class="target" id="index-26"></span><dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:[c-void]">
-<span class="sig-name descname"><span class="pre">&lt;C-void&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-void]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;C-void&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-void]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p><p>The abstract superclass of all designator classes. It is a subclass
@@ -1037,7 +1039,7 @@ between C and Dylan.</p>
 
 <span class="target" id="index-27"></span><dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:size-of">
-<span class="sig-name descname"><span class="pre">size-of</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:size-of" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">size-of</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:size-of" title="Permalink to this definition">¶</a></dt>
 <dd><p>Takes a designator class and returns the size of the C type that the
 class designates.</p>
 <dl class="field-list simple">
@@ -1071,7 +1073,7 @@ has to be adjusted manually.</p>
 
 <span class="target" id="index-28"></span><dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:alignment-of">
-<span class="sig-name descname"><span class="pre">alignment-of</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:alignment-of" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">alignment-of</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:alignment-of" title="Permalink to this definition">¶</a></dt>
 <dd><p>Takes a designator class and returns the alignment of the C type that
 the class designates.</p>
 <dl class="field-list simple">
@@ -1099,7 +1101,7 @@ integer, in the same units as <a class="reference internal" href="#c-ffi:c-ffi:s
 
 </section>
 <section id="fundamental-numeric-type-designator-classes">
-<span id="index-29"></span><h3>Fundamental numeric type designator classes<a class="headerlink" href="#fundamental-numeric-type-designator-classes" title="Permalink to this heading">#</a></h3>
+<span id="index-29"></span><h3>Fundamental numeric type designator classes<a class="headerlink" href="#fundamental-numeric-type-designator-classes" title="Permalink to this heading">¶</a></h3>
 <p>This section describes the pre-defined designator classes for
 fundamental C numeric types. On page <a class="reference internal" href="#designator-classes">Designator
 classes</a> we saw that none of these designator types
@@ -1151,7 +1153,7 @@ C type.</p>
 and unsafe integer designator types exported from the C-FFI module.</p>
 <div class="table-wrapper docutils container" id="the-integer-designator-classes-and-their-mappings">
 <span id="index-34"></span><span id="index-34"></span><table class="docutils align-default" id="the-integer-designator-classes-and-their-mappings">
-<caption><span class="caption-text">The integer designator classes and their mappings.</span><a class="headerlink" href="#the-integer-designator-classes-and-their-mappings" title="Permalink to this table">#</a></caption>
+<caption><span class="caption-text">The integer designator classes and their mappings.</span><a class="headerlink" href="#the-integer-designator-classes-and-their-mappings" title="Permalink to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Designator name</p></th>
 <th class="head"><p>C type</p></th>
@@ -1314,7 +1316,7 @@ translation behavior for each of the types designating pointers to the
 fundamental integer designator types.</p>
 <span class="target" id="index-35"></span><dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:[c-number]">
-<span class="sig-name descname"><span class="pre">&lt;C-number&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-number]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;C-number&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-number]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#c-ffi:c-ffi:[c-value]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;C-value&gt;</span></code></a></p>
@@ -1328,7 +1330,7 @@ numeric C type.</p>
 
 <span class="target" id="index-36"></span><dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:[c-float]">
-<span class="sig-name descname"><span class="pre">&lt;C-float&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-float]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;C-float&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-float]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The class of C floating point values.</p>
@@ -1338,7 +1340,7 @@ numeric C type.</p>
 
 <span class="target" id="index-37"></span><dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:[c-double]">
-<span class="sig-name descname"><span class="pre">&lt;C-double&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-double]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;C-double&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-double]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The class of C double-precision values.</p>
@@ -1348,7 +1350,7 @@ numeric C type.</p>
 
 </section>
 <section id="pointer-designator-classes-and-related-functions">
-<span id="index-38"></span><h3>Pointer designator classes and related functions<a class="headerlink" href="#pointer-designator-classes-and-related-functions" title="Permalink to this heading">#</a></h3>
+<span id="index-38"></span><h3>Pointer designator classes and related functions<a class="headerlink" href="#pointer-designator-classes-and-related-functions" title="Permalink to this heading">¶</a></h3>
 <p>This section describes the pre-defined classes that designate C pointer
 types. Subclasses of the abstract classes documented here are
 instantiable, and C pointers are represented in Dylan by instances of
@@ -1364,7 +1366,7 @@ for <code class="docutils literal notranslate"><span class="pre">&lt;C-int&gt;</
 </div>
 <span class="target" id="index-39"></span><dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:[c-pointer]">
-<span class="sig-name descname"><span class="pre">&lt;C-pointer&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Primary</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-pointer]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;C-pointer&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Primary</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-pointer]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#c-ffi:c-ffi:[c-value]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;C-value&gt;</span></code></a></p>
@@ -1382,7 +1384,7 @@ representation of the C address.</p>
 
 <span class="target" id="index-40"></span><dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:pointer-address">
-<span class="sig-name descname"><span class="pre">pointer-address</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:pointer-address" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">pointer-address</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:pointer-address" title="Permalink to this definition">¶</a></dt>
 <dd><p>Recovers the address from an instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;C-pointer&gt;</span></code></a> and returns it as
 a Dylan <a class="reference internal" href="../common-dylan/machine-words.html#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a>.</p>
 <dl class="field-list simple">
@@ -1408,7 +1410,7 @@ returns it as a Dylan <a class="reference internal" href="../common-dylan/machin
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:pointer-cast">
-<span class="sig-name descname"><span class="pre">pointer-cast</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:pointer-cast" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">pointer-cast</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:pointer-cast" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts a pointer from one pointer type to another.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1434,7 +1436,7 @@ pointer will have the same address as the old pointer.</p>
 
 <span class="target" id="index-41"></span><dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:null-pointer">
-<span class="sig-name descname"><span class="pre">null-pointer</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:null-pointer" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">null-pointer</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:null-pointer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a null pointer whose type is given by the
 pointer-designator-class.</p>
 <dl class="field-list simple">
@@ -1462,7 +1464,7 @@ pointer-designator-class.</p>
 
 <span class="target" id="index-42"></span><dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:null-pointer?">
-<span class="sig-name descname"><span class="pre">null-pointer?</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:null-pointer?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">null-pointer?</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:null-pointer?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if a pointer is null</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1486,7 +1488,7 @@ pointer-designator-class.</p>
 
 <span class="target" id="index-43"></span><dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:[c-void\*]">
-<span class="sig-name descname"><span class="pre">&lt;C-void\*&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Concrete</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-void\*]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;C-void\*&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Concrete</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-void\*]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;C-pointer&gt;</span></code></a></p>
@@ -1500,7 +1502,7 @@ pointer-designator-class.</p>
 
 <span class="target" id="index-44"></span><dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:[c-statically-typed-pointer]">
-<span class="sig-name descname"><span class="pre">&lt;C-statically-typed-pointer&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-statically-typed-pointer]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;C-statically-typed-pointer&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-statically-typed-pointer]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;C-pointer&gt;</span></code></a>, <a class="reference internal" href="../language-extensions/object-with-elements.html#dylan:dylan-extensions:[mutable-object-with-elements]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;mutable-object-with-elements&gt;</span></code></a></p>
@@ -1514,7 +1516,7 @@ for a non-<em>void</em> base.</p>
 
 <span class="target" id="index-45"></span><dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:definec-pointer-type">
-<span class="sig-name descname"><span class="pre">define</span> <span class="pre">C-pointer-type</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#c-ffi:c-ffi:definec-pointer-type" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">define</span> <span class="pre">C-pointer-type</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#c-ffi:c-ffi:definec-pointer-type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Defines a constant bound to a pointer class designating pointers to a
 designator class name.</p>
 <dl class="field-list simple">
@@ -1544,7 +1546,7 @@ instances of a sealed concrete subclass of <em>pointer-class-name</em>.</p>
 
 <span class="target" id="index-46"></span><dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:referenced-type">
-<span class="sig-name descname"><span class="pre">referenced-type</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:referenced-type" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">referenced-type</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:referenced-type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the class designating the contents type of the designated C
 pointer type.</p>
 <dl class="field-list simple">
@@ -1572,7 +1574,7 @@ same argument.</p>
 
 <span class="target" id="index-47"></span><dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:c-type-cast">
-<span class="sig-name descname"><span class="pre">c-type-cast</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:c-type-cast" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">c-type-cast</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:c-type-cast" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts a value to a value of a specified type, according to the
 semantics of a C type cast.</p>
 <dl class="field-list">
@@ -1642,7 +1644,7 @@ conversions. You can define new methods for <a class="reference internal" href="
 
 <span class="target" id="index-50"></span><dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:pointer-value">
-<span class="sig-name descname"><span class="pre">pointer-value</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#c-ffi:c-ffi:pointer-value" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">pointer-value</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#c-ffi:c-ffi:pointer-value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Dereferences a c-typed pointer using its encapsulated raw C address.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1679,7 +1681,7 @@ address or is a null pointer.</p>
 
 <span class="target" id="index-51"></span><dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:pointer-value-setter">
-<span class="sig-name descname"><span class="pre">pointer-value-setter</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#c-ffi:c-ffi:pointer-value-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">pointer-value-setter</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#c-ffi:c-ffi:pointer-value-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Allows you to set pointer values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1710,7 +1712,7 @@ is a null pointer.</p>
 
 <span class="target" id="index-52"></span><dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:pointer-value-address">
-<span class="sig-name descname"><span class="pre">pointer-value-address</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#c-ffi:c-ffi:pointer-value-address" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">pointer-value-address</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#c-ffi:c-ffi:pointer-value-address" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a pointer of the same type as a C-typed pointer that points
 to the object offset into the C-typed pointer.</p>
 <dl class="field-list">
@@ -1744,7 +1746,7 @@ following expression is guaranteed to be true:</p>
 
 <span class="target" id="index-53"></span><dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:element([c-statically-typed-pointer])">
-<span class="sig-name descname"><span class="pre">element(&lt;C-statically-typed-pointer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#c-ffi:c-ffi:element([c-statically-typed-pointer])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">element(&lt;C-statically-typed-pointer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#c-ffi:c-ffi:element([c-statically-typed-pointer])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Dereferences a c-typed pointer using its encapsulated raw C address.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1774,7 +1776,7 @@ includes the optional index. Thus it does the same thing as:</p>
 
 <span class="target" id="index-54"></span><dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:element-setter([c-statically-typed-pointer])">
-<span class="sig-name descname"><span class="pre">element-setter(&lt;C-statically-typed-pointer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#c-ffi:c-ffi:element-setter([c-statically-typed-pointer])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">element-setter(&lt;C-statically-typed-pointer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#c-ffi:c-ffi:element-setter([c-statically-typed-pointer])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Allows you to set pointer values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1805,7 +1807,7 @@ the optional index. Thus it does the same thing as:</p>
 
 <span class="target" id="index-55"></span><dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:=([c-pointer])">
-<span class="sig-name descname"><span class="pre">=(&lt;C-pointer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#c-ffi:c-ffi:=([c-pointer])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">=(&lt;C-pointer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#c-ffi:c-ffi:=([c-pointer])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a> if two pointers are equal.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1845,7 +1847,7 @@ required, use <a class="reference internal" href="#c-ffi:c-ffi:pointer-value"><c
 
 <span class="target" id="index-57"></span><dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:[([c-pointer])">
-<span class="sig-name descname"><span class="pre">&lt;(&lt;C-pointer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#c-ffi:c-ffi:[([c-pointer])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;(&lt;C-pointer&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#c-ffi:c-ffi:[([c-pointer])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a> if the second argument is less than the first.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1888,7 +1890,7 @@ setters, <em>new</em> is the new value to which the value in the pointed-at
 location will be set. These functions can be used to deference any
 general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;C-pointer&gt;</span></code></a>.</p>
 <section id="c-char-at">
-<span id="index-58"></span><h4>C-char-at<a class="headerlink" href="#c-char-at" title="Permalink to this heading">#</a></h4>
+<span id="index-58"></span><h4>C-char-at<a class="headerlink" href="#c-char-at" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-char-at</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span><span class="w"> </span><span class="vg">*scaled-index*</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="vg">*machine-word*</span>
@@ -1896,7 +1898,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-char-at-setter">
-<span id="index-59"></span><h4>C-char-at-setter<a class="headerlink" href="#c-char-at-setter" title="Permalink to this heading">#</a></h4>
+<span id="index-59"></span><h4>C-char-at-setter<a class="headerlink" href="#c-char-at-setter" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-char-at-setter</span><span class="w"> </span><span class="vg">*new*</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span><span class="w"> </span><span class="vg">*scaled-index*</span>
@@ -1905,7 +1907,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-signed-char-at">
-<span id="index-60"></span><h4>C-signed-char-at<a class="headerlink" href="#c-signed-char-at" title="Permalink to this heading">#</a></h4>
+<span id="index-60"></span><h4>C-signed-char-at<a class="headerlink" href="#c-signed-char-at" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-signed-char-at</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span><span class="w"> </span><span class="vg">*scaled-index*</span><span class="w"> </span><span class="p">=&gt;</span>
@@ -1914,7 +1916,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-signed-char-at-setter">
-<span id="index-61"></span><h4>C-signed-char-at-setter<a class="headerlink" href="#c-signed-char-at-setter" title="Permalink to this heading">#</a></h4>
+<span id="index-61"></span><h4>C-signed-char-at-setter<a class="headerlink" href="#c-signed-char-at-setter" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-signed-char-at-setter</span><span class="w"> </span><span class="vg">*new*</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span>
@@ -1923,7 +1925,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-unsigned-char-at">
-<span id="index-62"></span><h4>C-unsigned-char-at<a class="headerlink" href="#c-unsigned-char-at" title="Permalink to this heading">#</a></h4>
+<span id="index-62"></span><h4>C-unsigned-char-at<a class="headerlink" href="#c-unsigned-char-at" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-unsigned-char-at</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span><span class="w"> </span><span class="vg">*scaled-index*</span><span class="w"> </span><span class="p">=&gt;</span>
@@ -1932,7 +1934,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-unsigned-char-at-setter">
-<span id="index-63"></span><h4>C-unsigned-char-at-setter<a class="headerlink" href="#c-unsigned-char-at-setter" title="Permalink to this heading">#</a></h4>
+<span id="index-63"></span><h4>C-unsigned-char-at-setter<a class="headerlink" href="#c-unsigned-char-at-setter" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-unsigned-char-at-setter</span><span class="w"> </span><span class="vg">*new*</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span>
@@ -1941,7 +1943,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-unsigned-short-at">
-<span id="index-64"></span><h4>C-unsigned-short-at<a class="headerlink" href="#c-unsigned-short-at" title="Permalink to this heading">#</a></h4>
+<span id="index-64"></span><h4>C-unsigned-short-at<a class="headerlink" href="#c-unsigned-short-at" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-unsigned-short-at</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span><span class="w"> </span><span class="vg">*scaled-index*</span>
@@ -1950,7 +1952,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-unsigned-short-at-setter">
-<span id="index-65"></span><h4>C-unsigned-short-at-setter<a class="headerlink" href="#c-unsigned-short-at-setter" title="Permalink to this heading">#</a></h4>
+<span id="index-65"></span><h4>C-unsigned-short-at-setter<a class="headerlink" href="#c-unsigned-short-at-setter" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-unsigned-short-at-setter</span><span class="w"> </span><span class="vg">*new*</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span>
@@ -1959,7 +1961,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-signed-short-at">
-<span id="index-66"></span><h4>C-signed-short-at<a class="headerlink" href="#c-signed-short-at" title="Permalink to this heading">#</a></h4>
+<span id="index-66"></span><h4>C-signed-short-at<a class="headerlink" href="#c-signed-short-at" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-signed-short-at</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span><span class="w"> </span><span class="vg">*scaled-index*</span><span class="w"> </span><span class="p">=&gt;</span>
@@ -1968,7 +1970,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-signed-short-at-setter">
-<span id="index-67"></span><h4>C-signed-short-at-setter<a class="headerlink" href="#c-signed-short-at-setter" title="Permalink to this heading">#</a></h4>
+<span id="index-67"></span><h4>C-signed-short-at-setter<a class="headerlink" href="#c-signed-short-at-setter" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-signed-short-at-setter</span><span class="w"> </span><span class="vg">*new*</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span>
@@ -1977,7 +1979,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-short-at">
-<span id="index-68"></span><h4>C-short-at<a class="headerlink" href="#c-short-at" title="Permalink to this heading">#</a></h4>
+<span id="index-68"></span><h4>C-short-at<a class="headerlink" href="#c-short-at" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-short-at</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span><span class="w"> </span><span class="vg">*scaled-index*</span><span class="w"> </span><span class="p">=&gt;</span>
@@ -1986,7 +1988,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-short-at-setter">
-<span id="index-69"></span><h4>C-short-at-setter<a class="headerlink" href="#c-short-at-setter" title="Permalink to this heading">#</a></h4>
+<span id="index-69"></span><h4>C-short-at-setter<a class="headerlink" href="#c-short-at-setter" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-short-at-setter</span><span class="w"> </span><span class="vg">*new*</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span><span class="w"> </span><span class="vg">*scaled-index*</span><span class="w"> </span><span class="p">=&gt;</span>
@@ -1995,7 +1997,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-unsigned-long-at">
-<span id="index-70"></span><h4>C-unsigned-long-at<a class="headerlink" href="#c-unsigned-long-at" title="Permalink to this heading">#</a></h4>
+<span id="index-70"></span><h4>C-unsigned-long-at<a class="headerlink" href="#c-unsigned-long-at" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-unsigned-long-at</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span><span class="w"> </span><span class="vg">*scaled-index*</span><span class="w"> </span><span class="p">=&gt;</span>
@@ -2004,7 +2006,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-unsigned-long-at-setter">
-<span id="index-71"></span><h4>C-unsigned-long-at-setter<a class="headerlink" href="#c-unsigned-long-at-setter" title="Permalink to this heading">#</a></h4>
+<span id="index-71"></span><h4>C-unsigned-long-at-setter<a class="headerlink" href="#c-unsigned-long-at-setter" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-unsigned-long-at-setter</span><span class="w"> </span><span class="vg">*new*</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span>
@@ -2013,7 +2015,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-signed-long-at">
-<span id="index-72"></span><h4>C-signed-long-at<a class="headerlink" href="#c-signed-long-at" title="Permalink to this heading">#</a></h4>
+<span id="index-72"></span><h4>C-signed-long-at<a class="headerlink" href="#c-signed-long-at" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-signed-long-at</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span><span class="w"> </span><span class="vg">*scaled-index*</span><span class="w"> </span><span class="p">=&gt;</span>
@@ -2022,7 +2024,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-signed-long-at-setter">
-<span id="index-73"></span><h4>C-signed-long-at-setter<a class="headerlink" href="#c-signed-long-at-setter" title="Permalink to this heading">#</a></h4>
+<span id="index-73"></span><h4>C-signed-long-at-setter<a class="headerlink" href="#c-signed-long-at-setter" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-signed-long-at-setter</span><span class="w"> </span><span class="vg">*new*</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span>
@@ -2031,7 +2033,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-long-at">
-<span id="index-74"></span><h4>C-long-at<a class="headerlink" href="#c-long-at" title="Permalink to this heading">#</a></h4>
+<span id="index-74"></span><h4>C-long-at<a class="headerlink" href="#c-long-at" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-long-at</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span><span class="w"> </span><span class="vg">*scaled-index*</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="vg">*machine-word*</span>
@@ -2039,7 +2041,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-long-at-setter">
-<span id="index-75"></span><h4>C-long-at-setter<a class="headerlink" href="#c-long-at-setter" title="Permalink to this heading">#</a></h4>
+<span id="index-75"></span><h4>C-long-at-setter<a class="headerlink" href="#c-long-at-setter" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-long-at-setter</span><span class="w"> </span><span class="vg">*new*</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span><span class="w"> </span><span class="vg">*scaled-index*</span><span class="w"> </span><span class="p">=&gt;</span>
@@ -2048,7 +2050,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-unsigned-int-at">
-<span id="index-76"></span><h4>C-unsigned-int-at<a class="headerlink" href="#c-unsigned-int-at" title="Permalink to this heading">#</a></h4>
+<span id="index-76"></span><h4>C-unsigned-int-at<a class="headerlink" href="#c-unsigned-int-at" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-unsigned-int-at</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span><span class="w"> </span><span class="vg">*scaled-index*</span><span class="w"> </span><span class="p">=&gt;</span>
@@ -2057,7 +2059,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-unsigned-int-at-setter">
-<span id="index-77"></span><h4>C-unsigned-int-at-setter<a class="headerlink" href="#c-unsigned-int-at-setter" title="Permalink to this heading">#</a></h4>
+<span id="index-77"></span><h4>C-unsigned-int-at-setter<a class="headerlink" href="#c-unsigned-int-at-setter" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-unsigned-int-at-setter</span><span class="w"> </span><span class="vg">*new*</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span>
@@ -2066,7 +2068,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-signed-int-at">
-<span id="index-78"></span><h4>C-signed-int-at<a class="headerlink" href="#c-signed-int-at" title="Permalink to this heading">#</a></h4>
+<span id="index-78"></span><h4>C-signed-int-at<a class="headerlink" href="#c-signed-int-at" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-signed-int-at</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span><span class="w"> </span><span class="vg">*scaled-index*</span><span class="w"> </span><span class="p">=&gt;</span>
@@ -2075,7 +2077,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-signed-int-at-setter">
-<span id="index-79"></span><h4>C-signed-int-at-setter<a class="headerlink" href="#c-signed-int-at-setter" title="Permalink to this heading">#</a></h4>
+<span id="index-79"></span><h4>C-signed-int-at-setter<a class="headerlink" href="#c-signed-int-at-setter" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-signed-int-at-setter</span><span class="w"> </span><span class="vg">*new*</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span>
@@ -2084,7 +2086,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-int-at">
-<span id="index-80"></span><h4>C-int-at<a class="headerlink" href="#c-int-at" title="Permalink to this heading">#</a></h4>
+<span id="index-80"></span><h4>C-int-at<a class="headerlink" href="#c-int-at" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-int-at</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span><span class="w"> </span><span class="vg">*scaled-index*</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="vg">*machine-word*</span>
@@ -2092,7 +2094,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-int-at-setter">
-<span id="index-81"></span><h4>C-int-at-setter<a class="headerlink" href="#c-int-at-setter" title="Permalink to this heading">#</a></h4>
+<span id="index-81"></span><h4>C-int-at-setter<a class="headerlink" href="#c-int-at-setter" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-int-at-setter</span><span class="w"> </span><span class="vg">*new*</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span><span class="w"> </span><span class="vg">*scaled-index*</span><span class="w"> </span><span class="p">=&gt;</span>
@@ -2101,7 +2103,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-double-at">
-<span id="index-82"></span><h4>C-double-at<a class="headerlink" href="#c-double-at" title="Permalink to this heading">#</a></h4>
+<span id="index-82"></span><h4>C-double-at<a class="headerlink" href="#c-double-at" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-double-at</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span><span class="w"> </span><span class="vg">*scaled-index*</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="vg">*float*</span>
@@ -2109,7 +2111,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-double-at-setter">
-<span id="index-83"></span><h4>C-double-at-setter<a class="headerlink" href="#c-double-at-setter" title="Permalink to this heading">#</a></h4>
+<span id="index-83"></span><h4>C-double-at-setter<a class="headerlink" href="#c-double-at-setter" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-double-at-setter</span><span class="w"> </span><span class="vg">*new-double-float*</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span>
@@ -2118,7 +2120,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-float-at">
-<span id="index-84"></span><h4>C-float-at<a class="headerlink" href="#c-float-at" title="Permalink to this heading">#</a></h4>
+<span id="index-84"></span><h4>C-float-at<a class="headerlink" href="#c-float-at" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-float-at</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span><span class="w"> </span><span class="vg">*scaled-index*</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="vg">*float*</span>
@@ -2126,7 +2128,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-float-at-setter">
-<span id="index-85"></span><h4>C-float-at-setter<a class="headerlink" href="#c-float-at-setter" title="Permalink to this heading">#</a></h4>
+<span id="index-85"></span><h4>C-float-at-setter<a class="headerlink" href="#c-float-at-setter" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-float-at-setter</span><span class="w"> </span><span class="vg">*new-single-float*</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span>
@@ -2135,7 +2137,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-pointer-at">
-<span id="index-86"></span><h4>C-pointer-at<a class="headerlink" href="#c-pointer-at" title="Permalink to this heading">#</a></h4>
+<span id="index-86"></span><h4>C-pointer-at<a class="headerlink" href="#c-pointer-at" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-pointer-at</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span><span class="w"> </span><span class="vg">*scaled-index*</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="vg">*C-pointer*</span>
@@ -2143,7 +2145,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-pointer-at-setter">
-<span id="index-87"></span><h4>C-pointer-at-setter<a class="headerlink" href="#c-pointer-at-setter" title="Permalink to this heading">#</a></h4>
+<span id="index-87"></span><h4>C-pointer-at-setter<a class="headerlink" href="#c-pointer-at-setter" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-pointer-at-setter</span><span class="w"> </span><span class="vg">*new*</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span><span class="w"> </span><span class="vg">*scaled-index*</span>
@@ -2152,7 +2154,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-size-t-at">
-<h4>C-size-t-at<a class="headerlink" href="#c-size-t-at" title="Permalink to this heading">#</a></h4>
+<h4>C-size-t-at<a class="headerlink" href="#c-size-t-at" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-size-t-at</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span><span class="w"> </span><span class="vg">*scaled-index*</span><span class="w"> </span><span class="p">=&gt;</span>
@@ -2161,7 +2163,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-size-t-at-setter">
-<h4>C-size-t-at-setter<a class="headerlink" href="#c-size-t-at-setter" title="Permalink to this heading">#</a></h4>
+<h4>C-size-t-at-setter<a class="headerlink" href="#c-size-t-at-setter" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-size-t-at-setter</span><span class="w"> </span><span class="vg">*new*</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span><span class="w"> </span><span class="vg">*scaled-index*</span><span class="w"> </span><span class="p">=&gt;</span>
@@ -2170,7 +2172,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-ssize-t-at">
-<h4>C-ssize-t-at<a class="headerlink" href="#c-ssize-t-at" title="Permalink to this heading">#</a></h4>
+<h4>C-ssize-t-at<a class="headerlink" href="#c-ssize-t-at" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-ssize-t-at</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span><span class="w"> </span><span class="vg">*scaled-index*</span><span class="w"> </span><span class="p">=&gt;</span>
@@ -2179,7 +2181,7 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </div>
 </section>
 <section id="c-ssize-t-at-setter">
-<h4>C-ssize-t-at-setter<a class="headerlink" href="#c-ssize-t-at-setter" title="Permalink to this heading">#</a></h4>
+<h4>C-ssize-t-at-setter<a class="headerlink" href="#c-ssize-t-at-setter" title="Permalink to this heading">¶</a></h4>
 <p>Function</p>
 <p>Signature</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">C-ssize-t-at-setter</span><span class="w"> </span><span class="vg">*new*</span><span class="w"> </span><span class="vg">*C-pointer*</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="vg">*byte-index*</span><span class="w"> </span><span class="vg">*scaled-index*</span><span class="w"> </span><span class="p">=&gt;</span>
@@ -2189,10 +2191,10 @@ general instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]
 </section>
 </section>
 <section id="structure-types">
-<span id="index-88"></span><h3>Structure types<a class="headerlink" href="#structure-types" title="Permalink to this heading">#</a></h3>
+<span id="index-88"></span><h3>Structure types<a class="headerlink" href="#structure-types" title="Permalink to this heading">¶</a></h3>
 <span class="target" id="index-89"></span><dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:[c-struct]">
-<span class="sig-name descname"><span class="pre">&lt;C-struct&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-struct]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;C-struct&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-struct]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p><p>The abstract superclass of all classes designating a C struct type.
@@ -2210,10 +2212,10 @@ returned.</p>
 
 </section>
 <section id="union-types">
-<span id="index-90"></span><h3>Union types<a class="headerlink" href="#union-types" title="Permalink to this heading">#</a></h3>
+<span id="index-90"></span><h3>Union types<a class="headerlink" href="#union-types" title="Permalink to this heading">¶</a></h3>
 <span class="target" id="index-91"></span><dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:[c-union]">
-<span class="sig-name descname"><span class="pre">&lt;C-union&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-union]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;C-union&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-union]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The abstract superclass of all classes designating a C union type.
@@ -2228,7 +2230,7 @@ that union type are accepted and returned.</p>
 
 </section>
 <section id="notes-on-c-type-macros">
-<span id="index-92"></span><h3>Notes on C type macros<a class="headerlink" href="#notes-on-c-type-macros" title="Permalink to this heading">#</a></h3>
+<span id="index-92"></span><h3>Notes on C type macros<a class="headerlink" href="#notes-on-c-type-macros" title="Permalink to this heading">¶</a></h3>
 <p>The C-FFI’s C interface description language does not model all of the
 ways of defining new types in C, but all C types should be expressible
 in it. As a simplification, we do not support anonymous base types in
@@ -2264,14 +2266,14 @@ accesses, for example <code class="docutils literal notranslate"><span class="pr
 </section>
 </section>
 <section id="defining-types">
-<span id="index-93"></span><h2>Defining types<a class="headerlink" href="#defining-types" title="Permalink to this heading">#</a></h2>
+<span id="index-93"></span><h2>Defining types<a class="headerlink" href="#defining-types" title="Permalink to this heading">¶</a></h2>
 <p>This section covers the definition macros that create Dylan designators
 for C types, structs and unions.</p>
 <section id="defining-specialized-versions-of-designator-classes">
-<span id="index-94"></span><h3>Defining specialized versions of designator classes<a class="headerlink" href="#defining-specialized-versions-of-designator-classes" title="Permalink to this heading">#</a></h3>
+<span id="index-94"></span><h3>Defining specialized versions of designator classes<a class="headerlink" href="#defining-specialized-versions-of-designator-classes" title="Permalink to this heading">¶</a></h3>
 <span class="target" id="index-95"></span><dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:definec-subtype">
-<span class="sig-name descname"><span class="pre">define</span> <span class="pre">C-subtype</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#c-ffi:c-ffi:definec-subtype" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">define</span> <span class="pre">C-subtype</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#c-ffi:c-ffi:definec-subtype" title="Permalink to this definition">¶</a></dt>
 <dd><p>Defines a specialized designator class for a C type based on an
 existing designator class for that type.</p>
 <dl class="field-list">
@@ -2407,10 +2409,10 @@ place a type beneath an abstract class.</p>
 
 </section>
 <section id="defining-specialized-designator-classes">
-<span id="index-98"></span><h3>Defining specialized designator classes<a class="headerlink" href="#defining-specialized-designator-classes" title="Permalink to this heading">#</a></h3>
+<span id="index-98"></span><h3>Defining specialized designator classes<a class="headerlink" href="#defining-specialized-designator-classes" title="Permalink to this heading">¶</a></h3>
 <span class="target" id="index-99"></span><dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:definec-mapped-subtype">
-<span class="sig-name descname"><span class="pre">define</span> <span class="pre">C-mapped-subtype</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#c-ffi:c-ffi:definec-mapped-subtype" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">define</span> <span class="pre">C-mapped-subtype</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#c-ffi:c-ffi:definec-mapped-subtype" title="Permalink to this definition">¶</a></dt>
 <dd><p>Allows you to define a name to which to bind a pointer designator.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
@@ -2600,10 +2602,10 @@ subtype of <code class="docutils literal notranslate"><span class="pre">&lt;C-ma
 
 </section>
 <section id="describing-structure-types">
-<span id="index-102"></span><h3>Describing structure types<a class="headerlink" href="#describing-structure-types" title="Permalink to this heading">#</a></h3>
+<span id="index-102"></span><h3>Describing structure types<a class="headerlink" href="#describing-structure-types" title="Permalink to this heading">¶</a></h3>
 <span class="target" id="index-103"></span><dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:definec-struct">
-<span class="sig-name descname"><span class="pre">define</span> <span class="pre">C-struct</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#c-ffi:c-ffi:definec-struct" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">define</span> <span class="pre">C-struct</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#c-ffi:c-ffi:definec-struct" title="Permalink to this definition">¶</a></dt>
 <dd><p>Describes C’s aggregate structures.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
@@ -2747,10 +2749,10 @@ packing semantics of Microsoft’s <code class="docutils literal notranslate"><s
 
 </section>
 <section id="describing-union-types">
-<span id="index-107"></span><h3>Describing union types<a class="headerlink" href="#describing-union-types" title="Permalink to this heading">#</a></h3>
+<span id="index-107"></span><h3>Describing union types<a class="headerlink" href="#describing-union-types" title="Permalink to this heading">¶</a></h3>
 <span class="target" id="index-108"></span><dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:definec-union">
-<span class="sig-name descname"><span class="pre">define</span> <span class="pre">C-union</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#c-ffi:c-ffi:definec-union" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">define</span> <span class="pre">C-union</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#c-ffi:c-ffi:definec-union" title="Permalink to this definition">¶</a></dt>
 <dd><p>Describes C union types to the <em>c-ffi</em>.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
@@ -2835,16 +2837,16 @@ just as in C’s <code class="docutils literal notranslate"><span class="pre">un
 </section>
 </section>
 <section id="functions">
-<span id="index-110"></span><h2>Functions<a class="headerlink" href="#functions" title="Permalink to this heading">#</a></h2>
+<span id="index-110"></span><h2>Functions<a class="headerlink" href="#functions" title="Permalink to this heading">¶</a></h2>
 <p>This section describes the C FFI macros that allow C functions to be
 made available to Dylan and Dylan functions available to C.</p>
 <section id="function-types">
-<span id="index-111"></span><h3>Function types<a class="headerlink" href="#function-types" title="Permalink to this heading">#</a></h3>
+<span id="index-111"></span><h3>Function types<a class="headerlink" href="#function-types" title="Permalink to this heading">¶</a></h3>
 <p>This section describes classes that designate C function types and how
 to construct them.</p>
 <span class="target" id="index-112"></span><dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:[c-function-pointer]">
-<span class="sig-name descname"><span class="pre">&lt;C-function-pointer&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-function-pointer]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;C-function-pointer&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-function-pointer]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The superclass of all classes that designate a C function type. It
@@ -2856,10 +2858,10 @@ is a subclass of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]"><
 
 </section>
 <section id="describing-c-functions-to-dylan">
-<span id="index-113"></span><h3>Describing C functions to Dylan<a class="headerlink" href="#describing-c-functions-to-dylan" title="Permalink to this heading">#</a></h3>
+<span id="index-113"></span><h3>Describing C functions to Dylan<a class="headerlink" href="#describing-c-functions-to-dylan" title="Permalink to this heading">¶</a></h3>
 <span class="target" id="index-114"></span><dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:definec-function">
-<span class="sig-name descname"><span class="pre">define</span> <span class="pre">C-function</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#c-ffi:c-ffi:definec-function" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">define</span> <span class="pre">C-function</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#c-ffi:c-ffi:definec-function" title="Permalink to this definition">¶</a></dt>
 <dd><p>Describes a C function to the <em>c-ffi</em>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
@@ -3071,10 +3073,10 @@ of the Dylan function is <a class="reference internal" href="#c-ffi:c-ffi:[c-fun
 
 </section>
 <section id="describing-dylan-functions-for-use-by-c">
-<span id="index-120"></span><h3>Describing Dylan functions for use by C<a class="headerlink" href="#describing-dylan-functions-for-use-by-c" title="Permalink to this heading">#</a></h3>
+<span id="index-120"></span><h3>Describing Dylan functions for use by C<a class="headerlink" href="#describing-dylan-functions-for-use-by-c" title="Permalink to this heading">¶</a></h3>
 <span class="target" id="index-121"></span><dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:definec-callable-wrapper">
-<span class="sig-name descname"><span class="pre">define</span> <span class="pre">C-callable-wrapper</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#c-ffi:c-ffi:definec-callable-wrapper" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">define</span> <span class="pre">C-callable-wrapper</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#c-ffi:c-ffi:definec-callable-wrapper" title="Permalink to this definition">¶</a></dt>
 <dd><p>Makes a Dylan function callable from C by describing a C contract for
 the function.</p>
 <dl class="field-list">
@@ -3276,12 +3278,12 @@ compatible with the declared type.</p>
 
 </section>
 <section id="objective-c">
-<h3>Objective C<a class="headerlink" href="#objective-c" title="Permalink to this heading">#</a></h3>
+<h3>Objective C<a class="headerlink" href="#objective-c" title="Permalink to this heading">¶</a></h3>
 <p>A full-featured Objective C bridge is provided separately, however, parts
 of that bridge are implemented within this library.</p>
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:defineobjc-selector">
-<span class="sig-name descname"><span class="pre">define</span> <span class="pre">objc-selector</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#c-ffi:c-ffi:defineobjc-selector" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">define</span> <span class="pre">objc-selector</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#c-ffi:c-ffi:defineobjc-selector" title="Permalink to this definition">¶</a></dt>
 <dd><p>Describe Objective C selectors to the <em>c-ffi</em>.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
@@ -3330,11 +3332,11 @@ for the selector. See the Objective C bridge documentation for more details.</p>
 
 </section>
 <section id="variables">
-<span id="index-124"></span><h3>Variables<a class="headerlink" href="#variables" title="Permalink to this heading">#</a></h3>
+<span id="index-124"></span><h3>Variables<a class="headerlink" href="#variables" title="Permalink to this heading">¶</a></h3>
 <p>This section covers describing and accessing C variables.</p>
 <span class="target" id="index-125"></span><dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:definec-variable">
-<span class="sig-name descname"><span class="pre">define</span> <span class="pre">C-variable</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#c-ffi:c-ffi:definec-variable" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">define</span> <span class="pre">C-variable</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#c-ffi:c-ffi:definec-variable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Describes C variables to the <em>c-ffi</em>.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
@@ -3411,7 +3413,7 @@ can be used for this purpose.</p>
 
 <span class="target" id="index-128"></span><dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:definec-address">
-<span class="sig-name descname"><span class="pre">define</span> <span class="pre">C-address</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#c-ffi:c-ffi:definec-address" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">define</span> <span class="pre">C-address</span></span> <em class="property"><span class="pre">Defining</span> <span class="pre">Macro</span></em><a class="headerlink" href="#c-ffi:c-ffi:definec-address" title="Permalink to this definition">¶</a></dt>
 <dd><p>Defines a Dylan constant binding that is a <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;C-pointer&gt;</span></code></a> to
 the location of a C global variable.</p>
 <dl class="field-list simple">
@@ -3454,7 +3456,7 @@ then they will be in separate <em>.dll</em> s and <em>import:</em> needs to be
 </section>
 </section>
 <section id="allocating-and-deallocating-c-storage">
-<span id="index-129"></span><h2>Allocating and deallocating C storage<a class="headerlink" href="#allocating-and-deallocating-c-storage" title="Permalink to this heading">#</a></h2>
+<span id="index-129"></span><h2>Allocating and deallocating C storage<a class="headerlink" href="#allocating-and-deallocating-c-storage" title="Permalink to this heading">¶</a></h2>
 <p>C objects can be allocated by calling <a class="reference external" href="https://opendylan.org/books/drm/Constructing_and_Initializing_Instances#make"><code class="xref drm docutils literal notranslate"><span class="pre">make</span></code></a> on an associated wrapper
 class or by allocating them on the stack using the macro
 <a class="reference internal" href="#c-ffi:c-ffi:with-stack-structure"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-stack-structure</span></code></a>.</p>
@@ -3464,7 +3466,7 @@ collector, so we provide a manual means of freeing this storage with the
 function <a class="reference internal" href="#c-ffi:c-ffi:destroy"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">destroy</span></code></a>.</p>
 <span class="target" id="index-130"></span><dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:make(subclass([c-pointer]))">
-<span class="sig-name descname"><span class="pre">make(subclass(&lt;C-pointer&gt;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#c-ffi:c-ffi:make(subclass([c-pointer]))" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make(subclass(&lt;C-pointer&gt;))</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#c-ffi:c-ffi:make(subclass([c-pointer]))" title="Permalink to this definition">¶</a></dt>
 <dd><p>Allocates a C object on the heap.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3548,7 +3550,7 @@ end C-struct &lt;Z-properties&gt;;
 
 <span class="target" id="index-131"></span><dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:destroy">
-<span class="sig-name descname"><span class="pre">destroy</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#c-ffi:c-ffi:destroy" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">destroy</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#c-ffi:c-ffi:destroy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Frees the allocated heap memory at a specified address.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3578,7 +3580,7 @@ serve as a deallocation facility. It must accept an address as a
 
 <span class="target" id="index-132"></span><dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:with-stack-structure">
-<span class="sig-name descname"><span class="pre">with-stack-structure</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#c-ffi:c-ffi:with-stack-structure" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">with-stack-structure</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#c-ffi:c-ffi:with-stack-structure" title="Permalink to this definition">¶</a></dt>
 <dd><p>Allocates an object within the scope of the body of the code.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
@@ -3632,12 +3634,12 @@ The memory that was allocated is freed after <em>body</em> exits.</p>
 
 </section>
 <section id="utility-designator-classes">
-<span id="index-133"></span><h2>Utility designator classes<a class="headerlink" href="#utility-designator-classes" title="Permalink to this heading">#</a></h2>
+<span id="index-133"></span><h2>Utility designator classes<a class="headerlink" href="#utility-designator-classes" title="Permalink to this heading">¶</a></h2>
 <p>The following designator classes are defined for convenience purposes
 using <a class="reference internal" href="#c-ffi:c-ffi:definec-mapped-subtype"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span> <span class="pre">c-mapped-subtype</span></code></a>.</p>
 <span class="target" id="index-134"></span><dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:[c-boolean]">
-<span class="sig-name descname"><span class="pre">&lt;C-boolean&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-boolean]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;C-boolean&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-boolean]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>A mapped subclass of <code class="docutils literal notranslate"><span class="pre">&lt;C-int&gt;</span></code> that provides an analogue to
@@ -3651,7 +3653,7 @@ to <a class="reference external" href="https://opendylan.org/books/drm/Other_Bui
 
 <span class="target" id="index-135"></span><dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:[c-string]">
-<span class="sig-name descname"><span class="pre">&lt;C-string&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-string]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;C-string&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-string]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p><p>A mapped subclass of <code class="docutils literal notranslate"><span class="pre">&lt;C-char*&gt;</span></code> and <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a>. On export the
@@ -3671,7 +3673,7 @@ its value is never stored and used after the call returns.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:[c-character]">
-<span class="sig-name descname"><span class="pre">&lt;C-character&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-character]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;C-character&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-character]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The Dylan type for import and export is <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#character"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;character&gt;</span></code></a>. It is a
@@ -3683,7 +3685,7 @@ and from C.</p>
 
 <span class="target" id="index-136"></span><dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:with-c-string">
-<span class="sig-name descname"><span class="pre">with-c-string</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#c-ffi:c-ffi:with-c-string" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">with-c-string</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#c-ffi:c-ffi:with-c-string" title="Permalink to this definition">¶</a></dt>
 <dd><p>Passes a C pointer to the contents of a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
@@ -3718,7 +3720,7 @@ garbage collector can no longer keep track of it.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:clear-memory!">
-<span class="sig-name descname"><span class="pre">clear-memory!</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:clear-memory!" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">clear-memory!</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:clear-memory!" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stores zeros in the specified bytes of memory.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3742,7 +3744,7 @@ word-aligned.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:copy-bytes!">
-<span class="sig-name descname"><span class="pre">copy-bytes!</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:copy-bytes!" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">copy-bytes!</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:copy-bytes!" title="Permalink to this definition">¶</a></dt>
 <dd><p>Copies an arbitrary number of bytes at an arbitrary alignment.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3770,7 +3772,7 @@ of copying whole words.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:copy-into!">
-<span class="sig-name descname"><span class="pre">copy-into!</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:copy-into!" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">copy-into!</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:copy-into!" title="Permalink to this definition">¶</a></dt>
 <dd><p>Copies the specified number of words.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3802,7 +3804,7 @@ overlap.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:equal-memory?">
-<span class="sig-name descname"><span class="pre">equal-memory?</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:equal-memory?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">equal-memory?</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:equal-memory?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a> if the size of the two designated memory spaces have
 the same contents.</p>
 <dl class="field-list simple">
@@ -3827,7 +3829,7 @@ word-aligned.</p>
 
 <span class="target" id="index-137"></span><dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:[c-dylan-object]">
-<span class="sig-name descname"><span class="pre">&lt;C-Dylan-object&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-dylan-object]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;C-Dylan-object&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-dylan-object]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;C-void*&gt;</span></code></p>
@@ -3853,7 +3855,7 @@ it was a handle.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:register-c-dylan-object">
-<span class="sig-name descname"><span class="pre">register-C-Dylan-object</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:register-c-dylan-object" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">register-C-Dylan-object</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:register-c-dylan-object" title="Permalink to this definition">¶</a></dt>
 <dd><p>Allows objects to be passed to a C function as instances of
 <a class="reference internal" href="#c-ffi:c-ffi:[c-dylan-object]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;C-Dylan-object&gt;</span></code></a>.</p>
 <dl class="field-list simple">
@@ -3885,7 +3887,7 @@ assures that the handle passed to C is not accidentally corrupted
 
 <span class="target" id="index-138"></span><dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:unregister-c-dylan-object">
-<span class="sig-name descname"><span class="pre">unregister-C-Dylan-object</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:unregister-c-dylan-object" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">unregister-C-Dylan-object</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:unregister-c-dylan-object" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deallocates an object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3912,7 +3914,7 @@ object as it normally would.</p>
 
 <span class="target" id="index-139"></span><dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:export-c-dylan-object">
-<span class="sig-name descname"><span class="pre">export-C-Dylan-object</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:export-c-dylan-object" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">export-C-Dylan-object</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:export-c-dylan-object" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fetches the <a class="reference internal" href="#c-ffi:c-ffi:[c-dylan-object]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;C-Dylan-object&gt;</span></code></a> handle for a Dylan object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3932,7 +3934,7 @@ object as it normally would.</p>
 
 <span class="target" id="index-140"></span><dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:import-c-dylan-object">
-<span class="sig-name descname"><span class="pre">import-C-Dylan-object</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:import-c-dylan-object" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">import-C-Dylan-object</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#c-ffi:c-ffi:import-c-dylan-object" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fetches the Dylan object for a <a class="reference internal" href="#c-ffi:c-ffi:[c-dylan-object]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;C-Dylan-object&gt;</span></code></a> handle.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4105,6 +4107,6 @@ object as it normally would.</p>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

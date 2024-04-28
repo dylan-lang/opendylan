@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Programming in Open Dylan" href="model.html" /><link rel="prev" title="Quick Start" href="quick-start.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Fixing Bugs - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="fixing-bugs">
-<h1>Fixing Bugs<a class="headerlink" href="#fixing-bugs" title="Permalink to this heading">#</a></h1>
+<h1>Fixing Bugs<a class="headerlink" href="#fixing-bugs" title="Permalink to this heading">¶</a></h1>
 <p>Though we can play Reversi, we cannot save games in progress and resume
 play at a later date. In this section, we add a save feature to the
 game, available through <strong>Save</strong>, <strong>Save As</strong> and <strong>Open</strong> commands on the
@@ -473,7 +475,7 @@ moment, you will see that those items are disabled.)</p>
 we must correct before the feature will work properly. In doing so, we
 will see the editor, debugger, and browser tools.</p>
 <section id="rebuilding-the-application">
-<h2>Rebuilding the application<a class="headerlink" href="#rebuilding-the-application" title="Permalink to this heading">#</a></h2>
+<h2>Rebuilding the application<a class="headerlink" href="#rebuilding-the-application" title="Permalink to this heading">¶</a></h2>
 <p>There is another prepared Dylan source file with the changes we need to
 implement the game-saving facility.</p>
 <p>In the Reversi project window, go to the Sources page and select
@@ -502,7 +504,7 @@ project window after rebuilding Reversi:</p>
 and how the environment helps us deal with them.</p>
 </section>
 <section id="problems-at-compile-time">
-<h2>Problems at compile time<a class="headerlink" href="#problems-at-compile-time" title="Permalink to this heading">#</a></h2>
+<h2>Problems at compile time<a class="headerlink" href="#problems-at-compile-time" title="Permalink to this heading">¶</a></h2>
 <p>In this section we look at how the compiler handles problems that it
 comes across in a project’s source code. When we rebuilt Reversi in
 <a class="reference internal" href="#rebuilding-the-application">Rebuilding the application</a>, the compiler
@@ -524,7 +526,7 @@ automatically.</p>
 <figure class="align-center" id="id3">
 <img alt="../_images/warnings2-0b1.png" src="../_images/warnings2-0b1.png" />
 <figcaption>
-<p><span class="caption-text">The project window’s Warnings page.</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">The project window’s Warnings page.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The table has four columns:</p>
@@ -573,7 +575,7 @@ redisplay.</p>
 <figure class="align-center" id="id4">
 <img alt="../_images/editor.png" src="../_images/editor.png" />
 <figcaption>
-<p><span class="caption-text">The Open Dylan editor.</span><a class="headerlink" href="#id4" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">The Open Dylan editor.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Now we can see the cause of the first serious warning. A semi-colon is
@@ -625,7 +627,7 @@ addressed, all the other serious warnings that were follow-on effects of
 the missing semi-colon have gone away. In addition, the single ordinary
 warning was removed by the <em>end</em> -clause fix.</p>
 <section id="controlling-the-compiler-s-treatment-of-warnings">
-<span id="index-4"></span><h3>Controlling the compiler’s treatment of warnings<a class="headerlink" href="#controlling-the-compiler-s-treatment-of-warnings" title="Permalink to this heading">#</a></h3>
+<span id="index-4"></span><h3>Controlling the compiler’s treatment of warnings<a class="headerlink" href="#controlling-the-compiler-s-treatment-of-warnings" title="Permalink to this heading">¶</a></h3>
 <p>We have seen that serious warnings are caused by code that, if executed,
 would lead to a run-time exception. Some programming language compilers
 would refuse to link an executable file or DLL for such code, on the
@@ -642,7 +644,7 @@ setting.</p>
 </section>
 </section>
 <section id="problems-at-run-time">
-<span id="id1"></span><h2>Problems at run time<a class="headerlink" href="#problems-at-run-time" title="Permalink to this heading">#</a></h2>
+<span id="id1"></span><h2>Problems at run time<a class="headerlink" href="#problems-at-run-time" title="Permalink to this heading">¶</a></h2>
 <p>Now we have taken a brief look at how Open Dylan treats
 compile-time problems, we will look at how it lets us debug problems
 that only emerge as exceptions at run time.</p>
@@ -664,7 +666,7 @@ the Reversi window.</p>
 <figure class="align-center" id="id5">
 <span id="dylan-runtime-application-error"></span><img alt="../_images/error2-0.png" src="../_images/error2-0.png" />
 <figcaption>
-<p><span class="caption-text">A Dylan run-time application error.</span><a class="headerlink" href="#id5" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">A Dylan run-time application error.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The dialog appeared because the Open Dylan debugger caught an
@@ -703,7 +705,7 @@ debugger. The default filter setting is “Filtered visible frames”.</p>
 <figure class="align-center" id="id6">
 <img alt="../_images/errstack2-0.png" src="../_images/errstack2-0.png" />
 <figcaption>
-<p><span class="caption-text">The Reversi application stack after a game-saving error.</span><a class="headerlink" href="#id6" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">The Reversi application stack after a game-saving error.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Each item in the list is a call frame on the stack for the thread being
@@ -717,7 +719,7 @@ of the icons and their meanings, but note for now that the green arrow
 icon represents the current location of the stack pointer — that is, the
 call at which the thread was paused.</p>
 <section id="searching-the-stack-backtrace-for-the-cause-of-the-error">
-<span id="searching-stack-backtrace-for-cause"></span><h3>Searching the stack backtrace for the cause of the error<a class="headerlink" href="#searching-the-stack-backtrace-for-the-cause-of-the-error" title="Permalink to this heading">#</a></h3>
+<span id="searching-stack-backtrace-for-cause"></span><h3>Searching the stack backtrace for the cause of the error<a class="headerlink" href="#searching-the-stack-backtrace-for-the-cause-of-the-error" title="Permalink to this heading">¶</a></h3>
 <p>In this section we examine the backtrace and see what events led up to
 the unhandled exception.</p>
 <p>Looking at the top of the backtrace, we can see that the most recent
@@ -779,7 +781,7 @@ Debugger Options…</strong>, see <a class="reference internal" href="debug.html
 <figure class="align-center" id="id7">
 <img alt="../_images/unfilterederrstack2-0.png" src="../_images/unfilterederrstack2-0.png" />
 <figcaption>
-<p><span class="caption-text">Stack pane showing call frames from all modules.</span><a class="headerlink" href="#id7" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Stack pane showing call frames from all modules.</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>So the question is whether the call to <code class="docutils literal notranslate"><span class="pre">coerce-from-element</span></code> failed, or
@@ -853,7 +855,7 @@ the squares being represented by integers, and the file stream being
 composed of byte characters.</p>
 </section>
 <section id="browsing-local-variables">
-<span id="id2"></span><h3>Browsing local variables<a class="headerlink" href="#browsing-local-variables" title="Permalink to this heading">#</a></h3>
+<span id="id2"></span><h3>Browsing local variables<a class="headerlink" href="#browsing-local-variables" title="Permalink to this heading">¶</a></h3>
 <p>In this section we use the Open Dylan browser to help confirm the
 cause of the unhandled Dylan exception.</p>
 <p>Expand the call frame for <code class="docutils literal notranslate"><span class="pre">reversi-board-write-data</span></code>.</p>
@@ -863,7 +865,7 @@ arguments are listed first: <em>board</em> and <em>stream</em>, followed by the
 <figure class="align-center" id="id8">
 <img alt="../_images/locvars.png" src="../_images/locvars.png" />
 <figcaption>
-<p><span class="caption-text">Local variables in the <code class="docutils literal notranslate"><span class="pre">reversi-board-write-data</span></code> call frame.</span><a class="headerlink" href="#id8" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Local variables in the <code class="docutils literal notranslate"><span class="pre">reversi-board-write-data</span></code> call frame.</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The notation</p>
@@ -881,7 +883,7 @@ we come across in Open Dylan.</p>
 <figure class="align-center" id="id9">
 <img alt="../_images/firstbrowse.png" src="../_images/firstbrowse.png" />
 <figcaption>
-<p><span class="caption-text">Browsing an instance of <code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code>.</span><a class="headerlink" href="#id9" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Browsing an instance of <code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code>.</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The browser shows us in its Object field that we are browsing an
@@ -913,7 +915,7 @@ to browsing them.</p>
 <figure class="align-center" id="id10">
 <img alt="../_images/collsquares.png" src="../_images/collsquares.png" />
 <figcaption>
-<p><span class="caption-text">Browsing the elements of a collection.</span><a class="headerlink" href="#id10" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Browsing the elements of a collection.</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Now we can see the elements of the <em>reversi-board-squares</em> collection.</p>
@@ -945,7 +947,7 @@ from. However, we have yet to check what goes on in
 elements in the <em>reversi-board-squares</em> sequence into integers?</p>
 </section>
 <section id="browsing-definitions">
-<h3>Browsing definitions<a class="headerlink" href="#browsing-definitions" title="Permalink to this heading">#</a></h3>
+<h3>Browsing definitions<a class="headerlink" href="#browsing-definitions" title="Permalink to this heading">¶</a></h3>
 <p>In this section, we browse the definition of <code class="docutils literal notranslate"><span class="pre">reversi-square-write-data</span></code>
 to see whether it converts the board squares into integers.</p>
 <p>To browse the definition, we have the option of locating it on the
@@ -983,7 +985,7 @@ that the board square representations are converted into integers. This
 is where the integer that caused the exception came from.</p>
 </section>
 <section id="fixing-the-error">
-<h3>Fixing the error<a class="headerlink" href="#fixing-the-error" title="Permalink to this heading">#</a></h3>
+<h3>Fixing the error<a class="headerlink" href="#fixing-the-error" title="Permalink to this heading">¶</a></h3>
 <p>In this section, we fix the Reversi project source code to eliminate the
 cause of the exception we have been tracking down.</p>
 <p>This is what we have learned about the error so far:</p>
@@ -1071,7 +1073,7 @@ application.</p>
 <p>The save operation now works without raising an unhandled exception.</p>
 </section>
 <section id="loading-the-saved-game-back-in">
-<h3>Loading the saved game back in<a class="headerlink" href="#loading-the-saved-game-back-in" title="Permalink to this heading">#</a></h3>
+<h3>Loading the saved game back in<a class="headerlink" href="#loading-the-saved-game-back-in" title="Permalink to this heading">¶</a></h3>
 <p>The next step is to test the code for loading a saved game. To test this
 we need to change the state of the board from what it was like when we
 saved the game.</p>
@@ -1167,6 +1169,6 @@ saved the game into, and click <strong>Open</strong>.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

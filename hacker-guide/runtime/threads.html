@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Startup" href="startup.html" /><link rel="prev" title="Name Mangling" href="mangling.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Compiler Support for Threads - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,11 +463,11 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="compiler-support-for-threads">
-<h1>Compiler Support for Threads<a class="headerlink" href="#compiler-support-for-threads" title="Permalink to this heading">#</a></h1>
+<h1>Compiler Support for Threads<a class="headerlink" href="#compiler-support-for-threads" title="Permalink to this heading">¶</a></h1>
 <section id="dylan-portability-interface">
-<h2>Dylan Portability Interface<a class="headerlink" href="#dylan-portability-interface" title="Permalink to this heading">#</a></h2>
+<h2>Dylan Portability Interface<a class="headerlink" href="#dylan-portability-interface" title="Permalink to this heading">¶</a></h2>
 <p>The Threads Library is designed for implementation using
 different threads APIs from common operating systems, including Unix
 and Windows. Harlequin’s implementation of the library is designed
@@ -479,7 +481,7 @@ portability layer via primitive function definitions and some
 specialized emit methods for flow-graph node types which are specific to
 threads.</p>
 <section id="portability-and-runtime-layers">
-<h3>Portability and Runtime Layers<a class="headerlink" href="#portability-and-runtime-layers" title="Permalink to this heading">#</a></h3>
+<h3>Portability and Runtime Layers<a class="headerlink" href="#portability-and-runtime-layers" title="Permalink to this heading">¶</a></h3>
 <p>The design assumes that each of the concrete classes of the
 Threads Library (<code class="docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;simple-lock&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;recursive-lock&gt;</span></code>,
 <code class="docutils literal notranslate"><span class="pre">&lt;semaphore&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;notification&gt;</span></code>) corresponds with an equivalent
@@ -518,7 +520,7 @@ low-level operating system features, for three of the most popular
 general-purpose operating systems.</p>
 </section>
 <section id="implementations-of-dylan-thread-interfaces">
-<h3>Implementations of Dylan Thread Interfaces<a class="headerlink" href="#implementations-of-dylan-thread-interfaces" title="Permalink to this heading">#</a></h3>
+<h3>Implementations of Dylan Thread Interfaces<a class="headerlink" href="#implementations-of-dylan-thread-interfaces" title="Permalink to this heading">¶</a></h3>
 <div class="table-wrapper docutils container">
 <table class="docutils align-default">
 <thead>
@@ -563,7 +565,7 @@ as a lock);</p></td>
 </div>
 </section>
 <section id="dylan-types-for-threads-portability">
-<h3>Dylan Types for Threads Portability<a class="headerlink" href="#dylan-types-for-threads-portability" title="Permalink to this heading">#</a></h3>
+<h3>Dylan Types for Threads Portability<a class="headerlink" href="#dylan-types-for-threads-portability" title="Permalink to this heading">¶</a></h3>
 <p>Three Dylan types merit discussion for their use with portability
 primitives: <code class="docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;portable-container&gt;</span></code>.  Objects that are
 instances of the <code class="docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;portable-container&gt;</span></code> classes have
@@ -601,7 +603,7 @@ contain additional fields that are not of interest to the portability
 layer, and subclasses may add additional fields of their own.</p>
 </section>
 <section id="correspondence-between-dylan-types-and-c-types">
-<h3>Correspondence Between Dylan Types and C Types<a class="headerlink" href="#correspondence-between-dylan-types-and-c-types" title="Permalink to this heading">#</a></h3>
+<h3>Correspondence Between Dylan Types and C Types<a class="headerlink" href="#correspondence-between-dylan-types-and-c-types" title="Permalink to this heading">¶</a></h3>
 <div class="table-wrapper docutils container">
 <table class="docutils align-default">
 <thead>
@@ -664,9 +666,9 @@ layer, and subclasses may add additional fields of their own.</p>
 </section>
 </section>
 <section id="compiler-support-for-the-portability-interface">
-<h2>Compiler Support for the Portability Interface<a class="headerlink" href="#compiler-support-for-the-portability-interface" title="Permalink to this heading">#</a></h2>
+<h2>Compiler Support for the Portability Interface<a class="headerlink" href="#compiler-support-for-the-portability-interface" title="Permalink to this heading">¶</a></h2>
 <section id="the-compiler-flow-graph">
-<h3>The Compiler Flow Graph<a class="headerlink" href="#the-compiler-flow-graph" title="Permalink to this heading">#</a></h3>
+<h3>The Compiler Flow Graph<a class="headerlink" href="#the-compiler-flow-graph" title="Permalink to this heading">¶</a></h3>
 <p>The front end of the compiler parses Dylan source code and produces an
 intermediate representation, the Implicit Continuation Representation
 (ICR). The ICR is a directed acyclic graph (DAG) of Dylan objects. A
@@ -689,7 +691,7 @@ specialize on node and leaf classes to enable them to produce the
 appropriate output.</p>
 </section>
 <section id="compiler-support-for-atomic-and-fluid-variables">
-<h3>Compiler Support for Atomic and Fluid Variables<a class="headerlink" href="#compiler-support-for-atomic-and-fluid-variables" title="Permalink to this heading">#</a></h3>
+<h3>Compiler Support for Atomic and Fluid Variables<a class="headerlink" href="#compiler-support-for-atomic-and-fluid-variables" title="Permalink to this heading">¶</a></h3>
 <p>The portability layer provides support for atomic variable access and
 for Dylan fluid variables (implemented as thread-local variables).
 Atomic variables and thread variables are directly represented in the
@@ -718,7 +720,7 @@ flow graph. They are implemented by specializing methods on the leaf
 classes that represent atomic and fluid variables.</p>
 </section>
 <section id="compiler-support-for-primitives">
-<h3>Compiler Support for Primitives<a class="headerlink" href="#compiler-support-for-primitives" title="Permalink to this heading">#</a></h3>
+<h3>Compiler Support for Primitives<a class="headerlink" href="#compiler-support-for-primitives" title="Permalink to this heading">¶</a></h3>
 <p>When the compiler constructs the flow graph, it represents a function
 call as a node in the ICR. Just as the compiler distinguishes atomic and
 fluid variables by means of specialized leaf classes, so it
@@ -739,9 +741,9 @@ node class <code class="docutils literal notranslate"><span class="pre">&lt;prim
 </section>
 </section>
 <section id="support-for-dylan-language-features">
-<h2>Support for Dylan Language Features<a class="headerlink" href="#support-for-dylan-language-features" title="Permalink to this heading">#</a></h2>
+<h2>Support for Dylan Language Features<a class="headerlink" href="#support-for-dylan-language-features" title="Permalink to this heading">¶</a></h2>
 <section id="interfacing-to-foreign-code">
-<h3>Interfacing to Foreign Code<a class="headerlink" href="#interfacing-to-foreign-code" title="Permalink to this heading">#</a></h3>
+<h3>Interfacing to Foreign Code<a class="headerlink" href="#interfacing-to-foreign-code" title="Permalink to this heading">¶</a></h3>
 <p>It is intended that threads created by the Dylan library may
 inter-operate with code written in other languages with no special
 constraints. Dylan is interfaced with other languages via a Foreign
@@ -821,7 +823,7 @@ set to point to a suitable value on the stack; finally a new Dylan
 <code class="docutils literal notranslate"><span class="pre">primitive-initialize-current-thread</span></code> (as for the first thread).</p>
 </section>
 <section id="finalization">
-<h3>Finalization<a class="headerlink" href="#finalization" title="Permalink to this heading">#</a></h3>
+<h3>Finalization<a class="headerlink" href="#finalization" title="Permalink to this heading">¶</a></h3>
 <p>As has been discussed, the Dylan synchronization objects are implemented
 as wrappers around lower-level operating system structures. The Dylan
 objects are subject to garbage collection, and their memory will be
@@ -926,6 +928,6 @@ collector which is currently under development.</p>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

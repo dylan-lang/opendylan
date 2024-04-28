@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="The PPML library" href="ppml.html" /><link rel="prev" title="Debugging" href="debugging.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Porting to a New Target Platform - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,15 +463,15 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="porting-to-a-new-target-platform">
-<h1>Porting to a New Target Platform<a class="headerlink" href="#porting-to-a-new-target-platform" title="Permalink to this heading">#</a></h1>
+<h1>Porting to a New Target Platform<a class="headerlink" href="#porting-to-a-new-target-platform" title="Permalink to this heading">¶</a></h1>
 <div class="alert alert-block alert-warning admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This is a work in progress, as we work through doing a new port.</p>
 </div>
 <section id="naming-your-target">
-<h2>Naming Your Target<a class="headerlink" href="#naming-your-target" title="Permalink to this heading">#</a></h2>
+<h2>Naming Your Target<a class="headerlink" href="#naming-your-target" title="Permalink to this heading">¶</a></h2>
 <p>A target name typically consists of the CPU type and the OS name, separated
 by a hyphen.  Due to using the hyphen as a separator, the CPU type and OS name
 should not include a hyphen.</p>
@@ -507,7 +509,7 @@ emscripten, the JVM, and Google’s Native Client.</p>
 </div>
 </section>
 <section id="new-registry">
-<h2>New Registry<a class="headerlink" href="#new-registry" title="Permalink to this heading">#</a></h2>
+<h2>New Registry<a class="headerlink" href="#new-registry" title="Permalink to this heading">¶</a></h2>
 <p>The registry is how we map library names to the actual project files that
 should be built to provide that library.  This lets us provide per-platform
 implementations of libraries as required.</p>
@@ -517,9 +519,9 @@ as needed. If you are doing a port to a Unix-like platform, this should be
 pretty straightforward to copy from one of the Linux definitions.</p>
 </section>
 <section id="system-library">
-<h2>System Library<a class="headerlink" href="#system-library" title="Permalink to this heading">#</a></h2>
+<h2>System Library<a class="headerlink" href="#system-library" title="Permalink to this heading">¶</a></h2>
 <section id="new-lid-and-definitions">
-<h3>New LID and definitions<a class="headerlink" href="#new-lid-and-definitions" title="Permalink to this heading">#</a></h3>
+<h3>New LID and definitions<a class="headerlink" href="#new-lid-and-definitions" title="Permalink to this heading">¶</a></h3>
 <p>You will need to create a new <code class="docutils literal notranslate"><span class="pre">.lid</span></code> file to point to the per-platform
 files for the new target.  You will also need a <code class="docutils literal notranslate"><span class="pre">*-operating-system.dylan</span></code>
 file to provide a couple of definitions.</p>
@@ -527,7 +529,7 @@ file to provide a couple of definitions.</p>
 currently supported target platforms.</p>
 </section>
 <section id="magic-numbers">
-<h3>Magic Numbers<a class="headerlink" href="#magic-numbers" title="Permalink to this heading">#</a></h3>
+<h3>Magic Numbers<a class="headerlink" href="#magic-numbers" title="Permalink to this heading">¶</a></h3>
 <p>The system library requires some magic numbers for accessing struct members
 defined within the standard C library.</p>
 <p>To do this, compile <code class="docutils literal notranslate"><span class="pre">sources/system/dump-magic-numbers.c</span></code> for your target
@@ -536,7 +538,7 @@ you can add to the system library.</p>
 </section>
 </section>
 <section id="c-back-end">
-<h2>C Back-End<a class="headerlink" href="#c-back-end" title="Permalink to this heading">#</a></h2>
+<h2>C Back-End<a class="headerlink" href="#c-back-end" title="Permalink to this heading">¶</a></h2>
 <p>If the new processor type is a 64 bit processor, you will
 want to update the C back-end appropriately:</p>
 <ul class="simple">
@@ -556,7 +558,7 @@ usages of <code class="docutils literal notranslate"><span class="pre">__x86_64_
 in <code class="docutils literal notranslate"><span class="pre">sources/lib/run-time/Makefile.in</span></code> that will need to be updated.</p>
 </section>
 <section id="llvm-back-end">
-<h2>LLVM Back-End<a class="headerlink" href="#llvm-back-end" title="Permalink to this heading">#</a></h2>
+<h2>LLVM Back-End<a class="headerlink" href="#llvm-back-end" title="Permalink to this heading">¶</a></h2>
 <p>The per-platform configurations for the LLVM back-end can be found
 within <code class="docutils literal notranslate"><span class="pre">sources/dfmc/llvm-back-end/llvm-targets.dylan</span></code>.</p>
 <p>When adding a new CPU type, add a new abstract back-end for the CPU with
@@ -578,7 +580,7 @@ that will need to be updated.</p>
 <p><em>This isn’t completely written yet.</em></p>
 </section>
 <section id="build-scripts">
-<h2>Build Scripts<a class="headerlink" href="#build-scripts" title="Permalink to this heading">#</a></h2>
+<h2>Build Scripts<a class="headerlink" href="#build-scripts" title="Permalink to this heading">¶</a></h2>
 <p>Build scripts are partially documented within <a class="reference internal" href="../build-system.html"><span class="doc">Jam-based Build System</span></a>.
 The existing build scripts can be found within <code class="docutils literal notranslate"><span class="pre">sources/jamfiles</span></code>.</p>
 <p>You will want to copy an existing one and make whatever changes are
@@ -588,7 +590,7 @@ already shared within <code class="docutils literal notranslate"><span class="pr
 so that it gets installed.</p>
 </section>
 <section id="autoconf">
-<h2>Autoconf<a class="headerlink" href="#autoconf" title="Permalink to this heading">#</a></h2>
+<h2>Autoconf<a class="headerlink" href="#autoconf" title="Permalink to this heading">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">configure.ac</span></code> script handles detecting a target platform and
 setting some appropriate variables within the build system. There
 is a large block that deals with checking the <code class="docutils literal notranslate"><span class="pre">$host</span></code> (set up
@@ -598,10 +600,10 @@ to create an updated <code class="docutils literal notranslate"><span class="pre
 <code class="docutils literal notranslate"><span class="pre">configure</span></code>.</p>
 </section>
 <section id="performing-a-cross-build">
-<h2>Performing a Cross-Build<a class="headerlink" href="#performing-a-cross-build" title="Permalink to this heading">#</a></h2>
+<h2>Performing a Cross-Build<a class="headerlink" href="#performing-a-cross-build" title="Permalink to this heading">¶</a></h2>
 <p>In the examples below, we will use <code class="docutils literal notranslate"><span class="pre">arm-linux</span></code> as the example.</p>
 <section id="preparing-the-garbage-collector">
-<h3>Preparing the Garbage Collector<a class="headerlink" href="#preparing-the-garbage-collector" title="Permalink to this heading">#</a></h3>
+<h3>Preparing the Garbage Collector<a class="headerlink" href="#preparing-the-garbage-collector" title="Permalink to this heading">¶</a></h3>
 <p>Currently, most ports of Open Dylan will probably be using the Boehm
 garbage collector rather than MPS.  An easy way to get the required
 files is to install the Boehm GC on the target platform and then
@@ -612,7 +614,7 @@ has been ported to the target platform first. This is an undertaking
 that is outside the scope of this document.</p>
 </section>
 <section id="building-the-run-time">
-<h3>Building the Run-Time<a class="headerlink" href="#building-the-run-time" title="Permalink to this heading">#</a></h3>
+<h3>Building the Run-Time<a class="headerlink" href="#building-the-run-time" title="Permalink to this heading">¶</a></h3>
 <p>You can cross-compile the run-time by going to <code class="docutils literal notranslate"><span class="pre">sources/lib/run-time</span></code>
 and running <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code>, however, you will need to pass some special
 flags to <code class="docutils literal notranslate"><span class="pre">make</span></code>:</p>
@@ -637,7 +639,7 @@ you will be using to perform cross-compilation.</p>
 </div>
 </section>
 <section id="creating-a-custom-build-script">
-<h3>Creating a Custom Build Script<a class="headerlink" href="#creating-a-custom-build-script" title="Permalink to this heading">#</a></h3>
+<h3>Creating a Custom Build Script<a class="headerlink" href="#creating-a-custom-build-script" title="Permalink to this heading">¶</a></h3>
 <p>When cross-compiling, it is best to set up a custom Jam build
 script which can be passed to the <code class="docutils literal notranslate"><span class="pre">dylan-compiler</span></code>.  This will
 allow you to customize important parts of the build configuration.</p>
@@ -653,7 +655,7 @@ include $(SYSTEM_BUILD_SCRIPTS)/arm-linux-build.jam ;
 includes the system-provided build script for <code class="docutils literal notranslate"><span class="pre">arm-linux</span></code>.</p>
 </section>
 <section id="cross-building-a-test-application">
-<h3>Cross-Building a Test Application<a class="headerlink" href="#cross-building-a-test-application" title="Permalink to this heading">#</a></h3>
+<h3>Cross-Building a Test Application<a class="headerlink" href="#cross-building-a-test-application" title="Permalink to this heading">¶</a></h3>
 <p>Assuming that you’ve cross-compiled and installed a copy of the
 run-time into the version of Open Dylan that you’re using for
 cross-compilation, this is an easy step:</p>
@@ -668,7 +670,7 @@ target machine and executed. Hopefully it runs correctly. If not,
 now is the time to start debugging.</p>
 </section>
 <section id="cross-building-the-dylan-compiler">
-<h3>Cross-Building the Dylan Compiler<a class="headerlink" href="#cross-building-the-dylan-compiler" title="Permalink to this heading">#</a></h3>
+<h3>Cross-Building the Dylan Compiler<a class="headerlink" href="#cross-building-the-dylan-compiler" title="Permalink to this heading">¶</a></h3>
 <p>This is no different from building the <code class="docutils literal notranslate"><span class="pre">hello-world</span></code> application
 except that now you are building <code class="docutils literal notranslate"><span class="pre">dylan-compiler</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">OPEN_DYLAN_TARGET_PLATFORM</span><span class="o">=</span><span class="n">arm</span><span class="o">-</span><span class="n">linux</span> \
@@ -678,7 +680,7 @@ except that now you are building <code class="docutils literal notranslate"><spa
 </div>
 </section>
 <section id="building-without-a-cross-compiler">
-<h3>Building without a Cross-Compiler<a class="headerlink" href="#building-without-a-cross-compiler" title="Permalink to this heading">#</a></h3>
+<h3>Building without a Cross-Compiler<a class="headerlink" href="#building-without-a-cross-compiler" title="Permalink to this heading">¶</a></h3>
 <p>When you don’t have an actual cross-compiler when porting
 to a new platform, the recommended solution is to use a shared
 file system and custom compiler scripts.</p>
@@ -785,6 +787,6 @@ to compile a test application and the Dylan compiler.</p></li>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

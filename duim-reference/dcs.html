@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="DUIM-Sheets Library" href="sheets.html" /><link rel="prev" title="DUIM-Extended-Geometry Library" href="ext-geom.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>DUIM-DCs Library - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,11 +463,11 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="duim-dcs-library">
-<h1>DUIM-DCs Library<a class="headerlink" href="#duim-dcs-library" title="Permalink to this heading">#</a></h1>
+<h1>DUIM-DCs Library<a class="headerlink" href="#duim-dcs-library" title="Permalink to this heading">¶</a></h1>
 <section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
 <p>The DUIM-DCs library provides color support to the DUIM library. The
 library contains a single module, <em>duim-dcs</em>, from which all the
 interfaces described in this chapter are exposed. <a class="reference internal" href="#duim-dcs-module">DUIM-DCs
@@ -476,7 +478,7 @@ of ink, color, brush, pen, palette, and shapes that make up patterns and
 images.</p>
 </section>
 <section id="the-class-hierarchy-for-duim-dcs">
-<h2>The class hierarchy for DUIM-DCs<a class="headerlink" href="#the-class-hierarchy-for-duim-dcs" title="Permalink to this heading">#</a></h2>
+<h2>The class hierarchy for DUIM-DCs<a class="headerlink" href="#the-class-hierarchy-for-duim-dcs" title="Permalink to this heading">¶</a></h2>
 <p>A number of base classes are exposed in the DUIM-DCs library, each of
 which is a subclass of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>. They are shown in the following table</p>
 <div class="table-wrapper docutils container">
@@ -539,7 +541,7 @@ is, fonts that are resident on a particular device. This is a direct
 subclass of <a class="reference internal" href="#duim-dcs:duim-dcs:[text-style]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;text-style&gt;</span></code></a>.</p></li>
 </ul>
 <section id="subclasses-of-ink">
-<h3>Subclasses of &lt;ink&gt;<a class="headerlink" href="#subclasses-of-ink" title="Permalink to this heading">#</a></h3>
+<h3>Subclasses of &lt;ink&gt;<a class="headerlink" href="#subclasses-of-ink" title="Permalink to this heading">¶</a></h3>
 <p>A number of subclasses of &lt;ink&gt; are exposed by the DUIM-DCs library, as
 follows:</p>
 <ul class="simple">
@@ -560,7 +562,7 @@ each rectangular cell of the pattern. This is a direct subclass of
 </ul>
 </section>
 <section id="error-classes-provided-by-duim-dcs">
-<h3>Error classes provided by DUIM-DCs<a class="headerlink" href="#error-classes-provided-by-duim-dcs" title="Permalink to this heading">#</a></h3>
+<h3>Error classes provided by DUIM-DCs<a class="headerlink" href="#error-classes-provided-by-duim-dcs" title="Permalink to this heading">¶</a></h3>
 <p>Two error classes are provided by the DUIM-DCs library, both of which
 are immediate subclasses of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;error&gt;</span></code>.</p>
 <ul class="simple">
@@ -574,12 +576,12 @@ depth of the connected monitor.</p></li>
 </section>
 </section>
 <section id="duim-dcs-module">
-<h2>DUIM-DCs Module<a class="headerlink" href="#duim-dcs-module" title="Permalink to this heading">#</a></h2>
+<h2>DUIM-DCs Module<a class="headerlink" href="#duim-dcs-module" title="Permalink to this heading">¶</a></h2>
 <p>This section contains a complete reference of all the interfaces that
 are exported from the <em>duim-dcs</em> module.</p>
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:\=">
-<span class="sig-name descname"><span class="pre">\=</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:\=" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">\=</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:\=" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <code class="docutils literal notranslate"><span class="pre">#t</span></code> if two objects are equal.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -619,7 +621,7 @@ are exported from the <em>duim-dcs</em> module.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:add-colors">
-<span class="sig-name descname"><span class="pre">add-colors</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:add-colors" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">add-colors</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:add-colors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds one or more colors to a palette and returns the updated palette.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -644,7 +646,7 @@ are exported from the <em>duim-dcs</em> module.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$background">
-<span class="sig-name descname"><span class="pre">$background</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$background" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$background</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$background" title="Permalink to this definition">¶</a></dt>
 <dd><p>An indirect ink that uses the medium’s background design.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -665,7 +667,7 @@ are exported from the <em>duim-dcs</em> module.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$black">
-<span class="sig-name descname"><span class="pre">$black</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$black" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$black</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$black" title="Permalink to this definition">¶</a></dt>
 <dd><p>The usual definition of black.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -686,7 +688,7 @@ color model, its value is <em>000</em>.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$blue">
-<span class="sig-name descname"><span class="pre">$blue</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$blue" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$blue</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$blue" title="Permalink to this definition">¶</a></dt>
 <dd><p>The usual definition of the color blue.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -706,7 +708,7 @@ color model, its value is <em>000</em>.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$boole-clr">
-<span class="sig-name descname"><span class="pre">$boole-clr</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-clr" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$boole-clr</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-clr" title="Permalink to this definition">¶</a></dt>
 <dd><p>The logical operator that is always 0.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -721,7 +723,7 @@ to the <em>boole</em> function.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$boole-set">
-<span class="sig-name descname"><span class="pre">$boole-set</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-set" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$boole-set</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-set" title="Permalink to this definition">¶</a></dt>
 <dd><p>The logical operator that is always 1.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -736,7 +738,7 @@ to the <em>boole</em> function.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$boole-1">
-<span class="sig-name descname"><span class="pre">$boole-1</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-1" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$boole-1</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-1" title="Permalink to this definition">¶</a></dt>
 <dd><p>The logical operator that is always the same as the first integer
 argument to the <em>boole</em> function.</p>
 <dl class="field-list simple">
@@ -753,7 +755,7 @@ argument to the <em>boole</em> function. It is a suitable first argument to the
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$boole-2">
-<span class="sig-name descname"><span class="pre">$boole-2</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-2" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$boole-2</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-2" title="Permalink to this definition">¶</a></dt>
 <dd><p>The logical operator that is always the same as the second integer
 argument to the <em>boole</em> function.</p>
 <dl class="field-list simple">
@@ -770,7 +772,7 @@ argument to the <em>boole</em> function. It is a suitable first argument to the
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$boole-c1">
-<span class="sig-name descname"><span class="pre">$boole-c1</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-c1" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$boole-c1</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-c1" title="Permalink to this definition">¶</a></dt>
 <dd><p>The logical operator that is always the same as the complement of the
 first integer argument to the <em>boole</em> function.</p>
 <dl class="field-list simple">
@@ -787,7 +789,7 @@ argument to the <em>boole</em> function.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$boole-c2">
-<span class="sig-name descname"><span class="pre">$boole-c2</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-c2" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$boole-c2</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-c2" title="Permalink to this definition">¶</a></dt>
 <dd><p>The logical operator that is always the same as the complement of the
 second integer argument to the <em>boole</em> function.</p>
 <dl class="field-list simple">
@@ -804,7 +806,7 @@ argument to the <em>boole</em> function.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$boole-and">
-<span class="sig-name descname"><span class="pre">$boole-and</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-and" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$boole-and</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-and" title="Permalink to this definition">¶</a></dt>
 <dd><p>The logical operator <em>and</em>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -819,7 +821,7 @@ argument to the <em>boole</em> function.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$boole-ior">
-<span class="sig-name descname"><span class="pre">$boole-ior</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-ior" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$boole-ior</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-ior" title="Permalink to this definition">¶</a></dt>
 <dd><p>The logical operator <em>inclusive</em> <em>or</em>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -834,7 +836,7 @@ to the <em>boole</em> function.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$boole-xor">
-<span class="sig-name descname"><span class="pre">$boole-xor</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-xor" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$boole-xor</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-xor" title="Permalink to this definition">¶</a></dt>
 <dd><p>The logical operator <em>exclusive</em> <em>or</em>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -849,7 +851,7 @@ to the <em>boole</em> function.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$boole-eqv">
-<span class="sig-name descname"><span class="pre">$boole-eqv</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-eqv" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$boole-eqv</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-eqv" title="Permalink to this definition">¶</a></dt>
 <dd><p>The logical operator <em>equivalence</em> (<em>exclusive</em> <em>nor</em>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -864,7 +866,7 @@ suitable first argument to the <em>boole</em> function.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$boole-nand">
-<span class="sig-name descname"><span class="pre">$boole-nand</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-nand" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$boole-nand</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-nand" title="Permalink to this definition">¶</a></dt>
 <dd><p>The logical operator <em>not-and</em>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -879,7 +881,7 @@ suitable first argument to the <em>boole</em> function.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$boole-nor">
-<span class="sig-name descname"><span class="pre">$boole-nor</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-nor" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$boole-nor</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-nor" title="Permalink to this definition">¶</a></dt>
 <dd><p>The logical operator <em>not-or</em>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -894,7 +896,7 @@ suitable first argument to the <em>boole</em> function.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$boole-andc1">
-<span class="sig-name descname"><span class="pre">$boole-andc1</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-andc1" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$boole-andc1</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-andc1" title="Permalink to this definition">¶</a></dt>
 <dd><p>The logical operator that is the <em>and</em> of the complement of the first
 integer argument to the <em>boole</em> function with the second.</p>
 <dl class="field-list simple">
@@ -911,7 +913,7 @@ suitable first argument to the <em>boole</em> function.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$boole-andc2">
-<span class="sig-name descname"><span class="pre">$boole-andc2</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-andc2" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$boole-andc2</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-andc2" title="Permalink to this definition">¶</a></dt>
 <dd><p>The logical operator that is the <em>and</em> of the first integer argument to
 the <em>boole</em> function with the second with the complement of the second.</p>
 <dl class="field-list simple">
@@ -928,7 +930,7 @@ first argument to the boole function.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$boole-orc1">
-<span class="sig-name descname"><span class="pre">$boole-orc1</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-orc1" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$boole-orc1</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-orc1" title="Permalink to this definition">¶</a></dt>
 <dd><p>The logical operator that is the <em>or</em> of the complement of the first
 integer argument to the <em>boole</em> function with the second.</p>
 <dl class="field-list simple">
@@ -945,7 +947,7 @@ suitable first argument to the <em>boole</em> function.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$boole-orc2">
-<span class="sig-name descname"><span class="pre">$boole-orc2</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-orc2" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$boole-orc2</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$boole-orc2" title="Permalink to this definition">¶</a></dt>
 <dd><p>The logical operator that is the <em>or</em> of the first integer argument to
 the <em>boole</em> function with the second with the complement of the second.</p>
 <dl class="field-list simple">
@@ -962,7 +964,7 @@ first argument to the <em>boole</em> function.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$bricks-stipple">
-<span class="sig-name descname"><span class="pre">$bricks-stipple</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$bricks-stipple" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$bricks-stipple</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$bricks-stipple" title="Permalink to this definition">¶</a></dt>
 <dd><p>A stipple pattern for use in creating a patterned brush with horizontal
 and vertical lines in the pattern of the mortar in a brick wall.</p>
 <dl class="field-list simple">
@@ -984,7 +986,7 @@ and vertical lines in the pattern of the mortar in a brick wall.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:[brush]">
-<span class="sig-name descname"><span class="pre">&lt;brush&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:[brush]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;brush&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:[brush]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The protocol class for brushes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1035,7 +1037,7 @@ and vertical lines in the pattern of the mortar in a brick wall.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:brush?">
-<span class="sig-name descname"><span class="pre">brush?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:brush?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">brush?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:brush?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <code class="docutils literal notranslate"><span class="pre">#t</span></code> if its argument is a brush.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1059,7 +1061,7 @@ and vertical lines in the pattern of the mortar in a brick wall.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:brush-background">
-<span class="sig-name descname"><span class="pre">brush-background</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:brush-background" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">brush-background</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:brush-background" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the ink that is the background color of a brush.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1089,7 +1091,7 @@ and vertical lines in the pattern of the mortar in a brick wall.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:brush-fill-rule">
-<span class="sig-name descname"><span class="pre">brush-fill-rule</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:brush-fill-rule" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">brush-fill-rule</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:brush-fill-rule" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the fill rule of the brush.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1120,7 +1122,7 @@ fill rule.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:brush-fill-style">
-<span class="sig-name descname"><span class="pre">brush-fill-style</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:brush-fill-style" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">brush-fill-style</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:brush-fill-style" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the fill style of the brush.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1151,7 +1153,7 @@ fill style.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:brush-foreground">
-<span class="sig-name descname"><span class="pre">brush-foreground</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:brush-foreground" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">brush-foreground</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:brush-foreground" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the ink that is the foreground color of a brush.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1181,7 +1183,7 @@ fill style.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:brush-mode">
-<span class="sig-name descname"><span class="pre">brush-mode</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:brush-mode" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">brush-mode</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:brush-mode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns an integer representing the drawing mode of a brush.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1211,7 +1213,7 @@ fill style.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:brush-stipple">
-<span class="sig-name descname"><span class="pre">brush-stipple</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:brush-stipple" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">brush-stipple</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:brush-stipple" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the stipple pattern of a brush.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1243,7 +1245,7 @@ fill style.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:brush-stretch-mode">
-<span class="sig-name descname"><span class="pre">brush-stretch-mode</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:brush-stretch-mode" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">brush-stretch-mode</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:brush-stretch-mode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the stretch mode of the brush.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1267,7 +1269,7 @@ fill style.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:brush-tile">
-<span class="sig-name descname"><span class="pre">brush-tile</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:brush-tile" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">brush-tile</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:brush-tile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the tile pattern of a brush.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1299,7 +1301,7 @@ fill style.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:brush-ts-x">
-<span class="sig-name descname"><span class="pre">brush-ts-x</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:brush-ts-x" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">brush-ts-x</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:brush-ts-x" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the value of the <em>x</em> coordinate that is used to align the
 brush’s tile or stipple pattern.</p>
 <dl class="field-list simple">
@@ -1332,7 +1334,7 @@ pattern, <em>brush-ts-x</em> returns <code class="docutils literal notranslate">
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:brush-ts-y">
-<span class="sig-name descname"><span class="pre">brush-ts-y</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:brush-ts-y" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">brush-ts-y</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:brush-ts-y" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the value of the <em>y</em> coordinate that is used to align the
 brush’s tile or stipple pattern.</p>
 <dl class="field-list simple">
@@ -1365,7 +1367,7 @@ pattern, <em>brush-ts-y</em> returns <code class="docutils literal notranslate">
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:[color]">
-<span class="sig-name descname"><span class="pre">&lt;color&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:[color]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;color&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:[color]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The protocol class for colors.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1449,7 +1451,7 @@ it hides the previous contents of the drawing plane when it is drawn.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:color?">
-<span class="sig-name descname"><span class="pre">color?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:color?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">color?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:color?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <code class="docutils literal notranslate"><span class="pre">#t</span></code> if object is a color.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1484,7 +1486,7 @@ it hides the previous contents of the drawing plane when it is drawn.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:color-ihs">
-<span class="sig-name descname"><span class="pre">color-ihs</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:color-ihs" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">color-ihs</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:color-ihs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns four values, the intensity, hue, saturation, and opacity
 components of a color.</p>
 <dl class="field-list simple">
@@ -1525,7 +1527,7 @@ values are real numbers between <em>0</em> and <code class="docutils literal not
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:color-luminosity">
-<span class="sig-name descname"><span class="pre">color-luminosity</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:color-luminosity" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">color-luminosity</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:color-luminosity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the brightness of a color.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1561,7 +1563,7 @@ perception of the color by the human retina.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:[color-not-found]">
-<span class="sig-name descname"><span class="pre">&lt;color-not-found&gt;</span></span> <em class="property"><span class="pre">Concrete</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:[color-not-found]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;color-not-found&gt;</span></span> <em class="property"><span class="pre">Concrete</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:[color-not-found]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of the error that is signalled when a color that is not
 available is requested.</p>
 <dl class="field-list simple">
@@ -1598,7 +1600,7 @@ color that was requested but was not available.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:color-palette?">
-<span class="sig-name descname"><span class="pre">color-palette?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:color-palette?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">color-palette?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:color-palette?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <code class="docutils literal notranslate"><span class="pre">#t</span></code> if the stream or medium supports color.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1632,7 +1634,7 @@ color that was requested but was not available.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:color-rgb">
-<span class="sig-name descname"><span class="pre">color-rgb</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:color-rgb" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">color-rgb</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:color-rgb" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns four values, the red, green, blue, and opacity components of a
 color.</p>
 <dl class="field-list simple">
@@ -1672,7 +1674,7 @@ and 1 (inclusive).</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:contrasting-colors-limit">
-<span class="sig-name descname"><span class="pre">contrasting-colors-limit</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:contrasting-colors-limit" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">contrasting-colors-limit</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:contrasting-colors-limit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the number of contrasting colors that can be rendered on the
 current platform.</p>
 <dl class="field-list simple">
@@ -1708,7 +1710,7 @@ protocol must implement a method for this generic function.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:contrasting-dash-patterns-limit">
-<span class="sig-name descname"><span class="pre">contrasting-dash-patterns-limit</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:contrasting-dash-patterns-limit" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">contrasting-dash-patterns-limit</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:contrasting-dash-patterns-limit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the number of contrasting dash patterns that the specified port
 can generate.</p>
 <dl class="field-list simple">
@@ -1741,7 +1743,7 @@ can generate.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$cross-hatch">
-<span class="sig-name descname"><span class="pre">$cross-hatch</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$cross-hatch" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$cross-hatch</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$cross-hatch" title="Permalink to this definition">¶</a></dt>
 <dd><p>A stipple pattern for use in creating a patterned brush with alternating
 solid and dashed lines.</p>
 <dl class="field-list simple">
@@ -1763,7 +1765,7 @@ solid and dashed lines.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$cyan">
-<span class="sig-name descname"><span class="pre">$cyan</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$cyan" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$cyan</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$cyan" title="Permalink to this definition">¶</a></dt>
 <dd><p>The usual definition for the color cyan.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -1783,7 +1785,7 @@ solid and dashed lines.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$dash-dot-dot-pen">
-<span class="sig-name descname"><span class="pre">$dash-dot-dot-pen</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$dash-dot-dot-pen" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$dash-dot-dot-pen</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$dash-dot-dot-pen" title="Permalink to this definition">¶</a></dt>
 <dd><p>A pen that draws a line with two dots between each dash.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -1808,7 +1810,7 @@ is <code class="docutils literal notranslate"><span class="pre">1</span></code> 
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$dash-dot-pen">
-<span class="sig-name descname"><span class="pre">$dash-dot-pen</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$dash-dot-pen" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$dash-dot-pen</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$dash-dot-pen" title="Permalink to this definition">¶</a></dt>
 <dd><p>A pen that draws a dashed and dotted line.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -1833,7 +1835,7 @@ is <code class="docutils literal notranslate"><span class="pre">1</span></code> 
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$dashed-pen">
-<span class="sig-name descname"><span class="pre">$dashed-pen</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$dashed-pen" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$dashed-pen</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$dashed-pen" title="Permalink to this definition">¶</a></dt>
 <dd><p>A pen that draws a dashed line.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -1858,7 +1860,7 @@ is <code class="docutils literal notranslate"><span class="pre">1</span></code> 
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:default-background">
-<span class="sig-name descname"><span class="pre">default-background</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:default-background" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">default-background</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:default-background" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the ink that is the default background of its argument.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1890,7 +1892,7 @@ is <code class="docutils literal notranslate"><span class="pre">1</span></code> 
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:default-background-setter">
-<span class="sig-name descname"><span class="pre">default-background-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:default-background-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">default-background-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:default-background-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the default background.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1923,7 +1925,7 @@ is <code class="docutils literal notranslate"><span class="pre">1</span></code> 
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:default-foreground">
-<span class="sig-name descname"><span class="pre">default-foreground</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:default-foreground" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">default-foreground</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:default-foreground" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the ink that is the default foreground of its argument.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1955,7 +1957,7 @@ is <code class="docutils literal notranslate"><span class="pre">1</span></code> 
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:default-foreground-setter">
-<span class="sig-name descname"><span class="pre">default-foreground-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:default-foreground-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">default-foreground-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:default-foreground-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the default foreground.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1988,7 +1990,7 @@ is <code class="docutils literal notranslate"><span class="pre">1</span></code> 
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:default-text-style">
-<span class="sig-name descname"><span class="pre">default-text-style</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:default-text-style" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">default-text-style</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:default-text-style" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the default text style for its argument.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2020,7 +2022,7 @@ style is specified.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:default-text-style-setter">
-<span class="sig-name descname"><span class="pre">default-text-style-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:default-text-style-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">default-text-style-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:default-text-style-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the default text style.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2051,7 +2053,7 @@ style is specified.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:[device-font]">
-<span class="sig-name descname"><span class="pre">&lt;device-font&gt;</span></span> <em class="property"><span class="pre">Concrete</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:[device-font]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;device-font&gt;</span></span> <em class="property"><span class="pre">Concrete</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:[device-font]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The protocol class for device-specific fonts.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -2083,7 +2085,7 @@ style is specified.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$diagonal-hatch-down">
-<span class="sig-name descname"><span class="pre">$diagonal-hatch-down</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$diagonal-hatch-down" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$diagonal-hatch-down</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$diagonal-hatch-down" title="Permalink to this definition">¶</a></dt>
 <dd><p>A stipple pattern for use in creating a patterned brush with alternating
 dashes and spaces.</p>
 <dl class="field-list simple">
@@ -2106,7 +2108,7 @@ space, and the second line starting with a space followed by a dash.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$diagonal-hatch-up">
-<span class="sig-name descname"><span class="pre">$diagonal-hatch-up</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$diagonal-hatch-up" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$diagonal-hatch-up</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$diagonal-hatch-up" title="Permalink to this definition">¶</a></dt>
 <dd><p>A stipple pattern for use in creating a patterned brush with alternating
 dashes and spaces.</p>
 <dl class="field-list simple">
@@ -2129,7 +2131,7 @@ dash, and the second line starting with a dash followed by a space.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$dotted-pen">
-<span class="sig-name descname"><span class="pre">$dotted-pen</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$dotted-pen" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$dotted-pen</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$dotted-pen" title="Permalink to this definition">¶</a></dt>
 <dd><p>A pen that draws a dotted line.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -2152,7 +2154,7 @@ dash, and the second line starting with a dash followed by a space.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:find-color">
-<span class="sig-name descname"><span class="pre">find-color</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:find-color" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">find-color</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:find-color" title="Permalink to this definition">¶</a></dt>
 <dd><p>Looks up and returns a color by name.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2327,7 +2329,7 @@ anything special about these particular colors.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$foreground">
-<span class="sig-name descname"><span class="pre">$foreground</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$foreground" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$foreground</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$foreground" title="Permalink to this definition">¶</a></dt>
 <dd><p>An indirect ink that uses the medium’s foreground design.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -2348,7 +2350,7 @@ anything special about these particular colors.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:fully-merged-text-style?">
-<span class="sig-name descname"><span class="pre">fully-merged-text-style?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:fully-merged-text-style?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">fully-merged-text-style?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:fully-merged-text-style?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <code class="docutils literal notranslate"><span class="pre">#t</span></code> if the specified text style is completely specified.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2378,7 +2380,7 @@ anything special about these particular colors.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$green">
-<span class="sig-name descname"><span class="pre">$green</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$green" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$green</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$green" title="Permalink to this definition">¶</a></dt>
 <dd><p>The usual definition of the color green.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -2398,7 +2400,7 @@ anything special about these particular colors.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$hearts-stipple">
-<span class="sig-name descname"><span class="pre">$hearts-stipple</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$hearts-stipple" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$hearts-stipple</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$hearts-stipple" title="Permalink to this definition">¶</a></dt>
 <dd><p>A stipple pattern for use in creating a patterned brush that draws a
 heart shape.</p>
 <dl class="field-list simple">
@@ -2420,7 +2422,7 @@ heart shape.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$horizontal-hatch">
-<span class="sig-name descname"><span class="pre">$horizontal-hatch</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$horizontal-hatch" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$horizontal-hatch</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$horizontal-hatch" title="Permalink to this definition">¶</a></dt>
 <dd><p>A stipple pattern for use in creating a patterned brush with alternating
 horizontal rows of lines and spaces.</p>
 <dl class="field-list simple">
@@ -2442,7 +2444,7 @@ horizontal rows of lines and spaces.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:[image]">
-<span class="sig-name descname"><span class="pre">&lt;image&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:[image]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;image&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:[image]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class for objects that are images.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -2477,7 +2479,7 @@ horizontal rows of lines and spaces.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:image?">
-<span class="sig-name descname"><span class="pre">image?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:image?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">image?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:image?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <code class="docutils literal notranslate"><span class="pre">#t</span></code> if its argument is an image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2510,7 +2512,7 @@ horizontal rows of lines and spaces.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:image-depth">
-<span class="sig-name descname"><span class="pre">image-depth</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:image-depth" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">image-depth</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:image-depth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the depth of an image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2543,7 +2545,7 @@ horizontal rows of lines and spaces.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:image-height">
-<span class="sig-name descname"><span class="pre">image-height</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:image-height" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">image-height</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:image-height" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the height of an image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2576,7 +2578,7 @@ horizontal rows of lines and spaces.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:image-width">
-<span class="sig-name descname"><span class="pre">image-width</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:image-width" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">image-width</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:image-width" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the width of an image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2609,7 +2611,7 @@ horizontal rows of lines and spaces.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:[ink]">
-<span class="sig-name descname"><span class="pre">&lt;ink&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:[ink]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;ink&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:[ink]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of objects that represent a way of arranging colors and
 opacities in the drawing plane.</p>
 <dl class="field-list simple">
@@ -2641,7 +2643,7 @@ brush.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:ink?">
-<span class="sig-name descname"><span class="pre">ink?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:ink?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ink?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:ink?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <code class="docutils literal notranslate"><span class="pre">#t</span></code> if its argument is an ink.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2671,7 +2673,7 @@ brush.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$magenta">
-<span class="sig-name descname"><span class="pre">$magenta</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$magenta" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$magenta</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$magenta" title="Permalink to this definition">¶</a></dt>
 <dd><p>The usual definition of the color magenta.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -2691,7 +2693,7 @@ brush.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:make">
-<span class="sig-name descname"><span class="pre">make</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:make" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:make" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns an object that is of the same type as the class given as its
 argument.</p>
 <dl class="field-list simple">
@@ -2745,7 +2747,7 @@ defaults.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:make-color-for-contrasting-color">
-<span class="sig-name descname"><span class="pre">make-color-for-contrasting-color</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:make-color-for-contrasting-color" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make-color-for-contrasting-color</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:make-color-for-contrasting-color" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a color that is recognizably different from the main color.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2775,7 +2777,7 @@ defaults.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:make-contrasting-colors">
-<span class="sig-name descname"><span class="pre">make-contrasting-colors</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:make-contrasting-colors" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make-contrasting-colors</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:make-contrasting-colors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a vector of colors with recognizably different appearance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2818,7 +2820,7 @@ depending on whether the output medium supports color.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:make-contrasting-dash-patterns">
-<span class="sig-name descname"><span class="pre">make-contrasting-dash-patterns</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:make-contrasting-dash-patterns" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make-contrasting-dash-patterns</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:make-contrasting-dash-patterns" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a vector of dash patterns with recognizably different
 appearances.</p>
 <dl class="field-list simple">
@@ -2858,7 +2860,7 @@ indicating the pattern to use.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:make-device-font">
-<span class="sig-name descname"><span class="pre">make-device-font</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:make-device-font" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make-device-font</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:make-device-font" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a device-specific font.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2892,7 +2894,7 @@ styles and font names for the port’s host window system.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:make-gray-color">
-<span class="sig-name descname"><span class="pre">make-gray-color</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:make-gray-color" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make-gray-color</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:make-gray-color" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a member of class <a class="reference internal" href="#duim-dcs:duim-dcs:[color]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;color&gt;</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2928,7 +2930,7 @@ black, and the values in between are shades of gray.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:make-ihs-color">
-<span class="sig-name descname"><span class="pre">make-ihs-color</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:make-ihs-color" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make-ihs-color</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:make-ihs-color" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a member of the class <a class="reference internal" href="#duim-dcs:duim-dcs:[color]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;color&gt;</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2964,7 +2966,7 @@ number between <em>0</em> and sqrt(<em>3</em>) (inclusive). The <em>hue</em> and
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:make-palette">
-<span class="sig-name descname"><span class="pre">make-palette</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:make-palette" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make-palette</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:make-palette" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a member of the class <a class="reference internal" href="#duim-dcs:duim-dcs:[palette]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;palette&gt;</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2988,7 +2990,7 @@ number between <em>0</em> and sqrt(<em>3</em>) (inclusive). The <em>hue</em> and
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:make-pattern">
-<span class="sig-name descname"><span class="pre">make-pattern</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:make-pattern" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make-pattern</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:make-pattern" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a pattern generated from a two-dimensional array.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3042,7 +3044,7 @@ those designs shows through in each tile.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:make-rgb-color">
-<span class="sig-name descname"><span class="pre">make-rgb-color</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:make-rgb-color" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make-rgb-color</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:make-rgb-color" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a member of class <a class="reference internal" href="#duim-dcs:duim-dcs:[color]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;color&gt;</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3081,7 +3083,7 @@ When all three color components are 0, the resulting color is black.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:make-stencil">
-<span class="sig-name descname"><span class="pre">make-stencil</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:make-stencil" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make-stencil</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:make-stencil" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a pattern design generated from a two-dimensional array.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3110,7 +3112,7 @@ design in cell <em>i,j</em> of the resulting pattern is the value of
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:make-text-style">
-<span class="sig-name descname"><span class="pre">make-text-style</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:make-text-style" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make-text-style</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:make-text-style" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns an instance of <a class="reference internal" href="#duim-dcs:duim-dcs:[text-style]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;text-style&gt;</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3158,7 +3160,7 @@ and size.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:merge-text-styles">
-<span class="sig-name descname"><span class="pre">merge-text-styles</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:merge-text-styles" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">merge-text-styles</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:merge-text-styles" title="Permalink to this definition">¶</a></dt>
 <dd><p>Merges two text styles and returns a new text style that is the same as
 the first, except that unspecified components in are filled in from the
 second.</p>
@@ -3201,7 +3203,7 @@ of sizes, from smallest to largest, is <code class="docutils literal notranslate
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:[palette]">
-<span class="sig-name descname"><span class="pre">&lt;palette&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:[palette]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;palette&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:[palette]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The protocol class for color palettes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -3232,7 +3234,7 @@ of sizes, from smallest to largest, is <code class="docutils literal notranslate
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:palette?">
-<span class="sig-name descname"><span class="pre">palette?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:palette?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">palette?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:palette?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <code class="docutils literal notranslate"><span class="pre">#t</span></code> if an object is a palette.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3263,7 +3265,7 @@ map that maps 16 bit colors into a, for example, 8 bit display.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:[palette-full]">
-<span class="sig-name descname"><span class="pre">&lt;palette-full&gt;</span></span> <em class="property"><span class="pre">Concrete</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:[palette-full]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;palette-full&gt;</span></span> <em class="property"><span class="pre">Concrete</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:[palette-full]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class for errors that are signalled when a color palette is full.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -3288,7 +3290,7 @@ map that maps 16 bit colors into a, for example, 8 bit display.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$parquet-stipple">
-<span class="sig-name descname"><span class="pre">$parquet-stipple</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$parquet-stipple" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$parquet-stipple</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$parquet-stipple" title="Permalink to this definition">¶</a></dt>
 <dd><p>A stipple pattern for use in creating a patterned brush that looks like
 a parquet floor.</p>
 <dl class="field-list simple">
@@ -3310,7 +3312,7 @@ a parquet floor.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:[pattern]">
-<span class="sig-name descname"><span class="pre">&lt;pattern&gt;</span></span> <em class="property"><span class="pre">Concrete</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:[pattern]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;pattern&gt;</span></span> <em class="property"><span class="pre">Concrete</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:[pattern]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class for patterns.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -3345,7 +3347,7 @@ design in each rectangular cell of the pattern.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:pattern?">
-<span class="sig-name descname"><span class="pre">pattern?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:pattern?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">pattern?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:pattern?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <code class="docutils literal notranslate"><span class="pre">#t</span></code> if its argument is a pattern.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3375,7 +3377,7 @@ design in each rectangular cell of the pattern.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:[pen]">
-<span class="sig-name descname"><span class="pre">&lt;pen&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:[pen]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;pen&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:[pen]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The protocol class for pens.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -3424,7 +3426,7 @@ design in each rectangular cell of the pattern.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:pen?">
-<span class="sig-name descname"><span class="pre">pen?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:pen?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">pen?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:pen?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <code class="docutils literal notranslate"><span class="pre">#t</span></code> if its argument is a pen.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3459,7 +3461,7 @@ design in each rectangular cell of the pattern.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:pen-cap-shape">
-<span class="sig-name descname"><span class="pre">pen-cap-shape</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:pen-cap-shape" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">pen-cap-shape</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:pen-cap-shape" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the shape of the end of a line or an arc drawn by the pen.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3495,7 +3497,7 @@ design in each rectangular cell of the pattern.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:pen-dashes">
-<span class="sig-name descname"><span class="pre">pen-dashes</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:pen-dashes" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">pen-dashes</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:pen-dashes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <code class="docutils literal notranslate"><span class="pre">#t</span></code> if the lines drawn by a pen are dashed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3534,7 +3536,7 @@ the gaps between dashes.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:pen-joint-shape">
-<span class="sig-name descname"><span class="pre">pen-joint-shape</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:pen-joint-shape" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">pen-joint-shape</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:pen-joint-shape" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the shape of the joints between line segments of a closed,
 unfilled figure.</p>
 <dl class="field-list simple">
@@ -3568,7 +3570,7 @@ unfilled figure drawn by <em>pen</em>.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:pen-units">
-<span class="sig-name descname"><span class="pre">pen-units</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:pen-units" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">pen-units</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:pen-units" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the units in which the pen width is specified.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3606,7 +3608,7 @@ comfortably visible thin line.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:pen-width">
-<span class="sig-name descname"><span class="pre">pen-width</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:pen-width" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">pen-width</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:pen-width" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the pen-width, that is how wide a stroke the pen draws, of its
 argument.</p>
 <dl class="field-list simple">
@@ -3644,7 +3646,7 @@ argument.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:read-image">
-<span class="sig-name descname"><span class="pre">read-image</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:read-image" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">read-image</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:read-image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads an image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3676,7 +3678,7 @@ argument.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:read-image-as">
-<span class="sig-name descname"><span class="pre">read-image-as</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:read-image-as" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">read-image-as</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:read-image-as" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads an image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3712,7 +3714,7 @@ of.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$red">
-<span class="sig-name descname"><span class="pre">$red</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$red" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$red</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$red" title="Permalink to this definition">¶</a></dt>
 <dd><p>The usual definition of the color red.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -3732,7 +3734,7 @@ of.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:remove-colors">
-<span class="sig-name descname"><span class="pre">remove-colors</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:remove-colors" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">remove-colors</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:remove-colors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes one or more colors from a palette and returns the updated
 palette.</p>
 <dl class="field-list simple">
@@ -3758,7 +3760,7 @@ palette.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$solid-pen">
-<span class="sig-name descname"><span class="pre">$solid-pen</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$solid-pen" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$solid-pen</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$solid-pen" title="Permalink to this definition">¶</a></dt>
 <dd><p>A pen that draws a solid line.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -3782,7 +3784,7 @@ palette.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:[stencil]">
-<span class="sig-name descname"><span class="pre">&lt;stencil&gt;</span></span> <em class="property"><span class="pre">Concrete</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:[stencil]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;stencil&gt;</span></span> <em class="property"><span class="pre">Concrete</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:[stencil]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class for stencils.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -3824,7 +3826,7 @@ contains only opacities.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:stencil?">
-<span class="sig-name descname"><span class="pre">stencil?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:stencil?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">stencil?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:stencil?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <code class="docutils literal notranslate"><span class="pre">#t</span></code> if its argument is a stencil.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3855,7 +3857,7 @@ contains only opacities.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:[text-style]">
-<span class="sig-name descname"><span class="pre">&lt;text-style&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:[text-style]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;text-style&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:[text-style]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The protocol class for text styles.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -3931,7 +3933,7 @@ in printer’s points.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:text-style?">
-<span class="sig-name descname"><span class="pre">text-style?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:text-style?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">text-style?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:text-style?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <code class="docutils literal notranslate"><span class="pre">#t</span></code> if its argument is a text-style.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3968,7 +3970,7 @@ in printer’s points.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:text-style-components">
-<span class="sig-name descname"><span class="pre">text-style-components</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:text-style-components" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">text-style-components</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:text-style-components" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the components of a text style as the values family, face,
 slant, size, underline and strikeout.</p>
 <dl class="field-list simple">
@@ -4012,7 +4014,7 @@ family, face, slant, size, underline and strikeout.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:text-style-family">
-<span class="sig-name descname"><span class="pre">text-style-family</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:text-style-family" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">text-style-family</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:text-style-family" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the family component of the specified text style.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4049,7 +4051,7 @@ family, face, slant, size, underline and strikeout.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:text-style-size">
-<span class="sig-name descname"><span class="pre">text-style-size</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:text-style-size" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">text-style-size</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:text-style-size" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the style component of the specified text style.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4086,7 +4088,7 @@ family, face, slant, size, underline and strikeout.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:text-style-slant">
-<span class="sig-name descname"><span class="pre">text-style-slant</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:text-style-slant" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">text-style-slant</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:text-style-slant" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the slant component of the specified text style.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4123,7 +4125,7 @@ family, face, slant, size, underline and strikeout.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:text-style-strikeout?">
-<span class="sig-name descname"><span class="pre">text-style-strikeout?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:text-style-strikeout?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">text-style-strikeout?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:text-style-strikeout?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <code class="docutils literal notranslate"><span class="pre">#t</span></code> if the text style includes a line through it, striking it
 out.</p>
 <dl class="field-list simple">
@@ -4162,7 +4164,7 @@ out.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:text-style-underline?">
-<span class="sig-name descname"><span class="pre">text-style-underline?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:text-style-underline?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">text-style-underline?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:text-style-underline?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <code class="docutils literal notranslate"><span class="pre">#t</span></code> if the text style is underlined.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4199,7 +4201,7 @@ out.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:text-style-weight">
-<span class="sig-name descname"><span class="pre">text-style-weight</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:text-style-weight" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">text-style-weight</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:text-style-weight" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the weight component of the specified text style.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4236,7 +4238,7 @@ out.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$tiles-stipple">
-<span class="sig-name descname"><span class="pre">$tiles-stipple</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$tiles-stipple" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$tiles-stipple</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$tiles-stipple" title="Permalink to this definition">¶</a></dt>
 <dd><p>A stipple pattern for use in creating a patterned brush with lines and
 spaces suggesting tiles</p>
 <dl class="field-list simple">
@@ -4258,7 +4260,7 @@ spaces suggesting tiles</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$vertical-hatch">
-<span class="sig-name descname"><span class="pre">$vertical-hatch</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$vertical-hatch" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$vertical-hatch</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$vertical-hatch" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>A stipple pattern for use in creating a patterned brush with alternating
 vertical columns of lines and spaces.</p>
@@ -4282,7 +4284,7 @@ vertical columns of lines and spaces.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$white">
-<span class="sig-name descname"><span class="pre">$white</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$white" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$white</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$white" title="Permalink to this definition">¶</a></dt>
 <dd><p>The usual definition of white.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -4303,7 +4305,7 @@ vertical columns of lines and spaces.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:write-image">
-<span class="sig-name descname"><span class="pre">write-image</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:write-image" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">write-image</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:write-image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Writes out a copy of an image to disk (or other designated medium).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4323,7 +4325,7 @@ vertical columns of lines and spaces.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$xor-brush">
-<span class="sig-name descname"><span class="pre">$xor-brush</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$xor-brush" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$xor-brush</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$xor-brush" title="Permalink to this definition">¶</a></dt>
 <dd><p>A standard brush with the drawing property of <em>$boole-xor</em>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -4337,7 +4339,7 @@ vertical columns of lines and spaces.</p>
 
 <dl class="dylan constant">
 <dt class="sig sig-object dylan-api dylan" id="duim-dcs:duim-dcs:$yellow">
-<span class="sig-name descname"><span class="pre">$yellow</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$yellow" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">$yellow</span></span> <em class="property"><span class="pre">Constant</span></em><a class="headerlink" href="#duim-dcs:duim-dcs:$yellow" title="Permalink to this definition">¶</a></dt>
 <dd><p>The usual definition of the color yellow.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -4435,6 +4437,6 @@ vertical columns of lines and spaces.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

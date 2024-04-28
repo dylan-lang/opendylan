@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" /><link rel="next" title="The Runtime" href="../../runtime/index.html" /><link rel="prev" title="Compiler Design (Old)" href="design.html" />
 
-    <link rel="shortcut icon" href="../../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Compiler Internals (Old) - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,11 +463,11 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="compiler-internals-old">
-<h1>Compiler Internals (Old)<a class="headerlink" href="#compiler-internals-old" title="Permalink to this heading">#</a></h1>
+<h1>Compiler Internals (Old)<a class="headerlink" href="#compiler-internals-old" title="Permalink to this heading">¶</a></h1>
 <section id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>This chapter is an overview of the libraries involved during
 compilation, information was gathered while hacking on the compiler.
 It focuses only on DFMC, the Dylan Flow Machine Compiler, located in
@@ -544,7 +546,7 @@ which prints <code class="docutils literal notranslate"><span class="pre">Hello<
 </div>
 </section>
 <section id="dfmc-management">
-<h2>dfmc-management<a class="headerlink" href="#dfmc-management" title="Permalink to this heading">#</a></h2>
+<h2>dfmc-management<a class="headerlink" href="#dfmc-management" title="Permalink to this heading">¶</a></h2>
 <p>The library dfmc-management drives the compilation process, prints
 general information about what is happening at the moment (progress,
 warnings) and takes care of some global settings like opening and
@@ -583,7 +585,7 @@ allow lazy recompilation: only recompile if the API has changed of a
 linked library.</p>
 </section>
 <section id="dfmc-reader">
-<h2>dfmc-reader<a class="headerlink" href="#dfmc-reader" title="Permalink to this heading">#</a></h2>
+<h2>dfmc-reader<a class="headerlink" href="#dfmc-reader" title="Permalink to this heading">¶</a></h2>
 <p>This library reads the Dylan source, tokenizes it, annotates source
 locations, and builds a parse tree. The parser is in
 <code class="docutils literal notranslate"><span class="pre">parser.dylgram</span></code>, which uses <code class="docutils literal notranslate"><span class="pre">app/parser-compiler</span></code> to generate
@@ -649,7 +651,7 @@ returns the following parse tree:</p>
 &lt;fragment&gt;, &lt;object&gt;</p>
 </section>
 <section id="dfmc-definitions">
-<h2>dfmc-definitions<a class="headerlink" href="#dfmc-definitions" title="Permalink to this heading">#</a></h2>
+<h2>dfmc-definitions<a class="headerlink" href="#dfmc-definitions" title="Permalink to this heading">¶</a></h2>
 <p>Once the abstract syntax tree is generated (by the reader), it’s time
 to convert this into definitions, which are the names in dylan. There
 are several top-level definitions in dylan, namely: binding, class,
@@ -723,7 +725,7 @@ this is top-level Dylan code without any context. All macros are
 expanded.</p>
 </section>
 <section id="excursion-into-run-time-and-compile-time">
-<h2>Excursion into run-time and compile-time<a class="headerlink" href="#excursion-into-run-time-and-compile-time" title="Permalink to this heading">#</a></h2>
+<h2>Excursion into run-time and compile-time<a class="headerlink" href="#excursion-into-run-time-and-compile-time" title="Permalink to this heading">¶</a></h2>
 <p>Some objects are defined in the compiler, but are injected into the
 Dylan world. How does this happen?</p>
 <p>In the Dylan library you see <code class="docutils literal notranslate"><span class="pre">//</span> <span class="pre">BOOTED:</span></code> comments here and
@@ -764,11 +766,11 @@ will use these new definitions in the next Dylan (dylan-2)
 library. Beware of dragons.</p>
 </section>
 <section id="dfmc-macro-expander">
-<h2>dfmc-macro-expander<a class="headerlink" href="#dfmc-macro-expander" title="Permalink to this heading">#</a></h2>
+<h2>dfmc-macro-expander<a class="headerlink" href="#dfmc-macro-expander" title="Permalink to this heading">¶</a></h2>
 <p>The deep magic happens here.</p>
 </section>
 <section id="dfmc-convert">
-<h2>dfmc-convert<a class="headerlink" href="#dfmc-convert" title="Permalink to this heading">#</a></h2>
+<h2>dfmc-convert<a class="headerlink" href="#dfmc-convert" title="Permalink to this heading">¶</a></h2>
 <p>Converts definition objects to model objects. In order to fulfill
 this task, it looks up bindings to objects from other
 libraries. Also converts the bodies of definitions to a flow
@@ -789,7 +791,7 @@ corresponding compile and run time objects, and are prefixed with
 an ampersand, e.g., <code class="docutils literal notranslate"><span class="pre">&lt;&amp;object&gt;</span></code>.</p>
 </section>
 <section id="dfmc-modeling">
-<h2>dfmc-modeling<a class="headerlink" href="#dfmc-modeling" title="Permalink to this heading">#</a></h2>
+<h2>dfmc-modeling<a class="headerlink" href="#dfmc-modeling" title="Permalink to this heading">¶</a></h2>
 <p>Contains modeling of runtime and compile time objects. Since some
 calls are attempted at compile time rather than at runtime,
 it provides these compile time methods with a mechanism to override
@@ -802,7 +804,7 @@ compile time definitions are available in this library, in order to
 load definitions of dependent libraries.</p>
 </section>
 <section id="dfmc-flow-graph">
-<h2>dfmc-flow-graph<a class="headerlink" href="#dfmc-flow-graph" title="Permalink to this heading">#</a></h2>
+<h2>dfmc-flow-graph<a class="headerlink" href="#dfmc-flow-graph" title="Permalink to this heading">¶</a></h2>
 <p>The flow graph consists of instances of the <code class="docutils literal notranslate"><span class="pre">&lt;computation&gt;</span></code> class,
 like <code class="docutils literal notranslate"><span class="pre">&lt;if&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;loop-call&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;assignment&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;merge&gt;</span></code>. The flow
 graph is in a (pseudo) static single assignment (SSA) form. Every time any
@@ -828,7 +830,7 @@ library.</p>
 <p><code class="docutils literal notranslate"><span class="pre">join-2x1</span></code> etc. are the operations on the flow graph.</p>
 </section>
 <section id="dfmc-typist">
-<h2>dfmc-typist<a class="headerlink" href="#dfmc-typist" title="Permalink to this heading">#</a></h2>
+<h2>dfmc-typist<a class="headerlink" href="#dfmc-typist" title="Permalink to this heading">¶</a></h2>
 <p>This library contains runtime type algebra as well as a type
 inference algorithm.</p>
 <p>Main entry point is <code class="docutils literal notranslate"><span class="pre">type-estimate</span></code>, which calls
@@ -856,7 +858,7 @@ if #f (the temp), optimizer has determined that type check is superfluous</p>
 </div>
 </section>
 <section id="dfmc-optimization">
-<h2>dfmc-optimization<a class="headerlink" href="#dfmc-optimization" title="Permalink to this heading">#</a></h2>
+<h2>dfmc-optimization<a class="headerlink" href="#dfmc-optimization" title="Permalink to this heading">¶</a></h2>
 <p>This library contains several optimizations: dead code removal,
 constant folding, common subexpression elimination, inlining,
 dispatch upgrading and tail call analysis.</p>
@@ -971,6 +973,6 @@ inlining is done. <code class="docutils literal notranslate"><span class="pre">&
 </div><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

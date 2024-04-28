@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="prev" title="Open Dylan 2011.1 Release Notes" href="../release-notes/2011.1.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Dylan Style Guide - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,15 +463,15 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="dylan-style-guide">
-<h1>Dylan Style Guide<a class="headerlink" href="#dylan-style-guide" title="Permalink to this heading">#</a></h1>
+<h1>Dylan Style Guide<a class="headerlink" href="#dylan-style-guide" title="Permalink to this heading">¶</a></h1>
 <p>This document describes a coding style that the Dylan group recommends.
 There are still some areas of disagreement, and there is still room to
 change this style guide. In some places the Dylan book group decided to
 use a different style, which is noted in this guide.</p>
 <section id="controversial-comments">
-<h2>Controversial comments<a class="headerlink" href="#controversial-comments" title="Permalink to this heading">#</a></h2>
+<h2>Controversial comments<a class="headerlink" href="#controversial-comments" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>scott thinks that matching definition names (e.g., <em>end class &lt;bolt&gt;</em>)
 are a bad idea because they are hard to maintain in the face of
@@ -499,7 +501,7 @@ nearby statements, even when they don’t need it.</p></li>
 </ul>
 </section>
 <section id="line-length">
-<h2>Line Length<a class="headerlink" href="#line-length" title="Permalink to this heading">#</a></h2>
+<h2>Line Length<a class="headerlink" href="#line-length" title="Permalink to this heading">¶</a></h2>
 <p>Lines should be kept to a <em>reasonable</em> length. Small monitors are rare
 these days so a strict 80 column rule is no longer necessary, even
 considering side-by-side diffs or split screen editing. However,
@@ -508,7 +510,7 @@ unnatural contortions, because it is often easier to read that
 way. Use your judgement.</p>
 </section>
 <section id="consistency">
-<h2>Consistency<a class="headerlink" href="#consistency" title="Permalink to this heading">#</a></h2>
+<h2>Consistency<a class="headerlink" href="#consistency" title="Permalink to this heading">¶</a></h2>
 <p>Formatting style should be consistent.</p>
 <p>A broader pattern I tend to go for is consistency of indentation within
 a group of forms. If the shape of one or two forms in a group force a
@@ -536,7 +538,7 @@ definitions forming a protocol:</p>
 </div>
 </section>
 <section id="naming">
-<h2>Naming<a class="headerlink" href="#naming" title="Permalink to this heading">#</a></h2>
+<h2>Naming<a class="headerlink" href="#naming" title="Permalink to this heading">¶</a></h2>
 <p>Naming is hard.  There is no single rule that works for everything.
 Here are some rules that should always be followed:</p>
 <ul>
@@ -622,14 +624,14 @@ to change the name if the implementation type changes.</p>
 </ul>
 </section>
 <section id="dot-notation">
-<h2>Dot notation<a class="headerlink" href="#dot-notation" title="Permalink to this heading">#</a></h2>
+<h2>Dot notation<a class="headerlink" href="#dot-notation" title="Permalink to this heading">¶</a></h2>
 <p>Use for stateless property accessors that return a single value.</p>
 <p>I now tend to use dot notation quite widely for any logical “property
 access”, even if computed. That is, <code class="docutils literal notranslate"><span class="pre">foo.size</span></code> is acceptable but the
 imperative <code class="docutils literal notranslate"><span class="pre">foo.initialize</span></code> and <code class="docutils literal notranslate"><span class="pre">foo.close</span></code> aren’t for me.</p>
 </section>
 <section id="symbols-versus-keywords">
-<h2>Symbols versus keywords<a class="headerlink" href="#symbols-versus-keywords" title="Permalink to this heading">#</a></h2>
+<h2>Symbols versus keywords<a class="headerlink" href="#symbols-versus-keywords" title="Permalink to this heading">¶</a></h2>
 <p>Use keywords only for keyword parameters. Do this:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;file-stream&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">direction:</span><span class="w"> </span><span class="ss">#&quot;input&quot;</span><span class="p">);</span>
 </pre></div>
@@ -645,7 +647,7 @@ example in a slot specification or in a parameter list:</p>
 </div>
 </section>
 <section id="end-words">
-<h2>End words<a class="headerlink" href="#end-words" title="Permalink to this heading">#</a></h2>
+<h2>End words<a class="headerlink" href="#end-words" title="Permalink to this heading">¶</a></h2>
 <p>“End words” are the optional one or two words that follow <code class="docutils literal notranslate"><span class="pre">end</span></code> in
 statements. For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="o">...</span> <span class="n">end</span> <span class="k">if</span>
@@ -678,7 +680,7 @@ causes useless hits when searching the code.</p>
 </ul>
 </section>
 <section id="semicolons">
-<h2>Semicolons<a class="headerlink" href="#semicolons" title="Permalink to this heading">#</a></h2>
+<h2>Semicolons<a class="headerlink" href="#semicolons" title="Permalink to this heading">¶</a></h2>
 <p>Last expression can go without semicolon only where the value is used.
 This is actually a useful little practice since if you want to add a
 form to the end of a body whose value is significant you’re forced to
@@ -698,7 +700,7 @@ think a little more.</p>
 </div>
 </section>
 <section id="general-indentation">
-<h2>General indentation<a class="headerlink" href="#general-indentation" title="Permalink to this heading">#</a></h2>
+<h2>General indentation<a class="headerlink" href="#general-indentation" title="Permalink to this heading">¶</a></h2>
 <p>Avoid boxing your code and having big right column:</p>
 <p><strong>No:</strong></p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">yukyukyukyukyukyukyuk</span><span class="w"> </span><span class="p">(</span><span class="n">blahblahblahblahblah</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;foo&gt;</span><span class="p">,</span>
@@ -725,7 +727,7 @@ think a little more.</p>
 </div>
 </section>
 <section id="operators-on-newline">
-<h2>Operators on newline<a class="headerlink" href="#operators-on-newline" title="Permalink to this heading">#</a></h2>
+<h2>Operators on newline<a class="headerlink" href="#operators-on-newline" title="Permalink to this heading">¶</a></h2>
 <p>In long expressions where line breaks are necessary, put operators on
 a new line and indent two spaces:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">supercalifragilisticexpealidocious</span>
@@ -743,7 +745,7 @@ a new line and indent two spaces:</p>
 </pre></div>
 </div>
 <section id="calls">
-<h3>Calls<a class="headerlink" href="#calls" title="Permalink to this heading">#</a></h3>
+<h3>Calls<a class="headerlink" href="#calls" title="Permalink to this heading">¶</a></h3>
 <p>Usually is on same line with arguments single spaced and no space
 between the function and its argument list:</p>
 <p><strong>Yes:</strong></p>
@@ -777,7 +779,7 @@ between the function and its argument list:</p>
 </section>
 </section>
 <section id="if-then-else">
-<h2>if then else<a class="headerlink" href="#if-then-else" title="Permalink to this heading">#</a></h2>
+<h2>if then else<a class="headerlink" href="#if-then-else" title="Permalink to this heading">¶</a></h2>
 <p>General case:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
 <span class="w">  </span><span class="k">then</span><span class="w"> </span><span class="n">statements</span><span class="w"> </span><span class="p">...</span>
@@ -792,7 +794,7 @@ between the function and its argument list:</p>
 </div>
 </section>
 <section id="let">
-<h2>let<a class="headerlink" href="#let" title="Permalink to this heading">#</a></h2>
+<h2>let<a class="headerlink" href="#let" title="Permalink to this heading">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">let</span></code> statements should generally have the smallest scope necessary.
 They do not increase the indentation level:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xxxxx</span><span class="p">;</span>
@@ -804,7 +806,7 @@ They do not increase the indentation level:</p>
 </div>
 </section>
 <section id="select-and-case">
-<h2>select and case<a class="headerlink" href="#select-and-case" title="Permalink to this heading">#</a></h2>
+<h2>select and case<a class="headerlink" href="#select-and-case" title="Permalink to this heading">¶</a></h2>
 <p>The aligned <code class="docutils literal notranslate"><span class="pre">=&gt;</span></code>’s help make the cases stand out:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">case</span>
 <span class="w">  </span><span class="n">count</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">test</span><span class="p">(</span><span class="n">item</span><span class="p">,</span><span class="w"> </span><span class="n">target</span><span class="p">)</span>
@@ -832,7 +834,7 @@ They do not increase the indentation level:</p>
 </div>
 </section>
 <section id="macros">
-<h2>Macros<a class="headerlink" href="#macros" title="Permalink to this heading">#</a></h2>
+<h2>Macros<a class="headerlink" href="#macros" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">macro</span><span class="w"> </span><span class="n">collecting</span>
 <span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="n">collecting</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="nt">?body</span><span class="w"> </span><span class="k">end</span><span class="w"> </span><span class="p">}</span>
 <span class="w">    </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">collecting</span><span class="w"> </span><span class="p">(</span><span class="n">_collector</span><span class="p">)</span>
@@ -857,7 +859,7 @@ They do not increase the indentation level:</p>
 </div>
 </section>
 <section id="for-loop">
-<h2>for loop<a class="headerlink" href="#for-loop" title="Permalink to this heading">#</a></h2>
+<h2>for loop<a class="headerlink" href="#for-loop" title="Permalink to this heading">¶</a></h2>
 <p>Put each iteration clause on a line by itself:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">elementincollectionnumberone</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">collection1</span><span class="p">,</span>
 <span class="w">     </span><span class="n">elementincollectionnumbertwo</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">collection2</span><span class="p">)</span>
@@ -873,7 +875,7 @@ They do not increase the indentation level:</p>
 </div>
 </section>
 <section id="local-methods">
-<h2>Local methods<a class="headerlink" href="#local-methods" title="Permalink to this heading">#</a></h2>
+<h2>Local methods<a class="headerlink" href="#local-methods" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">method</span><span class="w"> </span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 <span class="w">  </span><span class="k">local</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">strip</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="w">          </span><span class="p">...</span>
@@ -917,7 +919,7 @@ They do not increase the indentation level:</p>
 </div>
 </section>
 <section id="parameter-lists">
-<h2>Parameter lists<a class="headerlink" href="#parameter-lists" title="Permalink to this heading">#</a></h2>
+<h2>Parameter lists<a class="headerlink" href="#parameter-lists" title="Permalink to this heading">¶</a></h2>
 <p>Right after function name:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="nb">vector</span><span class="w"> </span><span class="p">(</span><span class="k">#rest</span><span class="w"> </span><span class="n">rest</span><span class="p">)</span>
 <span class="w">  </span><span class="n">rest</span>
@@ -943,7 +945,7 @@ operators continued across lines, indent #key names as follows:</p>
 </div>
 </section>
 <section id="return-values">
-<h2>Return values<a class="headerlink" href="#return-values" title="Permalink to this heading">#</a></h2>
+<h2>Return values<a class="headerlink" href="#return-values" title="Permalink to this heading">¶</a></h2>
 <p>No semicolon.</p>
 <p>Parenthesis notation.</p>
 <p>If both parameter list and return values fit on the first line:</p>
@@ -1013,7 +1015,7 @@ exactly to the return value name</p>
 </div>
 </section>
 <section id="method-constants">
-<h2>Method constants<a class="headerlink" href="#method-constants" title="Permalink to this heading">#</a></h2>
+<h2>Method constants<a class="headerlink" href="#method-constants" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">constant</span><span class="w"> </span><span class="nb">curry</span>
 <span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="p">(...)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(...)</span>
 <span class="w">      </span><span class="p">...</span>
@@ -1022,7 +1024,7 @@ exactly to the return value name</p>
 </div>
 </section>
 <section id="generic-function-definitions">
-<h2>Generic function definitions<a class="headerlink" href="#generic-function-definitions" title="Permalink to this heading">#</a></h2>
+<h2>Generic function definitions<a class="headerlink" href="#generic-function-definitions" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">open</span><span class="w"> </span><span class="nb">generic</span><span class="w"> </span><span class="nb">choose</span>
 <span class="w">    </span><span class="p">(</span><span class="n">pred</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;function&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">seq</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;sequence&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">elts</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;sequence&gt;</span><span class="p">);</span>
 
@@ -1033,7 +1035,7 @@ exactly to the return value name</p>
 </div>
 </section>
 <section id="class-definitions">
-<h2>Class definitions<a class="headerlink" href="#class-definitions" title="Permalink to this heading">#</a></h2>
+<h2>Class definitions<a class="headerlink" href="#class-definitions" title="Permalink to this heading">¶</a></h2>
 <p>Lots of direct superclasses:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">class</span><span class="w"> </span><span class="nc">&lt;z&gt;</span>
 <span class="w">    </span><span class="p">(</span><span class="nc">&lt;a&gt;</span><span class="p">,</span><span class="w"> </span><span class="nc">&lt;b&gt;</span><span class="p">,</span><span class="w"> </span><span class="nc">&lt;c&gt;</span><span class="p">)</span>
@@ -1139,6 +1141,6 @@ exactly to the return value name</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

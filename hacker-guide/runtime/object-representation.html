@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Calling Convention" href="calling-convention.html" /><link rel="prev" title="The Runtime" href="index.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Object Representation - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="object-representation">
-<h1>Object Representation<a class="headerlink" href="#object-representation" title="Permalink to this heading">#</a></h1>
+<h1>Object Representation<a class="headerlink" href="#object-representation" title="Permalink to this heading">¶</a></h1>
 <p>Harlequin’s implementation achieves dynamic typing of Dylan objects by
 associating the type with an object based on tagging.</p>
 <p>In many circumstances, the Dylan compiler can statically determine the
@@ -476,7 +478,7 @@ reference to the Dylan class object <a class="reference external" href="https://
 choose to represent the value as a direct bit pattern, wherever this
 does not violate the semantics of the program.</p>
 <section id="tagging-scheme">
-<h2>Tagging Scheme<a class="headerlink" href="#tagging-scheme" title="Permalink to this heading">#</a></h2>
+<h2>Tagging Scheme<a class="headerlink" href="#tagging-scheme" title="Permalink to this heading">¶</a></h2>
 <p>All Dylan values are represented as data of the same size, the size of a
 pointer. The bit pattern of these values contains tag bits which
 indicate whether the value is actually a pointer, or whether it is a
@@ -508,7 +510,7 @@ bits.</p>
 </div>
 </section>
 <section id="integers-and-characters">
-<h2>Integers and Characters<a class="headerlink" href="#integers-and-characters" title="Permalink to this heading">#</a></h2>
+<h2>Integers and Characters<a class="headerlink" href="#integers-and-characters" title="Permalink to this heading">¶</a></h2>
 <p>Integers and characters are represented as direct values, using the tag
 bits as the only indication of type. The tagging scheme uses the least
 significant two bits. With this scheme, a character or integer is
@@ -522,7 +524,7 @@ directly on the tagged values. It is planned to improve this mechanism
 at a later date, along with a revision of the tagging scheme.</p>
 </section>
 <section id="boxed-objects">
-<h2>Boxed Objects<a class="headerlink" href="#boxed-objects" title="Permalink to this heading">#</a></h2>
+<h2>Boxed Objects<a class="headerlink" href="#boxed-objects" title="Permalink to this heading">¶</a></h2>
 <p>Apart from integers and characters, all Dylan objects are indirectly
 represented as <em>boxed</em> values (that is, they are pointers to heap
 allocated boxes). The runtime system is responsible for ensuring that
@@ -538,7 +540,7 @@ about which slots should be traced.</p>
 </figure>
 </section>
 <section id="id1">
-<h2>Boxed Objects<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<h2>Boxed Objects<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
 <p>Note that two indirections are necessary to find the class of an object.
 In practice, this is a rare operation, because almost all dynamic class
 testing within Dylan is implicit, and the implementation can use the
@@ -550,7 +552,7 @@ closures, virtually all wrappers, and most class objects, as well as
 strings, symbols, and literal vectors and lists.</p>
 </section>
 <section id="variably-sized-objects">
-<h2>Variably Sized Objects<a class="headerlink" href="#variably-sized-objects" title="Permalink to this heading">#</a></h2>
+<h2>Variably Sized Objects<a class="headerlink" href="#variably-sized-objects" title="Permalink to this heading">¶</a></h2>
 <p>Variably sized objects, such as strings, vectors and arrays, are boxed
 objects which contain a <em>repeated slot</em>. The repeated slot is
 implemented as a variably sized data area preceded by a normal slot
@@ -563,12 +565,12 @@ trace the repeated data. For example, an instance of the <a class="reference ext
 <figure class="align-center" id="id2">
 <img alt="../../_images/runtime-3.png" src="../../_images/runtime-3.png" />
 <figcaption>
-<p><span class="caption-text">An Instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a></span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">An Instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a></span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
 <section id="function-objects">
-<h2>Function Objects<a class="headerlink" href="#function-objects" title="Permalink to this heading">#</a></h2>
+<h2>Function Objects<a class="headerlink" href="#function-objects" title="Permalink to this heading">¶</a></h2>
 <p>Dylan provides two built-in classes of functions: <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#generic-function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;generic-function&gt;</span></code></a>
 and <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#method"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;method&gt;</span></code></a>. These both obey the same general purpose calling
 convention, but also support specialized calling conventions (described
@@ -674,6 +676,6 @@ environments.</p>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

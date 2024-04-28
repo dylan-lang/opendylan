@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Methods &amp; Generic Functions" href="methods-generic-functions.html" /><link rel="prev" title="Why Dylan?" href="why-dylan.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Expressions &amp; Variables - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="expressions-variables">
-<h1>Expressions &amp; Variables<a class="headerlink" href="#expressions-variables" title="Permalink to this heading">#</a></h1>
+<h1>Expressions &amp; Variables<a class="headerlink" href="#expressions-variables" title="Permalink to this heading">¶</a></h1>
 <p>Dylan identifiers may contain a greater variety of characters
 than those of C++ or Java. Specifically, variable names may contain all
 alphanumeric characters, plus the symbols <code class="docutils literal notranslate"><span class="pre">!</span> <span class="pre">&amp;</span> <span class="pre">*</span> <span class="pre">&lt;</span> <span class="pre">=</span> <span class="pre">&gt;</span>
@@ -481,7 +483,7 @@ functions. In C++, <code class="docutils literal notranslate"><span class="pre">
 both languages, programmers can use this flexibility to define
 operators for custom numeric classes.</p>
 <section id="naming-conventions">
-<h2>Naming Conventions<a class="headerlink" href="#naming-conventions" title="Permalink to this heading">#</a></h2>
+<h2>Naming Conventions<a class="headerlink" href="#naming-conventions" title="Permalink to this heading">¶</a></h2>
 <p>Dylan uses the extra characters permitted in variable names to
 support a number of standard naming conventions, as shown in this table:</p>
 <div class="table-wrapper docutils container">
@@ -511,14 +513,14 @@ returns either true or false)</p></td>
 </div>
 </section>
 <section id="true-and-false">
-<h2>True and False<a class="headerlink" href="#true-and-false" title="Permalink to this heading">#</a></h2>
+<h2>True and False<a class="headerlink" href="#true-and-false" title="Permalink to this heading">¶</a></h2>
 <p>Dylan represents true as <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a> and false as <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>. When evaluated in
 a Boolean context, all values other than <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> are considered
 true. Thus, the number zero – and other common “false” values –
 evaluate as true in Dylan.</p>
 </section>
 <section id="the-nature-of-variables">
-<h2>The Nature of Variables<a class="headerlink" href="#the-nature-of-variables" title="Permalink to this heading">#</a></h2>
+<h2>The Nature of Variables<a class="headerlink" href="#the-nature-of-variables" title="Permalink to this heading">¶</a></h2>
 <p>Dylan variables differ from those found in C and Pascal. Instead
 of <em>holding</em> their values, Dylan variables
 <em>refer</em> to them. Conceptually, they resemble a
@@ -557,7 +559,7 @@ and implementation efficiency, every variable must refer to some
 well-defined object.</p>
 </section>
 <section id="assignment-equality-and-identity">
-<h2>Assignment, Equality and Identity<a class="headerlink" href="#assignment-equality-and-identity" title="Permalink to this heading">#</a></h2>
+<h2>Assignment, Equality and Identity<a class="headerlink" href="#assignment-equality-and-identity" title="Permalink to this heading">¶</a></h2>
 <p>Dylan uses all three of the “equals” operators
 found in C and Pascal, albeit in a different fashion. The
 assignment operator, <a class="reference external" href="https://opendylan.org/books/drm/Function_Macros#assignment"><code class="xref drm docutils literal notranslate"><span class="pre">:=</span></code></a>, rebinds Dylan variable
@@ -608,7 +610,7 @@ instances of strings are stored separately, and two equal strings are
 not necessarily the same string.</p>
 </section>
 <section id="parallel-values">
-<h2>Parallel Values<a class="headerlink" href="#parallel-values" title="Permalink to this heading">#</a></h2>
+<h2>Parallel Values<a class="headerlink" href="#parallel-values" title="Permalink to this heading">¶</a></h2>
 <p>It’s possible to bind more than one variable at a time in Dylan.
 For example, a single <a class="reference external" href="https://opendylan.org/books/drm/Local_Declaration_Macros#let"><code class="xref drm docutils literal notranslate"><span class="pre">let</span></code></a> statement could bind
 <code class="docutils literal notranslate"><span class="pre">x</span></code> to 2, <code class="docutils literal notranslate"><span class="pre">y</span></code> to 3 and <code class="docutils literal notranslate"><span class="pre">z</span></code> to 4.</p>
@@ -621,7 +623,7 @@ are used. All three values are assigned directly, using some
 implementation-dependent mechanism.</p>
 </section>
 <section id="type-declarations">
-<span id="id1"></span><h2>Type Declarations<a class="headerlink" href="#type-declarations" title="Permalink to this heading">#</a></h2>
+<span id="id1"></span><h2>Type Declarations<a class="headerlink" href="#type-declarations" title="Permalink to this heading">¶</a></h2>
 <p>Dylan variables may have explicit types. This allows the
 compiler to generate better code and to catch type-mismatch errors at
 compile time. To take advantage of this feature, use the <code class="docutils literal notranslate"><span class="pre">::</span></code> operator:</p>
@@ -640,7 +642,7 @@ integer, for example, the compiler can rely on this fact to optimize
 the resulting code.</p>
 </section>
 <section id="module-variables-and-constants">
-<h2>Module Variables and Constants<a class="headerlink" href="#module-variables-and-constants" title="Permalink to this heading">#</a></h2>
+<h2>Module Variables and Constants<a class="headerlink" href="#module-variables-and-constants" title="Permalink to this heading">¶</a></h2>
 <p>Dylan supports module-level variables, which serve roughly the same purpose as
 C’s global variables. The forms <a class="reference external" href="https://opendylan.org/books/drm/Definition_Macros#define_variable"><code class="xref drm docutils literal notranslate"><span class="pre">define</span> <span class="pre">variable</span></code></a> and <a class="reference external" href="https://opendylan.org/books/drm/Definition_Macros#define_constant"><code class="xref drm docutils literal notranslate"><span class="pre">define</span>
 <span class="pre">constant</span></code></a>
@@ -733,6 +735,6 @@ information out on its own.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

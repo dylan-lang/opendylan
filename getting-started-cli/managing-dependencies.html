@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="A Few More Quick Tips" href="quick-tips.html" /><link rel="prev" title="Using Source Registries" href="source-registries.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Managing Dependencies - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="managing-dependencies">
-<h1>Managing Dependencies<a class="headerlink" href="#managing-dependencies" title="Permalink to this heading">#</a></h1>
+<h1>Managing Dependencies<a class="headerlink" href="#managing-dependencies" title="Permalink to this heading">¶</a></h1>
 <p>We recommend managing inter-library dependencies by use of the Dylan package
 manager and the <strong class="program">dylan</strong> tool. When using the <strong class="program">dylan</strong> tool
 dependencies are added to the “dylan-package.json” file in your project. Each
@@ -474,7 +476,7 @@ for details.</p>
 <p>The second way to manage dependencies is to use Git submodules. The remainder
 of this document explains how to do that.</p>
 <section id="adding-a-git-submodule">
-<h2>Adding a Git Submodule<a class="headerlink" href="#adding-a-git-submodule" title="Permalink to this heading">#</a></h2>
+<h2>Adding a Git Submodule<a class="headerlink" href="#adding-a-git-submodule" title="Permalink to this heading">¶</a></h2>
 <p>Git submodules allow you to specify a precise version that you rely upon, but
 they assume that everyone is using Git.</p>
 <p>We tend to keep all Git submodules in a top level directory
@@ -492,7 +494,7 @@ it is recommended to use either the git or https protocols
 </div>
 </section>
 <section id="updating-a-git-submodule">
-<h2>Updating a Git Submodule<a class="headerlink" href="#updating-a-git-submodule" title="Permalink to this heading">#</a></h2>
+<h2>Updating a Git Submodule<a class="headerlink" href="#updating-a-git-submodule" title="Permalink to this heading">¶</a></h2>
 <p>If the submodule has been updated to point at a new revision, after
 you do a <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code>, update your submodules with:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">submodule</span> <span class="n">update</span> <span class="o">--</span><span class="n">init</span> <span class="o">--</span><span class="n">recursive</span>
@@ -508,7 +510,7 @@ you do a <code class="docutils literal notranslate"><span class="pre">git</span>
 </div>
 </section>
 <section id="setting-up-registry-entries">
-<h2>Setting Up Registry Entries<a class="headerlink" href="#setting-up-registry-entries" title="Permalink to this heading">#</a></h2>
+<h2>Setting Up Registry Entries<a class="headerlink" href="#setting-up-registry-entries" title="Permalink to this heading">¶</a></h2>
 <p>For each library that you add as a submodule, create a registry entry so that
 the Open Dylan compiler can find the library.  See <a class="reference internal" href="source-registries.html"><span class="doc">Using Source Registries</span></a> for
 more detail.</p>
@@ -522,7 +524,7 @@ needed by looking into the registry directory of the library
 that you’re using.</p>
 </section>
 <section id="transitive-dependencies">
-<h2>Transitive Dependencies<a class="headerlink" href="#transitive-dependencies" title="Permalink to this heading">#</a></h2>
+<h2>Transitive Dependencies<a class="headerlink" href="#transitive-dependencies" title="Permalink to this heading">¶</a></h2>
 <p>The Dylan compiler won’t find transitive dependencies automatically (unless you
 are using <a class="reference external" href="https://opendylan.org/package/dylan-tool/index.html">dylan-tool</a>), so you will need to create registry entries for them
 as well.</p>
@@ -610,6 +612,6 @@ the <code class="docutils literal notranslate"><span class="pre">ext/http/</span
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

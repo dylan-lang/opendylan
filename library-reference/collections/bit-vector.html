@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="The collectors Module" href="collectors.html" /><link rel="prev" title="The bit-set Module" href="bit-set.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>The bit-vector Module - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,12 +463,12 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="the-bit-vector-module">
-<h1>The bit-vector Module<a class="headerlink" href="#the-bit-vector-module" title="Permalink to this heading">#</a></h1>
+<h1>The bit-vector Module<a class="headerlink" href="#the-bit-vector-module" title="Permalink to this heading">¶</a></h1>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-vector:[bit-vector]">
-<span class="sig-name descname"><span class="pre">&lt;bit-vector&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Primary</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#collections:bit-vector:[bit-vector]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;bit-vector&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Primary</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#collections:bit-vector:[bit-vector]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#vector"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;vector&gt;</span></code></a></p>
@@ -487,7 +489,7 @@ elements are indexed from <code class="docutils literal notranslate"><span class
 
 <dl class="dylan type">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-vector:[bit]">
-<span class="sig-name descname"><span class="pre">&lt;bit&gt;</span></span> <em class="property"><span class="pre">Type</span></em><a class="headerlink" href="#collections:bit-vector:[bit]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;bit&gt;</span></span> <em class="property"><span class="pre">Type</span></em><a class="headerlink" href="#collections:bit-vector:[bit]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Equivalent<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">limited(&lt;integer&gt;,</span> <span class="pre">min:</span> <span class="pre">0,</span> <span class="pre">max:</span> <span class="pre">1)</span></code></p>
@@ -502,7 +504,7 @@ elements are indexed from <code class="docutils literal notranslate"><span class
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-vector:bit-count">
-<span class="sig-name descname"><span class="pre">bit-count</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-vector:bit-count" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">bit-count</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-vector:bit-count" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bit-count <em>vector</em> #key <em>bit-value</em> =&gt; <em>count</em></p>
@@ -527,7 +529,7 @@ elements are indexed from <code class="docutils literal notranslate"><span class
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-vector:bit-vector-and">
-<span class="sig-name descname"><span class="pre">bit-vector-and</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-vector:bit-vector-and" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">bit-vector-and</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-vector:bit-vector-and" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bit-vector-and <em>vector1</em> <em>vector2</em> #key <em>pad1</em> <em>pad2</em> =&gt; <em>result</em> <em>pad</em></p>
@@ -562,7 +564,7 @@ input pad values.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-vector:bit-vector-and!">
-<span class="sig-name descname"><span class="pre">bit-vector-and!</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-vector:bit-vector-and!" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">bit-vector-and!</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-vector:bit-vector-and!" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bit-vector-and! <em>vector1</em> <em>vector2</em> #key <em>pad1</em> <em>pad2</em> =&gt; <em>result</em> <em>pad</em></p>
@@ -597,7 +599,7 @@ calculated by taking the logical and of the two input pad values.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-vector:bit-vector-andc2">
-<span class="sig-name descname"><span class="pre">bit-vector-andc2</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-vector:bit-vector-andc2" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">bit-vector-andc2</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-vector:bit-vector-andc2" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bit-vector-andc2 <em>vector1</em> <em>vector2</em> #key <em>pad1</em> <em>pad2</em> =&gt; <em>result</em> <em>pad</em></p>
@@ -632,7 +634,7 @@ logical and of <code class="docutils literal notranslate"><span class="pre">pad1
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-vector:bit-vector-andc2!">
-<span class="sig-name descname"><span class="pre">bit-vector-andc2!</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-vector:bit-vector-andc2!" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">bit-vector-andc2!</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-vector:bit-vector-andc2!" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bit-vector-andc2! <em>vector1</em> <em>vector2</em> #key <em>pad1</em> <em>pad2</em> =&gt; <em>result</em> <em>pad</em></p>
@@ -668,7 +670,7 @@ by taking the logical and of <code class="docutils literal notranslate"><span cl
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-vector:bit-vector-not">
-<span class="sig-name descname"><span class="pre">bit-vector-not</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-vector:bit-vector-not" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">bit-vector-not</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-vector:bit-vector-not" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bit-vector-not <em>vector</em> #key <em>pad</em> =&gt; <em>result</em> <em>result-pad</em></p>
@@ -693,7 +695,7 @@ by taking the logical and of <code class="docutils literal notranslate"><span cl
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-vector:bit-vector-not!">
-<span class="sig-name descname"><span class="pre">bit-vector-not!</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-vector:bit-vector-not!" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">bit-vector-not!</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-vector:bit-vector-not!" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bit-vector-not! <em>vector</em> #key <em>pad</em> =&gt; <em>result</em> <em>result-pad</em></p>
@@ -719,7 +721,7 @@ contents. <code class="docutils literal notranslate"><span class="pre">result</s
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-vector:bit-vector-or">
-<span class="sig-name descname"><span class="pre">bit-vector-or</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-vector:bit-vector-or" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">bit-vector-or</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-vector:bit-vector-or" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bit-vector-or <em>vector1</em> <em>vector2</em> #key <em>pad1</em> <em>pad2</em> =&gt; <em>result</em> <em>pad</em></p>
@@ -754,7 +756,7 @@ by taking the logical or of the two input pad values.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-vector:bit-vector-or!">
-<span class="sig-name descname"><span class="pre">bit-vector-or!</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-vector:bit-vector-or!" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">bit-vector-or!</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-vector:bit-vector-or!" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bit-vector-or! <em>vector1</em> <em>vector2</em> #key <em>pad1</em> <em>pad2</em> =&gt; <em>result</em> <em>pad</em></p>
@@ -789,7 +791,7 @@ calculated by taking the logical or of the two input pad values.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-vector:bit-vector-xor">
-<span class="sig-name descname"><span class="pre">bit-vector-xor</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-vector:bit-vector-xor" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">bit-vector-xor</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-vector:bit-vector-xor" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bit-vector-xor <em>vector1</em> <em>vector2</em> #key <em>pad1</em> <em>pad2</em> =&gt; <em>result</em> <em>pad</em></p>
@@ -824,7 +826,7 @@ logical xor of the two input pad values.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-vector:bit-vector-xor!">
-<span class="sig-name descname"><span class="pre">bit-vector-xor!</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-vector:bit-vector-xor!" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">bit-vector-xor!</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-vector:bit-vector-xor!" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bit-vector-xor! <em>vector1</em> <em>vector2</em> #key <em>pad1</em> <em>pad2</em> =&gt; <em>result</em> <em>pad</em></p>
@@ -912,6 +914,6 @@ logical xor of the two input pad values.</p>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

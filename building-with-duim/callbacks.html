@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Using Command Tables" href="commands.html" /><link rel="prev" title="Adding Menus To The Application" href="menus.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Adding Callbacks to the Application - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="adding-callbacks-to-the-application">
-<span id="index-0"></span><h1>Adding Callbacks to the Application<a class="headerlink" href="#adding-callbacks-to-the-application" title="Permalink to this heading">#</a></h1>
+<span id="index-0"></span><h1>Adding Callbacks to the Application<a class="headerlink" href="#adding-callbacks-to-the-application" title="Permalink to this heading">¶</a></h1>
 <p>At this point, the task list manager still does very little. If you try
 running the code (as described in <a class="reference external" href="improve.html#starting-the-application">Starting the
 application</a>), and interacting with any of the
@@ -502,7 +504,7 @@ the event behavior, or new classes of events (for example, support for
 different input devices or notification of low resources). If you are
 just using gadgets, then you only ever need to use callbacks.</p>
 <section id="defining-the-underlying-data-structures-for-tasks">
-<span id="index-1"></span><h2>Defining the underlying data structures for tasks<a class="headerlink" href="#defining-the-underlying-data-structures-for-tasks" title="Permalink to this heading">#</a></h2>
+<span id="index-1"></span><h2>Defining the underlying data structures for tasks<a class="headerlink" href="#defining-the-underlying-data-structures-for-tasks" title="Permalink to this heading">¶</a></h2>
 <p>Before defining any real callbacks, it is time to consider how you can
 represent task lists, and the information contained in them. This is
 essential, not just for handling tasks within the application, but for
@@ -627,7 +629,7 @@ gadget, and it can be specified using the <code class="docutils literal notransl
 definition. This is described in <a class="reference internal" href="#updating-the-user-interface">Updating the user interface</a>.</p>
 </section>
 <section id="specifying-a-callback-in-the-definition-of-each-gadget">
-<span id="index-2"></span><h2>Specifying a callback in the definition of each gadget<a class="headerlink" href="#specifying-a-callback-in-the-definition-of-each-gadget" title="Permalink to this heading">#</a></h2>
+<span id="index-2"></span><h2>Specifying a callback in the definition of each gadget<a class="headerlink" href="#specifying-a-callback-in-the-definition-of-each-gadget" title="Permalink to this heading">¶</a></h2>
 <p>As you have already seen when using the <code class="docutils literal notranslate"><span class="pre">not-yet-implemented</span></code> callback,
 providing a callback for a gadget is just a matter of specifying another
 keyword-value pair in the definition of the gadget. There are two ways
@@ -721,7 +723,7 @@ callback functions listed above. These other functions and methods are
 called by some of the callbacks themselves.</p>
 </section>
 <section id="defining-the-callbacks">
-<span id="index-3"></span><h2>Defining the callbacks<a class="headerlink" href="#defining-the-callbacks" title="Permalink to this heading">#</a></h2>
+<span id="index-3"></span><h2>Defining the callbacks<a class="headerlink" href="#defining-the-callbacks" title="Permalink to this heading">¶</a></h2>
 <p>This section shows you how to define the callbacks that are necessary in
 the task list manager, as well as any other associated functions and
 methods.</p>
@@ -742,7 +744,7 @@ for all GUI design. Separating GUI code and non-GUI code also lets you
 produce code that is more easily reusable, either in other parts of a
 developing application, or in completely different applications.</p>
 <section id="handling-files-in-the-task-list-manager">
-<span id="index-4"></span><h3>Handling files in the task list manager<a class="headerlink" href="#handling-files-in-the-task-list-manager" title="Permalink to this heading">#</a></h3>
+<span id="index-4"></span><h3>Handling files in the task list manager<a class="headerlink" href="#handling-files-in-the-task-list-manager" title="Permalink to this heading">¶</a></h3>
 <p>To begin with, you will define the functions and methods that let you
 save files to disk and load them back into the task list manager. Once
 you have added these to your code, you will be able to save and reload
@@ -783,7 +785,7 @@ and converts it into an instance of <code class="docutils literal notranslate"><
 methods and functions in turn.</p>
 </section>
 <section id="the-open-file-method">
-<span id="index-6"></span><h3>The open-file method<a class="headerlink" href="#the-open-file-method" title="Permalink to this heading">#</a></h3>
+<span id="index-6"></span><h3>The open-file method<a class="headerlink" href="#the-open-file-method" title="Permalink to this heading">¶</a></h3>
 <p>The code for open-file is shown below. Add this code to <code class="docutils literal notranslate"><span class="pre">frame.dylan</span></code>.</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">open-file</span>
 <span class="w">    </span><span class="p">(</span><span class="n">gadget</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;gadget&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">()</span>
@@ -913,7 +915,7 @@ correctly displayed on the screen. The method <code class="docutils literal notr
 described in <a class="reference internal" href="#updating-the-user-interface">Updating the user interface</a>.</p>
 </section>
 <section id="the-save-file-method">
-<span id="index-7"></span><h3>The save-file method<a class="headerlink" href="#the-save-file-method" title="Permalink to this heading">#</a></h3>
+<span id="index-7"></span><h3>The save-file method<a class="headerlink" href="#the-save-file-method" title="Permalink to this heading">¶</a></h3>
 <p>The code for <code class="docutils literal notranslate"><span class="pre">save-file</span></code> is as follows:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">save-file</span>
 <span class="w">    </span><span class="p">(</span><span class="n">gadget</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;gadget&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">()</span>
@@ -953,7 +955,7 @@ to be saved to disk.</p></li>
 has not previously been saved to disk.</p>
 </section>
 <section id="the-save-as-file-method">
-<span id="index-8"></span><h3>The save-as-file method<a class="headerlink" href="#the-save-as-file-method" title="Permalink to this heading">#</a></h3>
+<span id="index-8"></span><h3>The save-as-file method<a class="headerlink" href="#the-save-as-file-method" title="Permalink to this heading">¶</a></h3>
 <p>The code for <code class="docutils literal notranslate"><span class="pre">save-as-file</span></code> is as follows:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">save-as-file</span>
 <span class="w">    </span><span class="p">(</span><span class="n">gadget</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;gadget&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">#key</span><span class="w"> </span><span class="n">filename</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">()</span>
@@ -1061,7 +1063,7 @@ function</a> and the method <code class="docutils literal notranslate"><span cla
 <a class="reference internal" href="#updating-the-user-interface">Updating the user interface</a>.</p>
 </section>
 <section id="the-load-task-list-function">
-<span id="index-9"></span><h3>The load-task-list function<a class="headerlink" href="#the-load-task-list-function" title="Permalink to this heading">#</a></h3>
+<span id="index-9"></span><h3>The load-task-list function<a class="headerlink" href="#the-load-task-list-function" title="Permalink to this heading">¶</a></h3>
 <p>The code for <code class="docutils literal notranslate"><span class="pre">load-task-list</span></code> is shown below. Because this function does
 not use any DUIM code, it is described only briefly.</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">function</span><span class="w"> </span><span class="n">load-task-list</span>
@@ -1129,7 +1131,7 @@ technique to use when you wish to save and load symbol information in an
 application.</p>
 </section>
 <section id="the-save-task-list-function">
-<span id="index-10"></span><h3>The save-task-list function<a class="headerlink" href="#the-save-task-list-function" title="Permalink to this heading">#</a></h3>
+<span id="index-10"></span><h3>The save-task-list function<a class="headerlink" href="#the-save-task-list-function" title="Permalink to this heading">¶</a></h3>
 <p>The code for <code class="docutils literal notranslate"><span class="pre">save-task-list</span></code> is shown below. Because this function does
 not use any DUIM code, it is described only briefly.</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">function</span><span class="w"> </span><span class="n">save-task-list</span>
@@ -1181,7 +1183,7 @@ file under a different name.</p>
 been successfully saved.</p>
 </section>
 <section id="adding-and-removing-tasks-from-the-task-list">
-<span id="index-11"></span><h3>Adding and removing tasks from the task list<a class="headerlink" href="#adding-and-removing-tasks-from-the-task-list" title="Permalink to this heading">#</a></h3>
+<span id="index-11"></span><h3>Adding and removing tasks from the task list<a class="headerlink" href="#adding-and-removing-tasks-from-the-task-list" title="Permalink to this heading">¶</a></h3>
 <p>This section describes the functions and methods necessary for adding to
 the task list and removing tasks from the task list. A total of two
 methods and two functions are necessary.</p>
@@ -1212,7 +1214,7 @@ underlying data structures.</p>
 definitions of the functions to <code class="docutils literal notranslate"><span class="pre">task-list.dylan</span></code>.</p>
 </section>
 <section id="duim-support-for-adding-and-removing-tasks">
-<span id="index-12"></span><h3>DUIM support for adding and removing tasks<a class="headerlink" href="#duim-support-for-adding-and-removing-tasks" title="Permalink to this heading">#</a></h3>
+<span id="index-12"></span><h3>DUIM support for adding and removing tasks<a class="headerlink" href="#duim-support-for-adding-and-removing-tasks" title="Permalink to this heading">¶</a></h3>
 <p>This section describes the methods necessary to provide support in the
 task list manager GUI for adding and removing tasks.</p>
 <p id="index-13">Add the code described in this section to <code class="docutils literal notranslate"><span class="pre">frame.dylan</span></code>.</p>
@@ -1348,7 +1350,7 @@ described in <a class="reference internal" href="#non-duim-support-for-adding-an
 interface</a>.</p>
 </section>
 <section id="non-duim-support-for-adding-and-removing-tasks">
-<span id="index-14"></span><h3>Non-DUIM support for adding and removing tasks<a class="headerlink" href="#non-duim-support-for-adding-and-removing-tasks" title="Permalink to this heading">#</a></h3>
+<span id="index-14"></span><h3>Non-DUIM support for adding and removing tasks<a class="headerlink" href="#non-duim-support-for-adding-and-removing-tasks" title="Permalink to this heading">¶</a></h3>
 <p>This section describes the functions necessary for adding an instance of
 <code class="docutils literal notranslate"><span class="pre">&lt;task&gt;</span></code> to a <code class="docutils literal notranslate"><span class="pre">&lt;task-list&gt;</span></code>, and removing a <code class="docutils literal notranslate"><span class="pre">&lt;task&gt;</span></code> from a
 <code class="docutils literal notranslate"><span class="pre">&lt;task-list&gt;</span></code>. These functions are called by the callback functions
@@ -1384,7 +1386,7 @@ and returns no values. The function first removes the <code class="docutils lite
 that a change in the <code class="docutils literal notranslate"><span class="pre">&lt;task-list&gt;</span></code> has occurred.</p>
 </section>
 <section id="updating-the-user-interface">
-<span id="index-15"></span><h3>Updating the user interface<a class="headerlink" href="#updating-the-user-interface" title="Permalink to this heading">#</a></h3>
+<span id="index-15"></span><h3>Updating the user interface<a class="headerlink" href="#updating-the-user-interface" title="Permalink to this heading">¶</a></h3>
 <p>This section describes a number of miscellaneous methods that are
 required for smooth operation of the task list manager. Each of the
 methods defined here ensures that the task list manager displays the
@@ -1423,7 +1425,7 @@ method is described in <a class="reference external" href="callbacks.html#refres
 <p>Each of these methods should be added to the file <code class="docutils literal notranslate"><span class="pre">frame.dylan</span></code>.</p>
 </section>
 <section id="initializing-a-new-instance-of-task-frame">
-<h3>Initializing a new instance of &lt;task-frame&gt;<a class="headerlink" href="#initializing-a-new-instance-of-task-frame" title="Permalink to this heading">#</a></h3>
+<h3>Initializing a new instance of &lt;task-frame&gt;<a class="headerlink" href="#initializing-a-new-instance-of-task-frame" title="Permalink to this heading">¶</a></h3>
 <p>The code below provides an <code class="docutils literal notranslate"><span class="pre">initialize</span></code> method for the class
 <code class="docutils literal notranslate"><span class="pre">&lt;task-frame&gt;</span></code>. This simply ensures that the display in a
 <code class="docutils literal notranslate"><span class="pre">&lt;task-frame&gt;</span></code> is refreshed as soon as it is created, and calls any
@@ -1444,7 +1446,7 @@ the task list manager by double-clicking on a file of tasks.</p>
 <p>Add the code for this method to <code class="docutils literal notranslate"><span class="pre">frame.dylan</span></code>.</p>
 </section>
 <section id="determining-and-setting-the-selected-task">
-<h3>Determining and setting the selected task<a class="headerlink" href="#determining-and-setting-the-selected-task" title="Permalink to this heading">#</a></h3>
+<h3>Determining and setting the selected task<a class="headerlink" href="#determining-and-setting-the-selected-task" title="Permalink to this heading">¶</a></h3>
 <p>Two methods are used to determine which task is selected in the task
 list manager, and to set a specific task in the task list manager:
 <code class="docutils literal notranslate"><span class="pre">frame-selected-task</span></code> and <code class="docutils literal notranslate"><span class="pre">frame-selected-task-setter</span></code>.</p>
@@ -1503,7 +1505,7 @@ in <a class="reference internal" href="#duim-support-for-adding-and-removing-tas
 <p>Add the code for these methods to <code class="docutils literal notranslate"><span class="pre">frame.dylan</span></code>.</p>
 </section>
 <section id="enabling-and-disabling-buttons-in-the-interface">
-<h3>Enabling and disabling buttons in the interface<a class="headerlink" href="#enabling-and-disabling-buttons-in-the-interface" title="Permalink to this heading">#</a></h3>
+<h3>Enabling and disabling buttons in the interface<a class="headerlink" href="#enabling-and-disabling-buttons-in-the-interface" title="Permalink to this heading">¶</a></h3>
 <p>The two methods for <code class="docutils literal notranslate"><span class="pre">note-task-selection-change</span></code> make a number of
 changes to the GUI of the task list manager, to ensure that the correct
 information is displayed to the user. In particular, they perform any
@@ -1633,7 +1635,7 @@ List 1 project, change the line that reads:</p>
 <p>Add the code for these methods to <code class="docutils literal notranslate"><span class="pre">frame.dylan</span></code>.</p>
 </section>
 <section id="id1">
-<h3>Refreshing the list of tasks<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<h3>Refreshing the list of tasks<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">refresh-task-frame</span></code> method is called whenever the list of tasks
 needs to be refreshed for whatever reason. This happens most commonly
 after adding or removing a task from the list, or loading in a new task
@@ -1713,7 +1715,7 @@ by calling <code class="docutils literal notranslate"><span class="pre">note-tas
 <p>Add the code for this method to <code class="docutils literal notranslate"><span class="pre">frame.dylan</span></code>.</p>
 </section>
 <section id="creating-an-information-dialog">
-<span id="index-16"></span><h3>Creating an information dialog<a class="headerlink" href="#creating-an-information-dialog" title="Permalink to this heading">#</a></h3>
+<span id="index-16"></span><h3>Creating an information dialog<a class="headerlink" href="#creating-an-information-dialog" title="Permalink to this heading">¶</a></h3>
 <p>The following function displays a simple dialog box that provides
 information about the application. This dialog is displayed when you
 choose the <em>Help &gt; About</em> menu command.</p>
@@ -1724,7 +1726,7 @@ choose the <em>Help &gt; About</em> menu command.</p>
 </div>
 </section>
 <section id="exiting-the-task-list-manager">
-<span id="index-17"></span><h3>Exiting the task list manager<a class="headerlink" href="#exiting-the-task-list-manager" title="Permalink to this heading">#</a></h3>
+<span id="index-17"></span><h3>Exiting the task list manager<a class="headerlink" href="#exiting-the-task-list-manager" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">exit-task</span></code> method allows you to exit the task list manager. It is
 invoked by choosing <em>File &gt; Exit</em>. The definition of this method is
 quite simple.</p>
@@ -1753,7 +1755,7 @@ function is invoked to exit the task list manager window.</p>
 </section>
 </section>
 <section id="enhancing-the-task-list-manager">
-<span id="index-18"></span><h2>Enhancing the task list manager<a class="headerlink" href="#enhancing-the-task-list-manager" title="Permalink to this heading">#</a></h2>
+<span id="index-18"></span><h2>Enhancing the task list manager<a class="headerlink" href="#enhancing-the-task-list-manager" title="Permalink to this heading">¶</a></h2>
 <p>This concludes the tutorial on building application with DUIM. At this
 point, you can build and run a functional task list manager, but it is a
 very basic application. <a class="reference internal" href="commands.html"><span class="doc">Using Command Tables</span></a> introduces command tables as a way of
@@ -1879,6 +1881,6 @@ as your reference source, get coding!</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

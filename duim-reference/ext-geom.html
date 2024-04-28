@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="DUIM-DCs Library" href="dcs.html" /><link rel="prev" title="DUIM-Geometry Library" href="geom.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>DUIM-Extended-Geometry Library - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,11 +463,11 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="duim-extended-geometry-library">
-<h1>DUIM-Extended-Geometry Library<a class="headerlink" href="#duim-extended-geometry-library" title="Permalink to this heading">#</a></h1>
+<h1>DUIM-Extended-Geometry Library<a class="headerlink" href="#duim-extended-geometry-library" title="Permalink to this heading">¶</a></h1>
 <section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
 <p>The DUIM-Extended-Geometry library builds on the features provided by
 the DUIM-Geometry library, and provides more extensive support for
 coordinate geometry that is only required for more specialist
@@ -475,13 +477,13 @@ exposed. See <a class="reference internal" href="#duim-extended-geometry-module"
 complete reference entries for each exposed interface.</p>
 </section>
 <section id="the-class-hierarchy-for-duim-extended-geometry">
-<h2>The class hierarchy for DUIM-Extended-Geometry<a class="headerlink" href="#the-class-hierarchy-for-duim-extended-geometry" title="Permalink to this heading">#</a></h2>
+<h2>The class hierarchy for DUIM-Extended-Geometry<a class="headerlink" href="#the-class-hierarchy-for-duim-extended-geometry" title="Permalink to this heading">¶</a></h2>
 <p>The DUIM-Extended-Geometry library defines no base classes itself, but
 instead subclasses two classes exposed in the DUIM-Geometry library:
 <a class="reference internal" href="geom.html#duim-geometry:duim-geometry:[area]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;area&gt;</span></code></a> and <a class="reference internal" href="geom.html#duim-geometry:duim-geometry:[path]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;path&gt;</span></code></a>. In each case, these subclasses provide more
 specialized geometrical tools.</p>
 <section id="subclasses-of-area">
-<h3>Subclasses of &lt;area&gt;<a class="headerlink" href="#subclasses-of-area" title="Permalink to this heading">#</a></h3>
+<h3>Subclasses of &lt;area&gt;<a class="headerlink" href="#subclasses-of-area" title="Permalink to this heading">¶</a></h3>
 <p>Three subclasses of <a class="reference internal" href="geom.html#duim-geometry:duim-geometry:[area]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;area&gt;</span></code></a> are exposed in the DUIM-Extended-Geometry
 library, each of which provides the ability to create instances of
 particular shapes. Their usage is relatively obvious.</p>
@@ -495,7 +497,7 @@ on a drawable object.</p></li>
 </ul>
 </section>
 <section id="subclass-of-path">
-<h3>Subclass of &lt;path&gt;<a class="headerlink" href="#subclass-of-path" title="Permalink to this heading">#</a></h3>
+<h3>Subclass of &lt;path&gt;<a class="headerlink" href="#subclass-of-path" title="Permalink to this heading">¶</a></h3>
 <p>Three subclasses of <a class="reference internal" href="geom.html#duim-geometry:duim-geometry:[path]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;path&gt;</span></code></a> are exposed in the DUIM-Extended-Geometry
 library, each of which provides the ability to create instances of
 particular types of line. Their usage is relatively obvious.</p>
@@ -511,12 +513,12 @@ at each coordinate.</p></li>
 </section>
 </section>
 <section id="duim-extended-geometry-module">
-<span id="id1"></span><h2>DUIM-Extended-Geometry Module<a class="headerlink" href="#duim-extended-geometry-module" title="Permalink to this heading">#</a></h2>
+<span id="id1"></span><h2>DUIM-Extended-Geometry Module<a class="headerlink" href="#duim-extended-geometry-module" title="Permalink to this heading">¶</a></h2>
 <p>This section contains a complete reference of all the interfaces that
 are exported from the <em>duim-extended-geometry</em> module.</p>
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:do-polygon-coordinates">
-<span class="sig-name descname"><span class="pre">do-polygon-coordinates</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:do-polygon-coordinates" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">do-polygon-coordinates</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:do-polygon-coordinates" title="Permalink to this definition">¶</a></dt>
 <dd><p>Applies a function to all of the coordinates of the vertices of a
 polygon.</p>
 <dl class="field-list simple">
@@ -545,7 +547,7 @@ coordinates of the vertex. <em>do-polygon-coordinates</em> returns <code class="
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:do-polygon-segments">
-<span class="sig-name descname"><span class="pre">do-polygon-segments</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:do-polygon-segments" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">do-polygon-segments</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:do-polygon-segments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Applies a function to the segments that compose a polygon.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -578,7 +580,7 @@ first point.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:draw-design">
-<span class="sig-name descname"><span class="pre">draw-design</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:draw-design" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">draw-design</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:draw-design" title="Permalink to this definition">¶</a></dt>
 <dd><p>Draws a design on a drawing surface.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -598,7 +600,7 @@ first point.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:[ellipse]">
-<span class="sig-name descname"><span class="pre">&lt;ellipse&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:[ellipse]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;ellipse&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:[ellipse]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class that corresponds to an ellipse.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -666,7 +668,7 @@ module.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:ellipse?">
-<span class="sig-name descname"><span class="pre">ellipse?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:ellipse?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ellipse?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:ellipse?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <code class="docutils literal notranslate"><span class="pre">#t</span></code> if an object is an ellipse.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -696,7 +698,7 @@ module.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:ellipse-center-point">
-<span class="sig-name descname"><span class="pre">ellipse-center-point</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:ellipse-center-point" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ellipse-center-point</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:ellipse-center-point" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the center point of an ellipse or an elliptical arc.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -726,7 +728,7 @@ module.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:ellipse-center-position">
-<span class="sig-name descname"><span class="pre">ellipse-center-position</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:ellipse-center-position" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ellipse-center-position</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:ellipse-center-position" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the coordinates of the center point of an ellipse or an
 elliptical arc.</p>
 <dl class="field-list simple">
@@ -761,7 +763,7 @@ center of the elliptical object, respectively.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:ellipse-end-angle">
-<span class="sig-name descname"><span class="pre">ellipse-end-angle</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:ellipse-end-angle" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ellipse-end-angle</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:ellipse-end-angle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the end angle of an ellipse or an elliptical-object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -794,7 +796,7 @@ equal to <em>2p</em>.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:ellipse-radii">
-<span class="sig-name descname"><span class="pre">ellipse-radii</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:ellipse-radii" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ellipse-radii</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:ellipse-radii" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns four values corresponding to the two radius vectors of an
 elliptical arc.</p>
 <dl class="field-list simple">
@@ -830,7 +832,7 @@ so may not be the same as the values passed to the constructor function.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:ellipse-start-angle">
-<span class="sig-name descname"><span class="pre">ellipse-start-angle</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:ellipse-start-angle" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ellipse-start-angle</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:ellipse-start-angle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the start angle of an elliptical arc.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -863,7 +865,7 @@ less than <em>2p</em>.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:[elliptical-arc]">
-<span class="sig-name descname"><span class="pre">&lt;elliptical-arc&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:[elliptical-arc]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;elliptical-arc&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:[elliptical-arc]" title="Permalink to this definition">¶</a></dt>
 <dd><p>An <em>elliptical arc</em> is a path consisting of all or a portion of the
 outline of an ellipse.</p>
 <dl class="field-list simple">
@@ -919,7 +921,7 @@ module.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:elliptical-arc?">
-<span class="sig-name descname"><span class="pre">elliptical-arc?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:elliptical-arc?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">elliptical-arc?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:elliptical-arc?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <code class="docutils literal notranslate"><span class="pre">#t</span></code> if an object is an elliptical arc,</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -949,7 +951,7 @@ module.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:[line]">
-<span class="sig-name descname"><span class="pre">&lt;line&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:[line]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;line&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:[line]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class that corresponds to a line.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1005,7 +1007,7 @@ module.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:line?">
-<span class="sig-name descname"><span class="pre">line?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:line?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">line?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:line?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <code class="docutils literal notranslate"><span class="pre">#t</span></code> if an object is a line.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1029,7 +1031,7 @@ module.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:line-end-point">
-<span class="sig-name descname"><span class="pre">line-end-point</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:line-end-point" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">line-end-point</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:line-end-point" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the ending point of a line.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1059,7 +1061,7 @@ module.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:line-end-position">
-<span class="sig-name descname"><span class="pre">line-end-position</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:line-end-position" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">line-end-position</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:line-end-position" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the ending point of a line.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1094,7 +1096,7 @@ of the line, respectively.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:line-start-point">
-<span class="sig-name descname"><span class="pre">line-start-point</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:line-start-point" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">line-start-point</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:line-start-point" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the starting point of a line.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1124,7 +1126,7 @@ of the line, respectively.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:line-start-position">
-<span class="sig-name descname"><span class="pre">line-start-position</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:line-start-position" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">line-start-position</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:line-start-position" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the starting point of a line.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1159,7 +1161,7 @@ of the line, respectively.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:make-ellipse">
-<span class="sig-name descname"><span class="pre">make-ellipse</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:make-ellipse" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make-ellipse</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:make-ellipse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns an object of class <a class="reference internal" href="#duim-extended-geometry:duim-extended-geometry:[ellipse]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;ellipse&gt;</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1235,7 +1237,7 @@ a loss of performance.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:make-elliptical-arc">
-<span class="sig-name descname"><span class="pre">make-elliptical-arc</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:make-elliptical-arc" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make-elliptical-arc</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:make-elliptical-arc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns an object of class <em>&lt;elliptical-arc&gt;</em>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1310,7 +1312,7 @@ using this function may lead to a loss of performance.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:make-line">
-<span class="sig-name descname"><span class="pre">make-line</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:make-line" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make-line</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:make-line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns an object of class <a class="reference internal" href="#duim-extended-geometry:duim-extended-geometry:[line]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;line&gt;</span></code></a>.t</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1344,7 +1346,7 @@ using this function may lead to a loss of performance.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:make-polygon">
-<span class="sig-name descname"><span class="pre">make-polygon</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:make-polygon" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make-polygon</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:make-polygon" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns an object of class <a class="reference internal" href="#duim-extended-geometry:duim-extended-geometry:[polygon]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;polygon&gt;</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1392,7 +1394,7 @@ a loss of performance.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:make-polyline">
-<span class="sig-name descname"><span class="pre">make-polyline</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:make-polyline" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make-polyline</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:make-polyline" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns an object of class <a class="reference internal" href="#duim-extended-geometry:duim-extended-geometry:[polyline]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;polyline&gt;</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1448,7 +1450,7 @@ a loss of performance.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:make-rectangle">
-<span class="sig-name descname"><span class="pre">make-rectangle</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:make-rectangle" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make-rectangle</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:make-rectangle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns an object of class <a class="reference internal" href="#duim-extended-geometry:duim-extended-geometry:[rectangle]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;rectangle&gt;</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1499,7 +1501,7 @@ function may lead to a loss of performance.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:[polygon]">
-<span class="sig-name descname"><span class="pre">&lt;polygon&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:[polygon]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;polygon&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:[polygon]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class that corresponds to a polygon.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1558,7 +1560,7 @@ module.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:polygon?">
-<span class="sig-name descname"><span class="pre">polygon?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:polygon?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">polygon?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:polygon?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <code class="docutils literal notranslate"><span class="pre">#t</span></code> if its argument is a polygon.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1590,7 +1592,7 @@ module.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:polygon-coordinates">
-<span class="sig-name descname"><span class="pre">polygon-coordinates</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:polygon-coordinates" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">polygon-coordinates</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:polygon-coordinates" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a sequence of coordinate pairs that specify the segments in a
 polygon or a polyline.</p>
 <dl class="field-list simple">
@@ -1624,7 +1626,7 @@ polygon or a polyline.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:polygon-points">
-<span class="sig-name descname"><span class="pre">polygon-points</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:polygon-points" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">polygon-points</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:polygon-points" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a sequence of points that specify the segments in a polygon or a
 polyline.</p>
 <dl class="field-list simple">
@@ -1658,7 +1660,7 @@ polyline.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:[polyline]">
-<span class="sig-name descname"><span class="pre">&lt;polyline&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:[polyline]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;polyline&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:[polyline]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The protocol class that corresponds to a polyline.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1718,7 +1720,7 @@ module.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:polyline?">
-<span class="sig-name descname"><span class="pre">polyline?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:polyline?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">polyline?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:polyline?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <code class="docutils literal notranslate"><span class="pre">#t</span></code> if an object is a polyline.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1749,7 +1751,7 @@ module.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:polyline-closed?">
-<span class="sig-name descname"><span class="pre">polyline-closed?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:polyline-closed?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">polyline-closed?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:polyline-closed?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <code class="docutils literal notranslate"><span class="pre">#t</span></code> if the polyline is closed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1782,7 +1784,7 @@ polygons.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:[rectangle]">
-<span class="sig-name descname"><span class="pre">&lt;rectangle&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:[rectangle]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;rectangle&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:[rectangle]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The protocol class that corresponds to a rectangle.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1854,7 +1856,7 @@ module.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:rectangle?">
-<span class="sig-name descname"><span class="pre">rectangle?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:rectangle?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">rectangle?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:rectangle?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <code class="docutils literal notranslate"><span class="pre">#t</span></code> if the object is a rectangle.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1892,7 +1894,7 @@ module.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:rectangle-edges">
-<span class="sig-name descname"><span class="pre">rectangle-edges</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:rectangle-edges" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">rectangle-edges</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:rectangle-edges" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the coordinates of the minimum and maximum of the rectangle.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1944,7 +1946,7 @@ of the rectangle.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:rectangle-height">
-<span class="sig-name descname"><span class="pre">rectangle-height</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:rectangle-height" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">rectangle-height</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:rectangle-height" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns height of the rectangle.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1983,7 +1985,7 @@ maximum <em>y</em> and its minimum <em>y</em>.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:rectangle-max-point">
-<span class="sig-name descname"><span class="pre">rectangle-max-point</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:rectangle-max-point" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">rectangle-max-point</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:rectangle-max-point" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the bottom right point of the rectangle.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2021,7 +2023,7 @@ maximum <em>y</em> and its minimum <em>y</em>.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:rectangle-max-position">
-<span class="sig-name descname"><span class="pre">rectangle-max-position</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:rectangle-max-position" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">rectangle-max-position</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:rectangle-max-position" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the <em>x</em> and <em>y</em> coordinates of the bottom right of the
 rectangle.</p>
 <dl class="field-list simple">
@@ -2062,7 +2064,7 @@ rectangle.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:rectangle-min-point">
-<span class="sig-name descname"><span class="pre">rectangle-min-point</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:rectangle-min-point" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">rectangle-min-point</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:rectangle-min-point" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the left top point of the rectangle.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2100,7 +2102,7 @@ rectangle.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:rectangle-min-position">
-<span class="sig-name descname"><span class="pre">rectangle-min-position</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:rectangle-min-position" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">rectangle-min-position</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:rectangle-min-position" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the <em>x</em> and <em>y</em> coordinates of the left top of the rectangle.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2139,7 +2141,7 @@ rectangle.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:rectangle-size">
-<span class="sig-name descname"><span class="pre">rectangle-size</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:rectangle-size" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">rectangle-size</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:rectangle-size" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the width and the height of the rectangle.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2178,7 +2180,7 @@ rectangle.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim-extended-geometry:duim-extended-geometry:rectangle-width">
-<span class="sig-name descname"><span class="pre">rectangle-width</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:rectangle-width" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">rectangle-width</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim-extended-geometry:duim-extended-geometry:rectangle-width" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the width of the rectangle.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2295,6 +2297,6 @@ between the maximum <em>x</em> and its minimum <em>x</em>.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

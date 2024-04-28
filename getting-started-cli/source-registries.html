@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Managing Dependencies" href="managing-dependencies.html" /><link rel="prev" title="Hello World" href="hello-world.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Using Source Registries - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="using-source-registries">
-<h1>Using Source Registries<a class="headerlink" href="#using-source-registries" title="Permalink to this heading">#</a></h1>
+<h1>Using Source Registries<a class="headerlink" href="#using-source-registries" title="Permalink to this heading">¶</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>When using the <strong class="program">dylan</strong> tool source registries are created
@@ -510,7 +512,7 @@ the hello-world LID file is in <code class="docutils literal notranslate"><span 
 “registry” directory it automatically uses that registry, in addition to (and
 taking precedence over) the registry in the Open Dylan installation directory.</p>
 <section id="open-dylan-user-registries">
-<h2>OPEN_DYLAN_USER_REGISTRIES<a class="headerlink" href="#open-dylan-user-registries" title="Permalink to this heading">#</a></h2>
+<h2>OPEN_DYLAN_USER_REGISTRIES<a class="headerlink" href="#open-dylan-user-registries" title="Permalink to this heading">¶</a></h2>
 <p>If you prefer to invoke the compiler from outside your workspace or if you want
 to include multiple workspace registries when searching for libraries, you can
 set the <span class="target" id="index-0"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">OPEN_DYLAN_USER_REGISTRIES</span></code> environment variable. For
@@ -532,7 +534,7 @@ separating them with colons (Unix) or semicolons (Windows):</p>
 </div>
 </section>
 <section id="registry-search-order">
-<h2>Registry Search Order<a class="headerlink" href="#registry-search-order" title="Permalink to this heading">#</a></h2>
+<h2>Registry Search Order<a class="headerlink" href="#registry-search-order" title="Permalink to this heading">¶</a></h2>
 <p>For each step in the following list, the directory named for the current
 platform is searched <strong>before</strong> the “generic” directory.</p>
 <ol class="arabic simple">
@@ -636,6 +638,6 @@ $ dylan-compiler
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

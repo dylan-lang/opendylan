@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="The coloring-stream Library" href="../coloring-stream/index.html" /><link rel="prev" title="The set Module" href="set.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>The table-extensions Module - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="the-table-extensions-module">
-<h1>The table-extensions Module<a class="headerlink" href="#the-table-extensions-module" title="Permalink to this heading">#</a></h1>
+<h1>The table-extensions Module<a class="headerlink" href="#the-table-extensions-module" title="Permalink to this heading">¶</a></h1>
 <p>The Collections library’s <em>table-extensions</em> module extends the Dylan
 language’s standard table features.</p>
 <div class="admonition note">
@@ -473,7 +475,7 @@ from that described by the DRM. See <a class="reference internal" href="../langu
 for details of these differences.</p>
 </div>
 <section id="basics">
-<h2>Basics<a class="headerlink" href="#basics" title="Permalink to this heading">#</a></h2>
+<h2>Basics<a class="headerlink" href="#basics" title="Permalink to this heading">¶</a></h2>
 <p>The <em>table-extensions</em> module exports the classes <a class="reference internal" href="#collections:table-extensions:[string-table]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;string-table&gt;</span></code></a> and
 <a class="reference internal" href="#collections:table-extensions:[case-insensitive-string-table]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;case-insensitive-string-table&gt;</span></code></a>; the type <a class="reference internal" href="#collections:table-extensions:[hash-state]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;hash-state&gt;</span></code></a>; the
 constructor macro <code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">table</span></code>; the generic function <a class="reference internal" href="#collections:table-extensions:remove-all-keys!"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">remove-all-keys!</span></code></a>
@@ -493,7 +495,7 @@ equivalence predicate are convenient building blocks for creating new
 table classes and hash functions.</p>
 </section>
 <section id="hash-functions">
-<h2>Hash functions<a class="headerlink" href="#hash-functions" title="Permalink to this heading">#</a></h2>
+<h2>Hash functions<a class="headerlink" href="#hash-functions" title="Permalink to this heading">¶</a></h2>
 <p>Different hash functions are not required to return the same hash code
 for equal or even identical objects. For instance,</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">collection-hash</span><span class="p">(#(),</span><span class="w"> </span><span class="nb">object-hash</span><span class="p">,</span><span class="w"> </span><span class="nb">object-hash</span><span class="p">);</span>
@@ -509,7 +511,7 @@ guaranteed to return the same hash code as <a class="reference internal" href="#
 keyword useless.</p>
 </section>
 <section id="weak-tables">
-<h2>Weak tables<a class="headerlink" href="#weak-tables" title="Permalink to this heading">#</a></h2>
+<h2>Weak tables<a class="headerlink" href="#weak-tables" title="Permalink to this heading">¶</a></h2>
 <p>Open Dylan allows all general instances of the built-in class
 <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#table"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;table&gt;</span></code></a> to be <em>weak</em>. See <a class="reference internal" href="../language-extensions/weak-tables.html"><span class="doc">weak tables</span></a> of
 this volume for information about weakness.</p>
@@ -526,12 +528,12 @@ part becomes eligible for garbage collection.</p></li>
 value.</p></li>
 </ul>
 <section id="id1">
-<h3>The table-extensions Module<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<h3>The table-extensions Module<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <p>This section contains a reference description for each item exported
 from the module <em>table-extensions</em>.</p>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="collections:table-extensions:[string-table]">
-<span class="sig-name descname"><span class="pre">&lt;string-table&gt;</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#collections:table-extensions:[string-table]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;string-table&gt;</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#collections:table-extensions:[string-table]" title="Permalink to this definition">¶</a></dt>
 <dd><p>A table class that uses strings for keys.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -552,7 +554,7 @@ key that is not an instance of <a class="reference external" href="https://opend
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="collections:table-extensions:[case-insensitive-string-table]">
-<span class="sig-name descname"><span class="pre">&lt;case-insensitive-string-table&gt;</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#collections:table-extensions:[case-insensitive-string-table]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;case-insensitive-string-table&gt;</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#collections:table-extensions:[case-insensitive-string-table]" title="Permalink to this definition">¶</a></dt>
 <dd><p>A table class that uses case-insensitive strings for keys.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -574,7 +576,7 @@ key that is not an instance of <a class="reference external" href="https://opend
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="collections:table-extensions:[hash-state]">
-<span class="sig-name descname"><span class="pre">&lt;hash-state&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#collections:table-extensions:[hash-state]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;hash-state&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#collections:table-extensions:[hash-state]" title="Permalink to this definition">¶</a></dt>
 <dd><p>A hash state.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -592,7 +594,7 @@ return value of <a class="reference internal" href="../language-extensions/langu
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="collections:table-extensions:collection-hash">
-<span class="sig-name descname"><span class="pre">collection-hash</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:table-extensions:collection-hash" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">collection-hash</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:table-extensions:collection-hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Hashes the elements of a collection.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -627,7 +629,7 @@ suitable for use as hash functions. See page <a class="reference external" href=
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="collections:table-extensions:sequence-hash">
-<span class="sig-name descname"><span class="pre">sequence-hash</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:table-extensions:sequence-hash" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">sequence-hash</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:table-extensions:sequence-hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Hashes the elements of a sequence.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -660,7 +662,7 @@ function. See page <a class="reference external" href="https://opendylan.org/boo
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="collections:table-extensions:values-hash">
-<span class="sig-name descname"><span class="pre">values-hash</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:table-extensions:values-hash" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">values-hash</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:table-extensions:values-hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Hashes the values passed to it.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -693,7 +695,7 @@ function. See page <a class="reference external" href="https://opendylan.org/boo
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="collections:table-extensions:string-hash">
-<span class="sig-name descname"><span class="pre">string-hash</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:table-extensions:string-hash" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">string-hash</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:table-extensions:string-hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Hashes a string.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -720,7 +722,7 @@ function. See page <a class="reference external" href="https://opendylan.org/boo
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="collections:table-extensions:case-insensitive-string-hash">
-<span class="sig-name descname"><span class="pre">case-insensitive-string-hash</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:table-extensions:case-insensitive-string-hash" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">case-insensitive-string-hash</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:table-extensions:case-insensitive-string-hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Hashes a string, without considering case information.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -754,7 +756,7 @@ the characters in the strings it compares.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="collections:table-extensions:case-insensitive-equal">
-<span class="sig-name descname"><span class="pre">case-insensitive-equal</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:table-extensions:case-insensitive-equal" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">case-insensitive-equal</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:table-extensions:case-insensitive-equal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compares two strings for equality, ignoring case differences between
 them.</p>
 <dl class="field-list">
@@ -806,7 +808,7 @@ strings.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:table-extensions:remove-all-keys!">
-<span class="sig-name descname"><span class="pre">remove-all-keys!</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:table-extensions:remove-all-keys!" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">remove-all-keys!</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:table-extensions:remove-all-keys!" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes all keys from a collection and leaves it empty.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -836,7 +838,7 @@ it empty.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="collections:table-extensions:remove-all-keys!([mutable-explicit-key-collection])">
-<span class="sig-name descname"><span class="pre">remove-all-keys!(&lt;mutable-explicit-key-collection&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#collections:table-extensions:remove-all-keys!([mutable-explicit-key-collection])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">remove-all-keys!(&lt;mutable-explicit-key-collection&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#collections:table-extensions:remove-all-keys!([mutable-explicit-key-collection])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes all keys from a collection and leaves it empty.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -867,7 +869,7 @@ making repeated calls to <code class="docutils literal notranslate"><span class=
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="collections:table-extensions:remove-all-keys!([table])">
-<span class="sig-name descname"><span class="pre">remove-all-keys!(&lt;table&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#collections:table-extensions:remove-all-keys!([table])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">remove-all-keys!(&lt;table&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#collections:table-extensions:remove-all-keys!([table])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes all keys from a table and leaves it empty.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -894,7 +896,7 @@ it empty.</p>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="collections:table-extensions:tabling">
-<span class="sig-name descname"><span class="pre">tabling</span></span> <em class="property"><span class="pre">Function</span> <span class="pre">Macro</span></em><a class="headerlink" href="#collections:table-extensions:tabling" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">tabling</span></span> <em class="property"><span class="pre">Function</span> <span class="pre">Macro</span></em><a class="headerlink" href="#collections:table-extensions:tabling" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a table and populates it with keys and values.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
@@ -1006,6 +1008,6 @@ pairs. If <em>class</em> is omitted, creates a table of type <a class="reference
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

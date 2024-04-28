@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="An IDL Binding for Dylan" href="idl-app.html" /><link rel="prev" title="Running and Debugging CORBA Applications" href="rundebug.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Using the Dylan IDL Compiler - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,11 +463,11 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="using-the-dylan-idl-compiler">
-<h1>Using the Dylan IDL Compiler<a class="headerlink" href="#using-the-dylan-idl-compiler" title="Permalink to this heading">#</a></h1>
+<h1>Using the Dylan IDL Compiler<a class="headerlink" href="#using-the-dylan-idl-compiler" title="Permalink to this heading">¶</a></h1>
 <section id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>The Open Dylan IDL compiler, Scepter, is available as a standalone
 executable called <code class="file docutils literal notranslate"><span class="pre">console-scepter.exe</span></code>. The executable is
 available in the <code class="file docutils literal notranslate"><span class="pre">bin</span></code> subfolder of your top-level Open Dylan
@@ -479,7 +481,7 @@ current working folder called <code class="file docutils literal notranslate"><s
 <code class="file docutils literal notranslate"><span class="pre">skeletons</span></code>.</p>
 </section>
 <section id="general-usage">
-<h2>General usage<a class="headerlink" href="#general-usage" title="Permalink to this heading">#</a></h2>
+<h2>General usage<a class="headerlink" href="#general-usage" title="Permalink to this heading">¶</a></h2>
 <p>The IDL compiler (<strong class="program">console-scepter.exe</strong>) is invoked from a
 console prompt. The general form of the command is:</p>
 <p><strong>console-scepter</strong> [<em>options</em>] &lt;<em>file</em>&gt;</p>
@@ -493,7 +495,7 @@ supplied. Options can be prefixed with the character <code class="docutils liter
 </div>
 </section>
 <section id="code-generation-options">
-<h2>Code generation options<a class="headerlink" href="#code-generation-options" title="Permalink to this heading">#</a></h2>
+<h2>Code generation options<a class="headerlink" href="#code-generation-options" title="Permalink to this heading">¶</a></h2>
 <dl>
 <dt><code class="docutils literal notranslate"><span class="pre">/language:</span></code> <em>name</em></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">/language</span></code> option is deprecated, but is still supported for
 backward compatibility. It has been replaced with the <code class="docutils literal notranslate"><span class="pre">/back-end</span></code>
@@ -549,7 +551,7 @@ stubs libraries.</p>
 </dl>
 </section>
 <section id="preprocessor-options">
-<h2>Preprocessor options<a class="headerlink" href="#preprocessor-options" title="Permalink to this heading">#</a></h2>
+<h2>Preprocessor options<a class="headerlink" href="#preprocessor-options" title="Permalink to this heading">¶</a></h2>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">/preprocess</span></code></dt><dd><p>Runs the preprocessor on the IDL file and displays the result on
 standard output. The preprocessor output is not compiled.</p>
@@ -566,7 +568,7 @@ find files mentioned in <code class="docutils literal notranslate"><span class="
 </dl>
 </section>
 <section id="miscellaneous-options">
-<h2>Miscellaneous options<a class="headerlink" href="#miscellaneous-options" title="Permalink to this heading">#</a></h2>
+<h2>Miscellaneous options<a class="headerlink" href="#miscellaneous-options" title="Permalink to this heading">¶</a></h2>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">/help</span></code></dt><dd><p>Display the command-line usage message.</p>
 </dd>
@@ -586,7 +588,7 @@ identifier or keyword definition in order to be recognised.</p>
 </dl>
 </section>
 <section id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h2>
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">¶</a></h2>
 <p>The following example would compile the bank demo IDL file. The
 generated projects are placed in subfolders called
 <code class="file docutils literal notranslate"><span class="pre">bank-protocol</span></code>, <code class="file docutils literal notranslate"><span class="pre">bank-stubs</span></code>, and <code class="file docutils literal notranslate"><span class="pre">bank-skeletons</span></code>
@@ -688,6 +690,6 @@ definitions in the Bank demo IDL file:</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

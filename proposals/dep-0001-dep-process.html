@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Define Function" href="dep-0002-define-function.html" /><link rel="prev" title="Dylan Enhancement Proposals" href="index.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>DEP Purpose and Guidelines - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="dep-purpose-and-guidelines">
-<h1>DEP Purpose and Guidelines<a class="headerlink" href="#dep-purpose-and-guidelines" title="Permalink to this heading">#</a></h1>
+<h1>DEP Purpose and Guidelines<a class="headerlink" href="#dep-purpose-and-guidelines" title="Permalink to this heading">¶</a></h1>
 <div class="table-wrapper docutils container">
 <table class="docutils align-default">
 <tbody>
@@ -492,14 +494,14 @@
 </table>
 </div>
 <section id="preamble">
-<h2>Preamble<a class="headerlink" href="#preamble" title="Permalink to this heading">#</a></h2>
+<h2>Preamble<a class="headerlink" href="#preamble" title="Permalink to this heading">¶</a></h2>
 <p>This document is based heavily on Python <a class="reference external" href="https://www.python.org/dev/peps/pep-0001/">PEP 1</a>, “PEP Purpose and
 Guidelines”, by Barry Warsaw, Jeremy Hylton, and David Goodger.  The
 author would like to thank them for providing an excellent base for
 the Dylan team to work from.</p>
 </section>
 <section id="terminology">
-<h2>Terminology<a class="headerlink" href="#terminology" title="Permalink to this heading">#</a></h2>
+<h2>Terminology<a class="headerlink" href="#terminology" title="Permalink to this heading">¶</a></h2>
 <dl>
 <dt>Dylan Reference Manual (DRM)</dt><dd><p>The manual written by Andrew Shalit, plus its errata.</p>
 </dd>
@@ -521,7 +523,7 @@ Dylan.  They are officially maintained in the following sense:</p>
 </dl>
 </section>
 <section id="what-is-a-dep">
-<h2>What is a DEP?<a class="headerlink" href="#what-is-a-dep" title="Permalink to this heading">#</a></h2>
+<h2>What is a DEP?<a class="headerlink" href="#what-is-a-dep" title="Permalink to this heading">¶</a></h2>
 <p>DEP stands for Dylan Enhancement Proposal.  A DEP is a design document
 which</p>
 <blockquote>
@@ -545,7 +547,7 @@ repository, their revision history is the historical record of the
 feature proposal <a class="footnote-reference brackets" href="#id3" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
 </section>
 <section id="dep-types">
-<h2>DEP Types<a class="headerlink" href="#dep-types" title="Permalink to this heading">#</a></h2>
+<h2>DEP Types<a class="headerlink" href="#dep-types" title="Permalink to this heading">¶</a></h2>
 <p>There are three kinds of DEP:</p>
 <ol class="arabic simple">
 <li><p>A <strong>Standards Track</strong> DEP describes a new feature or implementation
@@ -569,7 +571,7 @@ Any meta-DEP is also considered a Process DEP.</p></li>
 </ol>
 </section>
 <section id="dep-work-flow">
-<h2>DEP Work Flow<a class="headerlink" href="#dep-work-flow" title="Permalink to this heading">#</a></h2>
+<h2>DEP Work Flow<a class="headerlink" href="#dep-work-flow" title="Permalink to this heading">¶</a></h2>
 <p><strong>Have an idea</strong> – The DEP process begins with a new idea for Dylan.
 It is highly recommended that a single DEP contain a <strong>single key
 proposal</strong> or new idea. Small enhancements or patches often don’t need
@@ -649,7 +651,7 @@ an API can replace version 1.</p>
 DEP).</p>
 </section>
 <section id="what-belongs-in-a-successful-dep">
-<h2>What belongs in a successful DEP?<a class="headerlink" href="#what-belongs-in-a-successful-dep" title="Permalink to this heading">#</a></h2>
+<h2>What belongs in a successful DEP?<a class="headerlink" href="#what-belongs-in-a-successful-dep" title="Permalink to this heading">¶</a></h2>
 <p>Each DEP should have the following parts:</p>
 <ol class="arabic">
 <li><p>Title</p></li>
@@ -695,7 +697,7 @@ documentation.</p>
 </ol>
 </section>
 <section id="dep-format-and-templates">
-<h2>DEP Format and Templates<a class="headerlink" href="#dep-format-and-templates" title="Permalink to this heading">#</a></h2>
+<h2>DEP Format and Templates<a class="headerlink" href="#dep-format-and-templates" title="Permalink to this heading">¶</a></h2>
 <p>DEPs must be written in <a class="reference external" href="https://web.archive.org/web/20120114014252/https://docutils.sourceforge.net/rst.html">ReStructuredText</a> format.  This allows for
 rich markup that is still quite easy to read, but results in much
 better-looking and more functional HTML.</p>
@@ -710,7 +712,7 @@ For example:</p>
 <p>Fix any errors that are displayed.</p>
 </section>
 <section id="dep-header-preamble">
-<h2>DEP Header Preamble<a class="headerlink" href="#dep-header-preamble" title="Permalink to this heading">#</a></h2>
+<h2>DEP Header Preamble<a class="headerlink" href="#dep-header-preamble" title="Permalink to this heading">¶</a></h2>
 <p>Each DEP must begin with a title, followed by an RFC 822 style header
 preamble in simple RST table format.  The headers must appear in the
 following order.  Headers marked with “*” are optional and are
@@ -734,14 +736,14 @@ a comma as separator.</p>
 </pre></div>
 </div>
 <section id="dep-number">
-<h3>DEP Number<a class="headerlink" href="#dep-number" title="Permalink to this heading">#</a></h3>
+<h3>DEP Number<a class="headerlink" href="#dep-number" title="Permalink to this heading">¶</a></h3>
 <p>Authors may assign DEP numbers themselves by looking at the last
 number in the <a class="reference external" href="https://opendylan.org/proposals/index.html">numerical list of DEPs</a> and incrementing it by
 one.  To prevent collisions, the author should set the <code class="docutils literal notranslate"><span class="pre">DEP-Number</span></code>
 header to “Unassigned” until just before the DEP is committed to git.</p>
 </section>
 <section id="author">
-<h3>Author<a class="headerlink" href="#author" title="Permalink to this heading">#</a></h3>
+<h3>Author<a class="headerlink" href="#author" title="Permalink to this heading">¶</a></h3>
 <p>The Author header lists the names, and optionally the email addresses
 of all the authors/owners of the DEP.  The format of the Author header
 value must be</p>
@@ -757,16 +759,16 @@ value must be</p>
 following RFC 2822 continuation line conventions.</p>
 </section>
 <section id="status">
-<h3>Status<a class="headerlink" href="#status" title="Permalink to this heading">#</a></h3>
+<h3>Status<a class="headerlink" href="#status" title="Permalink to this heading">¶</a></h3>
 <p>See <a class="reference internal" href="#dep-work-flow">DEP Work Flow</a> for a description of this field.</p>
 </section>
 <section id="type">
-<h3>Type<a class="headerlink" href="#type" title="Permalink to this heading">#</a></h3>
+<h3>Type<a class="headerlink" href="#type" title="Permalink to this heading">¶</a></h3>
 <p>The Type header specifies the type of DEP: Standards Track,
 Informational, or Process.</p>
 </section>
 <section id="affects-drm">
-<h3>Affects-DRM<a class="headerlink" href="#affects-drm" title="Permalink to this heading">#</a></h3>
+<h3>Affects-DRM<a class="headerlink" href="#affects-drm" title="Permalink to this heading">¶</a></h3>
 <p>This field is only required for Standards Track DEPs.  The value
 should be <strong>Yes</strong> if the DEP proposes a change to the Dylan language
 definition, and otherwise <strong>No</strong>.  The language definition is composed
@@ -775,41 +777,41 @@ this field is <strong>Yes</strong>.  If this field is set to <strong>Yes</strong
 <em>must</em> clearly list exactly how it affects the language definition.</p>
 </section>
 <section id="created">
-<h3>Created<a class="headerlink" href="#created" title="Permalink to this heading">#</a></h3>
+<h3>Created<a class="headerlink" href="#created" title="Permalink to this heading">¶</a></h3>
 <p>The Created header records the date that the DEP was assigned a
 number.</p>
 </section>
 <section id="last-modified">
-<h3>Last-Modified<a class="headerlink" href="#last-modified" title="Permalink to this heading">#</a></h3>
+<h3>Last-Modified<a class="headerlink" href="#last-modified" title="Permalink to this heading">¶</a></h3>
 <p>The Last-Modified header is included because it may be useful to those
 reading DEPs without access to git.  It should be updated when
 substantive changes are made to the DEP.  It need not be updated when
 fixing typos, changed URLs, etc.</p>
 </section>
 <section id="post-history">
-<h3>Post-History<a class="headerlink" href="#post-history" title="Permalink to this heading">#</a></h3>
+<h3>Post-History<a class="headerlink" href="#post-history" title="Permalink to this heading">¶</a></h3>
 <p>This field should list the dates when DEP drafts were posted to the
 hackers mailing list.  List the dates from newest to oldest.</p>
 </section>
 <section id="resolution">
-<h3>Resolution<a class="headerlink" href="#resolution" title="Permalink to this heading">#</a></h3>
+<h3>Resolution<a class="headerlink" href="#resolution" title="Permalink to this heading">¶</a></h3>
 <p>The Resolution header is required for Standards Track DEPs only.  It
 contains a URL that should point to an email message or other web
 resource where the pronouncement about the DEP is made.</p>
 </section>
 <section id="target-version">
-<h3>Target-Version<a class="headerlink" href="#target-version" title="Permalink to this heading">#</a></h3>
+<h3>Target-Version<a class="headerlink" href="#target-version" title="Permalink to this heading">¶</a></h3>
 <p>Standards Track DEPs must have a Target-Version header which indicates
 the version of Open Dylan in which the feature will be released.
 Informational and Process DEPs do not need a Target-Version header.</p>
 </section>
 <section id="requires">
-<h3>Requires<a class="headerlink" href="#requires" title="Permalink to this heading">#</a></h3>
+<h3>Requires<a class="headerlink" href="#requires" title="Permalink to this heading">¶</a></h3>
 <p>DEPs may have a Requires header, indicating the DEP numbers that this
 DEP depends on.</p>
 </section>
 <section id="superseded-by-and-replaces">
-<h3>Superseded-By and Replaces<a class="headerlink" href="#superseded-by-and-replaces" title="Permalink to this heading">#</a></h3>
+<h3>Superseded-By and Replaces<a class="headerlink" href="#superseded-by-and-replaces" title="Permalink to this heading">¶</a></h3>
 <p>DEPs may also have a Superseded-By header indicating that they have
 been rendered obsolete by a later document; the value is the number of
 the DEP that replaces the current document.  The newer DEP must have a
@@ -818,7 +820,7 @@ obsolete.</p>
 </section>
 </section>
 <section id="auxiliary-files">
-<h2>Auxiliary Files<a class="headerlink" href="#auxiliary-files" title="Permalink to this heading">#</a></h2>
+<h2>Auxiliary Files<a class="headerlink" href="#auxiliary-files" title="Permalink to this heading">¶</a></h2>
 <p>DEPs may include auxiliary files such as diagrams.  Such files must be
 named <code class="docutils literal notranslate"><span class="pre">dep-XXXX-aaaa.ext</span></code>, where “XXXX” is the DEP number (padded
 with leading zeros), “aaaa” is arbitrary text to indicate the file
@@ -826,7 +828,7 @@ content (e.g., “state-diagram”), and “ext” is replaced by the actual
 file extension (e.g. “png”).</p>
 </section>
 <section id="reporting-dep-bugs-or-submitting-dep-updates">
-<h2>Reporting DEP Bugs, or Submitting DEP Updates<a class="headerlink" href="#reporting-dep-bugs-or-submitting-dep-updates" title="Permalink to this heading">#</a></h2>
+<h2>Reporting DEP Bugs, or Submitting DEP Updates<a class="headerlink" href="#reporting-dep-bugs-or-submitting-dep-updates" title="Permalink to this heading">¶</a></h2>
 <p>How you report a bug, or submit a DEP update depends on several
 factors, such as the maturity of the DEP, the preferences of the DEP
 author, and the nature of your comments.  For the early draft stages
@@ -840,7 +842,7 @@ with the DEP author.</p>
 themselves committing them to Git and pushing to the main repository.</p>
 </section>
 <section id="dep-author-responsibilities-workflow">
-<h2>DEP Author Responsibilities &amp; Workflow<a class="headerlink" href="#dep-author-responsibilities-workflow" title="Permalink to this heading">#</a></h2>
+<h2>DEP Author Responsibilities &amp; Workflow<a class="headerlink" href="#dep-author-responsibilities-workflow" title="Permalink to this heading">¶</a></h2>
 <p>A DEP author must subscribe to the &lt;<a class="reference external" href="mailto:dylan-lang&#37;&#52;&#48;googlegroups&#46;com">dylan-lang<span>&#64;</span>googlegroups<span>&#46;</span>com</a>&gt;
 list.  Before submitting a (new revision of a DEP) the author must do
 the following:</p>
@@ -875,7 +877,7 @@ documentation page.</p></li>
 </ul>
 </section>
 <section id="references-and-footnotes">
-<h2>References and Footnotes<a class="headerlink" href="#references-and-footnotes" title="Permalink to this heading">#</a></h2>
+<h2>References and Footnotes<a class="headerlink" href="#references-and-footnotes" title="Permalink to this heading">¶</a></h2>
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="id3" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
@@ -896,7 +898,7 @@ channel or on the hackers list.</p>
 </aside>
 </section>
 <section id="copyright">
-<h2>Copyright<a class="headerlink" href="#copyright" title="Permalink to this heading">#</a></h2>
+<h2>Copyright<a class="headerlink" href="#copyright" title="Permalink to this heading">¶</a></h2>
 <p>This document has been placed in the public domain.</p>
 </section>
 </section>
@@ -998,6 +1000,6 @@ channel or on the hackers list.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

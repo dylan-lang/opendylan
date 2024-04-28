@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="DUIM-Frames Library" href="frames.html" /><link rel="prev" title="DUIM-Layouts Library" href="layouts.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>DUIM-Gadgets Library - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,11 +463,11 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="duim-gadgets-library">
-<h1>DUIM-Gadgets Library<a class="headerlink" href="#duim-gadgets-library" title="Permalink to this heading">#</a></h1>
+<h1>DUIM-Gadgets Library<a class="headerlink" href="#duim-gadgets-library" title="Permalink to this heading">¶</a></h1>
 <section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
 <p>The elements that comprise a Graphical User Interface (GUI) are arranged
 in a hierarchical ordering of object classes. At the top level of the
 DUIM hierarchy there are three main classes, <a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a>,
@@ -529,7 +531,7 @@ using DUIM</em> book. See the same book for a more practical example of
 implementing an application using the DUIM library.</p>
 </section>
 <section id="callbacks-and-keys">
-<h2>Callbacks and keys<a class="headerlink" href="#callbacks-and-keys" title="Permalink to this heading">#</a></h2>
+<h2>Callbacks and keys<a class="headerlink" href="#callbacks-and-keys" title="Permalink to this heading">¶</a></h2>
 <p>When an event occurs in a user interface (for example, a button is
 pressed, a menu command is chosen, or an item in a list is
 double-clicked), you usually want some operation to be performed. If the
@@ -570,7 +572,7 @@ the printed representation, or label, of all the items in a collection
 gadget.</p>
 </section>
 <section id="gadget-protocols">
-<h2>Gadget protocols<a class="headerlink" href="#gadget-protocols" title="Permalink to this heading">#</a></h2>
+<h2>Gadget protocols<a class="headerlink" href="#gadget-protocols" title="Permalink to this heading">¶</a></h2>
 <p>Gadgets are objects that make up an interface: the menus, buttons,
 sliders, check lists, tool bars, menu bars, and so on. Gadget classes
 may support three protocols, <em>value</em>, <em>items</em>, and <em>activate</em>.</p>
@@ -605,7 +607,7 @@ a <a class="reference internal" href="#duim:duim-gadgets:gadget-enabled?"><code 
 can also be found in the <em>Building Applications using DUIM</em> book.</p>
 </section>
 <section id="the-class-hierarchy-for-duim-gadgets">
-<h2>The class hierarchy for DUIM-Gadgets<a class="headerlink" href="#the-class-hierarchy-for-duim-gadgets" title="Permalink to this heading">#</a></h2>
+<h2>The class hierarchy for DUIM-Gadgets<a class="headerlink" href="#the-class-hierarchy-for-duim-gadgets" title="Permalink to this heading">¶</a></h2>
 <p>This section presents an overview of the available classes of gadget,
 and describes the class hierarchy present.</p>
 <p>In each table below, classes that support the <em>items</em> protocol are
@@ -618,7 +620,7 @@ no bold is used.</p>
 are described in <a class="reference internal" href="#subclasses-of-value-gadget">Subclasses of &lt;value-gadget&gt;</a>, <a class="reference internal" href="#subclasses-of-button">Subclasses of
 &lt;button&gt;</a>, and <a class="reference internal" href="#subclasses-of-collection-gadget">Subclasses of &lt;collection-gadget&gt;</a>.</p>
 <section id="the-gadget-class-and-its-subclasses">
-<h3>The &lt;gadget&gt; class and its subclasses<a class="headerlink" href="#the-gadget-class-and-its-subclasses" title="Permalink to this heading">#</a></h3>
+<h3>The &lt;gadget&gt; class and its subclasses<a class="headerlink" href="#the-gadget-class-and-its-subclasses" title="Permalink to this heading">¶</a></h3>
 <p>The base class for the majority of DUIM gadgets is the <em>&lt;gadget&gt;</em> class,
 which is itself a subclass of <em>&lt;object&gt;</em>. All other DUIM gadgets are
 subclasses of <em>&lt;gadget&gt;</em>, with the exception of <em>&lt;list-item&gt;</em>,
@@ -681,7 +683,7 @@ border and label identifying the grouping.</p>
 </dl>
 </section>
 <section id="overall-class-hierarchy-for-the-duim-gadgets-library">
-<h3>Overall class hierarchy for the DUIM-Gadgets library<a class="headerlink" href="#overall-class-hierarchy-for-the-duim-gadgets-library" title="Permalink to this heading">#</a></h3>
+<h3>Overall class hierarchy for the DUIM-Gadgets library<a class="headerlink" href="#overall-class-hierarchy-for-the-duim-gadgets-library" title="Permalink to this heading">¶</a></h3>
 <p>&lt;object&gt;</p>
 <p>&lt;gadget&gt;</p>
 <p>&lt;action-gadget&gt;</p>
@@ -704,7 +706,7 @@ border and label identifying the grouping.</p>
 <p>&lt;table-item&gt;</p>
 </section>
 <section id="subclasses-of-value-gadget">
-<h3>Subclasses of &lt;value-gadget&gt;<a class="headerlink" href="#subclasses-of-value-gadget" title="Permalink to this heading">#</a></h3>
+<h3>Subclasses of &lt;value-gadget&gt;<a class="headerlink" href="#subclasses-of-value-gadget" title="Permalink to this heading">¶</a></h3>
 <p>Any gadget that can take a value of some sort is a subclass of
 <a class="reference internal" href="#duim:duim-gadgets:[value-gadget]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;value-gadget&gt;</span></code></a>. As might be expected, this includes the majority of
 the gadgets in the DUIM-Gadgets library.</p>
@@ -749,7 +751,7 @@ displayed in a tab control displays a new page of information.</p>
 the &lt;value-gadget&gt; class</a>.</p>
 </section>
 <section id="subclasses-of-the-value-gadget-class">
-<h3>Subclasses of the <em>&lt;value-gadget&gt;</em> class<a class="headerlink" href="#subclasses-of-the-value-gadget-class" title="Permalink to this heading">#</a></h3>
+<h3>Subclasses of the <em>&lt;value-gadget&gt;</em> class<a class="headerlink" href="#subclasses-of-the-value-gadget-class" title="Permalink to this heading">¶</a></h3>
 <p>&lt;value-gadget&gt;</p>
 <p>&lt;text-gadget&gt;</p>
 <p><em>&lt;password-field&gt;</em></p>
@@ -768,7 +770,7 @@ the &lt;value-gadget&gt; class</a>.</p>
 <p>See <a class="reference internal" href="#subclasses-of-collection-gadget">Subclasses of &lt;collection-gadget&gt;</a></p>
 </section>
 <section id="subclasses-of-page">
-<h3>Subclasses of &lt;page&gt;<a class="headerlink" href="#subclasses-of-page" title="Permalink to this heading">#</a></h3>
+<h3>Subclasses of &lt;page&gt;<a class="headerlink" href="#subclasses-of-page" title="Permalink to this heading">¶</a></h3>
 <p>The <cite>&lt;page&gt;</cite> class is the base class of gadgets that are used to display
 a whole page of information within a “parent” element, with the page
 itself optionally containing other layouts or gadgets. Pages are used in
@@ -778,7 +780,7 @@ need to be displayed in a common parent.</p>
 class</a>.</p>
 </section>
 <section id="subclasses-of-the-page-class">
-<h3>Subclasses of the <em>&lt;page&gt;</em> class<a class="headerlink" href="#subclasses-of-the-page-class" title="Permalink to this heading">#</a></h3>
+<h3>Subclasses of the <em>&lt;page&gt;</em> class<a class="headerlink" href="#subclasses-of-the-page-class" title="Permalink to this heading">¶</a></h3>
 <p>&lt;page&gt;</p>
 <p>&lt;tab-control-page&gt;</p>
 <p>&lt;property-page&gt;</p>
@@ -788,7 +790,7 @@ associated with each tab in a tab control.</p>
 <figure class="align-center" id="id1">
 <img alt="../_images/gadgets-3.png" src="../_images/gadgets-3.png" />
 <figcaption>
-<p><span class="caption-text">A tab control page</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">A tab control page</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The <a class="reference internal" href="frames.html#duim:duim-frames:[property-page]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;property-page&gt;</span></code></a> class performs a similar job for property frames
@@ -799,7 +801,7 @@ display the user-configurable properties of an application.</p>
 <figure class="align-center" id="id2">
 <img alt="../_images/gadgets-4.png" src="../_images/gadgets-4.png" />
 <figcaption>
-<p><span class="caption-text">A property page</span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">A property page</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The <a class="reference internal" href="frames.html#duim:duim-frames:[wizard-page]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;wizard-page&gt;</span></code></a> class is used to define the elements in each
@@ -809,12 +811,12 @@ presented to the user in a strict order.</p>
 <figure class="align-center" id="id3">
 <img alt="../_images/gadgets-5.png" src="../_images/gadgets-5.png" />
 <figcaption>
-<p><span class="caption-text">A wizard page</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">A wizard page</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
 <section id="subclasses-of-button">
-<h3>Subclasses of &lt;button&gt;<a class="headerlink" href="#subclasses-of-button" title="Permalink to this heading">#</a></h3>
+<h3>Subclasses of &lt;button&gt;<a class="headerlink" href="#subclasses-of-button" title="Permalink to this heading">¶</a></h3>
 <p>The subclasses of <a class="reference internal" href="#duim:duim-gadgets:[button]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;button&gt;</span></code></a> are as shown in <a class="reference internal" href="#subclasses-of-the-button-class">Subclasses of the
 &lt;button&gt; class</a>. These subclasses include not only
 buttons that can appear in any sheet, but also their equivalent classes
@@ -826,7 +828,7 @@ specific value on and off in the same way.</p>
 each one supports the <em>value</em> protocol, as described in <a class="reference internal" href="#overview">Overview</a>.</p>
 </section>
 <section id="subclasses-of-the-button-class">
-<h3>Subclasses of the <em>&lt;button&gt;</em> class<a class="headerlink" href="#subclasses-of-the-button-class" title="Permalink to this heading">#</a></h3>
+<h3>Subclasses of the <em>&lt;button&gt;</em> class<a class="headerlink" href="#subclasses-of-the-button-class" title="Permalink to this heading">¶</a></h3>
 <p>&lt;button&gt;</p>
 <p>&lt;check-button&gt;</p>
 <p>&lt;check-menu-button&gt;</p>
@@ -837,13 +839,13 @@ each one supports the <em>value</em> protocol, as described in <a class="referen
 <p>&lt;radio-menu-button&gt;</p>
 </section>
 <section id="subclasses-of-collection-gadget">
-<h3>Subclasses of &lt;collection-gadget&gt;<a class="headerlink" href="#subclasses-of-collection-gadget" title="Permalink to this heading">#</a></h3>
+<h3>Subclasses of &lt;collection-gadget&gt;<a class="headerlink" href="#subclasses-of-collection-gadget" title="Permalink to this heading">¶</a></h3>
 <p>The subclasses of <a class="reference internal" href="#duim:duim-gadgets:[collection-gadget]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;collection-gadget&gt;</span></code></a> are as shown in <a class="reference internal" href="#subclasses-of-the-collection-gadget-class">Subclasses
 of the &lt;collection-gadget&gt; class</a>. All of these
 subclasses support the <em>items</em> protocol, even though they are not
 displayed in bold.</p>
 <section id="subclasses-of-the-collection-gadget-class">
-<h4>Subclasses of the <em>&lt;collection-gadget&gt;</em> class<a class="headerlink" href="#subclasses-of-the-collection-gadget-class" title="Permalink to this heading">#</a></h4>
+<h4>Subclasses of the <em>&lt;collection-gadget&gt;</em> class<a class="headerlink" href="#subclasses-of-the-collection-gadget-class" title="Permalink to this heading">¶</a></h4>
 <p>&lt;collection-gadget&gt;</p>
 <p>&lt;button-box&gt;</p>
 <p>&lt;check-box&gt;</p>
@@ -920,7 +922,7 @@ value gadgets, each one supports the <em>value</em> protocol, as described in
 </section>
 </section>
 <section id="button-gadgets">
-<h2>Button gadgets<a class="headerlink" href="#button-gadgets" title="Permalink to this heading">#</a></h2>
+<h2>Button gadgets<a class="headerlink" href="#button-gadgets" title="Permalink to this heading">¶</a></h2>
 <p>Broadly speaking, buttons are gadgets whose value can be changed, or for
 which some user-defined functionality can be invoked, by clicking on the
 gadget with the pointer device. Buttons encompass obvious controls such
@@ -929,12 +931,12 @@ menu items.</p>
 <figure class="align-center" id="id4">
 <img alt="../_images/gadgets-6.png" src="../_images/gadgets-6.png" />
 <figcaption>
-<p><span class="caption-text">A selection of button and equivalent menu buttons</span><a class="headerlink" href="#id4" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">A selection of button and equivalent menu buttons</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
 <section id="text-gadgets">
-<h2>Text gadgets<a class="headerlink" href="#text-gadgets" title="Permalink to this heading">#</a></h2>
+<h2>Text gadgets<a class="headerlink" href="#text-gadgets" title="Permalink to this heading">¶</a></h2>
 <p>A text gadget is a gadget into which you can type textual information.
 There are three different classes of text gadget available in DUIM, each
 of which is a subclass of the <a class="reference internal" href="#duim:duim-gadgets:[text-gadget]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;text-gadget&gt;</span></code></a> class.</p>
@@ -946,7 +948,7 @@ of which is a subclass of the <a class="reference internal" href="#duim:duim-gad
 <p><a class="reference internal" href="#duim:duim-gadgets:[password-field]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;password-field&gt;</span></code></a></p>
 </section>
 <section id="collection-gadgets">
-<h2>Collection gadgets<a class="headerlink" href="#collection-gadgets" title="Permalink to this heading">#</a></h2>
+<h2>Collection gadgets<a class="headerlink" href="#collection-gadgets" title="Permalink to this heading">¶</a></h2>
 <p>A collection gadget is any gadget whose items may themselves form a
 Dylan collection. Often, a collection gadget is used to group together a
 number other gadgets, such as buttons, in such a way that the
@@ -970,19 +972,19 @@ same menu.</p>
 <figure class="align-center" id="id5">
 <img alt="../_images/gadgets-10.png" src="../_images/gadgets-10.png" />
 <figcaption>
-<p><span class="caption-text">A variety of simple collection gadgets</span><a class="headerlink" href="#id5" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">A variety of simple collection gadgets</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
 <section id="value-range-gadgets">
-<h2>Value range gadgets<a class="headerlink" href="#value-range-gadgets" title="Permalink to this heading">#</a></h2>
+<h2>Value range gadgets<a class="headerlink" href="#value-range-gadgets" title="Permalink to this heading">¶</a></h2>
 <p>A value range gadget is any gadget whose value falls within a defined
 Dylan range.</p>
 <figure class="align-center">
 <img alt="../_images/gadgets-11.png" src="../_images/gadgets-11.png" />
 </figure>
 <section id="a-variety-of-value-range-gadgets">
-<h3>A variety of value range gadgets<a class="headerlink" href="#a-variety-of-value-range-gadgets" title="Permalink to this heading">#</a></h3>
+<h3>A variety of value range gadgets<a class="headerlink" href="#a-variety-of-value-range-gadgets" title="Permalink to this heading">¶</a></h3>
 <p>Sliders, scroll bars, and scroll bars are all examples of value range
 gadgets. Value range gadgets provide immediate visual feedback of the
 value of the gadget at any time, as shown in <a class="reference internal" href="#a-variety-of-value-range-gadgets">A variety of value
@@ -994,7 +996,7 @@ of a task.</p>
 </section>
 </section>
 <section id="page-gadgets">
-<h2>Page gadgets<a class="headerlink" href="#page-gadgets" title="Permalink to this heading">#</a></h2>
+<h2>Page gadgets<a class="headerlink" href="#page-gadgets" title="Permalink to this heading">¶</a></h2>
 <p>A page gadget is used to define the contents of a page in any control
 that consists of multiple pages. Different classes of page gadget are
 used for different types of multi-page control. There are three types of
@@ -1018,7 +1020,7 @@ see ` &lt;frames.htm#89815&gt;`_.</p>
 <figure class="align-center" id="id6">
 <img alt="../_images/gadgets-12.png" src="../_images/gadgets-12.png" />
 <figcaption>
-<p><span class="caption-text">A tab control page, a property page, and a wizard page</span><a class="headerlink" href="#id6" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">A tab control page, a property page, and a wizard page</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <div class="admonition note">
@@ -1030,7 +1032,7 @@ on this library.</p>
 </div>
 </section>
 <section id="gadgets-that-can-have-children">
-<h2>Gadgets that can have children<a class="headerlink" href="#gadgets-that-can-have-children" title="Permalink to this heading">#</a></h2>
+<h2>Gadgets that can have children<a class="headerlink" href="#gadgets-that-can-have-children" title="Permalink to this heading">¶</a></h2>
 <p>Most gadgets cannot have any children associated with them; they are
 leaf elements in the sheet hierarchy. However, a number of specialized
 gadgets exist which can take children. This section describes those
@@ -1042,7 +1044,7 @@ themselves be gadgets of some kind. In some cases (menu bars, for
 instance), the type of gadgets that can be defined as a child is
 constrained.</p>
 <section id="menus-and-menu-bars">
-<h3>Menus and menu bars<a class="headerlink" href="#menus-and-menu-bars" title="Permalink to this heading">#</a></h3>
+<h3>Menus and menu bars<a class="headerlink" href="#menus-and-menu-bars" title="Permalink to this heading">¶</a></h3>
 <p>You can define a system of menus for a DUIM application by creating a
 hierarchy of menu bar, menu, and menu button objects. Menu bars can be
 defined for any application written using DUIM using the <a class="reference internal" href="#duim:duim-gadgets:[menu-bar]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;menu-bar&gt;</span></code></a>
@@ -1054,7 +1056,7 @@ application can be populated using several different classes of gadget,
 all of which are subclasses of the <a class="reference internal" href="#duim:duim-gadgets:[menu-button]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;menu-button&gt;</span></code></a> class.</p>
 </section>
 <section id="status-bars">
-<h3>Status bars<a class="headerlink" href="#status-bars" title="Permalink to this heading">#</a></h3>
+<h3>Status bars<a class="headerlink" href="#status-bars" title="Permalink to this heading">¶</a></h3>
 <p>You can add a status bar to a window in a DUIM application by creating
 an instance of the <a class="reference internal" href="#duim:duim-gadgets:[status-bar]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;status-bar&gt;</span></code></a> class. A status bar is typically used
 to provide feedback to the user, and by default shows displays the
@@ -1065,7 +1067,7 @@ take a number of children.</p>
 <figure class="align-center" id="id7">
 <img alt="../_images/gadgets-13.png" src="../_images/gadgets-13.png" />
 <figcaption>
-<p><span class="caption-text">A status bar</span><a class="headerlink" href="#id7" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">A status bar</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>In word processing applications, the status bar may also display the
@@ -1076,14 +1078,14 @@ the current folder. Often, the system time is displayed in the status
 bar for an application.</p>
 </section>
 <section id="tab-controls">
-<h3>Tab controls<a class="headerlink" href="#tab-controls" title="Permalink to this heading">#</a></h3>
+<h3>Tab controls<a class="headerlink" href="#tab-controls" title="Permalink to this heading">¶</a></h3>
 <p>An instance of the class <a class="reference internal" href="#duim:duim-gadgets:[tab-control]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;tab-control&gt;</span></code></a> lets you define a sheet that
 contains several “pages” of information. Each page of information is
 displayed by clicking on the appropriate tab along the top of the sheet.</p>
 <figure class="align-center" id="id8">
 <img alt="../_images/gadgets-14.png" src="../_images/gadgets-14.png" />
 <figcaption>
-<p><span class="caption-text">A tab control</span><a class="headerlink" href="#id8" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">A tab control</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>This children of a tab control are the pages of information themselves.
@@ -1091,7 +1093,7 @@ Each child should be an instance of the <a class="reference internal" href="#dui
 types of page available are described in <a class="reference internal" href="#page-gadgets">Page gadgets</a>.</p>
 </section>
 <section id="group-boxes">
-<h3>Group boxes<a class="headerlink" href="#group-boxes" title="Permalink to this heading">#</a></h3>
+<h3>Group boxes<a class="headerlink" href="#group-boxes" title="Permalink to this heading">¶</a></h3>
 <p><img alt="image0" src="../_images/gadgets-15.png" /> The <a class="reference internal" href="#duim:duim-gadgets:[group-box]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;group-box&gt;</span></code></a> class allows you to group together any number
 of gadgets that are associated to some degree in an interface. A group
 box creates a purely visual grouping, and does not affect the behavior
@@ -1101,12 +1103,12 @@ the children of a group box can be any type of gadget.</p>
 </section>
 </section>
 <section id="duim-gadgets-module">
-<h2>DUIM-Gadgets Module<a class="headerlink" href="#duim-gadgets-module" title="Permalink to this heading">#</a></h2>
+<h2>DUIM-Gadgets Module<a class="headerlink" href="#duim-gadgets-module" title="Permalink to this heading">¶</a></h2>
 <p>This section contains a complete reference of all the interfaces that
 are exported from the <em>duim-gadgets</em> module.</p>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[action-gadget]">
-<span class="sig-name descname"><span class="pre">&lt;action-gadget&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[action-gadget]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;action-gadget&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[action-gadget]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The protocol class for gadgets that have action callbacks.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1140,7 +1142,7 @@ can only be activated when they are enabled.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:activate-gadget">
-<span class="sig-name descname"><span class="pre">activate-gadget</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:activate-gadget" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">activate-gadget</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:activate-gadget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Activates the specified gadget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1161,7 +1163,7 @@ had pressed the button.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:add-column">
-<span class="sig-name descname"><span class="pre">add-column</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:add-column" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">add-column</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:add-column" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a column to the specified table.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1192,7 +1194,7 @@ column order the new column should be added.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:add-item">
-<span class="sig-name descname"><span class="pre">add-item</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:add-item" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">add-item</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:add-item" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds an item to the specified list or table control.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1233,7 +1235,7 @@ created via a call to <a class="reference internal" href="#duim:duim-gadgets:mak
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:add-node">
-<span class="sig-name descname"><span class="pre">add-node</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:add-node" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">add-node</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:add-node" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds node to the specified tree control.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1275,7 +1277,7 @@ If <em>setting-roots?</em> is true, then the new node is added at the root of
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[border]">
-<span class="sig-name descname"><span class="pre">&lt;border&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[border]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;border&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[border]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of bordering gadgets.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1300,7 +1302,7 @@ or groove. Input and output borders represent “logical” borders.</p>
 <figure class="align-center" id="id9">
 <img alt="../_images/gadgets-16.png" src="../_images/gadgets-16.png" />
 <figcaption>
-<p><span class="caption-text">Different types of border</span><a class="headerlink" href="#id9" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Different types of border</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Borders are usually created using the <a class="reference internal" href="#duim:duim-gadgets:with-border"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-border</span></code></a> macro, rather
@@ -1319,7 +1321,7 @@ than by making direct instances of this class.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[button]">
-<span class="sig-name descname"><span class="pre">&lt;button&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[button]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;button&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[button]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of all button gadgets.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1438,7 +1440,7 @@ possible, so as to fit the entire width of the row layout.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[button-box]">
-<span class="sig-name descname"><span class="pre">&lt;button-box&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[button-box]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;button-box&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[button-box]" title="Permalink to this definition">¶</a></dt>
 <dd><p>A class that groups buttons.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1522,7 +1524,7 @@ the subclasses.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[check-box]">
-<span class="sig-name descname"><span class="pre">&lt;check-box&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[check-box]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;check-box&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[check-box]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of check boxes, or groups of check buttons.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1559,7 +1561,7 @@ items in the check box.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[check-button]">
-<span class="sig-name descname"><span class="pre">&lt;check-button&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[check-button]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;check-button&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[check-button]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of check buttons.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1589,7 +1591,7 @@ either <code class="docutils literal notranslate"><span class="pre">#t</span></c
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[check-menu-box]">
-<span class="sig-name descname"><span class="pre">&lt;check-menu-box&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[check-menu-box]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;check-menu-box&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[check-menu-box]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of groups of check buttons displayed in a menu.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1627,7 +1629,7 @@ menu box.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[check-menu-button]">
-<span class="sig-name descname"><span class="pre">&lt;check-menu-button&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[check-menu-button]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;check-menu-button&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[check-menu-button]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of check buttons that can be displayed in a menu.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1662,7 +1664,7 @@ values of a menu button is either <code class="docutils literal notranslate"><sp
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[collection-gadget]">
-<span class="sig-name descname"><span class="pre">&lt;collection-gadget&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[collection-gadget]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;collection-gadget&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[collection-gadget]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of all gadgets that contain collections.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1765,7 +1767,7 @@ key-press callbacks.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[combo-box]">
-<span class="sig-name descname"><span class="pre">&lt;combo-box&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[combo-box]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;combo-box&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[combo-box]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of combo boxes, which combine options boxes with text fields.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1820,7 +1822,7 @@ for the gadget.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:contract-node">
-<span class="sig-name descname"><span class="pre">contract-node</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:contract-node" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">contract-node</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:contract-node" title="Permalink to this definition">¶</a></dt>
 <dd><p>Contracts the specified node in a tree control.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1847,7 +1849,7 @@ children of the node that were displayed.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:display-menu">
-<span class="sig-name descname"><span class="pre">display-menu</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:display-menu" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">display-menu</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:display-menu" title="Permalink to this definition">¶</a></dt>
 <dd><p>Displays the specified menu.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1878,7 +1880,7 @@ to the owner of the menu.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:expand-node">
-<span class="sig-name descname"><span class="pre">expand-node</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:expand-node" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">expand-node</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:expand-node" title="Permalink to this definition">¶</a></dt>
 <dd><p>Expands the specified node in a tree control.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1911,7 +1913,7 @@ function on the node.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:find-item">
-<span class="sig-name descname"><span class="pre">find-item</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:find-item" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">find-item</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:find-item" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finds an item in a list control or a table control.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1949,7 +1951,7 @@ function on the node.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:find-node">
-<span class="sig-name descname"><span class="pre">find-node</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:find-node" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">find-node</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:find-node" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finds a node in a tree control.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1984,7 +1986,7 @@ function on the node.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[gadget]">
-<span class="sig-name descname"><span class="pre">&lt;gadget&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[gadget]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;gadget&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[gadget]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The protocol class of all gadgets.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -2097,7 +2099,7 @@ it: only the values cannot be changed.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget?">
-<span class="sig-name descname"><span class="pre">gadget?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if the specified object is a gadget.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2135,7 +2137,7 @@ it: only the values cannot be changed.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-accelerator">
-<span class="sig-name descname"><span class="pre">gadget-accelerator</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-accelerator" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-accelerator</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-accelerator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the keyboard accelerator of the specified gadget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2173,7 +2175,7 @@ button gadgets.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-accelerator-setter">
-<span class="sig-name descname"><span class="pre">gadget-accelerator-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-accelerator-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-accelerator-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-accelerator-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the keyboard accelerator of the specified gadget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2212,7 +2214,7 @@ button gadgets.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-activate-callback">
-<span class="sig-name descname"><span class="pre">gadget-activate-callback</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-activate-callback" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-activate-callback</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-activate-callback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the activate callback of the specified gadget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2246,7 +2248,7 @@ activate callback for the gadget.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-activate-callback-setter">
-<span class="sig-name descname"><span class="pre">gadget-activate-callback-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-activate-callback-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-activate-callback-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-activate-callback-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the activate callback for the specified gadget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2277,7 +2279,7 @@ activate callback for the gadget.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-client">
-<span class="sig-name descname"><span class="pre">gadget-client</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-client" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-client</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-client" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the client of the specified gadget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2319,7 +2321,7 @@ client when a callback is received.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-client-setter">
-<span class="sig-name descname"><span class="pre">gadget-client-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-client-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-client-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-client-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the client of the specified gadget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2357,7 +2359,7 @@ client when a callback is received.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-command">
-<span class="sig-name descname"><span class="pre">gadget-command</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-command" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-command</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-command" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the command associated with the specified gadget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2392,7 +2394,7 @@ user chooses the relevant menu command.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-command-setter">
-<span class="sig-name descname"><span class="pre">gadget-command-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-command-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-command-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-command-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the command of the specified gadget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2428,7 +2430,7 @@ user chooses the relevant menu command.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-default?">
-<span class="sig-name descname"><span class="pre">gadget-default?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-default?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-default?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-default?" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Returns true if the specified gadget is the default gadget in a frame.</p>
 </div></blockquote>
@@ -2467,7 +2469,7 @@ default gesture is usually pressing the RETURN button.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-default?-setter">
-<span class="sig-name descname"><span class="pre">gadget-default?-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-default?-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-default?-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-default?-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Toggles whether the specified button is the default for the current
 frame.</p>
 <dl class="field-list simple">
@@ -2508,7 +2510,7 @@ default gesture is usually pressing the RETURN button.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-documentation">
-<span class="sig-name descname"><span class="pre">gadget-documentation</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-documentation" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-documentation</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-documentation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the documentation string for the specified gadget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2550,7 +2552,7 @@ presentation, you should keep them as short as possible.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-documentation-setter">
-<span class="sig-name descname"><span class="pre">gadget-documentation-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-documentation-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-documentation-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-documentation-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the documentation string for the specified gadget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2594,7 +2596,7 @@ presentation, you should keep them as short as possible.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-enabled?">
-<span class="sig-name descname"><span class="pre">gadget-enabled?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-enabled?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-enabled?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-enabled?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if the gadget is enabled.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2640,7 +2642,7 @@ out on the screen.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-enabled?-setter">
-<span class="sig-name descname"><span class="pre">gadget-enabled?-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-enabled?-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-enabled?-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-enabled?-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Toggles the enabled state of the specified gadget.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2689,7 +2691,7 @@ out on the screen.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-id">
-<span class="sig-name descname"><span class="pre">gadget-id</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-id" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-id</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the ID of the specified gadget.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2744,7 +2746,7 @@ value for that tab control.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-id-setter">
-<span class="sig-name descname"><span class="pre">gadget-id-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-id-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-id-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-id-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the ID of the specified gadget.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2792,7 +2794,7 @@ value for that tab control.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-items">
-<span class="sig-name descname"><span class="pre">gadget-items</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-items" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-items</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-items" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the items for the specified gadget.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2845,7 +2847,7 @@ is a function that computes the label for the items in that gadget.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-items-setter">
-<span class="sig-name descname"><span class="pre">gadget-items-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-items-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-items-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-items-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the items for the specified gadget.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2885,7 +2887,7 @@ is a function that computes the label for the items in that gadget.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-key-press-callback">
-<span class="sig-name descname"><span class="pre">gadget-key-press-callback</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-key-press-callback" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-key-press-callback</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-key-press-callback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the key-press callback for the specified gadget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2927,7 +2929,7 @@ matches that typed.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-key-press-callback-setter">
-<span class="sig-name descname"><span class="pre">gadget-key-press-callback-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-key-press-callback-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-key-press-callback-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-key-press-callback-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the key-press callback for the specified gadget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2970,7 +2972,7 @@ matches that typed.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-label">
-<span class="sig-name descname"><span class="pre">gadget-label</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-label" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-label</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-label" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the label for the specified gadget.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3007,7 +3009,7 @@ matches that typed.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-label-key">
-<span class="sig-name descname"><span class="pre">gadget-label-key</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-label-key" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-label-key</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-label-key" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the function that is used to compute the label for the items in
 the specified gadget.</p>
 <dl class="field-list">
@@ -3063,7 +3065,7 @@ equivalents of the symbols stated.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-label-setter">
-<span class="sig-name descname"><span class="pre">gadget-label-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-label-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-label-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-label-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the label for the specified gadget.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3105,7 +3107,7 @@ amount of space than the old label.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-mnemonic">
-<span class="sig-name descname"><span class="pre">gadget-mnemonic</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-mnemonic" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-mnemonic</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-mnemonic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the mnemonic for the specified gadget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3139,7 +3141,7 @@ focus.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-mnemonic-setter">
-<span class="sig-name descname"><span class="pre">gadget-mnemonic-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-mnemonic-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-mnemonic-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-mnemonic-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the mnemonic for the specified gadget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3174,7 +3176,7 @@ focus.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-orientation">
-<span class="sig-name descname"><span class="pre">gadget-orientation</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-orientation" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-orientation</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-orientation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the orientation of the specified gadget.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3211,7 +3213,7 @@ focus.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-popup-menu-callback">
-<span class="sig-name descname"><span class="pre">gadget-popup-menu-callback</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-popup-menu-callback" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-popup-menu-callback</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-popup-menu-callback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the popup menu callback of the specified gadget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3244,7 +3246,7 @@ gadget.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-popup-menu-callback-setter">
-<span class="sig-name descname"><span class="pre">gadget-popup-menu-callback-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-popup-menu-callback-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-popup-menu-callback-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-popup-menu-callback-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the popup menu callback of the specified gadget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3278,7 +3280,7 @@ right-clicking on the gadget.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-ratios">
-<span class="sig-name descname"><span class="pre">gadget-ratios</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-ratios" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-ratios</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-ratios" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the ratios of the windows in <em>splitter</em>. This generic function
 lets you query the position of a splitter.</p>
 <dl class="field-list simple">
@@ -3300,7 +3302,7 @@ lets you query the position of a splitter.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-ratios-setter">
-<span class="sig-name descname"><span class="pre">gadget-ratios-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-ratios-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-ratios-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-ratios-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the ratios of the windows in <em>splitter</em>. This generic function
 lets you set the position of a splitter.</p>
 <dl class="field-list simple">
@@ -3326,7 +3328,7 @@ lets you set the position of a splitter.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-read-only?">
-<span class="sig-name descname"><span class="pre">gadget-read-only?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-read-only?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-read-only?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-read-only?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if the gadget is editable.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3357,7 +3359,7 @@ gadget is of most use with text gadgets.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-scrolling-horizontally?">
-<span class="sig-name descname"><span class="pre">gadget-scrolling-horizontally?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-scrolling-horizontally?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-scrolling-horizontally?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-scrolling-horizontally?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if the specified gadget has an associated horizontal scroll
 bar.</p>
 <dl class="field-list simple">
@@ -3389,7 +3391,7 @@ false otherwise.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-scrolling-vertically?">
-<span class="sig-name descname"><span class="pre">gadget-scrolling-vertically?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-scrolling-vertically?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-scrolling-vertically?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-scrolling-vertically?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if the specified gadget has an associated vertical scroll
 bar.</p>
 <dl class="field-list simple">
@@ -3421,7 +3423,7 @@ false otherwise.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-selection">
-<span class="sig-name descname"><span class="pre">gadget-selection</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-selection" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-selection</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-selection" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the currently selected items of the specified gadget.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3475,7 +3477,7 @@ with:</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-selection-mode">
-<span class="sig-name descname"><span class="pre">gadget-selection-mode</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-selection-mode" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-selection-mode</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-selection-mode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the type of selection for the specified gadget.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3523,7 +3525,7 @@ selected at a time, the selection mode returned is <code class="docutils literal
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-selection-setter">
-<span class="sig-name descname"><span class="pre">gadget-selection-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-selection-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-selection-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-selection-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the selection of the specified gadget.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3581,7 +3583,7 @@ programmatically (assuming that such a callback has been defined).</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-slug-size">
-<span class="sig-name descname"><span class="pre">gadget-slug-size</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-slug-size" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-slug-size</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-slug-size" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the slug size of the specified gadget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3622,7 +3624,7 @@ those guidelines as a reference.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-slug-size-setter">
-<span class="sig-name descname"><span class="pre">gadget-slug-size-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-slug-size-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-slug-size-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-slug-size-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the slug size of the specified gadget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3662,7 +3664,7 @@ those guidelines as a reference.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-test">
-<span class="sig-name descname"><span class="pre">gadget-test</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-test" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-test</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-test" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the test function for the specified gadget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3688,7 +3690,7 @@ identical.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-text">
-<span class="sig-name descname"><span class="pre">gadget-text</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-text" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-text</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the text for the specified gadget.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3732,7 +3734,7 @@ that you just typed with the following form:</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-text-setter">
-<span class="sig-name descname"><span class="pre">gadget-text-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-text-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-text-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-text-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the text for the specified gadget.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3776,7 +3778,7 @@ interactor:</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-value">
-<span class="sig-name descname"><span class="pre">gadget-value</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-value" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-value</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the gadget value of the specified gadget.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3844,7 +3846,7 @@ selected, <a class="reference internal" href="#duim:duim-gadgets:gadget-value"><
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-value-changed-callback">
-<span class="sig-name descname"><span class="pre">gadget-value-changed-callback</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-value-changed-callback" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-value-changed-callback</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-value-changed-callback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the value-changed callback of the specified gadget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3881,7 +3883,7 @@ changed callback for <em>gadget</em>.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-value-changed-callback-setter">
-<span class="sig-name descname"><span class="pre">gadget-value-changed-callback-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-value-changed-callback-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-value-changed-callback-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-value-changed-callback-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the value-changed-callback of the specified gadget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3917,7 +3919,7 @@ gadget.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-value-changing-callback">
-<span class="sig-name descname"><span class="pre">gadget-value-changing-callback</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-value-changing-callback" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-value-changing-callback</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-value-changing-callback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the value changing callback of the specified gadget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3950,7 +3952,7 @@ value.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-value-changing-callback-setter">
-<span class="sig-name descname"><span class="pre">gadget-value-changing-callback-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-value-changing-callback-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-value-changing-callback-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-value-changing-callback-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the value-changing callback of the specified gadget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3984,7 +3986,7 @@ value.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-value-key">
-<span class="sig-name descname"><span class="pre">gadget-value-key</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-value-key" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-value-key</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-value-key" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the function that is used to calculate the gadget value of the
 specified gadget.</p>
 <dl class="field-list">
@@ -4039,7 +4041,7 @@ and similarly for the other items in the list.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-value-range">
-<span class="sig-name descname"><span class="pre">gadget-value-range</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-value-range" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-value-range</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-value-range" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the range of values for the specified gadget.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4096,7 +4098,7 @@ and minimum values in the range. Consider the following range:</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-value-range-setter">
-<span class="sig-name descname"><span class="pre">gadget-value-range-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-value-range-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-value-range-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-value-range-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the range of values for the specified gadget.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4139,7 +4141,7 @@ represented by the range specified for gadget.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-value-setter">
-<span class="sig-name descname"><span class="pre">gadget-value-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-value-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-value-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-value-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the gadget value of the specified gadget.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4191,7 +4193,7 @@ invoked.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-value-type">
-<span class="sig-name descname"><span class="pre">gadget-value-type</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-value-type" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-value-type</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-value-type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the type of the gadget value for the specified gadget.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4234,7 +4236,7 @@ class <a class="reference external" href="https://opendylan.org/books/drm/Number
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-x-alignment">
-<span class="sig-name descname"><span class="pre">gadget-x-alignment</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-x-alignment" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-x-alignment</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-x-alignment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the horizontal alignment of the specified gadget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4267,7 +4269,7 @@ using the <code class="docutils literal notranslate"><span class="pre">x-alignme
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:gadget-y-alignment">
-<span class="sig-name descname"><span class="pre">gadget-y-alignment</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-y-alignment" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">gadget-y-alignment</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:gadget-y-alignment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the vertical alignment of the specified gadget.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4300,7 +4302,7 @@ using the <code class="docutils literal notranslate"><span class="pre">y-alignme
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[group-box]">
-<span class="sig-name descname"><span class="pre">&lt;group-box&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[group-box]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;group-box&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[group-box]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of gadgets that group their children using a labelled border.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -4320,7 +4322,7 @@ items visually.</p>
 <figure class="align-center" id="id10">
 <img alt="../_images/gadgets-22.png" src="../_images/gadgets-22.png" />
 <figcaption>
-<p><span class="caption-text">A group box</span><a class="headerlink" href="#id10" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">A group box</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The <code class="docutils literal notranslate"><span class="pre">label:</span></code> init-keyword specifies a string or icon that is to be used
@@ -4352,7 +4354,7 @@ should be displayed along the top or the bottom edge of the border.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:item-object">
-<span class="sig-name descname"><span class="pre">item-object</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:item-object" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">item-object</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:item-object" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the Dylan object representing an item in a list or table
 control.</p>
 <dl class="field-list simple">
@@ -4378,7 +4380,7 @@ control.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[label]">
-<span class="sig-name descname"><span class="pre">&lt;label&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[label]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;label&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[label]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of label gadgets.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -4422,7 +4424,7 @@ its size: only use images that are the size of a typical icon.</p>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:labelling">
-<span class="sig-name descname"><span class="pre">labelling</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#duim:duim-gadgets:labelling" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">labelling</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#duim:duim-gadgets:labelling" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Creates the specified sheet and assigns a label to it.</p>
 </div></blockquote>
@@ -4467,7 +4469,7 @@ label should be assigned.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[list-box]">
-<span class="sig-name descname"><span class="pre">&lt;list-box&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[list-box]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;list-box&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[list-box]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of list boxes.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -4487,7 +4489,7 @@ Default value: <code class="docutils literal notranslate"><span class="pre">#&qu
 <dd class="field-odd"><p><figure class="align-center" id="id11">
 <img alt="../_images/gadgets-23.png" src="../_images/gadgets-23.png" />
 <figcaption>
-<p><span class="caption-text">The class of list boxes.</span><a class="headerlink" href="#id11" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">The class of list boxes.</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The <code class="docutils literal notranslate"><span class="pre">borders:</span></code> init-keyword lets you specify a border around the list
@@ -4527,7 +4529,7 @@ gadget.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[list-control]">
-<span class="sig-name descname"><span class="pre">&lt;list-control&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[list-control]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;list-control&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[list-control]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of list controls.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -4615,7 +4617,7 @@ key-press callbacks.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:list-control-icon-function">
-<span class="sig-name descname"><span class="pre">list-control-icon-function</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:list-control-icon-function" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">list-control-icon-function</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:list-control-icon-function" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the icon function for the specified list control.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4656,7 +4658,7 @@ can be changed once the list control has been created.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:list-control-icon-function-setter">
-<span class="sig-name descname"><span class="pre">list-control-icon-function-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:list-control-icon-function-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">list-control-icon-function-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:list-control-icon-function-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the icon function for the specified list control.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4698,7 +4700,7 @@ can be changed once the list control has been created.</p>
 
 <dl class="dylan type">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[list-control-view]">
-<span class="sig-name descname"><span class="pre">&lt;list-control-view&gt;</span></span> <em class="property"><span class="pre">Type</span></em><a class="headerlink" href="#duim:duim-gadgets:[list-control-view]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;list-control-view&gt;</span></span> <em class="property"><span class="pre">Type</span></em><a class="headerlink" href="#duim:duim-gadgets:[list-control-view]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The type of possible views for a list control</p>
 <dl class="field-list simple">
 <dt class="field-odd">Equivalent<span class="colon">:</span></dt>
@@ -4736,7 +4738,7 @@ to the left of the item. Items are arranged vertically in one column.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:list-control-view">
-<span class="sig-name descname"><span class="pre">list-control-view</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:list-control-view" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">list-control-view</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:list-control-view" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the view for the specified list control.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4788,7 +4790,7 @@ each item. For more details, see the description for
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:list-control-view-setter">
-<span class="sig-name descname"><span class="pre">list-control-view-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:list-control-view-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">list-control-view-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:list-control-view-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the view for the specified list control.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4839,7 +4841,7 @@ each item. For more details, see the description for
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[list-item]">
-<span class="sig-name descname"><span class="pre">&lt;list-item&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[list-item]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;list-item&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[list-item]" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>The class that represents an item in a list control.</p>
 </div></blockquote>
@@ -4875,7 +4877,7 @@ each item. For more details, see the description for
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:make-item">
-<span class="sig-name descname"><span class="pre">make-item</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:make-item" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make-item</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:make-item" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates an item which can be inserted in the specified list control or
 table control.</p>
 <dl class="field-list simple">
@@ -4921,7 +4923,7 @@ of the default frame manager.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:make-menu-from-items">
-<span class="sig-name descname"><span class="pre">make-menu-from-items</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:make-menu-from-items" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make-menu-from-items</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:make-menu-from-items" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a menu object created from the specified items.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4974,7 +4976,7 @@ the menu, and <em>background</em> for the menu itself.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:make-node">
-<span class="sig-name descname"><span class="pre">make-node</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:make-node" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make-node</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:make-node" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Creates a node which can be inserted in the specified tree control.</p>
 </div></blockquote>
@@ -5014,7 +5016,7 @@ to the tree control.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[menu]">
-<span class="sig-name descname"><span class="pre">&lt;menu&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[menu]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;menu&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[menu]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of menu gadgets.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -5090,7 +5092,7 @@ have this effect.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[menu-bar]">
-<span class="sig-name descname"><span class="pre">&lt;menu-bar&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[menu-bar]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;menu-bar&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[menu-bar]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of menu bar gadgets.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -5140,7 +5142,7 @@ automatically by using <code class="docutils literal notranslate"><span class="p
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[menu-box]">
-<span class="sig-name descname"><span class="pre">&lt;menu-box&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[menu-box]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;menu-box&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[menu-box]" title="Permalink to this definition">¶</a></dt>
 <dd><p>A class that groups menu buttons.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -5192,7 +5194,7 @@ when the update callback is complete.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[menu-button]">
-<span class="sig-name descname"><span class="pre">&lt;menu-button&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[menu-button]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;menu-button&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[menu-button]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of all buttons that can appear in menus.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -5238,7 +5240,7 @@ discussion on this, see the entry for <a class="reference internal" href="#duim:
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:menu-owner">
-<span class="sig-name descname"><span class="pre">menu-owner</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:menu-owner" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">menu-owner</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:menu-owner" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the sheet that owns the specified menu.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5266,7 +5268,7 @@ specified, then the menu will be owned by the entire screen.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:node-children">
-<span class="sig-name descname"><span class="pre">node-children</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:node-children" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">node-children</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:node-children" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the children of the specified node in a tree control.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5299,7 +5301,7 @@ specified, then the menu will be owned by the entire screen.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:node-children-setter">
-<span class="sig-name descname"><span class="pre">node-children-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:node-children-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">node-children-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:node-children-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the children of the specified node in a tree control.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5333,7 +5335,7 @@ specified, then the menu will be owned by the entire screen.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:node-expanded?">
-<span class="sig-name descname"><span class="pre">node-expanded?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:node-expanded?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">node-expanded?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:node-expanded?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if the specified node is expanded in a tree control.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5364,7 +5366,7 @@ children are displayed in the tree control.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:node-object">
-<span class="sig-name descname"><span class="pre">node-object</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:node-object" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">node-object</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:node-object" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the object that the specified node in a tree control represents.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5394,7 +5396,7 @@ children are displayed in the tree control.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:node-parents">
-<span class="sig-name descname"><span class="pre">node-parents</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:node-parents" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">node-parents</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:node-parents" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the parents of the specified node in a tree control.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5425,7 +5427,7 @@ children are displayed in the tree control.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:node-state">
-<span class="sig-name descname"><span class="pre">node-state</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:node-state" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">node-state</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:node-state" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the state of the specified node in a tree control.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5458,7 +5460,7 @@ tree-node does not exist.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[option-box]">
-<span class="sig-name descname"><span class="pre">&lt;option-box&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[option-box]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;option-box&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[option-box]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of option boxes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -5478,7 +5480,7 @@ Default value: <code class="docutils literal notranslate"><span class="pre">#f</
 <dd class="field-odd"><p><figure class="align-center" id="id12">
 <img alt="../_images/gadgets-25.png" src="../_images/gadgets-25.png" />
 <figcaption>
-<p><span class="caption-text">The class of option boxes.</span><a class="headerlink" href="#id12" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">The class of option boxes.</span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The <code class="docutils literal notranslate"><span class="pre">borders:</span></code> init-keyword lets you specify a border around the option
@@ -5500,7 +5502,7 @@ for the gadget.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[page]">
-<span class="sig-name descname"><span class="pre">&lt;page&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[page]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;page&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[page]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class that represents a page in a tab control.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -5539,7 +5541,7 @@ where the label for the page becomes the label on the tab for the page.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[password-field]">
-<span class="sig-name descname"><span class="pre">&lt;password-field&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[password-field]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;password-field&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[password-field]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of text fields that do not echo typed text.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -5568,7 +5570,7 @@ with ES-PASSWORD style.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[progress-bar]">
-<span class="sig-name descname"><span class="pre">&lt;progress-bar&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[progress-bar]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;progress-bar&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[progress-bar]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of progress bar windows.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -5584,7 +5586,7 @@ with ES-PASSWORD style.</p>
 <dd class="field-odd"><p><figure class="align-center" id="id13">
 <img alt="../_images/gadgets-27.png" src="../_images/gadgets-27.png" />
 <figcaption>
-<p><span class="caption-text">The class of progress bar windows.</span><a class="headerlink" href="#id13" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">The class of progress bar windows.</span><a class="headerlink" href="#id13" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The <code class="docutils literal notranslate"><span class="pre">orientation:</span></code> init-keyword lets you specify whether the progress
@@ -5617,7 +5619,7 @@ can be monitored as follows:</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[push-box]">
-<span class="sig-name descname"><span class="pre">&lt;push-box&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[push-box]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;push-box&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[push-box]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Open<span class="colon">:</span></dt>
 <dd class="field-odd"><p></p></dd>
@@ -5635,7 +5637,7 @@ can be monitored as follows:</p>
 <dd class="field-even"><p><figure class="align-center" id="id14">
 <img alt="../_images/gadgets-28.png" src="../_images/gadgets-28.png" />
 <figcaption>
-<p><span class="caption-text">The class of grouped push buttons.</span><a class="headerlink" href="#id14" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">The class of grouped push buttons.</span><a class="headerlink" href="#id14" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The <a class="reference internal" href="#duim:duim-gadgets:gadget-value"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">gadget-value</span></code></a> of a push box is always the
@@ -5664,7 +5666,7 @@ which button has been pressed in a callback for the push box.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[push-button]">
-<span class="sig-name descname"><span class="pre">&lt;push-button&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[push-button]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;push-button&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[push-button]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of push buttons.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -5680,7 +5682,7 @@ which button has been pressed in a callback for the push box.</p>
 <img alt="../_images/gadgets-29.png" src="../_images/gadgets-29.png" />
 <figcaption>
 <p><span class="caption-text">The class of push buttons.The push button gadget provides
-press-to-activate switch behavior.</span><a class="headerlink" href="#id15" title="Permalink to this image">#</a></p>
+press-to-activate switch behavior.</span><a class="headerlink" href="#id15" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>When the button is activated (by releasing the pointer button over it),
@@ -5722,7 +5724,7 @@ message showing the label of the button.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[push-menu-box]">
-<span class="sig-name descname"><span class="pre">&lt;push-menu-box&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[push-menu-box]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;push-menu-box&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[push-menu-box]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of grouped push buttons in menus.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -5732,7 +5734,7 @@ message showing the label of the button.</p>
 <dd class="field-even"><p><figure class="align-center" id="id16">
 <img alt="../_images/gadgets-30.png" src="../_images/gadgets-30.png" />
 <figcaption>
-<p><span class="caption-text">The class of grouped push buttons in menus.</span><a class="headerlink" href="#id16" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">The class of grouped push buttons in menus.</span><a class="headerlink" href="#id16" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Internally, this class maps into the menu Windows control.</p>
@@ -5757,7 +5759,7 @@ message showing the label of the button.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[push-menu-button]">
-<span class="sig-name descname"><span class="pre">&lt;push-menu-button&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[push-menu-button]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;push-menu-button&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[push-menu-button]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of push buttons that appear on menus.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -5772,7 +5774,7 @@ message showing the label of the button.</p>
 <dd class="field-odd"><p><figure class="align-center" id="id17">
 <img alt="../_images/gadgets-31.png" src="../_images/gadgets-31.png" />
 <figcaption>
-<p><span class="caption-text">The class of push buttons that appear on menus.</span><a class="headerlink" href="#id17" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">The class of push buttons that appear on menus.</span><a class="headerlink" href="#id17" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The <code class="docutils literal notranslate"><span class="pre">default?:</span></code> init-keyword sets the default value for the push menu
@@ -5793,7 +5795,7 @@ button gadget.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[radio-box]">
-<span class="sig-name descname"><span class="pre">&lt;radio-box&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[radio-box]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;radio-box&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[radio-box]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of radio boxes, or groups of mutually exclusive radio buttons.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -5839,7 +5841,7 @@ itself.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[radio-button]">
-<span class="sig-name descname"><span class="pre">&lt;radio-button&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[radio-button]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;radio-button&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[radio-button]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of radio buttons.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -5871,7 +5873,7 @@ buttons using the :class:&lt;radio-box&gt;` gadget.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[radio-menu-box]">
-<span class="sig-name descname"><span class="pre">&lt;radio-menu-box&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[radio-menu-box]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;radio-menu-box&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[radio-menu-box]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of grouped radio buttons that can appear in menus.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -5882,7 +5884,7 @@ buttons using the :class:&lt;radio-box&gt;` gadget.</p>
 <figure class="align-center" id="id18">
 <img alt="../_images/gadgets-34.png" src="../_images/gadgets-34.png" />
 <figcaption>
-<p><span class="caption-text">A radio menu box</span><a class="headerlink" href="#id18" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">A radio menu box</span><a class="headerlink" href="#id18" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Internally, this class maps into the menu Windows control.</p>
@@ -5925,7 +5927,7 @@ menu box, as well as several other menu gadgets.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[radio-menu-button]">
-<span class="sig-name descname"><span class="pre">&lt;radio-menu-button&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[radio-menu-button]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;radio-menu-button&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[radio-menu-button]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of radio buttons that can appear in menus.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -5956,7 +5958,7 @@ several instances of such buttons using the :class:&lt;radio-menu-box&gt;` gadge
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:remove-column">
-<span class="sig-name descname"><span class="pre">remove-column</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:remove-column" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">remove-column</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:remove-column" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes a column from the specified table.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -5982,7 +5984,7 @@ several instances of such buttons using the :class:&lt;radio-menu-box&gt;` gadge
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:remove-item">
-<span class="sig-name descname"><span class="pre">remove-item</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:remove-item" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">remove-item</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:remove-item" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes an item from a list control or table control.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6014,7 +6016,7 @@ several instances of such buttons using the :class:&lt;radio-menu-box&gt;` gadge
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:remove-node">
-<span class="sig-name descname"><span class="pre">remove-node</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:remove-node" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">remove-node</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:remove-node" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes a node from a tree control.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6043,7 +6045,7 @@ several instances of such buttons using the :class:&lt;radio-menu-box&gt;` gadge
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[scroll-bar]">
-<span class="sig-name descname"><span class="pre">&lt;scroll-bar&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[scroll-bar]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;scroll-bar&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[scroll-bar]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of scroll bars.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -6117,7 +6119,7 @@ slug-size: 20));</p>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:scrolling">
-<span class="sig-name descname"><span class="pre">scrolling</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#duim:duim-gadgets:scrolling" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">scrolling</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#duim:duim-gadgets:scrolling" title="Permalink to this definition">¶</a></dt>
 <dd><p>Places scroll bars around the specified DUIM panes, if required.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
@@ -6173,7 +6175,7 @@ label should be assigned.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:scroll-position">
-<span class="sig-name descname"><span class="pre">scroll-position</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:scroll-position" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">scroll-position</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:scroll-position" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the position of the scroll bar slug in the specified sheet.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6216,7 +6218,7 @@ if you are using those guidelines as a reference.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[separator]">
-<span class="sig-name descname"><span class="pre">&lt;separator&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[separator]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;separator&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[separator]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of gadgets used as a visual separator.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -6233,7 +6235,7 @@ Default value: <code class="docutils literal notranslate"><span class="pre">#&qu
 <figure class="align-center" id="id19">
 <img alt="../_images/gadgets-37.png" src="../_images/gadgets-37.png" />
 <figcaption>
-<p><span class="caption-text">A separator</span><a class="headerlink" href="#id19" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">A separator</span><a class="headerlink" href="#id19" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The <code class="docutils literal notranslate"><span class="pre">orientation:</span></code> init-keyword specifies whether the separator is
@@ -6262,7 +6264,7 @@ it, separated with a separator.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:set-scroll-position">
-<span class="sig-name descname"><span class="pre">set-scroll-position</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:set-scroll-position" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set-scroll-position</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:set-scroll-position" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scrolls the window on the specified sheet.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6301,7 +6303,7 @@ if you are using those guidelines as a reference.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:sheet-viewport">
-<span class="sig-name descname"><span class="pre">sheet-viewport</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:sheet-viewport" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">sheet-viewport</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:sheet-viewport" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the viewport that is clipping the specified sheet.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6332,7 +6334,7 @@ if you are using those guidelines as a reference.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:sheet-viewport-region">
-<span class="sig-name descname"><span class="pre">sheet-viewport-region</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:sheet-viewport-region" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">sheet-viewport-region</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:sheet-viewport-region" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the sheet region of the specified sheet’s viewport, if it has
 one.</p>
 <dl class="field-list simple">
@@ -6365,7 +6367,7 @@ has no viewport, it returns <em>sheet</em> ‘s own region.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[slider]">
-<span class="sig-name descname"><span class="pre">&lt;slider&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[slider]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;slider&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[slider]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of slider gadgets.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -6428,7 +6430,7 @@ suitable alternative to spin boxes in many situations.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[spacing]">
-<span class="sig-name descname"><span class="pre">&lt;spacing&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[spacing]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;spacing&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[spacing]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of gadgets that can be used to provide spacing around a sheet.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -6476,7 +6478,7 @@ by a text field that has spacing added to it.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[spin-box]">
-<span class="sig-name descname"><span class="pre">&lt;spin-box&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[spin-box]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;spin-box&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[spin-box]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of spin box gadgets.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -6524,7 +6526,7 @@ suitable alternative to spin boxes in many situations.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[splitter]">
-<span class="sig-name descname"><span class="pre">&lt;splitter&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[splitter]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;splitter&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[splitter]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of splitter gadgets. Splitters are subclasses of both
 <a class="reference internal" href="#duim:duim-gadgets:[gadget]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;gadget&gt;</span></code></a> and <a class="reference internal" href="layouts.html#duim-layouts:duim-layouts:[layout]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;layout&gt;</span></code></a>. Splitters (sometimes referred
 to as split bars in Microsoft documentation) are gadgets that allow
@@ -6552,7 +6554,7 @@ the user moves the split bar.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:splitter-split-bar-moved-callback">
-<span class="sig-name descname"><span class="pre">splitter-split-bar-moved-callback</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:splitter-split-bar-moved-callback" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">splitter-split-bar-moved-callback</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:splitter-split-bar-moved-callback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the function invoked when the split bar of <em>splitter</em> is moved.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6573,7 +6575,7 @@ the user moves the split bar.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:splitter-split-bar-moved-callback-setter">
-<span class="sig-name descname"><span class="pre">splitter-split-bar-moved-callback-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:splitter-split-bar-moved-callback-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">splitter-split-bar-moved-callback-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:splitter-split-bar-moved-callback-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the callback invoked when the split bar of <em>splitter</em> is moved.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6595,7 +6597,7 @@ the user moves the split bar.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:splitter-split-box-callback">
-<span class="sig-name descname"><span class="pre">splitter-split-box-callback</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:splitter-split-box-callback" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">splitter-split-box-callback</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:splitter-split-box-callback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the callback invoked when the split box of <em>splitter</em> is
 clicked.</p>
 <dl class="field-list simple">
@@ -6617,7 +6619,7 @@ clicked.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:splitter-split-box-callback-setter">
-<span class="sig-name descname"><span class="pre">splitter-split-box-callback-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:splitter-split-box-callback-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">splitter-split-box-callback-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:splitter-split-box-callback-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the callback invoked when the split box of <em>splitter</em> is clicked.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6639,7 +6641,7 @@ clicked.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[status-bar]">
-<span class="sig-name descname"><span class="pre">&lt;status-bar&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[status-bar]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;status-bar&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[status-bar]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of status bars.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -6764,7 +6766,7 @@ progress bar with the given range of values.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:status-bar-label-pane">
-<span class="sig-name descname"><span class="pre">status-bar-label-pane</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:status-bar-label-pane" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">status-bar-label-pane</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:status-bar-label-pane" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the gadget that displays the label of the specified status bar.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6809,7 +6811,7 @@ returned with the following call:</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:status-bar-progress-bar">
-<span class="sig-name descname"><span class="pre">status-bar-progress-bar</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:status-bar-progress-bar" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">status-bar-progress-bar</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:status-bar-progress-bar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the progress bar for the specified status bar.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -6839,7 +6841,7 @@ returned with the following call:</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[tab-control]">
-<span class="sig-name descname"><span class="pre">&lt;tab-control&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[tab-control]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;tab-control&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[tab-control]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of tab controls.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -6914,7 +6916,7 @@ first page contains a button, and the second page contains a list.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:tab-control-current-page">
-<span class="sig-name descname"><span class="pre">tab-control-current-page</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:tab-control-current-page" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">tab-control-current-page</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:tab-control-current-page" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Returns the current visible page of the specified tab control.</p>
 </div></blockquote>
@@ -6973,7 +6975,7 @@ code:</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:tab-control-current-page-setter">
-<span class="sig-name descname"><span class="pre">tab-control-current-page-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:tab-control-current-page-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">tab-control-current-page-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:tab-control-current-page-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the current visible page of the specified tab control.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -7035,7 +7037,7 @@ current page as follows:</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:tab-control-labels">
-<span class="sig-name descname"><span class="pre">tab-control-labels</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:tab-control-labels" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">tab-control-labels</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:tab-control-labels" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the tab labels of the specified pane.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -7090,7 +7092,7 @@ current page as follows:</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[tab-control-page]">
-<span class="sig-name descname"><span class="pre">&lt;tab-control-page&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[tab-control-page]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;tab-control-page&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[tab-control-page]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class that represents a page in a tab control.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -7101,7 +7103,7 @@ current page as follows:</p>
 <figure class="align-center" id="id20">
 <img alt="../_images/gadgets-42.png" src="../_images/gadgets-42.png" />
 <figcaption>
-<p><span class="caption-text">A tab control page</span><a class="headerlink" href="#id20" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">A tab control page</span><a class="headerlink" href="#id20" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </p>
@@ -7120,7 +7122,7 @@ current page as follows:</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:tab-control-pages">
-<span class="sig-name descname"><span class="pre">tab-control-pages</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:tab-control-pages" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">tab-control-pages</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:tab-control-pages" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the tab pages of the specified pane.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -7180,7 +7182,7 @@ Default value: <code class="docutils literal notranslate"><span class="pre">#[]<
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:tab-control-pages-setter">
-<span class="sig-name descname"><span class="pre">tab-control-pages-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:tab-control-pages-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">tab-control-pages-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:tab-control-pages-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the tab pages of the specified tab control.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -7225,7 +7227,7 @@ contained in <em>pages</em>.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[table-column]">
-<span class="sig-name descname"><span class="pre">&lt;table-column&gt;</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[table-column]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;table-column&gt;</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[table-column]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of columns in table controls.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -7266,7 +7268,7 @@ init-keyword.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[table-control]">
-<span class="sig-name descname"><span class="pre">&lt;table-control&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[table-control]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;table-control&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[table-control]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of table controls.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -7327,7 +7329,7 @@ This is illustrated below.
 <figure class="align-center" id="id21">
 <img alt="../_images/gadgets-44.png" src="../_images/gadgets-44.png" />
 <figcaption>
-<p><span class="caption-text">Defining column headings and contents in table controls</span><a class="headerlink" href="#id21" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Defining column headings and contents in table controls</span><a class="headerlink" href="#id21" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>If you do not specify both of these init-keywords, you must supply
@@ -7361,7 +7363,7 @@ LVS-REPORT style.</p>
 
 <dl class="dylan type">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[table-control-view]">
-<span class="sig-name descname"><span class="pre">&lt;table-control-view&gt;</span></span> <em class="property"><span class="pre">Type</span></em><a class="headerlink" href="#duim:duim-gadgets:[table-control-view]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;table-control-view&gt;</span></span> <em class="property"><span class="pre">Type</span></em><a class="headerlink" href="#duim:duim-gadgets:[table-control-view]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The type of possible views for a table control</p>
 <dl class="field-list simple">
 <dt class="field-odd">Equivalent<span class="colon">:</span></dt>
@@ -7408,7 +7410,7 @@ author of the e-mail, its subject, and the date and time it was sent.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:table-control-view">
-<span class="sig-name descname"><span class="pre">table-control-view</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:table-control-view" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">table-control-view</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:table-control-view" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the current view of the specified table control.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -7440,7 +7442,7 @@ described in the entry for <a class="reference internal" href="#duim:duim-gadget
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:table-control-view-setter">
-<span class="sig-name descname"><span class="pre">table-control-view-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:table-control-view-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">table-control-view-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:table-control-view-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the current view of the specified table control.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -7475,7 +7477,7 @@ table control are displayed.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[table-item]">
-<span class="sig-name descname"><span class="pre">&lt;table-item&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[table-item]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;table-item&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[table-item]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class that represents an item in a table control.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -7507,7 +7509,7 @@ table item represents.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[text-editor]">
-<span class="sig-name descname"><span class="pre">&lt;text-editor&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[text-editor]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;text-editor&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[text-editor]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of multiple line text editors.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -7558,7 +7560,7 @@ displayed:</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[text-field]">
-<span class="sig-name descname"><span class="pre">&lt;text-field&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[text-field]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;text-field&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[text-field]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of single line text fields.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -7620,7 +7622,7 @@ invokes a callback that displays the gadget value in a dialog box.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[text-gadget]">
-<span class="sig-name descname"><span class="pre">&lt;text-gadget&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[text-gadget]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;text-gadget&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[text-gadget]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of all text gadgets.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -7696,7 +7698,7 @@ for the platform that you are writing for, and is not configurable.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[tool-bar]">
-<span class="sig-name descname"><span class="pre">&lt;tool-bar&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[tool-bar]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;tool-bar&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[tool-bar]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of tool bars.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -7716,7 +7718,7 @@ clicking the button performs.</p>
 <figure class="align-center" id="id22">
 <img alt="../_images/gadgets-47.png" src="../_images/gadgets-47.png" />
 <figcaption>
-<p><span class="caption-text">A tool bar</span><a class="headerlink" href="#id22" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">A tool bar</span><a class="headerlink" href="#id22" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>A tool bar is often placed underneath the menu bar of an application,
@@ -7746,7 +7748,7 @@ window inside the application.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[tree-control]">
-<span class="sig-name descname"><span class="pre">&lt;tree-control&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[tree-control]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;tree-control&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[tree-control]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of tree controls.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -7852,7 +7854,7 @@ control. It is a sequence.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:tree-control-children-predicate">
-<span class="sig-name descname"><span class="pre">tree-control-children-predicate</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:tree-control-children-predicate" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">tree-control-children-predicate</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:tree-control-children-predicate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the children predicate function of the specified tree control.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -7884,7 +7886,7 @@ control. It is a sequence.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:tree-control-children-predicate-setter">
-<span class="sig-name descname"><span class="pre">tree-control-children-predicate-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:tree-control-children-predicate-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">tree-control-children-predicate-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:tree-control-children-predicate-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the children predicate function of the specified tree control.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -7917,7 +7919,7 @@ control. It is a sequence.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:tree-control-children-generator">
-<span class="sig-name descname"><span class="pre">tree-control-children-generator</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:tree-control-children-generator" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">tree-control-children-generator</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:tree-control-children-generator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the function that generates the children of the specified tree control.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -7951,7 +7953,7 @@ root of <em>tree-control</em>.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:tree-control-children-generator-setter">
-<span class="sig-name descname"><span class="pre">tree-control-children-generator-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:tree-control-children-generator-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">tree-control-children-generator-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:tree-control-children-generator-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the function that generates the children of the specified tree
 control.</p>
 <dl class="field-list simple">
@@ -7987,7 +7989,7 @@ is the function that is used to generate the children below the root of
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:tree-control-icon-function">
-<span class="sig-name descname"><span class="pre">tree-control-icon-function</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:tree-control-icon-function" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">tree-control-icon-function</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:tree-control-icon-function" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the icon function for the specified list control.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -8028,7 +8030,7 @@ cannot be changed once the list control has been created.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:tree-control-initial-depth">
-<span class="sig-name descname"><span class="pre">tree-control-initial-depth</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:tree-control-initial-depth" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">tree-control-initial-depth</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:tree-control-initial-depth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the initial depth of the specified tree control.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -8064,7 +8066,7 @@ the top level are displayed, but no others).</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:tree-control-initial-depth-setter">
-<span class="sig-name descname"><span class="pre">tree-control-initial-depth-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:tree-control-initial-depth-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">tree-control-initial-depth-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:tree-control-initial-depth-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the initial depth of the specified tree control.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -8101,7 +8103,7 @@ the top level are displayed, but no others).</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:tree-control-roots">
-<span class="sig-name descname"><span class="pre">tree-control-roots</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:tree-control-roots" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">tree-control-roots</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:tree-control-roots" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Returns the roots of the specified tree control.</p>
 </div></blockquote>
@@ -8149,7 +8151,7 @@ the top level are displayed, but no others).</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:tree-control-roots-setter">
-<span class="sig-name descname"><span class="pre">tree-control-roots-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:tree-control-roots-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">tree-control-roots-setter</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:tree-control-roots-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the roots of the specified tree control.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -8200,7 +8202,7 @@ the top level are displayed, but no others).</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[tree-node]">
-<span class="sig-name descname"><span class="pre">&lt;tree-node&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[tree-node]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;tree-node&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[tree-node]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of nodes in tree controls.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -8252,7 +8254,7 @@ this might be a directory on disk.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:update-gadget">
-<span class="sig-name descname"><span class="pre">update-gadget</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:update-gadget" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">update-gadget</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:update-gadget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Forces the specified gadget to be redrawn.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -8273,7 +8275,7 @@ have been made which have not been reflected in the gadget automatically
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[value-gadget]">
-<span class="sig-name descname"><span class="pre">&lt;value-gadget&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[value-gadget]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;value-gadget&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[value-gadget]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of gadgets that can have values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -8319,7 +8321,7 @@ in a text field have been committed by pressing the RETURN key.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[value-range-gadget]">
-<span class="sig-name descname"><span class="pre">&lt;value-range-gadget&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[value-range-gadget]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;value-range-gadget&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[value-range-gadget]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of all value gadgets with ranges.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -8371,7 +8373,7 @@ messages being downloaded.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[viewport]">
-<span class="sig-name descname"><span class="pre">&lt;viewport&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[viewport]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;viewport&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[viewport]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of viewports.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -8429,7 +8431,7 @@ implement this kind of functionality using a table control.</p></li>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:viewport?">
-<span class="sig-name descname"><span class="pre">viewport?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:viewport?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">viewport?</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:viewport?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns true if the specified object is a viewport.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -8467,7 +8469,7 @@ implement this kind of functionality using a table control.</p></li>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:viewport-region">
-<span class="sig-name descname"><span class="pre">viewport-region</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:viewport-region" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">viewport-region</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#duim:duim-gadgets:viewport-region" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the region for the specified viewport.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -8503,7 +8505,7 @@ implement this kind of functionality using a table control.</p></li>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:with-border">
-<span class="sig-name descname"><span class="pre">with-border</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#duim:duim-gadgets:with-border" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">with-border</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#duim:duim-gadgets:with-border" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the specified sheet and places a border around it.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
@@ -8549,7 +8551,7 @@ border should be placed.</p>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:with-spacing">
-<span class="sig-name descname"><span class="pre">with-spacing</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#duim:duim-gadgets:with-spacing" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">with-spacing</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#duim:duim-gadgets:with-spacing" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the specified sheet and places spacing around it.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
@@ -8703,6 +8705,6 @@ spacing should be placed.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Expressions &amp; Variables" href="expressions-variables.html" /><link rel="prev" title="An Introduction to Dylan" href="index.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Why Dylan? - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="why-dylan">
-<h1>Why Dylan?<a class="headerlink" href="#why-dylan" title="Permalink to this heading">#</a></h1>
+<h1>Why Dylan?<a class="headerlink" href="#why-dylan" title="Permalink to this heading">¶</a></h1>
 <p>What earthly reason could there be for learning yet
 <em>another</em> computer language?  And why should that language be
 Dylan?</p>
@@ -474,7 +476,7 @@ Scheme or TCL – but uses an algebraic infix syntax similar to C’s.
 Dylan is object-oriented from the ground up, supports multiple
 inheritance and exceptions, implements <a class="reference internal" href="multiple-dispatch.html"><span class="doc">multiple dispatch</span></a>, and <a class="reference internal" href="#garbage-collection"><span class="std std-ref">collects garbage</span></a>.</p>
 <section id="dynamic-vs-static-languages">
-<h2>Dynamic vs. Static Languages<a class="headerlink" href="#dynamic-vs-static-languages" title="Permalink to this heading">#</a></h2>
+<h2>Dynamic vs. Static Languages<a class="headerlink" href="#dynamic-vs-static-languages" title="Permalink to this heading">¶</a></h2>
 <p>Static languages need to know the type of every variable at
 compile time. Examples of static languages include C++, Java, and Go.
 Code written in static languages typically compiles efficiently, and
@@ -492,7 +494,7 @@ caught at compile time. Code omitting those type declarations gains
 the flexibility of a dynamic language.</p>
 </section>
 <section id="functional-languages">
-<span id="id1"></span><h2>Functional Languages<a class="headerlink" href="#functional-languages" title="Permalink to this heading">#</a></h2>
+<span id="id1"></span><h2>Functional Languages<a class="headerlink" href="#functional-languages" title="Permalink to this heading">¶</a></h2>
 <p>Functional languages, such as Common Lisp,
 Scheme and to a large extent TCL, view an entire program as one large
 function to be evaluated. Expressions, statements and even control
@@ -528,7 +530,7 @@ more imperative idiom:</p>
 </div>
 </section>
 <section id="algebraic-infix-syntax">
-<h2>Algebraic Infix Syntax<a class="headerlink" href="#algebraic-infix-syntax" title="Permalink to this heading">#</a></h2>
+<h2>Algebraic Infix Syntax<a class="headerlink" href="#algebraic-infix-syntax" title="Permalink to this heading">¶</a></h2>
 <p>Languages based on LISP typically use a notation called
 fully-parenthesized prefix syntax (also known as
 s-expressions). This consists of nested parentheses, as seen in the
@@ -544,7 +546,7 @@ as shown in <a class="reference internal" href="#functional-languages"><span cla
 syntax similar to those of C and Pascal.</p>
 </section>
 <section id="object-orientation">
-<h2>Object Orientation<a class="headerlink" href="#object-orientation" title="Permalink to this heading">#</a></h2>
+<h2>Object Orientation<a class="headerlink" href="#object-orientation" title="Permalink to this heading">¶</a></h2>
 <p>Unlike many other object-oriented languages, Dylan uses objects
 for every data value. Integers and strings are objects, as are
 functions and classes themselves.</p>
@@ -566,7 +568,7 @@ powerful technique known as <a class="reference internal" href="multiple-dispatc
 All of these features will be explained in greater detail later on.</p>
 </section>
 <section id="garbage-collection">
-<span id="id2"></span><h2>Garbage Collection<a class="headerlink" href="#garbage-collection" title="Permalink to this heading">#</a></h2>
+<span id="id2"></span><h2>Garbage Collection<a class="headerlink" href="#garbage-collection" title="Permalink to this heading">¶</a></h2>
 <p>Languages with garbage collection have no need of a <code class="docutils literal notranslate"><span class="pre">free</span></code> or
 <code class="docutils literal notranslate"><span class="pre">delete</span></code> operator, because unused heap memory gets reclaimed automatically
 by the language runtime. This reduces the complexity of source code,
@@ -574,7 +576,7 @@ eliminates the need of keeping reference counts for shared objects,
 and prevents most memory allocation bugs and a major source of memory leaks.</p>
 </section>
 <section id="why-not-dylan">
-<h2>Why Not Dylan?<a class="headerlink" href="#why-not-dylan" title="Permalink to this heading">#</a></h2>
+<h2>Why Not Dylan?<a class="headerlink" href="#why-not-dylan" title="Permalink to this heading">¶</a></h2>
 <p>Dylan’s greatest weaknesses are its lack of a battle-hardened compiler
 and IDE, and a large user base (and hence a large set of libraries).
 However, the compiler and IDE themselves are written in Dylan so there
@@ -660,6 +662,6 @@ critical code.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

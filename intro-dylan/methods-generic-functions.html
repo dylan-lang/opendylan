@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Objects" href="objects.html" /><link rel="prev" title="Expressions &amp; Variables" href="expressions-variables.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Methods &amp; Generic Functions - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="methods-generic-functions">
-<h1>Methods &amp; Generic Functions<a class="headerlink" href="#methods-generic-functions" title="Permalink to this heading">#</a></h1>
+<h1>Methods &amp; Generic Functions<a class="headerlink" href="#methods-generic-functions" title="Permalink to this heading">¶</a></h1>
 <p>Dylan <a class="reference external" href="https://opendylan.org/books/drm/Functions_Overview#IX-763"><code class="xref drm docutils literal notranslate"><span class="pre">methods</span></code></a> correspond roughly to the
 functions found in C++. They take zero or more named parameters,
 but also return zero or more named return values. A minimal Dylan method
@@ -488,7 +490,7 @@ rewritten as <code class="docutils literal notranslate"><span class="pre">end</s
 Dylan permits all the obvious combinations of keywords and labels to
 follow an end statement.</p>
 <section id="parameters-parameter-lists">
-<h2>Parameters &amp; Parameter Lists<a class="headerlink" href="#parameters-parameter-lists" title="Permalink to this heading">#</a></h2>
+<h2>Parameters &amp; Parameter Lists<a class="headerlink" href="#parameters-parameter-lists" title="Permalink to this heading">¶</a></h2>
 <p>Dylan methods declare parameters in a fashion similar to that of
 many languages, except for the fact that parameters may
 optionally be untyped. Both of the following methods are legal:</p>
@@ -532,7 +534,7 @@ object:</p>
 <p>If this sounds unclear, reread the chapter on <a class="reference internal" href="expressions-variables.html"><span class="doc">variables and expressions</span></a>.</p>
 </section>
 <section id="return-values">
-<h2>Return Values<a class="headerlink" href="#return-values" title="Permalink to this heading">#</a></h2>
+<h2>Return Values<a class="headerlink" href="#return-values" title="Permalink to this heading">¶</a></h2>
 <p>Because Dylan methods can’t have “output” parameters, they’re allowed
 considerably more flexibility when it comes to return values. Methods
 may return more than one value. As with parameters, these values may
@@ -562,7 +564,7 @@ the value of the last expression in its body.</p>
 </div>
 </section>
 <section id="bare-methods">
-<h2>Bare Methods<a class="headerlink" href="#bare-methods" title="Permalink to this heading">#</a></h2>
+<h2>Bare Methods<a class="headerlink" href="#bare-methods" title="Permalink to this heading">¶</a></h2>
 <p>Nameless methods may be declared inline. Such <a class="reference external" href="https://opendylan.org/books/drm/Functions_Overview#IX-773"><code class="xref drm docutils literal notranslate"><span class="pre">bare</span> <span class="pre">methods</span></code></a> are
 typically used as parameters to other methods.  For example, the
 following code fragment squares each element of a list using the built
@@ -583,7 +585,7 @@ follows:</p>
 </div>
 </section>
 <section id="local-methods">
-<h2>Local Methods<a class="headerlink" href="#local-methods" title="Permalink to this heading">#</a></h2>
+<h2>Local Methods<a class="headerlink" href="#local-methods" title="Permalink to this heading">¶</a></h2>
 <p>Local methods resemble bare methods but have names. They are
 declared within other methods, often as private utility routines.</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">sum-squares</span><span class="w"> </span><span class="p">(</span><span class="k">in</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;list&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">sum-of-element-squares</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;integer&gt;</span><span class="p">)</span>
@@ -619,7 +621,7 @@ outside of the local function’s own scope are known as
 over” (or captures the binding of) the variable named <code class="docutils literal notranslate"><span class="pre">string</span></code>.</p>
 </section>
 <section id="generic-functions">
-<span id="id1"></span><h2>Generic Functions<a class="headerlink" href="#generic-functions" title="Permalink to this heading">#</a></h2>
+<span id="id1"></span><h2>Generic Functions<a class="headerlink" href="#generic-functions" title="Permalink to this heading">¶</a></h2>
 <p>A <a class="reference external" href="https://opendylan.org/books/drm/generic function"><code class="xref drm docutils literal notranslate"><span class="pre">generic</span> <span class="pre">function</span></code></a> represents zero or more
 similar methods. Every method created by means of
 <a class="reference external" href="https://opendylan.org/books/drm/Definition_Macros#define_method"><code class="xref drm docutils literal notranslate"><span class="pre">define</span> <span class="pre">method</span></code></a> is automatically contained
@@ -672,7 +674,7 @@ methods to a single parameter and no return values:</p>
 <a class="reference internal" href="multiple-dispatch.html"><span class="doc">multiple dispatch</span></a>.</p>
 </section>
 <section id="keyword-arguments">
-<h2>Keyword Arguments<a class="headerlink" href="#keyword-arguments" title="Permalink to this heading">#</a></h2>
+<h2>Keyword Arguments<a class="headerlink" href="#keyword-arguments" title="Permalink to this heading">¶</a></h2>
 <p>Functions may accept keyword arguments,
 extra parameters which are identified by a label rather than by their
 position in the argument list. Keyword arguments are often used in a
@@ -735,7 +737,7 @@ were omitted, the value of the <code class="docutils literal notranslate"><span 
 <code class="docutils literal notranslate"><span class="pre">seq</span></code> argument.</p>
 </section>
 <section id="rest-arguments">
-<h2>Rest Arguments<a class="headerlink" href="#rest-arguments" title="Permalink to this heading">#</a></h2>
+<h2>Rest Arguments<a class="headerlink" href="#rest-arguments" title="Permalink to this heading">¶</a></h2>
 <p>An argument list can also include <code class="docutils literal notranslate"><span class="pre">#rest</span></code>, which is used with a variable name:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">format</span><span class="w"> </span><span class="p">(</span><span class="n">format-string</span><span class="p">,</span><span class="w"> </span><span class="k">#rest</span><span class="w"> </span><span class="n">format-parameters</span><span class="p">)</span>
 <span class="w">  </span><span class="p">...</span>
@@ -752,7 +754,7 @@ were called like so:</p>
 value <code class="docutils literal notranslate"><span class="pre">#[&quot;cloudy&quot;,</span> <span class="pre">52]</span></code>.</p>
 </section>
 <section id="parameter-lists-and-generic-functions">
-<h2>Parameter Lists and Generic Functions<a class="headerlink" href="#parameter-lists-and-generic-functions" title="Permalink to this heading">#</a></h2>
+<h2>Parameter Lists and Generic Functions<a class="headerlink" href="#parameter-lists-and-generic-functions" title="Permalink to this heading">¶</a></h2>
 <p>A generic function restricts the parameter lists of its methods, but methods
 can expand on the generic function’s parameter list if the generic function
 allows it. This section describes how that works. It is a little more advanced
@@ -1031,6 +1033,6 @@ with <a class="reference internal" href="#generic-functions"><span class="std st
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

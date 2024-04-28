@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Numeric Literal Syntax" href="dep-0011-numeric-literal-syntax.html" /><link rel="prev" title="Multi-line Strings" href="dep-0008-multi-line-strings.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Defaulted Element Reference Syntax - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="defaulted-element-reference-syntax">
-<h1>Defaulted Element Reference Syntax<a class="headerlink" href="#defaulted-element-reference-syntax" title="Permalink to this heading">#</a></h1>
+<h1>Defaulted Element Reference Syntax<a class="headerlink" href="#defaulted-element-reference-syntax" title="Permalink to this heading">¶</a></h1>
 <div class="table-wrapper docutils container">
 <table class="docutils align-default">
 <tbody>
@@ -495,19 +497,19 @@
 </table>
 </div>
 <section id="revision-history">
-<h2>Revision History<a class="headerlink" href="#revision-history" title="Permalink to this heading">#</a></h2>
+<h2>Revision History<a class="headerlink" href="#revision-history" title="Permalink to this heading">¶</a></h2>
 <p>The revision history of this document is available here:
 <a class="reference external" href="https://github.com/dylan-lang/website/commits/master/source/proposals/dep-0010-element-otherwise.rst">https://github.com/dylan-lang/website/commits/master/source/proposals/dep-0010-element-otherwise.rst</a></p>
 </section>
 <section id="abstract">
-<h2>Abstract<a class="headerlink" href="#abstract" title="Permalink to this heading">#</a></h2>
+<h2>Abstract<a class="headerlink" href="#abstract" title="Permalink to this heading">¶</a></h2>
 <p>The Dylan language currently provides bracketed element reference
 syntax as a shorthand for calls to the <a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#element"><code class="xref drm docutils literal notranslate"><span class="pre">element</span></code></a> and <a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#aref"><code class="xref drm docutils literal notranslate"><span class="pre">aref</span></code></a>
 functions. This DEP proposes an element reference syntax for providing
 default values for <a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#element"><code class="xref drm docutils literal notranslate"><span class="pre">element</span></code></a> calls.</p>
 </section>
 <section id="motivation">
-<h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this heading">#</a></h2>
+<h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this heading">¶</a></h2>
 <p>The element reference syntax <code class="docutils literal notranslate"><span class="pre">collection[i]</span></code> is a compact way of
 writing <code class="docutils literal notranslate"><span class="pre">element(collection,</span> <span class="pre">i)</span></code>. However, whenever supplying a
 default becomes necessary, element reference syntax cannot be
@@ -516,7 +518,7 @@ area of code. Adding defaulted element reference syntax can improve
 the conciseness and readability of code.</p>
 </section>
 <section id="specification">
-<h2>Specification<a class="headerlink" href="#specification" title="Permalink to this heading">#</a></h2>
+<h2>Specification<a class="headerlink" href="#specification" title="Permalink to this heading">¶</a></h2>
 <p>To the <cite>operand</cite> nonterminal identifier we add the following phrase
 grammar rule:</p>
 <blockquote>
@@ -540,7 +542,7 @@ where it appears, the <code class="docutils literal notranslate"><span class="pr
 equivalent to <code class="docutils literal notranslate"><span class="pre">element(collection,</span> <span class="pre">i,</span> <span class="pre">default:</span> <span class="pre">y)</span></code>.</p>
 </section>
 <section id="rationale">
-<h2>Rationale<a class="headerlink" href="#rationale" title="Permalink to this heading">#</a></h2>
+<h2>Rationale<a class="headerlink" href="#rationale" title="Permalink to this heading">¶</a></h2>
 <p>Note that to prevent parsing ambiguities the operand of the
 <code class="docutils literal notranslate"><span class="pre">otherwise</span></code> clause uses the <cite>leaf</cite> grammar nonterminal rather than
 the <cite>expression</cite> nonterminal used for function call arguments. This
@@ -550,12 +552,12 @@ since in practice most supplied defaults are either literals or
 inconvenience.</p>
 </section>
 <section id="backwards-compatibility">
-<h2>Backwards Compatibility<a class="headerlink" href="#backwards-compatibility" title="Permalink to this heading">#</a></h2>
+<h2>Backwards Compatibility<a class="headerlink" href="#backwards-compatibility" title="Permalink to this heading">¶</a></h2>
 <p>The addition of this new legal syntax does not affect the
 interpretation of existing programs.</p>
 </section>
 <section id="reference-implementation">
-<h2>Reference Implementation<a class="headerlink" href="#reference-implementation" title="Permalink to this heading">#</a></h2>
+<h2>Reference Implementation<a class="headerlink" href="#reference-implementation" title="Permalink to this heading">¶</a></h2>
 <p>A reference implementation for Open Dylan can be found at
 <a class="reference external" href="https://github.com/dylan-lang/opendylan/tree/element-otherwise">https://github.com/dylan-lang/opendylan/tree/element-otherwise</a></p>
 </section>
@@ -638,6 +640,6 @@ interpretation of existing programs.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

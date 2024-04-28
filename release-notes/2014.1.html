@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Open Dylan 2013.2 Release Notes" href="2013.2.html" /><link rel="prev" title="Open Dylan 2019.1" href="2019.1.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Open Dylan 2014.1 Release Notes - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,11 +463,11 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="open-dylan-2014-1-release-notes">
-<h1>Open Dylan 2014.1 Release Notes<a class="headerlink" href="#open-dylan-2014-1-release-notes" title="Permalink to this heading">#</a></h1>
+<h1>Open Dylan 2014.1 Release Notes<a class="headerlink" href="#open-dylan-2014-1-release-notes" title="Permalink to this heading">¶</a></h1>
 <section id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>This document describes the 2014.1 release of Open Dylan, released
 December 29, 2014.</p>
 <ul class="simple">
@@ -475,14 +477,14 @@ December 29, 2014.</p>
 </ul>
 </section>
 <section id="bash-completion">
-<h2>Bash Completion<a class="headerlink" href="#bash-completion" title="Permalink to this heading">#</a></h2>
+<h2>Bash Completion<a class="headerlink" href="#bash-completion" title="Permalink to this heading">¶</a></h2>
 <p>A bash completion script is now included for <code class="docutils literal notranslate"><span class="pre">dylan-compiler</span></code> and
 can be found in <code class="docutils literal notranslate"><span class="pre">share/opendylan/bash_completion/</span></code>.  This can be
 symlinked into the relevant <code class="docutils literal notranslate"><span class="pre">bash_completion.d</span></code> directory on your
 system.</p>
 </section>
 <section id="build-system">
-<h2>Build System<a class="headerlink" href="#build-system" title="Permalink to this heading">#</a></h2>
+<h2>Build System<a class="headerlink" href="#build-system" title="Permalink to this heading">¶</a></h2>
 <ul>
 <li><p>The Jam files for Linux, FreeBSD and OS X have been updated to support
 doing a build when there are spaces in the path to the current working
@@ -510,7 +512,7 @@ directory.</p></li>
 </ul>
 </section>
 <section id="compiler">
-<h2>Compiler<a class="headerlink" href="#compiler" title="Permalink to this heading">#</a></h2>
+<h2>Compiler<a class="headerlink" href="#compiler" title="Permalink to this heading">¶</a></h2>
 <ul>
 <li><p>The intermediate language of the compiler, named Dylan Flow Machine,
 has been instrumented with tracing facilities. Changes to the control
@@ -545,7 +547,7 @@ functions.</p></li>
 </ul>
 </section>
 <section id="c-ffi">
-<h2>C-FFI<a class="headerlink" href="#c-ffi" title="Permalink to this heading">#</a></h2>
+<h2>C-FFI<a class="headerlink" href="#c-ffi" title="Permalink to this heading">¶</a></h2>
 <ul>
 <li><p>There is a new <code class="docutils literal notranslate"><span class="pre">objc-selector-definer</span></code> compiler macro. This supports
 the Objective C / Dylan bridge by allowing the definition of Objective
@@ -573,13 +575,13 @@ This was not broken when using the HARP back-end.</p></li>
 </ul>
 </section>
 <section id="c-run-time">
-<h2>C Run-time<a class="headerlink" href="#c-run-time" title="Permalink to this heading">#</a></h2>
+<h2>C Run-time<a class="headerlink" href="#c-run-time" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">debug-message</span></code> no longer crashes when printing some conditions.</p></li>
 </ul>
 </section>
 <section id="common-dylan">
-<h2>Common Dylan<a class="headerlink" href="#common-dylan" title="Permalink to this heading">#</a></h2>
+<h2>Common Dylan<a class="headerlink" href="#common-dylan" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>The <code class="docutils literal notranslate"><span class="pre">simple-io</span></code> module has been renamed to <code class="docutils literal notranslate"><span class="pre">simple-format</span></code>.
 A convenience module that re-exports <code class="docutils literal notranslate"><span class="pre">simple-format</span></code> has been
@@ -601,7 +603,7 @@ than only the function specializers.</p></li>
 </ul>
 </section>
 <section id="debugging">
-<h2>Debugging<a class="headerlink" href="#debugging" title="Permalink to this heading">#</a></h2>
+<h2>Debugging<a class="headerlink" href="#debugging" title="Permalink to this heading">¶</a></h2>
 <ul>
 <li><p>When using <a class="reference external" href="http://lldb.llvm.org/">LLDB</a> for debugging, Dylan
 support is now available. To use this, you need to import the
@@ -626,7 +628,7 @@ start showing Dylan values:</p>
 </ul>
 </section>
 <section id="dfmc-execution">
-<h2>dfmc-execution<a class="headerlink" href="#dfmc-execution" title="Permalink to this heading">#</a></h2>
+<h2>dfmc-execution<a class="headerlink" href="#dfmc-execution" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">dfmc-execution</span></code> provides a framework for interpreting the compiler’s
 IR (DFM). It has been experimentally restored from the source control
@@ -641,14 +643,14 @@ in using this for.</p></li>
 </ul>
 </section>
 <section id="dylan">
-<h2>Dylan<a class="headerlink" href="#dylan" title="Permalink to this heading">#</a></h2>
+<h2>Dylan<a class="headerlink" href="#dylan" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>There is now an specialized implementation of <code class="docutils literal notranslate"><span class="pre">member?</span></code> defined
 for searching for a <code class="docutils literal notranslate"><span class="pre">&lt;byte-character&gt;</span></code> in a <code class="docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code>.</p></li>
 </ul>
 </section>
 <section id="dylan-direct-c-ffi">
-<h2>dylan-direct-c-ffi<a class="headerlink" href="#dylan-direct-c-ffi" title="Permalink to this heading">#</a></h2>
+<h2>dylan-direct-c-ffi<a class="headerlink" href="#dylan-direct-c-ffi" title="Permalink to this heading">¶</a></h2>
 <ul>
 <li><p>Much like <code class="docutils literal notranslate"><span class="pre">%call-c-function</span></code> for low-level C-FFI, there is now
 a <code class="docutils literal notranslate"><span class="pre">%objc-msgsend</span></code> for low-level Objective C messaging integration.
@@ -672,7 +674,7 @@ variants, including sending to the super (<code class="docutils literal notransl
 </ul>
 </section>
 <section id="hash-algorithms">
-<h2>hash-algorithms<a class="headerlink" href="#hash-algorithms" title="Permalink to this heading">#</a></h2>
+<h2>hash-algorithms<a class="headerlink" href="#hash-algorithms" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>A crash resulting from memory corruption when using sha-1 has been
 fixed.</p></li>
@@ -680,7 +682,7 @@ fixed.</p></li>
 </ul>
 </section>
 <section id="io">
-<h2>IO<a class="headerlink" href="#io" title="Permalink to this heading">#</a></h2>
+<h2>IO<a class="headerlink" href="#io" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>New functions <code class="docutils literal notranslate"><span class="pre">format-err</span></code> and <code class="docutils literal notranslate"><span class="pre">force-err</span></code> have been added that
 do the same thing as <code class="docutils literal notranslate"><span class="pre">format-out</span></code> and <code class="docutils literal notranslate"><span class="pre">force-out</span></code>, but operate
@@ -688,20 +690,20 @@ on <code class="docutils literal notranslate"><span class="pre">*standard-error*
 </ul>
 </section>
 <section id="make-dylan-app">
-<h2>make-dylan-app<a class="headerlink" href="#make-dylan-app" title="Permalink to this heading">#</a></h2>
+<h2>make-dylan-app<a class="headerlink" href="#make-dylan-app" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">make-dylan-app</span></code> is now included in the Windows distribution.</p></li>
 </ul>
 </section>
 <section id="strings">
-<h2>strings<a class="headerlink" href="#strings" title="Permalink to this heading">#</a></h2>
+<h2>strings<a class="headerlink" href="#strings" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>String comparison and equality operations are now 10 times faster
 when they are known to be on byte-strings.</p></li>
 </ul>
 </section>
 <section id="system">
-<h2>system<a class="headerlink" href="#system" title="Permalink to this heading">#</a></h2>
+<h2>system<a class="headerlink" href="#system" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>The function <code class="docutils literal notranslate"><span class="pre">format-date</span></code> is now faster.</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">copy-file</span></code> method on Unix no longer fails when the path contains
@@ -713,7 +715,7 @@ on <code class="docutils literal notranslate"><span class="pre">x86_64-darwin</s
 </ul>
 </section>
 <section id="testworks">
-<h2>Testworks<a class="headerlink" href="#testworks" title="Permalink to this heading">#</a></h2>
+<h2>Testworks<a class="headerlink" href="#testworks" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Compiler warnings are now produced when a test or suite is unused.
 For example, it is easy to forget to add a test to any suite.  As a
@@ -815,6 +817,6 @@ details.</p></li>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Writing and Compiling IDL" href="bank-idl.html" /><link rel="prev" title="Quick Start Tutorial" href="getstart.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Setting up the Bank Example - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,11 +463,11 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="setting-up-the-bank-example">
-<h1>Setting up the Bank Example<a class="headerlink" href="#setting-up-the-bank-example" title="Permalink to this heading">#</a></h1>
+<h1>Setting up the Bank Example<a class="headerlink" href="#setting-up-the-bank-example" title="Permalink to this heading">¶</a></h1>
 <section id="about-the-bank-example">
-<h2>About the bank example<a class="headerlink" href="#about-the-bank-example" title="Permalink to this heading">#</a></h2>
+<h2>About the bank example<a class="headerlink" href="#about-the-bank-example" title="Permalink to this heading">¶</a></h2>
 <p>Chapters 4, 5, and 6 of this guide present a deeper CORBA development
 example than the Hello World example we saw in chapter 2. The new
 example is a simple implementation of a bank. The architecture of the
@@ -500,7 +502,7 @@ the accounts that are active in the server.</p>
 interface.</p>
 </section>
 <section id="where-to-find-the-example-code">
-<h2>Where to find the example code<a class="headerlink" href="#where-to-find-the-example-code" title="Permalink to this heading">#</a></h2>
+<h2>Where to find the example code<a class="headerlink" href="#where-to-find-the-example-code" title="Permalink to this heading">¶</a></h2>
 <p>The bank example code is available in the Open Dylan Examples menu,
 under the CORBA category. There is a Bank Client project and a Bank
 Server project.</p>
@@ -521,7 +523,7 @@ details.</p></li>
 </ul>
 </section>
 <section id="odbc-requirements">
-<h2>ODBC requirements<a class="headerlink" href="#odbc-requirements" title="Permalink to this heading">#</a></h2>
+<h2>ODBC requirements<a class="headerlink" href="#odbc-requirements" title="Permalink to this heading">¶</a></h2>
 <p>In order to run the example, you need to have ODBC version 3.0 (or
 higher) and an ODBC driver for Microsoft Access installed on the
 machine hosting the server application. You do not need a copy of
@@ -533,7 +535,7 @@ download page,
 <p>This information may change in the future.</p>
 </section>
 <section id="registering-the-database-with-odbc">
-<h2>Registering the database with ODBC<a class="headerlink" href="#registering-the-database-with-odbc" title="Permalink to this heading">#</a></h2>
+<h2>Registering the database with ODBC<a class="headerlink" href="#registering-the-database-with-odbc" title="Permalink to this heading">¶</a></h2>
 <p>So that the bank server can access the <code class="file docutils literal notranslate"><span class="pre">bank.mdb</span></code> database using
 ODBC, we need to register the database as an ODBC data source. This
 installation step also tells ODBC which driver to use when connecting
@@ -541,7 +543,7 @@ to the database.</p>
 <p>To register the database in this way, ODBC drivers must be installed
 on the machine that will host the server.</p>
 <section id="registering-the-database-on-windows-10">
-<h3>Registering the database on Windows 10<a class="headerlink" href="#registering-the-database-on-windows-10" title="Permalink to this heading">#</a></h3>
+<h3>Registering the database on Windows 10<a class="headerlink" href="#registering-the-database-on-windows-10" title="Permalink to this heading">¶</a></h3>
 <p>To register the <code class="file docutils literal notranslate"><span class="pre">bank.mdb</span></code> database with ODBC on Windows 10:</p>
 <ol class="arabic">
 <li><p>From the Windows <span class="guilabel">Start</span> menu, choose
@@ -583,7 +585,7 @@ building and running the demo itself.</p>
 </section>
 </section>
 <section id="building-the-bank-client-and-server">
-<h2>Building the Bank client and server<a class="headerlink" href="#building-the-bank-client-and-server" title="Permalink to this heading">#</a></h2>
+<h2>Building the Bank client and server<a class="headerlink" href="#building-the-bank-client-and-server" title="Permalink to this heading">¶</a></h2>
 <p>We can now build the client and server applications for the demo.</p>
 <ol class="arabic">
 <li><p>Start the Open Dylan environment.</p>
@@ -604,7 +606,7 @@ the source code for the protocol and stubs libraries.</p>
 </ol>
 </section>
 <section id="running-the-server-and-client">
-<h2>Running the server and client<a class="headerlink" href="#running-the-server-and-client" title="Permalink to this heading">#</a></h2>
+<h2>Running the server and client<a class="headerlink" href="#running-the-server-and-client" title="Permalink to this heading">¶</a></h2>
 <p>We can now run the bank demo for the first time.</p>
 <p>In the Bank-Server project window, choose <span class="menuselection">Application
 ‣ Start</span> to run the server executable. The server is represented by
@@ -703,6 +705,6 @@ client application. Then do the same for the server window.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

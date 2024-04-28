@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Open Dylan 2013.1 Release Notes" href="2013.1.html" /><link rel="prev" title="Open Dylan 2014.1 Release Notes" href="2014.1.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>Open Dylan 2013.2 Release Notes - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,11 +463,11 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="open-dylan-2013-2-release-notes">
-<h1>Open Dylan 2013.2 Release Notes<a class="headerlink" href="#open-dylan-2013-2-release-notes" title="Permalink to this heading">#</a></h1>
+<h1>Open Dylan 2013.2 Release Notes<a class="headerlink" href="#open-dylan-2013-2-release-notes" title="Permalink to this heading">¶</a></h1>
 <section id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>This document describes the 2013.2 release of Open Dylan, released
 December 23, 2013.</p>
 <ul class="simple">
@@ -475,18 +477,18 @@ December 23, 2013.</p>
 </ul>
 </section>
 <section id="improvements">
-<h2>Improvements<a class="headerlink" href="#improvements" title="Permalink to this heading">#</a></h2>
+<h2>Improvements<a class="headerlink" href="#improvements" title="Permalink to this heading">¶</a></h2>
 <section id="documentation">
-<h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading">#</a></h3>
+<h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading">¶</a></h3>
 <p>The <a class="reference external" href="http://opendylan.org/documentation/library-reference/logging/">logging</a> library has been documented.</p>
 <p>The <a class="reference external" href="http://opendylan.org/documentation/library-reference/regular-expressions/index.html">regular-expressions</a> library documentation has been greatly improved.</p>
 <p>The <a class="reference external" href="http://opendylan.org/documentation/library-reference/system/date.html">date</a> module documentation has been improved and now covers date formatting and parsing.</p>
 <p>The <a class="reference external" href="http://opendylan.org/documentation/library-reference/c-ffi/">C-FFI</a> library now discusses <a class="reference external" href="http://opendylan.org/documentation/library-reference/c-ffi/#notes-on-linking">linking against a library</a> rather than assuming that people will find the LID file documentation. <a class="reference external" href="http://opendylan.org/documentation/library-reference/c-ffi/#tracing-ffi-calls">Tracing FFI calls</a> has also been documented.</p>
 </section>
 <section id="build-tools">
-<h3>Build Tools<a class="headerlink" href="#build-tools" title="Permalink to this heading">#</a></h3>
+<h3>Build Tools<a class="headerlink" href="#build-tools" title="Permalink to this heading">¶</a></h3>
 <section id="architectures">
-<h4>Architectures<a class="headerlink" href="#architectures" title="Permalink to this heading">#</a></h4>
+<h4>Architectures<a class="headerlink" href="#architectures" title="Permalink to this heading">¶</a></h4>
 <p>Our configure script now supports the multiarch layout used on recent Debian systems.</p>
 <p><code class="docutils literal notranslate"><span class="pre">OPEN_DYLAN_PLATFORM_NAME</span></code> is now <code class="docutils literal notranslate"><span class="pre">OPEN_DYLAN_TARGET_PLATFORM</span></code> to make
 the intent more clear. Additionally, this value is available to Jam as
@@ -495,7 +497,7 @@ the intent more clear. Additionally, this value is available to Jam as
 is also improved, so long as the proper run-time libraries have been built.</p>
 </section>
 <section id="error-reporting">
-<h4>Error Reporting<a class="headerlink" href="#error-reporting" title="Permalink to this heading">#</a></h4>
+<h4>Error Reporting<a class="headerlink" href="#error-reporting" title="Permalink to this heading">¶</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">dylan-compiler</span></code> now reports more information about circular references.
 Before, it reported:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>.../opendylan/sources/dylan/multidimensional-array.dylan:19: Warning - The definition of $empty-dimensions is circular.
@@ -515,9 +517,9 @@ Before, it reported:</p>
 </section>
 </section>
 <section id="libraries">
-<h3>Libraries<a class="headerlink" href="#libraries" title="Permalink to this heading">#</a></h3>
+<h3>Libraries<a class="headerlink" href="#libraries" title="Permalink to this heading">¶</a></h3>
 <section id="common-dylan">
-<h4>common-dylan<a class="headerlink" href="#common-dylan" title="Permalink to this heading">#</a></h4>
+<h4>common-dylan<a class="headerlink" href="#common-dylan" title="Permalink to this heading">¶</a></h4>
 <p>A new module <code class="docutils literal notranslate"><span class="pre">simple-timers</span></code> has been added. This replaces the old
 primitives <code class="docutils literal notranslate"><span class="pre">primitive-start-timer</span></code> and <code class="docutils literal notranslate"><span class="pre">primitive-stop-timer</span></code>
 which have been removed.</p>
@@ -526,25 +528,25 @@ have been added for passing byte storage data to the C-FFI. These are
 implemented for <code class="docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;byte-vector&gt;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&lt;buffer&gt;</span></code>.</p>
 </section>
 <section id="command-line-parser">
-<h4>command-line-parser<a class="headerlink" href="#command-line-parser" title="Permalink to this heading">#</a></h4>
+<h4>command-line-parser<a class="headerlink" href="#command-line-parser" title="Permalink to this heading">¶</a></h4>
 <p>Two new init keywords have been added to the <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;command-line-parser&gt;</span></code>
 class: <code class="docutils literal notranslate"><span class="pre">min-positional-options:</span></code> and <code class="docutils literal notranslate"><span class="pre">max-positional-options:</span></code>.</p>
 </section>
 <section id="dylan-extensions">
-<h4>dylan-extensions<a class="headerlink" href="#dylan-extensions" title="Permalink to this heading">#</a></h4>
+<h4>dylan-extensions<a class="headerlink" href="#dylan-extensions" title="Permalink to this heading">¶</a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">debug-name</span></code> method now has a specialization for <code class="docutils literal notranslate"><span class="pre">&lt;slot-descriptor&gt;</span></code>.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">debug-message</span></code> method is now a function and doesn’t perform any
 generic dispatch, making it safe to use it almost anywhere, including
 within the dispatch code.</p>
 </section>
 <section id="hash-algorithms">
-<h4>hash-algorithms<a class="headerlink" href="#hash-algorithms" title="Permalink to this heading">#</a></h4>
+<h4>hash-algorithms<a class="headerlink" href="#hash-algorithms" title="Permalink to this heading">¶</a></h4>
 <p>A hash algorithms library has been added that supports the MD5, SHA-1, SHA256,
 SHA384, and SHA512 algorithms. <a class="reference external" href="http://opendylan.org/documentation/library-reference/hash-algorithms/">Documentation</a>
 is available. This library was written by Hannes Mehnert.</p>
 </section>
 <section id="i-o">
-<h4>I/O<a class="headerlink" href="#i-o" title="Permalink to this heading">#</a></h4>
+<h4>I/O<a class="headerlink" href="#i-o" title="Permalink to this heading">¶</a></h4>
 <p>Streams no longer default to having a lock, and the library as a whole
 no longer attempts to be thread-safe by default. If you need thread safety
 for a stream, use <code class="docutils literal notranslate"><span class="pre">with-stream-locked</span></code> at the application level to
@@ -563,13 +565,13 @@ to buffering 16k instead of 512 bytes. This leads to some substantial
 compile time improvements on hosts with slow drives.</p>
 </section>
 <section id="id2">
-<h4>logging<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h4>
+<h4>logging<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h4>
 <p>The logging library is now part of Open Dylan.  This means it is no
 longer necessary to add it as a git submodule in your project’s
 sources and set up a registry entry in order to use it.</p>
 </section>
 <section id="network">
-<h4>network<a class="headerlink" href="#network" title="Permalink to this heading">#</a></h4>
+<h4>network<a class="headerlink" href="#network" title="Permalink to this heading">¶</a></h4>
 <p>The bindings <code class="docutils literal notranslate"><span class="pre">$local-host</span></code> and <code class="docutils literal notranslate"><span class="pre">$loopback-address</span></code> have been removed.
 The function <code class="docutils literal notranslate"><span class="pre">local-host-name</span></code> is now provided which returns the host name.
 The main reason for this change was ongoing confusion by the way the network
@@ -577,20 +579,20 @@ library initialized itself (calling <code class="docutils literal notranslate"><
 to <code class="docutils literal notranslate"><span class="pre">gethostbyname</span></code>, which does not work on all computers).</p>
 </section>
 <section id="runtime">
-<h4>runtime<a class="headerlink" href="#runtime" title="Permalink to this heading">#</a></h4>
+<h4>runtime<a class="headerlink" href="#runtime" title="Permalink to this heading">¶</a></h4>
 <p>The C runtime will now use compiler primitives for the primitives
 <code class="docutils literal notranslate"><span class="pre">primitive-machine-word-count-low-zeros</span></code> and
 <code class="docutils literal notranslate"><span class="pre">primitive-machine-word-count-high-zeros</span></code>.</p>
 </section>
 <section id="system">
-<h4>System<a class="headerlink" href="#system" title="Permalink to this heading">#</a></h4>
+<h4>System<a class="headerlink" href="#system" title="Permalink to this heading">¶</a></h4>
 <p>Two new functions have been added: <code class="docutils literal notranslate"><span class="pre">current-process-id</span></code> and
 <code class="docutils literal notranslate"><span class="pre">parent-process-id</span></code>.  On Unix these are equivalent to <code class="docutils literal notranslate"><span class="pre">getpid</span></code> and
 <code class="docutils literal notranslate"><span class="pre">getppid</span></code> respectively.  On Windows they are equivalent to
 <code class="docutils literal notranslate"><span class="pre">GetCurrentProcessId</span></code> and <code class="docutils literal notranslate"><span class="pre">method</span> <span class="pre">()</span> <span class="pre">0</span> <span class="pre">end</span></code> respectively.</p>
 </section>
 <section id="testworks">
-<h4>Testworks<a class="headerlink" href="#testworks" title="Permalink to this heading">#</a></h4>
+<h4>Testworks<a class="headerlink" href="#testworks" title="Permalink to this heading">¶</a></h4>
 <ul class="simple">
 <li><p>The documentation has been largely rewritten.  Only names exported
 from the <code class="docutils literal notranslate"><span class="pre">testworks</span></code> module are documented.</p></li>
@@ -628,9 +630,9 @@ release note.)</p></li>
 </section>
 </section>
 <section id="bug-fixes">
-<h2>Bug Fixes<a class="headerlink" href="#bug-fixes" title="Permalink to this heading">#</a></h2>
+<h2>Bug Fixes<a class="headerlink" href="#bug-fixes" title="Permalink to this heading">¶</a></h2>
 <section id="id3">
-<h3>Common Dylan<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<h3>Common Dylan<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">application-arguments()</span></code> will now work on <code class="docutils literal notranslate"><span class="pre">x86_64-darwin</span></code>.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">debug-message()</span></code> function will now work around a possible clang compiler
 issue that causes a crash when printing integers.</p>
@@ -735,6 +737,6 @@ issue that causes a crash when printing integers.</p>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

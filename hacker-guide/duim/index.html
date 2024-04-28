@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Topics" href="../topics/index.html" /><link rel="prev" title="The DEBUGGER-MANAGER library" href="../runtime-manager/debugger-manager.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>DUIM - Dylan User Interface Manager - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,13 +463,13 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="duim-dylan-user-interface-manager">
-<h1>DUIM - Dylan User Interface Manager<a class="headerlink" href="#duim-dylan-user-interface-manager" title="Permalink to this heading">#</a></h1>
+<h1>DUIM - Dylan User Interface Manager<a class="headerlink" href="#duim-dylan-user-interface-manager" title="Permalink to this heading">¶</a></h1>
 <p>We have a lot to learn about hacking on DUIM, so there isn’t
 much to document yet as we haven’t learned yet.</p>
 <section id="gtk-back-end">
-<h2>GTK Back-end<a class="headerlink" href="#gtk-back-end" title="Permalink to this heading">#</a></h2>
+<h2>GTK Back-end<a class="headerlink" href="#gtk-back-end" title="Permalink to this heading">¶</a></h2>
 <p>The GTK+ back-end is usable on both macOS and Linux. It is
 based on GTK+ 3.x. On macOS, it assumes that the Quartz
 back-end is being used rather than X11.</p>
@@ -476,7 +478,7 @@ meta-data.  Some portions are hand-edited however or entirely done by
 hand, like the Cairo bindings.  Most of the special cases for hand-editing
 are put into the binding generator (<a class="reference external" href="https://github.com/dylan-foundry/gir-dylan">gir-dylan</a>), but not all.</p>
 <section id="getting-gtk-3-x-with-quartz-on-macos">
-<h3>Getting GTK+ 3.x with Quartz on macOS<a class="headerlink" href="#getting-gtk-3-x-with-quartz-on-macos" title="Permalink to this heading">#</a></h3>
+<h3>Getting GTK+ 3.x with Quartz on macOS<a class="headerlink" href="#getting-gtk-3-x-with-quartz-on-macos" title="Permalink to this heading">¶</a></h3>
 <p>Building GTK+ 3.x with Quartz on macOS must be done in a specific way.
 This currently can <em>not</em> be done with Homebrew.</p>
 <p>Follow the <a class="reference external" href="https://wiki.gnome.org/GTK+/OSX/Building">directions</a> on the GTK+ wiki, but make sure to build
@@ -498,7 +500,7 @@ Once you have a current build of Open Dylan, set the
 </div>
 </section>
 <section id="debugging-information">
-<h3>Debugging Information<a class="headerlink" href="#debugging-information" title="Permalink to this heading">#</a></h3>
+<h3>Debugging Information<a class="headerlink" href="#debugging-information" title="Permalink to this heading">¶</a></h3>
 <p>To enable more debugging information, uncomment the following line in
 <code class="docutils literal notranslate"><span class="pre">sources/duim/gtk/gtk-debug.dylan</span></code>:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="vg">*debug-duim-function*</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">dbg</span><span class="p">;</span>
@@ -591,6 +593,6 @@ and <a class="reference external" href="https://developer.gnome.org/gtk3/3.8/gtk
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>

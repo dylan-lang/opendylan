@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="The standard-io Module" href="standard-io.html" /><link rel="prev" title="The print and pprint Modules" href="print.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.04.27 -->
         <title>The streams Module - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=437aa6ec" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
     
@@ -112,6 +112,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -461,9 +463,9 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="the-streams-module">
-<h1>The streams Module<a class="headerlink" href="#the-streams-module" title="Permalink to this heading">#</a></h1>
+<h1>The streams Module<a class="headerlink" href="#the-streams-module" title="Permalink to this heading">¶</a></h1>
 <p>This document describes the Streams module, which allows you to establish
 and control input to and output from aggregates of data, such as files
 on disk, or sequences. This module, together with the Standard-IO
@@ -482,7 +484,7 @@ these later sections when using streams.</p>
 <p>Finally, <a class="reference internal" href="#the-streams-module-reference">The streams Module Reference</a> gives complete details on all
 interfaces in the Streams module, in alphabetical order.</p>
 <section id="goals-of-this-module">
-<h2>Goals of this module<a class="headerlink" href="#goals-of-this-module" title="Permalink to this heading">#</a></h2>
+<h2>Goals of this module<a class="headerlink" href="#goals-of-this-module" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>A generic, easy-to-use interface for streaming over aggregates of data. The
 same high-level interface for consuming or producing is available
@@ -494,7 +496,7 @@ and network I/O.</p></li>
 </ul>
 </section>
 <section id="concepts">
-<h2>Concepts<a class="headerlink" href="#concepts" title="Permalink to this heading">#</a></h2>
+<h2>Concepts<a class="headerlink" href="#concepts" title="Permalink to this heading">¶</a></h2>
 <p>A <em>stream</em> provides sequential access to an aggregate of data, such as a Dylan
 <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code> or a disk file. Streams grant this access according to a
 metaphor of <em>reading</em> and <em>writing</em>: elements can be read from streams or
@@ -510,7 +512,7 @@ consumed. Conversely, streams permitting writing operations are called
 underlying data aggregate. Streams permitting both kinds of operations
 are called <em>input-output</em> streams.</p>
 <section id="input-streams">
-<h3>Input Streams<a class="headerlink" href="#input-streams" title="Permalink to this heading">#</a></h3>
+<h3>Input Streams<a class="headerlink" href="#input-streams" title="Permalink to this heading">¶</a></h3>
 <p>The Streams module provides a set of functions for reading elements from
 an input stream. These functions hide the details of indexing,
 buffering, and so on. For instance, the function <a class="reference internal" href="#io:streams:read-element"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">read-element</span></code></a>
@@ -539,7 +541,7 @@ with the <code class="docutils literal notranslate"><span class="pre">on-end-of-
 reading functions support it.</p>
 </section>
 <section id="output-streams">
-<h3>Output Streams<a class="headerlink" href="#output-streams" title="Permalink to this heading">#</a></h3>
+<h3>Output Streams<a class="headerlink" href="#output-streams" title="Permalink to this heading">¶</a></h3>
 <p>The Streams module also provides a set of functions for writing data elements
 to an output stream. Like the functions that operate upon input streams, these
 functions hide the details of indexing, growing an underlying buffer, and so
@@ -558,7 +560,7 @@ string and create the string “I see!”, using the function
 information about writing to streams, see <a class="reference internal" href="#writing-to-streams">Writing to streams</a>.</p>
 </section>
 <section id="positionable-streams">
-<h3>Positionable Streams<a class="headerlink" href="#positionable-streams" title="Permalink to this heading">#</a></h3>
+<h3>Positionable Streams<a class="headerlink" href="#positionable-streams" title="Permalink to this heading">¶</a></h3>
 <p>Some streams are <em>positionable</em>; that is, any element of the stream can
 be accessed at any time. Positionable streams allow you to set the
 position at which the stream is accessed by the next operation. The
@@ -607,7 +609,7 @@ position.</p>
 </section>
 </section>
 <section id="stream-classes">
-<h2>Stream classes<a class="headerlink" href="#stream-classes" title="Permalink to this heading">#</a></h2>
+<h2>Stream classes<a class="headerlink" href="#stream-classes" title="Permalink to this heading">¶</a></h2>
 <p>The exported streams class heterarchy includes the classes shown in
 the image below. Classes shown in bold are all instantiable.</p>
 <figure class="align-center">
@@ -631,7 +633,7 @@ exported from the <a class="reference internal" href="../system/file-system.html
 <li><p><a class="reference internal" href="#io:streams:[indenting-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;indenting-stream&gt;</span></code></a></p></li>
 </ul>
 <section id="sequence-streams">
-<h3>Sequence streams<a class="headerlink" href="#sequence-streams" title="Permalink to this heading">#</a></h3>
+<h3>Sequence streams<a class="headerlink" href="#sequence-streams" title="Permalink to this heading">¶</a></h3>
 <p>Dylan provides various functions for manipulating sequences, such as
 <a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#concatenate"><code class="xref drm docutils literal notranslate"><span class="pre">concatenate</span></code></a> and <a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#copy-sequence"><code class="xref drm docutils literal notranslate"><span class="pre">copy-sequence</span></code></a>, but sometimes it can be useful to
 use the streams model to create or consume sequences. For example, if you’re
@@ -651,7 +653,7 @@ using multiple calls to <a class="reference internal" href="format.html#io:forma
 stream contents.</p></li>
 </ol>
 <section id="sequence-streams-and-object-identity">
-<h4>Sequence streams and object identity<a class="headerlink" href="#sequence-streams-and-object-identity" title="Permalink to this heading">#</a></h4>
+<h4>Sequence streams and object identity<a class="headerlink" href="#sequence-streams-and-object-identity" title="Permalink to this heading">¶</a></h4>
 <p>When writing to output streams over sequences, Dylan may from time to
 time need to grow the underlying sequence that it is using to represent
 the stream data.</p>
@@ -710,7 +712,7 @@ vector each time it grows.</p>
 </section>
 </section>
 <section id="closing-streams">
-<h3>Closing streams<a class="headerlink" href="#closing-streams" title="Permalink to this heading">#</a></h3>
+<h3>Closing streams<a class="headerlink" href="#closing-streams" title="Permalink to this heading">¶</a></h3>
 <p>It is important to call <a class="reference internal" href="#io:streams:close"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">close</span></code></a> on streams when you have finished with
 them. Typically, external streams such as <a class="reference internal" href="#io:streams:[file-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-stream&gt;</span></code></a> and
 <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;console-stream&gt;</span></code> allocate underlying system resources when they are
@@ -736,7 +738,7 @@ most libraries that provide stream classes provide a macro. For example,
 </div>
 </section>
 <section id="with-output-to-string-with-input-from-string-macros">
-<h3>with-output-to-string / with-input-from-string macros<a class="headerlink" href="#with-output-to-string-with-input-from-string-macros" title="Permalink to this heading">#</a></h3>
+<h3>with-output-to-string / with-input-from-string macros<a class="headerlink" href="#with-output-to-string-with-input-from-string-macros" title="Permalink to this heading">¶</a></h3>
 <p>The macro <a class="reference internal" href="#io:streams:with-output-to-string"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-output-to-string</span></code></a> provides a convenient way of
 returning a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> after performing a series of operations on a
 <a class="reference internal" href="#io:streams:[stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stream&gt;</span></code></a>, and then close the stream.</p>
@@ -788,7 +790,7 @@ opportunity to perform operations and closes the stream.</p>
 </div>
 </section>
 <section id="locking-streams">
-<h3>Locking streams<a class="headerlink" href="#locking-streams" title="Permalink to this heading">#</a></h3>
+<h3>Locking streams<a class="headerlink" href="#locking-streams" title="Permalink to this heading">¶</a></h3>
 <p>In an application where more than one thread may access a shared stream, it is
 important to match the granularity of locking to the transaction model of the
 application. Ideally, an application should lock a stream only once per
@@ -808,13 +810,13 @@ no guarantees about the atomicity of read and write operations.</p>
 </section>
 </section>
 <section id="reading-from-and-writing-to-streams">
-<h2>Reading from and writing to streams<a class="headerlink" href="#reading-from-and-writing-to-streams" title="Permalink to this heading">#</a></h2>
+<h2>Reading from and writing to streams<a class="headerlink" href="#reading-from-and-writing-to-streams" title="Permalink to this heading">¶</a></h2>
 <p>This section describes how you can read from or write to a stream. Note that
 the result is undefined if you call any of these functions on a buffered stream
 while its buffer is held by another thread; see <a class="reference internal" href="#using-buffered-streams">Using buffered streams</a> for
 details about buffered streams.</p>
 <section id="reading-from-streams">
-<h3>Reading from streams<a class="headerlink" href="#reading-from-streams" title="Permalink to this heading">#</a></h3>
+<h3>Reading from streams<a class="headerlink" href="#reading-from-streams" title="Permalink to this heading">¶</a></h3>
 <p>The following are the basic functions for reading from streams.</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#io:streams:read-element"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">read-element</span></code></a></p></li>
@@ -825,7 +827,7 @@ details about buffered streams.</p>
 <a class="reference internal" href="#io:streams:stream-input-available?"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">stream-input-available?</span></code></a>.</p>
 </section>
 <section id="convenience-functions-for-reading-from-streams">
-<h3>Convenience functions for reading from streams<a class="headerlink" href="#convenience-functions-for-reading-from-streams" title="Permalink to this heading">#</a></h3>
+<h3>Convenience functions for reading from streams<a class="headerlink" href="#convenience-functions-for-reading-from-streams" title="Permalink to this heading">¶</a></h3>
 <p>The following is a small set of reading functions that search for
 particular elements in a stream. These functions behave as though they
 were implemented in terms of the more primitive functions described in
@@ -837,7 +839,7 @@ were implemented in terms of the more primitive functions described in
 </ul>
 </section>
 <section id="writing-to-streams">
-<h3>Writing to streams<a class="headerlink" href="#writing-to-streams" title="Permalink to this heading">#</a></h3>
+<h3>Writing to streams<a class="headerlink" href="#writing-to-streams" title="Permalink to this heading">¶</a></h3>
 <p>This section describes the basic functions for writing to streams.</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#io:streams:write-element"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">write-element</span></code></a></p></li>
@@ -847,7 +849,7 @@ were implemented in terms of the more primitive functions described in
 <a class="reference internal" href="#io:streams:discard-output"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">discard-output</span></code></a>.</p>
 </section>
 <section id="reading-and-writing-by-lines">
-<h3>Reading and writing by lines<a class="headerlink" href="#reading-and-writing-by-lines" title="Permalink to this heading">#</a></h3>
+<h3>Reading and writing by lines<a class="headerlink" href="#reading-and-writing-by-lines" title="Permalink to this heading">¶</a></h3>
 <p>The following functions provide line-based input and output operations.</p>
 <p>The newline sequence for string streams is a sequence comprising the
 single newline character <code class="docutils literal notranslate"><span class="pre">\n</span></code>. For character file streams, the newline
@@ -870,7 +872,7 @@ newline sequence.</p>
 <p>See also <a class="reference internal" href="#io:streams:read-line-into!"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">read-line-into!</span></code></a>.</p>
 </section>
 <section id="querying-streams">
-<h3>Querying streams<a class="headerlink" href="#querying-streams" title="Permalink to this heading">#</a></h3>
+<h3>Querying streams<a class="headerlink" href="#querying-streams" title="Permalink to this heading">¶</a></h3>
 <p>The following functions can be used to determine various properties of a
 stream.</p>
 <ul class="simple">
@@ -883,7 +885,7 @@ past the last written element by comparing <a class="reference internal" href="#
 <a class="reference internal" href="#io:streams:stream-size"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">stream-size</span></code></a>.</p>
 </section>
 <section id="using-file-streams">
-<h3>Using file streams<a class="headerlink" href="#using-file-streams" title="Permalink to this heading">#</a></h3>
+<h3>Using file streams<a class="headerlink" href="#using-file-streams" title="Permalink to this heading">¶</a></h3>
 <p>The following operations can be performed on file streams.</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#io:streams:close([file-stream])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">close(&lt;file-stream&gt;)</span></code></a></p></li>
@@ -894,7 +896,7 @@ past the last written element by comparing <a class="reference internal" href="#
 </section>
 </section>
 <section id="using-buffered-streams">
-<h2>Using buffered streams<a class="headerlink" href="#using-buffered-streams" title="Permalink to this heading">#</a></h2>
+<h2>Using buffered streams<a class="headerlink" href="#using-buffered-streams" title="Permalink to this heading">¶</a></h2>
 <p>The Streams module provides efficient support for general use of
 buffered I/O. Most ordinary programmers using the module do not need to
 be concerned with buffering in most cases. When using buffered streams,
@@ -902,7 +904,7 @@ the buffering is transparent, but programs requiring more control can
 access buffering functionality when appropriate. This section describes
 the available buffering functionality.</p>
 <section id="overview">
-<h3>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h3>
+<h3>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h3>
 <p>A buffered stream maintains some sort of buffer. All buffered streams
 use the sealed class <a class="reference internal" href="#io:streams:[buffer]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;buffer&gt;</span></code></a> for their buffers. You can
 suggest a buffer size when creating buffered streams, but normally you
@@ -918,7 +920,7 @@ a thread already holds the buffer for a stream, any attempt to get the buffer
 again (or any other buffer for the same stream) has undefined results.</p>
 </section>
 <section id="useful-types-when-using-buffers">
-<h3>Useful types when using buffers<a class="headerlink" href="#useful-types-when-using-buffers" title="Permalink to this heading">#</a></h3>
+<h3>Useful types when using buffers<a class="headerlink" href="#useful-types-when-using-buffers" title="Permalink to this heading">¶</a></h3>
 <p>The following types are used in operations that involve buffers.</p>
 <dl class="simple">
 <dt><a class="reference internal" href="#io:streams:[byte]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;byte&gt;</span></code></a></dt><dd><p>A type representing limited integers in the range 0 to 255 inclusive.</p>
@@ -935,7 +937,7 @@ again (or any other buffer for the same stream) has undefined results.</p>
 </section>
 </section>
 <section id="wrapper-streams">
-<h2>Wrapper streams<a class="headerlink" href="#wrapper-streams" title="Permalink to this heading">#</a></h2>
+<h2>Wrapper streams<a class="headerlink" href="#wrapper-streams" title="Permalink to this heading">¶</a></h2>
 <p>Sometimes stream data requires conversion before an application can use it: you
 might have a stream over a file of UTF-8 bytes which you would prefer to handle
 as UTF-32 equivalents, or you might need to encrypt or decrypt file data.</p>
@@ -1000,7 +1002,7 @@ Unicode character stream wrapping an 8-bit character stream.</p>
 </pre></div>
 </div>
 <section id="wrapper-streams-and-delegation">
-<h3>Wrapper streams and delegation<a class="headerlink" href="#wrapper-streams-and-delegation" title="Permalink to this heading">#</a></h3>
+<h3>Wrapper streams and delegation<a class="headerlink" href="#wrapper-streams-and-delegation" title="Permalink to this heading">¶</a></h3>
 <p>One problem with wrapper streams is the need for a wrapper stream to
 intercept methods invoked by its inner stream. For example, consider two
 hypothetical streams, <code class="docutils literal notranslate"><span class="pre">&lt;interactive-stream&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;dialog-stream&gt;</span></code>,
@@ -1048,7 +1050,7 @@ on <a class="reference internal" href="#io:streams:[wrapper-stream]"><code class
 </section>
 </section>
 <section id="conditions">
-<h2>Conditions<a class="headerlink" href="#conditions" title="Permalink to this heading">#</a></h2>
+<h2>Conditions<a class="headerlink" href="#conditions" title="Permalink to this heading">¶</a></h2>
 <p>The following classes are available for error conditions on streams.</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#io:streams:[end-of-stream-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;end-of-stream-error&gt;</span></code></a></p></li>
@@ -1069,7 +1071,7 @@ the accessor function for the <code class="docutils literal notranslate"><span c
 individual conditions.</p>
 </section>
 <section id="indenting-streams">
-<h2>Indenting streams<a class="headerlink" href="#indenting-streams" title="Permalink to this heading">#</a></h2>
+<h2>Indenting streams<a class="headerlink" href="#indenting-streams" title="Permalink to this heading">¶</a></h2>
 <p>The Streams module provides an <a class="reference internal" href="#io:streams:[indenting-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;indenting-stream&gt;</span></code></a> which supports
 managing indentation when printing text to a stream. Indenting streams
 are implemented as wrapper streams, so the destination stream must be
@@ -1084,7 +1086,7 @@ provided at instantiation.</p>
 <p>Indenting streams analyze everything written to them so that indentation
 can be maintained, without having to call <a class="reference internal" href="#io:streams:new-line"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">new-line</span></code></a> directly.</p>
 <section id="using-indenting-streams">
-<h3>Using indenting streams<a class="headerlink" href="#using-indenting-streams" title="Permalink to this heading">#</a></h3>
+<h3>Using indenting streams<a class="headerlink" href="#using-indenting-streams" title="Permalink to this heading">¶</a></h3>
 <p>All operations available to <a class="reference internal" href="#io:streams:[wrapper-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;wrapper-stream&gt;</span></code></a> are available, as
 well as:</p>
 <ul class="simple">
@@ -1094,10 +1096,10 @@ well as:</p>
 </section>
 </section>
 <section id="streams-protocols">
-<h2>Streams protocols<a class="headerlink" href="#streams-protocols" title="Permalink to this heading">#</a></h2>
+<h2>Streams protocols<a class="headerlink" href="#streams-protocols" title="Permalink to this heading">¶</a></h2>
 <p>This section describes the protocols for different classes of stream.</p>
 <section id="positionable-stream-protocol">
-<h3>Positionable stream protocol<a class="headerlink" href="#positionable-stream-protocol" title="Permalink to this heading">#</a></h3>
+<h3>Positionable stream protocol<a class="headerlink" href="#positionable-stream-protocol" title="Permalink to this heading">¶</a></h3>
 <p>This section describes the protocol for positionable streams.</p>
 <p>A stream position can be thought of as a natural number that indicates
 how many elements into the stream the stream’s current location is.
@@ -1128,7 +1130,7 @@ requiring the entire contents of the stream up to that point to be read.</p>
 </ul>
 </section>
 <section id="wrapper-stream-protocol">
-<h3>Wrapper stream protocol<a class="headerlink" href="#wrapper-stream-protocol" title="Permalink to this heading">#</a></h3>
+<h3>Wrapper stream protocol<a class="headerlink" href="#wrapper-stream-protocol" title="Permalink to this heading">¶</a></h3>
 <p>This section describes the protocol for implementing wrapper streams.
 For information on using wrapper streams, see <a class="reference internal" href="#wrapper-streams">Wrapper streams</a>.</p>
 <ul class="simple">
@@ -1141,12 +1143,12 @@ For information on using wrapper streams, see <a class="reference internal" href
 </section>
 </section>
 <section id="the-streams-module-reference">
-<h2>The streams Module Reference<a class="headerlink" href="#the-streams-module-reference" title="Permalink to this heading">#</a></h2>
+<h2>The streams Module Reference<a class="headerlink" href="#the-streams-module-reference" title="Permalink to this heading">¶</a></h2>
 <p>This section includes complete reference entries for all interfaces that
 are exported from the <em>streams</em> module.</p>
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:adjust-stream-position">
-<span class="sig-name descname"><span class="pre">adjust-stream-position</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:adjust-stream-position" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">adjust-stream-position</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:adjust-stream-position" title="Permalink to this definition">¶</a></dt>
 <dd><p>Moves the position of a positionable stream by a specified amount.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1203,7 +1205,7 @@ sequence <a class="reference external" href="https://opendylan.org/books/drm/Col
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:as([integer],[stream-position])">
-<span class="sig-name descname"><span class="pre">as(&lt;integer&gt;,</span> <span class="pre">&lt;stream-position&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#io:streams:as([integer],[stream-position])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">as(&lt;integer&gt;,</span> <span class="pre">&lt;stream-position&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#io:streams:as([integer],[stream-position])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Coerces a <a class="reference internal" href="#io:streams:[stream-position]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stream-position&gt;</span></code></a> to an integer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1235,7 +1237,7 @@ argument is the class <a class="reference external" href="https://opendylan.org/
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:[buffer]">
-<span class="sig-name descname"><span class="pre">&lt;buffer&gt;</span></span> <em class="property"><span class="pre">Instantiable</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[buffer]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;buffer&gt;</span></span> <em class="property"><span class="pre">Instantiable</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[buffer]" title="Permalink to this definition">¶</a></dt>
 <dd><p>A subclass of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#vector"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;vector&gt;</span></code></a> whose <em>element-type</em> is <a class="reference internal" href="#io:streams:[byte]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;byte&gt;</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1272,7 +1274,7 @@ error is signalled, as when making any vector.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:[buffered-stream]">
-<span class="sig-name descname"><span class="pre">&lt;buffered-stream&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[buffered-stream]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;buffered-stream&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[buffered-stream]" title="Permalink to this definition">¶</a></dt>
 <dd><p>A subclass of <a class="reference internal" href="#io:streams:[stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;stream&gt;</span></code></a> supporting the Stream Extension and
 Buffer Access protocols.</p>
 <dl class="field-list simple">
@@ -1304,7 +1306,7 @@ init-keyword.</p>
 
 <dl class="dylan type">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:[byte]">
-<span class="sig-name descname"><span class="pre">&lt;byte&gt;</span></span> <em class="property"><span class="pre">Type</span></em><a class="headerlink" href="#io:streams:[byte]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;byte&gt;</span></span> <em class="property"><span class="pre">Type</span></em><a class="headerlink" href="#io:streams:[byte]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>A type representing limited integers in the range 0 to 255 inclusive.</p>
@@ -1326,7 +1328,7 @@ init-keyword.</p>
 
 <dl class="dylan type">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:[byte-character]">
-<span class="sig-name descname"><span class="pre">&lt;byte-character&gt;</span></span> <em class="property"><span class="pre">Type</span></em><a class="headerlink" href="#io:streams:[byte-character]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;byte-character&gt;</span></span> <em class="property"><span class="pre">Type</span></em><a class="headerlink" href="#io:streams:[byte-character]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>A type representing 8-bit characters that instances of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a> can contain.</p>
@@ -1349,7 +1351,7 @@ can contain.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:byte-storage-address([buffer])">
-<span class="sig-name descname"><span class="pre">byte-storage-address(&lt;buffer&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#io:streams:byte-storage-address([buffer])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">byte-storage-address(&lt;buffer&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#io:streams:byte-storage-address([buffer])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the address of the raw byte storage of a <a class="reference internal" href="#io:streams:[buffer]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;buffer&gt;</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">See also<span class="colon">:</span></dt>
@@ -1363,7 +1365,7 @@ can contain.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:byte-storage-offset-address([buffer])">
-<span class="sig-name descname"><span class="pre">byte-storage-offset-address(&lt;buffer&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#io:streams:byte-storage-offset-address([buffer])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">byte-storage-offset-address(&lt;buffer&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#io:streams:byte-storage-offset-address([buffer])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the address of the raw byte storage of a <a class="reference internal" href="#io:streams:[buffer]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;buffer&gt;</span></code></a>, with an offset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">See also<span class="colon">:</span></dt>
@@ -1377,7 +1379,7 @@ can contain.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:[byte-string-stream]">
-<span class="sig-name descname"><span class="pre">&lt;byte-string-stream&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[byte-string-stream]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;byte-string-stream&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[byte-string-stream]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of streams over byte strings.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1429,7 +1431,7 @@ string.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:[byte-vector]">
-<span class="sig-name descname"><span class="pre">&lt;byte-vector&gt;</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[byte-vector]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;byte-vector&gt;</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[byte-vector]" title="Permalink to this definition">¶</a></dt>
 <dd><p>A subtype of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#vector"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;vector&gt;</span></code></a> whose element-type is <a class="reference internal" href="#io:streams:[byte]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;byte&gt;</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1452,7 +1454,7 @@ string.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:close">
-<span class="sig-name descname"><span class="pre">close</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:close" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">close</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:close" title="Permalink to this definition">¶</a></dt>
 <dd><p>Closes a stream.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1471,7 +1473,7 @@ string.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:close([file-stream])">
-<span class="sig-name descname"><span class="pre">close(&lt;file-stream&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#io:streams:close([file-stream])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">close(&lt;file-stream&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#io:streams:close([file-stream])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Closes a file stream.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1503,7 +1505,7 @@ any errors caused by closing the file are ignored.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:discard-input">
-<span class="sig-name descname"><span class="pre">discard-input</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:discard-input" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">discard-input</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:discard-input" title="Permalink to this definition">¶</a></dt>
 <dd><p>Discards input from an input stream.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1535,7 +1537,7 @@ default method does nothing.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:discard-output">
-<span class="sig-name descname"><span class="pre">discard-output</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:discard-output" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">discard-output</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:discard-output" title="Permalink to this definition">¶</a></dt>
 <dd><p>Discards output to an output stream.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1564,7 +1566,7 @@ default method does nothing.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:[end-of-stream-error]">
-<span class="sig-name descname"><span class="pre">&lt;end-of-stream-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[end-of-stream-error]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;end-of-stream-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[end-of-stream-error]" title="Permalink to this definition">¶</a></dt>
 <dd><p>Error type signaled on reaching the end of an input stream.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1597,7 +1599,7 @@ error to be signaled. Its accessor is <code class="xref dylan dylan-gf docutils 
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:[file-does-not-exist-error]">
-<span class="sig-name descname"><span class="pre">&lt;file-does-not-exist-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[file-does-not-exist-error]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;file-does-not-exist-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[file-does-not-exist-error]" title="Permalink to this definition">¶</a></dt>
 <dd><p>Error type signaled when attempting to read a file that does not exist.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1627,7 +1629,7 @@ a file that does not exist. It is a subclass of
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:[file-error]">
-<span class="sig-name descname"><span class="pre">&lt;file-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[file-error]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;file-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[file-error]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The base class for all errors related to file I/O.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1661,7 +1663,7 @@ the error to be signalled. Its accessor is <a class="reference internal" href="#
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:file-error-locator">
-<span class="sig-name descname"><span class="pre">file-error-locator</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:file-error-locator" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">file-error-locator</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:file-error-locator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the <a class="reference internal" href="../system/locators.html#system:locators:[file-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-locator&gt;</span></code></a> of the file associated with a
 <a class="reference internal" href="#io:streams:[file-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-error&gt;</span></code></a>.</p>
 <dl class="field-list simple">
@@ -1683,7 +1685,7 @@ the error to be signalled. Its accessor is <a class="reference internal" href="#
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:[file-exists-error]">
-<span class="sig-name descname"><span class="pre">&lt;file-exists-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[file-exists-error]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;file-exists-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[file-exists-error]" title="Permalink to this definition">¶</a></dt>
 <dd><p>Error type signaled when trying to create a file that already exists.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1713,7 +1715,7 @@ create a file that already exists. It is a subclass of
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:[file-stream]">
-<span class="sig-name descname"><span class="pre">&lt;file-stream&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[file-stream]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;file-stream&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[file-stream]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of single-buffered streams over disk files.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1764,7 +1766,7 @@ creating the stream.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:force-output">
-<span class="sig-name descname"><span class="pre">force-output</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:force-output" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">force-output</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:force-output" title="Permalink to this definition">¶</a></dt>
 <dd><p>Forces pending output from an output stream buffer to its destination.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1795,7 +1797,7 @@ concerned about system failure causing loss of data.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:[incomplete-read-error]">
-<span class="sig-name descname"><span class="pre">&lt;incomplete-read-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[incomplete-read-error]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;incomplete-read-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[incomplete-read-error]" title="Permalink to this definition">¶</a></dt>
 <dd><p>Error type signaled on encountering the end of a stream before
 reading the required number of elements.</p>
 <dl class="field-list simple">
@@ -1835,7 +1837,7 @@ requested to be read. Its accessor is
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:[indenting-stream]">
-<span class="sig-name descname"><span class="pre">&lt;indenting-stream&gt;</span></span> <em class="property"><span class="pre">Instantiable</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[indenting-stream]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;indenting-stream&gt;</span></span> <em class="property"><span class="pre">Instantiable</span> <span class="pre">Sealed</span> <span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[indenting-stream]" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper stream which outputs indented text.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -1872,7 +1874,7 @@ converts sequences of spaces used for indentation to tabs.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:indent">
-<span class="sig-name descname"><span class="pre">indent</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:indent" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">indent</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:indent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alters the indentation level of an <a class="reference internal" href="#io:streams:[indenting-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;indenting-stream&gt;</span></code></a>.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1904,7 +1906,7 @@ converts sequences of spaces used for indentation to tabs.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:inner-stream">
-<span class="sig-name descname"><span class="pre">inner-stream</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:inner-stream" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">inner-stream</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:inner-stream" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the stream being wrapped.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1936,7 +1938,7 @@ converts sequences of spaces used for indentation to tabs.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:inner-stream-setter">
-<span class="sig-name descname"><span class="pre">inner-stream-setter</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:inner-stream-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">inner-stream-setter</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:inner-stream-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wraps a stream with a wrapper stream.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -1977,7 +1979,7 @@ function is for use only when implementing stream classes.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:[invalid-file-permissions-error]">
-<span class="sig-name descname"><span class="pre">&lt;invalid-file-permissions-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[invalid-file-permissions-error]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;invalid-file-permissions-error&gt;</span></span> <em class="property"><span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[invalid-file-permissions-error]" title="Permalink to this definition">¶</a></dt>
 <dd><p>Error type signalled when accessing a file in a way that conflicts
 with the permissions of the file.</p>
 <dl class="field-list simple">
@@ -2007,7 +2009,7 @@ subclass of <a class="reference internal" href="#io:streams:[file-error]"><code 
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:lock-stream">
-<span class="sig-name descname"><span class="pre">lock-stream</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:lock-stream" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">lock-stream</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:lock-stream" title="Permalink to this definition">¶</a></dt>
 <dd><p>Locks a stream.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2040,7 +2042,7 @@ streams from multiple threads.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:make([byte-string-stream])">
-<span class="sig-name descname"><span class="pre">make(&lt;byte-string-stream&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#io:streams:make([byte-string-stream])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make(&lt;byte-string-stream&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#io:streams:make([byte-string-stream])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates and opens a stream over a byte string.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2088,7 +2090,7 @@ If supplied, <em>contents</em> describes the contents of the stream. The
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:make([sequence-stream])">
-<span class="sig-name descname"><span class="pre">make(&lt;sequence-stream&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#io:streams:make([sequence-stream])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make(&lt;sequence-stream&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#io:streams:make([sequence-stream])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates and opens a stream over a sequence.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2149,7 +2151,7 @@ default is to stream over the entire sequence.</p>
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:make([string-stream])">
-<span class="sig-name descname"><span class="pre">make(&lt;string-stream&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#io:streams:make([string-stream])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make(&lt;string-stream&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#io:streams:make([string-stream])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates and opens a stream over a string.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2197,7 +2199,7 @@ supplied, <em>contents</em> describes the contents of the stream. The
 
 <dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:make([unicode-string-stream])">
-<span class="sig-name descname"><span class="pre">make(&lt;unicode-string-stream&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#io:streams:make([unicode-string-stream])" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">make(&lt;unicode-string-stream&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#io:streams:make([unicode-string-stream])" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates and opens a stream over a Unicode string.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2240,7 +2242,7 @@ init-keywords are as for <a class="reference internal" href="#io:streams:make([s
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:new-line">
-<span class="sig-name descname"><span class="pre">new-line</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:new-line" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">new-line</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:new-line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Writes a newline sequence to an output stream.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2262,7 +2264,7 @@ that writes the character <code class="docutils literal notranslate"><span class
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:outer-stream">
-<span class="sig-name descname"><span class="pre">outer-stream</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:outer-stream" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">outer-stream</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:outer-stream" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a stream’s wrapper stream.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2294,7 +2296,7 @@ that writes the character <code class="docutils literal notranslate"><span class
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:outer-stream-setter">
-<span class="sig-name descname"><span class="pre">outer-stream-setter</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:outer-stream-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">outer-stream-setter</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:outer-stream-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets a stream’s wrapper stream.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2333,7 +2335,7 @@ function is for use only when implementing stream classes.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:peek">
-<span class="sig-name descname"><span class="pre">peek</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:peek" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">peek</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:peek" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the next element of a stream without advancing the stream
 position.</p>
 <dl class="field-list simple">
@@ -2366,7 +2368,7 @@ position is not advanced.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:[positionable-stream]">
-<span class="sig-name descname"><span class="pre">&lt;positionable-stream&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[positionable-stream]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;positionable-stream&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[positionable-stream]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of positionable streams.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -2394,7 +2396,7 @@ Protocol. It is not instantiable.</p>
 
 <dl class="dylan type">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:[position-type]">
-<span class="sig-name descname"><span class="pre">&lt;position-type&gt;</span></span> <em class="property"><span class="pre">Type</span></em><a class="headerlink" href="#io:streams:[position-type]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;position-type&gt;</span></span> <em class="property"><span class="pre">Type</span></em><a class="headerlink" href="#io:streams:[position-type]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>A type representing positions in a stream.</p>
@@ -2422,7 +2424,7 @@ this might not be possible.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:read">
-<span class="sig-name descname"><span class="pre">read</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:read" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">read</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:read" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads a number of elements from an input stream.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2483,7 +2485,7 @@ elements were read from the stream, an
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:read-element">
-<span class="sig-name descname"><span class="pre">read-element</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:read-element" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">read-element</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:read-element" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads the next element in a stream.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2535,7 +2537,7 @@ of a sequence:</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:read-into!">
-<span class="sig-name descname"><span class="pre">read-into!</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:read-into!" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">read-into!</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:read-into!" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads a number of elements from a stream into a sequence.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2581,7 +2583,7 @@ becomes available.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:read-line">
-<span class="sig-name descname"><span class="pre">read-line</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:read-line" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">read-line</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:read-line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads a stream up to the next newline.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2628,7 +2630,7 @@ interpretation of <em>on-end-of-stream</em> is as for <a class="reference intern
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:read-line-into!">
-<span class="sig-name descname"><span class="pre">read-line-into!</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:read-line-into!" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">read-line-into!</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:read-line-into!" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads a stream up to the next newline into a string.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2685,7 +2687,7 @@ input, the function signals an error.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:read-through">
-<span class="sig-name descname"><span class="pre">read-through</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:read-through" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">read-through</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:read-through" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a sequence containing the elements of the stream up to, and
 including, the first occurrence of a given element.</p>
 <dl class="field-list simple">
@@ -2725,7 +2727,7 @@ stream is left positioned after <em>element</em>.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:read-to">
-<span class="sig-name descname"><span class="pre">read-to</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:read-to" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">read-to</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:read-to" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a sequence containing the elements of the stream up to, but
 not including, the first occurrence of a given element.</p>
 <dl class="field-list simple">
@@ -2775,7 +2777,7 @@ stream first and the second of which is <em>element</em>.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:read-to-end">
-<span class="sig-name descname"><span class="pre">read-to-end</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:read-to-end" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">read-to-end</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:read-to-end" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a sequence containing all the elements up to, and including,
 the last element of the stream.</p>
 <dl class="field-list">
@@ -2820,7 +2822,7 @@ already at its end, an empty collection is returned.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:[sequence-stream]">
-<span class="sig-name descname"><span class="pre">&lt;sequence-stream&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[sequence-stream]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;sequence-stream&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[sequence-stream]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of streams over sequences.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -2878,7 +2880,7 @@ sequence.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:skip-through">
-<span class="sig-name descname"><span class="pre">skip-through</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:skip-through" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">skip-through</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:skip-through" title="Permalink to this definition">¶</a></dt>
 <dd><p>Skips through an input stream past the first occurrence of a given element.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -2913,7 +2915,7 @@ element retrieved from the stream first and element second.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:[stream]">
-<span class="sig-name descname"><span class="pre">&lt;stream&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[stream]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;stream&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[stream]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The superclass of all stream classes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -2973,7 +2975,7 @@ more information.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:stream-at-end?">
-<span class="sig-name descname"><span class="pre">stream-at-end?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:stream-at-end?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">stream-at-end?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:stream-at-end?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests whether a stream is at its end.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3025,7 +3027,7 @@ sequence:</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:stream-contents">
-<span class="sig-name descname"><span class="pre">stream-contents</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:stream-contents" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">stream-contents</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:stream-contents" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a sequence containing all the elements of a positionable stream.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3086,7 +3088,7 @@ string and create the string “I see!”, using the function
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:stream-element-type">
-<span class="sig-name descname"><span class="pre">stream-element-type</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:stream-element-type" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">stream-element-type</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:stream-element-type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the element-type of a stream.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3110,7 +3112,7 @@ string and create the string “I see!”, using the function
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:stream-input-available?">
-<span class="sig-name descname"><span class="pre">stream-input-available?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:stream-input-available?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">stream-input-available?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:stream-input-available?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests if an input stream can be read.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3148,7 +3150,7 @@ argument to determine how to handle the end of stream.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:stream-console?">
-<span class="sig-name descname"><span class="pre">stream-console?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:stream-console?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">stream-console?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:stream-console?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tests whether a stream is directed to the console.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3183,7 +3185,7 @@ console (./example), or to a file (./example &gt; file):</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:stream-lock">
-<span class="sig-name descname"><span class="pre">stream-lock</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:stream-lock" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">stream-lock</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:stream-lock" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the lock for a stream.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3215,7 +3217,7 @@ implement a basic stream locking facility.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:stream-lock-setter">
-<span class="sig-name descname"><span class="pre">stream-lock-setter</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:stream-lock-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">stream-lock-setter</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:stream-lock-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets a lock on a stream.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3249,7 +3251,7 @@ locking facility.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:stream-open?">
-<span class="sig-name descname"><span class="pre">stream-open?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:stream-open?" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">stream-open?</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:stream-open?" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generic function for testing whether a stream is open.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3279,7 +3281,7 @@ locking facility.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:stream-position">
-<span class="sig-name descname"><span class="pre">stream-position</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:stream-position" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">stream-position</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:stream-position" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finds the current position of a positionable stream.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3324,7 +3326,7 @@ from a stream over the string <code class="docutils literal notranslate"><span c
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:[stream-position]">
-<span class="sig-name descname"><span class="pre">&lt;stream-position&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[stream-position]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;stream-position&gt;</span></span> <em class="property"><span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[stream-position]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class representing non-integer stream positions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -3359,7 +3361,7 @@ the stream that a single integer is not sufficient to represent.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:stream-position-setter">
-<span class="sig-name descname"><span class="pre">stream-position-setter</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:stream-position-setter" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">stream-position-setter</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:stream-position-setter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the position of a stream.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3411,7 +3413,7 @@ position past the current last element of the stream: use
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:stream-size">
-<span class="sig-name descname"><span class="pre">stream-size</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:stream-size" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">stream-size</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:stream-size" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finds the number of elements in a stream.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3452,7 +3454,7 @@ other such situations.</p></li>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:[string-stream]">
-<span class="sig-name descname"><span class="pre">&lt;string-stream&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[string-stream]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;string-stream&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[string-stream]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of streams over strings.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -3502,7 +3504,7 @@ is exclusive. The default is to stream over the entire string.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:synchronize-output">
-<span class="sig-name descname"><span class="pre">synchronize-output</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:synchronize-output" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">synchronize-output</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:synchronize-output" title="Permalink to this definition">¶</a></dt>
 <dd><p>Synchronizes an output stream with the application state.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3535,7 +3537,7 @@ not part of the Stream Extension Protocol.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:type-for-file-stream">
-<span class="sig-name descname"><span class="pre">type-for-file-stream</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:type-for-file-stream" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">type-for-file-stream</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:type-for-file-stream" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finds the type of file-stream class that needs to be instantiated for
 a given file.</p>
 <dl class="field-list simple">
@@ -3571,7 +3573,7 @@ to determine the class of which it should create an instance.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:type-for-sequence-stream">
-<span class="sig-name descname"><span class="pre">type-for-sequence-stream</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:type-for-sequence-stream" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">type-for-sequence-stream</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:type-for-sequence-stream" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines the <a class="reference internal" href="#io:streams:[sequence-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sequence-stream&gt;</span></code></a> subclass to instantiate to create
 a stream over the given sequence.</p>
 <dl class="field-list simple">
@@ -3613,7 +3615,7 @@ considers appropriate.</p>
 
 <dl class="dylan type">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:[unicode-character]">
-<span class="sig-name descname"><span class="pre">&lt;unicode-character&gt;</span></span> <em class="property"><span class="pre">Type</span></em><a class="headerlink" href="#io:streams:[unicode-character]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;unicode-character&gt;</span></span> <em class="property"><span class="pre">Type</span></em><a class="headerlink" href="#io:streams:[unicode-character]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The type that represents Unicode characters.</p>
@@ -3636,7 +3638,7 @@ considers appropriate.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:[unicode-string-stream]">
-<span class="sig-name descname"><span class="pre">&lt;unicode-string-stream&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[unicode-string-stream]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;unicode-string-stream&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[unicode-string-stream]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of streams over Unicode strings.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -3689,7 +3691,7 @@ Unicode string.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:unlock-stream">
-<span class="sig-name descname"><span class="pre">unlock-stream</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:unlock-stream" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">unlock-stream</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:unlock-stream" title="Permalink to this definition">¶</a></dt>
 <dd><p>Unlocks a stream.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3722,7 +3724,7 @@ streams from multiple threads.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:unread-element">
-<span class="sig-name descname"><span class="pre">unread-element</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:unread-element" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">unread-element</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:unread-element" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns an element that has been read back to a positionable stream.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3765,7 +3767,7 @@ most recently read from the stream.</p></li>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:wait-for-io-completion">
-<span class="sig-name descname"><span class="pre">wait-for-io-completion</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:wait-for-io-completion" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">wait-for-io-completion</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:wait-for-io-completion" title="Permalink to this definition">¶</a></dt>
 <dd><p>Waits for all pending operations on a stream to complete.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -3786,7 +3788,7 @@ close operations to complete and signals any queued errors. If
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:with-indentation">
-<span class="sig-name descname"><span class="pre">with-indentation</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#io:streams:with-indentation" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">with-indentation</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#io:streams:with-indentation" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
 <dd class="field-odd"><p><pre class="literal-block">with-indentation (<cite>stream</cite>)
@@ -3830,7 +3832,7 @@ around the body of code.</p>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:with-input-from-string">
-<span class="sig-name descname"><span class="pre">with-input-from-string</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#io:streams:with-input-from-string" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">with-input-from-string</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#io:streams:with-input-from-string" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates an input stream, to perform operations on it and closes the
 stream.</p>
 <dl class="field-list">
@@ -3880,7 +3882,7 @@ the second use, it allows to specify a class for the stream type.</p>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:with-output-to-string">
-<span class="sig-name descname"><span class="pre">with-output-to-string</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#io:streams:with-output-to-string" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">with-output-to-string</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#io:streams:with-output-to-string" title="Permalink to this definition">¶</a></dt>
 <dd><p>Provides a convenient way of returning a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> after
 performing a series of operations on a <a class="reference external" href="https://opendylan.org/books/drm/&lt;stream&gt;"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;stream&gt;</span></code></a>, and then
 close the stream.</p>
@@ -3922,7 +3924,7 @@ stream.</p>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:with-stream-locked">
-<span class="sig-name descname"><span class="pre">with-stream-locked</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#io:streams:with-stream-locked" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">with-stream-locked</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#io:streams:with-stream-locked" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run a body of code while the stream is locked.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
@@ -3964,7 +3966,7 @@ exiting <em>body</em>.</p>
 
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:[wrapper-stream]">
-<span class="sig-name descname"><span class="pre">&lt;wrapper-stream&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[wrapper-stream]" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;wrapper-stream&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#io:streams:[wrapper-stream]" title="Permalink to this definition">¶</a></dt>
 <dd><p>The class of wrapper-streams.</p>
 <dl class="field-list">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
@@ -4055,7 +4057,7 @@ character stream.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:write">
-<span class="sig-name descname"><span class="pre">write</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:write" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">write</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:write" title="Permalink to this definition">¶</a></dt>
 <dd><p>Writes the elements of a sequence to an output stream.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4121,7 +4123,7 @@ elements.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:write-element">
-<span class="sig-name descname"><span class="pre">write-element</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:write-element" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">write-element</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:write-element" title="Permalink to this definition">¶</a></dt>
 <dd><p>Writes an element to an output stream.</p>
 <dl class="field-list">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4169,7 +4171,7 @@ access all of the stream’s elements.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="io:streams:write-line">
-<span class="sig-name descname"><span class="pre">write-line</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:write-line" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">write-line</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#io:streams:write-line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Writes a string followed by a newline to an output stream.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
@@ -4322,6 +4324,6 @@ write to the stream.</p>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2df60dd4"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
     </body>
 </html>
