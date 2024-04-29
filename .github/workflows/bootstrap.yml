@@ -2,11 +2,9 @@ name: Bootstrap
 
 on:
   push:
-    paths-ignore:
-      - 'documentation/**'
+    paths-ignore: ['documentation/**', '**.rst', '**.md']
   pull_request:
-    paths-ignore:
-      - 'documentation/**'
+    paths-ignore: ['documentation/**', '**.rst', '**.md']
 
 jobs:
   build:
