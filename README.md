@@ -16,9 +16,9 @@ Verify that the downloaded version is working correctly by building a
 hello-world binary:
 
   ```
-  dylan new application --simple hello-world
+  deft new application --simple hello-world
   cd hello-world
-  dylan build --all
+  deft build --all
   _build/bin/hello-world
   ```
 

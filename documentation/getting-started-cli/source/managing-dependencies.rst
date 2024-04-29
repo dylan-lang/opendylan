@@ -2,13 +2,12 @@ Managing Dependencies
 =====================
 
 We recommend managing inter-library dependencies by use of the Dylan package
-manager and the :program:`dylan` tool. When using the :program:`dylan` tool
-dependencies are added to the "dylan-package.json" file in your project. Each
-dependency includes a `semantic version <https://semver.org>`_ and `dependency
-resolution
-<https://opendylan.org/package/dylan-tool/pacman.html#dependency-resolution>`_
-is done with "minimal version selection".  See the `dylan-tool`_ documentation
-for details.
+manager and :program:`deft`. When using :program:`deft` dependencies are added
+to the "dylan-package.json" file in your project. Each dependency includes a
+`semantic version <https://semver.org>`_ and `dependency resolution
+<https://opendylan.org/package/deft/pacman.html#dependency-resolution>`_ is
+done with "minimal version selection".  See the `deft`_ documentation for
+details.
 
 The second way to manage dependencies is to use Git submodules. The remainder
 of this document explains how to do that.
@@ -70,8 +69,8 @@ Transitive Dependencies
 -----------------------
 
 The Dylan compiler won't find transitive dependencies automatically (unless you
-are using `dylan-tool`_), so you will need to create registry entries for them
-as well.
+are using `deft`_), so you will need to create registry entries for them as
+well.
 
 Sometimes, you will want to create git submodules for them as
 well, but other times you can just reference them from the
@@ -82,4 +81,4 @@ a number of submodules, so you don't need to pull each
 of those in directly, but can reference them through
 the ``ext/http/`` directory.
 
-.. _dylan-tool: https://opendylan.org/package/dylan-tool/index.html
+.. _deft: https://opendylan.org/package/deft/index.html
