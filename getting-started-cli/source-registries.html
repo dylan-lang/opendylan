@@ -468,10 +468,10 @@
 <h1>Using Source Registries<a class="headerlink" href="#using-source-registries" title="Permalink to this heading">¶</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>When using the <strong class="program">dylan</strong> tool source registries are created
-for you via the <a class="reference external" href="https://opendylan.org/package/dylan-tool/index.html#dylan-update">dylan update</a>
-command and you should not have to create them explicitly. You may
-want to skip this section for now.</p>
+<p>When using <strong class="program">deft</strong>, source registries are created for you via
+the <a class="reference external" href="https://opendylan.org/package/deft/index.html#deft-update">deft update</a> command
+and you should not have to create them explicitly. You may want to
+skip this section for now.</p>
 </div>
 <p>Passing the name of a “.lid” file to <strong class="program">dylan-compiler</strong> works great when
 you have a single library that only uses other libraries that are part of Open
@@ -482,14 +482,14 @@ sources for that library?  The answer is registries.</p>
 in the registry which is named the same as the library and contains a pointer
 to the “.lid” file for the library.  For example, here’s the registry file for
 hello-world, created in the previous section. Note that this assumes you are
-still in the directory created by <a class="reference external" href="https://opendylan.org/package/dylan-tool/index.html#dylan-new-application">dylan new application</a>.</p>
+still in the directory created by <a class="reference external" href="https://opendylan.org/package/deft/index.html#deft-new-application">deft new application</a>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ls registry/*/hello-world
 registry/x86_64-darwin/hello-world
 </pre></div>
 </div>
 <p>What’s going on here?  First of all, the registry mechanism makes it possible
-to have platform-specific libraries.  The <a class="reference external" href="https://opendylan.org/package/dylan-tool/index.html">dylan</a> tool currently always
-writes registry entries to a platform-specific directory, in this case
+to have platform-specific libraries.  <a class="reference external" href="https://opendylan.org/package/deft/index.html">deft</a> currently always writes
+registry entries to a platform-specific directory, in this case
 <code class="docutils literal notranslate"><span class="pre">x86_64-darwin</span></code>, but anything platform-independent can actually go in the
 <code class="file docutils literal notranslate"><span class="pre">registry/generic</span></code> subdirectory.</p>
 <p>Platform-specific registry directories are searched before

@@ -1,11 +1,11 @@
 Using Source Registries
 =======================
 
-.. note:: When using the :program:`dylan` tool source registries are created
-          for you via the `dylan update
-          <https://opendylan.org/package/dylan-tool/index.html#dylan-update>`_
-          command and you should not have to create them explicitly. You may
-          want to skip this section for now.
+.. note:: When using :program:`deft`, source registries are created for you via
+          the `deft update
+          <https://opendylan.org/package/deft/index.html#deft-update>`_ command
+          and you should not have to create them explicitly. You may want to
+          skip this section for now.
 
 Passing the name of a ".lid" file to :program:`dylan-compiler` works great when
 you have a single library that only uses other libraries that are part of Open
@@ -17,8 +17,8 @@ For each Dylan library that isn't part of Open Dylan itself, you create a file
 in the registry which is named the same as the library and contains a pointer
 to the ".lid" file for the library.  For example, here's the registry file for
 hello-world, created in the previous section. Note that this assumes you are
-still in the directory created by `dylan new application
-<https://opendylan.org/package/dylan-tool/index.html#dylan-new-application>`_.
+still in the directory created by `deft new application
+<https://opendylan.org/package/deft/index.html#deft-new-application>`_.
 
 ::
 
@@ -26,9 +26,9 @@ still in the directory created by `dylan new application
   registry/x86_64-darwin/hello-world
 
 What's going on here?  First of all, the registry mechanism makes it possible
-to have platform-specific libraries.  The `dylan
-<https://opendylan.org/package/dylan-tool/index.html>`_ tool currently always
-writes registry entries to a platform-specific directory, in this case
+to have platform-specific libraries.  `deft
+<https://opendylan.org/package/deft/index.html>`_ currently always writes
+registry entries to a platform-specific directory, in this case
 ``x86_64-darwin``, but anything platform-independent can actually go in the
 :file:`registry/generic` subdirectory.
 

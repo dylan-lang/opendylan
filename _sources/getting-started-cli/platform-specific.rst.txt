@@ -66,9 +66,9 @@ For further details of the LID file format, see :doc:`../library-reference/lid`.
 4) The ``Platforms`` keyword
 
    Platform-specific LID files should use the ``Platforms`` keyword to indicate
-   which platforms they apply to. This tells the `dylan update
-   <https://opendylan.org/package/dylan-tool/index.html#dylan-update>`_
-   command which registry files to create.
+   which platforms they apply to. This tells the `deft update
+   <https://opendylan.org/package/deft/index.html#deft-update>`_ command which
+   registry files to create.
 
    =============== ========================= =========================
    Keyword         unix-io.lid               win32-io.lid
