@@ -1,5 +1,8 @@
-*~
+# If you add something here, you may also want to update the `clean` or
+# `distclean` target in Makefile.in to remove the ignored files.
+
 *.pyc
+*~
 /Makefile
 /aclocal.m4
 /Bootstrap.*/

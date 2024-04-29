@@ -302,6 +302,9 @@ clean:
 	rm -rf $(srcdir)/sources/corba/services/naming/naming-protocol
 	rm -rf $(srcdir)/sources/corba/services/naming/naming-skeletons
 	rm -rf $(srcdir)/sources/corba/services/naming/naming-stubs
+	rm -rf $(srcdir)/sources/corba/demos/bank/bank/protocol
+	rm -rf $(srcdir)/sources/corba/demos/bank/bank/skeletons
+	rm -rf $(srcdir)/sources/corba/demos/bank/bank/stubs
 	rm -rf $(srcdir)/sources/corba/demos/pente/protocol/
 	rm -rf $(srcdir)/sources/corba/demos/pente/skeletons/
 	rm -rf $(srcdir)/sources/corba/demos/pente/stubs/
@@ -313,16 +316,20 @@ clean:
 	rm -rf $(srcdir)/sources/runtime-manager/debugger-nub/stubs
 
 distclean: clean
-	-rm -f aclocal.m4
-	-rm -f configure
-	-rm -f config.log
-	-rm -f config.status
-	-rm -f config.status.lineno
-	-rm -f Makefile
-	-rm -f sources/lib/run-time/Makefile
-	-rm -f sources/jamfiles/Makefile sources/jamfiles/config.jam
-	-rm -rf build-aux
+	-find $(srcdir) -name '*~' -exec rm {} \;
+	-find $(srcdir) -name '*.pyc' -exec rm {} \;
+	-rm -f  Makefile
+	-rm -f  aclocal.m4
 	-rm -rf autom4te.cache
+	-rm -rf build-aux
+	-rm -f  config.log
+	-rm -f  config.status
+	-rm -f  config.status.lineno
+	-rm -rf config/build-aux
+	-rm -f  configure
+	-rm -rf documentation/*/build
+	-rm -f  sources/jamfiles/Makefile sources/jamfiles/config.jam
+	-rm -f  sources/lib/run-time/Makefile
 
 mostlyclean:
 
