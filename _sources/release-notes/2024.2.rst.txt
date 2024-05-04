@@ -20,6 +20,12 @@ this release.
 Compiler
 ========
 
+* Unified executables now export symbols so that call stack dumping
+  works properly.
+
+* The build rules for unified executables now properly depend on
+  copying included run-time libraries such as libunwind.
+
 Tools
 =====
 
