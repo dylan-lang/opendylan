@@ -1,0 +1,16 @@
+{
+    "name": "website",
+    "version": "0.1.0",
+    "description": "The opendylan.org website and tools to build it.",
+    "contact": "dylan-lang@googlegroups.com",
+    "keywords": ["documentation"],
+    "dependencies": [],
+    "dev-dependencies": [
+        "dylan-reference-manual",
+        "dylan-programming-book",
+        "gendoc",
+        "opendylan",
+        "sphinx-extensions"
+    ],
+    "url": "https://github.com/dylan-lang/website"
+}

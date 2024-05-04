@@ -3,70 +3,57 @@ This is the Open Dylan website.
 It is built using `Sphinx <https://www.sphinx-doc.org/>`_.  All content is
 written using ReStructured Text with Sphinx extensions.
 
-Preparation
-===========
+Installation
+============
 
-Installing system dependencies
-------------------------------
+Some system dependencies need to be satisfied first.  On a Debian-derivative
+this should work::
 
-Some system dependencies need to be satisfied first:
+    sudo apt install git graphviz make python3
 
-- Python 3 and its package manager pip3. (It may also be installed as just
-  "pip", but check whether that installs Python 2 packages.)
-- Git
-- Make
+Install a Python3 virtual environment and use ``pip`` rather than the ``apt``
+Python packages, which are sometimes very out-of-date. ::
 
-On a Debian-derivative, they're quite easy to fetch::
+    python3 -m venv /opt/python3-venv
+    export PATH=/opt/python3-venv/bin:${PATH}
+    pip install Sphinx furo
 
-    sudo apt install python3 python3-pip git make
+The next step is fetching the repository and its dependencies::
 
-Getting the source
-------------------
+    git clone https://github.com/dylan-lang/website.git
+    cd website
+    deft update    # Install Dylan package dependencies
 
-The next step is fetching the repository and its submodule::
+Building the site
+=================
 
-    git clone --recursive https://github.com/dylan-lang/website.git  # or your fork
+Simply run the :file:`update.sh` script, specifying where you want the HTML
+files to be generated::
 
-Note that for now the "opendylan" repository is a submodule and it (along with
-its own submodules) is rather large.
+    update.sh /tmp/opendylan.org
 
-Installing Sphinx and the Furo Theme
-------------------------------------
+The first time you run :file:`update.sh`, it will build the `gendoc
+<https://github.com/dylan-lang/gendoc>`_ executable, which takes a bit longer.
 
-Now you need the Python dependencies. The easiest way to do this is to use
-``pip3``::
+.. note:: Currently the downloads directory is still maintained by hand. When
+          building the live site the first time, copy the files from the old
+          location.
 
-    sudo pip3 install -U Sphinx furo
+Testing
+=======
 
-You may also need ``python-dateutil``.
+The generated site will be in the output directory you specified. Run a local
+server using that directory as a static site. For example::
 
-    sudo pip3 install python-dateutil
+    python3 -m http.server --directory /tmp/opendylan.org
 
-Building
-========
-
-Building the website is easy on a system with ``make``::
-
-    make html
-
-If you are on Windows, there is a ``make.bat`` as well. It currently requires
-that you run it with an argument::
-
-    make.bat html  # Best of luck! This hasn't been tested in ages.
-
-The generated site will be in ``build/html``. For the stylesheets and
-JavaScript to load correctly, we suggest running a local webserver
-pointing to this directory::
-
-    python3 -m http.server --directory build/html
-
-or you can eat our own Dylan dogfood and run our HTTP server! ::
+For bonus points, you can eat our own dogfood and run the Dylan HTTP server
+instead::
 
     git clone --recursive https://github.com/dylan-lang/http
     cd http
     make install
-    cd ...back to website dir...
-    http-server --directory build/html
+    http-server --directory /tmp/opendylan.org
 
 Link Validation
 ---------------

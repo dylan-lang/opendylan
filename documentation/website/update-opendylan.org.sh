@@ -7,19 +7,15 @@ exec > $logfile 2>&1
 
 exe_dir="$(realpath $(dirname $0))"
 
-repo_dir=/root/deploy-opendylan.org
-gendoc_exe=${repo_dir}/gendoc/_build/bin/gendoc
 dest_dir=/var/www/opendylan.org
 
-# Update opendylan and website submodule first so we get any changes
-# to the update.sh script.
-cd ${repo_dir}/opendylan
+# Update the repo first so we get any changes to the update.sh script,
+# dependencies, etc.
 git pull --rebase origin master
-git submodule update --init --recursive
 
-${exe_dir}/update.sh "${dest_dir}" "${repo_dir}" "${gendoc_exe}"
+${exe_dir}/update.sh "${dest_dir}"
 
-echo "Done updating opendylan.org"
+echo "Done updating opendylan.org in ${dest_DIR}."
 bzip2 $logfile
 # Keep 10 days of logs.
 find /var/log -name 'update-opendylan.org.*' -mtime +10 -print -exec rm {} \;
