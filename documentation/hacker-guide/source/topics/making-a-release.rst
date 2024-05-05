@@ -114,6 +114,11 @@ now here is a manual check-list.
    <https://github.com/dylan-lang/website/blob/master/source/download/index.rst>`_
    page.
 
+#. On GitHub, move the release from Draft to Final.
+
+#. Publish the new release in pacman-catalog with `deft publish
+   <https://opendylan.org/package/deft/index.html#deft-publish>`_.
+
 #. Announce the release. Check previous announcements for ideas, but no need to
    slavishly copy the format.
 
