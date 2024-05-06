@@ -3,7 +3,7 @@
 
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../../sphinx-extensions/sphinxcontrib'))
+sys.path.insert(0, os.path.abspath('../_packages/sphinx-extensions/current/src/sphinxcontrib'))
 extensions = [
     'dylan.domain',
     'sphinx.ext.graphviz',
@@ -38,9 +38,5 @@ html_favicon = '_static/favicon.ico'
 templates_path = ['_templates']
 
 exclude_patterns = [
-    # Omit duplicate docs and docs in submodules...
     '**/sphinx_rtd_theme/**',
-    'opendylan/sources/**',
-    'opendylan/*.rst',
-    'opendylan/**/README.rst',
 ]

@@ -8,7 +8,7 @@ Learn Dylan
 :doc:`../about/index`
     A quick overview of the language with examples of major features.
 
-:doc:`../intro-dylan/index`
+:doc:`../intro-dylan/source/index`
     This tutorial is written primarily for those with solid programming
     experience in C++ or another object-oriented, static language. It
     provides a gentler introduction to Dylan than does the `Dylan Reference
@@ -17,15 +17,15 @@ Learn Dylan
 `Dylan Programming Guide`_ [`pdf <https://opendylan.org/books/dpg/DylanProgramming.pdf>`__] [`epub <https://opendylan.org/books/dpg/DylanProgramming.epub>`__]
     A book length Dylan tutorial.
 
-:doc:`../getting-started-cli/index`
+:doc:`../getting-started-cli/source/index`
     Describes development using the Open Dylan command line tools
     and editor integration (like emacs). This is mainly for
     Linux, FreeBSD, and macOS users.
 
-:doc:`../getting-started-ide/index`
+:doc:`../getting-started-ide/source/index`
     Describes Open Dylan's integrated development environment (Windows only).
 
-:doc:`../building-with-duim/index`
+:doc:`../building-with-duim/source/index`
     Describes how to use DUIM (Dylan User Interface Manager),
     the portable window programming toolkit. (Windows only.)
 
@@ -35,15 +35,15 @@ References
 `Dylan Reference Manual`_ (`Errata`_)
     The official definition of the Dylan language and standard library.
 
-:doc:`../library-reference/index`
+:doc:`../library-reference/source/index`
     Reference docs for core libraries packaged with Open Dylan.
 
-:doc:`../duim-reference/index`
+:doc:`../duim-reference/source/index`
     Describes the libraries forming DUIM (Dylan User Interface Manager),
     the portable window programming toolkit. It complements
     Building Applications Using DUIM. (Currently Windows only.)
 
-:doc:`../corba-guide/index`
+:doc:`../corba-guide/source/index`
     A tutorial and reference for CORBA interoperability using the Open
     Dylan ORB.
 
@@ -132,10 +132,10 @@ For Open Dylan Developers
 .. note:: Notes and materials useful to those working on Open Dylan itself or
           those who have an interest in the low level details.
 
-:doc:`../hacker-guide/index`
+:doc:`../hacker-guide/source/index`
     A work in progress to help out people who are hacking on Open Dylan itself.
 
-:doc:`../style-guide/index`
+:doc:`../style-guide/source/index`
     Notes and thoughts on how to format your Dylan code. This is the style
     guide that we aspire to adhere to in the Open Dylan sources.
 
@@ -143,7 +143,7 @@ For Open Dylan Developers
     A series of proposals for improvements to the Open Dylan
     implementation and related libraries.
 
-:doc:`../release-notes/index`
+:doc:`../release-notes/source/index`
     Notes on new features and bug fixes in each release of Open Dylan.
 
 
@@ -160,11 +160,11 @@ For Open Dylan Developers
    News <../news/index>
    Cheat Sheets <cheatsheets/index>
    Publications <publications>
-   Intro to Dylan <../intro-dylan/index>
-   CORBA Guide <../corba-guide/index>
-   DUIM Guide <../building-with-duim/index>
-   DUIM Reference <../duim-reference/index>
-   Getting Started / IDE <../getting-started-ide/index>
-   Release Notes <../release-notes/index>
+   Intro to Dylan <../intro-dylan/source/index>
+   CORBA Guide <../corba-guide/source/index>
+   DUIM Guide <../building-with-duim/source/index>
+   DUIM Reference <../duim-reference/source/index>
+   Getting Started / IDE <../getting-started-ide/source/index>
+   Release Notes <../release-notes/source/index>
    Sphinx Extensions <../../sphinx-extensions/documentation/source/index>
-   Style Guide <../style-guide/index>
+   Style Guide <../style-guide/source/index>

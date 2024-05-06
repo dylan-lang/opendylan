@@ -15,7 +15,7 @@ GitHub <https://gist.github.com>`_ and paste a link to it.
 .. _contribute:
 
 How to Contribute
-  The :doc:`Hacker Guide <../hacker-guide/index>` has details on how to
+  The :doc:`Hacker Guide <../hacker-guide/source/index>` has details on how to
   contribute to the project.
 
 Report Bugs
