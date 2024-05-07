@@ -1,6 +1,7 @@
 {
     "name": "opendylan",
     "category": "compilers",
+    "contact": "dylan-lang@googlegroups.com",
     "description": "The Open Dylan compiler, IDE, and core libraries",
     "dependencies": [
         "collection-extensions@0.1",
@@ -17,5 +18,7 @@
         "testworks"
     ],
     "url": "https://github.com/dylan-lang/opendylan",
-    "version": "2024.2.0"
+    "version": "2024.2.0",
+    "license": "DUAL",
+    "license-url": "https://github.com/dylan-lang/opendylan/blob/master/License.txt"
 }
