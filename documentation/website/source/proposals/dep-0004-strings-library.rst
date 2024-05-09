@@ -1,0 +1,360 @@
+*******************
+New strings Library
+*******************
+
+==============  =============================================
+DEP #:          4
+Type:           Standards Track
+Author:         Carl Gay
+Status:         Accepted
+Created:        08-Apr-2012
+Last-Modified:  05-May-2012
+Post-History:   01-May-2012, 09-Apr-2012
+Dylan-Version:  2012.1
+==============  =============================================
+
+
+Abstract
+========
+
+This proposal is an attempt to provide a simpler, more consistent
+strings API than is currently available via string-extensions, that is
+available from a single library (and a single module).
+
+Goals
+=====
+
+#. Comprehensive string APIs available via the ``strings`` module
+   exported from the ``strings`` library.
+
+#. Consistent naming and parameter lists.
+
+#. As simple as possible to use for common tasks.  Strive for the same
+   simplicity as Python, for example.
+
+#. Where possible, functions introduced here should be useful when
+   applied to standard Dylan mapping functions (map, every?, etc)
+   and collection functions (sort, reverse, etc).  In other words
+   they should not require currying in order to be used with the
+   mapping and collection functions for the most common cases.
+
+#. Replace existing string-extensions module, which will only be
+   retained (on GitHub) so as not to break Gwydion Dylan unnecessarily.
+   (It could be integrated into GD instead of being a submodule.)
+
+
+Non Goals
+=========
+
+#. Unicode
+
+#. Immutable strings
+
+#. Strings not implemented as subclasses of :drm:`<sequence>`.
+
+#. Text formatting APIs, such as justification and wrapping.
+
+#. Anything that is only applicable to a specific human language,
+   such as *pluralize*.
+
+
+Proposal
+========
+
+Open Dylan currently has a hodge-podge of string manipulation
+functionality.  A few functions (concatenate, subsequence-position,
+as-lowercase, ...) are built into the ``dylan`` library, some
+functions are exported from various modules in the string-extensions
+library, and a few in common-dylan.  Some Common Lisp-like strings
+functionality has been built into DUIM and Deuce.  This proposal is an
+attempt to provide a richer strings API in a single "strings" module.
+This is complicated by the fact that some string operations are also
+applicable to generalized sequences.
+
+The entire existing "strings" module (mainly used by the http library)
+will be replaced by this API.
+
+I first present the entire API and then later discuss it in detail.
+
+
+API Summary
+-----------
+
+Export the following functions from the "strings" module of the
+"strings" library.
+
+::
+
+    control?      (char-or-string, #key start, end) => (boolean)
+    printable?    (char-or-string, #key start, end) => (boolean)
+    graphic?      (char-or-string, #key start, end) => (boolean)
+    alphabetic?   (char-or-string, #key start, end) => (boolean)
+    alphanumeric? (char-or-string, #key start, end) => (boolean)
+
+    lowercase?  (char-or-string, #key start, end) => (boolean)
+    uppercase?  (char-or-string, #key start, end) => (boolean)
+    whitespace? (char-or-string, #key start, end) => (boolean)
+
+    decimal-digit?      (char-or-string, #key start, end) => (boolean)
+    octal-digit?        (char-or-string, #key start, end) => (boolean)
+    hexadecimal-digit?  (char-or-string, #key start, end) => (boolean)
+
+    char-compare      (char1, char2) => (one-of(-1, 0, 1))
+    char-compare-ic   (char1, char2) => (one-of(-1, 0, 1))
+    char-equal-ic?    (char1, char2) => (boolean)
+
+    string-compare  (string1, string2, #key start1, end1, start2, end2, test) => (one-of(-1, 0, 1))
+    string-equal?   (string1, string2, #key start1, end1, start2, end2) => (boolean)
+    string-less?    (string1, string2, #key start1, end1, start2, end2) => (boolean)
+    string-greater? (string1, string2, #key start1, end1, start2, end2) => (boolean)
+    string-equal-ic?   (string1, string2, #key start1, end1, start2, end2) => (boolean)
+    string-less-ic?    (string1, string2, #key start1, end1, start2, end2) => (boolean)
+    string-greater-ic? (string1, string2, #key start1, end1, start2, end2) => (boolean)
+
+    starts-with? (string, pattern-string, #key test) => (boolean)
+    ends-with?   (string, pattern-string, #key test) => (boolean)
+
+    lowercase  (char-or-string, #key start, end) => (new-char-or-string)
+    lowercase! (char-or-string, #key start, end) => (char-or-string)
+    uppercase  (char-or-string, #key start, end) => (new-char-or-string)
+    uppercase! (char-or-string, #key start, end) => (char-or-string)
+
+    strip       (string, #key test = whitespace?, start, end) => (new-string)
+    strip-left  (string, #key test = whitespace?, start, end) => (new-string)
+    strip-right (string, #key test = whitespace?, start, end) => (new-string)
+
+    pad       (string, width, #key fill = ' ')
+    pad-left  (string, width, #key fill = ' ')
+    pad-right (string, width, #key fill = ' ')
+
+    find-substring     (string, pattern-string, #key start, end, ignore-case?) => (index-or-#f)
+    count-substrings   (string, pattern-string, #key start, end, ignore-case?) => (count)
+    replace-substrings (string, pattern-string, new, #key start, end, count, ignore-case?) => (new-string)
+
+    split-lines (string, #key remove-if-empty?) => (strings)
+
+    // For reference, the following functions are available via dylan
+    // or common-dylan and, although for general sequences, are
+    // often useful for strings as well...
+
+    concatenate (sequence, #rest more-sequences) => (new-sequence)
+    join (parts, separator, #key start, end, key, conjunction) => (string)
+    replace-elements! (big, predicate, new-value-fn, #key count) => (big)
+    replace-subsequence! (big, small, #key start, end) => (big)
+    split (string, separator, #key start, end, max, remove-if-empty) => (strings)
+
+Some observations about this API:
+
+* Because this API provides *start* and *end* keywords where
+  appropriate, it is possible to do string operations within larger
+  strings without allocating.
+
+* Some functions, such as starts-with? and ends-with?, are provided
+  just for readability, despite being trivial to implement in terms of
+  other functions.
+
+The remainder of this proposal will repeat the above API with
+discussion interspersed.
+
+
+Discussion
+----------
+
+All comparisons default to being case-sensitive unless the function
+name ends with "-ic" or "-ic?" (meaning ignore case).
+
+In all cases, ``start`` (or start1 or start2) parameters default to 0.
+
+In all cases, ``end`` (or end1 or end2) parameters default to the size
+of the corresponding string.
+
+::
+
+    control?      (char-or-string, #key start, end) => (boolean)
+    printable?    (char-or-string, #key start, end) => (boolean)
+    graphic?      (char-or-string, #key start, end) => (boolean)
+    alphabetic?   (char-or-string, #key start, end) => (boolean)
+    alphanumeric? (char-or-string, #key start, end) => (boolean)
+
+    lowercase?  (char-or-string, #key start, end) => (boolean)
+    uppercase?  (char-or-string, #key start, end) => (boolean)
+    whitespace? (char-or-string, #key start, end) => (boolean)
+
+    decimal-digit?      (char-or-string, #key start, end) => (boolean)
+    octal-digit?        (char-or-string, #key start, end) => (boolean)
+    hexadecimal-digit?  (char-or-string, #key start, end) => (boolean)
+
+The methods on :drm:`<character>` do not have *start* and *end*
+parameters for obvious reasons.
+
+The methods on :drm:`<string>` return true if they would return true for
+each character in the string.  The :drm:`<string>` methods could be
+implemented as follows::
+
+    every?(f, copy-sequence(s, start: start, end: _end))
+
+Making these functions work on strings makes the resulting code more
+concise than using :drm:`every?` and :drm:`copy-sequence` together,
+and also more efficient, since no allocation is necessary.  The
+alternative is to write your own comparison function (which is the
+solution we have now, resulting in multiple implementations) or write
+a :drm:`for` loop inline.
+
+Note that ``lowercase?`` and ``uppercase?`` return true for
+non-alphabetic characters, so (for example) to determine whether a
+string contains all uppercase alphabetic characters you would use::
+
+    alphabetic?(string) & uppercase?(string)
+
+::
+
+    char-compare      (char1, char2) => (one-of(-1, 0, 1))
+    char-compare-ic   (char1, char2) => (one-of(-1, 0, 1))
+    char-equal-ic?    (char1, char2) => (boolean)
+
+    string-compare  (string1, string2, #key start1, end1, start2, end2, test) => (one-of(-1, 0, 1))
+    string-equal?   (string1, string2, #key start1, end1, start2, end2) => (boolean)
+    string-less?    (string1, string2, #key start1, end1, start2, end2) => (boolean)
+    string-greater? (string1, string2, #key start1, end1, start2, end2) => (boolean)
+    string-equal-ic?   (string1, string2, #key start1, end1, start2, end2) => (boolean)
+    string-less-ic?    (string1, string2, #key start1, end1, start2, end2) => (boolean)
+    string-greater-ic? (string1, string2, #key start1, end1, start2, end2) => (boolean)
+
+String and character comparisons, both case-sensitive and ignoring
+case (\*-ic?).  These default to comparing the entire string but allow
+comparing substrings via keyword arguments.
+
+``string-compare`` returns -1 if *string1* is less than *string2*, 0
+if the strings are equal, and 1 if *string1* is greater than
+*string2*.
+
+Some might object to the \*-ic? functions on the grounds that a "test"
+parameter could be added to the non-\*-ic?  functions
+instead.  But consider this type of code, which is likely to be fairly
+common::
+
+    sort(seq, test: string-less-ic?)
+
+Instead one would have to write this::
+
+    sort(seq, test: rcurry(string-less?, test: char-compare-ic))
+
+or worse, if ``char-compare-ic`` is removed on the same grounds::
+
+    sort(seq, test: rcurry(string-less?, test: method (c1, c2)
+                                                 char-compare(as-lowercase(c1), as-lowercase(c2))
+                                               end))
+
+or, the less efficient but more concise::
+
+    sort(seq, test: method (s1, s2) as-lowercase(s1) < as-lowercase(s2) end)
+
+::
+
+    // Included here for completeness
+    =  (char-or-string, char-or-string) => (boolean)
+    <  (char-or-string, char-or-string) => (boolean)
+    >  (char-or-string, char-or-string) => (boolean)
+
+If one doesn't mind allocating memory, the above built-in functions
+can be used in place of explicit *start* and *end* parameters::
+
+    copy-sequence(s1, start: x, end: y) = copy-sequence(s2, start: w, end: z)
+
+::
+
+    lowercase  (char-or-string, #key start, end) => (new-char-or-string)
+    lowercase! (char-or-string, #key start, end) => (char-or-string)
+    uppercase  (char-or-string, #key start, end) => (new-char-or-string)
+    uppercase! (char-or-string, #key start, end) => (char-or-string)
+
+The above are provided despite the existence of :drm:`as-uppercase`
+and :drm:`as-lowercase` in the dylan module because they provide
+*start* and *end* parameters, which makes them consistent with the
+rest of the API.
+
+::
+
+    strip       (string, #key test = whitespace?, start, end) => (new-string)
+    strip-left  (string, #key test = whitespace?, start, end) => (new-string)
+    strip-right (string, #key test = whitespace?, start, end) => (new-string)
+
+Return a copy of *string* between *start* and *end* with characters
+matching *test* removed.  Characters are removed from the left and/or
+right side of *string* until the first character *not* matching *test*
+is found.
+
+::
+
+    pad       (string, width, #key fill = ' ')
+    pad-left  (string, width, #key fill = ' ')
+    pad-right (string, width, #key fill = ' ')
+
+The above return a new string of the given *width*.  If *string*
+is shorter than *width*, the *fill* character is added to the left
+and/or right side of the string as appropriate.
+
+    Examples::
+
+      pad("x", 5) => "  x  "
+      pad("x", 4) => "  x " or " x  "    (unspecified)
+      pad("x", 7, fill: '.') => "...x..."
+
+::
+
+    starts-with? (string, pattern-string, #key test) => (boolean)
+    ends-with?   (string, pattern-string, #key test) => (boolean)
+
+These common operations are for convenience and readability.  The
+*test* parameter is the same as for ``string-compare``.
+
+::
+
+    find-substring     (string, pattern-string, #key start, end, ignore-case?) => (index-or-#f)
+
+``find-substring`` is like :drm:`subsequence-position` except that it
+accepts *start* and *end* keyword arguments instead of *count*, and it
+only applies to strings so the *ignore-case?* argument has been added.
+
+Note that this (and replace-substrings) use *ignore-case?* instead of
+a *test* parameter.  This is because the implementation (Boyer
+Moore-ish search) needs to setup skip tables and the code for that
+needs to know explicitly whether case is being ignored.
+
+::
+
+    count-substrings   (string, pattern-string, #key start, end, ignore-case?) => (count)
+
+``count-substrings`` counts the number of non-overlapping occurrences
+of *pattern-string* within *big*.
+
+::
+
+    replace-substrings (string, pattern-string, new, #key start, end, count, ignore-case?) => (new-string)
+
+``replace-substrings`` returns a new string with occurrences of
+*pattern-string* replaced by *new*.  If *count* is supplied then only *count*
+occurrences (moving left to right through *string*) are replaced.
+*ignore-case?* defaults to #f.
+
+
+Dropped string-extensions Names
+-------------------------------
+
+A few names exported from *string-extensions* have no equivalent in this
+library:
+
+* The *%parse-string* module.  This should be moved to
+  *regular-expressions* if it's needed at all.
+
+* The *string-hacking* module.  This includes character sets, and a
+  few character utilities.
+
+* The *string-conversions* module.  The only names this exports that
+  aren't available elsewhere are *digit-to-integer* and
+  *integer-to-digit*.  I suggest we put basic conversions like this
+  into *common-dylan* alongside *string-to-integer* et al.
+
+* Two names from the *substring-search* module:
+  *make-substring-positioner* and *make-substring-replacer*.
+
