@@ -5,10 +5,10 @@ Documentation
 Learn Dylan
 ===========
 
-:doc:`../about/index`
+:doc:`/about/index`
     A quick overview of the language with examples of major features.
 
-:doc:`../intro-dylan/source/index`
+:doc:`/intro-dylan/index`
     This tutorial is written primarily for those with solid programming
     experience in C++ or another object-oriented, static language. It
     provides a gentler introduction to Dylan than does the `Dylan Reference
@@ -17,15 +17,15 @@ Learn Dylan
 `Dylan Programming Guide`_ [`pdf <https://opendylan.org/books/dpg/DylanProgramming.pdf>`__] [`epub <https://opendylan.org/books/dpg/DylanProgramming.epub>`__]
     A book length Dylan tutorial.
 
-:doc:`../getting-started-cli/source/index`
+:doc:`/getting-started-cli/index`
     Describes development using the Open Dylan command line tools
     and editor integration (like emacs). This is mainly for
     Linux, FreeBSD, and macOS users.
 
-:doc:`../getting-started-ide/source/index`
+:doc:`/getting-started-ide/index`
     Describes Open Dylan's integrated development environment (Windows only).
 
-:doc:`../building-with-duim/source/index`
+:doc:`/building-with-duim/index`
     Describes how to use DUIM (Dylan User Interface Manager),
     the portable window programming toolkit. (Windows only.)
 
@@ -35,38 +35,38 @@ References
 `Dylan Reference Manual`_ (`Errata`_)
     The official definition of the Dylan language and standard library.
 
-:doc:`../library-reference/source/index`
+:doc:`/library-reference/index`
     Reference docs for core libraries packaged with Open Dylan.
 
-:doc:`../duim-reference/source/index`
+:doc:`/duim-reference/index`
     Describes the libraries forming DUIM (Dylan User Interface Manager),
     the portable window programming toolkit. It complements
     Building Applications Using DUIM. (Currently Windows only.)
 
-:doc:`../corba-guide/source/index`
+:doc:`/corba-guide/index`
     A tutorial and reference for CORBA interoperability using the Open
     Dylan ORB.
 
 Articles
 ========
 
-:doc:`../articles/macro-system` by Dustin Voss.
+:doc:`/articles/macro-system` by Dustin Voss.
     This article holds hard-won knowledge about how the Dylan macro system works
     and how to work around some of the gotchas that may catch a macro writer.
 
-:doc:`../articles/procedural-dylan/index` by Paul Haahr.
+:doc:`/articles/procedural-dylan/index` by Paul Haahr.
     This essay explores Dylan from the perspective of a programmer used to
     traditional procedural languages, such as Pascal or C.
 
-:doc:`../package/http/server/quickstart/index`
+:doc:`/package/http/server/quickstart/index`
     A quick introduction to web development in Dylan.
 
-:doc:`../news/2011/12/12/dswank` by Hannes Mehnert.
+:doc:`/news/2011/12/12/dswank` by Hannes Mehnert.
     An exciting look at using DIME and emacs for Dylan development.
     DIME is for Dylan what `SLIME <https://common-lisp.net/project/slime/>`_
     is for Common Lisp.
 
-:doc:`../articles/beyond-java`
+:doc:`/articles/beyond-java`
     A discussion of some of the advantages Dylan provides over Java, based on
     Jason Trenouth's experience writing a CORBA IDL compiler in both Java and
     Dylan.  (Written around 2001 and Java now has better handling of numeric
@@ -78,7 +78,7 @@ Publications
 See the `publications page <publications.html>`_ for a full list. Below are a
 few highlighted publications.
 
-**LLVM Code Generation for Open Dylan** (by Peter Housel at ELS 2020 `pdf <https://zenodo.org/record/3742567/files/els2020-opendylan.pdf?download=1>`__ `bib <../_static/documentation/housel_peter_s_2020_3742567.bib>`__ `slides <https://european-lisp-symposium.org/static/2020/housel-slides.pdf>`__ `video <https://www.youtube.com/watch?v=6dcrXBzw4H4>`__)
+**LLVM Code Generation for Open Dylan** (by Peter Housel at ELS 2020 `pdf <https://zenodo.org/record/3742567/files/els2020-opendylan.pdf?download=1>`__ `bib </_static/documentation/housel_peter_s_2020_3742567.bib>`__ `slides <https://european-lisp-symposium.org/static/2020/housel-slides.pdf>`__ `video <https://www.youtube.com/watch?v=6dcrXBzw4H4>`__)
   The Open Dylan compiler, DFMC, was originally designed in the 1990s
   to compile Dylan language code targeting the 32-bit Intel x86
   platform, or other platforms via portable C. As platforms have
@@ -96,7 +96,7 @@ few highlighted publications.
 
   https://doi.org/10.5281/zenodo.3742567
 
-**Extending Dylan's type system for better type inference and error detection** (by Hannes Mehnert at ILC 2010 `pdf <http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.627.5175&rep=rep1&type=pdf>`__ `bib <../_static/documentation/mehnert2010.bib>`__)
+**Extending Dylan's type system for better type inference and error detection** (by Hannes Mehnert at ILC 2010 `pdf <http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.627.5175&rep=rep1&type=pdf>`__ `bib </_static/documentation/mehnert2010.bib>`__)
     Whereas dynamic typing enables rapid prototyping and easy
     experimentation, static typing provides early error detection and
     better compile time optimization. Gradual typing provides the best
@@ -116,7 +116,7 @@ few highlighted publications.
 
     https://dl.acm.org/doi/10.1145/1869643.1869645
 
-**D-Expressions: Lisp Power, Dylan Style** [`pdf <http://people.csail.mit.edu/jrb/Projects/dexprs.pdf>`__] [`bib <../_static/documentation/bachrach1999.bib>`__]
+**D-Expressions: Lisp Power, Dylan Style** [`pdf <http://people.csail.mit.edu/jrb/Projects/dexprs.pdf>`__] [`bib </_static/documentation/bachrach1999.bib>`__]
     This paper aims to demonstrate that it is possible for a language
     with a rich, conventional syntax to provide Lisp-style macro power
     and simplicity. We describe a macro system and syntax manipulation
@@ -132,18 +132,18 @@ For Open Dylan Developers
 .. note:: Notes and materials useful to those working on Open Dylan itself or
           those who have an interest in the low level details.
 
-:doc:`../hacker-guide/source/index`
+:doc:`/hacker-guide/index`
     A work in progress to help out people who are hacking on Open Dylan itself.
 
-:doc:`../style-guide/source/index`
+:doc:`/style-guide/index`
     Notes and thoughts on how to format your Dylan code. This is the style
     guide that we aspire to adhere to in the Open Dylan sources.
 
-:doc:`../proposals/index`
+:doc:`/proposals/index`
     A series of proposals for improvements to the Open Dylan
     implementation and related libraries.
 
-:doc:`../release-notes/source/index`
+:doc:`/release-notes/index`
     Notes on new features and bug fixes in each release of Open Dylan.
 
 
@@ -157,14 +157,15 @@ For Open Dylan Developers
 .. toctree::
    :hidden:
 
-   News <../news/index>
+   News </news/index>
    Cheat Sheets <cheatsheets/index>
    Publications <publications>
-   Intro to Dylan <../intro-dylan/source/index>
-   CORBA Guide <../corba-guide/source/index>
-   DUIM Guide <../building-with-duim/source/index>
-   DUIM Reference <../duim-reference/source/index>
-   Getting Started / IDE <../getting-started-ide/source/index>
-   Release Notes <../release-notes/source/index>
+   Intro to Dylan </intro-dylan/index>
+   CORBA Guide </corba-guide/index>
+   DUIM Guide </building-with-duim/index>
+   DUIM Reference </duim-reference/index>
+   Getting Started / IDE </getting-started-ide/index>
+   Release Notes </release-notes/index>
    Sphinx Extensions <../../sphinx-extensions/documentation/source/index>
-   Style Guide <../style-guide/source/index>
+   Style Guide </style-guide/index>
+   History </history/index>

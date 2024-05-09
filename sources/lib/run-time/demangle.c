@@ -14,7 +14,7 @@
 #define ARRAY_LEN(x)            (sizeof(x)/sizeof((x)[0]))
 
 // This is adequate for IEPs, but could be improved for other things
-// See documentation/hacker-guide/source/runtime/mangling.rst
+// See documentation/source/hacker-guide/runtime/mangling.rst
 int dylan_demangle(char *dest, size_t destsize, char *src)
 {
   if (destsize == 0) {

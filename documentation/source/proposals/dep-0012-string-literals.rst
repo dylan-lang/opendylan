@@ -355,4 +355,4 @@ Revision History
 ================
 
 The revision history of this document is available here:
-https://github.com/dylan-lang/website/commits/master/source/proposals/dep-0012-string-literals.rst
+https://github.com/dylan-lang/opendylan/commits/master/documentation/source/proposals/dep-0012-string-literals.rst

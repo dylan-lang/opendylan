@@ -111,7 +111,7 @@ now here is a manual check-list.
    backup on a server that we own.)
 
 #. Update the `Downloads
-   <https://github.com/dylan-lang/website/blob/master/source/download/index.rst>`_
+   <https://github.com/dylan-lang/opendylan/blob/master/documentation/source/download/index.rst>`_
    page.
 
 #. On GitHub, move the release from Draft to Final.
