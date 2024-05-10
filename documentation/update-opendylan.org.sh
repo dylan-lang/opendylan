@@ -13,9 +13,9 @@ dest_dir=/var/www/opendylan.org
 # dependencies, etc.
 git pull --rebase origin master
 
-${exe_dir}/update.sh "${dest_dir}"
+${exe_dir}/update.sh "${exe_dir}/source/package/index.rst" "${dest_dir}"
 
-echo "Done updating opendylan.org in ${dest_DIR}."
+echo "Done updating opendylan.org in ${dest_dir}."
 bzip2 $logfile
 # Keep 10 days of logs.
 find /var/log -name 'update-opendylan.org.*' -mtime +10 -print -exec rm {} \;
