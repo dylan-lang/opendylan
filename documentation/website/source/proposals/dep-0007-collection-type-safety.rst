@@ -1,0 +1,300 @@
+*****************************
+Type-Safe Limited Collections
+*****************************
+
+===============  ========================
+DEP-Number:      0007
+Author:          Dustin Voss
+Status:          Draft
+Type:            Standards Track
+Affects-DRM:     Yes
+Created:         28-Jul-2013
+Last-Modified:   25-Dec-2013
+Post-History:    19-Dec-2013, 28-Jul-2013
+Target-Version:  2014.1
+===============  ========================
+
+
+Abstract
+========
+
+To improve type safety of collections and particularly limited collections,
+this DEP adds a ``default-fill:`` keyword argument to limited collection
+classes and an ``element-type-fill`` and ``element-type`` getter to all
+collections.
+
+
+Specification
+=============
+
+The collection classes that allow a ``fill:`` keyword argument are:
+
+- ``<array>``
+- ``<vector>``
+- ``<simple-vector>``
+- ``<simple-object-vector>``
+- ``<stretchy-vector>``
+- ``<deque>``
+- ``<list>``
+- ``<string>``
+- ``<byte-string>``
+- ``<unicode-string>``
+
+This DEP refers to these classes as *fillable collection classes*. Fillable
+collection classes are comprised of all the direct and indirect subclasses of
+``<mutable-sequence>`` excepting ``<mutable-sequence>`` itself, ``<pair>``, and
+``<empty-list>``.
+
+
+``limited``
+-----------
+
+The ``limited`` methods on fillable collection classes will each add the
+following additional parameter:
+
+====================  ==========================================
+Class                 Parameter
+====================  ==========================================
+``<string>``          ``#key default-fill :: <character> = ' '``
+``<byte-string>``     ``#key default-fill :: K1 = C1``
+``<unicode-string>``  ``#key default-fill :: K2 = C2``
+All others            ``#key default-fill :: <object> = #f``
+====================  ==========================================
+
+*K1* and *K2* are unspecified subclasses of ``<character>``. *C1* and *C2* are
+unspecified values equivalent to a space character.
+
+The ``limited`` methods on fillable collection classes each return a limited
+type designated *L*. The ``fill:`` init-keyword of all *L* will have a default
+value identical to the default value listed above instead of ``#f``.
+
+The ``type-for-copy`` method on instances of *L* will return a limited type *L2*
+as described in the [DRM]_, but with the additional requirement that *L2* will
+have the same default fill value as *L* (i.e., the same ``default-fill:``
+argument).
+
+The defaulted or supplied ``default-fill:`` argument should be an instance of
+the element type of the collection. However, it is not an error to supply a
+default fill value that the collection cannot accommodate, since a call to
+``make`` may specify a fill value of the correct type.
+
+
+``element-type-fill``
+---------------------
+
+A new open generic function will be added to the Dylan library::
+
+   element-type-fill (coll :: <collection>) => (fill-value :: <object>)
+
+For instances of a limited fillable collection class type, this function will
+return the (possibly defaulted) ``default-fill:`` argument to ``limited``. For
+instances of all other fillable collection classes, this function will return
+the following:
+
+====================  ============  
+Class                 Return Value
+====================  ============  
+``<string>``          ``' '``
+``<byte-string>``     C1
+``<unicode-string>``  C2
+All others            ``#f``
+====================  ============  
+
+*C1* and *C2* are unspecified values equivalent to a space character.
+
+It is an error to call ``element-type-fill`` on an instance of a collection
+class that does not support the ``fill:`` init-keyword. However,
+implementations may find this difficult to check (because users can introduce
+that keyword in any subclass) and may return ``#f`` for such collections
+instead. Portable programs should not rely on this behavior.
+
+
+``element-type``
+----------------
+
+A new open generic function will be added to the Dylan library::
+
+   element-type (coll :: <collection>) => (element-type :: <type>)
+
+For instances of collection classes with a limited element type, this function
+will return that element type. For instances of other collection classes, this
+function will return the element type described in
+`Element Types <https://opendylan.org/books/drm/Element_Types>`__ of the [DRM]_.
+
+
+Motivation
+==========
+
+The second paragraph of the 
+`Collection Operations <https://opendylan.org/books/drm/Collection_Operations>`__
+section of the [DRM]_ states the following:
+
+   Note to implementors: Functions such as ``map``, ``map-as`` that return a
+   new collection cannot rely on the type they instantiate having a valid
+   default for ``fill:``. Therefore, when the size of the result is nonzero,
+   these functions should compute the first element of the result before making
+   the collection and specify that element as the ``fill:`` value. Otherwise a
+   spurious type error could occur when making the collection.
+   
+However, there is a problem with the ``size-setter`` method that is not
+addressed by the above note. That method may be called on an empty collection
+to grow it. The DRM states:
+
+   The value of each new element is the same as would have been used if the
+   stretchy sequence had been created with ``make``, specifying ``size:``
+   *new-size* but not ``fill:``.
+
+That is, new elements are the default ``fill:`` value for the collection. This
+will be ``#f``, ``0``, or ``' '`` depending on the type of limited
+collection. But in a user-defined limited collection, such as
+``limited(<vector>, of: <shape>)``, the default causes a spurious type error.
+And if the collection is empty, the workaround described in the DRM of using
+the first element of the collection cannot be used.
+
+This DEP solves that problem by describing a way for ``size-setter`` to
+populate a collection with valid values. This DEP also improves the
+interface/implementation separation of limited collections by allowing a
+library author to specify a valid default for ``fill:`` in a type-defining
+``limited`` call rather than requiring the client to know and use a valid
+``fill:`` value in every call to ``make``.
+
+Additionally, this DEP adds the ``element-type`` method. This method is useful
+for code that transforms or manipulates one collection into a different form.
+The example of the ``<stream>`` classes comes to mind. If you write code that
+maps a stream to or from a user-supplied collection, that code cannot verify
+compatibility between the stream's ``stream-element-type`` and the collection's
+element type. Adding the ``element-type`` method solves that problem.
+
+
+Rationale
+=========
+
+I named ``element-type-fill`` as such rather than ``default-fill`` because the
+latter name is a little more misleading. A user can define a subclass of a
+collection and provide a new default value for the ``fill:`` init-keyword
+without needing to define a new ``element-type-fill`` method; they only need to
+do that when restricting the element type of a collection.
+
+The ``element-type-fill`` and ``element-type`` methods take an *instance* of a
+collection class as an argument rather than the *type* of the collection. This
+is necessary because the [DRM]_ allows the ``limited`` function on *C* to
+return *C* itself as a type, implying that the default fill and element type
+information associated with the limited collection has to be available on a
+per-instance basis. Plus, creating getters on types is not idiomatic to Dylan.
+
+A previous draft had changed the behavior of ``map``, etc., so that they would
+instantiate their resulting collection with the collection's default fill
+value. This turned out to be problematic. Most limited collections used in the
+Open Dylan source code do not have a ``false-or`` element type, and the element
+type they do have lacks a sensible "blank" value such as ``#f``, ``0``, or
+``""`` to use as a default fill. Strictly speaking, such a collection is poorly
+formed because it can never be directly instantiated with a specific size;
+however, that situation never occurs in the Open Dylan source code. Instead,
+the source code instantiates such a collection indirectly via ``map`` or
+``as``. Those functions fill the collection with a value derived from the first
+element of the argument(s), as described by the DRM's note to implementors
+quoted above. The value is not the "correct" value for any element but the
+first, but of course each other element is given its own "correct" value
+immediately thereafter, with the fill value merely acting as a placeholder.
+Under the previous draft this fill behavior would have been removed and all
+those limited collections would have needed to be changed; in order to tolerate
+being instantiated "empty", they would have needed a ``false-or`` element type.
+That would have been a significant lapse in backwards compatibility with the
+Open Dylan source code and presumably with other source code as well.
+Therefore, I revised this DEP to leave ``map``, etc., functioning as they
+always have. Those "poorly-formed" limited collections are still poorly formed,
+but…they work in their environment.
+
+I had originally considered a more extensive change where each instance of a
+fillable collection class would not only track its *default* fill value, but
+also track the *specific* ``fill:`` value that it was created with. But in
+thinking about it, I feel the designers made the right call in leaving that
+information out of each instance. In particular, the implementation of
+``<list>`` would be difficult if each instance tracked its ``fill:`` value.
+
+
+Implementation Notes
+--------------------
+
+``element-type``
+''''''''''''''''
+
+The Open Dylan implementation already defines this internally. The name just
+needs to be exported.
+
+
+Backwards Compatibility
+=======================
+
+This DEP does not change the limited collection type relationships described in
+the `Limited Collection Types <https://opendylan.org/books/drm/Limited_Collection_Types>`__
+section of the [DRM]_.
+
+Before this DEP, the Open Dylan implementation of limited collections
+effectively specified a ``default-fill:`` argument for certain combinations of
+collection and element type, as follows:
+
+=====================  =====================================================
+Collection             Element Types     
+=====================  =====================================================
+``<array>``            ``<byte>``, ``<double-byte>``, ``<machine-word>``,
+                       ``<integer>``, ``<single-float>``, ``<double-float>``
+``<vector>``           ``<byte>``, ``<double-byte>``, ``<machine-word>``,
+                       ``<integer>``, ``<single-float>``, ``<double-float>``
+``<stretchy-vector>``  ``<byte>``, ``<byte-character>``
+=====================  =====================================================
+
+Programs that relied on this behavior should instead specify either the
+``default-fill:`` argument to ``limited`` or the ``fill:`` init-keyword to 
+``make``.
+
+An additional side-effect of this relates to the ``subclass`` function in type
+specializers. The ``subclass`` function does not work with every limited
+collection type, because limited collection types are not classes. That is,
+``limited(<vector>, of: <color>)`` is not congruent to ``subclass(<vector>)``,
+and never has been. However, ``subclass`` will work with the above combinations
+of collection and element type, assuming the correct ``default-fill:`` is
+provided. That is, ``limited(<vector>, of: <integer>, default-fill: 0)`` is
+congruent to ``subclass(<vector>)``.
+
+Existing subclasses of ``<collection>`` that define their own ``fill:``
+init-keyword will still work, assuming they also specify a default value for
+that keyword that is of the element type of the subclass.
+
+New code may use ``element-type`` or ``element-type-fill`` in conjunction with
+an existing subclass of ``<collection>`` that does not define those methods but
+nonetheless has restricted element types. ``element-type`` and
+``element-type-fill`` will then return ``<object>`` and ``#f``, which may not
+be correct for that collection's allowed element types.
+
+The only other backwards compatibility issue is a namespace collision if the
+user defines their own unrelated "element-type" or "element-type-fill" bindings.
+
+
+Reference Implementation
+========================
+
+The reference implementation includes the following implementation-specified
+behavior:
+
+   * ``limited(<string>, …)`` returns a ``limited(<byte-string>, …)``.
+   * ``element-type-fill`` on an instance of a non-fillable collection class
+     returns ``#f`` (as opposed to signaling an error).
+
+The reference implementation currently includes an ``element-type-fill`` slot
+in every instance of a ``<simple-T-X>`` class (e.g. ``<simple-byte-vector>``).
+Ideally, the ``<simple-T-X>`` class would hard code a common
+``element-type-fill`` value like ``0`` or ``' '``, and an additional subclass
+``<simple-T-X-with-fill>`` would include the ``element-type-fill`` slot if the
+user wants a more unusual fill value. Unfortunately, it appears that the
+implementation of repeated slots does not allow for subclasses of a class with
+repeated slots.
+
+A possible remedy is to implement two subclasses of a ``<simple-T-X>`` class:
+``<simple-T-X-common-fill>`` and ``<simple-T-X-custom-fill>``. ``<simple-T-X>``
+would become abstract and the two concrete subclasses would define the repeated
+slot. The code specifically allows for this in the ``dfmc-modeling`` module's
+``limited-element-type-mappings-definer`` macro; it can return a different
+concrete class depending on the ``default-fill:`` argument to ``limited``.
+
+.. [DRM] `Dylan Reference Manual`:title-reference:
