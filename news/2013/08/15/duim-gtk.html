@@ -313,6 +313,7 @@
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/drm/">Dylan Reference Manual</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://opendylan.org/package/">Package Docs</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../library-reference/index.html">Open Dylan Libraries</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle navigation of Open Dylan Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../../library-reference/language-extensions/index.html">Dylan Language Extensions</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Dylan Language Extensions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../../library-reference/language-extensions/language-differences.html">Language Differences</a></li>
@@ -474,6 +475,20 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../style-guide/index.html">Style Guide</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../history/index.html">Dylan History</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle navigation of Dylan History</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../history/apple-dylan/index.html">Apple Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" role="switch" type="checkbox"/><label for="toctree-checkbox-26"><div class="visually-hidden">Toggle navigation of Apple Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../history/apple-dylan/apple-cambridge.html">Apple Cambridge</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../history/apple-dylan/eulogy.html">Apple Dylan Eulogy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../history/apple-dylan/technology-release.html">Apple Dylan Technology Release</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../history/apple-dylan/today.html">Apple Dylan Today</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../history/apple-dylan/screenshots/browsers.html">Apple Dylan Screenshots - Browsers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../history/apple-dylan/screenshots/dynamic.html">Apple Dylan Screenshots - Dynamic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../history/apple-dylan/screenshots/index.html">Apple Dylan Screenshots</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../history/apple-dylan/screenshots/misc.html">Apple Dylan Screenshots - Misc</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../genindex.html">Full Index</a></li>
@@ -497,12 +512,12 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="https://github.com/dylan-lang/website/blob/master/source/news/2013/08/15/duim-gtk.rst?plain=true" title="View this page">
+  <a class="muted-link" href="https://github.com/dylan-lang/opendylan/blob/master/source/news/2013/08/15/duim-gtk.rst?plain=true" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
 </div><div class="edit-this-page">
-  <a class="muted-link" href="https://github.com/dylan-lang/website/edit/master/source/news/2013/08/15/duim-gtk.rst" title="Edit this page">
+  <a class="muted-link" href="https://github.com/dylan-lang/opendylan/edit/master/source/news/2013/08/15/duim-gtk.rst" title="Edit this page">
     <svg><use href="#svg-pencil"></use></svg>
     <span class="visually-hidden">Edit this page</span>
   </a>
@@ -527,25 +542,24 @@
 <img alt="../../../../_images/duim-gtk.png" src="../../../../_images/duim-gtk.png" />
 </figure>
 <p>Lately, we’ve been working on bringing back DUIM’s GTK+ back-end.</p>
-<p><a class="reference external" href="/building-with-duim/index.html">DUIM</a> is Dylan’s user interface framework. While it was
-originally cross-platform, the only back-end that works now
-is for Windows.  Bringing back the GTK+ back-end and completing
-it will enable us to support Linux, FreeBSD and perhaps Mac OS X.</p>
-<p>This is a great first step towards making the <a class="reference external" href="/getting-started-ide/index.html">IDE</a> more widely
-available. Apart from being able to use the IDE on additional
-platforms, which is great in and of itself, having the IDE available to
-more of us makes it easier to fix bugs and improve the functionality
-as most of us aren’t working on the Windows platform.</p>
+<p><a class="reference internal" href="../../../../building-with-duim/index.html"><span class="doc">DUIM</span></a> is Dylan’s user interface framework. While
+it was originally cross-platform, the only back-end that works now is for
+Windows.  Bringing back the GTK+ back-end and completing it will enable us to
+support Linux, FreeBSD and perhaps Mac OS X.</p>
+<p>This is a great first step towards making the <a class="reference internal" href="../../../../getting-started-ide/index.html"><span class="doc">IDE</span></a> more widely available. Apart from being able to use
+the IDE on additional platforms, which is great in and of itself, having the
+IDE available to more of us makes it easier to fix bugs and improve the
+functionality as most of us aren’t working on the Windows platform.</p>
 <p>So far, we have a new set of GTK+ bindings for GTK+ 3.x available
 in <a class="reference external" href="https://github.com/dylan-lang/opendylan/tree/master/sources/gtk">sources/gtk</a> and have begun the work to update the old
 <a class="reference external" href="https://github.com/dylan-lang/opendylan/tree/master/sources/duim/gtk">DUIM GTK+</a> back-end and make further improvements.</p>
-<p>At this point, we would welcome some assistance. There are
-further improvements to make to the GTK+ bindings and a lot of
-work to do on DUIM/Gtk. (We have started building a
-<a class="reference external" href="https://github.com/dylan-lang/opendylan/labels/lib-DUIM%20%2F%20Gtk">list of bugs</a>.) We’ve also started to collect some notes
-for the <a class="reference external" href="/hacker-guide/duim/index.html">hacker’s guide</a>, especially for working on Mac OS X.</p>
+<p>At this point, we would welcome some assistance. There are further improvements
+to make to the GTK+ bindings and a lot of work to do on DUIM/Gtk. (We have
+started building a <a class="reference external" href="https://github.com/dylan-lang/opendylan/labels/lib-DUIM%20%2F%20Gtk">list of bugs</a>.) We’ve also started to collect some notes
+for the <a class="reference internal" href="../../../../hacker-guide/duim/index.html"><span class="doc">Hacker Guide</span></a>, especially for working on
+Mac OS X.</p>
 <p>If you’re interested in learning more or helping out, get
-in touch with us on <a class="reference external" href="/community/">chat or the mailing list</a>!</p>
+in touch with us on <a class="reference internal" href="../../../../community/index.html"><span class="doc">chat or the mailing list</span></a>!</p>
 </section>
 
         </article>
@@ -559,7 +573,7 @@ in touch with us on <a class="reference external" href="/community/">chat or the
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2011-2023, Dylan Hackers
+                Copyright &#169; 2011-2024, Dylan Hackers
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -579,7 +593,7 @@ in touch with us on <a class="reference external" href="/community/">chat or the
       
     </aside>
   </div>
-</div><script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js?v=2df60dd4"></script>
+</div><script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js?v=13c31088"></script>
     <script src="../../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../../../../_static/scripts/furo.js?v=4e2eecee"></script>

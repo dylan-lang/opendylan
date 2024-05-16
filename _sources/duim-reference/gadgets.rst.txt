@@ -226,7 +226,7 @@ particular parts of a user interface to be created:
 
 The :class:`<gadget>` class provides a number of subclasses that allow
 general spatial and grouping capability, in addition to the layout
-functionality described in `DUIM-Layouts Library <layouts.htm#21962>`_.
+functionality described in :doc:`DUIM-Layouts Library <layouts>`.
 These are as follows:
 
 :class:`<label>`
@@ -382,6 +382,8 @@ See `Subclasses of \<button\>`_
 <collection-gadget>
 
 See `Subclasses of \<collection-gadget\>`_
+
+.. _gadgets-subclasses-of-page:
 
 Subclasses of <page>
 ^^^^^^^^^^^^^^^^^^^^
@@ -3764,7 +3766,7 @@ are exported from the *duim-gadgets* module.
    :param framem: An instance of type :class:`<frame-manager>`.
    :param items: An instance of type :drm:`<sequence>`.
    :param #key owner: An instance of type :class:`<sheet>`.
-   :param #key title: An instance of type :drm:`<string>``.
+   :param #key title: An instance of type :drm:`<string>`.
    :param #key label-key: An instance of :drm:`<function>`. Default value: :drm:`identity`.
    :param #key value-key: An instance of :drm:`<function>`. Default value: :drm:`identity`.
    :param #key foreground: An instance of type ``false-or(<ink>)``. Default value: ``#f``.

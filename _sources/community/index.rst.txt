@@ -37,7 +37,7 @@ Mailing List
   back-and-forth of chat, this is the preferred place for it.
 
   `comp.lang.dylan
-  <http://groups.google.com/forum/#!forum/comp.lang.dylan>`_ also exists,
+  <https://groups.google.com/forum/#!forum/comp.lang.dylan>`_ also exists,
   but dylan-lang@ is the preferred forum.
 
 Dylan on Other Sites
@@ -47,5 +47,5 @@ Dylan on Other Sites
 
 Pick a Project to Work On
   If you're looking for ideas, maybe you'll find something in the
-  old `Google Summer of Code suggestions <gsoc/index>`_ or on the
+  old :doc:`Google Summer of Code <gsoc/index>` suggestions or on the
   `opendylan GitHub wiki <https://github.com/dylan-lang/opendylan/wiki>`_.

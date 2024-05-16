@@ -11,10 +11,10 @@ Learn Dylan
 :doc:`../intro-dylan/index`
     This tutorial is written primarily for those with solid programming
     experience in C++ or another object-oriented, static language. It
-    provides a gentler introduction to Dylan than does the `Dylan Reference
-    Manual`_ (DRM).
+    provides a gentler introduction to Dylan than does the :drm:`Dylan Reference
+    Manual <Title>` (DRM).
 
-`Dylan Programming Guide`_ [`pdf <https://opendylan.org/books/dpg/DylanProgramming.pdf>`__] [`epub <https://opendylan.org/books/dpg/DylanProgramming.epub>`__]
+`Dylan Programming Guide <https://opendylan.org/package/dylan-programming-book/>`_
     A book length Dylan tutorial.
 
 :doc:`../getting-started-cli/index`
@@ -32,7 +32,7 @@ Learn Dylan
 References
 ==========
 
-`Dylan Reference Manual`_ (`Errata`_)
+:drm:`Dylan Reference Manual <Title>` (:drm:`Errata`)
     The official definition of the Dylan language and standard library.
 
 :doc:`../library-reference/index`
@@ -58,12 +58,12 @@ Articles
     This essay explores Dylan from the perspective of a programmer used to
     traditional procedural languages, such as Pascal or C.
 
-:doc:`../package/http/server/quickstart/index`
+`Dylan Package Documentation <https/package/http/server/quickstart/>`_
     A quick introduction to web development in Dylan.
 
 :doc:`../news/2011/12/12/dswank` by Hannes Mehnert.
     An exciting look at using DIME and emacs for Dylan development.
-    DIME is for Dylan what `SLIME <https://common-lisp.net/project/slime/>`_
+    DIME is for Dylan what `SLIME <https://slime.common-lisp.dev/>`_
     is for Common Lisp.
 
 :doc:`../articles/beyond-java`
@@ -75,8 +75,8 @@ Articles
 Publications
 ============
 
-See the `publications page <publications.html>`_ for a full list. Below are a
-few highlighted publications.
+See the :doc:`publications page <publications>` for a full
+list. Below are a few highlighted publications.
 
 **LLVM Code Generation for Open Dylan** (by Peter Housel at ELS 2020 `pdf <https://zenodo.org/record/3742567/files/els2020-opendylan.pdf?download=1>`__ `bib <../_static/documentation/housel_peter_s_2020_3742567.bib>`__ `slides <https://european-lisp-symposium.org/static/2020/housel-slides.pdf>`__ `video <https://www.youtube.com/watch?v=6dcrXBzw4H4>`__)
   The Open Dylan compiler, DFMC, was originally designed in the 1990s
@@ -94,7 +94,7 @@ few highlighted publications.
   implementation of the LLVM back-end and its associated run-time
   support.
 
-  https://doi.org/10.5281/zenodo.3742567
+  https://zenodo.org/records/3742567
 
 **Extending Dylan's type system for better type inference and error detection** (by Hannes Mehnert at ILC 2010 `pdf <http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.627.5175&rep=rep1&type=pdf>`__ `bib <../_static/documentation/mehnert2010.bib>`__)
     Whereas dynamic typing enables rapid prototyping and easy
@@ -114,7 +114,7 @@ few highlighted publications.
     generates faster code with fewer errors. Some previously
     undiscovered errors in the Dylan library were revealed.
 
-    https://dl.acm.org/doi/10.1145/1869643.1869645
+    https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.627.5175&rep=rep1&type=pdf
 
 **D-Expressions: Lisp Power, Dylan Style** [`pdf <http://people.csail.mit.edu/jrb/Projects/dexprs.pdf>`__] [`bib <../_static/documentation/bachrach1999.bib>`__]
     This paper aims to demonstrate that it is possible for a language
@@ -150,21 +150,17 @@ For Open Dylan Developers
 .. TODO: some of the below links should be relative so they work in a test installation
    of the website.
 
-.. _Dylan Programming Guide: https://opendylan.org/books/dpg/
-.. _Dylan Reference Manual: https://opendylan.org/books/drm/
-.. _Errata: https://opendylan.org/books/drm/Errata
-
 .. toctree::
    :hidden:
 
-   News <../news/index>
+   News </news/index>
    Cheat Sheets <cheatsheets/index>
    Publications <publications>
-   Intro to Dylan <../intro-dylan/index>
-   CORBA Guide <../corba-guide/index>
-   DUIM Guide <../building-with-duim/index>
-   DUIM Reference <../duim-reference/index>
-   Getting Started / IDE <../getting-started-ide/index>
-   Release Notes <../release-notes/index>
-   Sphinx Extensions <../../sphinx-extensions/documentation/source/index>
-   Style Guide <../style-guide/index>
+   Intro to Dylan </intro-dylan/index>
+   CORBA Guide </corba-guide/index>
+   DUIM Guide </building-with-duim/index>
+   DUIM Reference </duim-reference/index>
+   Getting Started / IDE </getting-started-ide/index>
+   Release Notes </release-notes/index>
+   Style Guide </style-guide/index>
+   Dylan History </history/index>

@@ -66,7 +66,8 @@ Following these rules, method ``format-err`` in the ``format-out``
 module of the ``io`` library becomes
 ``Kformat_errYformat_outVioMM0I``.
 
-For full details, see `the Hacker's guide <https://opendylan.org/documentation/hacker-guide/runtime/mangling.html?highlight=mangling>`_.
+For full details, see :doc:`the Hacker's guide
+</hacker-guide/runtime/mangling>`.
 
 Understanding stack traces
 --------------------------

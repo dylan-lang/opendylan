@@ -72,8 +72,8 @@ To create a CORBA project with the New Project wizard:
 #. Click :guilabel:`Next`.
 
    The next page is the standard wizard page for naming a project and
-   specifying its location. (See `Getting Started with Open Dylan > Projects
-   <https://opendylan.org/getting-started-ide/projects.html>`_ for details.)
+   specifying its location. (See :doc:`Getting Started with Open Dylan > Projects
+   </getting-started-ide/projects>` for details.)
 
    The project name you specify here is not used literally when the wizard
    creates the project or projects. Instead, if you chose to create a client

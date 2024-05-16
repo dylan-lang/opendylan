@@ -37,11 +37,10 @@ Some highlights in this release:
 * Testworks now generates reports in JSON format, along with other Testworks
   improvements.
 
-For full details on changes in this release see the `release notes
-<https://opendylan.org/documentation/release-notes/2020.1.html>`_, or go
-directly to the `download page <https://opendylan.org/download/index.html>`_.
+For full details on changes in this release see the :doc:`release notes
+</release-notes/2020.1>`, or go
+directly to the :doc:`download page </download/index>`.
 
-For more information on Open Dylan, see our `website <https://opendylan.org/>`_
-and our `documentation <https://opendylan.org/documentation/>`_.
+For more information on Open Dylan, see our https://opendylan.org/.
 
 Good luck and happy Dylan hacking!

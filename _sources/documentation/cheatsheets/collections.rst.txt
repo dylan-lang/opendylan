@@ -22,24 +22,24 @@ Common Collection Types
 +--------------------------+------------------------------------+----------------------------------------+
 | :drm:`<deque>`           | ``dylan:dylan``                    | A double-ended queue.                  |
 +--------------------------+------------------------------------+----------------------------------------+
-| `\<set>`_                | ``collections:set``                | A set is for efficiently tracking      |
+| :class:`<set>`           | ``collections:set``                | A set is for efficiently tracking      |
 |                          |                                    | membership.                            |
 +--------------------------+------------------------------------+----------------------------------------+
-| `\<bit-set>`_            | ``collections:bit-set``            | A set with bits for members.           |
+| :class:`<bit-set>`       | ``collections:bit-set``            | A set with bits for members.           |
 +--------------------------+------------------------------------+----------------------------------------+
-| `\<bit-vector>`_         | ``collections:bit-vector``         | A vector optimized for storing bit     |
+| :class:`<bit-vector>`    | ``collections:bit-vector``         | A vector optimized for storing bit     |
 |                          |                                    | values.                                |
 +--------------------------+------------------------------------+----------------------------------------+
-| `\<byte-vector>`_        | ``collections:byte-vector``        | A vector of bytes.                     |
+| :class:`<byte-vector>`   | ``collections:byte-vector``        | A vector of bytes.                     |
 +--------------------------+------------------------------------+----------------------------------------+
 | :drm:`<table>`           | ``dylan:dylan``                    | A mapping between keys and values.     |
 +--------------------------+------------------------------------+----------------------------------------+
-| `\<string-table>`_       | ``collections:table-extensions``   | A ``<table>`` with strings for keys.   |
+| :class:`<string-table>`  | ``collections:table-extensions``   | A :drm:`<table>` with strings for keys.|
 +--------------------------+------------------------------------+----------------------------------------+
 
 .. note::
 
-   Because of the default comparison function for ``<table>``, it is
+   Because of the default comparison function for :drm:`<table>`, it is
    important to use ``<string-table>`` when the keys will be strings.
 
 Mutable vs. Immutable
@@ -159,9 +159,3 @@ Common Operations
 | :drm:`<table>`      | :drm:`remove-key!`           | Modifies an explicit key collection so it no longer  |
 |                     |                              | has a particular key.                                |
 +---------------------+------------------------------+------------------------------------------------------+
-
-.. _<set>: library-reference/collections/set.html
-.. _<bit-set>: library-reference/collections/bit-set.html
-.. _<bit-vector>: library-reference/collections/bit-vector.html
-.. _<byte-vector>: library-reference/common-dylan/byte-vector.html
-.. _<string-table>: library-reference/collections/table-extensions.html#collections:table-extensions:[string-table]

@@ -51,11 +51,9 @@ Library Updates
 System
 ------
 
-* The `$machine-name:operating-system:system
-  <https://opendylan.org/library-reference/system/operating-system.html#system:operating-system:$machine-name>`_
-  constant has been renamed to `$machine-architecture
-  <https://opendylan.org/library-reference/system/operating-system.html#system:operating-system:$machine-architecture>`_.
-  The old name will remain, for backward compatibility.
+* The :const:`$machine-name` constant has been renamed to
+  :const:`$machine-architecture`.  The old name will remain, for backward
+  compatibility.
 
 Contributors
 ============

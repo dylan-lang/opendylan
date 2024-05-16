@@ -313,6 +313,7 @@
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/drm/">Dylan Reference Manual</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://opendylan.org/package/">Package Docs</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../library-reference/index.html">Open Dylan Libraries</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle navigation of Open Dylan Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/language-extensions/index.html">Dylan Language Extensions</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Dylan Language Extensions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/language-differences.html">Language Differences</a></li>
@@ -474,6 +475,20 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../style-guide/index.html">Style Guide</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../history/index.html">Dylan History</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle navigation of Dylan History</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../history/apple-dylan/index.html">Apple Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" role="switch" type="checkbox"/><label for="toctree-checkbox-26"><div class="visually-hidden">Toggle navigation of Apple Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../history/apple-dylan/apple-cambridge.html">Apple Cambridge</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../history/apple-dylan/eulogy.html">Apple Dylan Eulogy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../history/apple-dylan/technology-release.html">Apple Dylan Technology Release</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../history/apple-dylan/today.html">Apple Dylan Today</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../history/apple-dylan/screenshots/browsers.html">Apple Dylan Screenshots - Browsers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../history/apple-dylan/screenshots/dynamic.html">Apple Dylan Screenshots - Dynamic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../history/apple-dylan/screenshots/index.html">Apple Dylan Screenshots</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../history/apple-dylan/screenshots/misc.html">Apple Dylan Screenshots - Misc</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../genindex.html">Full Index</a></li>
@@ -497,12 +512,12 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="https://github.com/dylan-lang/website/blob/master/source/articles/beyond-java.rst?plain=true" title="View this page">
+  <a class="muted-link" href="https://github.com/dylan-lang/opendylan/blob/master/source/articles/beyond-java.rst?plain=true" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
 </div><div class="edit-this-page">
-  <a class="muted-link" href="https://github.com/dylan-lang/website/edit/master/source/articles/beyond-java.rst" title="Edit this page">
+  <a class="muted-link" href="https://github.com/dylan-lang/opendylan/edit/master/source/articles/beyond-java.rst" title="Edit this page">
     <svg><use href="#svg-pencil"></use></svg>
     <span class="visually-hidden">Edit this page</span>
   </a>
@@ -530,20 +545,20 @@
 <section id="the-java-age">
 <h2>The Java Age<a class="headerlink" href="#the-java-age" title="Permalink to this heading">¶</a></h2>
 <p>We have been living through the Java age. It is somewhat of an understatement
-to say that there has been a great deal of interest in the <a class="reference external" href="http://web.archive.org/web/20030409041302/http://java.sun.com/docs/books/jls/html/index.html">Java programming
+to say that there has been a great deal of interest in the <a class="reference external" href="https://web.archive.org/web/20030409041302/http://java.sun.com/docs/books/jls/html/index.html">Java programming
 language</a>
-– although as far as hype goes <a class="reference external" href="http://web.archive.org/web/20030409041302/http://www.xml.org/">XML</a> is now
-overshadowing it. Initially Java, outside <a class="reference external" href="http://web.archive.org/web/20030409041302/http://www.sun.com/">Sun Microsystems</a> at least, was
+– although as far as hype goes <a class="reference external" href="https://web.archive.org/web/20030409041302/http://www.xml.org/">XML</a> is now
+overshadowing it. Initially Java, outside <a class="reference external" href="https://web.archive.org/web/20030409041302/http://www.sun.com/">Sun Microsystems</a> at least, was
 seen as a programming language purely for the Internet. In particular, it came
 with a virtual machine that could be embedded in web browsers and a security
 model to control the activity of Java programs running in such browsers.</p>
 <p>These days, however, Java has moved on and developers are using the language
 for all sorts of applications. Java is perceived as a reasonable general
 purpose programming language – one that is good enough. The tools are
-evolving. JIT compilers like <a class="reference external" href="http://web.archive.org/web/20030409041302/http://www.javasoft.com/products/hotspot/">Sun’s Hotspot</a>
-are making Java code run faster. UML-based design tools like <a class="reference external" href="http://web.archive.org/web/20030409041302/http://www.rational.com/products/rose/index.jtmpl">Rational Rose</a>
+evolving. JIT compilers like <a class="reference external" href="https://web.archive.org/web/20030409041302/http://www.javasoft.com/products/hotspot/">Sun’s Hotspot</a>
+are making Java code run faster. UML-based design tools like <a class="reference external" href="https://web.archive.org/web/20030409041302/http://www.rational.com/products/rose/index.jtmpl">Rational Rose</a>
 are finding Java’s rigid syntax amenable to round-trip engineering. EJB-based
-Application Servers like <a class="reference external" href="http://web.archive.org/web/20030409041302/http://www.bea.com/">BEA’s WebLogic</a> are providing
+Application Servers like <a class="reference external" href="https://web.archive.org/web/20030409041302/http://www.bea.com/">BEA’s WebLogic</a> are providing
 the background of services needed for many kinds of business applications.</p>
 <p>So what’s the problem?</p>
 </section>
@@ -573,7 +588,7 @@ problems:</p>
 Java. This need not mean going back to C++. After all, Java’s popularization of
 garbage collection and pointer-free programming has probably significantly
 advanced the cause of reliable software. This also does not mean stepping
-sideways to <a class="reference external" href="http://web.archive.org/web/20030409041302/http://msdn.microsoft.com/vstudio/nextgen/technology/csharpintro.asp">C#</a>
+sideways to <a class="reference external" href="https://web.archive.org/web/20030409041302/http://msdn.microsoft.com/vstudio/nextgen/technology/csharpintro.asp">C#</a>
 – a similar language with many of the same problems.</p>
 <p>The alternative programming language that I’m proposing in this article is
 Dylan. Dylan already has solutions to the problems listed above for Java:</p>
@@ -589,10 +604,10 @@ Dylan. Dylan already has solutions to the problems listed above for Java:</p>
 <hr class="docutils" />
 <section id="an-example">
 <h2>An Example<a class="headerlink" href="#an-example" title="Permalink to this heading">¶</a></h2>
-<p>Since, according to <a class="reference external" href="http://web.archive.org/web/20030409041302/http://www.samueljohnson.com/">Samuel Johnson</a>,
+<p>Since, according to <a class="reference external" href="https://web.archive.org/web/20030409041302/http://www.samueljohnson.com/">Samuel Johnson</a>,
 “example is always more efficacious than precept”, I will examine a real
 programming task that is made more awkward by Java and more elegant by Dylan.</p>
-<p>In the last few years I’ve personally been working on some <a class="reference external" href="http://web.archive.org/web/20030409041302/http://www.corba.org/">CORBA</a>
+<p>In the last few years I’ve personally been working on some <a class="reference external" href="https://web.archive.org/web/20030409041302/http://www.corba.org/">CORBA</a>
 projects. In particular, I’ve written compilers in both Dylan and Java for
 CORBA’s Interface Definition Language (IDL), so I feel able to show how a
 language like Dylan can simplify application development compared to Java. In
@@ -1403,7 +1418,7 @@ All product and brand names are the registered trademarks or trademarks of their
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2011-2023, Dylan Hackers
+                Copyright &#169; 2011-2024, Dylan Hackers
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -1456,7 +1471,7 @@ All product and brand names are the registered trademarks or trademarks of their
       
     </aside>
   </div>
-</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=13c31088"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../_static/scripts/furo.js?v=4e2eecee"></script>

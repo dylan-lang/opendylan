@@ -13,8 +13,8 @@ Release 2023.1
 * Updated versions of LLVM and the BDW garbage collector.
 * New ``"""multi-line"""`` and ``#r"raw"`` string literals (`DEP 12
   <../proposals/dep-0012-string-literals.rst>`_).
-* The :doc:`dylan <../package/dylan-tool/index>` tool continues to evolve with
-  a new, simplified workspace model.
+* The `dylan <https://opendylan.org/package/dylan-tool/>`_ tool continues to
+  evolve with a new, simplified workspace model.
 * Bug fixes for json, command-line-parser, system, and others.
 
 See the `release notes <../release-notes/2023.1.rst>`_ for more details.
@@ -38,7 +38,7 @@ overhaul. The goals of this revamp were:
 #. Local table of contents in the right sidebar. Hooray `Furo
    <https://pradyunsg.me/furo/quickstart/>`_!
 
-#. Integrated :doc:`package docs <../package/index>`.
+#. Integrated `package docs <https://opendylan.org/package/>`_.
 
 #. Simplicity! We're a small team so we want to avoid any extra maintenance
    burden. To that end, we no longer use a Dylan-specific Sphinx theme or
@@ -46,7 +46,7 @@ overhaul. The goals of this revamp were:
    we don't want it! :-)
 
 We'd love to hear feedback on the new site. You can `file a bug
-<https://github.com/dylan-lang/website/issues>`_ or `drop us a note on Matrix
+<https://github.com/dylan-lang/opendylan/issues>`_ or `drop us a note on Matrix
 <https://app.element.io/#/room/#dylan-language:matrix.org>`_.
 
 

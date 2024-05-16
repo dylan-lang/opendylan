@@ -94,8 +94,8 @@ Naming
 Naming is hard.  There is no single rule that works for everything.
 Here are some rules that should always be followed:
 
-* Follow the `naming conventions in the Dylan Reference Manual
-  <http://opendylan.org/books/drm/Naming_Conventions>`_.
+* Follow the :drm:`naming conventions in the Dylan Reference Manual
+  <Naming_Conventions>`.
 
 * Use lowercase, not uppercase or mixed case.
 

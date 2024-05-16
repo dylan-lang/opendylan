@@ -12,7 +12,7 @@ completely rewritten to
   * be far less verbose
   * have simplified usage
   * have automatic support for --help
-  * be `documented </library-reference/command-line-parser/index.html>`_
+  * be `documented <https://opendylan.org/package/command-line-parser/>`_
 
 Testworks and the HTTP server are using the new library.  More
 enhancements coming soon.

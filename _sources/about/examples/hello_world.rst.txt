@@ -29,9 +29,11 @@ The canonical "Hello World" program in Dylan.
    format-out("Hello!\n");
 
 
-.. hint:: The `dylan new application </package/dylan-tool/index.html#dylan-new-application>`_
-          command will create these files for you, along with a test suite and
-          build files.
+.. hint:: The `deft new application
+          <https://opendylan.org/package/deft/index.html#deft-new-application>`_
+          command (called ``dylan new application`` in Open Dylan 2024.1 and
+          older releases) will create these files for you, along with a test
+          suite and build files.
 
 How it works
 ============

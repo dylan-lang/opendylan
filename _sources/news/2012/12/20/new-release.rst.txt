@@ -14,12 +14,12 @@ For a variety of reasons, we didn't get to carry out our plan for
 more frequent releases in 2012, but hope to have more frequent releases
 in 2013.
 
-While we have extensive `release notes </release-notes/2012.1.html>`_,
+While we have extensive :doc:`release notes </release-notes/2012.1>`,
 there are some important changes that we feel are worth calling out
 separately:
 
-* We now use the C3 superclass linearization. See `DEP-0003
-  </proposals/dep-0003-c3-linearization.html>`_ for more details.
+* We now use the C3 superclass linearization. See :doc:`DEP-0003
+  </proposals/dep-0003-c3-linearization>` for more details.
 * Multithreading now works in the C backend.
 * Binaries and libraries built by ``dylan-compiler`` no longer have
   their directory location hard-coded within the executables.

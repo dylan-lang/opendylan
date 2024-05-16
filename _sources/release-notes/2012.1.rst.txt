@@ -30,7 +30,7 @@ Introduction
 This document describes the 2012.1 release of Open Dylan, released
 December 19, 2012.
 
-* `Download the release <http://opendylan.org/download/index.html>`_
+* `Download the release <https://opendylan.org/download/index.html>`_
 * `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_
 * `Source code <https://github.com/dylan-lang/opendylan/tree/v2012.1>`_
 
@@ -51,8 +51,7 @@ the compiler will issue a serious warning.  In a future release this
 will be changed to non-serious warning, and then eventually the
 warning will be removed completely.
 
-See `DEP-0003 <http://opendylan.org/proposals/dep-0003.html>`_ for
-more details.
+See :doc:`DEP-0003 </proposals/dep-0003-c3-linearization>` for more details.
 
 
 Library Changes
@@ -62,7 +61,7 @@ Library Changes
   Any usages of it can be replaced by using the ``plists`` module
   from the ``collections`` library.  Additionally, the ``plists``
   module has been `documented
-  <http://opendylan.org/documentation/library-reference/collections/plists.html>`_.
+  <https://opendylan.org/library-reference/collections/plists.html>`_.
 
 * Support for MacOS 9 locators has been removed. This is pre-OS X code
   and we don't support Mac OS 9 as a platform.
@@ -83,8 +82,8 @@ Library Changes
 
 * A new ``strings`` library replaces the ``string-extensions``
   library.  The new library provides a simpler API with all names
-  exported from a single ``strings`` module.  `DEP-0004
-  <http://opendylan.org/proposals/dep-0004.html>`_ is currently the
+  exported from a single ``strings`` module.  :doc:`DEP-0004
+  </proposals/dep-0004-strings-library>` is currently the
   best documentation for this library.
 
 * The ``string-extensions`` library has been removed.  Use the
@@ -114,16 +113,13 @@ Documentation Improvements
   documentation up-to-date, modernizes its look and feel, and allows
   us to generate various output formats.
 
-* The core libraries documentation has been unified into one `Dylan
-  Library Reference
-  <http://opendylan.org/documentation/library-reference/index.html>`_
-  document.
+* The core libraries documentation has been unified into one :doc:`Dylan
+  Library Reference </library-reference/index>` document.
 
 * The documentation on using the Open Dylan Console Environment has
   been rewritten and expanded.  A new section on the Dylan Interaction
-  Mode for Emacs (DIME) has been added.  See both in `the Getting
-  Started Guide
-  <http://opendylan.org/documentation/getting-started/index.html>`_.
+  Mode for Emacs (DIME) has been added.  See both in :doc:`the Getting
+  Started Guide </getting-started-cli/index>`.
 
 
 dylan-compiler Improvements

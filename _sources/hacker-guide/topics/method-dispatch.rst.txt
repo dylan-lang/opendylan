@@ -225,15 +225,15 @@ Future Work
   but that aren't understood well (like dispatch profiling).
 * Much more documentation.
 
-.. _sources/dylan/discrimination.dylan: https://github.com/dylan-lang/opendylan/tree/master/sources/dylan/discrimination.dylan
-.. _sources/dylan/dispatch-caches.dylan: https://github.com/dylan-lang/opendylan/tree/master/sources/dylan/dispatch-caches.dylan
-.. _sources/dylan/dispatch-prologue.dylan: https://github.com/dylan-lang/opendylan/tree/master/sources/dylan/dispatch-prologue.dylan
-.. _sources/dylan/dispatch.dylan: https://github.com/dylan-lang/opendylan/tree/master/sources/dylan/dispatch.dylan
-.. _sources/dylan/new-dispatch.dylan: https://github.com/dylan-lang/opendylan/tree/master/sources/dylan/new-dispatch.dylan
-.. _sources/dylan/slot-dispatch.dylan: https://github.com/dylan-lang/opendylan/tree/master/sources/dylan/slot-dispatch.dylan
-.. _sources/dfmc/modeling/functions.dylan: https://github.com/dylan-lang/opendylan/tree/master/sources/dfmc/modeling/functions.dylan
-.. _sources/dfmc/optimization/dispatch.dylan: https://github.com/dylan-lang/opendylan/tree/master/sources/dfmc/optimization/dispatch.dylan
-.. _sources/dfmc/management/compilation-driver.dylan: https://github.com/dylan-lang/opendylan/tree/master/sources/dfmc/management/compilation-driver.dylan
-.. _sources/environment/deuce/dylanworks-mode.dylan: https://github.com/dylan-lang/opendylan/tree/master/sources/environment/deuce/dylanworks-mode.dylan
-.. _sources/project-manager/projects/implementation.dylan: https://github.com/dylan-lang/opendylan/tree/master/sources/project-manager/projects/implementation.dylan
-.. _sources/lib/dispatch-profiler: https://github.com/dylan-lang/opendylan/tree/master/sources/lib/dispatch-profiler
+.. _sources/dylan/discrimination.dylan: https://github.com/dylan-lang/opendylan/blob/master/sources/dylan/discrimination.dylan
+.. _sources/dylan/dispatch-caches.dylan: https://github.com/dylan-lang/opendylan/blob/master/sources/dylan/dispatch-caches.dylan
+.. _sources/dylan/dispatch-prologue.dylan: https://github.com/dylan-lang/opendylan/blob/master/sources/dylan/dispatch-prologue.dylan
+.. _sources/dylan/dispatch.dylan: https://github.com/dylan-lang/opendylan/blob/master/sources/dylan/dispatch.dylan
+.. _sources/dylan/new-dispatch.dylan: https://github.com/dylan-lang/opendylan/blob/master/sources/dylan/new-dispatch.dylan
+.. _sources/dylan/slot-dispatch.dylan: https://github.com/dylan-lang/opendylan/blob/master/sources/dylan/slot-dispatch.dylan
+.. _sources/dfmc/modeling/functions.dylan: https://github.com/dylan-lang/opendylan/blob/master/sources/dfmc/modeling/functions.dylan
+.. _sources/dfmc/optimization/dispatch.dylan: https://github.com/dylan-lang/opendylan/blob/master/sources/dfmc/optimization/dispatch.dylan
+.. _sources/dfmc/management/compilation-driver.dylan: https://github.com/dylan-lang/opendylan/blob/master/sources/dfmc/management/compilation-driver.dylan
+.. _sources/environment/deuce/dylanworks-mode.dylan: https://github.com/dylan-lang/opendylan/blob/master/sources/environment/deuce/dylanworks-mode.dylan
+.. _sources/project-manager/projects/implementation.dylan: https://github.com/dylan-lang/opendylan/blob/master/sources/project-manager/projects/implementation.dylan
+.. _sources/lib/dispatch-profiler: https://github.com/dylan-lang/opendylan/blob/master/sources/lib/dispatch-profiler

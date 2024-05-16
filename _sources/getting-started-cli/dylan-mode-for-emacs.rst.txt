@@ -24,8 +24,7 @@ dylan-emacs-support repository.
          '((opendylan ("/opt/opendylan/bin/dswank")
                       :env ("OPEN_DYLAN_USER_REGISTRIES=/tmp/dime-test/registry"))))
 
-Setting `OPEN_DYLAN_USER_REGISTRIES
-<source-registries.html#open-dylan-user-registries>`_ is important because
+Setting :ref:`OPEN_DYLAN_USER_REGISTRIES <open-dylan-user-registries>` is important because
 that's how DIME finds your projects. Above we set it to the dime-test registry
 that is created in the example below.
 

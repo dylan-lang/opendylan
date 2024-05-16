@@ -106,7 +106,7 @@ it as:
    part of this templating processing.
 
 Some additional details about the early design of HARP are available in
-`Techniques for Dynamic Software Migration <http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.47.2525>`_
+`Techniques for Dynamic Software Migration <https://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.47.2525>`_
 from 1988. Other early sources of information about it, written by Hunter
 and Knightbridge, appear to be lost to the sands of time.
 
@@ -141,7 +141,7 @@ Scott McKay also worked on the Deuce editor that was used in the DylanWorks
 IDE. He wrote about it briefly in a `newsgroup posting
 <https://groups.google.com/forum/#!msg/comp.lang.dylan/3uuUb3Z9pAc/6NbE9gYpeAIJ>`_.
 Bruce Mitchener also wrote briefly about the architecture of Deuce on the
-`Atom editor discussion forums <http://web.archive.org/web/20210407151341/https://discuss.atom.io/t/the-deuce-editor-architecture/2218>`_.
+`Atom editor discussion forums <https://web.archive.org/web/20210407151341/https://discuss.atom.io/t/the-deuce-editor-architecture/2218>`_.
 
 Memory Pool System
 ------------------
@@ -229,7 +229,7 @@ Over the years, there have been a variety of other Dylan implementations.
   <https://groups.csail.mit.edu/mac/ftpdir/scheme-mail/HTML/rrrs-1992/msg00197.html>`_.
 * In 1994, Jonathan Bachrach had an implementation written on top of
   CMUCL using a set of macros. This implementation has been lost.
-* The `Marlais <http://marlais.sourceforge.net/>`_ implementation was
+* The `Marlais <https://marlais.sourceforge.net/>`_ implementation was
   abandoned in 2001.
 * Dominique Boucher wrote `IDyl <https://github.com/schemeway/idyl>`_,
   a Dylan interpreter in Scheme in the mid-1990s.

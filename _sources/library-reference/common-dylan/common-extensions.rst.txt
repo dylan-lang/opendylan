@@ -789,7 +789,7 @@ The extensions are:
    :operations:
 
      - :drm:`condition-format-string`
-     - :drm:`condition-format-args`
+     - :drm:`condition-format-arguments`
 
 .. class:: <stretchy-sequence>
    :open:
@@ -1613,7 +1613,7 @@ The extensions are:
      Parses the command specified in *line* into a command name and
      arguments. The rules used to tokenize the string are given in
      Microsoft's C/C++ reference in the section `"Parsing C Command-Line
-     Arguments" <http://msdn.microsoft.com/en-us/library/a1y7w461.aspx>`_.
+     Arguments" <https://learn.microsoft.com/en-us/cpp/c-language/parsing-c-command-line-arguments?view=msvc-170>`_.
 
    :seealso:
 

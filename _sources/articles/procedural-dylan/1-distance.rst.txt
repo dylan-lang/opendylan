@@ -220,7 +220,6 @@ anywhere inside a body.
 
 --------------
 
-`Next -- Conditions and Multiple Values: The Quadratic
-Formula <2-quadratic.html>`_
+:doc:`Next -- Conditions and Multiple Values: The Quadratic Formula <2-quadratic>`
 
 Copyright © 1995 Paul Haahr. All rights reserved.

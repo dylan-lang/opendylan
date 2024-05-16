@@ -28,8 +28,8 @@ what others might find useful, please see our `list of projects in the
 Open Dylan wiki <https://github.com/dylan-lang/opendylan/wiki>`_ or
 check out the list of `bugs labeled Easy
 <https://github.com/dylan-lang/opendylan/labels/Easy>`_.  If you have
-something in mind that isn't there, feel free to `talk with us
-<http://opendylan.org/community/>`_ or add it to the list.
+something in mind that isn't there, feel free to :doc:`talk with us
+</community/index>` or add it to the list.
 
 Making Changes
 ==============
@@ -69,14 +69,13 @@ Guidelines
 * Update documentation as necessary. Also, if appropriate, update the
   release notes, samples and other supporting materials.
 * We suggest following `this note about git commit messages
-  <http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html>`_.
-* Follow the `style guide
-  <http://opendylan.org/documentation/style-guide/index.html>`_ for
-  new code. When working in existing code, follow the existing style.
+  <https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html>`_.
+* Follow the :doc:`style guide </style-guide/index>` for new code. When
+  working in existing code, follow the existing style.
 * Do not make a lot of style or whitespace fixes in the same commit as
   other changes.
 * Use 2 spaces for indentation, **never** tabs.  If you use emacs,
-  `dylan-mode <https://github.com/dylan-lang/dylan-mode>`_ does a
+  `dylan-mode <https://github.com/dylan-lang/dylan-emacs-support>`_ does a
   decent job of indenting code.
 
 Licensing

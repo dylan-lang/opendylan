@@ -8,8 +8,8 @@ Debugging a Compiler Crash or Internal Error
 When the compiler generates an internal error or directly crashes, using
 gdb or lldb is a great way to find out more about what has gone wrong.
 
-See `Debugging with GDB or LLDB`_ for general information on debugging
-applications written with Open Dylan.
+See :doc:`/getting-started-cli/debugging-with-gdb-lldb` for general information
+on debugging applications written with Open Dylan.
 
 An internal error from the compiler will often look something like
 this::
@@ -34,4 +34,4 @@ invoke ``dylan-compiler``.  This will generate DFM output files in
 your ``_build/build/`` directory.
 
 
-.. _Debugging with GDB or LLDB: http://opendylan.org/documentation/getting-started-cli/debugging-with-gdb-lldb.html
+.. _Debugging with GDB or LLDB: https://opendylan.org/documentation/getting-started-cli/debugging-with-gdb-lldb.html

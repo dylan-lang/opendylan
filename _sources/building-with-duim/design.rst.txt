@@ -220,7 +220,9 @@ box at the appropriate position in the call to ``vertically``.
    single: examples; using contain to run
    single: running examples interactively using contain
    single: contain to run examples interactively
-   
+
+.. _using-contain-to-run-examples-interactively:
+
 Using contain to run examples interactively
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

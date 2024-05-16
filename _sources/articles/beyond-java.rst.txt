@@ -18,11 +18,11 @@ The Java Age
 We have been living through the Java age. It is somewhat of an understatement
 to say that there has been a great deal of interest in the `Java programming
 language
-<http://web.archive.org/web/20030409041302/http://java.sun.com/docs/books/jls/html/index.html>`_
+<https://web.archive.org/web/20030409041302/http://java.sun.com/docs/books/jls/html/index.html>`_
 -- although as far as hype goes `XML
-<http://web.archive.org/web/20030409041302/http://www.xml.org/>`_ is now
+<https://web.archive.org/web/20030409041302/http://www.xml.org/>`_ is now
 overshadowing it. Initially Java, outside `Sun Microsystems
-<http://web.archive.org/web/20030409041302/http://www.sun.com/>`_ at least, was
+<https://web.archive.org/web/20030409041302/http://www.sun.com/>`_ at least, was
 seen as a programming language purely for the Internet. In particular, it came
 with a virtual machine that could be embedded in web browsers and a security
 model to control the activity of Java programs running in such browsers.
@@ -31,12 +31,12 @@ These days, however, Java has moved on and developers are using the language
 for all sorts of applications. Java is perceived as a reasonable general
 purpose programming language -- one that is good enough. The tools are
 evolving. JIT compilers like `Sun's Hotspot
-<http://web.archive.org/web/20030409041302/http://www.javasoft.com/products/hotspot/>`_
+<https://web.archive.org/web/20030409041302/http://www.javasoft.com/products/hotspot/>`_
 are making Java code run faster. UML-based design tools like `Rational Rose
-<http://web.archive.org/web/20030409041302/http://www.rational.com/products/rose/index.jtmpl>`_
+<https://web.archive.org/web/20030409041302/http://www.rational.com/products/rose/index.jtmpl>`_
 are finding Java's rigid syntax amenable to round-trip engineering. EJB-based
 Application Servers like `BEA's WebLogic
-<http://web.archive.org/web/20030409041302/http://www.bea.com/>`_ are providing
+<https://web.archive.org/web/20030409041302/http://www.bea.com/>`_ are providing
 the background of services needed for many kinds of business applications.
 
 So what's the problem?
@@ -71,7 +71,7 @@ Java. This need not mean going back to C++. After all, Java's popularization of
 garbage collection and pointer-free programming has probably significantly
 advanced the cause of reliable software. This also does not mean stepping
 sideways to `C#
-<http://web.archive.org/web/20030409041302/http://msdn.microsoft.com/vstudio/nextgen/technology/csharpintro.asp>`_
+<https://web.archive.org/web/20030409041302/http://msdn.microsoft.com/vstudio/nextgen/technology/csharpintro.asp>`_
 -- a similar language with many of the same problems.
 
 The alternative programming language that I'm proposing in this article is
@@ -90,12 +90,12 @@ An Example
 ==========
 
 Since, according to `Samuel Johnson
-<http://web.archive.org/web/20030409041302/http://www.samueljohnson.com/>`_,
+<https://web.archive.org/web/20030409041302/http://www.samueljohnson.com/>`_,
 "example is always more efficacious than precept", I will examine a real
 programming task that is made more awkward by Java and more elegant by Dylan.
 
 In the last few years I've personally been working on some `CORBA
-<http://web.archive.org/web/20030409041302/http://www.corba.org/>`_
+<https://web.archive.org/web/20030409041302/http://www.corba.org/>`_
 projects. In particular, I've written compilers in both Dylan and Java for
 CORBA's Interface Definition Language (IDL), so I feel able to show how a
 language like Dylan can simplify application development compared to Java. In

@@ -13,7 +13,7 @@ Dylan is a multi-paradigm functional and object-oriented programming language. I
 
 For more information on Open Dylan, see our `website <https://opendylan.org/>`_ and our `documentation <https://opendylan.org/documentation/>`_.
 
-We have extensive `release notes <https://opendylan.org/documentation/release-notes/2013.2.html>`_,
+We have extensive :doc:`release notes </release-notes/2013.2>`,
 but this release has been about iterative improvement rather than major changes.
 
 * Testworks has seen substantial improvements.

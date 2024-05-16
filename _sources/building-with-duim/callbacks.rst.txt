@@ -8,8 +8,7 @@ Adding Callbacks to the Application
 ***********************************
 
 At this point, the task list manager still does very little. If you try
-running the code (as described in `Starting the
-application <improve.html#starting-the-application>`_), and interacting with any of the
+running the code (as described in :ref:`starting-the-application`), and interacting with any of the
 elements in the GUI (clicking on a button, choosing a menu command, and
 so on), then only the "not yet implemented" message is displayed. This
 section shows you how to remedy this situation, by adding callback
@@ -54,7 +53,9 @@ just using gadgets, then you only ever need to use callbacks.
 
 .. index::
    single: task list manager; underlying data structures for tasks
-   
+
+.. _defining-the-underlying-data-structures-for-tasks:
+
 Defining the underlying data structures for tasks
 =================================================
 
@@ -150,8 +151,8 @@ ensure that information about tasks is passed to the ``task-list`` pane
 correctly. Make these changes to the existing definition in the file
 ``frame.dylan``.
 
-In `Gluing the final design together <menus.html#gluing-the-new-design-together>`_, the
-definition of ``task-list`` was given as:
+In :ref:`menus--gluing-it-together`, the definition of ``task-list`` was
+given as:
 
 .. code-block:: dylan
 
@@ -371,7 +372,9 @@ developing application, or in completely different applications.
    single: file handling in DUIM applications
    single: handling files in the task list manager
    single: task list manager; handling files
-   
+
+.. _handling-files-in-the-task-list-manager:
+
 Handling files in the task list manager
 ---------------------------------------
 
@@ -383,7 +386,7 @@ essential in even the most trivial application.
 
 .. index::
    single: DUIM applications; file handling in
-   
+
 There are three methods and two functions necessary for handling files.
 The methods handle GUI-specific operations involved in loading and
 saving files. The functions deal with the basic task of saving data
@@ -825,7 +828,7 @@ itself. Note that the ``task-list-modified?`` slot of the ``<task-list>`` is
 set to ``#f``, reflecting the fact that the task list is loaded, but
 unchanged. This does not have to be done explicitly by ``load-task-list``,
 since ``#f`` is the default value of this slot, as you can see from its
-definition in `Defining the underlying data structures for tasks`_.
+definition in :ref:`defining-the-underlying-data-structures-for-tasks`.
 
 The file is opened for reading using the ``with-open-file`` macro. It is
 then read a line at a time, setting the local variables ``name`` and
@@ -998,8 +1001,7 @@ As with other DUIM methods you have seen, ``frame`` and ``task-list`` are
 specified using known slot values about the gadget supplied to
 ``frame-add-task``, and the frame that contains the gadget. The ``name``
 and ``priority`` values are specified by calling the ``prompt-for-task``
-method defined in `Creating a dialog for adding new
-items <improve.html#creating-a-dialog-for-adding-new-items>`_. This method displays a dialog into which
+method defined in :ref:`improve--creating-a-dialog-for-new-items`. This method displays a dialog into which
 the user types the text for the new task and chooses the priority, both
 of which values are returned from ``prompt-for-task``.
 
@@ -1192,7 +1194,7 @@ section, together with a brief description of each one:
 
    Two methods are defined that deal with updating the GUI whenever a
    change is made to the task selection state. This method is described
-   in `Enabling and disabling buttons in the interface`_.
+   in :ref:`enable-disable-buttons`.
 
 ``refresh-task-frame``
 
@@ -1296,6 +1298,8 @@ in `DUIM support for adding and removing tasks`_.
 
 Add the code for these methods to ``frame.dylan``.
 
+.. _enable-disable-buttons:
+
 Enabling and disabling buttons in the interface
 -----------------------------------------------
 
@@ -1317,8 +1321,8 @@ method requires a slightly different definition, and the second method
 is not required at all.
 
 The ``note-task-selection-change`` method defined on ``<task-frame>``
-is called by ``refresh-task-frame``, described on `Refreshing the
-list of tasks <callbacks.html#refreshing-the-list-of-tasks>`_. The
+is called by ``refresh-task-frame``, described in `Refreshing the
+list of tasks <#refreshing-the-list-of-tasks>`_. The
 refresh-task-frame method is called whenever the list of tasks needs
 to be refreshed for whatever reason. This happens most commonly after
 adding or removing a task from the list, or loading in a new task list

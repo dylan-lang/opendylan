@@ -9,4 +9,4 @@ it will not integrate cleanly with Sphinx and our other documentation.
 
 We don't currently use this tool for any of the Open Dylan documentation.
 
-.. _available on GitHub: http://github.com/dylan-lang/doctower
+.. _available on GitHub: https://github.com/dylan-lang/doctower

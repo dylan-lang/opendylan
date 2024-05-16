@@ -970,7 +970,7 @@ File-System module.
      represented abstractly; for instance, contiguous elements could be
      treated as a single database record. This init-keyword defaults to
      something useful, potentially based on the properties of the file;
-     `<byte-character>`_ and `<unicode-character>`_ are likely choices.
+     :type:`<byte-character>` and :type:`<unicode-character>` are likely choices.
      See `Options when creating file streams`_.
 
    :seealso:

@@ -38,7 +38,7 @@ Publications about Dylan
     generates faster code with fewer errors. Some previously
     undiscovered errors in the Dylan library were revealed.
 
-    https://doi.org/10.1145/1869643.1869645
+    https://dl.acm.org/doi/10.1145/1869643.1869645
 
 **Automatically generated type-safe GTK+ binding for Dylan** (by Hannes Mehnert at ILC 2009 `pdf <https://www.researchgate.net/profile/Hannes_Mehnert/publication/255630976_Automatically_generated_type-safe_GTK_binding_for_Dylan/links/558fd23308ae15962d8b5e66/Automatically-generated-type-safe-GTK-binding-for-Dylan.pdf>`__ `bib <../_static/documentation/mehnert2009.bib>`__)
     We present an automated way to get language bindings for GTK+ for
@@ -59,7 +59,7 @@ Publications about Dylan
     the parse tree, and we will show the strengths and limits of this
     approach for the given problem.
 
-    https://doi.org/10.1145/1622123.1622148
+    https://dl.acm.org/doi/10.1145/1622123.1622148
 
 **Secure Networking** (by Andreas Bogk and Hannes Mehnert at 23rd Chaos Communication Congress `pdf <https://www.researchgate.net/profile/Hannes_Mehnert/publication/228910362_Secure_networking/links/558fefe308aed6ec4bf64b82/Secure-networking.pdf>`__)
     We noticed a lack of a decent secure framework for handling
@@ -121,7 +121,7 @@ Publications about Dylan
     Component Object Model (COM), and how they attempt to reduce the
     complexity of writing and using COM objects.
 
-    https://doi.org/10.1145/274946.274957
+    https://dl.acm.org/doi/10.1145/274946.274957
 
 **A Monotonic Superclass Linearization for Dylan** (by Kim Barrett and Bob Cassels and Paul Haahr and David A. Moon and Keith Playford and P. Tucker Withington at OOPSLA 1996 `PDF <../_static/c3-linearization.pdf>`__ `bib <../_static/documentation/barrett1996.bib>`__)
     Object-oriented languages with multiple inheritance and automatic
@@ -140,7 +140,7 @@ Publications about Dylan
     heterarchies from several large programs, analyzing where commonly
     used linearizations differ.
 
-    https://doi.org/10.1145/236337.236343
+    https://dl.acm.org/doi/10.1145/236337.236343
 
 **Discovering the way programmers think about new programming environments** (by Joseph Dumas and Paige Parsons - Communications of the ACM June 1995 `bib <../_static/documentation/dumas1995.bib>`__)
     An interesting usability study of a prototype development
@@ -152,7 +152,7 @@ Publications about Dylan
     how effectively the prototype conveys these innovations to Dylan
     developers is also given, followed by some proposed improvements.
 
-    https://doi.org/10.1145/203241.203253
+    https://dl.acm.org/doi/10.1145/203241.203253
 
 `Bibliography in bibtex format <../_static/documentation/publications.bib>`_
 

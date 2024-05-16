@@ -29,6 +29,6 @@ that is very widely used.
 It also re-exports these modules which are defined in
 :doc:`the dylan library <../dylan/index>`:
 
-- `The dylan Module <http://opendylan.org/books/drm/>`_
+- `The dylan Module </books/drm/>`_
 - :doc:`../dylan/threads`
 - :doc:`../dylan/finalization`

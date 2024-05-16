@@ -106,12 +106,12 @@ what many other programming language communities provide:
 
 * Clojure: `Leiningen <https://github.com/technomancy/leiningen>`_
 * Common Lisp: `QuickLisp <https://www.quicklisp.org/beta/>`_
-* Emacs Lisp: `Marmalade <https://web.archive.org/web/20121103132251/https://marmalade-repo.org/>`_ / `ELPA  <http://tromey.com/elpa/>`_
+* Emacs Lisp: `Marmalade <https://web.archive.org/web/20121103132251/https://marmalade-repo.org/>`_ / `ELPA  <https://tromey.com/elpa/>`_
 * Erlang: `EPM <https://web.archive.org/web/20111205025106/http://jkvor.com/erlang-package-manager>`_
 * haXe: `haxelib <https://haxe.org/manual/haxelib.html>`_
 * Lua: `LuaRocks <https://luarocks.org/>`_
 * NodeJS: `NPM <https://www.npmjs.com/>`_
-* Haskell: `Hackage <http://hackage.haskell.org/>`_
+* Haskell: `Hackage <https://hackage.haskell.org/>`_
 * Ocaml: `GODI <http://godi.camlcity.org/archive/godi/index.html>`_
 * PHP: `PEAR <https://pear.php.net/>`_
 * Perl: CPAN

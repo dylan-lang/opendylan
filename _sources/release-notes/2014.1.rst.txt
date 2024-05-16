@@ -159,7 +159,7 @@ Common Dylan
 Debugging
 =========
 
-* When using `LLDB <http://lldb.llvm.org/>`_ for debugging, Dylan
+* When using `LLDB <https://lldb.llvm.org/>`_ for debugging, Dylan
   support is now available. To use this, you need to import the
   Python scripts::
 
@@ -283,5 +283,4 @@ Testworks
   forward reference".
 
 * Benchmarks are once again supported.  See the `documentation
-  <http://opendylan.org/documentation/testworks/usage.html>`_ for
-  details.
+  <https://opendylan.org/package/testworks/>`_ for details.

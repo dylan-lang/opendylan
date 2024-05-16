@@ -13,7 +13,7 @@ A skip-list is a data type equivalent to a balanced (binary) tree.
 .. library:: skip-list
 
    The skip list library may be found in the `"skip-list" repository
-   <http://github.com/dylan-lang/skip-list>`_.
+   <https://github.com/dylan-lang/skip-list>`_.
    
 .. module:: skip-list
 

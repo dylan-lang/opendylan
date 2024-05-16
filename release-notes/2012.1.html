@@ -313,6 +313,7 @@
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/drm/">Dylan Reference Manual</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://opendylan.org/package/">Package Docs</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../library-reference/index.html">Open Dylan Libraries</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle navigation of Open Dylan Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/language-extensions/index.html">Dylan Language Extensions</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Dylan Language Extensions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/language-differences.html">Language Differences</a></li>
@@ -474,6 +475,20 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../style-guide/index.html">Style Guide</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../history/index.html">Dylan History</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle navigation of Dylan History</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../history/apple-dylan/index.html">Apple Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" role="switch" type="checkbox"/><label for="toctree-checkbox-26"><div class="visually-hidden">Toggle navigation of Apple Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../history/apple-dylan/apple-cambridge.html">Apple Cambridge</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../history/apple-dylan/eulogy.html">Apple Dylan Eulogy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../history/apple-dylan/technology-release.html">Apple Dylan Technology Release</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../history/apple-dylan/today.html">Apple Dylan Today</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../history/apple-dylan/screenshots/browsers.html">Apple Dylan Screenshots - Browsers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../history/apple-dylan/screenshots/dynamic.html">Apple Dylan Screenshots - Dynamic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../history/apple-dylan/screenshots/index.html">Apple Dylan Screenshots</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../history/apple-dylan/screenshots/misc.html">Apple Dylan Screenshots - Misc</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../genindex.html">Full Index</a></li>
@@ -497,12 +512,12 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="https://github.com/dylan-lang/website/blob/master/source/release-notes/2012.1.rst?plain=true" title="View this page">
+  <a class="muted-link" href="https://github.com/dylan-lang/opendylan/blob/master/source/release-notes/2012.1.rst?plain=true" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
 </div><div class="edit-this-page">
-  <a class="muted-link" href="https://github.com/dylan-lang/website/edit/master/source/release-notes/2012.1.rst" title="Edit this page">
+  <a class="muted-link" href="https://github.com/dylan-lang/opendylan/edit/master/source/release-notes/2012.1.rst" title="Edit this page">
     <svg><use href="#svg-pencil"></use></svg>
     <span class="visually-hidden">Edit this page</span>
   </a>
@@ -528,7 +543,7 @@
 <p>This document describes the 2012.1 release of Open Dylan, released
 December 19, 2012.</p>
 <ul class="simple">
-<li><p><a class="reference external" href="http://opendylan.org/download/index.html">Download the release</a></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/download/index.html">Download the release</a></p></li>
 <li><p><a class="reference external" href="https://github.com/dylan-lang/opendylan/issues">Report bugs</a></p></li>
 <li><p><a class="reference external" href="https://github.com/dylan-lang/opendylan/tree/v2012.1">Source code</a></p></li>
 </ul>
@@ -546,8 +561,7 @@ should not change the semantics of existing programs, but if it does
 the compiler will issue a serious warning.  In a future release this
 will be changed to non-serious warning, and then eventually the
 warning will be removed completely.</p>
-<p>See <a class="reference external" href="http://opendylan.org/proposals/dep-0003.html">DEP-0003</a> for
-more details.</p>
+<p>See <a class="reference internal" href="../proposals/dep-0003-c3-linearization.html"><span class="doc">DEP-0003</span></a> for more details.</p>
 </section>
 </section>
 <section id="library-changes">
@@ -556,7 +570,7 @@ more details.</p>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">CL-plists</span></code> module in the <code class="docutils literal notranslate"><span class="pre">cl</span></code> library has been removed.
 Any usages of it can be replaced by using the <code class="docutils literal notranslate"><span class="pre">plists</span></code> module
 from the <code class="docutils literal notranslate"><span class="pre">collections</span></code> library.  Additionally, the <code class="docutils literal notranslate"><span class="pre">plists</span></code>
-module has been <a class="reference external" href="http://opendylan.org/documentation/library-reference/collections/plists.html">documented</a>.</p></li>
+module has been <a class="reference external" href="https://opendylan.org/library-reference/collections/plists.html">documented</a>.</p></li>
 <li><p>Support for MacOS 9 locators has been removed. This is pre-OS X code
 and we don’t support Mac OS 9 as a platform.</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">bit-vectors</span></code> module in the <code class="docutils literal notranslate"><span class="pre">collections</span></code> library works
@@ -571,7 +585,7 @@ up substantially and the API is much more consistent.</p></li>
 FreeBSD. Previously, this was only supported on Windows.</p></li>
 <li><p>A new <code class="docutils literal notranslate"><span class="pre">strings</span></code> library replaces the <code class="docutils literal notranslate"><span class="pre">string-extensions</span></code>
 library.  The new library provides a simpler API with all names
-exported from a single <code class="docutils literal notranslate"><span class="pre">strings</span></code> module.  <a class="reference external" href="http://opendylan.org/proposals/dep-0004.html">DEP-0004</a> is currently the
+exported from a single <code class="docutils literal notranslate"><span class="pre">strings</span></code> module.  <a class="reference internal" href="../proposals/dep-0004-strings-library.html"><span class="doc">DEP-0004</span></a> is currently the
 best documentation for this library.</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">string-extensions</span></code> library has been removed.  Use the
 <code class="docutils literal notranslate"><span class="pre">strings</span></code> library instead.  Some of the functionality in
@@ -595,13 +609,12 @@ or pass <code class="docutils literal notranslate"><span class="pre">synchronize
 generator.  This is a huge improvement in our ability to keep the
 documentation up-to-date, modernizes its look and feel, and allows
 us to generate various output formats.</p></li>
-<li><p>The core libraries documentation has been unified into one <a class="reference external" href="http://opendylan.org/documentation/library-reference/index.html">Dylan
-Library Reference</a>
-document.</p></li>
+<li><p>The core libraries documentation has been unified into one <a class="reference internal" href="../library-reference/index.html"><span class="doc">Dylan
+Library Reference</span></a> document.</p></li>
 <li><p>The documentation on using the Open Dylan Console Environment has
 been rewritten and expanded.  A new section on the Dylan Interaction
-Mode for Emacs (DIME) has been added.  See both in <a class="reference external" href="http://opendylan.org/documentation/getting-started/index.html">the Getting
-Started Guide</a>.</p></li>
+Mode for Emacs (DIME) has been added.  See both in <a class="reference internal" href="../getting-started-cli/index.html"><span class="doc">the Getting
+Started Guide</span></a>.</p></li>
 </ul>
 </section>
 <section id="dylan-compiler-improvements">
@@ -863,7 +876,7 @@ of <code class="docutils literal notranslate"><span class="pre">dylan-compiler</
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2011-2023, Dylan Hackers
+                Copyright &#169; 2011-2024, Dylan Hackers
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -937,7 +950,7 @@ of <code class="docutils literal notranslate"><span class="pre">dylan-compiler</
       
     </aside>
   </div>
-</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=2df60dd4"></script>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=13c31088"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../_static/scripts/furo.js?v=4e2eecee"></script>
