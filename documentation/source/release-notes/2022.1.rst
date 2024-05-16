@@ -56,9 +56,10 @@ Tooling
 * The `dylan <https://github.com/dylan-lang/dylan-tool>`_ command is a new tool
   to manage Dylan packages and workspaces. It provides a centralized catalog of
   Dylan packages and a way to manage dependencies without resorting to Git
-  submodules or needing to manually create registry files. See the `dylan-tool
-  documentation <https://opendylan.org/documentation/dylan-tool>`_ for
-  details.
+  submodules or needing to manually create registry files.
+
+  .. note:: Since this release, dylan-tool was renamed to "deft". See the `deft
+            documentation </package/deft/>` for details.
 
   .. note:: This tool is still in the relatively early stages of development.
 
@@ -86,15 +87,15 @@ Documentation
 =============
 
 * The `Developing Component Software with CORBA
-  <http://opendylan.org/documentation/opendylan/corba-guide/index.htm>`_
+  <https://opendylan.org/opendylan/corba-guide/index.htm>`_
   guide has been updated.
 
-* Documentation for the DOOD library has been added to `the library reference
-  <https://opendylan.org/documentation/library-reference/index.html>`_.
+* Documentation for the DOOD library has been added to :doc:`the library
+  reference </library-reference/dood/index>`.
 
 * Documentation for the internal ``access-path`` and ``debugger-manager``
-  libraries is now available in the `Open Dylan Hacker's Guide
-  <https://opendylan.org/documentation/hacker-guide/index.html>`_.
+  libraries is now available in the :doc:`Open Dylan Hacker's Guide
+  </hacker-guide/index>`.
 
 Library Changes
 ===============

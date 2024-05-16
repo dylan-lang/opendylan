@@ -199,20 +199,18 @@ Debugging
 =========
 
 * The LLDB debugger support has been updated to work with Python 3.  For more
-  information, see `Debugging with GDB or LLDB
-  <https://opendylan.org/documentation/getting-started-cli/debugging-with-gdb-lldb.html>`_.
+  information, see :doc:`Debugging with GDB or LLDB
+  </getting-started-cli/debugging-with-gdb-lldb>`.
 
 Documentation
 =============
 
-* Dylan Reference Manual links were added to `An Introduction to Dylan
-  <https://opendylan.org/documentation/intro-dylan/index.html>`_
+* Dylan Reference Manual links were added to :doc:`An Introduction to Dylan
+  </intro-dylan/index>`.
 
-* Index sections were added to `Getting Started with the Open Dylan
-  IDE
-  <https://opendylan.org/documentation/getting-started-ide/index.html>`_,
-  `Building Applications With DUIM
-  <https://opendylan.org/documentation/building-with-duim/index.html>`_.
+* Index sections were added to :doc:`Getting Started with the Open Dylan IDE
+  </getting-started-ide/index>`, :doc:`Building Applications With DUIM
+  </building-with-duim/index>`.
 
 Build System
 ============
@@ -329,15 +327,14 @@ testworks Library
 
 * The testworks-specs library has been folded into testworks and has been
   greatly simplified. See `Interface Specification Suites
-  <https://opendylan.org/documentation/testworks/usage.html#interface-specification-suites>`_. Note
+  <https://opendylan.org/package/testworks/usage.html#interface-specification-suites>`_. Note
   that the new specification suites no longer expect you to define one test per
   exported name in your interface module. Instead you can write tests in
   whatever way best suits your needs and the interface specification suite only
   verifies that the specification matches the implementation.
 
 * A new function has been added to retrieve a unique directory for the current
-  test: `test-temp-directory
-  <https://opendylan.org/documentation/testworks/reference.html#testworks:testworks:test-temp-directory>`_
+  test: :func:`test-temp-directory`
 
 * The `--report` command line option now accepts "full" as a value, meaning to
   display individual assertion results in addition to the normal output.
@@ -383,9 +380,8 @@ big-integers library
 progress-stream library
 -----------------------
 
-* `A new library
-  <https://opendylan.org/documentation/library-reference/progress-stream/index.html>`_
-  for displaying text mode progress bars is provided.
+* :doc:`A new library </library-reference/progress-stream/index>` for
+  displaying text mode progress bars is provided.
 
 gabriel-benchmarks library
 --------------------------

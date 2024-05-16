@@ -39,6 +39,6 @@ However, enhanced support is available in
 `dylan-vim`_.
 
 .. _language-dylan: https://atom.io/packages/language-dylan
-.. _DeftIDEA: http://plugins.jetbrains.com/plugin/7325-deftidea
+.. _DeftIDEA: https://plugins.jetbrains.com/plugin/7325-deftidea
 .. _dylan.tmbundle: https://github.com/textmate/dylan.tmbundle
 .. _dylan-vim: https://github.com/dylan-lang/dylan-vim

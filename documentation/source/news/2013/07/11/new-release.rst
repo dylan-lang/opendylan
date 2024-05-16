@@ -9,7 +9,7 @@ Dear Dylan Hacker,
 
 It is a pleasure for us to announce a new release of Open Dylan.
 
-We have extensive `release notes </release-notes/2013.1.html>`_,
+We have extensive :doc:`release notes </release-notes/2013.1>`,
 but this release has been about iterative improvement rather than major changes.
 
 * A deadlock when using threads on x86-linux has been addressed.

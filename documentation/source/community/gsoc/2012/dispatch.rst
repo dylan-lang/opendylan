@@ -12,5 +12,5 @@ For this project some algorithmic knowledge is needed. The code will be mainly i
 
 Useful links:
 
-- `Eric Kidds technical report on compression of generic function tables <http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.68.9146&rep=rep1&type=pdf>`_
+- `Eric Kidds technical report on compression of generic function tables <https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.68.9146&rep=rep1&type=pdf>`_
 - `Yoav Zibin thesis about efficient runtime algorithms <https://yoav-zibin.github.io/homepage/publications/my-thesis.pdf>`_

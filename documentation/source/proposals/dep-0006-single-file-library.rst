@@ -18,7 +18,7 @@ Revision History
 ================
 
 The revision history of this document is available on GitHub:
-https://github.com/dylan-lang/website/commits/master/source/proposals/dep-0006-single-file-library.rst
+https://github.com/dylan-lang/opendylan/commits/master/documentation/source/proposals/dep-0006-single-file-library.rst
 
 Abstract
 ========
@@ -173,7 +173,7 @@ single source file, all LID keywords may appear in the header section.
 The compiler or interpreter should handle them in the same way it
 would if they were in a separate .lid file.  There is no conflict
 between the keywords used in LID files and those used in Dylan source
-files.  See https://opendylan.org/documentation/library-reference/lid.html
+files.  See :doc:`/library-reference/lid`
 for existing Open Dylan LID file keywords.
 
 Module Header

@@ -48,20 +48,10 @@ with a number of classes related to events that occur in frames.
 - :drm:`<object>`
 
   - :class:`<gadget>`
-  - :class:`<page>`
-
-    - See `Subclasses of \<page\>`_
-
-  - :class:`<frame>`
-
-    - See `Subclasses of \<frame\>`_
-
+  - :class:`<page>` - See :ref:`gadgets-subclasses-of-page`
+  - :class:`<frame>` - See `Subclasses of \<frame\>`_
   - :class:`<event>`
-
-    - :class:`<frame-event>`
-
-      - See `Subclasses of \<frame-event\>`_
-
+    - :class:`<frame-event>` - See `Subclasses of \<frame-event\>`_
   - :class:`<simple-command>`
   - :class:`<simple-undoable-command>`
   - :class:`<command-table>`
@@ -174,14 +164,15 @@ using the application.
    from the screen without actually destroying it (for example,
    a frame may be iconized).
 
+.. _frames-subclasses-of-page:
+
 Subclasses of <page>
 ^^^^^^^^^^^^^^^^^^^^
 
 Although the :class:`<page>` class is itself a subclass of :class:`<gadget>`, and is
 exposed by the DUIM-Gadgets library, two of its subclasses are exposed
 by the DUIM-Frames library: :class:`<wizard-page>` and :class:`<property-page>`. See
-`Subclasses of <page> <gadgets.htm#31084>`_ for an introduction to
-these classes.
+:ref:`gadgets-subclasses-of-page` for an introduction to these classes.
 
 DUIM-Commands Library
 =====================
@@ -4310,7 +4301,7 @@ are exported from the *duim-frames* module.
      #"mapped", #"iconified")``. Default value: ``#"detached"``.
    :param #key geometry: An instance of type :drm:`<vector>`. Default value: ``vector(#f, #f, #f, #f)``.
    :param #key resizable?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
-   :param #key properties: An instance of type :drm:`<stretchy-object-vector>`. Default value: ``make(<stretchy-vector>)``.
+   :param #key properties: An instance of type :class:`<stretchy-object-vector>`. Default value: ``make(<stretchy-vector>)``.
    :param #key thread: An instance of type ``false-or(<thread>)``. Default value: ``#f``.
    :param #key event-queue: An instance of type ``false-or(<event-queue>)``. Default value: ``#f``.
    :param #key foreground: An instance of type ``false-or(<ink>)``. Default value: ``#f``.

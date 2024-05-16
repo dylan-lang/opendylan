@@ -42,6 +42,5 @@ See also:
   in common-dylan is a simple example of making a new top-level "define" form.
 * :drm:`Built-in macros <Built-In_Macros_and_Special_Definitions>` -- Many of
   the basic features of Dylan are implemented as macros.
-* The `Dylan Macro System </articles/macro-system.html>`_ article by Dustin
-  Voss.
+* The :doc:`Dylan Macro System </articles/macro-system>` article by Dustin Voss.
 * The :drm:`Macros` chapter in the :drm:`DRM <Index>`.

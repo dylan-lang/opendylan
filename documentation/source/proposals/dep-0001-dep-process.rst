@@ -17,7 +17,7 @@ Preamble
 ========
 
 This document is based heavily on Python `PEP 1
-<https://www.python.org/dev/peps/pep-0001/>`_, "PEP Purpose and
+<https://peps.python.org/pep-0001/>`_, "PEP Purpose and
 Guidelines", by Barry Warsaw, Jeremy Hylton, and David Goodger.  The
 author would like to thank them for providing an excellent base for
 the Dylan team to work from.
@@ -136,7 +136,7 @@ the next available DEP number to the DEP by looking at the :doc:`DEP
 directory <index>` to find the highest used number.  The DEP
 number is not assured until the DEP has been committed to the `origin
 Git repository
-<https://github.com/dylan-lang/website/tree/master/source/proposals>`_.
+<https://github.com/dylan-lang/opendylan/tree/master/documentation/source/proposals>`_.
 As updates are necessary, the DEP author may commit new versions.
 
 Wait for at least ten days to receive feedback on each draft.
@@ -487,7 +487,7 @@ References and Footnotes
 .. [1] This historical record is available by the normal Git commands
    for retrieving older revisions.  For those without direct access to
    Git, you can browse the current and past DEP revisions here:
-   https://github.com/dylan-lang/website/tree/master/source/proposals
+   https://github.com/dylan-lang/opendylan/tree/master/documentation/source/proposals
 
 .. [2] Which issue tracker to use will depend on the content of the
    DEP.  For language changes, changes to Open Dylan, or changes to

@@ -25,7 +25,7 @@ The following options are among those available:
 
 See ``dylan-compiler -help`` for a full listing of the options.
 
-See https://opendylan.org/documentation/getting-started-cli/ for more
+See https://opendylan.org/getting-started-cli/ for more
 details on the usage of the ``dylan-compiler`` command line tool.
 
 SEE ALSO

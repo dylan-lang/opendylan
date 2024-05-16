@@ -70,8 +70,8 @@ characters. The primary example of this is regular expressions, which quickly
 become difficult to interpret when they themselves contain many backslashes.
 
 Open Dylan has a fairly simple work-around for this problem, which it calls
-`parser expansions
-<https://opendylan.org/documentation/library-reference/language-extensions/parser-expansions.html>`_::
+:doc:`parser expansions
+</library-reference/language-extensions/parser-expansions>`::
 
    define function string-parser (s) s end;
    define constant s1 = "\\.\\[\\*\\\\\\]";     // standard Dylan
@@ -355,4 +355,4 @@ Revision History
 ================
 
 The revision history of this document is available here:
-https://github.com/dylan-lang/website/commits/master/source/proposals/dep-0012-string-literals.rst
+https://github.com/dylan-lang/opendylan/commits/master/documentation/source/proposals/dep-0012-string-literals.rst

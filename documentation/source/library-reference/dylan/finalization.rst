@@ -14,7 +14,7 @@ to use the interface described in this documentation.
 What is finalization?
 =====================
 
-The `Memory Management Reference <http://www.memorymanagement.org>`_ defines
+The `Memory Management Reference <https://www.memorymanagement.org>`_ defines
 finalization as follows:
 
     In garbage-collected languages, it is often necessary to perform actions

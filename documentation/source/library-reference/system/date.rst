@@ -590,7 +590,7 @@ Date module.
 .. function:: as-rfc822-string
 
    Returns a string representation of a date, conforming to
-   `RFC 822 <http://www.w3.org/Protocols/rfc822/#z28>`_.
+   `RFC 822 <https://www.w3.org/Protocols/rfc822/#z28>`_.
 
    :signature: as-rfc822-string *date* => *rfc822-string*
 
@@ -1468,7 +1468,7 @@ Date module.
      * the date and time may be separated by a space character
      * TZD may be preceded by a space character
 
-     See http://www.w3.org/TR/NOTE-datetime.html.
+     See https://www.w3.org/TR/NOTE-datetime.html.
 
      Year:
         YYYY (eg 1997)

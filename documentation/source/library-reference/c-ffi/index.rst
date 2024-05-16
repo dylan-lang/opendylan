@@ -2436,7 +2436,7 @@ Defining specialized designator classes
           [`type-options`]
         end
 
-   :parameter modifiers: The same as the modifiers allowed in :drm:`define-class`.
+   :parameter modifiers: The same as the modifiers allowed in :drm:`define class`.
    :parameter type-name: A Dylan variable name.
    :parameter superclasses: A list of Dylan names.
    :parameter high-level-type: An instance of a Dylan :drm:`<type>`.

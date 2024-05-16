@@ -1898,7 +1898,7 @@ are exported from the *streams* module.
 
      The type of the result string is chosen so that the string can
      contain characters of *input-stream* 's element type. For example,
-     if the element type is `<byte-character>`_, the string will be a
+     if the element type is :type:`<byte-character>`, the string will be a
      :drm:`<byte-string>`.
 
      If *input-stream* is at its end immediately upon calling
@@ -2891,7 +2891,7 @@ are exported from the *streams* module.
    :statement:
 
    Provides a convenient way of returning a :drm:`<string>` after
-   performing a series of operations on a :drm:`<stream>`, and then
+   performing a series of operations on a :class:`<stream>`, and then
    close the stream.
 
    :macrocall:

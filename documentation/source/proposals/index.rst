@@ -24,8 +24,8 @@ building consensus within the community and documenting dissenting opinions.
 
 Because the DEPs are maintained as text files in a versioned repository, their
 `revision history
-<https://github.com/dylan-lang/website/tree/master/source/proposals>`_ is the
-historical record of the feature proposal.
+<https://github.com/dylan-lang/opendylan/tree/master/documentation/source/proposals>`_
+is the historical record of the feature proposal.
 
 For more information on the DEP process, see DEP 1,
 :doc:`dep-0001-dep-process`.

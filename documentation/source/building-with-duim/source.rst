@@ -9,9 +9,9 @@ Source Code For The Task List Manager
 For completeness, here is the full source code for both versions of the
 task list manager. If you have followed the example given in :doc:`design`
 through :doc:`commands` from the beginning, then your code should be the
-same as the code given in `A task list manager using menu gadgets`_. The
+same as the code given in :ref:`task-list-manager-using-menu-gadgets`. The
 source code for the second version of the task list manager, using command
-tables, is given in `A task list manager using command tables`_.
+tables, is given in :ref:`task-list-manager-using-command-tables`.
 
 .. note: Please note that both projects have the same name within the source
    code— *task-list* —and you should not load them both into the environment
@@ -21,7 +21,9 @@ tables, is given in `A task list manager using command tables`_.
    single: menu gadgets; task list manager example
    single: task list manager; menu gadgets implementation
    single: using; menu gadgets
-   
+
+.. _task-list-manager-using-menu-gadgets:
+
 A task list manager using menu gadgets
 --------------------------------------
 
@@ -478,7 +480,9 @@ Contents of the file *task-list.dylan* :
 .. index::
    single: task list manager; command table implementation
    single: using; command tables
-   
+
+.. _task-list-manager-using-command-tables:
+
 A task list manager using command tables
 ----------------------------------------
 
@@ -491,13 +495,12 @@ List 2 in the Documentation category of the Open Example Project dialog.
 
 .. index::
    command tables; task list manager example
-   
+
 The command tables used in this implementation are described in
 :doc:`commands`. You should refer to :doc:`improve` and :doc:`callbacks`,
 for a full description of the rest of the code shown here. Note that,
 apart from code specific to command tables and callbacks, the code listed
-in this section is a repeat of code listed in `A task list manager using
-menu gadgets`_.
+in this section is a repeat of code listed in :ref:`task-list-manager-using-menu-gadgets`.
 
 Contents of the file *frame.dylan* :
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

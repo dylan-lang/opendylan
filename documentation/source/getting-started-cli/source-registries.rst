@@ -54,6 +54,7 @@ When you invoke :program:`dylan-compiler` in the directory containing a
 "registry" directory it automatically uses that registry, in addition to (and
 taking precedence over) the registry in the Open Dylan installation directory.
 
+.. _open-dylan-user-registries:
 
 OPEN_DYLAN_USER_REGISTRIES
 --------------------------

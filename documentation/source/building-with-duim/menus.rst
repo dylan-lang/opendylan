@@ -262,7 +262,9 @@ about keyboard accelerators:
 
 .. index::
    single: task list manager; final design
-   
+
+.. _menus--gluing-it-together:
+
 Gluing the final design together
 --------------------------------
 
@@ -278,12 +280,10 @@ the class ``<task-list>`` as a value, the default value being an empty
 ``<task-list>``.  Although it has not been referred to so far, this
 class will be used as the basic data structure in which task lists are
 stored, and a more complete description of these data structures is
-given in `Defining the underlying data structures for tasks
-<callbacks.html#defining-the-underlying-data-structures-for-tasks>`_. It
+given in :ref:`defining-the-underlying-data-structures-for-tasks`. It
 transpires that defining the ``frame-task-list`` slot is essential for
-some of the file handling routines that are described in `Handling
-files in the task list manager
-<callbacks.html#handling-files-in-the-task-list-manager>`_.
+some of the file handling routines that are described in
+:ref:`handling-files-in-the-task-list-manager`.
 
 .. code-block:: dylan
 

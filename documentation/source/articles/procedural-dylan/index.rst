@@ -3,6 +3,14 @@
 Procedural Dylan
 ================
 
+.. toctree::
+   :hidden:
+   :maxdepth: 2
+
+   1-distance
+   2-quadratic
+   3-dot-product
+
 or How to write Pascal programs in Dylan
 ----------------------------------------
 
@@ -19,13 +27,6 @@ addition to one's bag of tricks.
 This essay is intended to be used as a tutorial introduction and not as
 a complete reference work. To avoid bogging down the discussion, much
 has been omitted and some details have been ignored. For more complete
-information, see the `Dylan Reference Manual </books/drm/>`__.
-
-.. toctree::
-   :titlesonly:
-
-   1-distance
-   2-quadratic
-   3-dot-product
+information, see the `Dylan Reference Manual </books/drm/>`_.
 
 Copyright © 1995 Paul Haahr. All rights reserved.

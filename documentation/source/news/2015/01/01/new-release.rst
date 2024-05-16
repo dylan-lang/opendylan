@@ -13,7 +13,7 @@ Dylan is a multi-paradigm functional and object-oriented programming language. I
 
 For more information on Open Dylan, see our `website <https://opendylan.org/>`_ and our `documentation <https://opendylan.org/documentation/>`_.
 
-We have extensive `release notes <https://opendylan.org/documentation/release-notes/2014.1.html>`_, but highlights include:
+We have extensive :doc:`release notes </release-notes/2014.1>`, but highlights include:
 
 * bash completion scripts are available.
 * The foundation of an Objective C / Dylan bridge has been integrated with the compiler.
@@ -26,7 +26,7 @@ We have extensive `release notes <https://opendylan.org/documentation/release-no
 
 Please report problems that you have in our `issue tracker <https://github.com/dylan-lang/opendylan/issues>`_.
 
-You can get it from our website, `https://opendylan.org/download/ <https://opendylan.org/download/>`_.
+You can get it from our website, https://opendylan.org/.
 On Windows there is an installer, on UNIX systems unpack into ``/opt``.
 On 64 bit Linux, you will need to have the Boehm GC installed for our
 executables to run. (Ubuntu: ``apt-get install libgc``)

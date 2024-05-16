@@ -187,7 +187,7 @@ over" (or captures the binding of) the variable named ``string``.
 Generic Functions
 =================
 
-A :drm:`generic function` represents zero or more
+A :drm:`<generic-function>` represents zero or more
 similar methods. Every method created by means of
 :drm:`define method` is automatically contained
 within the generic function of the same name. For example, a

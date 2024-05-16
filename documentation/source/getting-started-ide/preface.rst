@@ -6,8 +6,8 @@ This guide explains how to use the Open Dylan IDE (Windows only) to develop
 and deliver Dylan applications.
 
 For help getting started with the command-line
-tools, see the `Getting Started with the Open Dylan Command Line Tools
-<https://opendylan.org/documentation/getting-started-cli>`_ guide.
+tools, see the :doc:`Getting Started with the Open Dylan Command Line Tools
+</getting-started-cli/index>` guide.
 
 .. index::
    single: Dylan Reference Manual, the

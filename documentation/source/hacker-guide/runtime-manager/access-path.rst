@@ -468,7 +468,7 @@ Remote Processes
    :signature: remote-process-actual-identifier (object) => (value)
 
    :parameter object: An instance of :class:`<remote-process>`.
-   :value value: An instance of :drm:`<abstract-integer>`.
+   :value value: An instance of :class:`<abstract-integer>`.
 
 Remote Threads
 --------------
@@ -482,7 +482,7 @@ Remote Threads
    :keyword name: An instance of :drm:`<string>`.
    :keyword required nub-descriptor: An instance of :const:`<nubthread>`.
    :keyword os-priority: An instance of :drm:`<integer>`.
-   :keyword required rnub-descriptor: An instance of :drm:`<abstract-integer>`.
+   :keyword required rnub-descriptor: An instance of :class:`<abstract-integer>`.
    :keyword state: An instance of :drm:`<string>`.
 
    The class that models a thread in an application process. Instances
@@ -675,7 +675,7 @@ shared library, such as a DLL under Windows.
    :keyword core-name: An instance of :drm:`<string>`.
    :keyword locator: An instance of :drm:`<string>`.
    :keyword nub-descriptor: An instance of :const:`<nublibrary>`.
-   :keyword rnub-descriptor: An instance of :drm:`<abstract-integer>`.
+   :keyword rnub-descriptor: An instance of :class:`<abstract-integer>`.
    :keyword version-major: An instance of :drm:`<integer>`.
    :keyword version-minor: An instance of :drm:`<integer>`.
 
@@ -812,7 +812,7 @@ Remote Object Files
    :signature: remote-object-file-library (object) => (value)
 
    :parameter object: An instance of :class:`<remote-object-file>`.
-   :value value: An instance of :drm:`<remote-library>`.
+   :value value: An instance of :class:`<remote-library>`.
 
 .. generic-function:: remote-object-file-language
 
@@ -862,7 +862,7 @@ operate in terms of the virtual memory of the application.
    :signature: as-integer (x) => (i)
 
    :parameter x: An instance of :drm:`<object>`.
-   :value i: An instance of :drm:`<abstract-integer>`.
+   :value i: An instance of :class:`<abstract-integer>`.
 
    Converts the remote value to an <abstract-integer> (NB the
    concrete representation may be a big integer as defined in the
@@ -888,7 +888,7 @@ operate in terms of the virtual memory of the application.
 
    :signature: as-remote-value (x) => (ptr)
 
-   :parameter x: An instance of :drm:`<abstract-integer>`.
+   :parameter x: An instance of :class:`<abstract-integer>`.
    :value ptr: An instance of :type:`<remote-value>`.
 
    Converts the given abstract integer to a :type:`<remote-value>`.
@@ -897,7 +897,7 @@ operate in terms of the virtual memory of the application.
 
    :signature: as-remote-pointer (x) => (ptr)
 
-   :parameter x: An instance of :drm:`<abstract-integer>`.
+   :parameter x: An instance of :class:`<abstract-integer>`.
    :value ptr: An instance of :const:`<descriptor-pointer>`.
 
 .. generic-function:: indexed-remote-value

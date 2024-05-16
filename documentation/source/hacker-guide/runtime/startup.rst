@@ -113,7 +113,7 @@ the library's glue function, named ``_Init_``\ *mangled-library-name*, into the
 ``_init_dylan_library`` variable and branches to ``_DylanDllEntry@12``.
 
 A `DllMain entry point
-<https://msdn.microsoft.com/en-us/library/windows/desktop/ms682583%28v=vs.85%29.aspx>`_
+<https://learn.microsoft.com/en-us/windows/win32/dlls/dllmain>`_
 receives three arguments: the module handle of the DLL, a reason code,
 and a flag that indicates whether the DLL was loaded statically or
 dynamically. The ``_DylanDllEntry@12`` routine, generated in ``sources/harp/x86-windows-rtg/ffi-barrier.dylan``, looks at the reason

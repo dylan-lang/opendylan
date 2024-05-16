@@ -7,8 +7,8 @@ March, 2019.  This release contains many enhancements and bug fixes, highlights
 of which are listed below.  For complete details see `the commit logs
 <https://github.com/dylan-lang/opendylan/compare/v2014.1...v2019.1.0>`_.
 
-* Download the release: http://opendylan.org/download
-* Read documentation: http://opendylan.org/documentation
+* Download the release: https://opendylan.org/download
+* Read documentation: https://opendylan.org
 * Report problems: https://github.com/dylan-lang/opendylan/issues
 
 
@@ -337,7 +337,7 @@ coloring-stream Library
 
 * A new library for doing colored text output has been added. It currently
   supports ANSI codes on Unix terminals. It has been
-  `documented in the library reference`_.
+  :doc:`documented in the library reference </library-reference/coloring-stream/index>`.
 
 variable-search Library
 -----------------------

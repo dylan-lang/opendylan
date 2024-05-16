@@ -3,7 +3,7 @@ Improving The Design
 ********************
 
 The simple layout hierarchy described in `Creating the basic sheet
-hierarchy <design.html#creating-the-basic-sheet-hierarchy>`_ has a
+hierarchy <design#creating-the-basic-sheet-hierarchy>`_ has a
 number of problems associated with it, all of which revolve around the
 fact that the task list manager does not yet look very much like a
 standard Windows application. Although it is a simple design that does
@@ -76,7 +76,9 @@ Make sure that this file is the last one listed in the project window.
 .. index::
    single: applications; starting
    single: starting an application
-   
+
+.. _starting-the-application:
+
 Starting the application
 ------------------------
 
@@ -173,7 +175,9 @@ defined, to make the task list manager do something more substantial.
 .. index::
    single: defining; frame classes
    single: frame classes; defining
-   
+
+.. _defining-a-new-frame-class:
+
 Defining a new frame class
 --------------------------
 
@@ -253,7 +257,7 @@ radio box, and the list box from the initial design:
 Note that the definition of each element is identical to the
 definitions included in the original layout described in `Creating the
 basic sheet hierarchy
-<design.html#creating-the-basic-sheet-hierarchy>`_ (except that
+<design#creating-the-basic-sheet-hierarchy>`_ (except that
 activate callbacks have been added to the code). Adding ``(frame)``
 immediately after the name of each pane lets you refer to the frame
 itself within the frame definition using a local variable. This means
@@ -266,7 +270,7 @@ the frame itself.
 In addition, you need to define the layout in which to place these
 panes. This is itself just another pane, and its definition is again
 identical to the original layout described in `Creating the basic
-sheet hierarchy <design.html#creating-the-basic-sheet-hierarchy>`_,
+sheet hierarchy <design#creating-the-basic-sheet-hierarchy>`_,
 with one exception; rather than defining each element explicitly, you
 just include a reference to the relevant pane that you have already
 defined using normal slot syntax, thus:
@@ -379,8 +383,8 @@ robust, making it easier to modify and, eventually, maintain.
 
 If you want to try running your code, remember that you need to define
 some additional methods to create a frame instance and exit it cleanly.
-Methods for doing this were provided in `Starting the
-application`_. If you define these methods now, you
+Methods for doing this were provided in :ref:`starting-the-application`.
+If you define these methods now, you
 can create running versions of each successive generation of the
 application as it is developed.
 
@@ -520,6 +524,8 @@ design.
 .. index::
    single: task list manager; intermediate design
 
+.. _improve--gluing-it-together:
+
 Gluing the new design together
 ------------------------------
 
@@ -611,7 +617,7 @@ has reduced to a single column layout whose children are ``task-list`` and
 The definition for the new design of the frame class now looks as
 follows (button definitions vary slightly for the Task List 2 project,
 see `A task list manager using command tables
-<source.html#a-task-list-manager-using-command-tables>`_):
+<source#a-task-list-manager-using-command-tables>`_):
 
 .. code-block:: dylan
 
@@ -671,12 +677,14 @@ see `A task list manager using command tables
 Note that this definition does not incorporate the original ``task-text``
 pane defined in `Defining a new frame class`_. In fact, this part of the
 original interface is handled differently in the final design, and is
-re-implemented in `Creating a dialog for adding new items`_.
+re-implemented in :ref:`improve--creating-a-dialog-for-new-items`.
 
 .. index::
    single: creating; basic sheet hierarchy
    single: dialogs; for requesting information, creating
-   
+
+.. _improve--creating-a-dialog-for-new-items:
+
 Creating a dialog for adding new items
 --------------------------------------
 
@@ -716,14 +724,10 @@ new task.
 Add this method to ``frame.dylan``.
 
 .. note:: The definition of the ``prompt-for-task`` method uses the
-   ``<priority>`` type. Note that this type is defined in `Defining
-   the underlying data structures for tasks
-   <callbacks.html#defining-the-underlying-data-structures-for-tasks>`_. Until
-   the relevant code in `Defining the underlying data structures for
-   tasks
-   <callbacks.html#defining-the-underlying-data-structures-for-tasks>`_
-   is added to your project, any attempt to build it will generate a
-   serious warning.
+   ``<priority>`` type. Note that this type is defined in
+   :ref:`defining-the-underlying-data-structures-for-tasks`. Until the relevant
+   code in :ref:`defining-the-underlying-data-structures-for-tasks` is added
+   to your project, any attempt to build it will generate a serious warning.
 
 .. code-block:: dylan
 

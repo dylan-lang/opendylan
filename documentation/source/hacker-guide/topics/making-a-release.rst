@@ -32,9 +32,8 @@ now here is a manual check-list.
    * Run ``make check`` and if anything fails that is not marked ``EXPECTED TO
      FAIL``, fix the problem or discuss with others how to proceed.
 
-   * As a smoke test, verify that the `"Hello World" instructions
-     <https://opendylan.org/getting-started-cli/hello-world.html>`_ work on
-     each platform.
+   * As a smoke test, verify that the :doc:`"Hello World" instructions
+     </getting-started-cli/hello-world>` work on each platform.
 
    **TODO:** This should be done automatically by GitHub CI. See
    https://github.com/dylan-lang/opendylan/blob/master/.github/workflows/bootstrap.yml
@@ -111,7 +110,7 @@ now here is a manual check-list.
    backup on a server that we own.)
 
 #. Update the `Downloads
-   <https://github.com/dylan-lang/website/blob/master/source/download/index.rst>`_
+   <https://github.com/dylan-lang/opendylan/blob/master/documentation/source/download/index.rst>`_
    page.
 
 #. On GitHub, move the release from Draft to Final.

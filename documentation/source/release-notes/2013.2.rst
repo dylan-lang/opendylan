@@ -18,13 +18,13 @@ Improvements
 Documentation
 -------------
 
-The `logging <http://opendylan.org/documentation/library-reference/logging/>`_ library has been documented.
+The `logging <https://opendylan.org/library-reference/logging/>`_ library has been documented.
 
-The `regular-expressions <http://opendylan.org/documentation/library-reference/regular-expressions/index.html>`_ library documentation has been greatly improved.
+The `regular-expressions <https://opendylan.org/library-reference/regular-expressions/index.html>`_ library documentation has been greatly improved.
 
-The `date <http://opendylan.org/documentation/library-reference/system/date.html>`_ module documentation has been improved and now covers date formatting and parsing.
+The `date <https://opendylan.org/library-reference/system/date.html>`_ module documentation has been improved and now covers date formatting and parsing.
 
-The `C-FFI <http://opendylan.org/documentation/library-reference/c-ffi/>`_ library now discusses `linking against a library <http://opendylan.org/documentation/library-reference/c-ffi/#notes-on-linking>`_ rather than assuming that people will find the LID file documentation. `Tracing FFI calls <http://opendylan.org/documentation/library-reference/c-ffi/#tracing-ffi-calls>`_ has also been documented.
+The `C-FFI <https://opendylan.org/library-reference/c-ffi/>`_ library now discusses `linking against a library <https://opendylan.org/library-reference/c-ffi/#notes-on-linking>`_ rather than assuming that people will find the LID file documentation. `Tracing FFI calls <https://opendylan.org/library-reference/c-ffi/#tracing-ffi-calls>`_ has also been documented.
 
 Build Tools
 -----------
@@ -94,7 +94,7 @@ hash-algorithms
 ^^^^^^^^^^^^^^^
 
 A hash algorithms library has been added that supports the MD5, SHA-1, SHA256,
-SHA384, and SHA512 algorithms. `Documentation <http://opendylan.org/documentation/library-reference/hash-algorithms/>`_
+SHA384, and SHA512 algorithms. `Documentation <https://opendylan.org/package/hash-algorithms/>`_
 is available. This library was written by Hannes Mehnert.
 
 I/O
