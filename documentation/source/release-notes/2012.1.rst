@@ -1,0 +1,400 @@
+*******************************
+Open Dylan 2012.1 Release Notes
+*******************************
+
+
+.. 1  Introduction
+   2  Language Specification Changes
+     2.1  C3 Superclass Linearization
+   3  Library Changes
+   4  Documentation Improvements
+   5  dylan-compiler Improvements
+     5.1  Relocatable Executables and Libraries
+     5.2  Usability - Output and Locating Libraries
+     5.3  Documentation Generation
+     5.4  Dependency Graph Generation
+   6  Code Generation Improvements
+     6.1  Limited Collections
+   7  C Back-end Changes
+     7.1  Multi-threading
+     7.2  Performance Improvements
+     7.3  Shared Library Initialization
+     7.4  Fixes
+   8  C-FFI Changes
+   9  Other Changes
+
+
+Introduction
+============
+
+This document describes the 2012.1 release of Open Dylan, released
+December 19, 2012.
+
+* `Download the release <https://opendylan.org/download/index.html>`_
+* `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_
+* `Source code <https://github.com/dylan-lang/opendylan/tree/v2012.1>`_
+
+Language Specification Changes
+==============================
+
+We try to keep changes to the language definition few and far between
+and limited to things that are either necessary or clear advantages.
+
+C3 Superclass Linearization
+---------------------------
+
+Open Dylan now uses the C3 superclass linearization algorithm.  This
+algorithm was originally designed for Dylan but for historical reasons
+was never implemented in Dylan, until now.  In most cases this change
+should not change the semantics of existing programs, but if it does
+the compiler will issue a serious warning.  In a future release this
+will be changed to non-serious warning, and then eventually the
+warning will be removed completely.
+
+See :doc:`DEP-0003 </proposals/dep-0003-c3-linearization>` for more details.
+
+
+Library Changes
+===============
+
+* The ``CL-plists`` module in the ``cl`` library has been removed.
+  Any usages of it can be replaced by using the ``plists`` module
+  from the ``collections`` library.  Additionally, the ``plists``
+  module has been `documented
+  <https://opendylan.org/library-reference/collections/plists.html>`_.
+
+* Support for MacOS 9 locators has been removed. This is pre-OS X code
+  and we don't support Mac OS 9 as a platform.
+
+* The ``bit-vectors`` module in the ``collections`` library works
+  correctly now on 64 bit platforms.
+
+* The floating point support in the ``common-dylan`` library has
+  been enhanced.
+
+* The ``command-line-parser`` library has been relicensed and is now
+  available for wider usage.  This replaces old command parsing code.
+  This library has not yet been documented, but it has been cleaned
+  up substantially and the API is much more consistent.
+
+* ``load-library`` has now been implemented on Linux, Mac OS X and
+  FreeBSD. Previously, this was only supported on Windows.
+
+* A new ``strings`` library replaces the ``string-extensions``
+  library.  The new library provides a simpler API with all names
+  exported from a single ``strings`` module.  :doc:`DEP-0004
+  </proposals/dep-0004-strings-library>` is currently the
+  best documentation for this library.
+
+* The ``string-extensions`` library has been removed.  Use the
+  ``strings`` library instead.  Some of the functionality in
+  ``string-extensions``, such as character sets, was moved to the
+  regular-expressions library, which was the only thing using it.
+
+* The ``functional-objects-extras`` module was not used and has been
+  removed.
+
+* The ``*open-accessors*`` table has been removed from the I/O library.
+
+* Previously, sometimes using ``force-output()`` would also result
+  in an ``fsync()`` without specifying ``synchronize?: #t``. This
+  has been corrected. If you want to make sure that something
+  makes it to the disk, either use ``synchronize-output()``
+  or pass ``synchronize?: #t`` to ``force-output()``.
+
+* ``format-date`` from the ``system`` library is faster.
+
+
+Documentation Improvements
+==========================
+
+* All documentation has been converted to the Sphinx document
+  generator.  This is a huge improvement in our ability to keep the
+  documentation up-to-date, modernizes its look and feel, and allows
+  us to generate various output formats.
+
+* The core libraries documentation has been unified into one :doc:`Dylan
+  Library Reference </library-reference/index>` document.
+
+* The documentation on using the Open Dylan Console Environment has
+  been rewritten and expanded.  A new section on the Dylan Interaction
+  Mode for Emacs (DIME) has been added.  See both in :doc:`the Getting
+  Started Guide </getting-started-cli/index>`.
+
+
+dylan-compiler Improvements
+===========================
+
+Relocatable Executables and Libraries
+-------------------------------------
+
+Previously, the executables and libraries built by the Dylan
+compiler had to reside at a fixed path (set during compilation).
+
+This has now been loosened up significantly on Linux, Mac OS X
+and FreeBSD.  The same directory structure needs to be maintained
+with the ``bin`` and ``lib`` directories, but the location in
+the file system can change now.
+
+On Linux and FreeBSD, this uses ``$ORIGIN`` support in the
+dynamic linker.  On Mac OS X, this uses ``rpath`` support present
+in Mac OS X 10.5 and later.
+
+
+Usability - Output and Locating Libraries
+-----------------------------------------
+
+To simplify the build process, two changes were made to
+``dylan-compiler``:
+
+(1) Build products are now stored in ``./_build`` on non-Windows
+    platforms instead of in ``~/Open-Dylan``.  This may still be
+    overridden via the ``OPEN_DYLAN_USER_ROOT`` environment variable
+    if you prefer to re-use the same build products across multiple
+    different projects, but we don't recommend it.
+
+(2) If the directory ``./registry`` exists, the compiler will add it
+    to the beginning of the ``OPEN_DYLAN_USER_REGISTRIES`` environment
+    variable so that those registry entries take precedence over
+    others.
+
+The intention is that for projects that use several other projects one
+can now use git submodules and a project "registry" directory to make
+the following work::
+
+   $ git clone --recursive <url>
+   $ cd <project-directory>
+   $ dylan-compiler -build <project-name>
+
+In the past it would be necessary to set various environment variables
+and clone the central "registry" repository.  A minor side-effect of
+this change is that if you work on several distinct projects you will
+initially have to build all dependencies, down to and including the
+``dylan`` library.
+
+
+Debug Back-end Improvements
+---------------------------
+
+The debug back-end is used for printing the internal compiler
+state (the DFM).
+
+* calls are printed with more detail.
+* keyword and constrain type checks are printed more accurately.
+* primitive invocations of C functions via FFI are printed correctly.
+
+
+Documentation Generation
+------------------------
+
+In addition to the documentation updates, we've also enhanced the
+documentation generation feature within ``dylan-compiler`` to output
+the new format.  This can be used by, first loading and compiling
+a library and then::
+
+   > export -format rst interface-reference
+
+In a future release, the support currently present for the XML formatted
+documentation will be removed.
+
+Dependency Graph Generation
+---------------------------
+
+You can now generate a dependency graph (at the library level) for a
+project in both text and GraphViz ``.dot`` format.  Open a project and::
+
+   > export -format dot dependency-graph
+
+or, for plain text::
+
+   > export dependency-graph
+
+Code Generation Improvements
+============================
+
+Limited Collections
+-------------------
+
+There were some bugs and some missed opportunities for optimization in
+the limited collections code.
+
+
+Consider the following constant:
+
+.. code-block:: dylan
+
+    define constant <float-vec> = limited(<vector>, of: <single-float>, size: 3);
+
+
+The subtype relation was broken when the ``size:`` keyword is present:
+
+.. code-block:: dylan
+
+    let v = make(<float-vec>, fill: 0.0);
+    instance?(v, <float-vec>);  // returns #f
+
+This required fixing of ``instance?`` both in dfmc/modeling/types and
+dylan/type.
+
+
+Another issue with the same code was that the ``size`` method was not constant-folded at compile-time:
+
+.. code-block:: dylan
+
+    foo[1] := sin(foo[0]);
+
+This line of code lead to the following intermediate (DFM) code, which
+includes range checks (for both index 0 and 1):
+
+.. code-block:: dylan
+
+    t32 := SLOT-VALUE-INITD({{ foo }}, size)
+    t39 := [PRIMOP cast-integer-as-raw(t32)]
+    t44 := [PRIMOP machine-word-unsigned-less-than?(^%1, t39)]
+    IF (t44)
+      t51 := REPEATED-SLOT-VALUE({{ foo }}, single-float-vector-element, ^%1)
+    ELSE
+      *t28(1) := [CALLi ^{<&method> element-range-error (<collection>, <object>)}({{ foo }}, ^0)]
+      t71 := *t28(1) [0]
+      t70 := [PRIMOP single-float-as-raw(t71)]
+    END IF
+    t74 := [IF-MERGE t51 t70]
+    t67 := [PRIMOP single-float-sin(t74)]
+    t68 := [PRIMOP raw-as-single-float(t67)]
+    t85 := [PRIMOP machine-word-unsigned-less-than?(^%5, t39)]
+    IF (t85)
+      REPEATED-SLOT-VALUE({{ foo }}, single-float-vector-element, ^%5) := t67
+    ELSE
+      [CALLi ^{<&method> element-range-error (<collection>, <object>)}({{ foo }}, ^1)]
+    END IF
+    [IF-MERGE #f #f]
+
+The same Dylan code is now translated into the following DFM code:
+
+.. code-block:: dylan
+
+    t19 := REPEATED-SLOT-VALUE({{ foo }}, single-float-vector-element, ^%1)
+    t20 := [PRIMOP single-float-sin(t19)]
+    t21 := [PRIMOP raw-as-single-float(t20)]
+    REPEATED-SLOT-VALUE({{ foo }}, single-float-vector-element, ^%5) := t20
+
+This required fixes in the modeling, typist and optimization parts of
+the compiler.
+
+
+A third issue was that the type inference always used the inferred
+type of the actual instance. This failed for primitive types,
+:drm:`<single-float>` was used instead of ``<raw-single-float>``. This
+lead towards code which the C compiler could not compile
+(``incompatible code in assignment``):
+
+.. code-block:: dylan
+
+    a[0] := - a[0];
+
+This required a fix in the typist.
+
+Miscellaneous Fixes
+-------------------
+
+The control flow graph could be incorrect if an unwind-protect without
+a body is optimized.
+
+Some slot initializer constants (floats in particular) when inherited
+between classes in different files would result in compilation errors.
+
+The compiler would crash when the ``dimensions:`` keyword was not given
+when constructing an :drm:`<array>`.
+
+The compiler now warns rather than crashes on invalid inherited slot
+specifications.
+
+C Back-end Changes
+==================
+
+Multi-threading
+---------------
+
+The C back-end now fully supports multi-threading.  Several bugs
+unrelated to threading were also fixed in this work, which should
+improve the stability of the C back-end in general.
+
+This work is currently experimental and may have stability and
+performance issues.  Further feedback is welcome.
+
+Performance Improvements
+------------------------
+
+Previously, the C run-time was allocating unwind-protect control
+structures on the heap using the Garbage Collector. Additionally,
+unwind-protect was preserving signal state on some platforms, notably
+Mac OS X.  Together, this led to the C back-end being notably slower
+than the native HARP back-end when unwind-protects were used.
+
+This has been fixed and the resulting code can run in 50-80% of the
+time that it previously took. This is particularly true for users
+of the I/O libraries which make heavy use of unwind-protect.
+
+The C back-end was previously performing 2 type checks on keyword
+arguments. It now correctly only performs this check once.
+
+Shared Library Initialization
+-----------------------------
+
+The C back-end now generates shared libraries which can be used with
+``dlopen()``.  This behavior is in line with the libraries generated
+by the native HARP back-end.
+
+Fixes
+-----
+
+Some other bugs that resulted in the generation of invalid C have
+been fixed.
+
+We now abort when applying too many arguments in C run-time.
+
+A compilation crash with C back-end when trying to emit an overflown
+integer has been fixed.
+
+Stack usage in method dispatch has been reduced. This fixes an issue
+where a default sized stack would be exhausted on 64 bit platforms,
+especially while building the compiler.
+
+Floating point constants could in some circumstances be corrupted
+when compiled.
+
+C-FFI Changes
+=============
+
+C-variable setters
+------------------
+
+Setters should work with C-variables now.
+
+Constant Slot Syntax
+--------------------
+
+You can now use ``constant slot`` when defining a ``C-struct`` rather than having to set ``setter: #f``.
+This makes the syntax closer to normal class definitions:
+
+.. code-block:: dylan
+
+    define C-struct <Point>
+      constant slot x-coord :: <C-unsigned-short>;
+      constant slot y-coord :: <C-unsigned-short>;
+    end;
+
+
+Other Changes
+=============
+
+Running dylan-compiler under gdb with fdmake
+--------------------------------------------
+
+Sometimes, it is useful to be able to run ``dylan-compiler`` under ``gdb`` while doing a bootstrap build
+using fdmake. This is now easy to do::
+
+    make FDMAKE_OPTIONS=--gdb 3-stage-bootstrap
+
+Unfortunately, gdb doesn't return a correct exit status, so the build will fail after the first invocation
+of ``dylan-compiler``, but this is useful when looking into repeatable crashes.

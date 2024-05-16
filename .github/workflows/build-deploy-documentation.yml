@@ -31,12 +31,12 @@ jobs:
 
       - uses: ammaraskar/sphinx-action@master
         with:
-          pre-build-command: "echo furo >> documentation/website/requirements.txt"
-          docs-folder: "documentation/website"
+          pre-build-command: "echo furo >> documentation/requirements.txt"
+          docs-folder: "documentation"
 
       - name: Deploy documents to GH pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: documentation/website/build/html
+          folder: documentation/_build/html
 
 
