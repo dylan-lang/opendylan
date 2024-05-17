@@ -20,7 +20,7 @@ if [[ $# -ne 1 ]]; then
     exit 2
 fi
 
-dest_dir="$1"
+dest_dir=$(realpath "$1")
 
 if [[ ! -d "$dest_dir" ]]; then
     echo "${dest_dir} doesn't exist; aborting."
@@ -29,7 +29,7 @@ fi
 
 set -e   # die on any error
 
-opendylan_dir=$(realpath "$0/../..")
+opendylan_dir=$(dirname $(dirname $(realpath "$0")))
 
 # Get latest gendoc, DRM, etc, as specified in dylan-package.json.
 echo "Updating the Dylan workspace to get latest package dependencies..."
