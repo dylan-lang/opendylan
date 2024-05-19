@@ -327,7 +327,7 @@ testworks Library
 
 * The testworks-specs library has been folded into testworks and has been
   greatly simplified. See `Interface Specification Suites
-  <https://opendylan.org/package/testworks/usage.html#interface-specification-suites>`_. Note
+  <https://package.opendylan.org/testworks/usage.html#interface-specification-suites>`_. Note
   that the new specification suites no longer expect you to define one test per
   exported name in your interface module. Instead you can write tests in
   whatever way best suits your needs and the interface specification suite only

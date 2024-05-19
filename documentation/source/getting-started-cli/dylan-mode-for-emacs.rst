@@ -36,7 +36,7 @@ Create the project with ::
 which creates a library named "dime-test" and a corresponding executable
 library and test suite, as well as downloading dependencies and creating
 registry files.  See the `deft new application
-<https://opendylan.org/package/deft/index.html#deft-new-application>`_
+<https://package.opendylan.org/deft/index.html#deft-new-application>`_
 command for more.
 
 **Start dime:**  ::

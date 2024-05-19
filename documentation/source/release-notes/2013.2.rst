@@ -94,7 +94,7 @@ hash-algorithms
 ^^^^^^^^^^^^^^^
 
 A hash algorithms library has been added that supports the MD5, SHA-1, SHA256,
-SHA384, and SHA512 algorithms. `Documentation <https://opendylan.org/package/hash-algorithms/>`_
+SHA384, and SHA512 algorithms. `Documentation <https://package.opendylan.org/hash-algorithms/>`_
 is available. This library was written by Hannes Mehnert.
 
 I/O

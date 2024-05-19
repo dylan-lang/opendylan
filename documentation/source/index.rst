@@ -71,7 +71,7 @@ articles, and all the library docs.
 
 *Happy hacking!*
 
-.. _Dylan Programming Guide: https://opendylan.org/package/dylan-programming-book/
+.. _Dylan Programming Guide: https://package.opendylan.org/dylan-programming-book/
 .. _Dylan Reference Manual: https://opendylan.org/books/drm/
 .. _Dylan: books/drm/Title
 .. _Matrix: https://app.element.io/#/room/#dylan-language:matrix.org
@@ -92,7 +92,7 @@ articles, and all the library docs.
 
    Tour of Dylan <about/index>
    Getting Started Guide <getting-started-cli/index>
-   Dylan Programming Guide <https://opendylan.org/package/dylan-programming-book/>
+   Dylan Programming Guide <https://package.opendylan.org/dylan-programming-book/>
    Dylan Playground <https://play.opendylan.org>
 
 .. toctree::
@@ -100,7 +100,7 @@ articles, and all the library docs.
    :hidden:
 
    Dylan Reference Manual <https://opendylan.org/books/drm/>
-   Package Docs <https://opendylan.org/package/>
+   Package Docs <https://package.opendylan.org/>
    Open Dylan Libraries <library-reference/index>
    All Documentation <documentation/index>
    Full Index <genindex>

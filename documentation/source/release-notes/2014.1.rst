@@ -283,4 +283,4 @@ Testworks
   forward reference".
 
 * Benchmarks are once again supported.  See the `documentation
-  <https://opendylan.org/package/testworks/>`_ for details.
+  <https://package.opendylan.org/testworks/>`_ for details.

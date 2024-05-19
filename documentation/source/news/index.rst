@@ -13,8 +13,9 @@ Release 2023.1
 * Updated versions of LLVM and the BDW garbage collector.
 * New ``"""multi-line"""`` and ``#r"raw"`` string literals (`DEP 12
   <../proposals/dep-0012-string-literals.rst>`_).
-* The `dylan <https://opendylan.org/package/dylan-tool/>`_ tool continues to
-  evolve with a new, simplified workspace model.
+* The ``dylan`` tool (renamed to `deft <https://package.opendylan.org/deft/>`_
+  in Open Dylan 2024.2) continues to evolve with a new, simplified workspace
+  model.
 * Bug fixes for json, command-line-parser, system, and others.
 
 See the `release notes <../release-notes/2023.1.rst>`_ for more details.
@@ -38,7 +39,7 @@ overhaul. The goals of this revamp were:
 #. Local table of contents in the right sidebar. Hooray `Furo
    <https://pradyunsg.me/furo/quickstart/>`_!
 
-#. Integrated `package docs <https://opendylan.org/package/>`_.
+#. Integrated `package docs <https://package.opendylan.org/>`_.
 
 #. Simplicity! We're a small team so we want to avoid any extra maintenance
    burden. To that end, we no longer use a Dylan-specific Sphinx theme or
