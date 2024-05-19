@@ -30,8 +30,5 @@ optimizing Dylan code in general since it shows (for example) where
 the compiler wasn't able to optimize method dispatch.
 
 The main point you need to know is to add the ``-dfm`` flag when you
-invoke ``dylan-compiler``.  This will generate DFM output files in
+invoke :program:`dylan-compiler`.  This will generate DFM output files in
 your ``_build/build/`` directory.
-
-
-.. _Debugging with GDB or LLDB: https://opendylan.org/documentation/getting-started-cli/debugging-with-gdb-lldb.html

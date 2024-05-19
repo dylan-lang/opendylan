@@ -8,7 +8,7 @@ Introduction
 This document describes the 2013.1 release of Open Dylan, released
 July 11, 2013.
 
-* `Download the release <http://opendylan.org/download/index.html>`_
+* `Download the release <https://opendylan.org/download/index.html>`_
 * `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_
 * `Source code <https://github.com/dylan-lang/opendylan/tree/v2013.1>`_
 
