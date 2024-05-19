@@ -94,6 +94,7 @@ articles, and all the library docs.
    Getting Started Guide <getting-started-cli/index>
    Dylan Programming Guide <https://package.opendylan.org/dylan-programming-book/>
    Dylan Playground <https://play.opendylan.org>
+   Cheat Sheets <documentation/cheatsheets/index>
 
 .. toctree::
    :caption: Reference
