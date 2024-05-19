@@ -12,8 +12,8 @@ this release.
           are included in Open Dylan as git submodules, may be in other
           repositories.
 
-* Download the release: http://opendylan.org/download
-* Read documentation: http://opendylan.org/documentation
+* Download the release: https://opendylan.org/download
+* Read documentation: https://opendylan.org
 * Report problems: https://github.com/dylan-lang/opendylan/issues
 
 

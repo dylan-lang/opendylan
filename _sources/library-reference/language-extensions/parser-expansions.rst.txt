@@ -20,7 +20,7 @@ The ``<text>`` part can be either *delimited* or *undelimited*. Undelimited
 text can contain anything but commas, semicolons, brackets of any kind, and
 whitespace. All the following are valid::
 
-    #:http://opendylan.org/
+    #:https://opendylan.org/
     #:time:12:30am
     #:date:12/3/2000
     #:file:D:\dylan\sources\

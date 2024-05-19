@@ -3,7 +3,7 @@ Dylan Language Extensions
 *************************
 
 The Dylan language is described in `The Dylan Reference Manual
-<http://opendylan.org/books/drm/>`_ by Andrew Shalit (Addison-Wesley,
+<https://opendylan.org/books/drm/>`_ by Andrew Shalit (Addison-Wesley,
 1996). We call this book "the DRM" hereafter.
 
 Open Dylan provides an implementation of the Dylan language

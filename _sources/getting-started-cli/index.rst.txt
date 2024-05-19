@@ -5,8 +5,8 @@ Getting Started with the Open Dylan Command Line Tools
 This guide explains how to use the Open Dylan command-line tools to develop and
 deliver Dylan applications.
 
-For help getting started with the IDE (Windows only), see :doc:`Getting Started
-with the Open Dylan IDE </getting-started-ide/index>`.
+For help getting started with the IDE (Windows only), see
+:doc:`/getting-started-ide/index`.
 
 The compiler executable is called ``dylan-compiler``.  There is a helper
 application called :program:`dylan`, which can be used to generate some
