@@ -8,11 +8,11 @@ Supersedes:      DEP 8, multi-line-strings
 Type:            Standards Track
 Affects-DRM:     Yes
 Author:          Carl Gay
-Status:          Draft
+Status:          Final
 Created:         22-Mar-2023
 Last-Modified:   19-Aug-2023
 Post-History:    `28-Mar-2023 <https://groups.google.com/g/dylan-lang/c/xhofah0KYt8>`_
-Target-Version:  2023.2
+Target-Version:  2024.1
 ===============  =============================================
 
 
@@ -347,8 +347,8 @@ Equivalent to ``"^\\s*([0-9A-Fa-f]+)\\s*"``::
 Reference Implementation
 ========================
 
-A reference implementation is underway `on github
-<https://github.com/cgay/opendylan/commits/dep12>`_.
+The Open Dylan `dfmc-reader <https://github.com/dylan-lang/opendylan/tree/master/sources/dfmc/reader>`_
+contains the reference implementation.
 
 
 Revision History
