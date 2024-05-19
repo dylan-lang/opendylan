@@ -307,13 +307,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/dpg/">Dylan Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://package.opendylan.org/dylan-programming-book/">Dylan Programming Guide</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://play.opendylan.org">Dylan Playground</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/drm/">Dylan Reference Manual</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://opendylan.org/package/">Package Docs</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://package.opendylan.org/">Package Docs</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../library-reference/index.html">Open Dylan Libraries</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle navigation of Open Dylan Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/language-extensions/index.html">Dylan Language Extensions</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Dylan Language Extensions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/language-differences.html">Language Differences</a></li>
@@ -815,7 +815,7 @@ for all GUI design. Separating GUI code and non-GUI code also lets you
 produce code that is more easily reusable, either in other parts of a
 developing application, or in completely different applications.</p>
 <section id="handling-files-in-the-task-list-manager">
-<span id="index-4"></span><span id="id2"></span><h3>Handling files in the task list manager<a class="headerlink" href="#handling-files-in-the-task-list-manager" title="Permalink to this heading">¶</a></h3>
+<span id="callbacks-handling-files-in-the-task-list-manager"></span><span id="index-4"></span><h3>Handling files in the task list manager<a class="headerlink" href="#handling-files-in-the-task-list-manager" title="Permalink to this heading">¶</a></h3>
 <p>To begin with, you will define the functions and methods that let you
 save files to disk and load them back into the task list manager. Once
 you have added these to your code, you will be able to save and reload
@@ -1704,8 +1704,8 @@ List 1 project, change the line that reads:</p>
 </div>
 <p>Add the code for these methods to <code class="docutils literal notranslate"><span class="pre">frame.dylan</span></code>.</p>
 </section>
-<section id="id3">
-<h3>Refreshing the list of tasks<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
+<section id="id2">
+<h3>Refreshing the list of tasks<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">refresh-task-frame</span></code> method is called whenever the list of tasks
 needs to be refreshed for whatever reason. This happens most commonly
 after adding or removing a task from the list, or loading in a new task
@@ -1931,7 +1931,7 @@ as your reference source, get coding!</p>
 <li><a class="reference internal" href="#initializing-a-new-instance-of-task-frame">Initializing a new instance of &lt;task-frame&gt;</a></li>
 <li><a class="reference internal" href="#determining-and-setting-the-selected-task">Determining and setting the selected task</a></li>
 <li><a class="reference internal" href="#enabling-and-disabling-buttons-in-the-interface">Enabling and disabling buttons in the interface</a></li>
-<li><a class="reference internal" href="#id3">Refreshing the list of tasks</a></li>
+<li><a class="reference internal" href="#id2">Refreshing the list of tasks</a></li>
 <li><a class="reference internal" href="#creating-an-information-dialog">Creating an information dialog</a></li>
 <li><a class="reference internal" href="#exiting-the-task-list-manager">Exiting the task list manager</a></li>
 </ul>

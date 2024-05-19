@@ -283,7 +283,7 @@ stored, and a more complete description of these data structures is
 given in :ref:`defining-the-underlying-data-structures-for-tasks`. It
 transpires that defining the ``frame-task-list`` slot is essential for
 some of the file handling routines that are described in
-:ref:`handling-files-in-the-task-list-manager`.
+:ref:`callbacks--handling-files-in-the-task-list-manager`.
 
 .. code-block:: dylan
 

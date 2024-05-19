@@ -307,13 +307,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../getting-started-cli/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/dpg/">Dylan Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://package.opendylan.org/dylan-programming-book/">Dylan Programming Guide</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://play.opendylan.org">Dylan Playground</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/drm/">Dylan Reference Manual</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://opendylan.org/package/">Package Docs</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://package.opendylan.org/">Package Docs</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../library-reference/index.html">Open Dylan Libraries</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle navigation of Open Dylan Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/language-extensions/index.html">Dylan Language Extensions</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Dylan Language Extensions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/language-differences.html">Language Differences</a></li>
@@ -538,8 +538,7 @@
         <article role="main" id="furo-main-content">
           <section id="improving-the-design">
 <h1>Improving The Design<a class="headerlink" href="#improving-the-design" title="Permalink to this heading">¶</a></h1>
-<p>The simple layout hierarchy described in <a class="reference external" href="design#creating-the-basic-sheet-hierarchy">Creating the basic sheet
-hierarchy</a> has a
+<p>The simple layout hierarchy described in <a class="reference internal" href="design.html#design-creating-the-basic-sheet-hierarchy"><span class="std std-ref">Creating the basic sheet hierarchy</span></a> has a
 number of problems associated with it, all of which revolve around the
 fact that the task list manager does not yet look very much like a
 standard Windows application. Although it is a simple design that does
@@ -740,8 +739,9 @@ radio box, and the list box from the initial design:</p>
 </pre></div>
 </div>
 <p>Note that the definition of each element is identical to the
-definitions included in the original layout described in <a class="reference external" href="design#creating-the-basic-sheet-hierarchy">Creating the
-basic sheet hierarchy</a> (except that
+definitions included in the original layout described in
+<a class="reference internal" href="design.html#design-creating-the-basic-sheet-hierarchy"><span class="std std-ref">Creating the basic sheet hierarchy</span></a>
+(except that
 activate callbacks have been added to the code). Adding <code class="docutils literal notranslate"><span class="pre">(frame)</span></code>
 immediately after the name of each pane lets you refer to the frame
 itself within the frame definition using a local variable. This means
@@ -752,8 +752,8 @@ class. This ability is essential when you come to layout each pane in
 the frame itself.</p>
 <p>In addition, you need to define the layout in which to place these
 panes. This is itself just another pane, and its definition is again
-identical to the original layout described in <a class="reference external" href="design#creating-the-basic-sheet-hierarchy">Creating the basic
-sheet hierarchy</a>,
+identical to the original layout described in
+<a class="reference internal" href="design.html#design-creating-the-basic-sheet-hierarchy"><span class="std std-ref">Creating the basic sheet hierarchy</span></a>,
 with one exception; rather than defining each element explicitly, you
 just include a reference to the relevant pane that you have already
 defined using normal slot syntax, thus:</p>
@@ -1046,7 +1046,7 @@ has reduced to a single column layout whose children are <code class="docutils l
 <code class="docutils literal notranslate"><span class="pre">priority-box</span></code>.</p>
 <p>The definition for the new design of the frame class now looks as
 follows (button definitions vary slightly for the Task List 2 project,
-see <a class="reference external" href="source#a-task-list-manager-using-command-tables">A task list manager using command tables</a>):</p>
+see <a class="reference internal" href="source.html#source-task-list-manager-using-command-tables"><span class="std std-ref">A task list manager using command tables</span></a>):</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="n">frame</span><span class="w"> </span><span class="nc">&lt;task-frame&gt;</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;simple-frame&gt;</span><span class="p">)</span>
 <span class="w">  </span><span class="c1">// definition of buttons</span>
 <span class="w">  </span><span class="n">pane</span><span class="w"> </span><span class="n">add-button</span><span class="w"> </span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
@@ -1118,10 +1118,10 @@ asks the user to type the text for a new task. The definition of
 <code class="docutils literal notranslate"><span class="pre">task-text</span></code> is very similar to the definition you provided in the
 initial design, with the exception that the activate callback exits the
 dialog, rather than calling the <code class="docutils literal notranslate"><span class="pre">not-yet-implemented</span></code> function.</p>
-<figure class="align-center" id="id5">
+<figure class="align-center" id="id3">
 <span id="index-9"></span><img alt="../_images/new-task.png" src="../_images/new-task.png" />
 <figcaption>
-<p><span class="caption-text">The dialog box created by the prompt-for-task method</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+<p><span class="caption-text">The dialog box created by the prompt-for-task method</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The method takes two keyword arguments: a title, which is assigned a

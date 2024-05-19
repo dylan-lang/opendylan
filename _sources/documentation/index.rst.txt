@@ -14,7 +14,7 @@ Learn Dylan
     provides a gentler introduction to Dylan than does the :drm:`Dylan Reference
     Manual <Title>` (DRM).
 
-`Dylan Programming Guide <https://opendylan.org/package/dylan-programming-book/>`_
+`Dylan Programming Guide <https://package.opendylan.org/dylan-programming-book/>`_
     A book length Dylan tutorial.
 
 :doc:`../getting-started-cli/index`
@@ -58,7 +58,7 @@ Articles
     This essay explores Dylan from the perspective of a programmer used to
     traditional procedural languages, such as Pascal or C.
 
-`Dylan Package Documentation <https/package/http/server/quickstart/>`_
+`Dylan Package Documentation <https://package.opendylan.org/http/server/quickstart/>`_
     A quick introduction to web development in Dylan.
 
 :doc:`../news/2011/12/12/dswank` by Hannes Mehnert.

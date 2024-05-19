@@ -30,7 +30,7 @@ The canonical "Hello World" program in Dylan.
 
 
 .. hint:: The `deft new application
-          <https://opendylan.org/package/deft/index.html#deft-new-application>`_
+          <https://package.opendylan.org/deft/index.html#deft-new-application>`_
           command (called ``dylan new application`` in Open Dylan 2024.1 and
           older releases) will create these files for you, along with a test
           suite and build files.

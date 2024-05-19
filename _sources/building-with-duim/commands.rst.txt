@@ -397,5 +397,5 @@ instance of ``<gadget>``. This change results in these new definitions:
 
 For details about ``note-task-selection-change``, see
 :ref:`enable-disable-buttons`. See
-:ref:`task-list-manager-using-command-tables` for the complete source code for
-the Task List 2 project.
+:ref:`source--task-list-manager-using-command-tables` for the complete source
+code for the Task List 2 project.

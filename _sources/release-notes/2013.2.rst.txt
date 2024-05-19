@@ -18,9 +18,9 @@ Improvements
 Documentation
 -------------
 
-The `logging <https://opendylan.org/library-reference/logging/>`_ library has been documented.
+The `logging <https://package.opendylan.org//logging/>`_ library has been documented.
 
-The `regular-expressions <https://opendylan.org/library-reference/regular-expressions/index.html>`_ library documentation has been greatly improved.
+The `regular-expressions <https://package.opendylan.org//regular-expressions/>`_ library documentation has been greatly improved.
 
 The `date <https://opendylan.org/library-reference/system/date.html>`_ module documentation has been improved and now covers date formatting and parsing.
 
@@ -94,7 +94,7 @@ hash-algorithms
 ^^^^^^^^^^^^^^^
 
 A hash algorithms library has been added that supports the MD5, SHA-1, SHA256,
-SHA384, and SHA512 algorithms. `Documentation <https://opendylan.org/package/hash-algorithms/>`_
+SHA384, and SHA512 algorithms. `Documentation <https://package.opendylan.org/hash-algorithms/>`_
 is available. This library was written by Hannes Mehnert.
 
 I/O

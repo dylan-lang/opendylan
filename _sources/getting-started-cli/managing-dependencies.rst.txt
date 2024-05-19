@@ -5,7 +5,7 @@ We recommend managing inter-library dependencies by use of the Dylan package
 manager and :program:`deft`. When using :program:`deft` dependencies are added
 to the "dylan-package.json" file in your project. Each dependency includes a
 `semantic version <https://semver.org>`_ and `dependency resolution
-<https://opendylan.org/package/deft/pacman.html#dependency-resolution>`_ is
+<https://package.opendylan.org/deft/pacman.html#dependency-resolution>`_ is
 done with "minimal version selection".  See the `deft`_ documentation for
 details.
 
@@ -81,4 +81,4 @@ a number of submodules, so you don't need to pull each
 of those in directly, but can reference them through
 the ``ext/http/`` directory.
 
-.. _deft: https://opendylan.org/package/deft/index.html
+.. _deft: https://package.opendylan.org/deft/index.html
