@@ -3,7 +3,7 @@ Using Source Registries
 
 .. note:: When using :program:`deft`, source registries are created for you via
           the `deft update
-          <https://opendylan.org/package/deft/index.html#deft-update>`_ command
+          <https://package.opendylan.org/deft/index.html#deft-update>`_ command
           and you should not have to create them explicitly. You may want to
           skip this section for now.
 
@@ -18,7 +18,7 @@ in the registry which is named the same as the library and contains a pointer
 to the ".lid" file for the library.  For example, here's the registry file for
 hello-world, created in the previous section. Note that this assumes you are
 still in the directory created by `deft new application
-<https://opendylan.org/package/deft/index.html#deft-new-application>`_.
+<https://package.opendylan.org/deft/index.html#deft-new-application>`_.
 
 ::
 
@@ -27,7 +27,7 @@ still in the directory created by `deft new application
 
 What's going on here?  First of all, the registry mechanism makes it possible
 to have platform-specific libraries.  `deft
-<https://opendylan.org/package/deft/index.html>`_ currently always writes
+<https://package.opendylan.org/deft/index.html>`_ currently always writes
 registry entries to a platform-specific directory, in this case
 ``x86_64-darwin``, but anything platform-independent can actually go in the
 :file:`registry/generic` subdirectory.

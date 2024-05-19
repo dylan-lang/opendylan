@@ -55,7 +55,7 @@ Tooling
   * Symlink points to current installed version of packages, for easier tooling.
 
   Full documentation is
-  `here <https://opendylan.org/package/dylan-tool/index.html>`_.
+  `here <https://package.opendylan.org/deft/>`_.
 
 * The :program:`make-dylan-app` program has been removed and is replaced by
   :command:`dylan new application` and :command:`dylan new library`.

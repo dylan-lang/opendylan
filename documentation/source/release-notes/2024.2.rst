@@ -35,15 +35,14 @@ Tools
   warnings, and hover text.
 
   See the `lsp-server documentation
-  <https://opendylan.org/package/lsp-dylan/index.html>`_ for configuration
-  details.
+  <https://package.opendylan.org/lsp-dylan/>`_ for configuration details.
 
 * The ``dylan`` tool has been renamed to `deft
-  <https://opendylan.org/package/deft/index.html>`_.  This was done primarily
-  because it avoids some awkwardness when having to distinguish between the
-  Dylan language and the ``dylan`` tool. The ``dylan`` binary continues to
-  exist for backward compatibility (for example in GitHub workflows) but it
-  will be removed in a future release.
+  <https://package.opendylan.org/deft/>`_.  This was done primarily because it
+  avoids some awkwardness when having to distinguish between the Dylan language
+  and the ``dylan`` tool. The ``dylan`` binary continues to exist for backward
+  compatibility (for example in GitHub workflows) but it will be removed in a
+  future release.
 
 Library Updates
 ===============

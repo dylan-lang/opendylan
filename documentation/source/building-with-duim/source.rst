@@ -11,7 +11,7 @@ task list manager. If you have followed the example given in :doc:`design`
 through :doc:`commands` from the beginning, then your code should be the
 same as the code given in :ref:`task-list-manager-using-menu-gadgets`. The
 source code for the second version of the task list manager, using command
-tables, is given in :ref:`task-list-manager-using-command-tables`.
+tables, is given in :ref:`source--task-list-manager-using-command-tables`.
 
 .. note: Please note that both projects have the same name within the source
    code— *task-list* —and you should not load them both into the environment
@@ -481,7 +481,7 @@ Contents of the file *task-list.dylan* :
    single: task list manager; command table implementation
    single: using; command tables
 
-.. _task-list-manager-using-command-tables:
+.. _source--task-list-manager-using-command-tables:
 
 A task list manager using command tables
 ----------------------------------------

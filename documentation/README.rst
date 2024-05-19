@@ -67,7 +67,7 @@ Link Validation
 Sphinx also makes it easy to check that all of the links to external sites
 are valid.  You can run the link checker by::
 
-    make linkcheck
+    make linkcheck | grep -v ' ok '
 
 Site Maintenance
 ================
@@ -79,10 +79,10 @@ Site Maintenance
    timer to update the documentation in various repositories by essentially
    doing a git pull and make html.
 
-   Note that the script copies package docs into
-   ``/var/www/opendylan.org/package/`` and copies the DRM to
-   ``/var/www/opendylan.org/books/drm/`` so it assumes there are no top-level
-   URLs starting with ``/books/drm`` or ``/package``.
+   Note that the script copies the DRM's ``.html`` files to
+   ``/var/www/opendylan.org/books/drm/`` directly.
+   ``/var/www/opendylan.org/downloads/`` **is maintained by hand** so keep a
+   backup of it somewhere.
 
 Section Header Markup
 =====================
@@ -106,5 +106,5 @@ Dylan Language Markup
 =====================
 
 There is a `Dylan language Sphinx domain
-<https://github.com/dylan-lang/sphinx-extensions/blob/master/sphinxcontrib/dylan/domain/reference.rst>`_
-to make it easier to document and refer to Dylan language entities.
+<https://package.opendylan.org/sphinx-extensions/>`_ to make it easier to
+document and refer to Dylan language entities.

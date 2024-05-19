@@ -47,7 +47,7 @@ executable library.
 
 5. :file:`dylan-package.json` describes the new "hello-world" package. This is
    where you can specify dependencies, the package location, etc. See the `deft
-   documentation <https://opendylan.org/package/deft/index.html>`_ for more on
+   documentation <https://package.opendylan.org/deft/index.html>`_ for more on
    this. Note that the existence of this file turns the "hello-world" directory
    into a :program:`deft` workspace.
 
