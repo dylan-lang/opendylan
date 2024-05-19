@@ -278,7 +278,7 @@ system Library
   their omission led to possible confusion for users.
 
 .. _issue #899: https://github.com/dylan-lang/opendylan/issues/899
-.. _documented in the library reference: http://opendylan.org/documentation/library-reference/coloring-stream/
+.. _documented in the library reference: https://opendylan.org/library-reference/coloring-stream/
 
 * A problem with constructing ``<date>`` objects for ``time_t`` values
   with more than 30 bits (i.e., any time after Sat Jan 10 13:37:04 UTC 2004)

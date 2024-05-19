@@ -10,8 +10,8 @@ example::
     $ dylan-compiler
     Welcome to Open Dylan!
 
-    For documentation on Open Dylan, see http://opendylan.org/documentation/.
-    See http://opendylan.org/documentation/getting-started-cli/ for an introduction to the command line tools.
+    For documentation on Open Dylan, see https://opendylan.org.
+    See https://opendylan.org/getting-started-cli/ for an introduction to the command line tools.
 
     Type "help" for more information.
     >
