@@ -45,7 +45,7 @@ html_theme_options = {
     # https://pradyunsg.me/furo/customisation/edit-button/
     'source_repository': 'https://github.com/dylan-lang/opendylan',
     'source_branch': 'master',
-    'source_directory': 'source/',
+    'source_directory': 'documentation/source',
 }
 html_theme_path = ['_themes']   # still needed? add furo submodule here?
 html_title = 'Open Dylan'
