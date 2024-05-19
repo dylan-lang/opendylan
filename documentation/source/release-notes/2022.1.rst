@@ -87,16 +87,13 @@ IDE
 Documentation
 =============
 
-* The `Developing Component Software with CORBA
-  <https://opendylan.org/opendylan/corba-guide/index.htm>`_
-  guide has been updated.
+* :doc:`/corba-guide/index` has been updated.
 
 * Documentation for the DOOD library has been added to :doc:`the library
   reference </library-reference/dood/index>`.
 
 * Documentation for the internal ``access-path`` and ``debugger-manager``
-  libraries is now available in the :doc:`Open Dylan Hacker's Guide
-  </hacker-guide/index>`.
+  libraries is now available in the :doc:`/hacker-guide/index`.
 
 Library Changes
 ===============

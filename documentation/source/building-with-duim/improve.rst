@@ -2,8 +2,7 @@
 Improving The Design
 ********************
 
-The simple layout hierarchy described in `Creating the basic sheet
-hierarchy <design#creating-the-basic-sheet-hierarchy>`_ has a
+The simple layout hierarchy described in :ref:`design--creating-the-basic-sheet-hierarchy` has a
 number of problems associated with it, all of which revolve around the
 fact that the task list manager does not yet look very much like a
 standard Windows application. Although it is a simple design that does
@@ -255,9 +254,9 @@ radio box, and the list box from the initial design:
            activate-callback: not-yet-implemented);
 
 Note that the definition of each element is identical to the
-definitions included in the original layout described in `Creating the
-basic sheet hierarchy
-<design#creating-the-basic-sheet-hierarchy>`_ (except that
+definitions included in the original layout described in
+:ref:`design--creating-the-basic-sheet-hierarchy`
+(except that
 activate callbacks have been added to the code). Adding ``(frame)``
 immediately after the name of each pane lets you refer to the frame
 itself within the frame definition using a local variable. This means
@@ -269,8 +268,8 @@ the frame itself.
 
 In addition, you need to define the layout in which to place these
 panes. This is itself just another pane, and its definition is again
-identical to the original layout described in `Creating the basic
-sheet hierarchy <design#creating-the-basic-sheet-hierarchy>`_,
+identical to the original layout described in
+:ref:`design--creating-the-basic-sheet-hierarchy`,
 with one exception; rather than defining each element explicitly, you
 just include a reference to the relevant pane that you have already
 defined using normal slot syntax, thus:
@@ -616,8 +615,7 @@ has reduced to a single column layout whose children are ``task-list`` and
 
 The definition for the new design of the frame class now looks as
 follows (button definitions vary slightly for the Task List 2 project,
-see `A task list manager using command tables
-<source#a-task-list-manager-using-command-tables>`_):
+see :ref:`source--task-list-manager-using-command-tables`):
 
 .. code-block:: dylan
 

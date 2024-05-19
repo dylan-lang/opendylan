@@ -67,7 +67,9 @@ button, list, and text controls.
    single: creating; basic sheet hierarchy
    single: sheet hierarchy; creating
    single: sheets; creating a sheet hierarchy
-   
+
+.. _design--creating-the-basic-sheet-hierarchy:
+
 Creating the basic sheet hierarchy
 ----------------------------------
 

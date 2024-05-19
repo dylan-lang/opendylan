@@ -1849,9 +1849,8 @@ Note that DUIM provides default titles based on the specified direction,
 so you need only specify these titles if you want to supply a
 non-standard title to the dialog.
 
-Further examples of this function can be found in `Handling files in
-the task list manager
-<callbacks#handling-files-in-the-task-list-manager>`_.
+Further examples of this function can be found in
+:ref:`callbacks--handling-files-in-the-task-list-manager`.
 
 The convenience functions ``choose-color`` and ``choose-text-style``
 generate the common dialogs for choosing a color and a font

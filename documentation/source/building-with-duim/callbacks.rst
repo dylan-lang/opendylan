@@ -373,7 +373,7 @@ developing application, or in completely different applications.
    single: handling files in the task list manager
    single: task list manager; handling files
 
-.. _handling-files-in-the-task-list-manager:
+.. _callbacks--handling-files-in-the-task-list-manager:
 
 Handling files in the task list manager
 ---------------------------------------
