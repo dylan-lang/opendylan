@@ -124,9 +124,10 @@ Hack-a-thon
 </news/2013/06/30/dylan-hack-a-thon>`
 
 No matter if you know Dylan or not, we can help you `learn Dylan
-<https://opendylan.org/books/dpg/>`_ or put your other skills to use. We've got
-a good `list of tasks <https://github.com/dylan-lang/opendylan/wiki>`_ that
-we're collecting and some people will bring their own Dylan-related projects.
+<https://package.opendylan.org/dylan-programming-book/>`_ or put your other
+skills to use. We've got a good `list of tasks
+<https://github.com/dylan-lang/opendylan/wiki>`_ that we're collecting and some
+people will bring their own Dylan-related projects.
 
 
 Updated Dylan Programming Guide

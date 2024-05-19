@@ -6,9 +6,9 @@ Dylan Programming Guide
 =======================
 
 The `Dylan Programming Guide`_ has been updated to
-use our new documentation format.  As a result it is
-now available in `PDF`_ and `ePub`_ formats as well
-as much improved HTML.
+use our new documentation format.  As a result the
+HTML is much improved. and it can easily be built in
+epub and PDF formats as well.
 
 The Dylan Programming Guide is a great introduction
 to programming in Dylan and was written by Neil
@@ -33,7 +33,5 @@ We hope that this will be helpful in introducing a
 new generation of programmers to the Dylan programming
 language.
 
-.. _Dylan Programming Guide: https://opendylan.org/books/dpg/
-.. _PDF: https://opendylan.org/books/dpg/DylanProgramming.pdf
-.. _ePub: https://opendylan.org/books/dpg/DylanProgramming.epub
+.. _Dylan Programming Guide: https://package.opendylan.org/dylan-programming-book/
 .. _Pygments: https://pygments.org/
