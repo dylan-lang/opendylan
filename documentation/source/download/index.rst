@@ -2,12 +2,12 @@
 Install Open Dylan
 ******************
 
-The current version is **Open Dylan 2023.1**.
+The current version for unix is **Open Dylan 2024.1**, for Windows **2023.1**.
 
 Unix Platforms
 ==============
 
-➟ `Download binaries from GitHub <https://github.com/dylan-lang/opendylan/releases/tag/v2023.1.0>`_
+➟ `Download binaries from GitHub <https://github.com/dylan-lang/opendylan/releases/tag/v2024.1.0>`_
 
 Note that Unix versions only have a command-line compiler and not the full IDE that is
 available on Windows, although there is some integration with VS Code and Emacs.
