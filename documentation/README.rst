@@ -28,6 +28,11 @@ You may also need ``python-dateutil``.
 
     sudo pip3 install python-dateutil
 
+And ``sphinx-copybutton`` to show a copy button in code blocks::
+
+    sudo pip3 install sphinx-copybutton
+
+
 Building
 ========
 
