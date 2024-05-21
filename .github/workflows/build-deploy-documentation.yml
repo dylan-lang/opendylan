@@ -25,18 +25,21 @@ jobs:
         with:
           submodules: recursive
 
-      #
-      # Build documentation installing first 'furo' theme dependencies
-      #
+      - name: Add sphinx dependencies
+        run: |
+          echo furo >> documentation/requirements.txt
+          echo sphinx-copybutton >> documentation/requirements.txt
 
-      - uses: ammaraskar/sphinx-action@master
+      - name: Build documentation
+        uses: ammaraskar/sphinx-action@master
         with:
-          pre-build-command: "echo furo >> documentation/requirements.txt"
           docs-folder: "documentation"
+
+      - name: Bypassing Jekyll on GH pages
+        run: |
+          sudo touch documentation/_build/html/.nojekyll
 
       - name: Deploy documents to GH pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: documentation/_build/html
-
-

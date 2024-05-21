@@ -25,12 +25,12 @@ jobs:
         with:
           submodules: recursive
 
-      #
-      # Build documentation installing first 'furo' theme dependencies
-      #
+      - name: Add sphinx dependencies
+        run: |
+          echo furo >> documentation/requirements.txt
+          echo sphinx-copybutton >> documentation/requirements.txt
 
-      - uses: ammaraskar/sphinx-action@master
+      - name: Build documentation
+        uses: ammaraskar/sphinx-action@master
         with:
-          pre-build-command: "echo furo >> documentation/requirements.txt"
           docs-folder: "documentation"
-

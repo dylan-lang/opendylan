@@ -23,6 +23,7 @@ extensions = [
     'dylan.domain',
     'sphinx.ext.graphviz',
     'sphinx.ext.intersphinx',
+    'sphinx_copybutton',
 ]
 primary_domain = 'dylan'
 exclude_patterns = [
@@ -51,3 +52,9 @@ html_theme_path = ['_themes']   # still needed? add furo submodule here?
 html_title = 'Open Dylan'
 html_static_path = ['_static']
 html_favicon = '_static/favicon.ico'
+
+# -- Options for copybutton -------------------------------------------------
+# https://sphinx-copybutton.readthedocs.io/en/latest/use.html
+
+# Skip line numbers and prompt characters
+copybutton_exclude = '.linenos, .gp'
