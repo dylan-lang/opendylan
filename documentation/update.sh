@@ -7,7 +7,6 @@
 # Three directories in ${dest_dir} are special:
 #   1. /downloads   # copy files there by hand
 #   2. /books/drm   # the DRM is .html files, copied here separately
-#   3. /package     # package docs are generated here
 
 echo ""
 
@@ -28,6 +27,7 @@ if [[ ! -d "$dest_dir" ]]; then
 fi
 
 set -e   # die on any error
+set -x   # debug output
 
 opendylan_dir=$(dirname $(dirname $(realpath "$0")))
 
@@ -35,8 +35,6 @@ opendylan_dir=$(dirname $(dirname $(realpath "$0")))
 echo "Updating the Dylan workspace to get latest package dependencies..."
 cd "${opendylan_dir}/documentation"
 dylan update
-dylan build gendoc
-
 
 # Build and install main docs
 
@@ -44,32 +42,15 @@ echo "Building Open Dylan docs in ${opendylan_dir}/documentation/_build/html/ ..
 make --directory ${opendylan_dir}/documentation html
 
 echo "Copying main docs to ${dest_dir} ..."
-rsync -avz ${opendylan_dir}/documentation/_build/html/ ${dest_dir}
-
-
-# Build and install package docs.
-#
-# Copy the gendoc package first since we're about to modify its docs/source dir.
-
-work_dir=$(mktemp -d)
-cp -rp ${opendylan_dir}/_packages/gendoc/current/src ${work_dir}/gendoc
-cd ${work_dir}/gendoc
-dylan update        # Install sphinx-extensions in the right relative location.
-
-package_dir="${work_dir}/gendoc/docs/source/"
-echo "Generating package docs in ${package_dir}..."
-${opendylan_dir}/_build/bin/gendoc ${package_dir}/index.rst
-make --directory ${work_dir}/gendoc/docs html
-
-echo "Copying package docs to ${dest_dir}/package ..."
-rsync -avz ${work_dir}/gendoc/docs/_build/html/ ${dest_dir}/package
+rsync -a ${opendylan_dir}/documentation/_build/html/ ${dest_dir}
 
 
 # Install the DRM docs.
 #
 # Note that the DRM docs depend on rewrite rules setup in nginx config in order
-# to redirect Foo to Foo.html or Foo.png etc.
+# to redirect Foo to Foo.html or Foo.png etc., so testing is difficult. But it
+# also rarely changes so is unlikely to break.
 
 echo "Copying DRM docs to ${dest_dir}/books/drm ..."
 mkdir -p ${dest_dir}/books/drm
-rsync -avz ${opendylan_dir}/_packages/dylan-reference-manual/current/src/source/  ${dest_dir}/books/drm
+rsync -a ${opendylan_dir}/_packages/dylan-reference-manual/current/src/source/  ${dest_dir}/books/drm

@@ -1,23 +1,24 @@
 #!/bin/bash -xe
 
-# This script is intended to be run from cron.
+# This script is intended to be run from a systemd timer.  We use our own log
+# file because there can be a lot of output and it seems better not to spam the
+# systemd journal.
 
 logfile=/var/log/update-opendylan.org.`date +%Y%m%d%H%M`.log
 exec > $logfile 2>&1
 
-exe_dir="$(realpath $(dirname $0))"
+export PATH=/root/dylan/bin:/opt/opendylan/bin:/opt/python3-venv/bin:${PATH}
 
-repo_dir=/root/deploy-opendylan.org
-gendoc_exe=${repo_dir}/gendoc/_build/bin/gendoc
+exe_dir="$(realpath $(dirname $0))"
+opendylan_dir="$(dirname ${exe_dir})"
 dest_dir=/var/www/opendylan.org
 
-# Update opendylan and website submodule first so we get any changes
-# to the update.sh script.
-cd ${repo_dir}/opendylan
-git pull --rebase origin master
+# Pull changes to update.sh and the docs.
+cd "${opendylan_dir}"
+git pull --rebase --tags origin master
 git submodule update --init --recursive
 
-${exe_dir}/update.sh "${dest_dir}" "${repo_dir}" "${gendoc_exe}"
+${exe_dir}/update.sh "${dest_dir}"
 
 echo "Done updating opendylan.org"
 bzip2 $logfile
