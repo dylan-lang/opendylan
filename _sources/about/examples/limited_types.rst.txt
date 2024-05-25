@@ -48,7 +48,7 @@ vectors of floating point numbers for this code:
 	 output :: <audio-buffer>)
      => ()
       for (i from 0 below $audio-buffer-size)
-	output[i] = 0.5 * input1[i] + 0.5 * input2[i];
+	output[i] := 0.5 * input1[i] + 0.5 * input2[i];
       end;
     end;
 
