@@ -1112,7 +1112,7 @@ of <a class="reference internal" href="#c-ffi:c-ffi:[c-value]"><code class="xref
 <em>import-type</em>, so you cannot use it when designating a transition
 between C and Dylan.</p>
 <p>This class is only useful in that it is the <em>referenced-type</em> for
-<code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;C-void*&gt;</span></code>.</p>
+<a class="reference internal" href="#c-ffi:c-ffi:[c-void*]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;C-void*&gt;</span></code></a>.</p>
 </p>
 </dd>
 </dl>
@@ -1568,8 +1568,8 @@ pointer-designator-class.</p>
 </dd></dl>
 
 <span class="target" id="index-43"></span><dl class="dylan class">
-<dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:[c-void\*]">
-<span class="sig-name descname"><span class="pre">&lt;C-void\*&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Concrete</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-void\*]" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object dylan-api dylan" id="c-ffi:c-ffi:[c-void*]">
+<span class="sig-name descname"><span class="pre">&lt;C-void*&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Concrete</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-void*]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;C-pointer&gt;</span></code></a></p>
@@ -3913,10 +3913,10 @@ word-aligned.</p>
 <span class="sig-name descname"><span class="pre">&lt;C-Dylan-object&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Class</span></em><a class="headerlink" href="#c-ffi:c-ffi:[c-dylan-object]" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;C-void*&gt;</span></code></p>
+<dd class="field-odd"><p><a class="reference internal" href="#c-ffi:c-ffi:[c-void*]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;C-void*&gt;</span></code></a></p>
 </dd>
 <dt class="field-even">Discussion<span class="colon">:</span></dt>
-<dd class="field-even"><p><p>A mapped subclass of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;C-void*&gt;</span></code>. Objects of this type
+<dd class="field-even"><p><p>A mapped subclass of <a class="reference internal" href="#c-ffi:c-ffi:[c-void*]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;C-void*&gt;</span></code></a>. Objects of this type
 correspond to specific Dylan objects. The Dylan type for import and
 export is <code class="docutils literal notranslate"><span class="pre">&lt;C-Dylan-Object&gt;</span></code>. The C type is <code class="docutils literal notranslate"><span class="pre">void*</span></code>.</p>
 <p>To pass a reference to an arbitrary Dylan object to C, the Dylan
