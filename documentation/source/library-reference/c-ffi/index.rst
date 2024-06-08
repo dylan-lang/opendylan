@@ -1242,7 +1242,7 @@ these classes.
    single: <C-void*> class
    single: classes; <C-void*>
 
-.. class:: <C-void\*>
+.. class:: <C-void*>
    :open:
    :concrete:
 
