@@ -5,7 +5,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define open abstract class <stream-error> (<error>, <format-string-condition>)
+define open abstract class <stream-error> (<simple-error>)
   constant slot stream-error-stream :: <stream>,
     required-init-keyword: stream:;
 end;
@@ -17,7 +17,7 @@ define generic stream-error-stream
 // TODO: yuck.  Would be nicer to just have a condition-to-string method..
 // andrewa: note that then you need to update the runtime manager to
 // know about the new class too, it is simpler to rely on subclassing
-// <format-string-condition>.
+// <simple-condition>.
 define method make
     (class :: subclass(<stream-error>),
      #rest args,

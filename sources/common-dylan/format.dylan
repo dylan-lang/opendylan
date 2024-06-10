@@ -582,7 +582,7 @@ define method condition-to-string
 end method condition-to-string;
 
 define method condition-to-string
-    (condition :: <format-string-condition>) => (string :: <string>)
+    (condition :: <simple-condition>) => (string :: <string>)
   apply(format-to-string,
         condition-format-string(condition),
         condition-format-arguments(condition))

@@ -15,8 +15,7 @@ The extensions are:
 - Collection model: :class:`<stretchy-sequence>`, :class:`<string-table>`,
   :gf:`difference`, :func:`fill-table!`, :gf:`find-element`, :gf:`position`,
   :gf:`remove-all-keys!`, :macro:`define table`, :gf:`split`, and :gf:`join`.
-- Condition system: :class:`<format-string-condition>`,
-  :class:`<simple-condition>`, and :gf:`condition-to-string`.
+- Condition system: :class:`<simple-condition>`, and :gf:`condition-to-string`.
 - Control flow: :macro:`iterate` and :macro:`when`.
 - Development conveniences:
 
@@ -143,7 +142,7 @@ The extensions are:
 
      Returns a string representation of a general instance of
      :drm:`<condition>`. There is a method on
-     :class:`<format-string-condition>` and method on
+     :class:`<simple-condition>` and method on
      :drm:`<type-error>`.
 
 .. macro:: debug-assert
@@ -522,25 +521,6 @@ The extensions are:
      Formats a floating-point number to a string. It uses scientific
      notation where necessary.
 
-.. class:: <format-string-condition>
-   :sealed:
-   :instantiable:
-
-   The class of conditions that take a format string.
-
-   :superclasses: :drm:`<condition>`
-
-   :description:
-
-     The class of conditions that take a format string, as defined by
-     the DRM.
-
-     It is the superclass of Dylan's :class:`<simple-condition>`.
-
-   :seealso:
-
-     - The :doc:`Format module <../io/format>` in the :doc:`IO library <../io/index>`.
-
 .. function:: ignore
 
    A compiler directive that tells the compiler it must not issue a
@@ -777,19 +757,27 @@ The extensions are:
    :sealed:
    :instantiable:
 
-   The class of simple conditions.
+   The class of conditions that accept a format string and format arguments
+   with which to build a message describing the condition.
 
-   :superclasses: :class:`<format-string-condition>`
+   :superclasses: :class:`<condition>`
 
    :description:
 
-     The class of simple conditions. It is the superclass of :drm:`<simple-error>`,
-     :drm:`<simple-warning>`, and :drm:`<simple-restart>`.
+     As the superclass of :drm:`<simple-error>`, :drm:`<simple-warning>`, and
+     :drm:`<simple-restart>`, the :class:`<simple-condition>` class provides
+     the ``format-string:`` and ``format-arguments:`` init keywords described
+     in the DRM.
 
    :operations:
 
      - :drm:`condition-format-string`
      - :drm:`condition-format-arguments`
+
+   :seealso:
+
+     - The :doc:`format module <../io/format>` in the :doc:`IO library
+       <../io/index>`.
 
 .. class:: <stretchy-sequence>
    :open:

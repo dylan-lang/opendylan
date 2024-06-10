@@ -89,7 +89,7 @@ end method abort;
 
 /// TYPE-ERRORS
 
-define open class <type-error> (<error>, <format-string-condition>)  // Should be sealed?
+define open class <type-error> (<error>, <simple-condition>)  // Should be sealed?
   constant slot type-error-value, init-keyword: value:;
   constant slot type-error-expected-type :: <type>, init-keyword: type:;
 end class <type-error>;

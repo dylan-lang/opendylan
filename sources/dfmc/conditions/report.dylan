@@ -23,8 +23,8 @@ define thread variable *detail-level* :: <detail-level> = #"normal";
 // specializable parameter.
 //
 // The default method for <program-condition>s takes advantage of the
-// fact that all program conditions obey the <format-string-condition>
-// (aka <simple-condition>) protocol of having a format string and its
+// fact that all program conditions obey the <simple-condition>
+// protocol of having a format string and its
 // arguments in the condition itself.  Methods for conditions outside
 // the program condition hierarchy just handle the default level by
 // using the %s/%= distinction in format.

@@ -73,7 +73,7 @@ define interface-specification-suite file-system-locators-specification-suite ()
     (subclass(<locator>), <string>) => (<locator>);
 
   // Locator conditions
-  instantiable class <locator-error> (<format-string-condition>, <error>);
+  instantiable class <locator-error> (<simple-condition>, <error>);
   function locator-error (<string>, #"rest") => (#"rest");
 
   // Utilities
