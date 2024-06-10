@@ -719,8 +719,8 @@ define &module dylan-extensions
 
   create
     \last-handler-definer,
-    <format-string-condition>,
-    <simple-condition>, // HACK: COMPATIBILITY
+    <format-string-condition>,  // Deprecated...
+    <simple-condition>,         // ...use this instead.
       <stack-overflow-error>,
       <arithmetic-error>,
         <division-by-zero-error>,
