@@ -797,10 +797,10 @@ File-System module.
 
 .. class:: <file-system-error>
 
-   Error type signaled when any other functions in the File-System
+   Error type signaled when any of the functions in the File-System
    module signal an error.
 
-   :superclasses: :drm:`<error>`, :class:`<simple-condition>`
+   :superclasses: :drm:`<simple-error>`
 
    :description:
 
