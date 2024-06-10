@@ -137,7 +137,7 @@ end method show-property;
 
 /// Errors
 
-define class <set-property-error> (<simple-condition>, <error>)
+define class <set-property-error> (<simple-error>)
 end class <set-property-error>;
 
 define method set-error

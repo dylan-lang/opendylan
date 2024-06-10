@@ -101,7 +101,7 @@ define method project-close-compilation-contexts
   next-method()
 end;
 
-define class <debug-target-not-set-error> (<simple-condition>, <error>) end;
+define class <debug-target-not-set-error> (<simple-error>) end;
 
 
 define function verify-execution-target (project :: <interactive-project>)
