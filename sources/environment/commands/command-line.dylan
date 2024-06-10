@@ -260,7 +260,7 @@ define open generic parse-next-argument
 
 /// Utilities
 
-define class <command-line-server-error> (<simple-condition>, <error>)
+define class <command-line-server-error> (<simple-error>)
 end class <command-line-server-error>;
 
 define class <command-error> (<command-line-server-error>)

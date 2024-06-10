@@ -86,7 +86,7 @@ The locators Module
    All errors raised by the locator system should be instances of
    this error.
 
-   :superclasses: :class:`<simple-condition>`, :drm:`<error>`
+   :superclasses: :drm:`<simple-error>`
 
 
 .. class:: <server-locator>

@@ -22,7 +22,7 @@ end class <file-system-directory-locator>;
 define class <file-system-file-locator> (<file-system-locator>, <file-locator>)
 end class <file-system-file-locator>;
 
-define sealed class <file-system-error> (<error>, <simple-condition>)
+define sealed class <file-system-error> (<simple-error>)
 end class <file-system-error>;
 
 define sealed class <file-error> (<file-system-error>)
