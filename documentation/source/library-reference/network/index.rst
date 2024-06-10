@@ -731,7 +731,7 @@ This section lists the socket condition classes in the Network library.
    :description:
 
      The class of socket conditions. It inherits the ``format-string:``
-     and ``format-arguments:`` keywords from
+     and ``format-arguments:`` init keywords from
      :class:`<simple-condition>`.
 
      Slots:

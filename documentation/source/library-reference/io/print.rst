@@ -349,7 +349,7 @@ IO library's *print* module.
          end;
 
    With the above method, an ``<account>`` object with name "foo" will print as
-   ``{<account> "foo" #xDEADBEEF}``.
+   ``{<account> "foo" 123}`` where ``123`` is a unique identifier for the object.
 
 
 The pprint Module
