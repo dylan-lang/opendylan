@@ -341,7 +341,7 @@ Program Conditions
    :open:
    :abstract:
 
-   :superclasses: :const:`<format-string-condition>`
+   :superclasses: :class:`<simple-condition>`
 
    :keyword compilation-stage: Defaults to the value of :var:`*current-stage*`.
    :keyword program-note-creator: Defaults to the value of :var:`*current-dependent*`.

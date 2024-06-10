@@ -41,7 +41,7 @@ define function invoke-debugger (condition) end;
 // best to subclass one of <program-error>, <program-note>, or
 // <program-restart> instead.
 
-define open abstract class <program-condition> (<format-string-condition>)
+define open abstract class <program-condition> (<simple-condition>)
 
   // TODO: Make this class primary.
 

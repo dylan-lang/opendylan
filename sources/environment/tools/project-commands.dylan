@@ -526,7 +526,7 @@ end method environment-open-file;
 
 /// Project error handling
 
-define class <project-error> (<format-string-condition>, <error>)
+define class <project-error> (<simple-condition>, <error>)
 end class <project-error>;
 
 define class <link-error> (<project-error>)

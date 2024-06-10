@@ -62,6 +62,7 @@ define open abstract primary class <simple-condition> (<condition>)
   constant slot condition-format-arguments, init-keyword: format-arguments:, init-value: #[];
 end class <simple-condition>;
 
+// Deprecated. Use <simple-condition> instead. This will be removed in a future release.
 define constant <format-string-condition> = <simple-condition>;
 
 // debug-message and its C primitive require the arguments as a vector.
