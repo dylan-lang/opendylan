@@ -66,7 +66,8 @@ end module byte-vector;
 define module common-extensions
   use dylan-extensions,
     export: { <bottom>,
-              <format-string-condition>,
+              <format-string-condition>, // Deprecated...
+              <simple-condition>,        // ...use this instead.
                 <stack-overflow-error>,
                 <arithmetic-error>,
                   <division-by-zero-error>,
@@ -75,7 +76,6 @@ define module common-extensions
                   <arithmetic-underflow-error>,
               <stretchy-object-vector>,
               <object-deque>,
-              <simple-condition>,
               <stretchy-sequence>,
               <string-table>,
               false-or,
