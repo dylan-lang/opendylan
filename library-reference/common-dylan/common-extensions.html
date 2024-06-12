@@ -693,7 +693,7 @@ sequence that may or may not be freshly allocated. If
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="common-dylan:common-extensions:condition-to-string">
 <span class="sig-name descname"><span class="pre">condition-to-string</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#common-dylan:common-extensions:condition-to-string" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a string representation of a condition object.</p>
+<dd><p>Returns a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> representation of a condition object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>condition-to-string <em>condition</em> =&gt; <em>string</em></p>
@@ -709,10 +709,16 @@ sequence that may or may not be freshly allocated. If
 </ul>
 </dd>
 <dt class="field-even">Discussion<span class="colon">:</span></dt>
-<dd class="field-even"><p>Returns a string representation of a general instance of
-<a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#condition"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;condition&gt;</span></code></a>. There is a method on
-<a class="reference internal" href="#common-dylan:common-extensions:[format-string-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;format-string-condition&gt;</span></code></a> and method on
-<a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#type-error"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;type-error&gt;</span></code></a>.</p>
+<dd class="field-even"><p><p>Returns a string representation of a general instance of
+<a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#condition"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;condition&gt;</span></code></a>.</p>
+<p>Note that it is often not necessary to write a method on this generic
+function for your condition classes because you can use the method
+provided by <a class="reference internal" href="#common-dylan:common-extensions:[simple-condition]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;simple-condition&gt;</span></code></a>, usually via one of its
+subclasses, <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#simple-error"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;simple-error&gt;</span></code></a>, <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#simple-warning"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;simple-warning&gt;</span></code></a>, or
+<a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#simple-restart"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;simple-restart&gt;</span></code></a>. Simply make your condition a subclass of one of
+these classes and provide the <code class="docutils literal notranslate"><span class="pre">format-string:</span></code> and <code class="docutils literal notranslate"><span class="pre">format-arguments:</span></code>
+init keywords.</p>
+</p>
 </dd>
 </dl>
 </dd></dl>
