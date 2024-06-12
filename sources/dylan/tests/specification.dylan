@@ -238,7 +238,7 @@ define interface-specification-suite dylan-conditions-specification-suite ()
   open abstract class <serious-condition> (<condition>);
   sealed instantiable class <simple-error> (<error>);
   sealed instantiable class <simple-warning> (<warning>);
-  sealed instantiable class <type-error> (<error>);
+  sealed instantiable class <type-error> (<error>); // make-test-instance method below.
   open abstract class <warning> (<condition>);
 
   /// Restarts
@@ -285,6 +285,12 @@ define interface-specification-suite dylan-conditions-specification-suite ()
   function type-error-expected-type (<type-error>) => (<type>),
     expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
 end dylan-conditions-specification-suite;
+
+define sideways method make-test-instance (class == <type-error>) => (err :: <type-error>)
+  make(<type-error>,
+       value: #"type-error-value",
+       type: <string>)
+end method;
 
 //--- Bindings not defined by the DRM
 //---*** Are there any others?
