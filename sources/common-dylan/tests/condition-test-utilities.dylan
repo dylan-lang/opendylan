@@ -31,7 +31,6 @@ end method make-condition;
 /// Condition test functions
 
 define method test-condition (condition :: <condition>) => ()
-  test-output("test-condition(<condition>)\n");
   do(method (function) function(condition) end,
      vector(// Functions on <condition>
             do-test-signal,
@@ -48,7 +47,6 @@ define method test-condition (condition :: <condition>) => ()
 end method test-condition;
 
 define method test-condition (condition :: <simple-error>) => ()
-  test-output("test-condition(<simple-error>)\n");
   next-method();
   do(method (function) function(condition) end,
      vector(// Functions on <simple-error>
