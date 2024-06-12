@@ -89,9 +89,13 @@ end method abort;
 
 /// TYPE-ERRORS
 
-define open class <type-error> (<error>, <format-string-condition>)  // Should be sealed?
-  constant slot type-error-value, init-keyword: value:;
-  constant slot type-error-expected-type :: <type>, init-keyword: type:;
+// Note that the DRM only mentions <error> as a superclass. Speculation: we
+// additionally subclass <simple-condition> because there is special support
+// for its condition-format-string and condition-format-arguments in the
+// debugger manager.
+define sealed class <type-error> (<error>, <simple-condition>)
+  constant slot type-error-value, required-init-keyword: value:;
+  constant slot type-error-expected-type :: <type>, required-init-keyword: type:;
 end class <type-error>;
 
 define method make

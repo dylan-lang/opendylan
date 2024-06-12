@@ -66,6 +66,12 @@ define method test-condition (condition :: <type-error>) => ()
             ))
 end method test-condition;
 
+define method make-condition (class == <type-error>) => (c :: <type-error>)
+  make(<type-error>,
+       value: #"type-error-value",
+       type: <string>)
+end method;
+
 define method test-condition (condition :: <simple-warning>) => ()
   next-method();
   do(method (function) function(condition) end,

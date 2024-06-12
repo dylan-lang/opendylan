@@ -132,7 +132,7 @@ The extensions are:
 .. generic-function:: condition-to-string
    :open:
 
-   Returns a string representation of a condition object.
+   Returns a :drm:`<string>` representation of a condition object.
 
    :signature: condition-to-string *condition* => *string*
 
@@ -142,9 +142,15 @@ The extensions are:
    :description:
 
      Returns a string representation of a general instance of
-     :drm:`<condition>`. There is a method on
-     :class:`<format-string-condition>` and method on
-     :drm:`<type-error>`.
+     :drm:`<condition>`.
+
+     Note that it is often not necessary to write a method on this generic
+     function for your condition classes because you can use the method
+     provided by :class:`<simple-condition>`, usually via one of its
+     subclasses, :drm:`<simple-error>`, :drm:`<simple-warning>`, or
+     :drm:`<simple-restart>`. Simply make your condition a subclass of one of
+     these classes and provide the ``format-string:`` and ``format-arguments:``
+     init keywords.
 
 .. macro:: debug-assert
    :statement:
