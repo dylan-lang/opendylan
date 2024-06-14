@@ -94,8 +94,6 @@ sources
     jam                 - Jam script interpreter.
     parser-run-time     - Support for parsers.
     source-records      - Reads source files and tracks location.
-    stack-walker        - Debugging on UNIX by walking the stack. Nowadays
-                          directly in the run-time.
     walker              - Build has-a tree.
   project-manager       - Takes care about dependencies of projects and actual
                           invocation of linker, etc.

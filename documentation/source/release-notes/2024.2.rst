@@ -54,6 +54,11 @@ System
   :const:`$machine-architecture`.  The old name will remain, for backward
   compatibility.
 
+Other
+-----
+
+* The obsolete (32-bit x86-only) ``stack-walker`` library was removed.
+
 Contributors
 ============
 
