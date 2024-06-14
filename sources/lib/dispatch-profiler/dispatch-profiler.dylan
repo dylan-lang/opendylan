@@ -646,6 +646,24 @@ define method print-dispatch-statistics
   end block;
 end method;
 
+define macro with-dispatch-profiling-report
+  { with-dispatch-profiling-report(#rest ?options:expression)
+      ?:body
+     end }
+  => { block ()
+         clear-dispatch-profiling(%current-library());
+         profile-all-terminal-engine-nodes?() := #t;
+         *dispatch-profiling-enabled?* := #t;
+         ?body
+       cleanup
+         *dispatch-profiling-enabled?* := #f;
+
+         let stats = make-dispatch-statistics(#f);
+         collect-dispatch-statistics(%current-library(), stats);
+         print-dispatch-statistics(stats, ?options);
+       end }
+end macro;
+
 define method enable-call-site-caches-only (library)
   call-site-caches-enabled?()          := #t;
   profile-all-terminal-engine-nodes?() := #t;

@@ -33,6 +33,7 @@ define module dispatch-profiler
     clear-dispatch-statistics!,
     collect-dispatch-statistics,
     print-dispatch-statistics,
+    with-dispatch-profiling-report,
     enable-generic-caches-only,
     enable-call-site-caches-only
     ;
