@@ -24,6 +24,8 @@ define class <bitcode-stream> (<wrapper-stream>)
   slot bitcode-records :: <object-table> = make(<object-table>);
 end class;
 
+define sealed domain inner-stream (<bitcode-stream>);
+
 define method bitcode-flush
     (stream :: <bitcode-stream>)
  => ();
