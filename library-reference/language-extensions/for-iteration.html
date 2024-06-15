@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Weak tables" href="weak-tables.html" /><link rel="prev" title="Function Definition" href="define-function.html" />
 
     <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.05.06 -->
-        <title>Extensions to the FOR iteration construct - Open Dylan</title>
+        <title>Extensions to the FOR iteration macro - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=387cc868" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
@@ -327,7 +327,7 @@
 <li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">Dylan Language Extensions</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle navigation of Dylan Language Extensions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="language-differences.html">Language Differences</a></li>
 <li class="toctree-l3"><a class="reference internal" href="define-function.html">Function Definition</a></li>
-<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">Extensions to the FOR iteration construct</a></li>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">Extensions to the FOR iteration macro</a></li>
 <li class="toctree-l3"><a class="reference internal" href="weak-tables.html">Weak tables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="inlining.html">Inlining adjectives for methods, constants, functions, and slots</a></li>
 <li class="toctree-l3"><a class="reference internal" href="numbers.html">Integers</a></li>
@@ -545,17 +545,17 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="extensions-to-the-for-iteration-construct">
-<h1>Extensions to the FOR iteration construct<a class="headerlink" href="#extensions-to-the-for-iteration-construct" title="Permalink to this heading">¶</a></h1>
+          <span class="target" id="index-0"></span><section id="extensions-to-the-for-iteration-macro">
+<span id="index-1"></span><h1>Extensions to the FOR iteration macro<a class="headerlink" href="#extensions-to-the-for-iteration-macro" title="Permalink to this heading">¶</a></h1>
 <p>We have also made two extensions to the <code class="docutils literal notranslate"><span class="pre">for</span></code> iteration construct: a
-<code class="docutils literal notranslate"><span class="pre">keyed-by</span></code> clause and <code class="docutils literal notranslate"><span class="pre">in</span> <span class="pre">…</span> <span class="pre">using</span></code> clauses.</p>
+<code class="docutils literal notranslate"><span class="pre">keyed-by</span></code> clause and <code class="docutils literal notranslate"><span class="pre">in</span> <span class="pre">...</span> <span class="pre">using</span></code> clauses.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">keyed-by</span></code> clause allows iteration over table elements:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">my-element</span><span class="w"> </span><span class="n">keyed-by</span><span class="w"> </span><span class="n">my-key</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">my-table</span><span class="p">)</span>
 <span class="w">  </span><span class="p">...</span>
 <span class="k">end</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">in</span> <span class="pre">…</span> <span class="pre">using</span></code> clause allows you to specify a iteration protocol
+<p>The <code class="docutils literal notranslate"><span class="pre">in</span> <span class="pre">...</span> <span class="pre">using</span></code> clause allows you to specify a iteration protocol
 other than the default (<a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#forward-iteration-protocol"><code class="xref drm docutils literal notranslate"><span class="pre">forward-iteration-protocol</span></code></a>):</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="nb">element</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">my-sequence</span><span class="w"> </span><span class="n">using</span><span class="w"> </span><span class="nb">backward-iteration-protocol</span><span class="p">)</span>
 <span class="w">  </span><span class="p">...</span>

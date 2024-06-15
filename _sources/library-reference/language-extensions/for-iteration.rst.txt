@@ -1,8 +1,11 @@
-Extensions to the FOR iteration construct
------------------------------------------
+.. index:: pair: for; keyed-by
+.. index:: pair: for; using
+
+Extensions to the FOR iteration macro
+-------------------------------------
 
 We have also made two extensions to the ``for`` iteration construct: a
-``keyed-by`` clause and ``in … using`` clauses.
+``keyed-by`` clause and ``in ... using`` clauses.
 
 The ``keyed-by`` clause allows iteration over table elements:
 
@@ -12,7 +15,7 @@ The ``keyed-by`` clause allows iteration over table elements:
       ...
     end;
 
-The ``in … using`` clause allows you to specify a iteration protocol
+The ``in ... using`` clause allows you to specify a iteration protocol
 other than the default (:drm:`forward-iteration-protocol`):
 
 .. code-block:: dylan

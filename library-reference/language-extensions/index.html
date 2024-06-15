@@ -327,7 +327,7 @@
 <li class="toctree-l2 current has-children current-page"><a class="current reference internal" href="#">Dylan Language Extensions</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle navigation of Dylan Language Extensions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="language-differences.html">Language Differences</a></li>
 <li class="toctree-l3"><a class="reference internal" href="define-function.html">Function Definition</a></li>
-<li class="toctree-l3"><a class="reference internal" href="for-iteration.html">Extensions to the FOR iteration construct</a></li>
+<li class="toctree-l3"><a class="reference internal" href="for-iteration.html">Extensions to the FOR iteration macro</a></li>
 <li class="toctree-l3"><a class="reference internal" href="weak-tables.html">Weak tables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="inlining.html">Inlining adjectives for methods, constants, functions, and slots</a></li>
 <li class="toctree-l3"><a class="reference internal" href="numbers.html">Integers</a></li>
@@ -547,16 +547,16 @@
         <article role="main" id="furo-main-content">
           <section id="dylan-language-extensions">
 <h1>Dylan Language Extensions<a class="headerlink" href="#dylan-language-extensions" title="Permalink to this heading">¶</a></h1>
-<p>The Dylan language is described in <a class="reference external" href="https://opendylan.org/books/drm/">The Dylan Reference Manual</a> by Andrew Shalit (Addison-Wesley,
-1996). We call this book “the DRM” hereafter.</p>
-<p>Open Dylan provides an implementation of the Dylan language
-described by the DRM, with a few exceptions that are documented in
-<a class="reference internal" href="language-differences.html"><span class="doc">Language Differences</span></a>.</p>
-<p>Open Dylan provides the Dylan language in the <code class="docutils literal notranslate"><span class="pre">dylan</span></code> module of the
-<code class="docutils literal notranslate"><span class="pre">dylan</span></code> library.</p>
-<p>This document is an introduction to Open Dylan’s extensions to the
-Dylan language.  These extensions are either built in to the <code class="docutils literal notranslate"><span class="pre">dylan</span></code>
-library or are available in a separate library, <a class="reference internal" href="../common-dylan/index.html"><span class="doc">common-dylan</span></a>.</p>
+<p>The Dylan language is described in the <a class="reference external" href="https://opendylan.org/books/drm/Title"><code class="xref drm docutils literal notranslate"><span class="pre">Dylan</span> <span class="pre">Reference</span> <span class="pre">Manual</span></code></a> by
+Andrew Shalit (Addison-Wesley, 1996), hereafter referred to as “the DRM”.</p>
+<p>The ways in which Open Dylan differs from the DRM are documented in
+<a class="reference internal" href="language-differences.html"><span class="doc">Language Differences</span></a>. The rest of this document describes features added
+to the language while retaining compatibility with the DRM.  These extensions
+are either built in to the <code class="docutils literal notranslate"><span class="pre">dylan</span></code> library or are available in a separate
+library, <a class="reference internal" href="../common-dylan/index.html"><span class="doc">common-dylan</span></a>.</p>
+<p>The <a class="reference internal" href="../common-dylan/index.html"><span class="doc">common-dylan</span></a> library exports the
+<code class="xref dylan dylan-mod docutils literal notranslate"><span class="pre">common-dylan</span></code> module and several other very frequently used
+modules.</p>
 <p>The majority of the extensions are in the <a class="reference internal" href="../common-dylan/common-extensions.html"><span class="doc">common-extensions</span></a> module
 of the <a class="reference internal" href="../common-dylan/index.html"><span class="doc">common-dylan</span></a> library. That library
 also exports a number of smaller modules that contain other basic
@@ -587,7 +587,7 @@ DRM. These extensions are available to applications in the <code class="docutils
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="language-differences.html">Language Differences</a></li>
 <li class="toctree-l1"><a class="reference internal" href="define-function.html">Function Definition</a></li>
-<li class="toctree-l1"><a class="reference internal" href="for-iteration.html">Extensions to the FOR iteration construct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="for-iteration.html">Extensions to the FOR iteration macro</a></li>
 <li class="toctree-l1"><a class="reference internal" href="weak-tables.html">Weak tables</a></li>
 <li class="toctree-l1"><a class="reference internal" href="inlining.html">Inlining adjectives for methods, constants, functions, and slots</a></li>
 <li class="toctree-l1"><a class="reference internal" href="numbers.html">Integers</a></li>
