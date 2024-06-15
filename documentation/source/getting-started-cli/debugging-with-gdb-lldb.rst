@@ -361,16 +361,16 @@ and will assist you in analyzing values.
 
 .. c:function:: bool dylan_simple_condition_p (D instance)
 
-   Tests whether instance is a ``<simple-condition>``.
+   Tests whether instance is a :class:`<simple-condition>`.
 
 .. c:function:: D dylan_simple_condition_format_string (D instance)
 
-   Returns the format string stored in the given ``<simple-condition>``.
+   Returns the format string stored in the given :class:`<simple-condition>`.
 
 .. c:function:: D dylan_simple_condition_format_args (D instance)
 
    Returns the format string arguments stored in the given
-   ``<simple-condition>``.
+   :class:`<simple-condition>`.
 
 .. c:function:: bool dylan_class_p (D instance)
 

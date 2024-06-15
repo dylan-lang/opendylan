@@ -113,7 +113,7 @@ end method as;
 
 /// Locator conditions
 
-define class <locator-error> (<format-string-condition>, <error>)
+define class <locator-error> (<simple-error>)
 end class <locator-error>;
 
 define function locator-error

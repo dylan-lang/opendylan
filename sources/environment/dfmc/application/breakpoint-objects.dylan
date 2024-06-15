@@ -65,7 +65,7 @@ end class <class-breakpoint>;
 ///// <BREAKPOINT-ERROR>
 //    The class of all breakpoint errors
 
-define abstract class <breakpoint-error> (<format-string-condition>, <error>)
+define abstract class <breakpoint-error> (<simple-condition>, <error>)
 end class <breakpoint-error>;
 
 

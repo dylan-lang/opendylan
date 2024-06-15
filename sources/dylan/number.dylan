@@ -100,7 +100,7 @@ define generic remainder
 
 //// CONDITIONS
 
-define open abstract class <arithmetic-error> (<error>, <format-string-condition>)
+define open abstract class <arithmetic-error> (<error>, <simple-condition>)
   inherited slot condition-format-string = "Arithmetic error";
 end class <arithmetic-error>;
 

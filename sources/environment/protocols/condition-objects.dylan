@@ -12,9 +12,9 @@ define user-object-class <condition-object> (<user-object>)
   binding <condition>, module: dylan, library: dylan;
 end user-object-class <condition-object>;
 
-define user-object-class <format-string-condition-object> (<condition-object>)
-  binding <format-string-condition>, module: dylan-extensions, library: dylan;
-end user-object-class <format-string-condition-object>;
+define user-object-class <simple-condition-object> (<condition-object>)
+  binding <simple-condition>, module: dylan-extensions, library: dylan;
+end user-object-class <simple-condition-object>;
 
 define constant $format-condition-string-id
   = make(<definition-id>,

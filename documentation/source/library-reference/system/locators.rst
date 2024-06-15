@@ -85,8 +85,8 @@ The locators Module
 
    All errors raised by the locator system should be instances of
    this error.
-   
-   :superclasses: :class:`<format-string-condition>`, :drm:`<error>`
+
+   :superclasses: :drm:`<simple-error>`
 
 
 .. class:: <server-locator>
@@ -94,7 +94,7 @@ The locators Module
    :abstract:
 
    The abstract superclass of  locators for servers.
-   
+
    :superclasses: :class:`<locator>`
 
    :seealso:
