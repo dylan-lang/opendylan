@@ -2823,7 +2823,7 @@ define function write-module
             write-record(stream, #"GCNAME", gc-name);
           end if;
         end method;
-      for (global :: <llvm-global-value> in m.llvm-module-functions)
+      for (global :: <llvm-function> in m.llvm-module-functions)
         if (global.llvm-function-garbage-collector)
           do-gc(global.llvm-function-garbage-collector);
         end if;
