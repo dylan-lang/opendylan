@@ -657,8 +657,10 @@ library doesn’t link directly against any C libraries.)</p>
 </li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">Platforms</span></code> keyword</p>
 <p>Platform-specific LID files should use the <code class="docutils literal notranslate"><span class="pre">Platforms</span></code> keyword to indicate
-which platforms they apply to. This tells the <a class="reference external" href="https://package.opendylan.org/deft/index.html#deft-update">deft update</a> command which
-registry files to create.</p>
+which platforms they apply to. This helps the <a class="reference external" href="https://package.opendylan.org/deft/index.html#deft-update">deft update</a> command decide
+which registry files to create. If there is no <code class="docutils literal notranslate"><span class="pre">Platforms</span></code> keyword
+<code class="docutils literal notranslate"><span class="pre">deft</span></code> assumes the LID file applies to the current platform and creates a
+registry file for its library.</p>
 <div class="table-wrapper docutils container">
 <table class="docutils align-default">
 <thead>

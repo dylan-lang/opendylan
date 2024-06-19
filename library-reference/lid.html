@@ -676,6 +676,38 @@ provide a fuller, less concise description than that given by the
 <section id="open-dylan-s-lid-extensions">
 <h2>Open Dylan’s LID extensions<a class="headerlink" href="#open-dylan-s-lid-extensions" title="Permalink to this heading">¶</a></h2>
 <p>This section contains extensions to LID that Open Dylan supports.</p>
+<section id="tooling-support">
+<h3>Tooling Support<a class="headerlink" href="#tooling-support" title="Permalink to this heading">¶</a></h3>
+<section id="platforms">
+<h4>Platforms<a class="headerlink" href="#platforms" title="Permalink to this heading">¶</a></h4>
+<p>Platform-specific LID files should use the <code class="docutils literal notranslate"><span class="pre">Platforms</span></code> keyword to indicate
+which platforms they apply to. This helps the <a class="reference external" href="https://package.opendylan.org/deft/index.html#deft-update">deft update</a> command decide
+which registry files to create. If there is no <code class="docutils literal notranslate"><span class="pre">Platforms</span></code> keyword <code class="docutils literal notranslate"><span class="pre">deft</span></code>
+assumes the LID file applies to the current platform and creates a registry
+file for its library.</p>
+<p>For example, if you have a library with separate LID files for Windows and Unix
+platforms add this to the Windows LID file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Platforms</span><span class="p">:</span> <span class="n">win32</span>
+</pre></div>
+</div>
+<p>and add this to the Unix LID file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Platforms</span><span class="p">:</span> <span class="n">x86_64</span><span class="o">-</span><span class="n">linux</span>
+           <span class="n">x86_64</span><span class="o">-</span><span class="n">darwin</span>
+           <span class="n">x86_64</span><span class="o">-</span><span class="n">freebsd</span>
+           <span class="n">x86_64</span><span class="o">-</span><span class="n">netbsd</span>
+           <span class="n">x86</span><span class="o">-</span><span class="n">freebsd</span>
+           <span class="n">x86</span><span class="o">-</span><span class="n">linux</span>
+           <span class="n">x86</span><span class="o">-</span><span class="n">netbsd</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We <a class="reference external" href="https://github.com/dylan-lang/deft/issues/3">plan</a> to add
+platform aliases such as “unix” so that it isn’t necessary to list
+all supported Unix platforms.</p>
+</div>
+</section>
+</section>
 <section id="specifying-foreign-files-and-resource-files">
 <h3>Specifying foreign files and resource files<a class="headerlink" href="#specifying-foreign-files-and-resource-files" title="Permalink to this heading">¶</a></h3>
 <p>The following keywords allow you to specify that files of foreign source
@@ -1077,6 +1109,10 @@ resource files can be integrated into a Dylan library:</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#open-dylan-s-lid-extensions">Open Dylan’s LID extensions</a><ul>
+<li><a class="reference internal" href="#tooling-support">Tooling Support</a><ul>
+<li><a class="reference internal" href="#platforms">Platforms</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#specifying-foreign-files-and-resource-files">Specifying foreign files and resource files</a><ul>
 <li><a class="reference internal" href="#c-source-files">C-Source-Files:</a></li>
 <li><a class="reference internal" href="#c-header-files">C-Header-Files:</a></li>
