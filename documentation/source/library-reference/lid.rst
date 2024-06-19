@@ -168,6 +168,38 @@ Open Dylan's LID extensions
 
 This section contains extensions to LID that Open Dylan supports.
 
+Tooling Support
+---------------
+
+Platforms
+^^^^^^^^^
+
+Platform-specific LID files should use the ``Platforms`` keyword to indicate
+which platforms they apply to. This helps the `deft update
+<https://package.opendylan.org/deft/index.html#deft-update>`_ command decide
+which registry files to create. If there is no ``Platforms`` keyword ``deft``
+assumes the LID file applies to the current platform and creates a registry
+file for its library.
+
+For example, if you have a library with separate LID files for Windows and Unix
+platforms add this to the Windows LID file::
+
+  Platforms: win32
+
+and add this to the Unix LID file::
+
+  Platforms: x86_64-linux
+             x86_64-darwin
+             x86_64-freebsd
+             x86_64-netbsd
+             x86-freebsd
+             x86-linux
+             x86-netbsd
+
+.. note:: We `plan <https://github.com/dylan-lang/deft/issues/3>`_ to add
+          platform aliases such as "unix" so that it isn't necessary to list
+          all supported Unix platforms.
+
 Specifying foreign files and resource files
 -------------------------------------------
 
