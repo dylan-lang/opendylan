@@ -190,14 +190,20 @@ define method maybe-rename-temporaries-in-conditional
           (c.environment, <constrain-type>,
            value: to-be-renamed, type: constraint);
       let then-f = c.consequent;
+      let merge-c :: <if-merge> = c.next-computation;
       let changed? = #f;
       rename-temporary!(to-be-renamed, tt-t);
-      for-computations(tc from then-f before c.next-computation)
+      for-computations(tc from then-f before merge-c)
         let now-changed? = rename-temporary-references!(tc, to-be-renamed, tt-t);
         changed? := (changed? | now-changed?);
       end;
+      // The left side of the merge is also part of the consequent
+      if (merge-c.merge-left-value == to-be-renamed)
+        merge-replace-left-value!(merge-c, to-be-renamed, tt-t);
+        changed? := #t;
+      end;
       if (changed?)
-        insert-computation-before!(then-f, tt-c);
+        insert-computation-before-reference!(then-f, tt-c, tt-t);
       else // It's not used in the consequent, so get rid of it.
         remove-user!(to-be-renamed, tt-c);
       end;
