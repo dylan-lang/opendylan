@@ -31,7 +31,7 @@ define sealed domain unlock-stream (<simple-wrapper-stream>);
 define open generic inner-stream
     (wrapper-stream :: <wrapper-stream>) => (stream :: <stream>);
 
-define method inner-stream
+define inline method inner-stream
     (wrapper-stream :: <wrapper-stream>) => (stream :: <stream>)
   wrapper-stream.%inner-stream;
 end method inner-stream;

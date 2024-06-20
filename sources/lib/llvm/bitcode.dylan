@@ -24,6 +24,8 @@ define class <bitcode-stream> (<wrapper-stream>)
   slot bitcode-records :: <object-table> = make(<object-table>);
 end class;
 
+define sealed domain inner-stream (<bitcode-stream>);
+
 define method bitcode-flush
     (stream :: <bitcode-stream>)
  => ();
@@ -346,13 +348,14 @@ end bitcode-block;
 define method stream-record-id
     (stream :: <bitcode-stream>, record :: <symbol>)
  => (id :: <integer>)
-  let record-definition = element(stream.bitcode-records, record, default: #f);
-  if (~record-definition)
+  let record-definition :: false-or(<bitcode-record-definition>)
+    = element(stream.bitcode-records, record, default: #f);
+  if (record-definition)
+    record-definition.record-id
+  else
     error("record %= not defined for this block type", record);
-  end if;
-  record-definition.record-id
+  end if
 end method;
-
 
 /// Abbreviations
 
@@ -491,7 +494,8 @@ end method;
 define method write-abbrev-record
   (stream :: <bitcode-stream>, name :: <symbol>, #rest operands)
  => ();
-  let definition = stream.bitcode-abbrev-definitions[name];
+  let definition :: <bitcode-abbrev-definition>
+    = stream.bitcode-abbrev-definitions[name];
 
   // Output the abbreviation id
   write-abbrev-id(stream, definition.abbrev-id);
@@ -501,7 +505,7 @@ define method write-abbrev-record
   for (value in operands,
        op-index = 0
          then begin
-                let op = ops[op-index];
+                let op :: <abbrev-op> = ops[op-index];
                 select (op.op-kind)
                   #"fixed" =>
                     write-fixed(stream, op.op-data, value);
@@ -511,7 +515,7 @@ define method write-abbrev-record
                     op-index + 1;
                   #"array" =>
                     write-vbr(stream, 6, value.size);
-                    let aop = ops[op-index + 1];
+                    let aop :: <abbrev-op> = ops[op-index + 1];
                     select (aop.op-kind)
                       #"fixed" =>
                         do(curry(write-fixed, stream, aop.op-data), value);

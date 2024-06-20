@@ -60,6 +60,13 @@ Tools
 Library Updates
 ===============
 
+IO
+----
+
+* The performance of several subclasses of :class:`<wrapper-stream>`
+  has been improved by sealing the :func:`inner-stream` method for
+  each subclass.
+
 System
 ------
 

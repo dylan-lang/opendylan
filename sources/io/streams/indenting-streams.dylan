@@ -54,6 +54,7 @@ end;
 
 define sealed domain make(singleton(<indenting-stream>));
 define sealed domain initialize(<indenting-stream>);
+define sealed domain inner-stream(<indenting-stream>);
 
 define constant $spaces :: <byte-string>
   = "                                                                "; // 64

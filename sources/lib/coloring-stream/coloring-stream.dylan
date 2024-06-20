@@ -10,6 +10,7 @@ end class <coloring-stream>;
 
 define sealed domain make(singleton(<coloring-stream>));
 define sealed domain initialize(<coloring-stream>);
+define sealed domain inner-stream(<coloring-stream>);
 
 define sealed method make
     (class == <coloring-stream>, #rest initargs,

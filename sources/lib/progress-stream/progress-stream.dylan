@@ -24,6 +24,8 @@ define sealed method make
   end if
 end method;
 
+define sealed domain inner-stream (<progress-stream>);
+
 define class <dummy-progress-stream> (<progress-stream>)
 end class;
 
