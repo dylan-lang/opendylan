@@ -19,7 +19,6 @@ define library dswank
   use file-source-records;
   use system;
   use registry-projects;
-  //use stack-walker;
   use release-info;
   use dfmc-back-end-implementations;
 end library;
@@ -46,7 +45,6 @@ define module dswank
   use file-system;
   use locators;
   use registry-projects;
-  //use stack-walker;
   use release-info;
   use operating-system;
 end module;
