@@ -26,6 +26,19 @@ Compiler
 * The build rules for unified executables now properly depend on
   copying included run-time libraries such as libunwind.
 
+* Optimizations that allow the type of ``if`` expressions to be more
+  accurately estimated have been improved. For example, in this
+  function:
+
+  .. code-block::
+
+    define function if-example (arg :: false-or(<integer>)) => (result :: <integer>);
+      min(arg | 20, 30)
+    end;
+
+  the comparison can now be properly inlined because the first
+  argument to :drm:`min` is known to be an :drm:`<integer>`.
+
 Tools
 =====
 
