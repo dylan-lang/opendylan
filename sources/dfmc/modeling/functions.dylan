@@ -1634,8 +1634,8 @@ define concrete-engine-node-initialization <simple-call-site-cache-header-engine
 end concrete-engine-node-initialization;
 
 define primary &class <profiling-call-site-cache-header-engine-node> (<cache-header-engine-node>)
-  &slot profiling-call-site-cache-header-engine-node-count-1;
-  &slot profiling-call-site-cache-header-engine-node-count-2;
+  raw &slot profiling-call-site-cache-header-engine-node-count-1 :: <raw-machine-word>;
+  raw &slot profiling-call-site-cache-header-engine-node-count-2 :: <raw-machine-word>;
   &slot profiling-call-site-cache-header-engine-node-id;
   &slot profiling-call-site-cache-header-engine-node-library;
   slot  profiling-call-site-cache-header-engine-node-call;

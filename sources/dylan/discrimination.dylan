@@ -699,10 +699,10 @@ define function compute-terminal-engine-node (ds :: <dispatch-state>)
       = bootstrap-typed-allocate-engine-node(<profiling-call-site-cache-header-engine-node>,
                                              engine-node$k-profiling-cache-header,
                                              0);
-    primitive-initialize-discriminator(new);
+    cache-header-engine-node-parent(new) := parent;
+    primitive-initialize-engine-node(new);
     %profile-count-low(new)  := as(<machine-word>, 0);
     %profile-count-high(new) := as(<machine-word>, 0);
-    cache-header-engine-node-parent(new) := parent;
     install-cache-header-engine-node-next(new, ans, %ds-gf(ds));
     new
   else

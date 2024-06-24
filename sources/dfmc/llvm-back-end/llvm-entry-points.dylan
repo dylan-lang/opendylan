@@ -2247,7 +2247,6 @@ define outer cache-header entry-point-descriptor profiling-cache-header
   let engine-cast = op--object-pointer-cast(be, engine, pcschen-class);
 
   // Increment the profiling counter atomically
-  // FIXME declare engine node count fields as <raw-machine-word>
   let rmw-slotptr-type
     = llvm-pointer-to(be, llvm-reference-type(be, dylan-value(#"<raw-machine-word>")));
   let count-1-ptr

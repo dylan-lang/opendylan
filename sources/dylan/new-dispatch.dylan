@@ -722,6 +722,7 @@ define function make-linear-class-keyed-discriminator
   let d :: <linear-class-keyed-discriminator>
     = bootstrap-allocate-repeated-discriminator(code, argnum, extra-bits, table-size, $ckd-empty);
   lckd-index(d) := 0;
+  lckd-hits(d) := 0;
   primitive-initialize-discriminator(d);
   d
 end function;
@@ -791,6 +792,7 @@ define inline function linear-class-key-lookup
           else
             let otherkey = %ckd-ref(d, i);
             if (pointer-id?(otherkey, key))
+              lckd-hits(d) := add-without-overflow(lckd-hits(d), 1);
               %ckd-ref(d, add-without-overflow(i, 1))
             // elseif (pointer-id?(otherkey, $ckd-empty))
             //   default
@@ -1236,6 +1238,7 @@ define function make-linear-singleton-discriminator
   singleton-discriminator-table(d) := v;
   singleton-discriminator-default(d) := $absent-engine-node;
   lsd-index(d)    := 0;
+  lsd-hits(d)     := 0;
   local method loop(i :: <integer>, l :: <list>)
           unless (l == #())
             if (~(i < len)) // @@@@ (i >= len)
@@ -1291,6 +1294,7 @@ define inline function immediate-linear-singleton-discriminator-element
             else
               let k = vector-element(table, i);
               if (pointer-id?(k, key))
+                lsd-hits(d) := add-without-overflow(lsd-hits(d), 1);
                 lsd-index(d) := i;
                 vector-element(table, i + 1)
               else
@@ -1341,6 +1345,7 @@ define inline function value-object-linear-singleton-discriminator-element
             else
               let k = vector-element(table, i);
               if (k ~== $absent-engine-node & k = key)
+                lsd-hits(d) := add-without-overflow(lsd-hits(d), 1);
                 lsd-index(d) := i;
                 vector-element(table, i + 1)
               else

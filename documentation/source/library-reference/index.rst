@@ -25,6 +25,7 @@ Contents:
    collections/index
    coloring-stream/index
    common-dylan/index
+   dispatch-profiler/index
    dood/index
    dylan/index
    io/index

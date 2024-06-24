@@ -77,6 +77,9 @@ System
 Other
 -----
 
+* The :lib:`dispatch-profiler` library is now usable and is
+  documented.
+
 * The obsolete (32-bit x86-only) ``stack-walker`` library was removed.
 
 Contributors

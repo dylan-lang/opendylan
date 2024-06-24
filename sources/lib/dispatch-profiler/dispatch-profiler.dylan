@@ -378,11 +378,6 @@ define method print-dispatch-statistics
      #key library :: false-or(<symbol>), profile-base :: false-or(<string>),
           full? = #t, by-library? = #f, hits-only? = #t, app-results-only? = #f, uncalled-methods? = #f, app-details? = #t)
   let stream   = #f;
-  // HACK: pentium-dw command parser is brain damaged
-  when (profile-base)
-    let end-index = find-key(profile-base, curry(\==, ' ')) | size(profile-base);
-    profile-base := copy-sequence(profile-base, end: end-index);
-  end when;
   local method current-stream (app-stream, library) => (stream)
           if (app-stream & app-stream ~== *standard-output*)
             app-stream
@@ -650,6 +645,24 @@ define method print-dispatch-statistics
     end unless;
   end block;
 end method;
+
+define macro with-dispatch-profiling-report
+  { with-dispatch-profiling-report(#rest ?options:expression)
+      ?:body
+     end }
+  => { block ()
+         clear-dispatch-profiling(%current-library());
+         profile-all-terminal-engine-nodes?() := #t;
+         *dispatch-profiling-enabled?* := #t;
+         ?body
+       cleanup
+         *dispatch-profiling-enabled?* := #f;
+
+         let stats = make-dispatch-statistics(#f);
+         collect-dispatch-statistics(%current-library(), stats);
+         print-dispatch-statistics(stats, ?options);
+       end }
+end macro;
 
 define method enable-call-site-caches-only (library)
   call-site-caches-enabled?()          := #t;

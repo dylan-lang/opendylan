@@ -247,6 +247,7 @@ define macro with-dispatch-walking-type
 
 end macro;
 
+/*
 define macro with-preserved-dispatch-walking-types
 
     { with-preserved-dispatch-walking-types (?dws:expression)
@@ -263,7 +264,7 @@ define macro with-preserved-dispatch-walking-types
       end block }
 
 end macro;
-
+*/
 
 
 define method dispatch-walker
