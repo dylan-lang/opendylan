@@ -360,6 +360,7 @@
 <li class="toctree-l3"><a class="reference internal" href="library-reference/common-dylan/transcendentals.html">The transcendentals Module</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="library-reference/dispatch-profiler/index.html">The DISPATCH-PROFILER library</a></li>
 <li class="toctree-l2"><a class="reference internal" href="library-reference/dood/index.html">The DOOD library</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="library-reference/dylan/index.html">The dylan Library</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of The dylan Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="library-reference/dylan/finalization.html">The finalization Module</a></li>
@@ -3292,6 +3293,10 @@
 </li>
         <li><a href="duim-reference/sheets.html#duim-sheets:duim-sheets:clear-clipboard">clear-clipboard</a>
 </li>
+        <li><a href="library-reference/dispatch-profiler/index.html#dispatch-profiler:dispatch-profiler:clear-dispatch-profiling">clear-dispatch-profiling</a>
+</li>
+        <li><a href="library-reference/dispatch-profiler/index.html#dispatch-profiler:dispatch-profiler:clear-dispatch-statistics!">clear-dispatch-statistics!</a>
+</li>
         <li><a href="library-reference/c-ffi/index.html#c-ffi:c-ffi:clear-memory!">clear-memory!</a>
 </li>
         <li><a href="duim-reference/frames.html#duim:duim-frames:clear-progress-note">clear-progress-note</a>
@@ -3323,6 +3328,8 @@
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="library-reference/collections/collectors.html#collections:collectors:collect">collect</a>
+</li>
+        <li><a href="library-reference/dispatch-profiler/index.html#dispatch-profiler:dispatch-profiler:collect-dispatch-statistics">collect-dispatch-statistics</a>
 </li>
         <li><a href="library-reference/collections/collectors.html#collections:collectors:collect-first">collect-first</a>
 </li>
@@ -3833,6 +3840,8 @@
           <li><a href="getting-started-ide/debug.html#index-22">stepping commands</a>
 </li>
         </ul></li>
+        <li><a href="library-reference/dispatch-profiler/index.html#dispatch-profiler:dispatch-profiler:decache-all-generics">decache-all-generics</a>
+</li>
         <li><a href="library-reference/system/date.html#system:date:decode-date">decode-date</a>
 </li>
         <li><a href="library-reference/system/date.html#system:date:decode-duration">decode-duration</a>
@@ -4158,10 +4167,10 @@
 </li>
         <li><a href="duim-reference/frames.html#duim:duim-frames:dialog-next-page">dialog-next-page</a>
 </li>
-        <li><a href="duim-reference/frames.html#duim:duim-frames:dialog-next-page-setter">dialog-next-page-setter</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="duim-reference/frames.html#duim:duim-frames:dialog-next-page-setter">dialog-next-page-setter</a>
+</li>
         <li><a href="duim-reference/frames.html#duim:duim-frames:dialog-page-changed-callback">dialog-page-changed-callback</a>
 </li>
         <li><a href="duim-reference/frames.html#duim:duim-frames:dialog-page-changed-callback-setter">dialog-page-changed-callback-setter</a>
@@ -4662,6 +4671,10 @@
 </li>
         <li><a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:enable-breakpoint">enable-breakpoint</a>
 </li>
+        <li><a href="library-reference/dispatch-profiler/index.html#dispatch-profiler:dispatch-profiler:enable-call-site-caches-only">enable-call-site-caches-only</a>
+</li>
+        <li><a href="library-reference/dispatch-profiler/index.html#dispatch-profiler:dispatch-profiler:enable-generic-caches-only">enable-generic-caches-only</a>
+</li>
         <li><a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:enable-read-watchpoint">enable-read-watchpoint</a>
 </li>
         <li><a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:enable-write-watchpoint">enable-write-watchpoint</a>
@@ -4696,6 +4709,8 @@
         <ul>
           <li><a href="library-reference/system/operating-system.html#index-0">COMSPEC</a>
 </li>
+          <li><a href="library-reference/dispatch-profiler/index.html#index-0">OPEN_DYLAN_PROFILE_ALL_CALLS</a>
+</li>
           <li><a href="getting-started-cli/source-registries.html#index-0">OPEN_DYLAN_USER_REGISTRIES</a>, <a href="getting-started-cli/source-registries.html#index-1">[1]</a>, <a href="getting-started-cli/source-registries.html#index-2">[2]</a>, <a href="getting-started-cli/source-registries.html#index-3">[3]</a>
 </li>
           <li><a href="download/index.html#index-0">PATH</a>
@@ -4705,12 +4720,12 @@
 </li>
         <li><a href="library-reference/system/operating-system.html#system:operating-system:environment-variable">environment-variable</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="library-reference/system/operating-system.html#system:operating-system:environment-variable-setter">environment-variable-setter</a>
 </li>
         <li><a href="library-reference/c-ffi/index.html#c-ffi:c-ffi:equal-memory?">equal-memory?</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="library-reference/win32/index.html#index-13">error messages</a>
 </li>
         <li><a href="duim-reference/geom.html#duim-geometry:duim-geometry:even-scaling-transform?">even-scaling-transform?</a>
@@ -6186,6 +6201,8 @@
 </li>
         <li><a href="duim-reference/dcs.html#duim-dcs:duim-dcs:make-device-font">make-device-font</a>
 </li>
+        <li><a href="library-reference/dispatch-profiler/index.html#dispatch-profiler:dispatch-profiler:make-dispatch-statistics">make-dispatch-statistics</a>
+</li>
         <li><a href="duim-reference/ext-geom.html#duim-extended-geometry:duim-extended-geometry:make-ellipse">make-ellipse</a>
 </li>
         <li><a href="duim-reference/ext-geom.html#duim-extended-geometry:duim-extended-geometry:make-elliptical-arc">make-elliptical-arc</a>
@@ -6275,10 +6292,10 @@
 </li>
         <li><a href="duim-reference/sheets.html#duim-sheets:duim-sheets:medium-background">medium-background</a>
 </li>
-        <li><a href="duim-reference/sheets.html#duim-sheets:duim-sheets:medium-background-setter">medium-background-setter</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="duim-reference/sheets.html#duim-sheets:duim-sheets:medium-background-setter">medium-background-setter</a>
+</li>
         <li><a href="duim-reference/sheets.html#duim-sheets:duim-sheets:medium-brush">medium-brush</a>
 </li>
         <li><a href="duim-reference/sheets.html#duim-sheets:duim-sheets:medium-brush-setter">medium-brush-setter</a>
@@ -6602,6 +6619,8 @@
         <li><a href="duim-reference/sheets.html#duim-sheets:duim-sheets:open-clipboard">open-clipboard</a>
 </li>
         <li><a href="library-reference/system/locators.html#system:locators:open-locator">open-locator</a>
+</li>
+        <li><a href="library-reference/dispatch-profiler/index.html#index-0">OPEN_DYLAN_PROFILE_ALL_CALLS</a>
 </li>
         <li><a href="getting-started-cli/source-registries.html#index-0">OPEN_DYLAN_USER_REGISTRIES</a>, <a href="getting-started-cli/source-registries.html#index-1">[1]</a>, <a href="getting-started-cli/source-registries.html#index-2">[2]</a>, <a href="getting-started-cli/source-registries.html#index-3">[3]</a>
 </li>
@@ -7003,10 +7022,10 @@
 </li>
         <li><a href="library-reference/dylan/primitives.html#dylan:dylan-primitives:primitive-release-all-notification">primitive-release-all-notification</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="library-reference/dylan/primitives.html#dylan:dylan-primitives:primitive-release-notification">primitive-release-notification</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="library-reference/dylan/primitives.html#dylan:dylan-primitives:primitive-release-recursive-lock">primitive-release-recursive-lock</a>
 </li>
         <li><a href="library-reference/dylan/primitives.html#dylan:dylan-primitives:primitive-release-semaphore">primitive-release-semaphore</a>
@@ -7192,6 +7211,8 @@
         <li><a href="library-reference/dylan/primitives.html#c.primitive_xep_apply">primitive_xep_apply (C function)</a>
 </li>
         <li><a href="library-reference/io/print.html#io:print:print">print</a>
+</li>
+        <li><a href="library-reference/dispatch-profiler/index.html#dispatch-profiler:dispatch-profiler:print-dispatch-statistics">print-dispatch-statistics</a>
 </li>
         <li><a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:print-dylan-object">print-dylan-object</a>
 </li>
@@ -8976,6 +8997,8 @@
         <li><a href="library-reference/sql/index.html#sql:sql:with-database">with-database</a>
 </li>
         <li><a href="library-reference/sql/index.html#sql:sql:with-dbms">with-dbms</a>
+</li>
+        <li><a href="library-reference/dispatch-profiler/index.html#dispatch-profiler:dispatch-profiler:with-dispatch-profiling-report">with-dispatch-profiling-report</a>
 </li>
         <li><a href="duim-reference/sheets.html#duim-sheets:duim-sheets:with-drawing-options">with-drawing-options</a>
 </li>
