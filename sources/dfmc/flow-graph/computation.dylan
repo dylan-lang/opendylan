@@ -51,12 +51,12 @@ define abstract dood-class <computation> (<queueable-item-mixin>)
     reinit-expression: #f;
 end dood-class <computation>;
 
-define method environment (c :: <computation>)
+define sealed inline method environment (c :: <computation>)
  => (res :: false-or(<lambda-lexical-environment>))
   c.%environment
 end;
 
-define method environment-setter
+define sealed method environment-setter
     (e :: false-or(<lambda-lexical-environment>), c :: <computation>)
  => (res :: false-or(<lambda-lexical-environment>))
   if (slot-initialized?(c, %environment) & (c.environment ~= e))
