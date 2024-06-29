@@ -276,6 +276,20 @@ define test issue-1455 ()
   check-true("no other values were returned", empty?(more));
 end;
 
+define test issue-1523 ()
+  // Loop merge for a can be eliminated as dead code
+  let value
+    = iterate loop (a = #f, b = 1)
+        if (b == 3)
+          b
+        else
+          loop(b, b + 1)
+        end
+      end;
+  check-equal("Loop with dead iteration variables executes properly",
+              value, 3);
+end;
+
 define suite dylan-regressions-test-suite ()
   test bug-2766;
   test bug-5800;
@@ -299,4 +313,5 @@ define suite dylan-regressions-test-suite ()
   test issue-1091;
   test issue-1095;
   test issue-1455;
+  test issue-1523;
 end suite;
