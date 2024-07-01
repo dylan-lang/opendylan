@@ -436,6 +436,14 @@ define method delete-computation! (c :: <unwind-protect>) => ();
   remove-computation-references!(c);
 end method;
 
+define method delete-computation! (c :: <loop-merge>) => ();
+  let loop :: <loop> = c.loop-merge-loop;
+  loop.loop-merges := remove!(loop.loop-merges, c);
+  let loop-call :: <loop-call> = c.loop-merge-call;
+  loop-call.loop-call-merges := remove!(loop-call.loop-call-merges, c);
+  next-method();
+end method;
+
 //// multiple computation interfaces
 
 define method insert-computations-after!
