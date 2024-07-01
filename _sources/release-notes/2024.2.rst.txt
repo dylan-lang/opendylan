@@ -39,6 +39,9 @@ Compiler
   the comparison can now be properly inlined because the first
   argument to :drm:`min` is known to be an :drm:`<integer>`.
 
+* `Issue 1523 <https://github.com/dylan-lang/opendylan/issues/1523>`_, which
+  could result in a compiler abort during code generation, has been fixed.
+
 Tools
 =====
 
