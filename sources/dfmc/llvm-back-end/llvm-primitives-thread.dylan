@@ -62,7 +62,28 @@ end method;
 
 // The current TEB (on platforms that support thread-local variables),
 // or the TEB of the initial thread (on platforms without TLV support).
-define thread-local runtime-variable %teb :: <teb> = #f;
+define thread-local runtime-variable %teb :: <teb>
+  = begin
+      let members
+        = map(method (member :: <raw-aggregate-member>)
+                let member-type = llvm-aggregate-member-type(be, member);
+                select (member.member-name)
+                  #"teb-thread-local-variables" => // Initialize to #[]
+                    let empty-vector
+                      = emit-reference(be, be.llvm-builder-module,
+                                       dylan-value(#"%empty-vector"));
+                    make(<llvm-cast-constant>, operator: #"BITCAST",
+                         type: member-type,
+                         operands: vector(empty-vector));
+                  otherwise =>
+                    make(<llvm-null-constant>, type: member-type);
+                end select
+              end,
+              be.llvm-teb-struct-type.raw-aggregate-members);
+      make(<llvm-aggregate-constant>,
+           type: llvm-reference-type(be, be.llvm-teb-struct-type),
+           aggregate-values: members)
+    end;
 
 // %teb-tlv-index is the variable which contains the handle for the
 // Windows TLV/pthreads key which holds the TEB for each thread on platforms
