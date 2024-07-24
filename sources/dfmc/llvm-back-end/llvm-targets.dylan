@@ -310,6 +310,12 @@ end method;
 
 /// LLVM Thread-local storage platform support
 
+define method llvm-runtime-thread-local-support?
+    (back-end :: <llvm-back-end>)
+ => (support? :: <boolean>)
+  #t
+end method;
+
 define method llvm-thread-local-support?
     (back-end :: <llvm-back-end>)
  => (support? :: <boolean>)

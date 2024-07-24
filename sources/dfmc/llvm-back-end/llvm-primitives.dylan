@@ -745,7 +745,7 @@ define method llvm-runtime-variable
     let attributes = descriptor.runtime-variable-attributes;
     let thread-local?
       = member?(#"thread-local", attributes)
-      & llvm-thread-local-support?(back-end);
+      & llvm-runtime-thread-local-support?(back-end);
     let section
       = llvm-section-name(back-end, descriptor.runtime-variable-section,
                           thread-local?: thread-local?);
