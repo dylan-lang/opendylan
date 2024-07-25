@@ -278,17 +278,101 @@ define method op--initialize-thread-variables
   ins--block(back-end, common-bb);
 end method;
 
+define side-effecting stateful dynamic-extent auxiliary &runtime-primitive-descriptor primitive-expand-thread-local-variables
+    (old-tlv-vector :: <simple-object-vector>, old-tlv-size :: <raw-integer>)
+ => (tlv-vector :: <simple-object-vector>);
+  let word-size = back-end-word-size(be);
+  let m = be.llvm-builder-module;
+
+  let cursor
+    = ins--load(be, llvm-runtime-variable(be, m, %tlv-initializations-cursor-descriptor),
+                alignment: word-size);
+  let new-tlv = op--allocate-vector(be, cursor);
+
+  // Copy elements of the old TLV vector into the new one
+  let sov-class :: <&class> = dylan-value(#"<simple-object-vector>");
+  let new-tlv-cast
+    = op--object-pointer-cast(be, new-tlv, sov-class);
+  begin
+    let dst-slot-ptr
+      = op--getslotptr(be, new-tlv-cast, sov-class, #"vector-element");
+    let dst-byte-ptr = ins--bitcast(be, dst-slot-ptr, $llvm-i8*-type);
+
+    let old-tlv-cast = op--object-pointer-cast(be, old-tlv-vector, sov-class);
+    let src-slot-ptr
+      = op--getslotptr(be, old-tlv-cast, sov-class, #"vector-element");
+    let src-byte-ptr = ins--bitcast(be, src-slot-ptr, $llvm-i8*-type);
+
+    let old-tlv-byte-size = ins--mul(be, old-tlv-size, word-size);
+    op--memcpy(be, dst-byte-ptr, src-byte-ptr, old-tlv-byte-size, $llvm-false,
+               dst-alignment: word-size, src-alignment: word-size);
+  end;
+
+  // Copy remaining elements from the initializations vector
+  let initializations
+    = ins--load(be, llvm-runtime-variable(be, m, %tlv-initializations-descriptor),
+                alignment: word-size);
+  let initializations-cast = op--object-pointer-cast(be, initializations, sov-class);
+  begin
+    let dst-slot-ptr
+      = op--getslotptr(be, new-tlv-cast, sov-class, #"vector-element", old-tlv-size);
+    let dst-byte-ptr = ins--bitcast(be, dst-slot-ptr, $llvm-i8*-type);
+
+    let src-slot-ptr
+      = op--getslotptr(be, initializations-cast, sov-class, #"vector-element", old-tlv-size);
+    let src-byte-ptr = ins--bitcast(be, src-slot-ptr, $llvm-i8*-type);
+
+    let remaining-size = ins--sub(be, cursor, old-tlv-size);
+    let remaining-byte-size = ins--mul(be, remaining-size, word-size);
+    op--memcpy(be, dst-byte-ptr, src-byte-ptr, remaining-byte-size, $llvm-false,
+               dst-alignment: word-size, src-alignment: word-size);
+  end;
+
+  new-tlv
+end;
+
 define side-effecting stateful indefinite-extent &c-primitive-descriptor primitive-allocate-thread-variable
     (initial-value :: <object>) => (handle :: <raw-pointer>);
 
-define side-effect-free dynamic-extent stateless &unimplemented-primitive-descriptor primitive-read-thread-variable
+define method op--tlv-vector
+    (back-end :: <llvm-back-end>, index :: <llvm-value>)
+ => (tlv-vector :: <llvm-value>);
+  let word-size = back-end-word-size(back-end);
+
+  let tlv-slot
+    = op--teb-getelementptr(back-end, #"teb-thread-local-variables");
+  let tlv-vector = ins--load(back-end, tlv-slot, alignment: word-size);
+  let tlv-vector-cast
+    = op--object-pointer-cast(back-end, tlv-vector, #"<simple-object-vector>");
+  let tlv-vector-size
+    = call-primitive(back-end, primitive-vector-size-descriptor,
+                     tlv-vector-cast);
+  ins--if(back-end, ins--icmp-ult(back-end, index, tlv-vector-size))
+    // This thread's vector already has this entry
+    tlv-vector-cast
+  ins--else
+    // Expand this thread's vector with missing initializations
+    let new-tlv
+      = call-primitive(back-end, primitive-expand-thread-local-variables-descriptor,
+                       tlv-vector, tlv-vector-size);
+    ins--store(back-end, new-tlv, tlv-slot, alignment: word-size);
+    op--object-pointer-cast(back-end, new-tlv, #"<simple-object-vector>")
+  end ins--if
+end method;
+
+define side-effect-free dynamic-extent stateless &primitive-descriptor primitive-read-thread-variable
     (handle :: <raw-pointer>) => (value :: <object>);
-  //---*** Fill this in...
+  let index = ins--ptrtoint(be, handle, be.%type-table["iWord"]);
+  let tlv-vector = op--tlv-vector(be, index);
+  call-primitive(be, primitive-vector-element-descriptor, tlv-vector, index)
 end;
 
-define side-effecting stateless dynamic-extent &unimplemented-primitive-descriptor primitive-write-thread-variable
+define side-effecting stateless dynamic-extent &primitive-descriptor primitive-write-thread-variable
     (handle :: <raw-pointer>, newval :: <object>) => (newval);
-  //---*** Fill this in...
+  let index = ins--ptrtoint(be, handle, be.%type-table["iWord"]);
+  let tlv-vector = op--tlv-vector(be, index);
+  call-primitive(be, primitive-vector-element-setter-descriptor,
+                 newval, tlv-vector, index)
 end;
 
 define side-effecting stateful dynamic-extent &c-primitive-descriptor primitive-initialize-current-thread

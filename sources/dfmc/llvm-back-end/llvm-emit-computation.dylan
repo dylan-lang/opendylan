@@ -668,18 +668,18 @@ define method emit-computation
   let global = llvm-builder-global(back-end, name);
   llvm-constrain-type(global.llvm-value-type,
 		      llvm-pointer-to(back-end, $llvm-object-pointer-type));
-  let value = ins--load(back-end, global);
   let result
     = if (c.referenced-binding.binding-thread?)
         if (llvm-thread-local-support?(back-end))
           op--initialize-thread-variables(back-end);
-          value
+          ins--load(back-end, global)
         else
+          let handle = ins--load(back-end, global);
           call-primitive(back-end, primitive-read-thread-variable-descriptor,
-                         value)
+                         handle)
         end if
       else
-	value
+	ins--load(back-end, global)
       end if;
   computation-result(back-end, c, result);
 end method;
