@@ -18,6 +18,8 @@
 #  include <gc/gc.h>
 #endif
 
+#define USE_NATIVE_TLV
+
 /* Error codes returned by the primitives. These correspond to the codes
  *  defined in dylan/return-codes.dylan
  */
@@ -127,17 +129,13 @@ void primitive_initialize_thread_variables(void)
   // and register them as GC roots
   pthread_mutex_lock(&tlv_initializations_lock);
 
+  // Ensure that the TEB is registered
+  char *range_start = (char *) &Pteb, *range_end = (char *) (&Pteb + 1);
+
+#ifdef USE_NATIVE_TLV
   struct KLsimple_object_vectorGVKd *initializations
     = (struct KLsimple_object_vectorGVKd *) Ptlv_initializations;
   DSINT size = Ptlv_initializations_cursor;
-
-  char *range_start = NULL, *range_end = NULL;
-
-  // Ensure that the TEB is registered
-  if (Ptlv_initializations_local_cursor == 0) {
-    range_start = (char *) &Pteb;
-    range_end = (char *) (&Pteb + 1);
-  }
 
   // Locate each TLV, initialize it, and register it as (part of a
   // range of) GC roots
@@ -161,11 +159,12 @@ void primitive_initialize_thread_variables(void)
       range_end = (char *) (tlv + 1);
     }
   }
+  Ptlv_initializations_local_cursor = size;
+#endif
 
 #if defined(GC_USE_BOEHM)
   GC_add_roots(range_start, range_end);
 #endif
-  Ptlv_initializations_local_cursor = size;
 
   pthread_mutex_unlock(&tlv_initializations_lock);
 }
@@ -175,12 +174,13 @@ void deinitialize_thread_variables(void)
   // Deregister TLV areas as GC roots
   pthread_mutex_lock(&tlv_initializations_lock);
 
+  // Ensure that the TEB is deregistered
+  char *range_start = (char *) &Pteb, *range_end = (char *) (&Pteb + 1);
+
+#ifdef USE_NATIVE_TLV
   struct KLsimple_object_vectorGVKd *initializations
     = (struct KLsimple_object_vectorGVKd *) Ptlv_initializations;
   DSINT size = Ptlv_initializations_cursor;
-
-  // Ensure that the TEB is deregistered
-  char *range_start = (char *) &Pteb, *range_end = (char *) (&Pteb + 1);
 
   // Locate each TLV and deregister it as (part of a range of) GC
   // roots
@@ -201,6 +201,7 @@ void deinitialize_thread_variables(void)
       range_end = (char *) (tlv + 1);
     }
   }
+#endif
 
 #if defined(GC_USE_BOEHM)
   GC_remove_roots(range_start, range_end);
@@ -208,6 +209,36 @@ void deinitialize_thread_variables(void)
 
   pthread_mutex_unlock(&tlv_initializations_lock);
 }
+
+#ifndef USE_NATIVE_TLV
+
+D primitive_allocate_thread_variable(dylan_value value)
+{
+  pthread_mutex_lock(&tlv_initializations_lock);
+
+  // Add the value to %tlv-initializations
+  struct KLsimple_object_vectorGVKd *initializations
+    = (struct KLsimple_object_vectorGVKd *) Ptlv_initializations;
+  DSINT size = ((intptr_t) initializations->size) >> 2;
+
+  DSINT new_size = Ptlv_initializations_cursor + 1;
+  if (new_size > size) {
+    Ptlv_initializations
+      = primitive_grow_vector(Ptlv_initializations, 32);
+    initializations
+      = (struct KLsimple_object_vectorGVKd *) Ptlv_initializations;
+  }
+
+  DSINT handle = Ptlv_initializations_cursor;
+  initializations->vector_element[Ptlv_initializations_cursor++] = value;
+
+  pthread_mutex_unlock(&tlv_initializations_lock);
+
+  // Return the offset into the TLV vector (an integer, not a pointer)
+  return (D) handle;
+}
+
+#endif
 
 
 /// Thread operations
