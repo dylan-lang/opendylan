@@ -319,7 +319,7 @@ end method;
 define method llvm-thread-local-support?
     (back-end :: <llvm-back-end>)
  => (support? :: <boolean>)
-  #t
+  #f
 end method;
 
 define method llvm-thread-local-support?

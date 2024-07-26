@@ -18,7 +18,7 @@
 #  include <gc/gc.h>
 #endif
 
-#define USE_NATIVE_TLV
+//#define USE_NATIVE_TLV
 
 /* Error codes returned by the primitives. These correspond to the codes
  *  defined in dylan/return-codes.dylan
