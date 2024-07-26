@@ -26,33 +26,40 @@ define method emit-all (back-end :: <llvm-back-end>,
       back-end.llvm-back-end-dbg-compile-unit
         := llvm-compilation-record-dbg-compile-unit(back-end, cr);
 
-      // Install type definitions
-      llvm-register-types(back-end, m);
+      let current-library-mode
+        = current-library-description().library-description-compilation-mode;
+      let loose-mode? = current-library-mode == #"loose";
+      let interactive-mode? = current-library-mode == #"interactive";
+      dynamic-bind (*loose-mode?* = loose-mode?,
+                    *interactive-mode?* = interactive-mode?)
+        // Install type definitions
+        llvm-register-types(back-end, m);
 
-      // Items to emit from this compilation record
-      let heap = cr.compilation-record-model-heap;
-      let literals = heap.heap-defined-object-sequence;
+        // Items to emit from this compilation record
+        let heap = cr.compilation-record-model-heap;
+        let literals = heap.heap-defined-object-sequence;
 
-      // Output DFM files
-      if (dfm-output?)
-        emit-all-dfm(back-end, cr, flags);
-      end if;
+        // Output DFM files
+        if (dfm-output?)
+          emit-all-dfm(back-end, cr, flags);
+        end if;
 
-      // Emit code
-      for (literal in literals)
-        emit-code(back-end, m, literal);
-      end for;
-
-      with-labeling-from-dynamic
-        for (code in heap.heap-root-system-init-code)
-          emit-code(back-end, m, code.^iep, init?: #t);
+        // Emit code
+        for (literal in literals)
+          emit-code(back-end, m, literal);
         end for;
-        for (code in heap.heap-root-init-code)
-          emit-code(back-end, m, code.^iep, init?: #t);
-        end for;
-      end;
 
-      retract-local-methods-in-heap(heap);
+        with-labeling-from-dynamic
+          for (code in heap.heap-root-system-init-code)
+            emit-code(back-end, m, code.^iep, init?: #t);
+          end for;
+          for (code in heap.heap-root-init-code)
+            emit-code(back-end, m, code.^iep, init?: #t);
+          end for;
+        end;
+
+        retract-local-methods-in-heap(heap);
+      end dynamic-bind;
     cleanup
       remove-all-keys!(back-end.%dbg-type-table);
       remove-all-keys!(back-end.%lambda-dbg-function-table);
