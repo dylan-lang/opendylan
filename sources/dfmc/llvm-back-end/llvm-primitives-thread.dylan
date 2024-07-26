@@ -99,7 +99,15 @@ define runtime-variable %teb-chain :: <raw-address>
 define method op--teb
     (be :: <llvm-back-end>) => (teb :: <llvm-value>);
   let module = be.llvm-builder-module;
-  llvm-runtime-variable(be, module, %teb-descriptor)
+  let teb-var = llvm-runtime-variable(be, module, %teb-descriptor);
+  if (*interactive-mode?*)
+    // The interactive downloader currently can't handle linking
+    // thread-local storage, so we emit a call to the run-time
+    let tebp = call-primitive(be, dylan-teb-descriptor);
+    ins--bitcast(be, tebp, teb-var.llvm-value-type)
+  else
+    teb-var
+  end if
 end method;
 
 define method op--teb
