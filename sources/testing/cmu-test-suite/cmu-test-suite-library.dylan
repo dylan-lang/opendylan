@@ -12,7 +12,6 @@ define module dylan-test
   use simple-profiling;
 
   use dispatch-engine;
-  use dylan-incremental;
   use dylan-extensions;
 //  use debug-dispatch;
 end;
