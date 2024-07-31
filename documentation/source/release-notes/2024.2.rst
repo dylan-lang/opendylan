@@ -63,6 +63,12 @@ Tools
 Library Updates
 ===============
 
+Dylan
+-----
+
+* The return value of :drm:`push-last` on :drm:`<deque>` now matches
+  that specified in the Dylan Reference Manual.
+
 IO
 ----
 
