@@ -62,6 +62,22 @@ define test test-<deque> ()
     test-collection-class(<deque>, instantiable?: #t);
 end;
 
+define test test-<deque>-functions ()
+  let d = make-test-instance(<deque>);
+  for (i from 5 to 1 by -1)
+    check-equal("push returns new value", i, push(d, i));
+  end for;
+  for (i from 6 to 10)
+    check-equal("push-last returns new value", i, push-last(d, i));
+  end for;
+  check-equal("first pop is last item inserted at start", 1, pop(d));
+  check-equal("first pop-last is last item inserted at end", 10, pop-last(d));
+  check-true("add! returns <deque> argument", d == add!(d, 1));
+  check-equal("add! added new element to front", 1, pop(d));
+  check-true("remove! returns <deque> argument", d == remove!(d, 9));
+  check-equal("remove! removed final element", 8, pop-last(d));
+end;
+
 define test test-<list> ()
     test-collection-class(<list>, instantiable?: #t);
 end;
@@ -108,6 +124,7 @@ define suite dylan-collections-test-suite ()
   test test-<simple-object-vector>;
   test test-<stretchy-vector>;
   test test-<deque>;
+  test test-<deque>-functions;
   test test-<list>;
   test test-<pair>;
   test test-<empty-list>;
