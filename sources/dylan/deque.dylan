@@ -517,7 +517,7 @@ end method pop;
 //
 
 define sealed inline method trusted-push-last
-    (deque :: <object-deque>, new-element) => (result :: <deque>)
+    (deque :: <object-deque>, new-element) => (new-element)
   let rep = deque.representation;
   let rep-last-index = rep.last-index;
   while (rep-last-index = (rep.size - 1))
@@ -529,13 +529,13 @@ define sealed inline method trusted-push-last
   end while;
   rep.last-index := rep-last-index := rep-last-index + 1;
   island-deque-element(rep, rep-last-index) := new-element;
-  deque
+  new-element
 end method trusted-push-last;
 
 define sealed method push-last
-    (deque :: <object-deque>, new-element) => (result :: <deque>)
+    (deque :: <object-deque>, new-element) => (new-element)
   check-type(new-element, element-type(deque));
-  trusted-push-last(deque, new-element);
+  trusted-push-last(deque, new-element)
 end method push-last;
 
 
