@@ -837,8 +837,9 @@ define method hex-escape-character
     (source-location :: <lexer-source-location>, start :: <integer>)
  => (char :: <character>, end-pos :: <integer>)
   let (code, epos)
-    = parse-integer(source-location, radix: 16, start: start,
-                    stop-at-non-digit?: #t);
+    = parse-integer(source-location,
+                    source-location.source-location-record.contents,
+                    radix: 16, start: start, stop-at-non-digit?: #t);
   if (code > $max-lexer-code)
     note(<character-code-too-large>,
          source-location:
@@ -853,150 +854,162 @@ define method hex-escape-character
   end
 end method hex-escape-character;
 
-// Convert a string literal to its internal representation by processing escape
-// codes and line endings. Canonicalize CRLF and CR to a single LF.  Works for
-// both one-line and multi-line strings because the lexer state transitions
-// disallow CR and LF in one-line strings in the first place. If escapes? is
-// true, process escape codes.
+// Convert a string literal to its internal representation by removing the prefix (if
+// any), processing escape codes if escapes? is true, and canonicalizing line endings to
+// just \n.  Works for both one-line and multi-line strings because the lexer state
+// transitions disallow CR and LF in one-line strings in the first place. bpos points to
+// just after the start delimiter (" or """) and epos points to the first character of
+// the end delimiter.
 define method decode-string
     (source-location :: <lexer-source-location>, bpos :: <integer>,
-     epos :: <integer>, escapes? :: <boolean>)
- => (string :: <byte-string>, multi-line? :: <boolean>)
-  let contents = source-location.source-location-record.contents;
-  let multi-line? = #f;
+     epos :: <integer>, escapes? :: <boolean>, triple-quoted? :: <boolean>)
+ => (string :: <byte-string>)
   local
-    method skip-hex-escape (pos)
-      // TODO(cgay): signal better error if '>' not found.
-      if (contents[pos] == as(<integer>, '>'))
-        pos + 1
-      else
-        skip-hex-escape(pos + 1)
-      end
-    end method,
-    method loop (pos :: <integer>, len :: <integer>, prev-was-cr? :: <boolean>,
-                 string :: false-or(<string>))
-             => (len :: <integer>)
-      if (pos >= epos)
-        len
-      else
-        let code = contents[pos];
-        select (code)
-          as(<integer>, '\\') =>
-            if (~escapes?)
-              string & (string[len] := '\\');
-              loop(pos + 1, len + 1, #f, string)
+    method fail (format-string, #rest format-args)
+      note(<invalid-multi-line-string-literal>,
+           source-location: source-location,
+           token-string: extract-string(source-location),
+           detail: apply(format-to-string,
+                         concatenate("invalid multi-line string literal: ",
+                                     format-string),
+                         format-args));
+    end,
+    method whitespace-code? (c)
+      c == $space-code | c == $tab-code
+    end,
+    method find-line-break (seq, bpos, epos)
+      if (bpos < epos)
+        select (seq[bpos])
+          $newline-code =>
+            values(bpos, bpos + 1);
+          $carriage-return-code =>
+            if (bpos + 1 < epos & seq[bpos + 1] == $newline-code)
+              values(bpos, bpos + 2)
             else
-              let escape-char = as(<character>, contents[pos + 1]);
-              let new-position
-                = if (escape-char == '<')
-                    if (string)
-                      let (char, epos)
-                        = hex-escape-character(source-location, pos + 2);
-                      string[len] := char;
-                      epos + 1
-                    else
-                      skip-hex-escape(pos + 2)
-                    end
-                  else
-                    string & (string[len] := escape-character(escape-char));
-                    pos + 2
-                  end;
-              loop(new-position, len + 1, #f, string);
-            end if;
-          as(<integer>, '\r') =>
-            multi-line? := #t;
-            string & (string[len] := '\n');
-            loop(pos + 1, len + 1, #t, string);
-          as(<integer>, '\n') =>
-            multi-line? := #t;
-            let increment = if (prev-was-cr?)
-                              0 // already stored a LF
-                            else
-                              string & (string[len] := '\n');
-                              1
-                            end;
-            loop(pos + 1, len + increment, #f, string);
+              values(bpos, bpos + 1)
+            end;
           otherwise =>
-            string & (string[len] := as(<character>, code));
-            loop(pos + 1, len + 1, #f, string);
-        end select
-      end if
-    end method;
-  let length = loop(bpos, 0, #f, #f);
-  let string = make(<string>, size: length);
-  loop(bpos, 0, #f, string);
-  values(string, multi-line?)
-end method decode-string;
-
-// https://opendylan.org/proposals/dep-0012-string-literals.html#the-rectangle-rule
-//
-// When this is called `string` is known to contain at least one literal newline
-// character, the EOL sequence has already been canonicalized to just '\n', escape
-// sequences have been processed, and the start/end delimiters have been removed.
-define function trim-multi-line-prefix
-    (string :: <string>, source-location) => (maybe-trimmed :: <string>)
-  let lines = split(string, '\n');
-  let junk = first(lines);
-  let prefix = last(lines);
-  if (~empty?(junk) & ~whitespace?(junk))
-    note(<invalid-multi-line-string-literal>,
-         source-location: source-location,
-         token-string: extract-string(source-location),
-         detail:
-           "only whitespace may follow the start delimiter \"\"\" on the same line");
-  end;
-  if (~empty?(prefix) & ~whitespace?(prefix))
-    note(<invalid-multi-line-string-literal>,
-         source-location: source-location,
-         token-string: extract-string(source-location),
-         detail:
-           "only whitespace may precede the end delimiter \"\"\" on the same line");
-  end;
-  local method remove-prefix (line)
-          if (line = "")
-            line
-          elseif (~starts-with?(line, prefix))
-            note(<invalid-multi-line-string-literal>,
-                 source-location: source-location,
-                 token-string: extract-string(source-location),
-                 detail:
-                   format-to-string
-                   ("each line must begin with the same whitespace that precedes the end"
-                      " delimiter (got %=, want %=)",
-                    copy-sequence(line, end: prefix.size), prefix));
-          else
-            copy-sequence(line, start: prefix.size)
-          end
-        end method;
-  select (lines.size)
-    1 => error("compiler bug while trimming multi-line string prefix");
-    2 => "";
-    otherwise =>
-      let keep = copy-sequence(lines, start: 1, end: lines.size - 1);
-      let trimmed = map(remove-prefix, keep);
-      if (every?(empty?, trimmed))
-        // If all lines are empty the last line needs to be handled specially because of
-        // the exceptional case of ``abc\n"""`` (where we don't want the final newline)
-        // vs ``\n\n"""`` (where we do want the final newline).
-        join(concatenate(trimmed, #("")), "\n")
-      else
-        join(trimmed, "\n")
+            find-line-break(seq, bpos + 1, epos);
+        end
       end
-  end select
-end function;
+    end,
+    method remove-prefix (prefix, line)
+      if (~prefix | empty?(prefix))
+        line
+      else
+        for (c in line, p in prefix)
+          if (c ~== p)
+            fail("each line must begin with the same whitespace prefix, got %=, want %=",
+                 as(<string>, line), as(<string>, prefix))
+          end;
+        end;
+        copy-sequence(line, start: prefix.size)
+      end
+    end,
+    // Can't use hex-escape-character because we don't know the correct offset from the
+    // beginning of the literal due to using split/join.
+    method parse-hex-escape (line, start) => (char, epos)
+      let (code, epos)
+        = parse-integer(source-location, line,
+                        radix: 16, start: start, stop-at-non-digit?: #t);
+      assert(epos <= line.size, "epos out of bounds: %d", epos);
+      assert(line[epos] == as(<integer>, '>'),
+             "hex escape must end with '>', got %=", line[epos]);
+      if (code > $max-lexer-code)
+        note(<character-code-too-large>,
+             source-location: record-position-as-location
+               (source-location.source-location-record,
+                source-location.source-location-source-position),
+             token-string: extract-string(source-location));
+        values(0, epos)        // If forced, continue with NUL...
+      else
+        values(code, epos + 1)
+      end
+    end,
+    method process-escapes (line)
+      let len = line.size;
+      let new = make(<stretchy-vector>);
+      iterate loop (pos = 0, escaped? = #f)
+        if (pos >= len)
+          as(<byte-vector>, new)
+        else
+          let code = line[pos];
+          if (escaped?)
+            let new-position
+              = if (code == as(<integer>, '<'))
+                  let (code, epos) = parse-hex-escape(line, pos + 1);
+                  add!(new, code);
+                  epos
+                else
+                  add!(new, as(<integer>, escape-character(as(<character>, code))));
+                  pos + 1
+                end;
+            loop(new-position, #f)
+          elseif (code == $escape-code)
+            loop(pos + 1, #t)
+          else
+            add!(new, code);
+            loop(pos + 1, #f)
+          end
+        end
+      end iterate
+    end,
+    method process-line (prefix, line)
+      if (~empty?(line))
+        if (prefix & ~empty?(prefix))
+          line := remove-prefix(prefix, line);
+        end;
+        if (escapes? & member?($escape-code, line))
+          line := process-escapes(line);
+        end;
+      end;
+      line
+    end;
+  let contents = source-location.source-location-record.contents;
+  let parts = split(contents, find-line-break, start: bpos, end: epos);
+  if (parts.size == 1)
+    as(<string>, process-line(#f, parts[0]))      // e.g., """abc"""
+  else
+    let prefix = parts.last;
+    if (~every?(whitespace-code?, prefix))
+      fail("prefix must be all whitespace, got %=", as(<string>, prefix));
+    end;
+    if (~every?(whitespace-code?, parts.first))
+      fail("only whitespace may follow the open delimiter \"\"\" on the"
+             " same line, got %=", parts.first);
+    end;
+    let parts = map(curry(process-line, prefix), parts);
+    // Deal with this oddity in our spec:
+    // """\n
+    // abc\n            => LF excluded, end is before '\n'
+    // """
+    // """\n
+    // \n               => LF included, end is after '\n'
+    // """
+    as(<string>,
+       join(copy-sequence(parts,
+                          start: 1,
+                          end: if (empty?(parts[parts.size - 2]))
+                                 parts.size
+                               else
+                                 parts.size - 1
+                               end),
+            make(<byte-vector>, size: 1, fill: $newline-code)))
+  end if
+end method decode-string;
 
 // Make a <literal-token> when confronted with the #"foo" syntax.
 // These are referred to as "unique strings" in the DRM Lexical Syntax.
 //
 define method %make-quoted-symbol
     (lexer :: <lexer>, source-location :: <lexer-source-location>,
-     start-offset :: <integer>, end-offset :: <integer>)
+     start-offset :: <integer>, end-offset :: <integer>, multi-line? :: <boolean>)
  => (res :: <symbol-syntax-symbol-fragment>)
   let sym = as(<symbol>,
                decode-string(source-location,
                              source-location.start-posn + start-offset,
                              source-location.end-posn - end-offset,
-                             #t));
+                             #t, multi-line?));
   make(<symbol-syntax-symbol-fragment>,
        record: source-location.source-location-record,
        source-position: source-location.source-location-source-position,
@@ -1004,10 +1017,10 @@ define method %make-quoted-symbol
 end method;
 
 define constant make-quoted-symbol
-  = rcurry(%make-quoted-symbol, 2, 1);
+  = rcurry(%make-quoted-symbol, 2, 1, #f);
 
 define constant make-multi-line-quoted-symbol
-  = rcurry(%make-quoted-symbol, 4, 3);
+  = rcurry(%make-quoted-symbol, 4, 3, #t);
 
 // Make a <literal-token> when confronted with the foo: syntax.
 //
@@ -1035,14 +1048,12 @@ define constant $underscore_code :: <integer> = as(<integer>, '_');
 // Parse and return an integer in the supplied radix.
 //
 define method parse-integer
-    (source-location :: <lexer-source-location>,
+    (source-location :: <lexer-source-location>, contents :: <byte-vector>,
      #key radix :: <integer> = 10,
           start :: <integer> = source-location.start-posn,
           end: finish :: <integer> = source-location.end-posn,
           stop-at-non-digit? = #f)
  => (res :: <abstract-integer>, end-pos :: <integer>)
-  let contents :: <byte-vector>
-    = source-location.source-location-record.contents;
   // We do our working in negative integers to avoid representation
   // overflow until absolutely necessary.
   local method repeat (posn :: <integer>, result :: <abstract-integer>)
@@ -1126,7 +1137,7 @@ define method parse-integer-literal
     end if;
   end if;
 
-  let int = parse-integer(source-location, radix: radix, start: posn);
+  let int = parse-integer(source-location, contents, radix: radix, start: posn);
 
   if (~extended &
         (int < runtime-$minimum-integer
@@ -1175,15 +1186,11 @@ end method make-character-literal;
 define method %make-string-literal
     (lexer :: <lexer>, source-location :: <lexer-source-location>,
      start-offset :: <integer>, end-offset :: <integer>,
-     allow-escapes? :: <boolean>)
+     allow-escapes? :: <boolean>, multi-line? :: <boolean>)
  => (res :: <string-fragment>)
   let bpos = source-location.start-posn + start-offset;
   let epos = source-location.end-posn - end-offset;
-  let (string, multi-line?)
-    = decode-string(source-location, bpos, epos, allow-escapes?);
-  if (multi-line?)
-    string := trim-multi-line-prefix(string, source-location);
-  end;
+  let string = decode-string(source-location, bpos, epos, allow-escapes?, multi-line?);
   make(<string-fragment>,
        record: source-location.source-location-record,
        source-position: source-location.source-location-source-position,
@@ -1192,16 +1199,16 @@ define method %make-string-literal
 end method;
 
 define constant make-string-literal                // "..."
-  = rcurry(%make-string-literal, 1, 1, #t);
+  = rcurry(%make-string-literal, 1, 1, #t, #f);
 
 define constant make-multi-line-string-literal     // """..."""
-  = rcurry(%make-string-literal, 3, 3, #t);
+  = rcurry(%make-string-literal, 3, 3, #t, #t);
 
 define constant make-raw-string-literal            // #r"..."
-  = rcurry(%make-string-literal, 3, 1, #f);
+  = rcurry(%make-string-literal, 3, 1, #f, #f);
 
 define constant make-multi-line-raw-string-literal // #r"""..."""
-  = rcurry(%make-string-literal, 5, 3, #f);
+  = rcurry(%make-string-literal, 5, 3, #f, #t);
 
 define method parse-ratio-literal
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
@@ -1603,6 +1610,7 @@ end method parse-conditional;
 // TODO: CORRECTNESS: Multiplatform newline sequence handling.
 
 define constant $space-code = as(<integer>, ' ');
+define constant $carriage-return-code = as(<integer>, '\r');
 define constant $newline-code = as(<integer>, '\n');
 define constant $tab-code = as(<integer>, '\t');
 

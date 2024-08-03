@@ -2,11 +2,11 @@ Module: dfmc-reader-test-suite
 License: See License.txt in this distribution for details.
 
 define function verify-literal
-    (fragment, value, required-class) => ()
+    (fragment, want-value, required-class) => ()
   assert-instance?(required-class, fragment,
-                   format-to-string("verify-literal for value %=", value));
+                   format-to-string("verify-literal for value %=", want-value));
   if (instance?(fragment, required-class))
-    assert-equal(fragment.fragment-value, value);
+    assert-equal(want-value, fragment.fragment-value);
   end;
 end function;
 
@@ -197,6 +197,7 @@ define test ratio-literal-test ()
   assert-signals(<ratios-not-supported>, read-fragment("1/2"));
 end test ratio-literal-test;
 
+// Define #:string: syntax.
 define function string-parser (s) s end;
 
 define test string-literal-test ()
@@ -210,6 +211,7 @@ define test string-literal-test ()
                  map-as(<string>, char, #('\a', '\b', '\e', '\f', '\n', '\r',
                                           '\t', '\0', '\'', '\"', '\\')),
                  <string-fragment>);
+
   // Basic hex escaping.
   verify-literal(read-fragment(#:string:{"z\<9f>z"}),
                  map-as(<string>, char, #('z', #x9f, 'z')),
@@ -224,71 +226,98 @@ define test string-literal-test ()
   assert-signals(<invalid-token>, read-fragment(#:string:{"\1<b>"}));
 end test;
 
-// verify multi-line string
-define function verify-mls
-    (name, source, want)
-  assert-no-errors(read-fragment(source), "%s - parses without error", name);
-  let frag = read-fragment(source);
-  assert-instance?(<string-fragment>, frag, "%s - is string fragment", name);
-  assert-equal(frag.fragment-value, want, "%s - has expected value", name);
-end function;
-
-define test string-literal-one-line-test ()
-  verify-mls("empty string", #:string:{""""""}, "");
-
+// Note: one line as in one line of source code not as in having no newline characters.
+define test test-triple-quoted-one-line-strings ()
+  let frag0 = read-fragment(#:string:{""""""});
+  expect-equal("", frag0.fragment-value);
   // Make sure the reader didn't stop at the first pair of double quotes...
-  let empty-string-fragment = read-fragment(#:string:{""""""});
   assert-equal(#:string:{""""""},
-               source-location-string(fragment-source-location(empty-string-fragment)),
+               source-location-string(fragment-source-location(frag0)),
                "entire empty string consumed");
-
-  verify-mls("simple abc",
-             #:string:{"""abc"""},  "abc");
-  verify-mls("abc with spaces",
-             #:string:{""" abc """},  " abc ");
+  let frag1 = read-fragment(#:string:{"""abc"""});
+  assert-equal("abc", frag1.fragment-value);
+  let frag2 = read-fragment(#:string:{""" abc """});
+  assert-equal(" abc ", frag2.fragment-value);
+  let frag3 = read-fragment(#:string:{"""abc\ndef"""});
+  assert-equal("abc\ndef", frag3.fragment-value);
 end test;
 
-define test string-literal-multi-line-test ()
-  verify-mls("multi-line empty string, no prefix",
-             #:string:{"""
-"""},
-             "");
-  verify-mls("multi-line empty string, with prefix",
-             #:string:{"""
-"""},
-             "");
-  verify-mls("multi-line one blank line, no prefix",
-             #:string:{"""
+define test test-multi-line-string-basics ()
+  let frag1 = read-fragment(#:string:{
+"""
+abc
+"""});
+  assert-equal("abc", frag1.fragment-value);
 
-"""},
-             "\n");
-  verify-mls("leading whitespace relative to end delim retained",
-             #:string:{"""
+  let frag2 = read-fragment(#:string:{
+  """
+  abc
+  """});
+  assert-equal("abc", frag2.fragment-value);
+
+  let frag3 = read-fragment(#:string:{
+"""
+abc
+def
+"""});
+  assert-equal("abc\ndef", frag3.fragment-value);
+
+  let frag4 = read-fragment(#:string:{
+  """
+  abc
+  def
+  """});
+  assert-equal("abc\ndef", frag4.fragment-value);
+
+  let frag5 = read-fragment(#:string:{
+"""
+
+
+
+"""});
+  assert-equal("\n\n\n", frag5.fragment-value);
+end test;
+
+define test test-multi-line-empty-strings ()
+  let frag1 = read-fragment(#:string:{"""
+"""});
+  assert-equal("", frag1.fragment-value, "multi-line empty string, no prefix");
+  let frag2 = read-fragment(#:string:{"""
+                                      """});
+  assert-equal("", frag2.fragment-value, "multi-line empty string, with prefix");
+end test;
+
+define test test-multi-line-string-with-blank-lines ()
+  let frag1 = read-fragment(#:string:{"""
+
+"""});
+  assert-equal("\n", frag1.fragment-value, "blank line, no prefix");
+
+  // Not using #:string: here to avoid having trailing whitespace, which could be removed
+  // by editors.
+  let frag2 = read-fragment("\"\"\"\n  def\n  \n  \"\"\"");
+  assert-equal("def\n\n", frag2.fragment-value, "blank line with prefix");
+end test;
+
+define test test-multi-line-string-whitespace-relative-to-delimiters ()
+  let frag1 = read-fragment(#:string:{"""
   abc
 def
-"""},
-             "  abc\ndef");
-  verify-mls("end delim to right of start delim",
-             #:string:{"""
-                           abc
-                         def
-                         """},
-             "  abc\ndef");
-  verify-mls("whitespace on first line ignored?", // 0x20 = space
-             #:string:{"""\<20>\<20>
-  abc
-def
-"""},
-             "  abc\ndef");
-  // The first blank line below is truly empty and the second one has only the prefix
-  // (written as \<20> to avoid editors removing trailing whitespace).
-  verify-mls("blank lines retained",
-             #:string:{"""
+"""});
+  assert-equal("  abc\ndef", frag1.fragment-value);
+  let frag2 = read-fragment(#:string:{"""
+    xxx
+  yyy
+  """});
+  assert-equal("  xxx\nyyy", frag2.fragment-value);
+end test;
 
-   def
-\<20>\<20>\<20>
-   """},
-             "\ndef\n");
+define test test-multi-line-string-delimiter-rules ()
+  // Whitespace following the opening """ and preceding the first \n should be ignored.
+  // Since editors sometimes remove trailing whitespace we write this using escape
+  // sequences instead of with #:string:.
+  let frag1 = read-fragment("\"\"\"   \n  abc\n  \"\"\"");
+  assert-equal("abc", frag1.fragment-value);
   assert-signals(<invalid-multi-line-string-literal>,
                  read-fragment(#:string:{"""a  (only whitespace allowed after start delim)
 abc
@@ -305,143 +334,56 @@ xxx"""}),
   xxx  (this line not indented enough)
    """}),
                  "prefix mismatch non-white");
-  // Prefix should be "   " but one line has a literal tab in prefix.
-  /* TODO: the literal tab causes a failure due (I presume) to
-           https://github.com/dylan-lang/opendylan/issues/425
-  check-condition("prefix mismatch whitespace",
-                  <error>,
-                  read-fragment("\"\"\"\n   aaa\n \t bbb\n   \"\"\""));
-  */
+end test;
 
+define test test-multi-line-string-eol-handling ()
   // Check that CRLF and CR are converted to LF.
-  verify-mls("eol canonicalized 1",
-             "\"\"\"\na\r\nc\n\"\"\"",
-             "a\nc");
-  verify-mls("eol canonicalized 2",
-             "\"\"\"\na\rc\n\"\"\"",
-             "a\nc");
-  verify-mls("eol canonicalized 3",
-             "\"\"\"\r\na\n\rc\r\n\"\"\"",
-             "a\n\nc");
+  let frag1 = read-fragment("\"\"\"\na\r\nc\n\"\"\"");
+  assert-equal("a\nc", frag1.fragment-value);
+  let frag2 = read-fragment("\"\"\"\na\rc\n\"\"\"");
+  assert-equal("a\nc", frag2.fragment-value);
+  let frag3 = read-fragment("\"\"\"\r\na\n\rc\r\n\"\"\"");
+  assert-equal("a\n\nc", frag3.fragment-value);
+end test;
 
+define test test-multi-line-string-escaping ()
+  let frag1 = read-fragment(#:string:{"""\a\b\e\f\n\r\t\0\'\"\\"""});
+  // https://github.com/dylan-lang/opendylan/issues/425
+  assert-equal(map-as(<string>, identity,
+                      #('\a', '\b', '\e', '\f', '\n', '\r', '\t', '\0', '\'', '\"', '\\')),
+               frag1.fragment-value,
+               "one of each standard escape sequence");
   let char = curry(as, <character>);
-  verify-mls("all escape sequences",
-             #:string:{"""\a\b\e\f\n\r\t\0\'\"\\"""},
-             map-as(<string>, char,
-                    #('\a', '\b', '\e', '\f', '\n', '\r', '\t', '\0', '\'', '\"', '\\')));
-  verify-mls("basic hex escaping",
-             #:string:{"""z\<9f>z"""},
-             map-as(<string>, char, #('z', #x9f, 'z')));
+  let frag2 = read-fragment(#:string:{"""z\<9f>z"""});
+  assert-equal(map-as(<string>, char, #('z', #x9f, 'z')),
+               frag2.fragment-value,
+               "basic hex escaping");
+
   // We can't handle character codes > 255 yet, but the leading zeros shouldn't
   // confuse the reader.
-  verify-mls("hex escape with leading zeros",
-             #:string:{"""z\<009f>z"""},
-             map-as(<string>, char, #('z', #x9f, 'z')));
+  let frag3 = read-fragment(#:string:{"""z\<009f>z"""});
+  assert-equal(map-as(<string>, char, #('z', #x9f, 'z')),
+               frag3.fragment-value,
+               "hex escape with leading zeros");
 
   assert-signals(<invalid-token>,
                  read-fragment(#:string:{"""\1<b>"""}),
                  "invalid escape sequence");
-
-  verify-mls("one line",
-             #:string:{
-"""
-abc
-"""},
-                  "abc");
-  verify-mls("one line with prefix",
-             #:string:{
-  """
-  abc
-  """},
-             "abc");
-  verify-mls("two lines",
-             #:string:{
-"""
-abc
-def
-"""},
-             "abc\ndef");
-  verify-mls("two lines with prefix",
-             #:string:{
-  """
-  abc
-  def
-  """},
-             "abc\ndef");
-  verify-mls("empty line at start",
-             #:string:{
-"""
-
-abc
-"""},
-             "\nabc");
-  verify-mls("two empty lines at start",
-             #:string:{
-"""
-
-
-abc
-"""},
-             "\n\nabc");
-  verify-mls("one empty line",
-             #:string:{
-"""
-
-"""},
-             "\n");
-  verify-mls("one empty line with prefix",
-             #:string:{
-  """
-\<20>\<20>
-  """},
-             "\n");
-  verify-mls("empty line at end",
-             #:string:{
-"""
-abc
-
-"""},
-             "abc\n");
-  verify-mls("two empty lines at end",
-             #:string:{
-"""
-abc
-
-
-"""},
-                  "abc\n\n");
-  verify-mls("empty lines at start and end",
-             #:string:{
-"""
-
-abc
-
-"""},
-             "\nabc\n");
-  verify-mls("two empty lines",
-             #:string:{
-"""
-
-
-"""},
-             "\n\n");
-  verify-mls("three empty lines",
-             #:string:{
-"""
-
-
-
-"""},
-             "\n\n\n");
-  verify-mls("three empty lines at end",
-             #:string:{
-"""
-abc
-
-
-
-"""},
-             "abc\n\n\n");
+  let frag4 = read-fragment(#:string:{"""
+  \nxxx
+  """});
+  assert-equal("\nxxx", frag4.fragment-value,
+               "newline escape sequence, xxx longer than prefix");
+  let frag5 = read-fragment(#:string:{"""
+  \nxx
+  """});
+  assert-equal("\nxx", frag5.fragment-value,
+               "newline escape sequence, xx same length as prefix");
+  let frag6 = read-fragment(#:string:{"""
+  \nx
+  """});
+  assert-equal("\nx", frag6.fragment-value,
+               "Newline escape sequences, x shorter than prefix");
 end test;
 
 define test string-literal-raw-one-line-test ()
@@ -474,10 +416,9 @@ define test string-literal-raw-multi-line-test ()
   verify-literal(read-fragment(#:string:{#r"""a""c"""}), "a\"\"c", <string-fragment>);
 
   // All escape codes ignored?  \ precedes the terminating double quotes to
-  // ensure that it is ignored. We replace the X after the fact, to avoid
-  // confusing Emacs.
+  // ensure that it is ignored.
   let s = #:string:{#r"""\a\b\e\f\n\r\t\0\'\\\<X"""};
-  s[s.size - 4] := '\\';
+  s[s.size - 4] := '\\';        // to avoid confusing emacs
   verify-literal(read-fragment(s),
                  concatenate(#:string:{\a\b\e\f\n\r\t\0\'\\\<}, "\\"),
                  <string-fragment>);
@@ -498,17 +439,17 @@ define test symbol-literal-test ()
   verify-presentation(sym, #:string:{#"a"});
 
   // Literal Newline accepted and preserved?
-  let sym = read-fragment("#\"\"\"a\nb\"\"\"");
+  let sym = read-fragment("#\"\"\"\na\nb\n\"\"\"");
   verify-literal(sym, #"a\nb", <symbol-syntax-symbol-fragment>);
   verify-presentation(sym, "#\"a\nb\"");
 
   // CRLF -> LF?
-  let sym = read-fragment("#\"\"\"c\r\nd\"\"\"");
+  let sym = read-fragment("#\"\"\"\nc\r\nd\n\"\"\"");
   verify-literal(sym, #"c\nd", <symbol-syntax-symbol-fragment>);
   verify-presentation(sym, "#\"c\nd\"");
 
   // CR -> LF?
-  let sym = read-fragment("#\"\"\"e\rf\"\"\"");
+  let sym = read-fragment("#\"\"\"\ne\rf\n\"\"\"");
   verify-literal(sym, #"e\nf", <symbol-syntax-symbol-fragment>);
   verify-presentation(sym, "#\"e\nf\"");
 end test symbol-literal-test;
@@ -546,12 +487,17 @@ define suite literal-test-suite ()
   test octal-integer-literal-test;
   test pair-literal-test;
   test ratio-literal-test;
-  test string-literal-multi-line-test;
-  test string-literal-one-line-test;
   test string-literal-raw-multi-line-test;
   test string-literal-raw-one-line-test;
   test string-literal-test;
   test symbol-literal-test;
   test vector-literal-test;
   test hash-literal-test;
+  test test-multi-line-string-eol-handling;
+  test test-multi-line-string-basics;
+  test test-multi-line-string-escaping;
+  test test-multi-line-string-delimiter-rules;
+  test test-multi-line-string-whitespace-relative-to-delimiters;
+  test test-multi-line-string-with-blank-lines;
+  test test-multi-line-empty-strings;
 end suite literal-test-suite;
