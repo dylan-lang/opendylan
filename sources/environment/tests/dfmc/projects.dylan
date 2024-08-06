@@ -50,29 +50,23 @@ define function test-project-location
   let directory = root-directory();
   let location-name
     = format-to-string
-        ("%s/environment/tests/%s/%s.hdp",
+        ("%s/%s/%s.hdp",
          directory,
          select (name by \=)
-           "environment-test-application" => "test-application";
-           "environment-test-library"     => "test-library";
+           "environment-test-application" => "environment/tests/test-application";
+           "environment-test-library"     => "environment/tests/test-library";
+           "cmu-test-suite"               => "testing/cmu-test-suite";
          end,
          name);
   // format-out("project-location: %=\n", location-name);
   as(<file-locator>, location-name);
 end function test-project-location;
 
-define function open-test-projects () => ()
-  let library = open-project(test-project-location($test-library));
-  open-project-compiler-database
-    (library, error-handler: project-condition-handler);
-  let application = open-project(test-project-location($test-application));
-  open-project-compiler-database
-    (application, error-handler: project-condition-handler);
-
+define function test-project-build (project :: <project-object>, #key link?)
   let progress
     = make(<progress-stream>, inner-stream: *standard-output*);
-  build-project(application,
-                link?: #f,
+  build-project(project,
+                link?: link?,
                 save-databases?: #t,
                 error-handler: project-condition-handler,
                 progress-callback:
@@ -87,6 +81,17 @@ define function open-test-projects () => ()
                     show-progress(progress, position, range, label: label);
                   end);
   new-line(progress);
+end function;
+
+define function open-test-projects () => ()
+  let library = open-project(test-project-location($test-library));
+  open-project-compiler-database
+    (library, error-handler: project-condition-handler);
+  let application = open-project(test-project-location($test-application));
+  open-project-compiler-database
+    (application, error-handler: project-condition-handler);
+
+  test-project-build(application);
 
   unless (open-project-compiler-database
             (library, error-handler: project-condition-handler))
