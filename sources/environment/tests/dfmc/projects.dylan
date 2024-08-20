@@ -126,6 +126,8 @@ define test open-projects-test ()
               environment-object-primitive-name
                 (*test-application*, *test-application*),
               $test-application);
+  check-true("Application project compiled",
+             project-compiled?(*test-application*));
   check-instance?("Library project open",
                   <project-object>, *test-library*);
   check-equal("Library project target type",
@@ -138,6 +140,8 @@ define test open-projects-test ()
               environment-object-primitive-name
                 (*test-library*, *test-library*),
               $test-library);
+  check-true("Library project compiled",
+             project-compiled?(*test-library*));
 end test open-projects-test;
 
 
