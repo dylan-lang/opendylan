@@ -43,6 +43,8 @@ define module build-system
 
     build-system-variable,
 
+    $build-system-makefile-name,
+
     target-platform-name,
 
     default-build-script,

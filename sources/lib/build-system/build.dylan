@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define constant $dylanmakefile  = "dylanmakefile.mkf";
+define constant $build-system-makefile-name = "dylanmakefile.mkf";
 define constant $build-log-file = "build.log";
 define constant $platform-variable = "OPEN_DYLAN_TARGET_PLATFORM";
 define constant $default-platform = $platform-name;
@@ -109,7 +109,7 @@ define method build-system
                          compiler-back-end: compiler-back-end,
                          build-directory: directory);
       with-build-directory (directory)
-        jam-read-mkf(jam, as(<file-locator>, $dylanmakefile));
+        jam-read-mkf(jam, as(<file-locator>, $build-system-makefile-name));
 
         jam-target-build(jam, build-targets,
                          progress-callback: wrap-progress-callback,
