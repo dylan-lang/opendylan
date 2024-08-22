@@ -388,7 +388,6 @@ define module environment-protocols
          find-application-proxy,
          application-proxy-id,
          run-application,
-         initialize-application-client,
          attach-live-application,
          note-run-application-failed,
          stop-application,

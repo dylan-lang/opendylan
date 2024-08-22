@@ -33,6 +33,7 @@ define method run-application
     (application :: <dfmc-application>,
      #key startup-option :: <symbol> = #"start",
           client,
+          initialize-client,
           filename :: false-or(<file-locator>),
           arguments :: false-or(<string>),
           process :: false-or(<process>) = #f,
@@ -44,6 +45,7 @@ define method run-application
           pause-before-termination? :: <boolean> = #f)
  => (application :: <dfmc-application>)
   ignore(client);
+  ignore(initialize-client);
 
   // A couple of conveniences for filename processing stolen from
   // the console debugger.
