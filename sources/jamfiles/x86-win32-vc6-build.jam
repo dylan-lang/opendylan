@@ -51,8 +51,7 @@ LINKFLAGS ?= /NODEFAULTLIB
 
 # External libraries linked with the dylan library
 # (via the Linker-Options: keyword in Sources/dylan/dylan.lid)
-rtlibs  ?= kernel32.lib pentium-run-time.lib mmdw.lib mpsplinth.lib
-           minvcrt.lib ;
+rtlibs  ?= kernel32.lib pentium-run-time.lib minvcrt.lib ;
 
 # External libraries linked with libraries other than the dylan library
 # (via the DylanLibrary function defined below)
