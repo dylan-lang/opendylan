@@ -12,6 +12,7 @@ Files: library
        streams
        byte-vector
        machine-words
+       timers-tests
        transcendentals
        regressions
        threads/simple-locks

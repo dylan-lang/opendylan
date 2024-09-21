@@ -40,6 +40,7 @@ define module common-dylan-test-suite
   use simple-format;
   use simple-random;
   use simple-profiling;
+  use simple-timers;
   use file-system,
     import: { file-exists? };
   use operating-system,

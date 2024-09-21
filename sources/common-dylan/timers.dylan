@@ -111,3 +111,18 @@ define inline function %timer-diff-times
     values(seconds, microseconds)
   end if
 end;
+
+// We use a microsecond counter rather than nanoseconds because implementations
+// may legitimately return a time since some arbitrary epoch rather than, say,
+// the machine uptime, and that could easily overflow given only 61 usable
+// bits. Ex: In 2024, the nanos since 1970-01-01 already uses 61 bits.
+define function microsecond-counter () => (microseconds :: <integer>)
+  let (sec :: <machine-word>, nano :: <machine-word>)
+    = %timer-current-time();
+  // I think coerce...(u%-(sec, 0)) is faster than as-unsigned(<integer>, sec)
+  // due to the latter causing a fully dynamic gf method dispatch. Is there a
+  // better way?
+  let seconds :: <integer> = coerce-machine-word-to-integer(u%-(sec, 0));
+  let microseconds :: <integer> = coerce-machine-word-to-integer(u%divide(nano, 1000));
+  seconds * 1_000_000 + microseconds
+end function;

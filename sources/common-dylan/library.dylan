@@ -47,7 +47,8 @@ define module simple-timers
          timer-start,
          timer-stop,
          timer-accumulated-time,
-         timer-running?;
+         timer-running?,
+         microsecond-counter;
 end module simple-timers;
 
 define module byte-vector
