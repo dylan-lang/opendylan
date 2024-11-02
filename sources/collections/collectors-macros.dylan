@@ -84,6 +84,8 @@ define macro collect-into
 end macro;
 
 define macro collected
+  { collected () }
+    => { collected(?=_collector) }
   { collected (?:name) }
     => { ?name ## "-collection"(?name ## "-collector") }
 end macro;
