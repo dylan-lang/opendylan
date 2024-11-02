@@ -14,7 +14,7 @@ define open generic collector-protocol (class, #key)
       add-sequence-last  :: <function>,
       collection         :: <function>);
 
-//// Default.
+//// By default collect into a <list>.
 
 define inline sealed method collector-protocol
      (class == <object>, #rest options, #key)
@@ -65,12 +65,16 @@ define inline sealed method collector-protocol
       add-sequence-last  :: <function>,
       collection         :: <function>)
   values(begin
-           let head-pair = pair(#f, #());
-	   head(head-pair) := head-pair;
+           let head-pair = pair(#f, #()); // The collector is #(final-pair . collection)
+	   head(head-pair) := head-pair;  // except when the collection is empty.
          end,
          method (collector :: <pair>, value)
-           let new-pair = pair(value, collector.tail);
+           let t = collector.tail;
+           let new-pair = pair(value, t);
            collector.tail := new-pair;
+           if (empty?(t))
+             collector.head := new-pair;
+           end;
            value;
          end,
          method (collector :: <pair>, value)
