@@ -28,6 +28,10 @@ define macro collecting
            ?body;
            collected(?=_collector)
          end }
+  // This variant could have returned values(collected(var1), collected(var2), ...)
+  // to match the way unnamed collections work, but unfortunately that would break
+  // current callers if it were changed now. (The callers I checked in OD would be
+  // trivial to convert.)
   { collecting (?vars) ?:body end }
     => { ?vars;
          ?body }
