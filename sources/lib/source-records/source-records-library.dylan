@@ -82,7 +82,6 @@ define module source-records-implementation
   use common-dylan;
   use threads;
   // Probably don't need all this, sort it out later
-  // use collectors;
   use set;
   use byte-vector;
   use streams;

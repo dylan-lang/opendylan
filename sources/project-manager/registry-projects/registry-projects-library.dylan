@@ -8,7 +8,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define library registry-projects
   use dylan;
   // Probably don't need all this, sort it out later...
-  use collections;
   use io;
   use system;
   use build-system;
@@ -26,8 +25,6 @@ define module registry-projects-internal
   use dylan-extensions;
   use simple-debugging;
   // Probably don't need all this, sort it out later...
-  use collectors;
-  use set;
   use streams;
   use locators;
   use format;

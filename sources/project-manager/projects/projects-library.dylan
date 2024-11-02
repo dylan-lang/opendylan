@@ -13,7 +13,6 @@ define library projects
   use release-info;
   use dood;        //---*** andrewa: just for with-walk-progress
   // Probably don't need all this, sort it out later...
-  use collections;
   use io;
   use system;
 
@@ -150,8 +149,6 @@ define module projects-implementation
     import: { \with-walk-progress };
 
   // Probably don't need all this, sort it out later...
-  use collectors;
-  use set;
   use locators;
   use streams;
   use format;
