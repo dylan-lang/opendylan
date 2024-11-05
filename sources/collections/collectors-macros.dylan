@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Unfortunately, the implicitly generated name for a collecting () call
-// has to be antigygienic so that it can be referred to by name in more
+// has to be unhygienic so that it can be referred to by name in more
 // than one macro.
 
 define macro collecting
@@ -28,6 +28,10 @@ define macro collecting
            ?body;
            collected(?=_collector)
          end }
+  // This variant could have returned values(collected(var1), collected(var2), ...)
+  // to match the way unnamed collections work, but unfortunately that would break
+  // current callers if it were changed now. (The callers I checked in OD would be
+  // trivial to convert.)
   { collecting (?vars) ?:body end }
     => { ?vars;
          ?body }
@@ -84,6 +88,8 @@ define macro collect-into
 end macro;
 
 define macro collected
+  { collected () }
+    => { collected(?=_collector) }
   { collected (?:name) }
     => { ?name ## "-collection"(?name ## "-collector") }
 end macro;

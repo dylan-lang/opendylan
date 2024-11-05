@@ -35,7 +35,6 @@ define module file-source-records-implementation
   use threads;
   use locators;
   // Probably don't need all this, sort it out later
-  // use collectors;
   use byte-vector;
   use set;
   use streams;
