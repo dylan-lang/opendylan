@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="The plists Module" href="plists.html" /><link rel="prev" title="The bit-vector Module" href="bit-vector.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.07.18 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.08.06 -->
         <title>The collectors Module - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=613ab9ff" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=302659d7" />
@@ -536,44 +536,161 @@
           <section id="the-collectors-module">
 <h1>The collectors Module<a class="headerlink" href="#the-collectors-module" title="Permalink to this heading">¶</a></h1>
 <dl class="dylan macro">
+<dt class="sig sig-object dylan-api dylan" id="collections:collectors:collecting">
+<span class="sig-name descname"><span class="pre">collecting</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#collections:collectors:collecting" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect values into a named or unnamed collector.  A collector may be, for example, a
+<a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#collection"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;collection&gt;</span></code></a>, a number into which values are accumulated, etc.</p>
+<dl class="field-list">
+<dt class="field-odd">Macro Call<span class="colon">:</span></dt>
+<dd class="field-odd"><p><pre class="literal-block">collecting ([<cite>name</cite>] [as <cite>type</cite>])
+  [ <cite>body</cite> ]
+end [ collecting ]</pre>
+</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>name</strong> – A Dylan variable-name <em>BNF</em>. If omitted, the collection is returned
+from the <a class="reference internal" href="#collections:collectors:collecting"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">collecting</span></code></a> macro call. If supplied, the caller is responsible for
+calling <code class="docutils literal notranslate"><span class="pre">collected(name)</span></code> to retrieve the collection before the call to
+<cite>collecting</cite> terminates.</p></li>
+<li><p><strong>type</strong> – A Dylan type. The default value is <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#list"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;list&gt;</span></code></a>.</p></li>
+<li><p><strong>body</strong> – A Dylan body <em>BNF</em>.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Binds <em>name</em> (or a default variable name if <em>name</em> is not supplied) to a collector
+that can efficiently collect new values into the collection when <a class="reference internal" href="#collections:collectors:collect"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">collect</span></code></a>
+or the related <code class="docutils literal notranslate"><span class="pre">collect-*</span></code> macros are called.</p>
+</dd>
+<dt class="field-even">Example<span class="colon">:</span></dt>
+<dd class="field-even"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">collecting</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="n">collect</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="n">collect</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">end</span><span class="p">;</span>
+<span class="c1">// =&gt; #(1, 2)</span>
+
+<span class="n">collecting</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="n">collect</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="n">collect-first</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">end</span><span class="p">;</span>
+<span class="c1">// =&gt; #(2, 1)</span>
+
+<span class="n">collecting</span><span class="w"> </span><span class="p">(</span><span class="nb">as</span><span class="w"> </span><span class="nc">&lt;integer&gt;</span><span class="p">)</span><span class="w"> </span><span class="n">collect</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="n">collect</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">end</span><span class="p">;</span>
+<span class="c1">// =&gt; 3</span>
+
+<span class="n">collecting</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">)</span>
+<span class="w">  </span><span class="n">collect-into</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">  </span><span class="n">collect-into</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<span class="w">  </span><span class="n">collect-into</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span>
+<span class="w">  </span><span class="nb">values</span><span class="p">(</span><span class="n">collected</span><span class="p">(</span><span class="n">a</span><span class="p">),</span><span class="w"> </span><span class="n">collected</span><span class="p">(</span><span class="n">b</span><span class="p">),</span><span class="w"> </span><span class="n">collected</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="k">end</span><span class="p">;</span>
+<span class="c1">// =&gt; #(1), #(2), #(3)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="collections:collectors:collect">
 <span class="sig-name descname"><span class="pre">collect</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#collections:collectors:collect" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Discussion<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Collect a value at the end of the unnamed collector: <code class="docutils literal notranslate"><span class="pre">collect(100)</span></code>
+May only be used when <code class="docutils literal notranslate"><span class="pre">collecting</span> <span class="pre">()</span> <span class="pre">...</span> <span class="pre">end</span></code> was called with no arguments.</p>
+</dd>
+<dt class="field-even">See also<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#collections:collectors:collecting"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">collecting</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="collections:collectors:collect-first">
 <span class="sig-name descname"><span class="pre">collect-first</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#collections:collectors:collect-first" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="dylan macro">
-<dt class="sig sig-object dylan-api dylan" id="collections:collectors:collect-first-into">
-<span class="sig-name descname"><span class="pre">collect-first-into</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#collections:collectors:collect-first-into" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="dylan macro">
-<dt class="sig sig-object dylan-api dylan" id="collections:collectors:collect-into">
-<span class="sig-name descname"><span class="pre">collect-into</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#collections:collectors:collect-into" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Discussion<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Collect a value at the beginning of the unnamed collector:
+<code class="docutils literal notranslate"><span class="pre">collect-first(100)</span></code> May only be used when <code class="docutils literal notranslate"><span class="pre">collecting</span> <span class="pre">()</span> <span class="pre">...</span> <span class="pre">end</span></code> was called
+with no arguments.</p>
+</dd>
+<dt class="field-even">See also<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#collections:collectors:collecting"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">collecting</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="collections:collectors:collect-last">
 <span class="sig-name descname"><span class="pre">collect-last</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#collections:collectors:collect-last" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Discussion<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Collect a value at the end of the unnamed collector:
+<code class="docutils literal notranslate"><span class="pre">collect-last(100)</span></code> May only be used when <code class="docutils literal notranslate"><span class="pre">collecting</span> <span class="pre">()</span> <span class="pre">...</span> <span class="pre">end</span></code> was called
+with no arguments.</p>
+</dd>
+<dt class="field-even">See also<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#collections:collectors:collecting"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">collecting</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="dylan macro">
+<dt class="sig sig-object dylan-api dylan" id="collections:collectors:collect-into">
+<span class="sig-name descname"><span class="pre">collect-into</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#collections:collectors:collect-into" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Discussion<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Collect a value at the end of a named collector: <code class="docutils literal notranslate"><span class="pre">collect-into(c,</span>
+<span class="pre">100)</span></code> May only be used when <code class="docutils literal notranslate"><span class="pre">collecting</span> <span class="pre">(c)</span> <span class="pre">...</span> <span class="pre">end</span></code> was called with arguments.</p>
+</dd>
+<dt class="field-even">See also<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#collections:collectors:collecting"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">collecting</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="dylan macro">
+<dt class="sig sig-object dylan-api dylan" id="collections:collectors:collect-first-into">
+<span class="sig-name descname"><span class="pre">collect-first-into</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#collections:collectors:collect-first-into" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Discussion<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Collect a value at the beginning of a named collector:
+<code class="docutils literal notranslate"><span class="pre">collect-first-into(c,</span> <span class="pre">100)</span></code> May only be used when <code class="docutils literal notranslate"><span class="pre">collecting</span> <span class="pre">(c)</span> <span class="pre">...</span> <span class="pre">end</span></code> was
+called with arguments.</p>
+</dd>
+<dt class="field-even">See also<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#collections:collectors:collecting"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">collecting</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="collections:collectors:collect-last-into">
 <span class="sig-name descname"><span class="pre">collect-last-into</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#collections:collectors:collect-last-into" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Discussion<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Collect a value at the end of a named collector: <code class="docutils literal notranslate"><span class="pre">collect-last-into(c,</span>
+<span class="pre">100)</span></code> May only be used when <code class="docutils literal notranslate"><span class="pre">collecting</span> <span class="pre">(c)</span> <span class="pre">...</span> <span class="pre">end</span></code> was called with arguments.</p>
+</dd>
+<dt class="field-even">See also<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#collections:collectors:collecting"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">collecting</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="collections:collectors:collected">
 <span class="sig-name descname"><span class="pre">collected</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#collections:collectors:collected" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list">
+<dt class="field-odd">Discussion<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Retrieve the value of the collection associated with a collector.</p>
+</dd>
+<dt class="field-even">Example<span class="colon">:</span></dt>
+<dd class="field-even"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">collecting</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="nb">map</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">collected</span><span class="p">())</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="k">end</span>
 
-<dl class="dylan macro">
-<dt class="sig sig-object dylan-api dylan" id="collections:collectors:collecting">
-<span class="sig-name descname"><span class="pre">collecting</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#collections:collectors:collecting" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="n">collecting</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="nb">map</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span><span class="w"> </span><span class="n">collected</span><span class="p">(</span><span class="n">a</span><span class="p">));</span><span class="w"> </span><span class="nb">map</span><span class="p">(</span><span class="n">f2</span><span class="p">,</span><span class="w"> </span><span class="n">collected</span><span class="p">(</span><span class="n">b</span><span class="p">));</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="k">end</span>
+</pre></div>
+</div>
+</dd>
+<dt class="field-odd">See also<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#collections:collectors:collecting"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">collecting</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:collectors:collector-protocol">
@@ -590,12 +707,18 @@
 <dt class="field-odd">Values<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>new-collector</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
-<li><p><strong>add-first</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>.</p></li>
-<li><p><strong>add-last</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>.</p></li>
-<li><p><strong>add-sequence-first</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>.</p></li>
-<li><p><strong>add-sequence-last</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>.</p></li>
-<li><p><strong>collection</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>.</p></li>
+<li><p><strong>add-first</strong> – A <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a> that accepts the collection and a value and adds
+the value to the beginning of the collection.</p></li>
+<li><p><strong>add-last</strong> – A <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a> that accepts the collection and a value and adds
+the value to the end of the collection.</p></li>
+<li><p><strong>add-sequence-first</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>. <strong>Not yet implemented.</strong></p></li>
+<li><p><strong>add-sequence-last</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>. <strong>Not yet implemented.</strong></p></li>
+<li><p><strong>collection</strong> – A <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a> that receives the collector and returns the
+collection.</p></li>
 </ul>
+</dd>
+<dt class="field-even">See also<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#collections:collectors:collecting"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">collecting</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
