@@ -276,8 +276,14 @@ define test issue-1455 ()
   check-true("no other values were returned", empty?(more));
 end;
 
-define test issue-1523 ()
+define test issue-1523 (expected-to-fail-reason: "needs a release after 2024.1")
   // Loop merge for a can be eliminated as dead code
+
+  assert-true(#f);
+
+  /* This causes an illegal instruction trap. Uncomment this after the release following
+     2024.1 is live.
+
   let value
     = iterate loop (a = #f, b = 1)
         if (b == 3)
@@ -288,6 +294,7 @@ define test issue-1523 ()
       end;
   check-equal("Loop with dead iteration variables executes properly",
               value, 3);
+  */
 end;
 
 define suite dylan-regressions-test-suite ()
