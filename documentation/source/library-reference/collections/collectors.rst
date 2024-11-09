@@ -48,7 +48,7 @@ The collectors Module
            collect-into(a, 1);
            collect-into(b, 2);
            collect-into(c, 3);
-           values(collected(a), collected(b), collected(c)
+           values(collected(a), collected(b), collected(c))
          end;
          // => #(1), #(2), #(3)
 
@@ -105,9 +105,9 @@ The collectors Module
 
       .. code-block:: dylan
 
-         collecting () ... map(f, collected()) ... end
+         collecting () ...; do(f, collected()); ... end
 
-         collecting (a, b) ... map(f1, collected(a)); map(f2, collected(b)); ... end
+         collecting (a, b) ...; do(f1, collected(a)); do(f2, collected(b)); ... end
 
    :seealso: :macro:`collecting`
 
