@@ -127,7 +127,7 @@ whitespace are automatically concatenated.
 Because Dylan's quoted symbol syntax (also known as "unique string" syntax) is
 just `#` followed by any standard string, we also allow ``#"""`` to indicate a
 multi-line quoted symbol, to be consistent. No new syntax is provided to create
-a "raw" quoted symbols, i.e., quoted symbols without escape processing.
+"raw" quoted symbols, i.e., quoted symbols without escape processing.
 
 The Rectangle Rule
 ------------------
