@@ -141,8 +141,8 @@ The dynamic environment
 -----------------------
 
 Dylan has an implicit notion of a *dynamic environment*, corresponding
-to language constructs with *dynamic extent*. For example, the *block*
-construct can introduce *cleanup-clauses*, and the *body* of the block
+to language constructs with *dynamic extent*. For example, the :drm:`block`
+construct can introduce *cleanup-clauses*, and the *body* of the :drm:`block`
 is executed in a dynamic environment in which those cleanup-clauses are
 active. *Handlers* and *exit procedures* are other examples of language
 features related to the dynamic environment.
@@ -197,7 +197,7 @@ a property of the dynamic environment.
 Thread variables can have new dynamic bindings created for them with the
 macro :macro:`dynamic-bind`. Thread variables inherently have
 thread-local bindings, so it is possible to re-bind a thread variable
-dynamically using the Dylan construct ``*block* ... *cleanup*``. The
+dynamically using the Dylan construct ``block ... cleanup``. The
 :macro:`dynamic-bind` macro can be implemented in this way.
 
 The thread-local nature of dynamically bindable variables may not be
@@ -769,7 +769,7 @@ Locks
        let the-lock = *lock*;
        if (wait-for(the-lock, *keys ...*))
          block ()
-           *body*...
+           ...*body*...
          cleanup
            release(the-lock)
          end block
@@ -1820,13 +1820,13 @@ feature.
 
      .. code-block:: dylan
 
-       *name* (*arg* 1, ... *arg* n)
+       *name* (*arg1*, ... *argn*)
 
      The macro expands into this call:
 
      .. code-block:: dylan
 
-       *name* -conditional-updater(*new-value*, *local-name*, *arg* 1, ...  *arg* n)
+       *name* -conditional-updater(*new-value*, *local-name*, *arg1*, ...  *argn*)
 
      If the result of this function call is :drm:`#f`, the conditional update is
      deemed to have failed.

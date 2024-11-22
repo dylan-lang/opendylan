@@ -652,8 +652,8 @@ loop.</p>
 <section id="the-dynamic-environment">
 <h3>The dynamic environment<a class="headerlink" href="#the-dynamic-environment" title="Permalink to this heading">¶</a></h3>
 <p>Dylan has an implicit notion of a <em>dynamic environment</em>, corresponding
-to language constructs with <em>dynamic extent</em>. For example, the <em>block</em>
-construct can introduce <em>cleanup-clauses</em>, and the <em>body</em> of the block
+to language constructs with <em>dynamic extent</em>. For example, the <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#block"><code class="xref drm docutils literal notranslate"><span class="pre">block</span></code></a>
+construct can introduce <em>cleanup-clauses</em>, and the <em>body</em> of the <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#block"><code class="xref drm docutils literal notranslate"><span class="pre">block</span></code></a>
 is executed in a dynamic environment in which those cleanup-clauses are
 active. <em>Handlers</em> and <em>exit procedures</em> are other examples of language
 features related to the dynamic environment.</p>
@@ -700,7 +700,7 @@ a property of the dynamic environment.</p>
 <p>Thread variables can have new dynamic bindings created for them with the
 macro <a class="reference internal" href="#dylan:threads:dynamic-bind"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">dynamic-bind</span></code></a>. Thread variables inherently have
 thread-local bindings, so it is possible to re-bind a thread variable
-dynamically using the Dylan construct <code class="docutils literal notranslate"><span class="pre">*block*</span> <span class="pre">...</span> <span class="pre">*cleanup*</span></code>. The
+dynamically using the Dylan construct <code class="docutils literal notranslate"><span class="pre">block</span> <span class="pre">...</span> <span class="pre">cleanup</span></code>. The
 <a class="reference internal" href="#dylan:threads:dynamic-bind"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">dynamic-bind</span></code></a> macro can be implemented in this way.</p>
 <p>The thread-local nature of dynamically bindable variables may not be
 optimal for all problem domains. For instance a shared, global,
@@ -1356,7 +1356,7 @@ equivalent to the following:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="n">the-lock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="vg">*lock*</span><span class="p">;</span>
 <span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">wait-for</span><span class="p">(</span><span class="n">the-lock</span><span class="p">,</span><span class="w"> </span><span class="n">*keys</span><span class="w"> </span><span class="p">...</span><span class="o">*</span><span class="p">))</span>
 <span class="w">  </span><span class="nb">block</span><span class="w"> </span><span class="p">()</span>
-<span class="w">    </span><span class="vg">*body*</span><span class="p">...</span>
+<span class="w">    </span><span class="p">...</span><span class="vg">*body*</span><span class="p">...</span>
 <span class="w">  </span><span class="k">cleanup</span>
 <span class="w">    </span><span class="n">release</span><span class="p">(</span><span class="n">the-lock</span><span class="p">)</span>
 <span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="nb">block</span>
@@ -2574,11 +2574,11 @@ end</pre>
 <em>place</em> that has the syntax of a call to a function. This extended form
 for <a class="reference internal" href="#dylan:threads:conditional-update!"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">conditional-update!</span></code></a> is analogous to that for <a class="reference external" href="https://opendylan.org/books/drm/Function_Macros#assignment"><code class="xref drm docutils literal notranslate"><span class="pre">:=</span></code></a>. In this case,
 if the <em>place</em> appears syntactically as</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="vg">*name*</span><span class="w"> </span><span class="p">(</span><span class="vg">*arg*</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="vg">*arg*</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="vg">*name*</span><span class="w"> </span><span class="p">(</span><span class="vg">*arg1*</span><span class="p">,</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="vg">*argn*</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The macro expands into this call:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="vg">*name*</span><span class="w"> </span><span class="n">-conditional-updater</span><span class="p">(</span><span class="vg">*new-value*</span><span class="p">,</span><span class="w"> </span><span class="vg">*local-name*</span><span class="p">,</span><span class="w"> </span><span class="vg">*arg*</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="p">...</span><span class="w">  </span><span class="vg">*arg*</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="vg">*name*</span><span class="w"> </span><span class="n">-conditional-updater</span><span class="p">(</span><span class="vg">*new-value*</span><span class="p">,</span><span class="w"> </span><span class="vg">*local-name*</span><span class="p">,</span><span class="w"> </span><span class="vg">*arg1*</span><span class="p">,</span><span class="w"> </span><span class="p">...</span><span class="w">  </span><span class="vg">*argn*</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>If the result of this function call is <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>, the conditional update is
