@@ -523,7 +523,7 @@ define constant $initial-state :: <state>
        state(#"3string", #f, // seen """
              #('"' . #"close-double-quote"),
              #('\\' . #"3string-escape"),
-             #(" !#-[]-~\r\n" . #"3string"),
+             #(" !#-[]-~\r\n" . #"3string"),  // Ranges #-[ and ]-~ exclude backslash
              pair($ascii-8-bit-extensions, #"3string")),
        state(#"3string-escape", #f,
              #("\\'\"abefnrt0" . #"3string"),
