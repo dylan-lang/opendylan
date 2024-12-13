@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Improving The Design" href="improve.html" /><link rel="prev" title="Introduction" href="intro.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="A Quick Tour of Dylan" href="../about/index.html" /><link rel="prev" title="String Literal Syntax" href="dep-0012-string-literals.html" />
 
     <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.08.06 -->
-        <title>Designing A Simple DUIM Application - Open Dylan</title>
+        <title>Multiple Value Assignment - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
@@ -204,7 +204,7 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Community</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../community/index.html">Get Involved</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../download/index.html">Download</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../hacker-guide/index.html">Hacker Guide</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Hacker Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -249,19 +249,19 @@
 <li class="toctree-l2"><a class="reference internal" href="../hacker-guide/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../proposals/index.html">Enhancement Proposals</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of Enhancement Proposals</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0001-dep-process.html">DEP Purpose and Guidelines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0002-define-function.html">Define Function</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0003-c3-linearization.html">C3 superclass linearization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0004-strings-library.html">New strings Library</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0005-subclass-function.html">Subclass</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0006-single-file-library.html">Single File Libraries</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0007-collection-type-safety.html">Type-Safe Limited Collections</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0008-multi-line-strings.html">Multi-line Strings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0010-element-otherwise.html">Defaulted Element Reference Syntax</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0011-numeric-literal-syntax.html">Numeric Literal Syntax</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0012-string-literals.html">String Literal Syntax</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../proposals/dep-0013-multi-assignment.html">Multiple Value Assignment</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Enhancement Proposals</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of Enhancement Proposals</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="dep-0001-dep-process.html">DEP Purpose and Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dep-0002-define-function.html">Define Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dep-0003-c3-linearization.html">C3 superclass linearization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dep-0004-strings-library.html">New strings Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dep-0005-subclass-function.html">Subclass</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dep-0006-single-file-library.html">Single File Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dep-0007-collection-type-safety.html">Type-Safe Limited Collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dep-0008-multi-line-strings.html">Multi-line Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dep-0010-element-otherwise.html">Defaulted Element Reference Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dep-0011-numeric-literal-syntax.html">Numeric Literal Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dep-0012-string-literals.html">String Literal Syntax</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Multiple Value Assignment</a></li>
 </ul>
 </li>
 </ul>
@@ -308,7 +308,7 @@
 </li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/drm/">Dylan Reference Manual</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://package.opendylan.org/">Package Docs</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../library-reference/index.html">Open Dylan Libraries</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Open Dylan Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -381,7 +381,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../library-reference/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="../documentation/index.html">All Documentation</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of All Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../documentation/index.html">All Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of All Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../news/index.html">News</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../documentation/cheatsheets/index.html">Cheat Sheets</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of Cheat Sheets</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/syntax.html">Syntax</a></li>
@@ -417,17 +417,17 @@
 <li class="toctree-l3"><a class="reference internal" href="../corba-guide/idl-app.html">An IDL Binding for Dylan</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">DUIM Guide</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of DUIM Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="preface.html">Preface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="intro.html">Introduction</a></li>
-<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">Designing A Simple DUIM Application</a></li>
-<li class="toctree-l3"><a class="reference internal" href="improve.html">Improving The Design</a></li>
-<li class="toctree-l3"><a class="reference internal" href="menus.html">Adding Menus To The Application</a></li>
-<li class="toctree-l3"><a class="reference internal" href="callbacks.html">Adding Callbacks to the Application</a></li>
-<li class="toctree-l3"><a class="reference internal" href="commands.html">Using Command Tables</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tour.html">A Tour of the DUIM Libraries</a></li>
-<li class="toctree-l3"><a class="reference internal" href="source.html">Source Code For The Task List Manager</a></li>
-<li class="toctree-l3"><a class="reference internal" href="copyright.html">Copyright</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../building-with-duim/index.html">DUIM Guide</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of DUIM Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/preface.html">Preface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/intro.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/design.html">Designing A Simple DUIM Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/improve.html">Improving The Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/menus.html">Adding Menus To The Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/callbacks.html">Adding Callbacks to the Application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/commands.html">Using Command Tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/tour.html">A Tour of the DUIM Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/source.html">Source Code For The Task List Manager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../building-with-duim/copyright.html">Copyright</a></li>
 </ul>
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../duim-reference/index.html">DUIM Reference</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of DUIM Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -510,12 +510,12 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="https://github.com/dylan-lang/opendylan/blob/master/documentation/source/building-with-duim/design.rst?plain=true" title="View this page">
+  <a class="muted-link" href="https://github.com/dylan-lang/opendylan/blob/master/documentation/source/proposals/dep-0013-multi-assignment.rst?plain=true" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
 </div><div class="edit-this-page">
-  <a class="muted-link" href="https://github.com/dylan-lang/opendylan/edit/master/documentation/source/building-with-duim/design.rst" title="Edit this page">
+  <a class="muted-link" href="https://github.com/dylan-lang/opendylan/edit/master/documentation/source/proposals/dep-0013-multi-assignment.rst" title="Edit this page">
     <svg><use href="#svg-pencil"></use></svg>
     <span class="visually-hidden">Edit this page</span>
   </a>
@@ -534,205 +534,229 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="designing-a-simple-duim-application">
-<span id="index-0"></span><h1>Designing A Simple DUIM Application<a class="headerlink" href="#designing-a-simple-duim-application" title="Permalink to this heading">¶</a></h1>
-<section id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
-<p>The next few chapters of the manual introduce you to some of the most
-important DUIM concepts, and show you how to go about designing and
-implementing a simple DUIM application. On a first read through, you
-should work through each chapter in turn, since each chapter relies
-heavily on the information in the previous chapters.</p>
+          <section id="multiple-value-assignment">
+<h1>Multiple Value Assignment<a class="headerlink" href="#multiple-value-assignment" title="Permalink to this heading">¶</a></h1>
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>DEP #:</p></td>
+<td><p>13</p></td>
+</tr>
+<tr class="row-even"><td><p>Type:</p></td>
+<td><p>Standards Track</p></td>
+</tr>
+<tr class="row-odd"><td><p>Affects-DRM:</p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-even"><td><p>Author:</p></td>
+<td><p>Carl Gay</p></td>
+</tr>
+<tr class="row-odd"><td><p>Status:</p></td>
+<td><p>Draft</p></td>
+</tr>
+<tr class="row-even"><td><p>Created:</p></td>
+<td><p>10-Dec-2024</p></td>
+</tr>
+<tr class="row-odd"><td><p>Last-Modified:</p></td>
+<td><p>10-Dec-2024</p></td>
+</tr>
+<tr class="row-even"><td><p>Post-History:</p></td>
+<td><p>None</p></td>
+</tr>
+<tr class="row-odd"><td><p>Target-Version:</p></td>
+<td><p>2025.1</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<section id="abstract">
+<h2>Abstract<a class="headerlink" href="#abstract" title="Permalink to this heading">¶</a></h2>
+<p>Add new syntax to assign multiple variables from a single multi-valued expression.</p>
 </section>
-<section id="design-of-the-application">
-<span id="index-1"></span><h2>Design of the application<a class="headerlink" href="#design-of-the-application" title="Permalink to this heading">¶</a></h2>
-<p>For the purposes of this example, the application developed is a simple
-task list manager. The design of the application attempts to achieve the
-following goals:</p>
-<ul class="simple">
-<li><p>The design is simple enough that the principles of the programming
-model should not be obscured by the code itself.</p></li>
-<li><p>The design attempts to use the most common elements of the various
-DUIM libraries.</p></li>
-<li><p>The design is extensible, so that you can customize it to your own
-needs.</p></li>
-</ul>
-<p>A task list manager was chosen because it is representative of the sort
-of GUI application that you will probably want to develop. Although the
-overall design is quite simple, it demonstrates several commonly used
-elements and techniques, and is easily extensible beyond the scope of
-this manual, should you wish to experiment with the code. The concept of
-a task list manager is familiar to the majority of readers, so you can
-study the code and the programming model, without having to spend time
-figuring out what the application itself is supposed to do.</p>
-<p>The final task list manager is shown in <a class="reference internal" href="#"><span class="doc">Designing A Simple DUIM Application</span></a>. To load the code
-for the final design into the environment, choose <strong>Tools &gt; Open Example
-Project</strong> from any window in the environment, and load the Task List 1
-project from the Documentation category of the Open Example Project dialog.</p>
-<figure class="align-center" id="id2">
-<img alt="../_images/tasklist.png" src="../_images/tasklist.png" />
-<figcaption>
-<p><span class="caption-text">The Task List Manager Application</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
-</figcaption>
-</figure>
-<p>The task list manager is very simple to use. You create a list of things
-that you need to do, assigning a priority to each task as you create it.
-The application can display the tasks in your list sorted in a variety
-of ways. You can save your task list to a file on disk, and open files
-of the same type.</p>
-<p>The task list manager demonstrates the use of menus and a variety of
-button, list, and text controls.</p>
-</section>
-<section id="creating-the-basic-sheet-hierarchy">
-<span id="design-creating-the-basic-sheet-hierarchy"></span><span id="index-2"></span><h2>Creating the basic sheet hierarchy<a class="headerlink" href="#creating-the-basic-sheet-hierarchy" title="Permalink to this heading">¶</a></h2>
-<p>This section shows you how to create gadgets and sheets that make up the
-overall visual design of the interface. It shows you how to improve upon
-an initial design, but does not go into any details on the callbacks
-necessary for the application; at the end of this section you have an
-initial visual design.</p>
-<section id="placing-all-the-elements-in-a-single-layout">
-<h3>Placing all the elements in a single layout<a class="headerlink" href="#placing-all-the-elements-in-a-single-layout" title="Permalink to this heading">¶</a></h3>
-<p>The main part of the task list manager is a list box that is used for
-displaying the tasks that you add in the course of using the program.
-For the initial design, there are buttons that let you add and remove
-tasks from the list, and a text field into which you type the text for
-new tasks.</p>
-<p>To begin with, the following code creates all these elements, and places
-them in a single window, one above the other.</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;column-layout&gt;</span><span class="p">,</span>
-<span class="w">     </span><span class="k">children:</span><span class="w"> </span><span class="nb">vector</span><span class="w"> </span><span class="p">(</span><span class="nb">make</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;list-box&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">items:</span><span class="w"> </span><span class="p">#(),</span><span class="w"> </span><span class="k">lines:</span><span class="mi">15</span><span class="p">),</span>
-<span class="w">                       </span><span class="nb">make</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;text-field&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Task text:&quot;</span><span class="p">),</span>
-<span class="w">                       </span><span class="nb">make</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Add task&quot;</span><span class="p">),</span>
-<span class="w">                       </span><span class="nb">make</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span>
-<span class="w">                             </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Remove task&quot;</span><span class="p">)));</span>
+<section id="specification">
+<h2>Specification<a class="headerlink" href="#specification" title="Permalink to this heading">¶</a></h2>
+<p>The DRM defines the syntax of assignment expressions to be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">place</span> <span class="o">:=</span> <span class="n">new</span><span class="o">-</span><span class="n">value</span>
 </pre></div>
 </div>
-<p>You might notice a number of problems with this initial design:</p>
-<p>Firstly, the items have all been created correctly, but the resulting
-window is not particularly attractive. In order to improve the
-appearance, you need to rearrange the elements in the window by making
-better use of the layout facilities provided by DUIM.</p>
-<p>Secondly, the application does not yet look very much like a typical
-Windows application. Rather than individual buttons, the application
-should have a tool bar, and it is not common to have a text field in the
-main window of an application. There is no menu bar. Currently, the
-application has more of the feel of a dialog box, than a main
-application window. These issues are addressed later on in the example.</p>
+<p>This DEP adds new syntax on the left hand side to allow for multiple <em>places</em> to be set
+from the multiple values returned by the <code class="docutils literal notranslate"><span class="pre">new-value</span></code> expression, which we rename here
+to <code class="docutils literal notranslate"><span class="pre">new-values</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">place1</span><span class="p">,</span> <span class="n">place2</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span> <span class="o">:=</span> <span class="n">new</span><span class="o">-</span><span class="n">values</span>
+</pre></div>
+</div>
+<p>The first return value is assigned to <em>place1</em>, the second value to <em>place2</em>, etc.  The
+last <em>place</em> may be preceded by <code class="docutils literal notranslate"><span class="pre">#rest</span></code>, in which case it is assigned a sequence
+containing all the remaining values.</p>
+<p>If there are more <em>places</em> than values returned by <code class="docutils literal notranslate"><span class="pre">new-values</span></code>, the extra <em>places</em> are
+assigned the value <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p>
+<p>The name <code class="docutils literal notranslate"><span class="pre">_</span></code> (underscore) may be used to indicate that a value is to be ignored. For
+example, <code class="docutils literal notranslate"><span class="pre">(_,</span> <span class="pre">remainder)</span> <span class="pre">:=</span> <span class="pre">round(3.2)</span></code> will ignore the first return value and assign
+<code class="docutils literal notranslate"><span class="pre">remainder</span></code> the value <code class="docutils literal notranslate"><span class="pre">0.2</span></code>.</p>
+<p>The order of assignment of values to <em>places</em> is unspecified.</p>
+<section id="bnf-changes">
+<h3>BNF Changes<a class="headerlink" href="#bnf-changes" title="Permalink to this heading">¶</a></h3>
+<p>No changes are required to the Dylan BNF as described in the DRM.  <code class="docutils literal notranslate"><span class="pre">LEAF</span> <span class="pre">:=</span> <span class="pre">EXPRESSION</span></code>
+is already valid and <code class="docutils literal notranslate"><span class="pre">(</span> <span class="pre">EXPRESSION</span> <span class="pre">)</span></code> syntax is a valid <code class="docutils literal notranslate"><span class="pre">LEAF</span></code> production.</p>
 </section>
-<section id="redesigning-the-layout">
-<h3>Redesigning the layout<a class="headerlink" href="#redesigning-the-layout" title="Permalink to this heading">¶</a></h3>
-<p>To address the issue of layout first, you should group the text field
-and the <em>Add task</em> button in a row; since the two elements are
-inherently connected (the task you add is the one whose text is
-displayed in the text field), it makes sense to group them visually as
-well.</p>
-<p>The following code creates the necessary row layout:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">horizontally</span><span class="w"> </span><span class="p">()</span>
-<span class="w">  </span><span class="nb">make</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;text-field&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Task text:&quot;</span><span class="p">);</span>
-<span class="w">  </span><span class="nb">make</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Add task&quot;</span><span class="p">);</span>
-<span class="k">end</span>
+</section>
+<section id="rationale">
+<h2>Rationale<a class="headerlink" href="#rationale" title="Permalink to this heading">¶</a></h2>
+<p>Multiple value assignment syntax naturally matches the existing multiple value binding
+syntax provided by <a class="reference external" href="https://opendylan.org/books/drm/Local_Declaration_Macros#let"><code class="xref drm docutils literal notranslate"><span class="pre">let</span></code></a> and can occasionally be a useful tool to make code more
+concise.</p>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">¶</a></h2>
+<p>Some examples from the Open Dylan sources that can be made more concise:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="c1">// This occurs a lot in dfmc/conversion/convert.dylan</span>
+<span class="k">let</span><span class="w"> </span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">join-2x1!</span><span class="p">(</span><span class="nb">first</span><span class="p">,</span><span class="w"> </span><span class="nb">last</span><span class="p">,</span><span class="w"> </span><span class="n">comp</span><span class="p">);</span><span class="w"> </span><span class="nb">first</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">f</span><span class="p">;</span><span class="w">  </span><span class="nb">last</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">l</span><span class="p">;</span><span class="w"> </span><span class="c1">// old</span>
+<span class="p">(</span><span class="nb">first</span><span class="p">,</span><span class="w"> </span><span class="nb">last</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">join-2x1!</span><span class="p">(</span><span class="nb">first</span><span class="p">,</span><span class="w"> </span><span class="nb">last</span><span class="p">,</span><span class="w"> </span><span class="n">comp</span><span class="p">);</span><span class="w">                     </span><span class="c1">// new</span>
 </pre></div>
 </div>
-<p>Note that the macro <code class="docutils literal notranslate"><span class="pre">horizontally</span></code> has been used here. This macro takes
-any expressions that are passed to it and creates a row layout from the
-results of evaluating those expressions. The macro <code class="docutils literal notranslate"><span class="pre">vertically</span></code> works in
-a similar way, creating a column layout from its arguments. Use
-<code class="docutils literal notranslate"><span class="pre">vertically</span></code> to combine the row layout you just created with the <em>Remove
-task</em> button that still needs to be incorporated:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">vertically</span><span class="w"> </span><span class="p">()</span>
-<span class="w">  </span><span class="n">horizontally</span><span class="w"> </span><span class="p">()</span>
-<span class="w">    </span><span class="nb">make</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;text-field&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Task text:&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="nb">make</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Add task&quot;</span><span class="p">);</span>
-<span class="w">  </span><span class="k">end</span><span class="p">;</span>
-<span class="w">  </span><span class="nb">make</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Remove task&quot;</span><span class="p">);</span>
-<span class="k">end</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="c1">// old:</span>
+<span class="k">define</span><span class="w"> </span><span class="nb">sealed</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">set-union!</span>
+<span class="w">    </span><span class="p">(</span><span class="n">set1</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;bit-set&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">set2</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;bit-set&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">set1</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;bit-set&gt;</span><span class="p">)</span>
+<span class="w">  </span><span class="k">let</span><span class="w"> </span><span class="p">(</span><span class="nb">vector</span><span class="p">,</span><span class="w"> </span><span class="n">pad</span><span class="p">)</span>
+<span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">bit-vector-or!</span><span class="p">(</span><span class="n">set1</span><span class="p">.</span><span class="n">member-vector</span><span class="p">,</span><span class="w"> </span><span class="n">set2</span><span class="p">.</span><span class="n">member-vector</span><span class="p">,</span>
+<span class="w">                     </span><span class="k">pad1:</span><span class="w"> </span><span class="n">set1</span><span class="p">.</span><span class="n">member-vector-pad</span><span class="p">,</span>
+<span class="w">                     </span><span class="k">pad2:</span><span class="w"> </span><span class="n">set2</span><span class="p">.</span><span class="n">member-vector-pad</span><span class="p">);</span>
+<span class="w">  </span><span class="n">set1</span><span class="p">.</span><span class="n">member-vector</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">vector</span><span class="p">;</span>
+<span class="w">  </span><span class="n">set1</span><span class="p">.</span><span class="n">member-vector-pad</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">pad</span><span class="p">;</span>
+<span class="w">  </span><span class="n">set1</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">method</span><span class="p">;</span>
+
+<span class="c1">// new:</span>
+<span class="k">define</span><span class="w"> </span><span class="nb">sealed</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">set-union!</span>
+<span class="w">    </span><span class="p">(</span><span class="n">set1</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;bit-set&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">set2</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;bit-set&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">set1</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;bit-set&gt;</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="n">set1</span><span class="p">.</span><span class="n">member-vector</span><span class="p">,</span><span class="w"> </span><span class="n">set1</span><span class="p">.</span><span class="n">member-vector-pad</span><span class="p">)</span>
+<span class="w">    </span><span class="o">:=</span><span class="w"> </span><span class="n">bit-vector-or!</span><span class="p">(</span><span class="n">set1</span><span class="p">.</span><span class="n">member-vector</span><span class="p">,</span><span class="w"> </span><span class="n">set2</span><span class="p">.</span><span class="n">member-vector</span><span class="p">,</span>
+<span class="w">                      </span><span class="k">pad1:</span><span class="w"> </span><span class="n">set1</span><span class="p">.</span><span class="n">member-vector-pad</span><span class="p">,</span>
+<span class="w">                      </span><span class="k">pad2:</span><span class="w"> </span><span class="n">set2</span><span class="p">.</span><span class="n">member-vector-pad</span><span class="p">);</span>
+<span class="w">  </span><span class="n">set1</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">method</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>Finally, you need to add this sheet hierarchy to another row layout, so
-that the main list box for the application is on the left, and the sheet
-hierarchy containing the buttons and text field is on the right:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">horizontally</span><span class="w"> </span><span class="p">()</span>
-<span class="w">  </span><span class="nb">make</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;list-box&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">items:</span><span class="w"> </span><span class="p">#(),</span><span class="w"> </span><span class="k">lines:</span><span class="w"> </span><span class="mi">15</span><span class="p">);</span>
-<span class="w">  </span><span class="n">vertically</span><span class="w"> </span><span class="p">()</span>
-<span class="w">    </span><span class="n">horizontally</span><span class="w"> </span><span class="p">()</span>
-<span class="w">      </span><span class="nb">make</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;text-field&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Task text:&quot;</span><span class="p">);</span>
-<span class="w">      </span><span class="nb">make</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Add task&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="k">end</span><span class="p">;</span>
-<span class="w">    </span><span class="nb">make</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Remove task&quot;</span><span class="p">);</span>
-<span class="w">  </span><span class="k">end</span><span class="p">;</span>
-<span class="k">end</span>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="c1">// old:</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">below</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="w">  </span><span class="k">let</span><span class="w"> </span><span class="p">(</span><span class="nb">thread</span><span class="p">,</span><span class="w"> </span><span class="n">result</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">join-thread</span><span class="p">(</span><span class="n">threads</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="w">  </span><span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="k">for</span><span class="p">;</span>
+
+<span class="c1">// new:</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">below</span><span class="w"> </span><span class="n">n</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">join-thread</span><span class="p">(</span><span class="n">threads</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">for</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>In the last few steps, you have exclusively used <code class="docutils literal notranslate"><span class="pre">horizontally</span></code> and
-<code class="docutils literal notranslate"><span class="pre">vertically</span></code>. In fact, it does not matter if you use these macros, or
-if you create instances of <code class="docutils literal notranslate"><span class="pre">&lt;row-layout&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;column-layout&gt;</span></code>
-explicitly using <code class="docutils literal notranslate"><span class="pre">make</span></code>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>You may have to resize the window to see everything.</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="c1">// old:</span>
+<span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">stop-profiling-type</span>
+<span class="w">    </span><span class="p">(</span><span class="n">state</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;profiling-state&gt;</span><span class="p">,</span><span class="w"> </span><span class="nb">keyword</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;cpu-profiling-type&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">()</span>
+<span class="w">  </span><span class="k">when</span><span class="w"> </span><span class="p">(</span><span class="nb">element</span><span class="p">(</span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="ss">#&quot;cpu-profiling&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">default:</span><span class="w"> </span><span class="l">#f</span><span class="p">))</span>
+<span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="p">(</span><span class="n">seconds</span><span class="p">,</span><span class="w"> </span><span class="n">microseconds</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">timer-stop</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="ss">#&quot;cpu-profiling-timer&quot;</span><span class="p">]);</span>
+<span class="w">    </span><span class="n">state</span><span class="p">[</span><span class="ss">#&quot;cpu-time-seconds&quot;</span><span class="p">]</span><span class="w">      </span><span class="o">:=</span><span class="w"> </span><span class="n">seconds</span><span class="p">;</span>
+<span class="w">    </span><span class="n">state</span><span class="p">[</span><span class="ss">#&quot;cpu-time-microseconds&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">microseconds</span><span class="p">;</span>
+<span class="w">    </span><span class="n">state</span><span class="p">[</span><span class="ss">#&quot;cpu-profiling&quot;</span><span class="p">]</span><span class="w">         </span><span class="o">:=</span><span class="w"> </span><span class="l">#f</span><span class="p">;</span>
+<span class="w">    </span><span class="n">state</span><span class="p">[</span><span class="ss">#&quot;cpu-profiling-timer&quot;</span><span class="p">]</span><span class="w">   </span><span class="o">:=</span><span class="w"> </span><span class="l">#f</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">stop-profiling-type</span><span class="p">;</span>
+
+<span class="c1">// new:</span>
+<span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">stop-profiling-type</span>
+<span class="w">    </span><span class="p">(</span><span class="n">state</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;profiling-state&gt;</span><span class="p">,</span><span class="w"> </span><span class="nb">keyword</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;cpu-profiling-type&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">()</span>
+<span class="w">  </span><span class="k">when</span><span class="w"> </span><span class="p">(</span><span class="nb">element</span><span class="p">(</span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="ss">#&quot;cpu-profiling&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">default:</span><span class="w"> </span><span class="l">#f</span><span class="p">))</span>
+<span class="w">    </span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="ss">#&quot;cpu-time-seconds&quot;</span><span class="p">],</span><span class="w"> </span><span class="n">state</span><span class="p">[</span><span class="ss">#&quot;cpu-time-microseconds&quot;</span><span class="p">])</span>
+<span class="w">      </span><span class="o">:=</span><span class="w"> </span><span class="n">timer-stop</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="ss">#&quot;cpu-profiling-timer&quot;</span><span class="p">]);</span>
+<span class="w">    </span><span class="n">state</span><span class="p">[</span><span class="ss">#&quot;cpu-profiling&quot;</span><span class="p">]</span><span class="w">         </span><span class="o">:=</span><span class="w"> </span><span class="l">#f</span><span class="p">;</span>
+<span class="w">    </span><span class="n">state</span><span class="p">[</span><span class="ss">#&quot;cpu-profiling-timer&quot;</span><span class="p">]</span><span class="w">   </span><span class="o">:=</span><span class="w"> </span><span class="l">#f</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span>
+<span class="k">end</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">stop-profiling-type</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="c1">// old:</span>
+<span class="k">let</span><span class="w"> </span><span class="p">(</span><span class="n">sec</span><span class="p">,</span><span class="w"> </span><span class="n">nsec</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">%timer-current-time</span><span class="p">();</span>
+<span class="n">timer</span><span class="p">.</span><span class="n">timer-started-seconds</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">sec</span><span class="p">;</span>
+<span class="n">timer</span><span class="p">.</span><span class="n">timer-started-nanoseconds</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">nsec</span><span class="p">;</span>
+
+<span class="c1">// new:</span>
+<span class="p">(</span><span class="n">timer</span><span class="p">.</span><span class="n">timer-started-seconds</span><span class="p">,</span><span class="w"> </span><span class="n">timer</span><span class="p">.</span><span class="n">timer-started-nanoseconds</span><span class="p">)</span>
+<span class="w">  </span><span class="o">:=</span><span class="w"> </span><span class="n">%timer-current-time</span><span class="p">();</span>
+</pre></div>
+</div>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="c1">// old:</span>
+<span class="k">let</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="k">#rest</span><span class="w"> </span><span class="n">arguments</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tokenize-command-line</span><span class="p">(</span><span class="n">command-line</span><span class="p">);</span>
+<span class="vg">*application-name*</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+<span class="vg">*application-arguments*</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">apply</span><span class="p">(</span><span class="nb">vector</span><span class="p">,</span><span class="w"> </span><span class="n">arguments</span><span class="p">);</span>
+
+<span class="c1">// new:</span>
+<span class="p">(</span><span class="vg">*application-name*</span><span class="p">,</span><span class="w"> </span><span class="k">#rest</span><span class="w"> </span><span class="vg">*application-arguments*</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">tokenize-command-line</span><span class="p">(</span><span class="n">command-line</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="c1">// old:</span>
+<span class="k">let</span><span class="w"> </span><span class="p">(</span><span class="n">ins</span><span class="p">,</span><span class="w"> </span><span class="n">outs</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">split-operation-arguments</span><span class="p">(</span><span class="n">request-arguments</span><span class="p">(</span><span class="n">request</span><span class="p">));</span>
+<span class="n">request-in-args</span><span class="p">(</span><span class="n">request</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">ins</span><span class="p">;</span>
+<span class="n">request-out-args</span><span class="p">(</span><span class="n">request</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">outs</span><span class="p">;</span>
+
+<span class="c1">// new:</span>
+<span class="p">(</span><span class="n">request-in-args</span><span class="p">(</span><span class="n">request</span><span class="p">),</span><span class="w"> </span><span class="n">request-out-args</span><span class="p">(</span><span class="n">request</span><span class="p">))</span>
+<span class="w">  </span><span class="o">:=</span><span class="w"> </span><span class="n">split-operation-arguments</span><span class="p">(</span><span class="n">request-arguments</span><span class="p">(</span><span class="n">request</span><span class="p">));</span>
+</pre></div>
+</div>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="c1">// old:</span>
+<span class="k">let</span><span class="w"> </span><span class="p">(</span><span class="n">_n</span><span class="p">,</span><span class="w"> </span><span class="n">_what</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">goto-position-dialog</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="w"> </span><span class="n">what</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="ss">#&quot;line&quot;</span><span class="p">);</span>
+<span class="n">n</span><span class="w">    </span><span class="o">:=</span><span class="w"> </span><span class="n">_n</span><span class="p">;</span>
+<span class="n">what</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">_what</span>
+
+<span class="c1">// new:</span>
+<span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">what</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">goto-position-dialog</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="w"> </span><span class="n">what</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="ss">#&quot;line&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="c1">// old:</span>
+<span class="k">let</span><span class="w"> </span><span class="p">(</span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">frame-size</span><span class="p">(</span><span class="n">dialog</span><span class="p">);</span>
+<span class="no">$buffer-box-width</span><span class="w">  </span><span class="o">:=</span><span class="w"> </span><span class="n">width</span><span class="p">;</span>
+<span class="no">$buffer-box-height</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">height</span><span class="p">;</span>
+
+<span class="c1">// new:</span>
+<span class="p">(</span><span class="no">$buffer-box-width</span><span class="p">,</span><span class="w"> </span><span class="no">$buffer-box-height</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">frame-size</span><span class="p">(</span><span class="n">dialog</span><span class="p">);</span>
+</pre></div>
 </div>
 </section>
-<section id="adding-a-radio-box">
-<span id="index-3"></span><h3>Adding a radio box<a class="headerlink" href="#adding-a-radio-box" title="Permalink to this heading">¶</a></h3>
-<p>There is one aspect of the initial design that you have not yet
-incorporated into the structure: the radio box. This serves two purposes
-in the application:</p>
-<ol class="arabic simple">
-<li><p>It lets you choose the priority for a new task.</p></li>
-<li><p>It displays the priority of any task selected in the list.</p></li>
+<section id="alternatives-considered">
+<h2>Alternatives Considered<a class="headerlink" href="#alternatives-considered" title="Permalink to this heading">¶</a></h2>
+<ol class="arabic">
+<li><p>One might consider it desirable to allow the left hand side of <code class="docutils literal notranslate"><span class="pre">:=</span></code> expressions to
+omit the parentheses in multiple value assignments when it is unambiguous. That is, to
+allow both <code class="docutils literal notranslate"><span class="pre">(a,</span> <span class="pre">b)</span> <span class="pre">:=</span> <span class="pre">f()</span></code> and <code class="docutils literal notranslate"><span class="pre">a,</span> <span class="pre">b</span> <span class="pre">:=</span> <span class="pre">f()</span></code> as long as no ambiguity exists.</p>
+<p>In certain contexts parentheses would be required for disambiguation, for example in a
+argument list context:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">vector</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">f</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Is the above equivalent to <code class="docutils literal notranslate"><span class="pre">vector(a,</span> <span class="pre">f())</span></code> or <code class="docutils literal notranslate"><span class="pre">vector(f())</span></code>?</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">vector</span><span class="p">((</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">f</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>The above is unambiguously equivalent to <code class="docutils literal notranslate"><span class="pre">vector(f())</span></code> since multiple value
+assignment always returns the first assigned value.</p>
+<p>However, in a body context (i.e., a sequence of semicolon delimited statements)
+omitting the parentheses may be desirable as it is less “noisy”:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="p">...;</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">f</span><span class="p">();</span><span class="w"> </span><span class="p">...</span>
+</pre></div>
+</div>
+<p><strong>Decision:</strong> To remove any ambiguity, and to match the existence of parentheses for
+multiple value <em>bindings</em> with <a class="reference external" href="https://opendylan.org/books/drm/Local_Declaration_Macros#let"><code class="xref drm docutils literal notranslate"><span class="pre">let</span></code></a>, parentheses will be <em>required</em> for multiple
+value assignments.</p>
+</li>
 </ol>
-<p>The code to create the radio box is as follows:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">make</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;radio-box&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Priority:&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="k">items:</span><span class="w"> </span><span class="p">#(</span><span class="s">&quot;High&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Medium&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Low&quot;</span><span class="p">),</span>
-<span class="w">      </span><span class="k">orientation:</span><span class="w"> </span><span class="ss">#&quot;vertical&quot;</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>Notice that the <code class="docutils literal notranslate"><span class="pre">orientation:</span></code> init-keyword can be used to ensure that
-each item is displayed one above the other.</p>
-<p>It is probably best to place the radio box immediately below the <em>Remove
-task</em> button. To do this, you need to add the definition for the radio
-box at the appropriate position in the call to <code class="docutils literal notranslate"><span class="pre">vertically</span></code>.</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">horizontally</span><span class="w"> </span><span class="p">()</span>
-<span class="w">  </span><span class="nb">make</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;list-box&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">items:</span><span class="w"> </span><span class="p">#(),</span><span class="w"> </span><span class="k">lines:</span><span class="w"> </span><span class="mi">15</span><span class="p">);</span>
-<span class="w">  </span><span class="n">vertically</span><span class="w"> </span><span class="p">()</span>
-<span class="w">    </span><span class="n">horizontally</span><span class="w"> </span><span class="p">()</span>
-<span class="w">      </span><span class="nb">make</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;text-field&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Task text:&quot;</span><span class="p">);</span>
-<span class="w">      </span><span class="nb">make</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Add task&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="k">end</span><span class="p">;</span>
-<span class="w">    </span><span class="nb">make</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Remove task&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="nb">make</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;radio-box&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Priority:&quot;</span><span class="p">,</span>
-<span class="w">          </span><span class="k">items:</span><span class="w"> </span><span class="p">#(</span><span class="s">&quot;High&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Medium&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Low&quot;</span><span class="p">),</span>
-<span class="w">          </span><span class="k">orientation:</span><span class="w"> </span><span class="ss">#&quot;vertical&quot;</span><span class="p">);</span>
-<span class="w">  </span><span class="k">end</span><span class="p">);</span>
-</pre></div>
-</div>
 </section>
-<section id="using-contain-to-run-examples-interactively">
-<span id="index-4"></span><span id="id1"></span><h3>Using contain to run examples interactively<a class="headerlink" href="#using-contain-to-run-examples-interactively" title="Permalink to this heading">¶</a></h3>
-<p>You can use the function <code class="docutils literal notranslate"><span class="pre">contain</span></code> to run any of the examples above
-using the interactor available in the Dylan environment. This function
-lets you see the results of your work immediately, without the need to
-compile any source code or build a project, and is extremely useful for
-experimenting interactively when you are developing your initial ideas
-for a GUI design.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">contain</span></code> function takes any expression that describes a hierarchy
-of sheets as an argument. It creates a frame which contains this sheet
-hierarchy, and displays the resulting frame on the screen.</p>
-<p>Thus, to run any of the code segments shown in this chapter, simply pass
-them to <code class="docutils literal notranslate"><span class="pre">contain</span></code> as an argument. Here are two examples, adapted from
-earlier examples in this chapter, as illustrations of how to use
-<code class="docutils literal notranslate"><span class="pre">contain</span></code>.</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">contain</span><span class="w"> </span><span class="p">(</span><span class="n">horizontally</span><span class="w"> </span><span class="p">()</span>
-<span class="w">           </span><span class="nb">make</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;text-field&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Task text:&quot;</span><span class="p">);</span>
-<span class="w">           </span><span class="nb">make</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;push-button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Add task&quot;</span><span class="p">);</span>
-<span class="w">         </span><span class="k">end</span><span class="p">);</span>
-<span class="n">contain</span><span class="w"> </span><span class="p">(</span><span class="nb">make</span><span class="w"> </span><span class="p">(</span><span class="nc">&lt;text-field&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Task text:&quot;</span><span class="p">));</span>
-</pre></div>
-</div>
-<p>At this point, take a few minutes to go back over this chapter and
-practice using <code class="docutils literal notranslate"><span class="pre">contain</span></code> to run the code fragments that have already
-been discussed.</p>
+<section id="reference-implementation">
+<h2>Reference Implementation<a class="headerlink" href="#reference-implementation" title="Permalink to this heading">¶</a></h2>
+<p>TODO: permalink</p>
 </section>
+<section id="revision-history">
+<h2>Revision History<a class="headerlink" href="#revision-history" title="Permalink to this heading">¶</a></h2>
+<p>The revision history of this document is available here:
+<a class="reference external" href="https://github.com/dylan-lang/opendylan/commits/master/documentation/source/proposals/dep-0013-multi-assignment.rst">https://github.com/dylan-lang/opendylan/commits/master/documentation/source/proposals/dep-0013-multi-assignment.rst</a></p>
 </section>
 </section>
 
@@ -741,23 +765,23 @@ been discussed.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="improve.html">
+          <a class="next-page" href="../about/index.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Improving The Design</div>
+                <div class="title">A Quick Tour of Dylan</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="intro.html">
+          <a class="prev-page" href="dep-0012-string-literals.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Introduction</div>
+                <div class="title">String Literal Syntax</div>
                 
               </div>
             </a>
@@ -791,16 +815,17 @@ been discussed.</p>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Designing A Simple DUIM Application</a><ul>
-<li><a class="reference internal" href="#introduction">Introduction</a></li>
-<li><a class="reference internal" href="#design-of-the-application">Design of the application</a></li>
-<li><a class="reference internal" href="#creating-the-basic-sheet-hierarchy">Creating the basic sheet hierarchy</a><ul>
-<li><a class="reference internal" href="#placing-all-the-elements-in-a-single-layout">Placing all the elements in a single layout</a></li>
-<li><a class="reference internal" href="#redesigning-the-layout">Redesigning the layout</a></li>
-<li><a class="reference internal" href="#adding-a-radio-box">Adding a radio box</a></li>
-<li><a class="reference internal" href="#using-contain-to-run-examples-interactively">Using contain to run examples interactively</a></li>
+<li><a class="reference internal" href="#">Multiple Value Assignment</a><ul>
+<li><a class="reference internal" href="#abstract">Abstract</a></li>
+<li><a class="reference internal" href="#specification">Specification</a><ul>
+<li><a class="reference internal" href="#bnf-changes">BNF Changes</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#rationale">Rationale</a></li>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+<li><a class="reference internal" href="#alternatives-considered">Alternatives Considered</a></li>
+<li><a class="reference internal" href="#reference-implementation">Reference Implementation</a></li>
+<li><a class="reference internal" href="#revision-history">Revision History</a></li>
 </ul>
 </li>
 </ul>
