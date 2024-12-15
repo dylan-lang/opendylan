@@ -94,7 +94,7 @@ define command-line main => <main-command>
 
   keyword back-end :: <symbol> = "the compiler back-end to use";
   keyword build-script :: <file-locator> = "the (Jam) build script";
-  keyword target :: <symbol> = "the type of executable";
+  keyword target :: <symbol> = "the type of binary to create (executable or dll)";
   keyword dispatch-coloring :: <symbol> = "the dispatch coloring output type";
 
   flag help             = "show this help summary";
