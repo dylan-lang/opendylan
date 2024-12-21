@@ -128,7 +128,7 @@ Operators
 |                    |  logior(a, b) // Bitwise inclusive OR |                          |
 |                    |  logxor(a, b) // Bitwise exclusive OR |                          |
 |                    |  logand(a, b) // Bitwise AND          |                          |
-|                    |  lognot(a, b) // Bitwise NOT          |                          |
+|                    |  lognot(a)    // Bitwise NOT          |                          |
 |                    |  ash(a, b)    // Shift left: a << b   |                          |
 |                    |  ash(a, -b)   // Shift right: a >> b  |                          |
 +--------------------+---------------------------------------+--------------------------+
