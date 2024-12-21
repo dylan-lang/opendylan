@@ -189,7 +189,7 @@ fundamental numeric types:
       slot statistic :: <C-double>;
       slot data :: <C-char*>;
       slot next :: <Example*>;
-      pointer-type-name :: <Example*>;
+      pointer-type-name: <Example*>;
     end C-struct;
 
 This example defines the two designator types ``<Example>`` and
