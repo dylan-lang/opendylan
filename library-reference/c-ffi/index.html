@@ -640,13 +640,17 @@ definitions, a designator class can also be instantiable, in which case
 Dylan uses an instance of the designator class to represent an object of
 the C type it designates when that object is passed from the “C world”
 to the “Dylan world”.</p>
-<p id="index-8"><em>Note:</em> Only classes that designate C pointer types can be instantiated
-in this way. Instances of C’s fundamental numeric value types like <code class="docutils literal notranslate"><span class="pre">int</span></code>,
-<code class="docutils literal notranslate"><span class="pre">char</span></code>, and <code class="docutils literal notranslate"><span class="pre">double</span></code> are just converted to an equivalent Dylan object
-with the same value. The <code class="docutils literal notranslate"><span class="pre">&lt;Point&gt;</span></code> class is not an instantiable class in
-Dylan because there is nothing in Dylan that corresponds to a C struct.
-However, the C-FFI does provide a Dylan representation of a pointer to a
-C struct.</p>
+<div class="admonition note" id="index-8">
+<p class="admonition-title">Note</p>
+<p>Only classes that designate C pointer types can be
+instantiated in this way. Instances of C’s fundamental numeric
+value types like <code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">char</span></code>, and <code class="docutils literal notranslate"><span class="pre">double</span></code> are just
+converted to an equivalent Dylan object with the same value. The
+<code class="docutils literal notranslate"><span class="pre">&lt;Point&gt;</span></code> class is not an instantiable class in Dylan because
+there is nothing in Dylan that corresponds to a C struct.  However,
+the C-FFI does provide a Dylan representation of a pointer to a C
+struct.</p>
+</div>
 <p>To illustrate, here is an example interaction involving a C struct
 containing some pointer-typed slots and some slots whose types are
 fundamental numeric types:</p>

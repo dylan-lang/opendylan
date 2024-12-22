@@ -170,13 +170,14 @@ to the "Dylan world".
 .. index::
    single: pointer types
 
-*Note:* Only classes that designate C pointer types can be instantiated
-in this way. Instances of C's fundamental numeric value types like ``int``,
-``char``, and ``double`` are just converted to an equivalent Dylan object
-with the same value. The ``<Point>`` class is not an instantiable class in
-Dylan because there is nothing in Dylan that corresponds to a C struct.
-However, the C-FFI does provide a Dylan representation of a pointer to a
-C struct.
+.. note:: Only classes that designate C pointer types can be
+   instantiated in this way. Instances of C's fundamental numeric
+   value types like ``int``, ``char``, and ``double`` are just
+   converted to an equivalent Dylan object with the same value. The
+   ``<Point>`` class is not an instantiable class in Dylan because
+   there is nothing in Dylan that corresponds to a C struct.  However,
+   the C-FFI does provide a Dylan representation of a pointer to a C
+   struct.
 
 To illustrate, here is an example interaction involving a C struct
 containing some pointer-typed slots and some slots whose types are
