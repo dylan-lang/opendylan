@@ -558,7 +558,7 @@ repositories.</p>
 works properly.</p></li>
 <li><p>The build rules for unified executables now properly depend on
 copying included run-time libraries such as libunwind.</p></li>
-<li><p>Optimizations that allow the type of <code class="docutils literal notranslate"><span class="pre">if</span></code> expressions to be more
+<li><p>Optimizations that allow the type of <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#if"><code class="xref drm docutils literal notranslate"><span class="pre">if</span></code></a> expressions to be more
 accurately estimated have been improved. For example, in this
 function:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">define</span> <span class="n">function</span> <span class="k">if</span><span class="o">-</span><span class="n">example</span> <span class="p">(</span><span class="n">arg</span> <span class="p">::</span> <span class="n">false</span><span class="o">-</span><span class="ow">or</span><span class="p">(</span><span class="o">&lt;</span><span class="n">integer</span><span class="o">&gt;</span><span class="p">))</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">result</span> <span class="p">::</span> <span class="o">&lt;</span><span class="n">integer</span><span class="o">&gt;</span><span class="p">);</span>
@@ -571,6 +571,8 @@ argument to <a class="reference external" href="https://opendylan.org/books/drm/
 </li>
 <li><p><a class="reference external" href="https://github.com/dylan-lang/opendylan/issues/1523">Issue 1523</a>, which
 could result in a compiler abort during code generation, has been fixed.</p></li>
+<li><p>A <a class="reference external" href="https://github.com/dylan-lang/opendylan/issues/1624">serious bug</a> in the parsing
+of multi-line string literals has been fixed.</p></li>
 </ul>
 </section>
 <section id="tools">
@@ -591,6 +593,12 @@ future release.</p></li>
 </section>
 <section id="library-updates">
 <h2>Library Updates<a class="headerlink" href="#library-updates" title="Permalink to this heading">¶</a></h2>
+<section id="collections">
+<h3>collections<a class="headerlink" href="#collections" title="Permalink to this heading">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">collectors</span></code> module is now <a class="reference external" href="https://opendylan.org/library-reference/collections/collectors.html">fully documented</a>, the API has been
+made more consistent, and a bug in <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#list"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;list&gt;</span></code></a> collectors has been fixed. See <a class="reference external" href="https://github.com/dylan-lang/opendylan/pull/1627">the pull
+request</a> for details.</p>
+</section>
 <section id="dylan">
 <h3>Dylan<a class="headerlink" href="#dylan" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
@@ -669,6 +677,7 @@ documented.</p></li>
 <li><a class="reference internal" href="#compiler">Compiler</a></li>
 <li><a class="reference internal" href="#tools">Tools</a></li>
 <li><a class="reference internal" href="#library-updates">Library Updates</a><ul>
+<li><a class="reference internal" href="#collections">collections</a></li>
 <li><a class="reference internal" href="#dylan">Dylan</a></li>
 <li><a class="reference internal" href="#io">IO</a></li>
 <li><a class="reference internal" href="#system">System</a></li>
