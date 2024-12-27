@@ -26,7 +26,7 @@ Compiler
 * The build rules for unified executables now properly depend on
   copying included run-time libraries such as libunwind.
 
-* Optimizations that allow the type of ``if`` expressions to be more
+* Optimizations that allow the type of :drm:`if` expressions to be more
   accurately estimated have been improved. For example, in this
   function:
 
@@ -41,6 +41,9 @@ Compiler
 
 * `Issue 1523 <https://github.com/dylan-lang/opendylan/issues/1523>`_, which
   could result in a compiler abort during code generation, has been fixed.
+
+* A `serious bug <https://github.com/dylan-lang/opendylan/issues/1624>`_ in the parsing
+  of multi-line string literals has been fixed.
 
 Tools
 =====
@@ -62,6 +65,14 @@ Tools
 
 Library Updates
 ===============
+
+collections
+-----------
+
+The ``collectors`` module is now `fully documented
+<https://opendylan.org/library-reference/collections/collectors.html>`_, the API has been
+made more consistent, and a bug in :drm:`<list>` collectors has been fixed. See `the pull
+request <https://github.com/dylan-lang/opendylan/pull/1627>`_ for details.
 
 Dylan
 -----
