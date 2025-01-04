@@ -355,8 +355,8 @@ dist: 3-stage-bootstrap
 	rm -rf release/opendylan-$(version)/sources/bootstrap1-registry
 	cp -R Bootstrap.3/bin release/opendylan-$(version)/
 	cp -R Bootstrap.3/sbin/* release/opendylan-$(version)/bin
-	ln -s deft-app release/opendylan-$(version)/bin/deft
-	ln -s deft-app release/opendylan-$(version)/bin/dylan # ease transition to "deft"
+	ln -sf deft-app release/opendylan-$(version)/bin/deft
+	ln -sf deft-app release/opendylan-$(version)/bin/dylan # ease transition to "deft"
 	cp -R Bootstrap.3/databases release/opendylan-$(version)/
 	-cp -R Bootstrap.3/include/opendylan release/opendylan-$(version)/include
 	cp -R Bootstrap.3/lib release/opendylan-$(version)/
@@ -368,7 +368,7 @@ dist: 3-stage-bootstrap
 	cp $(srcdir)/BUILDING.rst release/opendylan-$(version)/
 	cd release \
 	  && tar cjf opendylan-$(version)-$(TARGET_PLATFORM).tar.bz2 opendylan-$(version) \
-	  && ln -s opendylan-$(version)-$(TARGET_PLATFORM).tar.bz2 opendylan.tar.bz2
+	  && ln -sf opendylan-$(version)-$(TARGET_PLATFORM).tar.bz2 opendylan.tar.bz2
 
 
 TEST_LIBS = \
