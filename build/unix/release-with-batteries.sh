@@ -86,7 +86,7 @@ if $NEED_LIBUNWIND; then
 fi
 (cd ${LLVM_DIST};
  cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_ASSERTIONS=OFF \
-       -DCMAKE_INSTALL_PREFIX=${DISTDIR} \
+       -DCMAKE_INSTALL_PREFIX=${DISTDIR}/llvm \
        -DLLVM_TARGETS_TO_BUILD:STRING="Native" \
        -DLLVM_ENABLE_PROJECTS="llvm;clang;lld" \
        ${RT_OPTS} \
@@ -133,13 +133,13 @@ fi
        -DLLVM_PARALLEL_COMPILE_JOBS=${DYLAN_JOBS} \
        llvm;
  ninja install-clang install-lld install-clang-resource-headers ${RT_TARGETS})
-CC="${DISTDIR}/bin/clang${SYSROOT}"
-CXX="${DISTDIR}/bin/clang++${SYSROOT}"
+CC="${DISTDIR}/llvm/bin/clang${SYSROOT}"
+CXX="${DISTDIR}/llvm/bin/clang++${SYSROOT}"
 
 RTLIBS_INSTALL=
 
 if $NEED_LIBUNWIND; then
-    for i in ${DISTDIR}/lib/*/libunwind*; do
+    for i in ${DISTDIR}/llvm/lib/*/libunwind*; do
         RTLIBS_INSTALL="$RTLIBS_INSTALL $i"
     done
 fi
