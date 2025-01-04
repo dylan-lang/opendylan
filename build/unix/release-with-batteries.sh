@@ -171,9 +171,4 @@ $top_srcdir/configure CC="$CC" CXX="$CXX" \
 
 echo "RTLIBS_INSTALL += ${RTLIBS_INSTALL} ;" >>sources/jamfiles/config.jam
 
-${MAKE} 3-stage-bootstrap DYLAN_JOBS=${DYLAN_JOBS}
-
-sed -i~ "s;${DISTDIR};\$(SYSTEM_ROOT);g" sources/jamfiles/config.jam
-rm sources/jamfiles/config.jam~
-
-${MAKE} dist
+${MAKE} dist DYLAN_JOBS=${DYLAN_JOBS}
