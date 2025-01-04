@@ -30,6 +30,7 @@ NEED_LIBUNWIND=:
 NEED_INSTALL_NAME=false
 SYSROOT=
 USE_LLD="-fuse-ld=lld"
+USE_LLD_OPTS="-DLLVM_ENABLE_LLD:BOOL=ON -DCLANG_DEFAULT_LINKER=lld"
 BUILD_SRC=false
 case ${MACHINE}-${SYSTEM} in
     amd64-FreeBSD)
@@ -61,6 +62,7 @@ case ${MACHINE}-${SYSTEM} in
         NEED_INSTALL_NAME=:
         SYSROOT=" -isysroot $(xcrun --show-sdk-path)"
         USE_LLD=
+        USE_LLD_OPTS=
         DYLAN_JOBS=$(getconf _NPROCESSORS_ONLN)
         ;;
 esac
@@ -89,7 +91,7 @@ fi
        -DCMAKE_INSTALL_PREFIX=${DISTDIR}/llvm \
        -DLLVM_TARGETS_TO_BUILD:STRING="Native" \
        -DLLVM_ENABLE_PROJECTS="llvm;clang;lld" \
-       ${RT_OPTS} \
+       ${RT_OPTS} ${USE_LLD_OPTS} \
        -DLLVM_ENABLE_TERMINFO=OFF \
        -DLLVM_ENABLE_LIBEDIT=OFF \
        -DLLVM_ENABLE_LIBXML2=OFF \
