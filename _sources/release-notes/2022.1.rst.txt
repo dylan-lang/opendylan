@@ -54,7 +54,7 @@ Tooling
 =======
 
 * The ``dylan`` command (renamed to <https://github.com/dylan-lang/deft>`_ in
-  Open Dylan 2024.2) is a new tool to manage Dylan packages and workspaces. It
+  Open Dylan 2025.1) is a new tool to manage Dylan packages and workspaces. It
   provides a centralized catalog of Dylan packages and a way to manage
   dependencies without resorting to Git submodules or needing to manually
   create registry files.
