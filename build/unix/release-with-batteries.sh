@@ -1,12 +1,12 @@
 #!/bin/sh
 set -e
 
-LLVM_RELEASE=16.0.5
+LLVM_RELEASE=19.1.0
 LLVM_REL=$(echo $LLVM_RELEASE | sed s/-rc/rc/)
 
 LLVM_CLANG=$(echo $LLVM_RELEASE | sed 's/\([0-9]*\).*/\1/')
 
-BDWGC_RELEASE=8.2.4
+BDWGC_RELEASE=8.2.8
 
 srcdir=`dirname $0`
 test -z "$srcdir" && srcdir=.
@@ -30,6 +30,7 @@ NEED_LIBUNWIND=:
 NEED_INSTALL_NAME=false
 SYSROOT=
 USE_LLD="-fuse-ld=lld"
+USE_LLD_OPTS="-DLLVM_ENABLE_LLD:BOOL=ON -DCLANG_DEFAULT_LINKER=lld"
 BUILD_SRC=false
 case ${MACHINE}-${SYSTEM} in
     amd64-FreeBSD)
@@ -61,6 +62,7 @@ case ${MACHINE}-${SYSTEM} in
         NEED_INSTALL_NAME=:
         SYSROOT=" -isysroot $(xcrun --show-sdk-path)"
         USE_LLD=
+        USE_LLD_OPTS=
         DYLAN_JOBS=$(getconf _NPROCESSORS_ONLN)
         ;;
 esac
@@ -86,14 +88,14 @@ if $NEED_LIBUNWIND; then
 fi
 (cd ${LLVM_DIST};
  cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_ASSERTIONS=OFF \
-       -DCMAKE_INSTALL_PREFIX=${DISTDIR} \
+       -DCMAKE_INSTALL_PREFIX=${DISTDIR}/llvm \
        -DLLVM_TARGETS_TO_BUILD:STRING="Native" \
        -DLLVM_ENABLE_PROJECTS="llvm;clang;lld" \
-       ${RT_OPTS} \
+       ${RT_OPTS} ${USE_LLD_OPTS} \
        -DLLVM_ENABLE_TERMINFO=OFF \
        -DLLVM_ENABLE_LIBEDIT=OFF \
        -DLLVM_ENABLE_LIBXML2=OFF \
-       -DLLVM_ENABLE_ZLIB=OFF \
+       -DLLVM_ENABLE_ZLIB=ON \
        -DLLVM_ENABLE_ZSTD=OFF \
        -DLLVM_INSTALL_TOOLCHAIN_ONLY=ON \
        -DLLVM_BUILD_TOOLS=OFF \
@@ -133,13 +135,13 @@ fi
        -DLLVM_PARALLEL_COMPILE_JOBS=${DYLAN_JOBS} \
        llvm;
  ninja install-clang install-lld install-clang-resource-headers ${RT_TARGETS})
-CC="${DISTDIR}/bin/clang${SYSROOT}"
-CXX="${DISTDIR}/bin/clang++${SYSROOT}"
+CC="${DISTDIR}/llvm/bin/clang${SYSROOT}"
+CXX="${DISTDIR}/llvm/bin/clang++${SYSROOT}"
 
 RTLIBS_INSTALL=
 
 if $NEED_LIBUNWIND; then
-    for i in ${DISTDIR}/lib/*/libunwind*; do
+    for i in ${DISTDIR}/llvm/lib/*/libunwind*; do
         RTLIBS_INSTALL="$RTLIBS_INSTALL $i"
     done
 fi
@@ -171,9 +173,4 @@ $top_srcdir/configure CC="$CC" CXX="$CXX" \
 
 echo "RTLIBS_INSTALL += ${RTLIBS_INSTALL} ;" >>sources/jamfiles/config.jam
 
-${MAKE} 3-stage-bootstrap DYLAN_JOBS=${DYLAN_JOBS}
-
-sed -i~ "s;${DISTDIR};\$(SYSTEM_ROOT);g" sources/jamfiles/config.jam
-rm sources/jamfiles/config.jam~
-
-${MAKE} dist
+${MAKE} dist DYLAN_JOBS=${DYLAN_JOBS}
