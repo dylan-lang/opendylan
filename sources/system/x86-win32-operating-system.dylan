@@ -11,7 +11,7 @@ define constant $architecture-little-endian? :: <boolean> = #t;
 define constant $machine-architecture = #"x86";
 define constant $os-name = #"win32";
 
-// $machine-name is deprecated as of v2024.2 but is kept for backward compatibility.
+// $machine-name is deprecated as of v2025.1 but is kept for backward compatibility.
 define constant $machine-name = $machine-architecture;
 
 define constant $DWORD_SIZE = raw-as-integer(primitive-word-size());

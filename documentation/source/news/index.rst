@@ -14,7 +14,7 @@ Release 2023.1
 * New ``"""multi-line"""`` and ``#r"raw"`` string literals (`DEP 12
   <../proposals/dep-0012-string-literals.rst>`_).
 * The ``dylan`` tool (renamed to `deft <https://package.opendylan.org/deft/>`_
-  in Open Dylan 2024.2) continues to evolve with a new, simplified workspace
+  in Open Dylan 2025.1) continues to evolve with a new, simplified workspace
   model.
 * Bug fixes for json, command-line-parser, system, and others.
 

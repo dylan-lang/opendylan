@@ -249,7 +249,7 @@ System library's operating-system module.
 
 .. constant:: $machine-name
 
-   .. deprecated:: 2024.2
+   .. deprecated:: 2025.1
       Use :const:`$machine-architecture` instead.
 
    This constant will be removed in a future release.
