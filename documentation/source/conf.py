@@ -10,7 +10,7 @@
 project = 'Open Dylan'
 copyright = '2011-2024, Dylan Hackers'
 author = 'Dylan Hackers'
-release = '2024.2.0'
+release = '2025.1.0'
 
 
 # -- General configuration ---------------------------------------------------

@@ -106,8 +106,8 @@ To see the list of registries in the order they will be searched, use the
     {personal registry in /tmp/a/x86_64-linux/}
     {personal registry in /tmp/b/x86_64-linux/}
     {personal registry in /tmp/x/registry/x86_64-linux/}
-    {personal registry in /opt/opendylan-2024.2/sources/registry/x86_64-linux/}
+    {personal registry in /opt/opendylan-2025.1/sources/registry/x86_64-linux/}
     {personal registry in /tmp/a/generic/}
     {personal registry in /tmp/b/generic/}
     {personal registry in /tmp/x/registry/generic/}
-    {personal registry in /opt/opendylan-2024.2/sources/registry/generic/}
+    {personal registry in /opt/opendylan-2025.1/sources/registry/generic/}
