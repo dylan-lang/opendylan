@@ -45,6 +45,10 @@ Compiler
 * A `serious bug <https://github.com/dylan-lang/opendylan/issues/1624>`_ in the parsing
   of multi-line string literals has been fixed.
 
+* `Issue 1647 <https://github.com/dylan-lang/opendylan/issues/1647>`_,
+  which suppressed error reporting within macro calls in slot
+  initializer expressions, is now fixed.
+
 Tools
 =====
 
