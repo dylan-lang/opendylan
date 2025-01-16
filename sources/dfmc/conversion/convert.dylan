@@ -3784,7 +3784,8 @@ define method &top-level-eval
   if (definition &
         ~instance?(definition, <&converter-definition>) &
         ~instance?(definition, <&definition-definition>))
-    &top-level-eval(form-expander(definition)(#f, fragment));
+    &top-level-eval(form-expander(definition)(#f, fragment),
+                    on-failure: on-failure)
   else
     on-failure
   end if;
@@ -3796,7 +3797,7 @@ define method &top-level-eval
     (fragment :: <body-fragment>, #key on-failure = #f) => (vals);
   let constituents = fragment-constituents(fragment);
   if (constituents.size = 1)
-    &top-level-eval(constituents[0]);
+    &top-level-eval(constituents[0], on-failure: on-failure);
   else
     // we can only do things for value here so fail if we got a body
     // that might have side effects.
