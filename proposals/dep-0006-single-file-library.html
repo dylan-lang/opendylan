@@ -555,13 +555,13 @@
 <td><p>12-Feb-2013 (Darwin’s birthday)</p></td>
 </tr>
 <tr class="row-even"><td><p>Last-Modified:</p></td>
-<td><p>04-Dec-2021</p></td>
+<td><p>16-Jan-2025</p></td>
 </tr>
 <tr class="row-odd"><td><p>Post-History:</p></td>
 <td><p>04-Dec-2021 <a class="reference external" href="https://gitter.im/dylan-lang/general">https://gitter.im/dylan-lang/general</a></p></td>
 </tr>
 <tr class="row-even"><td><p>Dylan-Version:</p></td>
-<td><p>2020.1</p></td>
+<td><p>2025.1</p></td>
 </tr>
 </tbody>
 </table>
@@ -597,12 +597,12 @@ experience for new users, and would help to make Dylan more attractive
 for “scripting” purposes.  The mantra has been that Dylan was designed
 for large projects, but there’s no reason it can’t also excel at
 scripting, with this change and the right set of support libraries.</p>
-<p>Note that even though the <code class="docutils literal notranslate"><span class="pre">make-dylan-app</span></code> program will generate a
+<p>Note that even though the <code class="docutils literal notranslate"><span class="pre">deft</span> <span class="pre">new</span> <span class="pre">library</span></code> command will generate a
 skeleton project with three files (and a registry), this does not
 remove the need to jump back and forth between the library definition
 file and the main source file as you figure out which modules you need
 to use.  There is also the issue of new users figuring out that
-<code class="docutils literal notranslate"><span class="pre">make-dylan-app</span></code> exists in the first place, and what LID files are.</p>
+<code class="docutils literal notranslate"><span class="pre">deft</span> <span class="pre">new</span> <span class="pre">library</span></code> exists in the first place, and how LID files work.</p>
 <p>There are plenty of libraries that are small enough to comfortably fit
 in a single file.  Of the existing libraries in <a class="reference external" href="https://github.com/dylan-lang">the dylan-lang github
 repository</a>, at least ten could
@@ -626,11 +626,11 @@ inability to deal with import conflicts.</p>
 <section id="goals">
 <h2>Goals<a class="headerlink" href="#goals" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
-<li><p>Make it possible to use the full power of the Dylan module system to
-define a library in a single file.</p></li>
+<li><p>Make it possible to use the full power of the Dylan module system, or close to it, when
+defining a library in a single file.</p></li>
 <li><p>Make all LID file options available in the single-file library
 format.</p></li>
-<li><p>Introduce a minimum of new syntax.  It should be obvious to someone
+<li><p>Introduce no new syntax.  It should be obvious to someone
 already used to Dylan what’s going on.</p></li>
 </ul>
 </section>
@@ -692,7 +692,7 @@ by a <em>code body</em>.</p>
 <section id="replacing-the-lid-file">
 <h3>Replacing the LID File<a class="headerlink" href="#replacing-the-lid-file" title="Permalink to this heading">¶</a></h3>
 <p>LID files have the same format as the header section of a Dylan
-Interchange Format source file.  When defining a Dylan library in a
+Interchange Format source file.  When defining a Dylan project in a
 single source file, all LID keywords may appear in the header section.
 The compiler or interpreter should handle them in the same way it
 would if they were in a separate .lid file.  There is no conflict
@@ -709,9 +709,8 @@ for existing Open Dylan LID file keywords.</p>
 the module name specified by the <code class="docutils literal notranslate"><span class="pre">Module</span></code> header.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This decision could have gone the other way, with <code class="docutils literal notranslate"><span class="pre">Library</span></code>
-required and <code class="docutils literal notranslate"><span class="pre">Module</span></code> optional. The rationale for this choice is
-that it is normal for each .dylan file to have a <code class="docutils literal notranslate"><span class="pre">Module</span></code> header
+<p>This decision could have gone the other way, with <code class="docutils literal notranslate"><span class="pre">Library</span></code> required and <code class="docutils literal notranslate"><span class="pre">Module</span></code>
+optional. However, it is normal for each .dylan file to have a <code class="docutils literal notranslate"><span class="pre">Module</span></code> header
 already, so this is consistent with current practice.</p>
 </div>
 </section>
@@ -721,11 +720,10 @@ already, so this is consistent with current practice.</p>
 present, the behavior is undefined.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Rationale: an implementation could choose to point to a Dylan source
-file instead of a LID file in its build system. For example, in Open
-Dylan a “registry” file could point to a .dylan file instead of a
-.lid file and there’s no reason to prevent the .dylan file from
-including other Dylan source files. However, that is not part of this
+<p>An implementation could choose to point to a Dylan source file instead of a LID file
+in its build system. For example, in Open Dylan a “registry” file could point to a
+<code class="docutils literal notranslate"><span class="pre">.dylan</span></code> file instead of a .lid file and there’s no reason to prevent the <code class="docutils literal notranslate"><span class="pre">.dylan</span></code>
+file from including other Dylan source files. However, that is not part of this
 proposal.</p>
 </div>
 </section>
@@ -736,27 +734,49 @@ proposal.</p>
 <ol class="arabic simple">
 <li><p>Dylan Interchange Format headers, including all headers that are allowed in
 Dylan source files or in LID files.</p></li>
-<li><p>Library and module definitions (see below).</p></li>
-<li><p>Main Dylan code</p></li>
+<li><p>Library and module definitions (see below). This section is implicitly in the
+<code class="docutils literal notranslate"><span class="pre">dylan-user</span></code> module. This section ends when the module whose name is specified in
+the <code class="docutils literal notranslate"><span class="pre">Module</span></code> header has been defined.</p></li>
+<li><p>The main Dylan code.</p></li>
 </ol>
 <p>In the library and module definitions section of the source file normal Dylan
 code comments are allowed and there must be:</p>
 <ul class="simple">
+<li><p>Any code needed by the library and module definitions.  For example, it is possible to
+define a macro to help define multiple modules. Note, however, that any code in this
+section is in the <code class="docutils literal notranslate"><span class="pre">dylan-user</span></code> module, which is defined by the Dylan implementation,
+so there is no way to export the code for use in other modules.  More specifically,
+there is no way to use the code in the main body of the same source file.</p></li>
 <li><p><em>Exactly one</em> <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">library</span></code> expression and its name must match the name
-specified in the <code class="docutils literal notranslate"><span class="pre">Library</span></code> header (or the <code class="docutils literal notranslate"><span class="pre">Module</span></code> header if there is no
-<code class="docutils literal notranslate"><span class="pre">Library</span></code> header).</p></li>
-<li><p><em>At least</em> one <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">module</span></code> expression whose name matches the <code class="docutils literal notranslate"><span class="pre">Module</span></code>
-header.</p></li>
-<li><p><em>No</em> other Dylan code.</p></li>
+specified in the <code class="docutils literal notranslate"><span class="pre">Library</span></code> header, or the <code class="docutils literal notranslate"><span class="pre">Module</span></code> header if there is no
+<code class="docutils literal notranslate"><span class="pre">Library</span></code> header.</p></li>
+<li><p><em>At least</em> one <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">module</span></code> expression whose name matches the name in the
+<code class="docutils literal notranslate"><span class="pre">Module</span></code> header.  This module definition terminates the library and module
+definition section of the source file.</p></li>
 </ul>
-<p>The library and module definitions section ends when the first expression that
-is not a <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">library</span></code> or <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">module</span></code> is encountered.</p>
-<p>The library and module definitions section is implicitly in the <code class="docutils literal notranslate"><span class="pre">dylan-user</span></code>
-module.</p>
 <p>This construction allows the full power of Dylan’s module system to be used,
 for example defining both implementation and interface modules, exporting the
 implementation module for use by a (possibly also single-file) test library,
 etc.</p>
+</section>
+<section id="open-dylan-support">
+<h3>Open Dylan Support<a class="headerlink" href="#open-dylan-support" title="Permalink to this heading">¶</a></h3>
+<p>Some changes will need to be made to Open Dylan to support single-file libraries.
+A non-exhaustive list:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">dylan-compiler</span></code> and <code class="docutils literal notranslate"><span class="pre">dylan-environment</span></code> programs need to accept files with a
+<code class="docutils literal notranslate"><span class="pre">.dylan</span></code> extension and attempt to open them as projects, giving an appropriate error
+if the file is badly formed.</p></li>
+<li><p>Registry files must be able to point to <code class="docutils literal notranslate"><span class="pre">.dylan</span></code> files in addition to <code class="docutils literal notranslate"><span class="pre">.lid</span></code> files.</p></li>
+<li><p>The IDE will need to handle single-file libraries specially:</p>
+<ul>
+<li><p>It should be possible to open a new project by selecting a <code class="docutils literal notranslate"><span class="pre">.dylan</span></code> file, with an
+appropriate error if the file doesn’t contain library and module definitions.</p></li>
+<li><p>The library and module definitions should be treated as if in the <code class="docutils literal notranslate"><span class="pre">dylan-user</span></code>
+module.</p></li>
+</ul>
+</li>
+</ul>
 </section>
 </section>
 <section id="model-implementation">
@@ -887,6 +907,7 @@ of this file for more detail.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#replacing-library-dylan">Replacing library.dylan</a></li>
+<li><a class="reference internal" href="#open-dylan-support">Open Dylan Support</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#model-implementation">Model Implementation</a></li>
