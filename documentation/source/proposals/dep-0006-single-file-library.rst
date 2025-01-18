@@ -8,9 +8,9 @@ Type:           Standards Track
 Author:         Carl Gay
 Status:         Draft
 Created:        12-Feb-2013 (Darwin's birthday)
-Last-Modified:  04-Dec-2021
+Last-Modified:  16-Jan-2025
 Post-History:   04-Dec-2021 https://gitter.im/dylan-lang/general
-Dylan-Version:  2020.1
+Dylan-Version:  2025.1
 ==============  =============================================
 
 
@@ -51,12 +51,12 @@ for "scripting" purposes.  The mantra has been that Dylan was designed
 for large projects, but there's no reason it can't also excel at
 scripting, with this change and the right set of support libraries.
 
-Note that even though the ``make-dylan-app`` program will generate a
+Note that even though the ``deft new library`` command will generate a
 skeleton project with three files (and a registry), this does not
 remove the need to jump back and forth between the library definition
 file and the main source file as you figure out which modules you need
 to use.  There is also the issue of new users figuring out that
-``make-dylan-app`` exists in the first place, and what LID files are.
+``deft new library`` exists in the first place, and how LID files work.
 
 There are plenty of libraries that are small enough to comfortably fit
 in a single file.  Of the existing libraries in `the dylan-lang github
@@ -85,13 +85,13 @@ inability to deal with import conflicts.
 Goals
 =====
 
-* Make it possible to use the full power of the Dylan module system to
-  define a library in a single file.
+* Make it possible to use the full power of the Dylan module system, or close to it, when
+  defining a library in a single file.
 
 * Make all LID file options available in the single-file library
   format.
 
-* Introduce a minimum of new syntax.  It should be obvious to someone
+* Introduce no new syntax.  It should be obvious to someone
   already used to Dylan what's going on.
 
 
@@ -168,7 +168,7 @@ Replacing the LID File
 ----------------------
 
 LID files have the same format as the header section of a Dylan
-Interchange Format source file.  When defining a Dylan library in a
+Interchange Format source file.  When defining a Dylan project in a
 single source file, all LID keywords may appear in the header section.
 The compiler or interpreter should handle them in the same way it
 would if they were in a separate .lid file.  There is no conflict
@@ -187,10 +187,11 @@ Library Header
 The ``Library`` header is optional. If missing, the library name is the same as
 the module name specified by the ``Module`` header.
 
-.. note:: This decision could have gone the other way, with ``Library``
-          required and ``Module`` optional. The rationale for this choice is
-          that it is normal for each .dylan file to have a ``Module`` header
-          already, so this is consistent with current practice.
+.. note::
+
+   This decision could have gone the other way, with ``Library`` required and ``Module``
+   optional. However, it is normal for each .dylan file to have a ``Module`` header
+   already, so this is consistent with current practice.
 
 Files Header
 ~~~~~~~~~~~~
@@ -198,12 +199,13 @@ Files Header
 The ``Files`` header should not appear in a single-file library.  If
 present, the behavior is undefined.
 
-.. note:: Rationale: an implementation could choose to point to a Dylan source
-          file instead of a LID file in its build system. For example, in Open
-          Dylan a "registry" file could point to a .dylan file instead of a
-          .lid file and there's no reason to prevent the .dylan file from
-          including other Dylan source files. However, that is not part of this
-          proposal.
+.. note::
+
+   An implementation could choose to point to a Dylan source file instead of a LID file
+   in its build system. For example, in Open Dylan a "registry" file could point to a
+   ``.dylan`` file instead of a .lid file and there's no reason to prevent the ``.dylan``
+   file from including other Dylan source files. However, that is not part of this
+   proposal.
 
 Replacing library.dylan
 -----------------------
@@ -213,32 +215,53 @@ A single-file Dylan library is divided into three logical sections:
 1.  Dylan Interchange Format headers, including all headers that are allowed in
     Dylan source files or in LID files.
 
-2.  Library and module definitions (see below).
+2.  Library and module definitions (see below). This section is implicitly in the
+    ``dylan-user`` module. This section ends when the module whose name is specified in
+    the ``Module`` header has been defined.
 
-3.  Main Dylan code
+3.  The main Dylan code.
 
 In the library and module definitions section of the source file normal Dylan
 code comments are allowed and there must be:
 
+* Any code needed by the library and module definitions.  For example, it is possible to
+  define a macro to help define multiple modules. Note, however, that any code in this
+  section is in the ``dylan-user`` module, which is defined by the Dylan implementation,
+  so there is no way to export the code for use in other modules.  More specifically,
+  there is no way to use the code in the main body of the same source file.
+
 * *Exactly one* ``define library`` expression and its name must match the name
-  specified in the ``Library`` header (or the ``Module`` header if there is no
-  ``Library`` header).
+  specified in the ``Library`` header, or the ``Module`` header if there is no
+  ``Library`` header.
 
-* *At least* one ``define module`` expression whose name matches the ``Module``
-  header.
-
-* *No* other Dylan code.
-
-The library and module definitions section ends when the first expression that
-is not a ``define library`` or ``define module`` is encountered.
-
-The library and module definitions section is implicitly in the ``dylan-user``
-module.
+* *At least* one ``define module`` expression whose name matches the name in the
+  ``Module`` header.  This module definition terminates the library and module
+  definition section of the source file.
 
 This construction allows the full power of Dylan's module system to be used,
 for example defining both implementation and interface modules, exporting the
 implementation module for use by a (possibly also single-file) test library,
 etc.
+
+Open Dylan Support
+------------------
+
+Some changes will need to be made to Open Dylan to support single-file libraries.
+A non-exhaustive list:
+
+* The ``dylan-compiler`` and ``dylan-environment`` programs need to accept files with a
+  ``.dylan`` extension and attempt to open them as projects, giving an appropriate error
+  if the file is badly formed.
+
+* Registry files must be able to point to ``.dylan`` files in addition to ``.lid`` files.
+
+* The IDE will need to handle single-file libraries specially:
+
+  - It should be possible to open a new project by selecting a ``.dylan`` file, with an
+    appropriate error if the file doesn't contain library and module definitions.
+
+  - The library and module definitions should be treated as if in the ``dylan-user``
+    module.
 
 Model Implementation
 ====================
