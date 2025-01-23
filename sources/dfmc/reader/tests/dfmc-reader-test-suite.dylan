@@ -1,11 +1,14 @@
 Module: dfmc-reader-test-suite
 License: See License.txt in this distribution for details.
 
+// TODO: this can just use get-token and i think there's already a function to get the
+// fragment string.
 define function get-token-as-string
     (source :: <string>, start :: <integer>) => (token :: <string>, kind)
   let contents = as(<byte-vector>, source);
+  let lexer = make-lexer(source);
   let (kind, bpos, bline, bcol, epos, eline, ecol, unexpected-eof?, current-line, line-start)
-    = get-token-1($initial-state, contents, start, contents.size, 0, 0);
+    = get-token-1(lexer, $initial-state, contents, start, 0, 0);
   values(as(<string>, copy-sequence(contents, start: bpos, end: epos)),
          kind)
 end function get-token-as-string;

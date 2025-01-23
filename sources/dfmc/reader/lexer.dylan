@@ -14,8 +14,12 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $max-lexer-code :: <integer> = 255;
 
+define constant $octothorp-code = as(<integer>, '#');
 
 // state machine
+
+define constant <result-type>
+  = type-union(singleton(#f), <symbol>, <class>, <function>);
 
 // A particular state in the state machine.
 //
@@ -30,9 +34,8 @@ define class <state> (<object>)
   // makes it out of the lexer (e.g. whitespace), classes for simple
   // tokens that don't need any extra parsing, and functions for more
   // complex tokens.
-  constant slot result :: type-union(singleton(#f), <symbol>, <class>, <function>),
-    required-init-keyword: result:;
-  //
+  constant slot result :: <result-type>, required-init-keyword: result:;
+
   // Either #f or a vector of next-states indexed by character code.
   // During construction, vector elements are either state names or #f.
   // After construction, the state names are replaced by the actual
@@ -49,6 +52,28 @@ define method print-object
   pprint-fields(state, stream, name: state.name);
 end method print-object;
 
+
+define class <conditionally-accepting-state> (<state>)
+  // Accepts a <lexer> argument and returns #t to accept, #f to not accept, and
+  // #"use-previous" to use the already seen accepting state. It is an error to return
+  // #"use-previous" unless you know an accepting state has already been seen.
+  constant slot %action :: <function>,
+    required-init-keyword: action:;
+end class;
+
+define inline method do-state-action (lexer :: <lexer>, state :: <state>)
+  state.result & #t
+end method;
+
+define method do-state-action (lexer :: <lexer>, state :: <conditionally-accepting-state>)
+  let res = state.%action(lexer);
+  if (res == #"use-previous")
+    // Whether this is an accepting state or not, use the previous accepting state.
+    #"use-previous"
+  else
+    state.result & res
+  end
+end method;
 
 // Make as many entries as necessary to represent the transitions from
 // 'on' to new-state.  'on' can be a character or a byte-string.  If a
@@ -101,9 +126,7 @@ end method add-transition;
 // transitions into a transition table and makes the state object.
 //
 define method state
-    (name :: <symbol>,
-     result :: type-union(singleton(#f), <symbol>, <class>, <function>),
-     #rest transitions)
+    (name :: <symbol>, result :: <result-type>, #rest transitions)
   let table = size(transitions) > 0
     & make(<vector>, size: $max-lexer-code + 1, fill: #f);
   for (transition in transitions)
@@ -115,6 +138,21 @@ define method state
        transitions: table);
 end method state;
 
+define function conditionally-accepting-state
+    (name :: <symbol>, result :: <result-type>, action :: <function>,
+     #rest transitions)
+  let table = if (size(transitions) > 0)
+                make(<vector>, size: $max-lexer-code + 1, fill: #f)
+              end;
+  for (transition in transitions)
+    add-transition(table, head(transition), tail(transition));
+  end for;
+  make(<conditionally-accepting-state>,
+       name: name,
+       result: result,
+       action: action,
+       transitions: table)
+end function;
 
 // Build a state machine and return the start state, which must be
 // named #"start".
@@ -191,7 +229,12 @@ define class <lexer> (<object>)
   //
   // The position that this line started at.
   slot line-start :: <integer>, required-init-keyword: line-start:;
-  //
+
+  // Used to track balanced consecutive double quotes of any length which delimit
+  // multi-quoted strings. These are reset to 0 after each string is accepted.
+  slot double-quote-start-count :: <integer> = 0;
+  slot double-quote-end-count :: <integer> = 0;
+
   // A list of tokens that have been unread.
   // slot pushed-tokens :: <list>, init-value: #();
   //
@@ -365,9 +408,10 @@ define method get-token
   // accepting state's result.
   //
   let contents :: <byte-vector> = lexer.source.contents;
-  let length :: <integer> = contents.size;
-  let (kind, bpos, bline, bcol, epos, eline, ecol, unexpected-eof?, current-line, current-line-start)
-    = get-token-1($initial-state, contents, lexer.posn, length, lexer.line, lexer.line-start);
+  let (kind, bpos, bline, bcol, epos, eline, ecol, unexpected-eof?,
+       current-line, current-line-start)
+    = get-token-1(lexer, $initial-state, contents, lexer.posn, lexer.line,
+                  lexer.line-start);
 
   //
   // Save the current token's end position so that the next token
@@ -385,22 +429,18 @@ define method get-token
   if (kind)
     do-process-token(kind, lexer, source-location)
   elseif (unexpected-eof?)
-    invalid-end-of-input(source-location);
+    invalid-end-of-input(source-location)
   else
-    invalid-token(source-location);
+    invalid-token(source-location)
   end if
 end method get-token;
 
-// This is separated out from get-token so as to be testable without
-// having to make a <lexer>, which in turn requires having to pull in
-// compilation records et al.  It would be nice to have the lexer only
-// require a simple "source reader" interface of some kind that is
-// less tied to the compiler internals.
 define function get-token-1
-    (state :: <state>, contents :: <byte-vector>, start :: <integer>,
-     length :: <integer>, line :: <integer>, lstart :: <integer>)
+    (lexer :: <lexer>, state :: <state>, contents :: <byte-vector>, start :: <integer>,
+     line :: <integer>, lstart :: <integer>)
  => (kind, bpos, bline, bcol, epos, eline, ecol, unexpected-eof? :: <boolean>,
      current-line, line-start)
+  let length :: <integer> = contents.size;
   let unexpected-eof :: <boolean> = #f;
   let saved-line :: false-or(<integer>) = #f;
   let saved-line-start :: false-or(<integer>) = #f;
@@ -416,9 +456,9 @@ define function get-token-1
     local
       // maybe-done is called when the state machine cannot be advanced any
       // further.  It just checks to see if we really are done or not.
-      method maybe-done () => (posn, result-kind, result-start, result-end)
+      method maybe-done (pos) => (pos, result-kind, result-start, result-end)
         if (~instance?(result-kind, <symbol>))
-          values(posn, result-kind, result-start, result-end)
+          values(pos, result-kind, result-start, result-end)
         else
           // result-kind is a symbol if this is one of the magic accepting
           // states.  Instead of returning some token, we do some special
@@ -458,20 +498,26 @@ define function get-token-1
             let result-start :: <integer> = result-start;
             repeat($initial-state, result-start)
           else
-            values(posn, result-kind, result-start, result-end)
+            values(pos, result-kind, result-start, result-end)
           end if
         end if
       end method maybe-done,
 
       method repeat (state :: <state>, posn :: <integer>)
                  => (posn, result-kind, result-start, result-end)
-        if (state.result)
+        let res = do-state-action(lexer, state);
+        if (res == #t & state.result)
           // An accepting state; record the result and where it ended.
           result-kind := state.result;
           result-end := posn;
         end if;
-        if (posn >= length)
-          maybe-done()
+        if (res == #"use-previous")
+          if (~result-kind)
+            error("the lexer expected a previous accepting state but there is none")
+          end;
+          maybe-done(posn)
+        elseif (posn >= length)
+          maybe-done(posn)
         else
           // Try advancing the state machine once more if possible.
           let table = state.transitions;
@@ -485,7 +531,7 @@ define function get-token-1
             let new-state :: <state> = new-state;
             repeat(new-state, posn + 1)
           else
-            maybe-done()
+            maybe-done(posn)
           end if
         end if
       end method repeat,
@@ -515,9 +561,10 @@ define function get-token-1
         result-end := result-start + 1;
       end if;
     end if;
-    if (result-kind == make-multi-line-string-literal
-          | result-kind == make-multi-line-raw-string-literal
-          | result-kind == make-multi-line-quoted-symbol)
+    // TODO: This is such a hack. Can make-*-literal return the line count and
+    // then we adjust the current line number in get-token, after get-token-1 returns?
+    if (result-kind == make-stringish-literal
+          | result-kind == make-raw-string-literal)
       // multi-line string literals are the only tokens with embedded newlines
       // so they require special treatment.  Increment current-line by the
       // number of newlines in the string to keep source locations correct.
@@ -858,11 +905,11 @@ end method hex-escape-character;
 // any), processing escape codes if escapes? is true, and canonicalizing line endings to
 // just \n.  Works for both one-line and multi-line strings because the lexer state
 // transitions disallow CR and LF in one-line strings in the first place. bpos points to
-// just after the start delimiter (" or """) and epos points to the first character of
-// the end delimiter.
+// just after the start delimiter (", #", #r", """, etc) and epos points to the first
+// character of the end delimiter.
 define method decode-string
     (source-location :: <lexer-source-location>, bpos :: <integer>,
-     epos :: <integer>, escapes? :: <boolean>, triple-quoted? :: <boolean>)
+     epos :: <integer>, escapes? :: <boolean>)
  => (string :: <byte-string>)
   local
     method fail (format-string, #rest format-args)
@@ -870,10 +917,10 @@ define method decode-string
            source-location: source-location,
            token-string: extract-string(source-location),
            detail: apply(format-to-string, format-string, format-args));
-    end,
+    end method,
     method whitespace-code? (c)
       c == $space-code
-    end,
+    end method,
     method find-line-break (seq, bpos, epos)
       if (bpos < epos)
         select (seq[bpos])
@@ -891,20 +938,23 @@ define method decode-string
             find-line-break(seq, bpos + 1, epos);
         end
       end
-    end,
+    end method,
     method remove-prefix (prefix, line)
       if (~prefix | empty?(prefix))
         line
       else
-        for (c in line, p in prefix)
-          if (c ~== p)
-            fail("each line must begin with the same whitespace prefix, got %=, want %=",
-                 as(<string>, line), as(<string>, prefix))
-          end;
-        end;
-        copy-sequence(line, start: prefix.size)
+        every?(\==, line, prefix)
+          | fail("each line must begin with the same whitespace prefix, got %=, want %=",
+                 as(<string>, line), as(<string>, prefix));
+        // In keeping with the C# spec, any prefix of the prefix is allowed, so it is
+        // valid here if line.size < prefix.size.
+        if (line.size < prefix.size)
+          ""
+        else
+          copy-sequence(line, start: prefix.size)
+        end
       end
-    end,
+    end method,
     // Can't use hex-escape-character because we don't know the correct offset from the
     // beginning of the literal due to using split/join.
     method parse-hex-escape (line, start) => (char, epos)
@@ -924,7 +974,7 @@ define method decode-string
       else
         values(code, epos + 1)
       end
-    end,
+    end method,
     method process-escapes (line)
       let len = line.size;
       let new = make(<stretchy-vector>);
@@ -952,7 +1002,7 @@ define method decode-string
           end
         end
       end iterate
-    end,
+    end method,
     method process-line (prefix, line)
       if (~empty?(line))
         if (prefix & ~empty?(prefix))
@@ -963,63 +1013,30 @@ define method decode-string
         end;
       end;
       line
-    end;
+    end method;
   let contents = source-location.source-location-record.contents;
   let parts = split(contents, find-line-break, start: bpos, end: epos);
-  if (parts.size == 1)
-    as(<string>, process-line(#f, parts[0]))      // e.g., "x" or """x"""
-  else
-    let prefix = parts.last;
-    if (~every?(whitespace-code?, prefix))
-      fail("prefix must be all whitespace, got %=", as(<string>, prefix));
-    end;
-    if (~every?(whitespace-code?, parts.first))
-      fail("only whitespace may follow the open delimiter \"\"\" on the"
-             " same line, got %=", parts.first);
-    end;
-    let parts = map(curry(process-line, prefix), parts);
-    // Deal with this oddity in our spec:
-    // """\n
-    // abc\n            => LF excluded, end is before '\n'
-    // """
-    // """\n
-    // \n               => LF included, end is after '\n'
-    // """
-    as(<string>,
-       join(copy-sequence(parts,
-                          start: 1,
-                          end: if (empty?(parts[parts.size - 2]))
-                                 parts.size
-                               else
-                                 parts.size - 1
-                               end),
-            make(<byte-vector>, size: 1, fill: $newline-code)))
-  end if
+  select (parts.size)
+    1 =>
+      as(<string>, process-line(#f, parts[0])); // e.g., """abc"""
+    2 =>
+      fail("multi-line strings must contain at least one line");
+    otherwise =>
+      let prefix = parts.last;
+      if (~every?(whitespace-code?, prefix))
+        fail("prefix must be all whitespace, got %=", as(<string>, prefix));
+      end;
+      if (~every?(whitespace-code?, parts.first))
+        // TODO: put the actual delimiter in the error message, in case it has more than
+        // 3 double quotes.
+        fail("only whitespace may follow the open delimiter \"\"\" on the"
+               " same line, got %=", parts.first);
+      end;
+      let parts = map(curry(process-line, prefix),
+                      copy-sequence(parts, start: 1, end: parts.size - 1));
+      as(<string>, join(parts, make(<byte-vector>, size: 1, fill: $newline-code)))
+  end select
 end method decode-string;
-
-// Make a <literal-token> when confronted with the #"foo" syntax.
-// These are referred to as "unique strings" in the DRM Lexical Syntax.
-//
-define method %make-quoted-symbol
-    (lexer :: <lexer>, source-location :: <lexer-source-location>,
-     start-offset :: <integer>, end-offset :: <integer>, multi-line? :: <boolean>)
- => (res :: <symbol-syntax-symbol-fragment>)
-  let sym = as(<symbol>,
-               decode-string(source-location,
-                             source-location.start-posn + start-offset,
-                             source-location.end-posn - end-offset,
-                             #t, multi-line?));
-  make(<symbol-syntax-symbol-fragment>,
-       record: source-location.source-location-record,
-       source-position: source-location.source-location-source-position,
-       value: as-fragment-value(sym));
-end method;
-
-define constant make-quoted-symbol
-  = rcurry(%make-quoted-symbol, 2, 1, #f);
-
-define constant make-multi-line-quoted-symbol
-  = rcurry(%make-quoted-symbol, 4, 3, #t);
 
 // Make a <literal-token> when confronted with the foo: syntax.
 //
@@ -1182,32 +1199,87 @@ define method make-character-literal
             end));
 end method make-character-literal;
 
-define method %make-string-literal
-    (lexer :: <lexer>, source-location :: <lexer-source-location>,
-     start-offset :: <integer>, end-offset :: <integer>,
-     allow-escapes? :: <boolean>, multi-line? :: <boolean>)
- => (res :: <string-fragment>)
-  let bpos = source-location.start-posn + start-offset;
-  let epos = source-location.end-posn - end-offset;
-  let string = decode-string(source-location, bpos, epos, allow-escapes?, multi-line?);
+define function increment-double-quote-start-count
+    (lexer :: <lexer>)
+  // If "" has been seen we can accept the empty string here.
+  2 == (lexer.double-quote-start-count := lexer.double-quote-start-count + 1)
+end function;
+
+define function increment-double-quote-end-count
+    (lexer :: <lexer>)
+  let dq-end-count = (lexer.double-quote-end-count := lexer.double-quote-end-count + 1);
+  dq-end-count == lexer.double-quote-start-count
+    & dq-end-count ~== 2
+end function;
+
+// The lexer is transitioning away from a sequence of double quotes that could
+// potentially be the end delimiter.
+define function reset-double-quote-end-count
+    (lexer :: <lexer>)
+  let dq-start-count = lexer.double-quote-start-count;
+  let dq-end-count   = lexer.double-quote-end-count;
+  lexer.double-quote-end-count := 0;
+  if (dq-start-count == dq-end-count | dq-start-count == 2)
+    // #"use-previous" tells the lexer to use the previous accepting state immediately
+    // rather than trying to greedily consume more. We want this both when we've seen a
+    // full string with balanced delimiters and when the start delimiter is ``""``.
+    // The latter must always be parsed as the empty string, not a start delimiter.
+    #"use-previous"
+  end
+end function;
+
+define function make-stringish-literal
+    (lexer :: <lexer>, source-location :: <lexer-source-location>)
+ => (fragment :: <fragment>)
+  let start :: <integer> = source-location.start-posn;
+  let contents :: <byte-vector> = source-location.source-location-record.contents;
+  let symbol? = contents[start] == $octothorp-code;
+  let prefix-length = if (symbol?) 1 else 0 end;
+  let string = extract-string-contents(prefix-length, #t, lexer, source-location);
+  if (symbol?)
+    make(<symbol-syntax-symbol-fragment>,
+         record: source-location.source-location-record,
+         source-position: source-location.source-location-source-position,
+         value: as-fragment-value(as(<symbol>, string)))
+  else
+    make(<string-fragment>,
+         record: source-location.source-location-record,
+         source-position: source-location.source-location-source-position,
+         value: as-fragment-value(string))
+  end
+end function;
+
+define function make-raw-string-literal
+    (lexer :: <lexer>, source-location :: <lexer-source-location>)
+ => (fragment :: <fragment>)
+  let string = extract-string-contents(2, #f, lexer, source-location);
   make(<string-fragment>,
        record: source-location.source-location-record,
        source-position: source-location.source-location-source-position,
-       // kind: $string-token,
        value: as-fragment-value(string))
-end method;
+end function;
 
-define constant make-string-literal                // "..."
-  = rcurry(%make-string-literal, 1, 1, #t, #f);
-
-define constant make-multi-line-string-literal     // """..."""
-  = rcurry(%make-string-literal, 3, 3, #t, #t);
-
-define constant make-raw-string-literal            // #r"..."
-  = rcurry(%make-string-literal, 3, 1, #f, #f);
-
-define constant make-multi-line-raw-string-literal // #r"""..."""
-  = rcurry(%make-string-literal, 5, 3, #f, #t);
+define function extract-string-contents
+    (prefix-length :: <integer>, escapes? :: <boolean>,
+     lexer :: <lexer>, source-location :: <lexer-source-location>)
+ => (s :: <string>)
+  let dq-start-count = lexer.double-quote-start-count;
+  lexer.double-quote-start-count := 0;
+  lexer.double-quote-end-count   := 0;
+  let start = source-location.start-posn;
+  let _end  = source-location.end-posn;
+  // If the total length of the accepted string is 2 then it's the empty string. It's a
+  // special case because the start/end delimiter counts may not be accurate when
+  // fall-back to the previously accepting state ("") occurs.
+  let shortest = 2 + prefix-length;
+  if (_end - start == shortest)
+    ""
+  else
+    let bpos = start + dq-start-count + prefix-length;
+    let epos = _end - dq-start-count;
+    decode-string(source-location, bpos, epos, escapes?)
+  end
+end function;
 
 define method parse-ratio-literal
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
