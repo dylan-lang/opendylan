@@ -229,27 +229,50 @@ define test string-literal-test ()
                  "invalid hex escape");
   assert-signals(<invalid-token>,
                  read-fragment("\"\n\""),
-                 "Newline not allowed in non-multi-line string literal");
+                 "Newline not allowed in one-line string literal");
   assert-signals(<invalid-string-literal>,
                  read-fragment("\"\t\""),
                  "Tab not allowed in string literal");
 end test;
 
-// Note: one line as in one line of source code not as in having no newline characters.
+define function verify-string-literal
+    (description, want-value, source-code)
+  let frag = get-token(make-lexer(source-code));
+  assert-instance?(<string-fragment>, frag, description);
+  assert-equal(want-value, frag.fragment-value, description);
+  frag
+end function;
+
 define test test-multi-quoted-one-line-strings ()
-  assert-signals(<error>, read-fragment("\"\"\"\"zz\"\"\""), // 4-doubles zz 3-doubles
-                 "unterminated string using 4-doubles delimiter");
-  // Make sure the reader didn't stop at the first pair of double quotes...
-  let frag0 = read-fragment(#:string:{"""x"""});
+  verify-string-literal("2 double-quotes never delimiter, always empty string",
+                        "",
+                        "\"\"zz\"\"");
+  verify-string-literal("unterminated multi-quote string accepts empty string (1)",
+                        "",
+                        "\"\"\"\"zz\"\"");
+  verify-string-literal("unterminated multi-quote string accepts empty string (2)",
+                        "",
+                        "\"\"\"\"");
+
+  let frag0 = verify-string-literal("simple triple-quoted string",
+                                    "x",
+                                    #:string:{"""x""" junk here});
   assert-equal(#:string:{"""x"""},
-               source-location-string(fragment-source-location(frag0)),
-               "entire 3-doubles string consumed?");
-  let frag1 = read-fragment(#:string:{"""abc"""});
-  assert-equal("abc", frag1.fragment-value);
-  let frag2 = read-fragment(#:string:{""" abc """});
-  assert-equal(" abc ", frag2.fragment-value);
-  let frag3 = read-fragment(#:string:{"""""abc\ndef"""""}); // 5-doubles
-  assert-equal("abc\ndef", frag3.fragment-value);
+               get-source(frag0),
+               "triple-quoted string fully consumed");
+
+  verify-string-literal("5-quoted string with escaped newline",
+                        "abc\ndef",
+                        #:string:{"""""abc\ndef"""""});
+  verify-string-literal("3-quoted string containing 2-quoted string",
+                        #:string:{f("", "")},
+                        #:string:{"""f("", "")"""});
+  verify-string-literal("4-quoted string containing 3-quoted string",
+                        #:string:{f("""x""")},
+                        #:string:{""""f("""x""")""""});
+  verify-string-literal("3-quoted string containing unbalanced quotes",
+                        #:string:{f("", ")},
+                        #:string:{"""f("", ")"""});
 end test;
 
 define test test-multi-line-string-basics ()
@@ -291,62 +314,78 @@ def
 end test;
 
 define test test-multi-line-empty-strings ()
-  assert-signals(<invalid-token>, read-fragment(#:string:{"""
-  """}),
-                 "multi-line string must have at least one line");
-  let frag1 = read-fragment("\"\"\"\n\n\"\"\"");
-  assert-equal("", frag1.fragment-value, "multi-line empty string, no prefix");
-  let frag2 = read-fragment("\"\"\"\n  \n  \"\"\"");
+  assert-signals(<invalid-string-literal>,
+                 read-fragment(#:string:{"""
+"""}),
+                 "multi-line strings must have at least one line");
+
+  let frag1 = read-fragment(#:string:{"""
+
+"""});
+  assert-equal("", frag1.fragment-value, "blank line, no prefix");
+
+  let frag2 = read-fragment(#:string:{"""
+
+                                      """});
   assert-equal("", frag2.fragment-value, "multi-line empty string, with prefix");
 end test;
 
 define test test-multi-line-string-with-blank-lines ()
+
+  // Not using #:string: here to avoid having trailing whitespace, which could be removed
+  // by editors.
+  let frag2 = read-fragment("\"\"\"\n  def\n  \n  \"\"\"");
+  assert-equal("def\n", frag2.fragment-value, "blank line with prefix");
 end test;
 
 define test test-multi-line-string-whitespace-relative-to-delimiters ()
-  let frag1 = read-fragment(#:string:{"""
+  verify-string-literal("leading whitespace preserved, no prefix",
+                        "  abc\ndef",
+                        #:string:{"""
   abc
 def
 """});
-  assert-equal("  abc\ndef", frag1.fragment-value, "leading whitespace preserved?");
-
-  let frag2 = read-fragment(#:string:{"""
-    xxx
-  yyy
-  """});
-  assert-equal("  xxx\nyyy", frag2.fragment-value,
-               "leading whitespace relative to prefix preserved?");
-
-  let frag3 = read-fragment("\"\"\"  xxx  \n  yyy  \n  \"\"\"");
-  assert-equal("xxx  \nyyy  ", frag3.fragment-value, "trailing whitespace preserved?");
+  verify-string-literal("leading whitespace preserved, with prefix",
+                        "  xxx\nyyy",
+                        #:string:{"""
+                                    xxx
+                                  yyy
+                                  """});
+  verify-string-literal("trailing whitespace preserved",
+                        "xxx  \nyyy  ",
+                        "\"\"\"\n  xxx  \n  yyy  \n  \"\"\"");
 end test;
 
 define test test-multi-line-string-delimiter-rules ()
-  // Whitespace following the opening """ and preceding the first \n should be ignored.
   let frag1 = read-fragment("\"\"\"   \n  abc\n  \"\"\"");
   assert-equal("abc", frag1.fragment-value,
-               "whitespace allowed after open delimiter?");
+               "whitespace allowed after open delimiter");
 
   assert-signals(<invalid-string-literal>,
                  read-fragment(#:string:{"""a  (only whitespace allowed after start delim)
 abc
 """}),
-                 "junk on first line");
+                 "junk not allowed on first line");
   assert-signals(<invalid-string-literal>,
                  read-fragment(#:string:{"""
 abc
 xxx"""}),
-                  "junk on last line");
+                  "junk not allowed on last line");
   assert-signals(<invalid-string-literal>,
                  read-fragment(#:string:{"""
    abc
   xxx  (this line not indented enough)
    """}),
-                 "prefix mismatch non-white");
-
+                 "prefix mismatch");
   assert-signals(<invalid-string-literal>,
                  read-fragment("\"\"\"\n  \n\t\"\"\""),
                  "prefix mismatch space vs tab");
+  // A line shorter than the prefix, but which is a prefix of the prefix, is allowed in
+  // order to ease copy / paste of the code, according to the C# spec. Here the empty
+  // line in the string is 2 spaces and the prefix is 3 spaces.
+  verify-string-literal("line is only a prefix of the prefix",
+                        "",
+                        "\"\"\"\n  \n   \"\"\"");
 end test;
 
 define test test-multi-line-string-eol-handling ()
@@ -402,54 +441,104 @@ define test test-multi-line-string-escaping ()
 end test;
 
 define test string-literal-raw-one-line-test ()
-  let f = read-fragment(#:string:{#r""});
-  verify-literal(f, "", <string-fragment>);
-  let source = source-location-string(fragment-source-location(f));
-  assert-equal(#:string:{#r""}, source);
+  verify-string-literal("raw one line empty string with #r",
+                        "",
+                        #:string:{#r""});
+  verify-string-literal("raw one line empty string with #R",
+                        "",
+                        #:string:{#R""});
+  verify-string-literal("raw one line simple string",
+                        "abc",
+                        #:string:{#r"abc"});
+  verify-string-literal("raw one line string with backslash",
+                        "a\\c",
+                        #:string:{#r"a\c"});
+  verify-string-literal("all escape codes in raw string",
+                        "\\a\\b\\e\\f\\n\\r\\t\\0\\'\\<\\\\",
+                        #:string:{#R"\a\b\e\f\n\r\t\0\'\<\\"});
 
-  // Repeat the above for #R
-  let f = read-fragment(#:string:{#R""});
-  verify-literal(f, "", <string-fragment>);
-  let source = source-location-string(fragment-source-location(f));
-  assert-equal(#:string:{#R""}, source);
+  verify-string-literal("raw, 2 double-quotes never delimiter, always empty string",
+                        "",
+                        #:string:{#R""zz""});
+  verify-string-literal("unterminated multi-quote raw string accepts empty string (1)",
+                        "",
+                        "#r\"\"\"\"zz\"\"");
+  verify-string-literal("unterminated multi-quote raw string accepts empty string (2)",
+                        "",
+                        "#r\"\"\"\"");
 
-  verify-literal(read-fragment(#:string:{#r"abc"}), "abc", <string-fragment>);
-  verify-literal(read-fragment(#:string:{#r"a\c"}), "a\\c", <string-fragment>);
+  let frag0 = verify-string-literal("simple triple-quoted raw string",
+                                    "x",
+                                    #:string:{#r"""x""" junk here});
+  assert-equal(#:string:{#r"""x"""},
+               get-source(frag0),
+               "triple-quoted raw string fully consumed");
 
-  // All escape codes ignored?  \ precedes the terminating double quote to
-  // ensure that it is ignored. We replace the X after the fact, to avoid
-  // confusing Emacs.
-  let s = #:string:{#r"\a\b\e\f\n\r\t\0\'\\\<X"};
-  s[s.size - 2] := '\\';
-  verify-literal(read-fragment(s),
-                 concatenate(#:string:{\a\b\e\f\n\r\t\0\'\\\<}, "\\"),
-                 <string-fragment>);
+  verify-string-literal("3-quoted raw string containing 2-quoted string",
+                        #:string:{f("", "")},
+                        #:string:{#r"""f("", "")"""});
+  verify-string-literal("4-quoted raw string containing 3-quoted string",
+                        #:string:{f("""x""")},
+                        #:string:{#r""""f("""x""")""""});
+  verify-string-literal("3-quoted raw string containing unbalanced quotes",
+                        #:string:{f("", ")},
+                        #:string:{#r"""f("", ")"""});
 end test;
 
 define test string-literal-raw-multi-line-test ()
-  assert-signals(<invalid-token>, read-fragment(#:string:{#r""""""}));
+  // <invalid-string-literal> because it's rejected after matching the state machine.
   assert-signals(<invalid-string-literal>,
-                 read-fragment(#:string:{#r"""
-                                           """}),
-                 "multi-line raw string must have at least one line");
-  verify-literal(read-fragment(#:string:{#R"""
+                 get-token(make-lexer(#:string:{#r"""
+                                                  """})),
+                 "raw multi-line string must have at least one line");
+  // <invalid-token> because it doesn't match the state machine.
+  assert-signals(<invalid-token>,
+                 get-token(make-lexer(#:string:{#r"
 
-                                           """}),
-                 "",
-                 "multi-line raw empty string");
+                                                  "})),
+                 "raw multi-line string delimiters must be at least length 3");
+  verify-string-literal("multi-line raw empty string with prefix",
+                        "",
+                        #:string:{#R"""
 
-  verify-literal(read-fragment(#:string:{#r"""abc"""}), "abc", <string-fragment>);
-  verify-literal(read-fragment(#:string:{#r"""a\c"""}), "a\\c", <string-fragment>);
-  verify-literal(read-fragment(#:string:{#r"""a""c"""}), "a\"\"c", <string-fragment>);
-  verify-literal(read-fragment(#:string:{#r"""""xo"""""}), "xo", <string-fragment>);
+                                    """});
+  verify-string-literal("multi-line raw empty string without prefix",
+                        "",
+                        #:string:{#R"""
 
-  // All escape codes ignored?  \ precedes the terminating double quotes to
-  // ensure that it is ignored.
-  let s = #:string:{#r"""\a\b\e\f\n\r\t\0\'\\\<X"""};
-  s[s.size - 4] := '\\';        // to avoid confusing emacs
-  verify-literal(read-fragment(s),
-                 concatenate(#:string:{\a\b\e\f\n\r\t\0\'\\\<}, "\\"),
-                 <string-fragment>);
+"""});
+  verify-string-literal("raw multi-line non-empty string",
+                        "abc",
+                        #:string:{#r"""
+                                    abc
+                                    """});
+  verify-string-literal("raw multi-line string with escape sequence",
+                        "xx\\nxx",
+                        #:string:{#r"""
+                                    xx\nxx
+                                    """});
+  verify-string-literal("raw multi-line string with nested double quotes",
+                        "a\"\"b",
+                        #:string:{#r"""
+                                    a""b
+                                    """});
+  verify-string-literal("raw multi-line string with length 4 delimiters",
+                        "xo",
+                        #:string:{#r"""""
+                                    xo
+                                    """""});
+  verify-string-literal("raw multi-line string with length 4 delimiters, nested 3s",
+                        "  \"\"\"hey\"\"\"",
+                        #:string:{#r"""""
+                                      """hey"""
+                                    """""});
+  verify-string-literal("raw multi-line nesting madness",
+                        #:string:{let x = #r"abc";
+let y = """"abc"""";},
+                        #:string:{#r"""""""""
+      let x = #r"abc";
+      let y = """"abc"""";
+      """""""""});
 end test;
 
 define test symbol-literal-test ()
@@ -525,6 +614,7 @@ define suite literal-test-suite ()
   test test-multi-line-string-basics;
   test test-multi-line-string-escaping;
   test test-multi-line-string-delimiter-rules;
+  test test-multi-line-string-whitespace-relative-to-delimiters;
   test test-multi-line-string-with-blank-lines;
   test test-multi-line-empty-strings;
   test test-multi-quoted-one-line-strings;
