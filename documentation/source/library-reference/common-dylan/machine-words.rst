@@ -23,157 +23,167 @@ from all other classes specified by the Dylan language.
 
 The :drm:`==` function compares instances of :class:`<machine-word>` by value.
 
-Useful functions from the Dylan module
-======================================
+Extensions to the Dylan Module
+==============================
 
 This section describes additional methods defined in the ``dylan`` module that
 pertain to :class:`<machine-word>`. Note that this section only describes
-extensions to the ``dylan`` library; for complete descriptions, you should also
-refer to the *Dylan Reference Manual*.
+*extensions* to the ``dylan`` module; for complete descriptions, you should also
+refer to the `Dylan Reference Manual <https://opendylan.org/books/drm/>`_.
 
-Note that the ``common-dylan`` library also has these extensions because it
+Note that the :doc:`common-dylan <index>` library also has these extensions because it
 uses the ``dylan`` library.
 
-.. function:: odd?
+.. method:: odd?
+   :sealed:
+   :specializer: <machine-word>
 
-   :signature: odd? m => r
+   Tests whether the argument is odd when interpreted as a signed integer value.
 
-   :parameter m: An instance of :class:`<machine-word>`
-   :value r: An instance of :drm:`<boolean>`
+   :seealso: :drm:`odd?`
 
-.. function:: even?
+.. method:: even?
+   :sealed:
+   :specializer: <machine-word>
 
-   :signature: even? m => r
+   Tests whether the argument is even when interpreted as a signed integer value.
 
-   :parameter m: An instance of :class:`<machine-word>`
-   :value r: An instance of :drm:`<boolean>`
+   :seealso: :drm:`even?`
 
-.. function:: zero?
+.. method:: zero?
+   :sealed:
+   :specializer: <machine-word>
 
-   :signature: zero? m => r
+   Tests whether the argument is zero when interpreted as a signed integer value.
 
-   :parameter m: An instance of :class:`<machine-word>`
-   :value r: An instance of :drm:`<boolean>`
+   :seealso: :drm:`zero?`
 
-.. note:: Cannot be used as the name of a result. It is not a valid Dylan name.
+.. method:: positive?
+   :sealed:
+   :specializer: <machine-word>
 
-.. function:: positive?
+   Tests whether the argument is positive when interpreted as a signed integer value.
 
-   :signature: positive? m => r
+   :seealso: :drm:`positive?`
 
-   :parameter m: An instance of :class:`<machine-word>`
-   :value r: An instance of :drm:`<boolean>`
+.. method:: negative?
+   :sealed:
+   :specializer: <machine-word>
 
-.. function:: negative?
+   Tests whether the argument is negative when interpreted as a signed integer value.
 
-   :signature: negative? m => r
+   :seealso: :drm:`negative?`
 
-   :parameter m: An instance of :class:`<machine-word>`
-   :value r: An instance of :drm:`<boolean>`
+.. method:: =
+   :sealed:
+   :specializer: <machine-word>, <machine-word>
 
-These functions return a result based on interpreting ``m`` as a signed
-integer value.
+   Compares two :class:`<machine-word>` values for equality when interpreted as signed
+   integer values.
 
-.. function:: \=
+   :seealso: :drm:`=`
 
-   :signature: = m1 m2 => r
-   :signature: = i1 m2 => r
-   :signature: = m1 i2 => r
+.. method:: =
+   :sealed:
+   :specializer: <abstract-integer>, <machine-word>
 
-   :parameter m1: An instance of :class:`<machine-word>`
-   :parameter m2: An instance of :class:`<machine-word>`
-   :parameter i1: An instance of :class:`<abstract-integer>`
-   :parameter i2: An instance of :class:`<abstract-integer>`
-   :value r: An instance of :drm:`<boolean>`
+   Compares two values for equality when the second argument is interpreted as a signed
+   integer value.
 
-   :description:
+   :seealso: :drm:`=`
 
-     The comparison is performed with the :class:`<machine-word>` arguments
-     interpreted as signed integer values.
+.. method:: =
+   :sealed:
+   :specializer: <machine-word>, <abstract-integer>
 
-.. function:: <
+   Compares two values for equality when the first argument is interpreted as a signed
+   integer value.
 
-   :signature: < m1 m2 => r
-   :signature: < i1 m2 => r
-   :signature: < m1 i2 => r
+   :seealso: :drm:`=`
 
-   :parameter m1: An instance of :class:`<machine-word>`
-   :parameter m2: An instance of :class:`<machine-word>`
-   :parameter i1: An instance of :class:`<abstract-integer>`
-   :parameter i2: An instance of :class:`<abstract-integer>`
-   :value r: An instance of :drm:`<boolean>`
+.. method:: <
+   :sealed:
+   :specializer: <machine-word>, <machine-word>
 
-   :description:
+   Returns true if the first argument is less than the second argument when both are
+   interpreted as signed integer values.
 
-     The comparison is performed with the :class:`<machine-word>` arguments
-     interpreted as signed integer values.
+   :seealso: :drm:`<`
 
-.. function:: as
+.. method:: <
+   :sealed:
+   :specializer: <abstract-integer>, <machine-word>
 
-   :signature: as t == <integer> m => r
+   Returns true if the first argument is less than the second argument when the second
+   argument is interpreted as a signed integer value.
 
-   :parameter m: An instance of :class:`<machine-word>`
-   :value r: An instance of :drm:`<integer>`
+   :seealso: :drm:`<`
 
-   :description:
+.. method:: <
+   :sealed:
+   :specializer: <machine-word>, <abstract-integer>
 
-     The result is an :drm:`<integer>` with the same value as ``m`` when
-     interpreted as a signed integer value. An error is signaled if the value
-     of ``m`` cannot be represented as an instance of :drm:`<integer>`.
+   Returns true if the first argument is less than the second argument when the first
+   argument is interpreted as a signed integer value.
 
-.. function:: as
+   :seealso: :drm:`<`
 
-   :signature: as t == <abstract-integer> m => r
+.. method:: as
+   :sealed:
+   :specializer: singleton(<integer>), <machine-word>
 
-   :parameter m: An instance of :class:`<machine-word>`
-   :value r: An instance of :class:`<abstract-integer>`
+   The result is an :drm:`<integer>` with the same value as the machine word when
+   interpreted as a signed integer value.  An error is signaled if the machine word
+   cannot be represented as an instance of :drm:`<integer>`.
 
-   :description:
+   :seealso: :drm:`as`
 
-     The result is an :class:`<abstract-integer>` with the same value as ``m``
-     when interpreted as a signed integer value.
+.. method:: as
+   :sealed:
+   :specializer: singleton(<abstract-integer>), <machine-word>
 
-     (The uses for an instance of :class:`<abstract-integer>` that is not also
-     an instance of :drm:`<integer>` are rather limited without the
-     Generic-Arithmetic library.)
+   The result is an :class:`<abstract-integer>` with the same value the machine word when
+   interpreted as a signed integer value.
 
-.. function:: as
+   This method is primarily useful in combination with the `generic-arithmetic
+   </library-reference/language-extensions/numbers.html#the-generic-arithmetic-library>`_
+   library.
 
-   :signature: as t == <machine-word> i => r
+   :seealso: :drm:`as`
 
-   :parameter i: An instance of :class:`<abstract-integer>`
-   :value r: An instance of :class:`<machine-word>`
+.. method:: as
+   :sealed:
+   :specializer: singleton(<machine-word>), <abstract-integer>
 
-   :description:
+   If the value of the integer is outside the machine word range, then the result
+   consists of the low :const:`$machine-word-size` bits of its twos-complement
+   representation. If any of the discarded bits differ from the sign of the integer, then
+   an error is signaled.
 
-     If the value of ``i`` is outside the machine word range, then the result
-     consists of the low :const:`$machine-word-size` bits of the twos-complement
-     representation of ``i``. If any of the discarded bits differ from the
-     sign of ``i``, then an error is signaled.
+   :seealso: :drm:`as`
+
 
 .. function:: limited
 
-   :signature: limited t == <machine-word> #key signed? min max => r
+   :signature: limited singleton(<machine-word>) #key *signed?* *min* *max* => *type*
 
-   :parameter #key signed?: An instance of :drm:`<boolean>`. Defaults to
-                            :drm:`#t`.
+   :parameter #key signed?: An instance of :drm:`<boolean>`. Defaults to :drm:`#t`.
    :parameter #key min: An instance of :class:`<machine-word>`
    :parameter #key max: An instance of :class:`<machine-word>`
-   :value r: An instance of :class:`<type>`
+   :value type: An instance of :class:`<type>`
 
-   :description:
+   If the *signed?* argument is true (the default) then the *min* and *max* arguments are
+   interpreted as signed values, otherwise they are interpreted as unsigned values. The
+   default value for each of *min* and *max* depends on the value of *signed?*.  The
+   defaults are taken from the corresponding minimum and maximum machine word values (see
+   :const:`$maximum-signed-machine-word` and related constants below).
 
-     If the ``signed?`` argument is true (the default) then the ``min`` and
-     ``max`` arguments are interpreted as signed values. When ``signed?`` is
-     false, the ``min`` and ``max`` arguments are interpreted as unsigned
-     values. The default value for each of min and max depends on the value of
-     ``signed?``.  The defaults are taken from the corresponding minimum and
-     maximum machine word values (see :const:`$maximum-signed-machine-word` and
-     related constants below).
+   For convenience, the values of *min* and/or *max* may also be instances of
+   :class:`<abstract-integer>`, in which case they are coerced to instances of
+   :class:`<machine-word>` as if by using :drm:`as`.
 
-     For convenience, the values of ``min`` and/or ``max`` may also be
-     instances of :class:`<abstract-integer>`, in which case they are coerced
-     to instances of :class:`<machine-word>` as if by using ``as``.
+   :seealso: :drm:`limited`
+
 
 The machine-words Module
 ========================
@@ -200,7 +210,7 @@ This section contains a reference entry for each item exported from the
    :operations:
 
      The :class:`<machine-word>` class provides the operations described below
-     and in `Useful functions from the Dylan module`_.
+     and in `Extensions to the Dylan module`_.
 
 Variables
 ---------
@@ -250,17 +260,17 @@ The following variables are exported from the ``machine-words`` module.
 
 .. function:: as-unsigned
 
-   :signature: as-unsigned t m => result
+   :signature: as-unsigned *type* *machine-word* => *machine-word*
 
-   :parameter t: A type
-   :parameter m: An instance of :class:`<machine-word>`
-   :value result: An instance of ``t``
+   :parameter type: A type
+   :parameter machine-word: An instance of :class:`<machine-word>`
+   :value result: An instance of type ``type``.
 
    :description:
 
-     The value of ``m`` is interpreted as an unsigned value and converted to an
+     The value ``machine-word`` is interpreted as an unsigned value and converted to an
      instance of :class:`<abstract-integer>`, then the result of that conversion
-     is converted to type ``t`` using ``as``.
+     is converted to type ``type`` using :drm:`as`.
 
 Basic and signed single word operations
 ---------------------------------------
