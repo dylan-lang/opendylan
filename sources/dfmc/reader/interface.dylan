@@ -102,8 +102,8 @@ define serious-program-warning <character-code-too-large> (<invalid-token>)
   format-arguments token-string;
 end serious-program-warning;
 
-define serious-program-warning <invalid-multi-line-string-literal> (<invalid-token>)
-  format-string    "Invalid multi-line string literal: %s";
+define serious-program-warning <invalid-string-literal> (<invalid-token>)
+  format-string    "Invalid string literal: %s";
   format-arguments detail;
 end serious-program-warning;
 

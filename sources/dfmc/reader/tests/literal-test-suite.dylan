@@ -221,9 +221,15 @@ define test string-literal-test ()
   verify-literal(read-fragment(#:string:{"z\<009f>z"}),
                  map-as(<string>, char, #('z', #x9f, 'z')),
                  <string-fragment>);
-  // A one line string literal can't contain a literal Newline.
-  assert-signals(<invalid-token>, read-fragment("\"\n\""));
-  assert-signals(<invalid-token>, read-fragment(#:string:{"\1<b>"}));
+  assert-signals(<invalid-token>,
+                 read-fragment(#:string:{"\1<b>"}),
+                 "invalid hex escape");
+  assert-signals(<invalid-token>,
+                 read-fragment("\"\n\""),
+                 "Newline not allowed in non-multi-line string literal");
+  assert-signals(<invalid-string-literal>,
+                 read-fragment("\"\t\""),
+                 "Tab not allowed in string literal");
 end test;
 
 // Note: one line as in one line of source code not as in having no newline characters.
@@ -318,17 +324,17 @@ define test test-multi-line-string-delimiter-rules ()
   // sequences instead of with #:string:.
   let frag1 = read-fragment("\"\"\"   \n  abc\n  \"\"\"");
   assert-equal("abc", frag1.fragment-value);
-  assert-signals(<invalid-multi-line-string-literal>,
+  assert-signals(<invalid-string-literal>,
                  read-fragment(#:string:{"""a  (only whitespace allowed after start delim)
 abc
 """}),
                  "junk on first line");
-  assert-signals(<invalid-multi-line-string-literal>,
+  assert-signals(<invalid-string-literal>,
                  read-fragment(#:string:{"""
 abc
 xxx"""}),
                   "junk on last line");
-  assert-signals(<invalid-multi-line-string-literal>,
+  assert-signals(<invalid-string-literal>,
                  read-fragment(#:string:{"""
    abc
   xxx  (this line not indented enough)

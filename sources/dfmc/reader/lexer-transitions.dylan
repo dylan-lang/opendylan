@@ -16,6 +16,8 @@ define constant $ascii-8-bit-extensions
 
 // Build the state graph and save the initial state.
 // Note that transition strings support ranges, like "A-Z".
+// Note that string literals allow tabs in order to detect them and give
+// a better warning message later.
 //
 define constant $initial-state :: <state>
   = compile-state-machine
@@ -125,14 +127,14 @@ define constant $initial-state :: <state>
        state(#"sharp-double-quote", #f,
              #('"' . #"sharp-2-double-quotes"),
              #('\\' . #"quoted-symbol-escape"),
-             #(" !#-[]-~" . #"quoted-symbol"),
+             #("\t !#-[]-~" . #"quoted-symbol"),
              pair($ascii-8-bit-extensions, #"quoted-symbol")),
        state(#"sharp-2-double-quotes", make-quoted-symbol,
              #('"' . #"3quoted-symbol")),
        state(#"quoted-symbol", #f,
              #('"' . #"quoted-symbol-end"),
              #('\\' . #"quoted-symbol-escape"),
-             #(" !#-[]-~" . #"quoted-symbol"),
+             #("\t !#-[]-~" . #"quoted-symbol"),
              pair($ascii-8-bit-extensions, #"quoted-symbol")),
        state(#"quoted-symbol-escape", #f,
              #("\\abefnrt0\"" . #"quoted-symbol"),
@@ -145,7 +147,7 @@ define constant $initial-state :: <state>
        state(#"quoted-symbol-end", make-quoted-symbol),
        state(#"3quoted-symbol", #f,
              #('"' . #"3quoted-symbol-double-quote"),
-             #("\r\n !#-[]-~" . #"3quoted-symbol"),
+             #("\r\n\t !#-[]-~" . #"3quoted-symbol"),
              #('\\' . #"3quoted-symbol-escape")),
        state(#"3quoted-symbol-escape", #f,
              #("\\abefnrt0\"" . #"3quoted-symbol"),
@@ -157,10 +159,10 @@ define constant $initial-state :: <state>
              #('>' . #"3quoted-symbol")),
        state(#"3quoted-symbol-double-quote", #f,
              #('"' . #"3quoted-symbol-2-double-quotes"),
-             #("\r\n !#-[]-~" . #"3quoted-symbol")),
+             #("\r\n\t !#-[]-~" . #"3quoted-symbol")),
        state(#"3quoted-symbol-2-double-quotes", #f,
              #('"' . #"3quoted-symbol-end"),
-             #("\r\n !#-[]-~" . #"3quoted-symbol")),
+             #("\r\n\t !#-[]-~" . #"3quoted-symbol")),
        state(#"3quoted-symbol-end", make-multi-line-quoted-symbol),
 
        state(#"sharp-b", #f,
@@ -509,12 +511,12 @@ define constant $initial-state :: <state>
        state(#"double-quote", #f,
              #('"' . #"two-double-quotes"),
              #('\\' . #"string-escape"),
-             #(" !#-[]-~" . #"simple-string"),
+             #("\t !#-[]-~" . #"simple-string"),
              pair($ascii-8-bit-extensions, #"simple-string")),
        state(#"simple-string", #f,
              #('"' . #"end-simple-string"),
              #('\\' . #"string-escape"),
-             #(" !#-[]-~" . #"simple-string"),
+             #("\t !#-[]-~" . #"simple-string"),
              pair($ascii-8-bit-extensions, #"simple-string")),
        state(#"end-simple-string", make-string-literal),
        state(#"two-double-quotes", make-string-literal,
@@ -523,7 +525,7 @@ define constant $initial-state :: <state>
        state(#"3string", #f, // seen """
              #('"' . #"close-double-quote"),
              #('\\' . #"3string-escape"),
-             #(" !#-[]-~\r\n" . #"3string"),  // Ranges #-[ and ]-~ exclude backslash
+             #("\t !#-[]-~\r\n" . #"3string"),  // Ranges #-[ and ]-~ exclude backslash
              pair($ascii-8-bit-extensions, #"3string")),
        state(#"3string-escape", #f,
              #("\\'\"abefnrt0" . #"3string"),
@@ -535,41 +537,41 @@ define constant $initial-state :: <state>
              #('>' . #"3string")),
        state(#"close-double-quote", #f,
              #('"' . #"close-double-quote-2"),
-             #(" !#-[]-~\r\n" . #"3string"),
+             #("\t !#-[]-~\r\n" . #"3string"),
              pair($ascii-8-bit-extensions, #"3string")),
        state(#"close-double-quote-2", #f,
              #('"' . #"multi-line-string"),
-             #(" !#-[]-~\r\n" . #"3string"),
+             #("\t !#-[]-~\r\n" . #"3string"),
              pair($ascii-8-bit-extensions, #"3string")),
        state(#"multi-line-string", make-multi-line-string-literal),
 
        // Raw strings
        state(#"raw-string-start", #f,          // seen #r"
              #('"' . #"sharp-r-2-double-quotes"),
-             #(" !#-~" . #"raw-1string"),
+             #("\t !#-~" . #"raw-1string"),
              pair($ascii-8-bit-extensions, #"raw-1string")),
        state(#"sharp-r-2-double-quotes", make-raw-string-literal,
              #('"' . #"raw-3string-start")),
        state(#"raw-1string", #f,       // seen #r" plus one non-" char
              #('"' . #"raw-1string-end"),
-             #(" !#-~" . #"raw-1string"),
+             #("\t !#-~" . #"raw-1string"),
              pair($ascii-8-bit-extensions, #"raw-1string")),
        state(#"raw-1string-end", make-raw-string-literal),
        state(#"raw-3string-start", #f, // seen #r"""
              #('"' . #"raw-3string-double-quote"),
-             #(" !#-~\r\n" . #"raw-3string"),
+             #("\t !#-~\r\n" . #"raw-3string"),
              pair($ascii-8-bit-extensions, #"raw-3string")),
        state(#"raw-3string", #f,
              #('"' . #"raw-3string-double-quote"),
-             #(" !#-~\r\n" . #"raw-3string"),
+             #("\t !#-~\r\n" . #"raw-3string"),
              pair($ascii-8-bit-extensions, #"raw-3string")),
        state(#"raw-3string-double-quote", #f,
              #('"' . #"raw-3string-2-double-quotes"),
-             #(" !#-~\r\n" . #"raw-3string"),
+             #("\t !#-~\r\n" . #"raw-3string"),
              pair($ascii-8-bit-extensions, #"raw-3string")),
        state(#"raw-3string-2-double-quotes", #f,
              #('"' . #"raw-3string-end"),
-             #(" !#-~\r\n" . #"raw-3string"),
+             #("\t !#-~\r\n" . #"raw-3string"),
              pair($ascii-8-bit-extensions, #"raw-3string")),
        state(#"raw-3string-end", make-multi-line-raw-string-literal),
 

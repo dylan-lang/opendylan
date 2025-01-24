@@ -866,16 +866,13 @@ define method decode-string
  => (string :: <byte-string>)
   local
     method fail (format-string, #rest format-args)
-      note(<invalid-multi-line-string-literal>,
+      note(<invalid-string-literal>,
            source-location: source-location,
            token-string: extract-string(source-location),
-           detail: apply(format-to-string,
-                         concatenate("invalid multi-line string literal: ",
-                                     format-string),
-                         format-args));
+           detail: apply(format-to-string, format-string, format-args));
     end,
     method whitespace-code? (c)
-      c == $space-code | c == $tab-code
+      c == $space-code
     end,
     method find-line-break (seq, bpos, epos)
       if (bpos < epos)
@@ -888,6 +885,8 @@ define method decode-string
             else
               values(bpos, bpos + 1)
             end;
+          $tab-code =>
+            fail("tab character at index %d; use \\t or spaces instead", bpos);
           otherwise =>
             find-line-break(seq, bpos + 1, epos);
         end
@@ -968,7 +967,7 @@ define method decode-string
   let contents = source-location.source-location-record.contents;
   let parts = split(contents, find-line-break, start: bpos, end: epos);
   if (parts.size == 1)
-    as(<string>, process-line(#f, parts[0]))      // e.g., """abc"""
+    as(<string>, process-line(#f, parts[0]))      // e.g., "x" or """x"""
   else
     let prefix = parts.last;
     if (~every?(whitespace-code?, prefix))
