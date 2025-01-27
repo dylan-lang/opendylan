@@ -4085,8 +4085,8 @@ using :macro:`define c-mapped-subtype`.
 
    :signature: export-C-Dylan-object *object* => *c-dylan-object*
 
-   :parameter object: An instance of :class:`<C-Dylan-object>`.
    :parameter object: An instance of :drm:`<object>`.
+   :value c-dylan-object: An instance of :class:`<C-Dylan-object>`.
 
    :description:
 
