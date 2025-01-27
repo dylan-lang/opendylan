@@ -550,261 +550,178 @@ implementation architecture. When running a 32 bit OS, a
 <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a> is 64 bits wide. <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a> is disjoint
 from all other classes specified by the Dylan language.</p>
 <p>The <a class="reference external" href="https://opendylan.org/books/drm/Equality_and_Comparison#identity"><code class="xref drm docutils literal notranslate"><span class="pre">==</span></code></a> function compares instances of <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a> by value.</p>
-<section id="useful-functions-from-the-dylan-module">
-<h2>Useful functions from the Dylan module<a class="headerlink" href="#useful-functions-from-the-dylan-module" title="Permalink to this heading">¶</a></h2>
+<section id="extensions-to-the-dylan-module">
+<h2>Extensions to the Dylan Module<a class="headerlink" href="#extensions-to-the-dylan-module" title="Permalink to this heading">¶</a></h2>
 <p>This section describes additional methods defined in the <code class="docutils literal notranslate"><span class="pre">dylan</span></code> module that
 pertain to <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a>. Note that this section only describes
-extensions to the <code class="docutils literal notranslate"><span class="pre">dylan</span></code> library; for complete descriptions, you should also
-refer to the <em>Dylan Reference Manual</em>.</p>
-<p>Note that the <code class="docutils literal notranslate"><span class="pre">common-dylan</span></code> library also has these extensions because it
+<em>extensions</em> to the <code class="docutils literal notranslate"><span class="pre">dylan</span></code> module; for complete descriptions, you should also
+refer to the <a class="reference external" href="https://opendylan.org/books/drm/">Dylan Reference Manual</a>.</p>
+<p>Note that the <a class="reference internal" href="index.html"><span class="doc">common-dylan</span></a> library also has these extensions because it
 uses the <code class="docutils literal notranslate"><span class="pre">dylan</span></code> library.</p>
-<dl class="dylan function">
-<dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:odd?">
-<span class="sig-name descname"><span class="pre">odd?</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:odd?" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Signature<span class="colon">:</span></dt>
-<dd class="field-odd"><p>odd? m =&gt; r</p>
-</dd>
-<dt class="field-even">Parameters<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>m</strong> – An instance of <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a></p></li>
-</ul>
-</dd>
-<dt class="field-odd">Values<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>r</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a></p></li>
-</ul>
+<dl class="dylan method">
+<dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:odd?([machine-word])">
+<span class="sig-name descname"><span class="pre">odd?(&lt;machine-word&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:machine-words:odd?([machine-word])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether the argument is odd when interpreted as a signed integer value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#odd_"><code class="xref drm docutils literal notranslate"><span class="pre">odd?</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="dylan function">
-<dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:even?">
-<span class="sig-name descname"><span class="pre">even?</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:even?" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Signature<span class="colon">:</span></dt>
-<dd class="field-odd"><p>even? m =&gt; r</p>
-</dd>
-<dt class="field-even">Parameters<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>m</strong> – An instance of <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a></p></li>
-</ul>
-</dd>
-<dt class="field-odd">Values<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>r</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a></p></li>
-</ul>
+<dl class="dylan method">
+<dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:even?([machine-word])">
+<span class="sig-name descname"><span class="pre">even?(&lt;machine-word&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:machine-words:even?([machine-word])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether the argument is even when interpreted as a signed integer value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#even_"><code class="xref drm docutils literal notranslate"><span class="pre">even?</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="dylan function">
-<dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:zero?">
-<span class="sig-name descname"><span class="pre">zero?</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:zero?" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Signature<span class="colon">:</span></dt>
-<dd class="field-odd"><p>zero? m =&gt; r</p>
-</dd>
-<dt class="field-even">Parameters<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>m</strong> – An instance of <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a></p></li>
-</ul>
-</dd>
-<dt class="field-odd">Values<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>r</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a></p></li>
-</ul>
+<dl class="dylan method">
+<dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:zero?([machine-word])">
+<span class="sig-name descname"><span class="pre">zero?(&lt;machine-word&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:machine-words:zero?([machine-word])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether the argument is zero when interpreted as a signed integer value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#zero_"><code class="xref drm docutils literal notranslate"><span class="pre">zero?</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Cannot be used as the name of a result. It is not a valid Dylan name.</p>
-</div>
-<dl class="dylan function">
-<dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:positive?">
-<span class="sig-name descname"><span class="pre">positive?</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:positive?" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Signature<span class="colon">:</span></dt>
-<dd class="field-odd"><p>positive? m =&gt; r</p>
-</dd>
-<dt class="field-even">Parameters<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>m</strong> – An instance of <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a></p></li>
-</ul>
-</dd>
-<dt class="field-odd">Values<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>r</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a></p></li>
-</ul>
+<dl class="dylan method">
+<dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:positive?([machine-word])">
+<span class="sig-name descname"><span class="pre">positive?(&lt;machine-word&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:machine-words:positive?([machine-word])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether the argument is positive when interpreted as a signed integer value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#positive_"><code class="xref drm docutils literal notranslate"><span class="pre">positive?</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="dylan function">
-<dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:negative?">
-<span class="sig-name descname"><span class="pre">negative?</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:negative?" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Signature<span class="colon">:</span></dt>
-<dd class="field-odd"><p>negative? m =&gt; r</p>
-</dd>
-<dt class="field-even">Parameters<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>m</strong> – An instance of <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a></p></li>
-</ul>
-</dd>
-<dt class="field-odd">Values<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>r</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a></p></li>
-</ul>
+<dl class="dylan method">
+<dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:negative?([machine-word])">
+<span class="sig-name descname"><span class="pre">negative?(&lt;machine-word&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:machine-words:negative?([machine-word])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether the argument is negative when interpreted as a signed integer value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Arithmetic_Operations#negative_"><code class="xref drm docutils literal notranslate"><span class="pre">negative?</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<p>These functions return a result based on interpreting <code class="docutils literal notranslate"><span class="pre">m</span></code> as a signed
+<dl class="dylan method">
+<dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:=([machine-word],[machine-word])">
+<span class="sig-name descname"><span class="pre">=(&lt;machine-word&gt;,</span> <span class="pre">&lt;machine-word&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:machine-words:=([machine-word],[machine-word])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compares two <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a> values for equality when interpreted as signed
+integer values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Equality_and_Comparison#equal"><code class="xref drm docutils literal notranslate"><span class="pre">=</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="dylan method">
+<dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:=([abstract-integer],[machine-word])">
+<span class="sig-name descname"><span class="pre">=(&lt;abstract-integer&gt;,</span> <span class="pre">&lt;machine-word&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:machine-words:=([abstract-integer],[machine-word])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compares two values for equality when the second argument is interpreted as a signed
 integer value.</p>
-<dl class="dylan function">
-<dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:\=">
-<span class="sig-name descname"><span class="pre">\=</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:\=" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Signature<span class="colon">:</span></dt>
-<dd class="field-odd"><p>= m1 m2 =&gt; r</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Equality_and_Comparison#equal"><code class="xref drm docutils literal notranslate"><span class="pre">=</span></code></a></p>
 </dd>
-<dt class="field-even">Signature<span class="colon">:</span></dt>
-<dd class="field-even"><p>= i1 m2 =&gt; r</p>
+</dl>
+</dd></dl>
+
+<dl class="dylan method">
+<dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:=([machine-word],[abstract-integer])">
+<span class="sig-name descname"><span class="pre">=(&lt;machine-word&gt;,</span> <span class="pre">&lt;abstract-integer&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:machine-words:=([machine-word],[abstract-integer])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compares two values for equality when the first argument is interpreted as a signed
+integer value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Equality_and_Comparison#equal"><code class="xref drm docutils literal notranslate"><span class="pre">=</span></code></a></p>
 </dd>
-<dt class="field-odd">Signature<span class="colon">:</span></dt>
-<dd class="field-odd"><p>= m1 i2 =&gt; r</p>
-</dd>
-<dt class="field-even">Parameters<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>m1</strong> – An instance of <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a></p></li>
-<li><p><strong>m2</strong> – An instance of <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a></p></li>
-<li><p><strong>i1</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;abstract-integer&gt;</span></code></p></li>
-<li><p><strong>i2</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;abstract-integer&gt;</span></code></p></li>
-</ul>
-</dd>
-<dt class="field-odd">Values<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>r</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a></p></li>
-</ul>
-</dd>
-<dt class="field-even">Discussion<span class="colon">:</span></dt>
-<dd class="field-even"><p>The comparison is performed with the <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a> arguments
+</dl>
+</dd></dl>
+
+<dl class="dylan method">
+<dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:[([machine-word],[machine-word])">
+<span class="sig-name descname"><span class="pre">&lt;(&lt;machine-word&gt;,</span> <span class="pre">&lt;machine-word&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:machine-words:[([machine-word],[machine-word])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if the first argument is less than the second argument when both are
 interpreted as signed integer values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Equality_and_Comparison#less_than"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="dylan function">
-<dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:[">
-<span class="sig-name descname"><span class="pre">&lt;</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:[" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Signature<span class="colon">:</span></dt>
-<dd class="field-odd"><p>&lt; m1 m2 =&gt; r</p>
-</dd>
-<dt class="field-even">Signature<span class="colon">:</span></dt>
-<dd class="field-even"><p>&lt; i1 m2 =&gt; r</p>
-</dd>
-<dt class="field-odd">Signature<span class="colon">:</span></dt>
-<dd class="field-odd"><p>&lt; m1 i2 =&gt; r</p>
-</dd>
-<dt class="field-even">Parameters<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>m1</strong> – An instance of <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a></p></li>
-<li><p><strong>m2</strong> – An instance of <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a></p></li>
-<li><p><strong>i1</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;abstract-integer&gt;</span></code></p></li>
-<li><p><strong>i2</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;abstract-integer&gt;</span></code></p></li>
-</ul>
-</dd>
-<dt class="field-odd">Values<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>r</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a></p></li>
-</ul>
-</dd>
-<dt class="field-even">Discussion<span class="colon">:</span></dt>
-<dd class="field-even"><p>The comparison is performed with the <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a> arguments
-interpreted as signed integer values.</p>
+<dl class="dylan method">
+<dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:[([abstract-integer],[machine-word])">
+<span class="sig-name descname"><span class="pre">&lt;(&lt;abstract-integer&gt;,</span> <span class="pre">&lt;machine-word&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:machine-words:[([abstract-integer],[machine-word])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if the first argument is less than the second argument when the second
+argument is interpreted as a signed integer value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Equality_and_Comparison#less_than"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="dylan function">
-<dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:as">
-<span class="sig-name descname"><span class="pre">as</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:as" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Signature<span class="colon">:</span></dt>
-<dd class="field-odd"><p>as t == &lt;integer&gt; m =&gt; r</p>
-</dd>
-<dt class="field-even">Parameters<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>m</strong> – An instance of <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a></p></li>
-</ul>
-</dd>
-<dt class="field-odd">Values<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>r</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a></p></li>
-</ul>
-</dd>
-<dt class="field-even">Discussion<span class="colon">:</span></dt>
-<dd class="field-even"><p>The result is an <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> with the same value as <code class="docutils literal notranslate"><span class="pre">m</span></code> when
-interpreted as a signed integer value. An error is signaled if the value
-of <code class="docutils literal notranslate"><span class="pre">m</span></code> cannot be represented as an instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p>
+<dl class="dylan method">
+<dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:[([machine-word],[abstract-integer])">
+<span class="sig-name descname"><span class="pre">&lt;(&lt;machine-word&gt;,</span> <span class="pre">&lt;abstract-integer&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:machine-words:[([machine-word],[abstract-integer])" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if the first argument is less than the second argument when the first
+argument is interpreted as a signed integer value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Equality_and_Comparison#less_than"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="dylan function">
-<dt class="sig sig-object dylan-api dylan">
-<span class="sig-name descname"><span class="pre">as</span></span> <em class="property"><span class="pre">Function</span></em></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Signature<span class="colon">:</span></dt>
-<dd class="field-odd"><p>as t == &lt;abstract-integer&gt; m =&gt; r</p>
-</dd>
-<dt class="field-even">Parameters<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>m</strong> – An instance of <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a></p></li>
-</ul>
-</dd>
-<dt class="field-odd">Values<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>r</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;abstract-integer&gt;</span></code></p></li>
-</ul>
-</dd>
-<dt class="field-even">Discussion<span class="colon">:</span></dt>
-<dd class="field-even"><p><p>The result is an <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;abstract-integer&gt;</span></code> with the same value as <code class="docutils literal notranslate"><span class="pre">m</span></code>
-when interpreted as a signed integer value.</p>
-<p>(The uses for an instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;abstract-integer&gt;</span></code> that is not also
-an instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> are rather limited without the
-Generic-Arithmetic library.)</p>
-</p>
+<dl class="dylan method">
+<dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:as(singleton([integer]),[machine-word])">
+<span class="sig-name descname"><span class="pre">as(singleton(&lt;integer&gt;),</span> <span class="pre">&lt;machine-word&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:machine-words:as(singleton([integer]),[machine-word])" title="Permalink to this definition">¶</a></dt>
+<dd><p>The result is an <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a> with the same value as the machine word when
+interpreted as a signed integer value.  An error is signaled if the machine word
+cannot be represented as an instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Coercing_and_Copying_Objects#as"><code class="xref drm docutils literal notranslate"><span class="pre">as</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="dylan function">
-<dt class="sig sig-object dylan-api dylan">
-<span class="sig-name descname"><span class="pre">as</span></span> <em class="property"><span class="pre">Function</span></em></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Signature<span class="colon">:</span></dt>
-<dd class="field-odd"><p>as t == &lt;machine-word&gt; i =&gt; r</p>
+<dl class="dylan method">
+<dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:as(singleton([abstract-integer]),[machine-word])">
+<span class="sig-name descname"><span class="pre">as(singleton(&lt;abstract-integer&gt;),</span> <span class="pre">&lt;machine-word&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:machine-words:as(singleton([abstract-integer]),[machine-word])" title="Permalink to this definition">¶</a></dt>
+<dd><p>The result is an <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;abstract-integer&gt;</span></code> with the same value the machine word when
+interpreted as a signed integer value.</p>
+<p>This method is primarily useful in combination with the <a class="reference external" href="/library-reference/language-extensions/numbers.html#the-generic-arithmetic-library">generic-arithmetic</a>
+library.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Coercing_and_Copying_Objects#as"><code class="xref drm docutils literal notranslate"><span class="pre">as</span></code></a></p>
 </dd>
-<dt class="field-even">Parameters<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>i</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;abstract-integer&gt;</span></code></p></li>
-</ul>
-</dd>
-<dt class="field-odd">Values<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>r</strong> – An instance of <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a></p></li>
-</ul>
-</dd>
-<dt class="field-even">Discussion<span class="colon">:</span></dt>
-<dd class="field-even"><p>If the value of <code class="docutils literal notranslate"><span class="pre">i</span></code> is outside the machine word range, then the result
-consists of the low <a class="reference internal" href="#common-dylan:machine-words:$machine-word-size"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$machine-word-size</span></code></a> bits of the twos-complement
-representation of <code class="docutils literal notranslate"><span class="pre">i</span></code>. If any of the discarded bits differ from the
-sign of <code class="docutils literal notranslate"><span class="pre">i</span></code>, then an error is signaled.</p>
+</dl>
+</dd></dl>
+
+<dl class="dylan method">
+<dt class="sig sig-object dylan-api dylan" id="common-dylan:machine-words:as(singleton([machine-word]),[abstract-integer])">
+<span class="sig-name descname"><span class="pre">as(singleton(&lt;machine-word&gt;),</span> <span class="pre">&lt;abstract-integer&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:machine-words:as(singleton([machine-word]),[abstract-integer])" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the value of the integer is outside the machine word range, then the result
+consists of the low <a class="reference internal" href="#common-dylan:machine-words:$machine-word-size"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$machine-word-size</span></code></a> bits of its twos-complement
+representation. If any of the discarded bits differ from the sign of the integer, then
+an error is signaled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Coercing_and_Copying_Objects#as"><code class="xref drm docutils literal notranslate"><span class="pre">as</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -814,33 +731,32 @@ sign of <code class="docutils literal notranslate"><span class="pre">i</span></c
 <span class="sig-name descname"><span class="pre">limited</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:limited" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
-<dd class="field-odd"><p>limited t == &lt;machine-word&gt; #key signed? min max =&gt; r</p>
+<dd class="field-odd"><p>limited singleton(&lt;machine-word&gt;) #key <em>signed?</em> <em>min</em> <em>max</em> =&gt; <em>type</em></p>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>signed?</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. Defaults to
-<a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a>.</p></li>
+<li><p><strong>signed?</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. Defaults to <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a>.</p></li>
 <li><p><strong>min</strong> (<em>#key</em>) – An instance of <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a></p></li>
 <li><p><strong>max</strong> (<em>#key</em>) – An instance of <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a></p></li>
 </ul>
 </dd>
 <dt class="field-odd">Values<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>r</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;type&gt;</span></code></p></li>
+<li><p><strong>type</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;type&gt;</span></code></p></li>
 </ul>
 </dd>
-<dt class="field-even">Discussion<span class="colon">:</span></dt>
-<dd class="field-even"><p><p>If the <code class="docutils literal notranslate"><span class="pre">signed?</span></code> argument is true (the default) then the <code class="docutils literal notranslate"><span class="pre">min</span></code> and
-<code class="docutils literal notranslate"><span class="pre">max</span></code> arguments are interpreted as signed values. When <code class="docutils literal notranslate"><span class="pre">signed?</span></code> is
-false, the <code class="docutils literal notranslate"><span class="pre">min</span></code> and <code class="docutils literal notranslate"><span class="pre">max</span></code> arguments are interpreted as unsigned
-values. The default value for each of min and max depends on the value of
-<code class="docutils literal notranslate"><span class="pre">signed?</span></code>.  The defaults are taken from the corresponding minimum and
-maximum machine word values (see <a class="reference internal" href="#common-dylan:machine-words:$maximum-signed-machine-word"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$maximum-signed-machine-word</span></code></a> and
-related constants below).</p>
-<p>For convenience, the values of <code class="docutils literal notranslate"><span class="pre">min</span></code> and/or <code class="docutils literal notranslate"><span class="pre">max</span></code> may also be
-instances of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;abstract-integer&gt;</span></code>, in which case they are coerced
-to instances of <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a> as if by using <code class="docutils literal notranslate"><span class="pre">as</span></code>.</p>
-</p>
+</dl>
+<p>If the <em>signed?</em> argument is true (the default) then the <em>min</em> and <em>max</em> arguments are
+interpreted as signed values, otherwise they are interpreted as unsigned values. The
+default value for each of <em>min</em> and <em>max</em> depends on the value of <em>signed?</em>.  The
+defaults are taken from the corresponding minimum and maximum machine word values (see
+<a class="reference internal" href="#common-dylan:machine-words:$maximum-signed-machine-word"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">$maximum-signed-machine-word</span></code></a> and related constants below).</p>
+<p>For convenience, the values of <em>min</em> and/or <em>max</em> may also be instances of
+<code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;abstract-integer&gt;</span></code>, in which case they are coerced to instances of
+<a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a> as if by using <a class="reference external" href="https://opendylan.org/books/drm/Coercing_and_Copying_Objects#as"><code class="xref drm docutils literal notranslate"><span class="pre">as</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://opendylan.org/books/drm/Constructing_and_Initializing_Instances#limited"><code class="xref drm docutils literal notranslate"><span class="pre">limited</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -869,7 +785,7 @@ disjoint from all other classes specified by the Dylan language.</p>
 </dd>
 <dt class="field-even">Operations<span class="colon">:</span></dt>
 <dd class="field-even"><p>The <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a> class provides the operations described below
-and in <a class="reference internal" href="#useful-functions-from-the-dylan-module">Useful functions from the Dylan module</a>.</p>
+and in <a class="reference internal" href="#extensions-to-the-dylan-module">Extensions to the Dylan module</a>.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -948,23 +864,23 @@ value.</p>
 <span class="sig-name descname"><span class="pre">as-unsigned</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#common-dylan:machine-words:as-unsigned" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
-<dd class="field-odd"><p>as-unsigned t m =&gt; result</p>
+<dd class="field-odd"><p>as-unsigned <em>type</em> <em>machine-word</em> =&gt; <em>machine-word</em></p>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>t</strong> – A type</p></li>
-<li><p><strong>m</strong> – An instance of <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a></p></li>
+<li><p><strong>type</strong> – A type</p></li>
+<li><p><strong>machine-word</strong> – An instance of <a class="reference internal" href="#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a></p></li>
 </ul>
 </dd>
 <dt class="field-odd">Values<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>result</strong> – An instance of <code class="docutils literal notranslate"><span class="pre">t</span></code></p></li>
+<li><p><strong>result</strong> – An instance of type <code class="docutils literal notranslate"><span class="pre">type</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Discussion<span class="colon">:</span></dt>
-<dd class="field-even"><p>The value of <code class="docutils literal notranslate"><span class="pre">m</span></code> is interpreted as an unsigned value and converted to an
+<dd class="field-even"><p>The value <code class="docutils literal notranslate"><span class="pre">machine-word</span></code> is interpreted as an unsigned value and converted to an
 instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;abstract-integer&gt;</span></code>, then the result of that conversion
-is converted to type <code class="docutils literal notranslate"><span class="pre">t</span></code> using <code class="docutils literal notranslate"><span class="pre">as</span></code>.</p>
+is converted to type <code class="docutils literal notranslate"><span class="pre">type</span></code> using <a class="reference external" href="https://opendylan.org/books/drm/Coercing_and_Copying_Objects#as"><code class="xref drm docutils literal notranslate"><span class="pre">as</span></code></a>.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2158,7 +2074,7 @@ correct value for the <code class="docutils literal notranslate"><span class="pr
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">The machine-words Module</a><ul>
-<li><a class="reference internal" href="#useful-functions-from-the-dylan-module">Useful functions from the Dylan module</a></li>
+<li><a class="reference internal" href="#extensions-to-the-dylan-module">Extensions to the Dylan Module</a></li>
 <li><a class="reference internal" href="#id1">The machine-words Module</a><ul>
 <li><a class="reference internal" href="#variables">Variables</a></li>
 <li><a class="reference internal" href="#basic-and-signed-single-word-operations">Basic and signed single word operations</a></li>

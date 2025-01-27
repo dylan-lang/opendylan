@@ -939,9 +939,11 @@
         </ul></li>
         <li><a href="getting-started-ide/debug.html#index-18">:in interaction command</a>
 </li>
-        <li><a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:[">&lt;</a>, <a href="library-reference/language-extensions/numbers.html#dylan:dylan:[">[1]</a>
+        <li><a href="library-reference/language-extensions/numbers.html#dylan:dylan:[">&lt;</a>
 
         <ul>
+          <li><a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:[([abstract-integer],[machine-word])">&lt;(&lt;abstract-integer&gt;, &lt;machine-word&gt;)</a>
+</li>
           <li><a href="library-reference/c-ffi/index.html#c-ffi:c-ffi:[([c-pointer])">&lt;(&lt;C-pointer&gt;)</a>
 </li>
           <li><a href="library-reference/language-extensions/numbers.html#dylan:dylan:[([complex])">&lt;(&lt;complex&gt;)</a>
@@ -951,6 +953,10 @@
           <li><a href="library-reference/system/date.html#system:date:[([duration])">&lt;(&lt;duration&gt;)</a>
 </li>
           <li><a href="library-reference/language-extensions/numbers.html#dylan:dylan:[([machine-number])">&lt;(&lt;machine-number&gt;)</a>
+</li>
+          <li><a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:[([machine-word],[abstract-integer])">&lt;(&lt;machine-word&gt;, &lt;abstract-integer&gt;)</a>
+</li>
+          <li><a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:[([machine-word],[machine-word])">&lt;(&lt;machine-word&gt;, &lt;machine-word&gt;)</a>
 </li>
         </ul></li>
         <li><a href="library-reference/c-ffi/index.html#index-57">&lt; method</a>
@@ -2274,6 +2280,8 @@
         <li><a href="duim-reference/sheets.html#duim-sheets:duim-sheets:=">=</a>, <a href="library-reference/language-extensions/numbers.html#dylan:dylan:=">[1]</a>
 
         <ul>
+          <li><a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:=([abstract-integer],[machine-word])">=(&lt;abstract-integer&gt;, &lt;machine-word&gt;)</a>
+</li>
           <li><a href="library-reference/c-ffi/index.html#c-ffi:c-ffi:=([c-pointer])">=(&lt;C-pointer&gt;)</a>
 </li>
           <li><a href="duim-reference/frames.html#duim:duim-frames:=([command])">=(&lt;command&gt;)</a>
@@ -2286,6 +2294,10 @@
 </li>
           <li><a href="library-reference/language-extensions/numbers.html#dylan:dylan:=([machine-number])">=(&lt;machine-number&gt;)</a>
 </li>
+          <li><a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:=([machine-word],[abstract-integer])">=(&lt;machine-word&gt;, &lt;abstract-integer&gt;)</a>
+</li>
+          <li><a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:=([machine-word],[machine-word])">=(&lt;machine-word&gt;, &lt;machine-word&gt;)</a>
+</li>
           <li><a href="duim-reference/geom.html#duim-geometry:duim-geometry:=([region])">=(&lt;region&gt;)</a>
 </li>
           <li><a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:=([remote-value],[remote-value])">=(&lt;remote-value&gt;, &lt;remote-value&gt;)</a>
@@ -2295,7 +2307,7 @@
         </ul></li>
         <li><a href="library-reference/c-ffi/index.html#index-55">= method</a>
 </li>
-        <li><a href="duim-reference/dcs.html#duim-dcs:duim-dcs:\=">\=</a>, <a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:\=">[1]</a>
+        <li><a href="duim-reference/dcs.html#duim-dcs:duim-dcs:\=">\=</a>
 </li>
         <li><a href="library-reference/language-extensions/numbers.html#dylan:dylan:^">^</a>
 
@@ -2511,12 +2523,12 @@
 </li>
         <li><a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:application-running-on-code-entry?-setter">application-running-on-code-entry?-setter</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:application-snapshot-skip">application-snapshot-skip</a>
 </li>
         <li><a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:application-snapshots">application-snapshots</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:application-state-post-mortem?">application-state-post-mortem?</a>
 </li>
         <li><a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:application-state-running?">application-state-running?</a>
@@ -2579,7 +2591,8 @@
           <li><a href="getting-started-ide/debug.html#index-2">green</a>, <a href="getting-started-ide/expanding.html#index-6">[1]</a>
 </li>
         </ul></li>
-        <li><a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:as">as</a>, <a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:as">[1]</a>, <a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:as">[2]</a>
+        <li>
+    as
 
         <ul>
           <li><a href="library-reference/io/streams.html#io:streams:as([integer],[stream-position])">as(&lt;integer&gt;, &lt;stream-position&gt;)</a>
@@ -2599,6 +2612,12 @@
           <li><a href="hacker-guide/topics/ppml.html#ppml:ppml:as(class==[ppml],[symbol])">as(class == &lt;ppml&gt;, &lt;symbol&gt;)</a>
 </li>
           <li><a href="hacker-guide/topics/ppml.html#ppml:ppml:as(class==[ppml],[vector])">as(class == &lt;ppml&gt;, &lt;vector&gt;)</a>
+</li>
+          <li><a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:as(singleton([abstract-integer]),[machine-word])">as(singleton(&lt;abstract-integer&gt;), &lt;machine-word&gt;)</a>
+</li>
+          <li><a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:as(singleton([integer]),[machine-word])">as(singleton(&lt;integer&gt;), &lt;machine-word&gt;)</a>
+</li>
+          <li><a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:as(singleton([machine-word]),[abstract-integer])">as(singleton(&lt;machine-word&gt;), &lt;abstract-integer&gt;)</a>
 </li>
         </ul></li>
         <li><a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:as-integer">as-integer</a>
@@ -4708,22 +4727,24 @@
 </li>
         <li><a href="library-reference/system/operating-system.html#system:operating-system:environment-variable">environment-variable</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="library-reference/system/operating-system.html#system:operating-system:environment-variable-setter">environment-variable-setter</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="library-reference/c-ffi/index.html#c-ffi:c-ffi:equal-memory?">equal-memory?</a>
 </li>
         <li><a href="library-reference/win32/index.html#index-13">error messages</a>
 </li>
         <li><a href="duim-reference/geom.html#duim-geometry:duim-geometry:even-scaling-transform?">even-scaling-transform?</a>
 </li>
-        <li><a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:even?">even?</a>, <a href="library-reference/language-extensions/numbers.html#dylan:dylan:even?">[1]</a>
+        <li><a href="library-reference/language-extensions/numbers.html#dylan:dylan:even?">even?</a>
 
         <ul>
           <li><a href="library-reference/language-extensions/numbers.html#dylan:dylan:even?([complex])">even?(&lt;complex&gt;)</a>
 </li>
           <li><a href="library-reference/language-extensions/numbers.html#dylan:dylan:even?([integer])">even?(&lt;integer&gt;)</a>
+</li>
+          <li><a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:even?([machine-word])">even?(&lt;machine-word&gt;)</a>
 </li>
         </ul></li>
         <li><a href="duim-reference/sheets.html#duim-sheets:duim-sheets:event-button">event-button</a>
@@ -6471,12 +6492,14 @@
           <li><a href="library-reference/language-extensions/numbers.html#dylan:dylan:negative([integer])">negative(&lt;integer&gt;)</a>
 </li>
         </ul></li>
-        <li><a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:negative?">negative?</a>, <a href="library-reference/language-extensions/numbers.html#dylan:dylan:negative?">[1]</a>
+        <li><a href="library-reference/language-extensions/numbers.html#dylan:dylan:negative?">negative?</a>
 
         <ul>
           <li><a href="library-reference/language-extensions/numbers.html#dylan:dylan:negative?([complex])">negative?(&lt;complex&gt;)</a>
 </li>
           <li><a href="library-reference/language-extensions/numbers.html#dylan:dylan:negative?([machine-number])">negative?(&lt;machine-number&gt;)</a>
+</li>
+          <li><a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:negative?([machine-word])">negative?(&lt;machine-word&gt;)</a>
 </li>
         </ul></li>
         <li><a href="library-reference/network/index.html#network:sockets:network-order">network-order</a>
@@ -6590,12 +6613,14 @@
           <li><a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:obtain-component-name([debug-target],[string])">obtain-component-name(&lt;debug-target&gt;, &lt;string&gt;)</a>
 </li>
         </ul></li>
-        <li><a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:odd?">odd?</a>, <a href="library-reference/language-extensions/numbers.html#dylan:dylan:odd?">[1]</a>
+        <li><a href="library-reference/language-extensions/numbers.html#dylan:dylan:odd?">odd?</a>
 
         <ul>
           <li><a href="library-reference/language-extensions/numbers.html#dylan:dylan:odd?([complex])">odd?(&lt;complex&gt;)</a>
 </li>
           <li><a href="library-reference/language-extensions/numbers.html#dylan:dylan:odd?([integer])">odd?(&lt;integer&gt;)</a>
+</li>
+          <li><a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:odd?([machine-word])">odd?(&lt;machine-word&gt;)</a>
 </li>
         </ul></li>
         <li><a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:older-stack-frame?">older-stack-frame?</a>
@@ -6621,10 +6646,10 @@
           <li><a href="getting-started-ide/coloring.html#index-0">dispatch</a>
 </li>
         </ul></li>
-        <li><a href="building-with-duim/tour.html#index-5">option buttons</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="building-with-duim/tour.html#index-5">option buttons</a>
+</li>
         <li><a href="library-reference/dylan/primitives.html#c.optional_xep">optional_xep (C function)</a>
 </li>
         <li><a href="library-reference/c-ffi/index.html#index-19">options in C-FFI macros</a>
@@ -6820,12 +6845,14 @@
 </li>
         <li><a href="library-reference/common-dylan/common-extensions.html#common-dylan:common-extensions:position">position</a>
 </li>
-        <li><a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:positive?">positive?</a>, <a href="library-reference/language-extensions/numbers.html#dylan:dylan:positive?">[1]</a>
+        <li><a href="library-reference/language-extensions/numbers.html#dylan:dylan:positive?">positive?</a>
 
         <ul>
           <li><a href="library-reference/language-extensions/numbers.html#dylan:dylan:positive?([complex])">positive?(&lt;complex&gt;)</a>
 </li>
           <li><a href="library-reference/language-extensions/numbers.html#dylan:dylan:positive?([machine-number])">positive?(&lt;machine-number&gt;)</a>
+</li>
+          <li><a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:positive?([machine-word])">positive?(&lt;machine-word&gt;)</a>
 </li>
         </ul></li>
         <li><a href="library-reference/sql/index.html#sql:sql:possible-explanation">possible-explanation</a>
@@ -7010,10 +7037,10 @@
 </li>
         <li><a href="library-reference/dylan/primitives.html#dylan:dylan-primitives:primitive-release-all-notification">primitive-release-all-notification</a>
 </li>
-        <li><a href="library-reference/dylan/primitives.html#dylan:dylan-primitives:primitive-release-notification">primitive-release-notification</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="library-reference/dylan/primitives.html#dylan:dylan-primitives:primitive-release-notification">primitive-release-notification</a>
+</li>
         <li><a href="library-reference/dylan/primitives.html#dylan:dylan-primitives:primitive-release-recursive-lock">primitive-release-recursive-lock</a>
 </li>
         <li><a href="library-reference/dylan/primitives.html#dylan:dylan-primitives:primitive-release-semaphore">primitive-release-semaphore</a>
@@ -9134,12 +9161,14 @@
   <h2>Z</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:zero?">zero?</a>, <a href="library-reference/language-extensions/numbers.html#dylan:dylan:zero?">[1]</a>
+        <li><a href="library-reference/language-extensions/numbers.html#dylan:dylan:zero?">zero?</a>
 
         <ul>
           <li><a href="library-reference/language-extensions/numbers.html#dylan:dylan:zero?([complex])">zero?(&lt;complex&gt;)</a>
 </li>
           <li><a href="library-reference/language-extensions/numbers.html#dylan:dylan:zero?([machine-number])">zero?(&lt;machine-number&gt;)</a>
+</li>
+          <li><a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:zero?([machine-word])">zero?(&lt;machine-word&gt;)</a>
 </li>
         </ul></li>
     </ul></td>
