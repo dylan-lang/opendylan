@@ -170,7 +170,7 @@ is no guarantee that the object will be added exactly *n* times.
 Note that this definition so general that it does not guarantee that any
 object will ever be added to be finalization queue. In practice, Common
 Dylan's implementation guarantees that an object is added to the queue
-at least once whenever an object has ben determined to be unreachable by
+at least once whenever an object has been determined to be unreachable by
 the garbage collector.
 
 To remain robust under multiple registration, finalizers should be
