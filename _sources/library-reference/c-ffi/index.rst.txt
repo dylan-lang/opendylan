@@ -202,7 +202,7 @@ Suppose there is a function *current-example* that returns an
 initialized ``<Example*>`` struct. The following transactions illustrate
 what you get when you read the slots of the structure it returns:
 
-::
+.. code-block:: dylan-repl
 
     ? define variable example = current-example();
     // Defined example
@@ -224,7 +224,7 @@ expecting numbers or passing objects out to C functions expecting
 numeric arguments, you should provide a Dylan number, and the C-FFI will
 convert it automatically to its C equivalent.
 
-::
+.. code-block:: dylan-repl
 
     ? example.data;
     {<C-char> pointer #xff5e00}
@@ -4085,8 +4085,8 @@ using :macro:`define c-mapped-subtype`.
 
    :signature: export-C-Dylan-object *object* => *c-dylan-object*
 
-   :parameter object: An instance of :class:`<C-Dylan-object>`.
    :parameter object: An instance of :drm:`<object>`.
+   :value c-dylan-object: An instance of :class:`<C-Dylan-object>`.
 
    :description:
 

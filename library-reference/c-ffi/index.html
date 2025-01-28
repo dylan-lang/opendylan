@@ -670,16 +670,16 @@ setter methods for the slots are defined for instances of <code class="docutils 
 <p>Suppose there is a function <em>current-example</em> that returns an
 initialized <code class="docutils literal notranslate"><span class="pre">&lt;Example*&gt;</span></code> struct. The following transactions illustrate
 what you get when you read the slots of the structure it returns:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>? define variable example = current-example();
-// Defined example
-? example.count;
-4
-? instance?(example.count, &lt;integer&gt;);
-#t
-? example.statistic;
-10.5
-? instance?(example.statistic, &lt;float&gt;);
-#t
+<div class="highlight-dylan-repl notranslate"><div class="highlight"><pre><span></span><span class="gp">?</span><span class="w"> </span><span class="k">define</span><span class="w"> </span><span class="nb">variable</span><span class="w"> </span><span class="n">example</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current-example</span><span class="p">();</span>
+<span class="go">// Defined example</span>
+<span class="gp">?</span><span class="w"> </span><span class="n">example</span><span class="p">.</span><span class="n">count</span><span class="p">;</span>
+<span class="go">4</span>
+<span class="gp">?</span><span class="w"> </span><span class="nb">instance?</span><span class="p">(</span><span class="n">example</span><span class="p">.</span><span class="n">count</span><span class="p">,</span><span class="w"> </span><span class="nc">&lt;integer&gt;</span><span class="p">);</span>
+<span class="go">#t</span>
+<span class="gp">?</span><span class="w"> </span><span class="n">example</span><span class="p">.</span><span class="n">statistic</span><span class="p">;</span>
+<span class="go">10.5</span>
+<span class="gp">?</span><span class="w"> </span><span class="nb">instance?</span><span class="p">(</span><span class="n">example</span><span class="p">.</span><span class="n">statistic</span><span class="p">,</span><span class="w"> </span><span class="nc">&lt;float&gt;</span><span class="p">);</span>
+<span class="go">#t</span>
 </pre></div>
 </div>
 <p>The interactions above show that if we access structure slots that were
@@ -690,14 +690,14 @@ same value appears in Dylan. Similarly, when setting slots in structs
 expecting numbers or passing objects out to C functions expecting
 numeric arguments, you should provide a Dylan number, and the C-FFI will
 convert it automatically to its C equivalent.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>? example.data;
-{&lt;C-char&gt; pointer #xff5e00}
-? instance?(example.data, &lt;C-char*&gt;);
-#t
-? example.next;
-{&lt;Example&gt; pointer #xff5f00}
-? instance?(example.next, &lt;Example*&gt;);
-#t
+<div class="highlight-dylan-repl notranslate"><div class="highlight"><pre><span></span><span class="gp">?</span><span class="w"> </span><span class="n">example</span><span class="p">.</span><span class="n">data</span><span class="p">;</span>
+<span class="go">{&lt;C-char&gt; pointer #xff5e00}</span>
+<span class="gp">?</span><span class="w"> </span><span class="nb">instance?</span><span class="p">(</span><span class="n">example</span><span class="p">.</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="nc">&lt;C-char*&gt;</span><span class="p">);</span>
+<span class="go">#t</span>
+<span class="gp">?</span><span class="w"> </span><span class="n">example</span><span class="p">.</span><span class="n">next</span><span class="p">;</span>
+<span class="go">{&lt;Example&gt; pointer #xff5f00}</span>
+<span class="gp">?</span><span class="w"> </span><span class="nb">instance?</span><span class="p">(</span><span class="n">example</span><span class="p">.</span><span class="n">next</span><span class="p">,</span><span class="w"> </span><span class="nc">&lt;Example*&gt;</span><span class="p">);</span>
+<span class="go">#t</span>
 </pre></div>
 </div>
 <p>The interactions above show that accessing structure slots with a
@@ -3996,12 +3996,16 @@ object as it normally would.</p>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>object</strong> – An instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-dylan-object]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;C-Dylan-object&gt;</span></code></a>.</p></li>
 <li><p><strong>object</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
 </ul>
 </dd>
-<dt class="field-odd">Discussion<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Fetches the <a class="reference internal" href="#c-ffi:c-ffi:[c-dylan-object]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;C-Dylan-object&gt;</span></code></a> handle for a Dylan object.</p>
+<dt class="field-odd">Values<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>c-dylan-object</strong> – An instance of <a class="reference internal" href="#c-ffi:c-ffi:[c-dylan-object]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;C-Dylan-object&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
+<dd class="field-even"><p>Fetches the <a class="reference internal" href="#c-ffi:c-ffi:[c-dylan-object]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;C-Dylan-object&gt;</span></code></a> handle for a Dylan object.</p>
 </dd>
 </dl>
 </dd></dl>
