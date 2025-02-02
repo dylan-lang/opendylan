@@ -560,17 +560,22 @@
 </tr>
 <tr class="row-odd"><td><p>Numbers</p></td>
 <td><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="mi">42</span><span class="w">       </span><span class="c1">// A decimal integer</span>
+<span class="mi">1</span><span class="n">_000</span><span class="w">    </span><span class="c1">// A decimal integer</span>
 <span class="mb">#b101010</span><span class="w"> </span><span class="c1">// A binary integer</span>
 <span class="mo">#o52</span><span class="w">     </span><span class="c1">// An octal integer</span>
 <span class="mh">#x2A</span><span class="w">     </span><span class="c1">// A hexadecimal integer</span>
-<span class="mf">-42.5</span><span class="w">    </span><span class="c1">// A floating point number</span>
-<span class="mf">6.02E23</span><span class="w">  </span><span class="c1">// A floating point number</span>
+<span class="mf">-42.5</span><span class="w">    </span><span class="c1">// A single float</span>
+<span class="mf">6.02E23</span><span class="w">  </span><span class="c1">// A single float</span>
+<span class="mf">6.02</span><span class="n">d23</span><span class="w">  </span><span class="c1">// A double float</span>
 </pre></div>
 </div>
 </td>
 <td><ul class="simple">
 <li><p><a class="reference external" href="https://opendylan.org/books/drm/Lexical_Grammar#XREF-2105"><code class="xref drm docutils literal notranslate"><span class="pre">Numbers</span></code></a> (syntax)</p></li>
 <li><p><a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#single-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;single-float&gt;</span></code></a></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#double-float"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;double-float&gt;</span></code></a></p></li>
 </ul>
 </td>
 </tr>
@@ -578,12 +583,19 @@
 <td><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="sc">&#39;a&#39;</span><span class="w">       </span><span class="c1">// A character</span>
 <span class="s">&quot;Hello&quot;</span><span class="w">   </span><span class="c1">// A simple string</span>
 <span class="s">&quot;Hello</span><span class="se">\n</span><span class="s">&quot;</span><span class="w"> </span><span class="c1">// An escape sequence</span>
+<span class="c1">// Equivalent to &quot;abc\ndef&quot;:</span>
+<span class="s">&quot;&quot;&quot;</span>
+<span class="n">abc</span>
+<span class="n">def</span>
+<span class="s">&quot;&quot;&quot;</span>
+<span class="k">#r</span><span class="s">&quot;ab</span><span class="se">\&quot;</span><span class="s">   // The raw string ab\</span>
 </pre></div>
 </div>
 </td>
 <td><ul class="simple">
-<li><p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a></p></li>
 <li><p><a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#character"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;character&gt;</span></code></a></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a></p></li>
+<li><p><a class="reference external" href="/proposals/dep-0012-string-literals.html">DEP 12</a></p></li>
 </ul>
 </td>
 </tr>
@@ -600,9 +612,10 @@
 </td>
 </tr>
 <tr class="row-even"><td><p>Collections</p></td>
-<td><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="p">#(</span><span class="mi">1</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="s">&quot;one&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1">// A literal &lt;pair&gt;</span>
-<span class="p">#(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">   </span><span class="c1">// A literal &lt;list&gt;</span>
-<span class="p">#[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w">   </span><span class="c1">// A literal &lt;vector&gt;</span>
+<td><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="p">#(</span><span class="mi">1</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="s">&quot;one&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1">// A literal pair</span>
+<span class="p">#(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">   </span><span class="c1">// A literal list</span>
+<span class="p">#[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w">   </span><span class="c1">// A literal vector</span>
+<span class="s">&quot;123&quot;</span><span class="w">        </span><span class="c1">// A literal string</span>
 </pre></div>
 </div>
 </td>
@@ -610,6 +623,7 @@
 <li><p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#pair"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;pair&gt;</span></code></a></p></li>
 <li><p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#list"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;list&gt;</span></code></a></p></li>
 <li><p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#vector"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;vector&gt;</span></code></a></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a></p></li>
 </ul>
 </td>
 </tr>
