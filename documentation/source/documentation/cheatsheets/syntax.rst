@@ -17,18 +17,26 @@ Literals
 +----------------+----------------------------------------+---------------------------+
 | Numbers        | .. code-block:: dylan                  | * :drm:`Numbers` (syntax) |
 |                |                                        | * :drm:`<number>`         |
-|                |  42       // A decimal integer         |                           |
-|                |  #b101010 // A binary integer          |                           |
+|                |  42       // A decimal integer         | * :drm:`<integer>`        |
+|                |  1_000    // A decimal integer         | * :drm:`<single-float>`   |
+|                |  #b101010 // A binary integer          | * :drm:`<double-float>`   |
 |                |  #o52     // An octal integer          |                           |
 |                |  #x2A     // A hexadecimal integer     |                           |
-|                |  -42.5    // A floating point number   |                           |
-|                |  6.02E23  // A floating point number   |                           |
+|                |  -42.5    // A single float            |                           |
+|                |  6.02E23  // A single float            |                           |
+|                |  6.02d23  // A double float            |                           |
 +----------------+----------------------------------------+---------------------------+
-| Strings        | .. code-block:: dylan                  |                           |
+| Strings        | .. code-block:: dylan                  | * :drm:`<character>`      |
 |                |                                        | * :drm:`<string>`         |
-|                |  'a'       // A character              | * :drm:`<character>`      |
+|                |  'a'       // A character              | * `DEP 12`_               |
 |                |  "Hello"   // A simple string          |                           |
 |                |  "Hello\n" // An escape sequence       |                           |
+|                |  // Equivalent to "abc\ndef":          |                           |
+|                |  """                                   |                           |
+|                |  abc                                   |                           |
+|                |  def                                   |                           |
+|                |  """                                   |                           |
+|                |  #r"ab\"   // The raw string ab\       |                           |
 +----------------+----------------------------------------+---------------------------+
 | Symbols        | .. code-block:: dylan                  | * :drm:`<symbol>`         |
 |                |                                        |                           |
@@ -38,10 +46,14 @@ Literals
 +----------------+----------------------------------------+---------------------------+
 | Collections    | .. code-block:: dylan                  | * :drm:`<pair>`           |
 |                |                                        | * :drm:`<list>`           |
-|                |  #(1 . "one") // A literal <pair>      | * :drm:`<vector>`         |
-|                |  #(1, 2, 3)   // A literal <list>      |                           |
-|                |  #[1, 2, 3]   // A literal <vector>    |                           |
+|                |  #(1 . "one") // A literal pair        | * :drm:`<vector>`         |
+|                |  #(1, 2, 3)   // A literal list        | * :drm:`<string>`         |
+|                |  #[1, 2, 3]   // A literal vector      |                           |
+|                |  "123"        // A literal string      |                           |
 +----------------+----------------------------------------+---------------------------+
+
+.. _DEP 12: /proposals/dep-0012-string-literals.html
+
 
 Naming Conventions
 ==================
