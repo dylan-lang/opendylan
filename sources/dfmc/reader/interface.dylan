@@ -18,12 +18,7 @@ define method read-top-level-fragment
     (record :: <compilation-record>, lexer :: false-or(<lexer>))
  => (fragment, lexer)
   with-classification-cache
-    let lexer
-      = lexer | make(<lexer>,
-                     source: record,
-                     start-posn: 0,
-                     start-line: 1,
-                     line-start: 0);
+    let lexer = lexer | make(<lexer>, source: record);
     local method lex ()
       let fragment = get-token(lexer);
       values(fragment-kind(fragment), fragment, fragment)
@@ -56,7 +51,7 @@ define method read-top-level-fragment
 end method read-top-level-fragment;
 
 define function source-lines-read (lexer :: <lexer>) => (lines :: <integer>)
-  (lexer.line | -1) + 1
+  (lexer.lexer-line-number | -1) + 1
 end function;
 
 // Re-read using a given lexer function.
