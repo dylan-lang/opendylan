@@ -16,11 +16,7 @@ end function make-compilation-record;
 
 define function make-lexer
     (source) => (lexer :: <lexer>)
-  make(<lexer>,
-       source: make-compilation-record(source),
-       start-posn: 0,
-       start-line: 1,
-       line-start: 0)
+  make(<lexer>, source: make-compilation-record(source))
 end function;
 
 define function read-fragment

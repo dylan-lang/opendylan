@@ -16,31 +16,28 @@ define constant $max-lexer-code :: <integer> = 255;
 
 define constant $octothorp-code = as(<integer>, '#');
 
-// state machine
-
-define constant <result-type>
-  = type-union(singleton(#f), <symbol>, <class>, <function>);
+// * #f indicates no builder, i.e., a non-accepting state.
+// * A function with signature (lexer, source-location) => (fragment) makes a
+//   <fragment> for the token being accepted at this state.
+// * A symbol is used for whitespace and comments, which never make it out of
+//   the lexer.
+define constant <fragment-builder>
+  = type-union(singleton(#f), <symbol>, <function>);
 
 // A particular state in the state machine.
-//
 define class <state> (<object>)
-  //
-  // The name of this state, a symbol.  Not really used once the state
-  // machine is built, but we keep it around for debugging purposes.
-  slot name :: <symbol>, required-init-keyword: name:;
-  //
-  // The acceptance result if this state is an accepting state, or #f
-  // if it is not.  Symbols are used for magic internal stuff that never
-  // makes it out of the lexer (e.g. whitespace), classes for simple
-  // tokens that don't need any extra parsing, and functions for more
-  // complex tokens.
-  constant slot result :: <result-type>, required-init-keyword: result:;
+  // Used while building the state machine, and for debugging.
+  constant slot state-name :: <symbol>,
+    required-init-keyword: name:;
+
+  constant slot state-fragment-builder :: <fragment-builder>,
+    required-init-keyword: fragment-builder:;
 
   // Either #f or a vector of next-states indexed by character code.
   // During construction, vector elements are either state names or #f.
   // After construction, the state names are replaced by the actual
   // state objects.
-  constant slot transitions :: false-or(<simple-object-vector>),
+  constant slot state-transitions :: false-or(<simple-object-vector>),
     required-init-keyword: transitions:;
 end class <state>;
 
@@ -49,29 +46,30 @@ define sealed domain initialize (<state>);
 
 define method print-object
     (state :: <state>, stream :: <stream>) => ()
-  pprint-fields(state, stream, name: state.name);
+  pprint-fields(state, stream, name: state.state-name);
 end method print-object;
 
 
 define class <conditionally-accepting-state> (<state>)
   // Accepts a <lexer> argument and returns #t to accept, #f to not accept, and
   // #"use-previous" to use the already seen accepting state. It is an error to return
-  // #"use-previous" unless you know an accepting state has already been seen.
-  constant slot %action :: <function>,
+  // #"use-previous" unless you know an accepting state has already been seen by the time
+  // this state is entered.
+  constant slot state-action :: <function>,
     required-init-keyword: action:;
 end class;
 
 define inline method do-state-action (lexer :: <lexer>, state :: <state>)
-  state.result & #t
+  state.state-fragment-builder & #t
 end method;
 
 define method do-state-action (lexer :: <lexer>, state :: <conditionally-accepting-state>)
-  let res = state.%action(lexer);
+  let res = state.state-action(lexer);
   if (res == #"use-previous")
     // Whether this is an accepting state or not, use the previous accepting state.
     #"use-previous"
   else
-    state.result & res
+    state.state-fragment-builder & res
   end
 end method;
 
@@ -126,7 +124,7 @@ end method add-transition;
 // transitions into a transition table and makes the state object.
 //
 define method state
-    (name :: <symbol>, result :: <result-type>, #rest transitions)
+    (name :: <symbol>, builder :: <fragment-builder>, #rest transitions)
   let table = size(transitions) > 0
     & make(<vector>, size: $max-lexer-code + 1, fill: #f);
   for (transition in transitions)
@@ -134,12 +132,12 @@ define method state
   end for;
   make(<state>,
        name: name,
-       result: result,
+       fragment-builder: builder,
        transitions: table);
 end method state;
 
 define function conditionally-accepting-state
-    (name :: <symbol>, result :: <result-type>, action :: <function>,
+    (name :: <symbol>, builder :: <fragment-builder>, action :: <function>,
      #rest transitions)
   let table = if (size(transitions) > 0)
                 make(<vector>, size: $max-lexer-code + 1, fill: #f)
@@ -149,7 +147,7 @@ define function conditionally-accepting-state
   end for;
   make(<conditionally-accepting-state>,
        name: name,
-       result: result,
+       fragment-builder: builder,
        action: action,
        transitions: table)
 end function;
@@ -164,10 +162,11 @@ define method compile-state-machine
   //
   let state-table = make(<table>);
   for (state in states)
-    if (element(state-table, state.name, default: #f))
-      error("State %= multiply defined.", state.name);
+    let name = state.state-name;
+    if (element(state-table, name, default: #f))
+      error("State %= multiply defined.", name);
     else
-      state-table[state.name] := state;
+      state-table[name] := state;
     end if;
   end for;
   //
@@ -176,7 +175,7 @@ define method compile-state-machine
   // object themselves instead of just to the new state name.
   //
   for (state in states)
-    let table = state.transitions;
+    let table = state.state-transitions;
     if (table)
       for (i from 0 to $max-lexer-code)
         let new-state = table[i];
@@ -211,27 +210,26 @@ define method feature-present? (feature :: <symbol>) => present? :: <boolean>;
 end method feature-present?;
 */
 
-
-// lexer
-
-// Holds the current lexer state.
-//
 define class <lexer> (<object>)
-  //
   // The compilation record we are currently tokenizing.
-  constant slot source :: <compilation-record>, required-init-keyword: source:;
-  //
-  // The position we are currently at in the source file.
-  slot posn :: <integer>, required-init-keyword: start-posn:;
-  //
-  // The line number we are currently working on.
-  slot line :: <integer>, required-init-keyword: start-line:;
-  //
-  // The position that this line started at.
-  slot line-start :: <integer>, required-init-keyword: line-start:;
+  // (Why is this a <compilation-record> and not a <source-record>? --cgay)
+  constant slot lexer-source :: <compilation-record>,
+    required-init-keyword: source:;
 
-  // Used to track balanced consecutive double quotes of any length which delimit
-  // multi-quoted strings. These are reset to 0 after each string is accepted.
+  // The position we are currently at in the source record.
+  slot lexer-position :: <integer> = 0,
+    init-keyword: position:;
+
+  // The line number we are currently working on.
+  slot lexer-line-number :: <integer> = 1,
+    init-keyword: line-number:;
+
+  // The position at which the line designated by lexer-line-number starts.
+  slot lexer-line-start-position :: <integer> = 0,
+    init-keyword: line-start-position:;
+
+  // Tracks balanced consecutive double quotes of any length which delimit multi-quoted
+  // strings. These are reset to 0 after each string is accepted.
   slot double-quote-start-count :: <integer> = 0;
   slot double-quote-end-count :: <integer> = 0;
 
@@ -239,14 +237,15 @@ define class <lexer> (<object>)
   // slot pushed-tokens :: <list>, init-value: #();
   //
   // slot conditional-state :: false-or(<conditional-state>), init-value: #f;
-  //
-  // The last token read.
-  slot last-token :: <object> = #f;
+
+  slot lexer-previous-token :: <object> = #f;
+
   // Tame source location object.
   constant slot tame-source-location :: <lexer-source-location>
     = make(<lexer-source-location>,
            source-record: #f,
-           start-posn: 0, end-posn: 0);
+           start-posn: 0,
+           end-posn: 0);
 end class <lexer>;
 
 define sealed domain make (singleton(<lexer>));
@@ -255,10 +254,10 @@ define sealed domain initialize (<lexer>);
 define method print-object
     (lexer :: <lexer>, stream :: <stream>) => ()
   pprint-fields(lexer, stream,
-                source: lexer.source.compilation-record-source-record,
-                posn: lexer.posn,
-                line: lexer.line,
-                column: lexer.posn - lexer.line-start + 1);
+                source: lexer.lexer-source.compilation-record-source-record,
+                position: lexer.lexer-position,
+                line-number: lexer.lexer-line-number,
+                column: lexer.lexer-position - lexer.lexer-line-start-position + 1);
 end method print-object;
 
 // Used just the once.
@@ -287,9 +286,9 @@ end function make-lexer-source-location;
 // Basically, we just implement a state machine via tail recursive
 // local methods.
 //
-// TODO(cgay): This fails for "/* \"/*\" */" so it needs to be made
-// string aware.
-//
+// TODO(cgay): This fails for #r"""/* "/*" */""" so it needs to be made string (and //)
+// aware. Now that we have <conditionally-accepting-state> this could mostly be done in
+// lexer-transitions.dylan.
 define method skip-multi-line-comment
     (contents :: <byte-vector>, length :: <integer>, start :: <integer>)
  => (epos :: false-or(<integer>), lines-skipped :: <integer>, line-start :: false-or(<integer>))
@@ -397,41 +396,33 @@ define macro fragment-builder
 end macro fragment-builder;
 
 define method get-token
-    (lexer :: <lexer>) => (res :: <fragment>)
-  //
-  // Basically, just record where we are starting, and keep
-  // advancing the state machine until there are no more possible
-  // advances.  We don't stop at the first accepting state we find,
-  // because the longest token is supposed to take precedence.  We
-  // just note where the last accepting state we came across was,
-  // and then when the state machine jams, we just use that latest
+    (lexer :: <lexer>) => (fragment :: <fragment>)
+  // Basically, just record where we start and keep advancing the state machine until
+  // there are no more possible advances.  We don't stop at the first accepting state we
+  // find, because the longest token is supposed to take precedence.  We just note where
+  // the last accepting state was, and when the state machine jams use that last
   // accepting state's result.
-  //
-  let contents :: <byte-vector> = lexer.source.contents;
   let (kind, bpos, bline, bcol, epos, eline, ecol, unexpected-eof?,
        current-line, current-line-start)
-    = get-token-1(lexer, $initial-state, contents, lexer.posn, lexer.line,
-                  lexer.line-start);
+    = get-token-1(lexer, $initial-state,
+                  lexer.lexer-source.contents,
+                  lexer.lexer-position,
+                  lexer.lexer-line-number,
+                  lexer.lexer-line-start-position);
 
-  //
-  // Save the current token's end position so that the next token
-  // starts here.
-  //
-  lexer.posn := epos;
-  lexer.line := current-line;
-  lexer.line-start := current-line-start;
+  // Save the current token's end position so that the next token starts here.
+  lexer.lexer-position            := epos;
+  lexer.lexer-line-number         := current-line;
+  lexer.lexer-line-start-position := current-line-start;
 
   let source-location = make-lexer-source-location
-    (lexer, lexer.source, bpos, bline, bcol, epos, eline, ecol);
-  //
-  // And finally, make and return the actual token.
-  //
+    (lexer, lexer.lexer-source, bpos, bline, bcol, epos, eline, ecol);
   if (kind)
     do-process-token(kind, lexer, source-location)
   elseif (unexpected-eof?)
-    invalid-end-of-input(source-location)
+    invalid-end-of-input(source-location) // can return #f and get return type error
   else
-    invalid-token(source-location)
+    invalid-token(source-location) // can return #f and get return type error
   end if
 end method get-token;
 
@@ -506,9 +497,9 @@ define function get-token-1
       method repeat (state :: <state>, posn :: <integer>)
                  => (posn, result-kind, result-start, result-end)
         let res = do-state-action(lexer, state);
-        if (res == #t & state.result)
+        if (res == #t & state.state-fragment-builder)
           // An accepting state; record the result and where it ended.
-          result-kind := state.result;
+          result-kind := state.state-fragment-builder;
           result-end := posn;
         end if;
         if (res == #"use-previous")
@@ -520,7 +511,7 @@ define function get-token-1
           maybe-done(posn)
         else
           // Try advancing the state machine once more if possible.
-          let table = state.transitions;
+          let table = state.state-transitions;
           let new-state
             = if (table /* & char < $max-lexer-code + 1 */)
                 let table :: <simple-object-vector> = table;
@@ -589,7 +580,7 @@ end function get-token-1;
 
 define inline function do-process-token
     (f, lexer :: <lexer>, source-location)
-  lexer.last-token := f(lexer, source-location);
+  lexer.lexer-previous-token := f(lexer, source-location);
 end;
 
 /*
@@ -797,11 +788,11 @@ define method make-constrained-name
         values(extract-symbol(source-location, end: colon-posn),
                #t);
       end;
-  let last = last-token(lexer);
+  let prev = lexer.lexer-previous-token;
   if (~explicit-name?
-        | instance?(last, <query-fragment>)
-        | instance?(last, <query-query-fragment>)
-        | instance?(last, <escaped-substitution-fragment>))
+        | instance?(prev, <query-fragment>)
+        | instance?(prev, <query-query-fragment>)
+        | instance?(prev, <escaped-substitution-fragment>))
     make(<constrained-name-fragment>,
          record: source-location.source-location-record,
          source-position: source-location.source-location-source-position,
@@ -1504,9 +1495,9 @@ define method make-hash-literal
                      start: source-location.start-posn + 2,
                      end:   source-location.end-posn - 1);
   block ()
-    let contents :: <byte-vector> = lexer.source.contents;
+    let contents :: <byte-vector> = lexer.lexer-source.contents;
     let length :: <integer> = contents.size;
-    let data-start :: <integer> = lexer.posn;
+    let data-start :: <integer> = lexer.lexer-position;
     let delimiter = contents[data-start];
     let delimiter-index
       = position($hash-data-start-delimiters, as(<character>, delimiter));
@@ -1528,11 +1519,11 @@ define method make-hash-literal
           let char :: <integer> = contents[i];
           if (char == end-delimiter & (prev-char ~== $escape-code))
             data := extract-string(source-location, start: data-start + 1, end: i);
-            lexer.posn := i + 1;
+            lexer.lexer-position := i + 1;
           else
             if (char == $newline-code)
-              lexer.line := lexer.line + 1;
-              lexer.line-start := i;
+              lexer.lexer-line-number := lexer.lexer-line-number + 1;
+              lexer.lexer-line-start-position := i;
             end;
             loop(i + 1, char);
           end;
@@ -1546,7 +1537,7 @@ define method make-hash-literal
         i := i + 1;
       end;
       data := extract-string(source-location, start: data-start, end: i);
-      lexer.posn := i;
+      lexer.lexer-position := i;
     end;
     let module = *current-module*;
     let parser-symbol = as(<symbol>, concatenate(name-string, "-parser"));
@@ -1730,14 +1721,14 @@ end function at-end-word?;
 
 define method skip-to-next-top-level-form
     (lexer :: <lexer>) => ()
-  let contents = lexer.source.contents;
+  let contents = lexer.lexer-source.contents;
   let length = contents.size;
   local method walk (i :: <integer>)
     if (i < length)
       let (newline?, start) = at-newline?(contents, i);
       if (newline?)
-        lexer.line-start := start;
-        lexer.line := lexer.line + 1;
+        lexer.lexer-line-start-position := start;
+        lexer.lexer-line-number := lexer.lexer-line-number + 1;
         if (~at-whitespace?(contents, start, length)
               & ~at-end-word?(contents, start, length))
           start
@@ -1751,5 +1742,5 @@ define method skip-to-next-top-level-form
       length
     end;
   end;
-  lexer.posn := walk(lexer.posn);
+  lexer.lexer-position := walk(lexer.lexer-position);
 end method skip-to-next-top-level-form;
