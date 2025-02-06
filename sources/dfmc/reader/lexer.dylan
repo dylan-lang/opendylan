@@ -403,17 +403,13 @@ define method get-token
   // the last accepting state was, and when the state machine jams use that last
   // accepting state's result.
   let (kind, bpos, bline, bcol, epos, eline, ecol, unexpected-eof?,
-       current-line, current-line-start)
-    = get-token-1(lexer, $initial-state,
-                  lexer.lexer-source.contents,
-                  lexer.lexer-position,
-                  lexer.lexer-line-number,
-                  lexer.lexer-line-start-position);
+       current-line-start-pos)
+    = get-token-1(lexer);
 
   // Save the current token's end position so that the next token starts here.
   lexer.lexer-position            := epos;
-  lexer.lexer-line-number         := current-line;
-  lexer.lexer-line-start-position := current-line-start;
+  lexer.lexer-line-number         := eline;
+  lexer.lexer-line-start-position := current-line-start-pos;
 
   let source-location = make-lexer-source-location
     (lexer, lexer.lexer-source, bpos, bline, bcol, epos, eline, ecol);
@@ -427,87 +423,90 @@ define method get-token
 end method get-token;
 
 define function get-token-1
-    (lexer :: <lexer>, state :: <state>, contents :: <byte-vector>, start :: <integer>,
-     line :: <integer>, lstart :: <integer>)
- => (kind, bpos, bline, bcol, epos, eline, ecol, unexpected-eof? :: <boolean>,
-     current-line, line-start)
-  let length :: <integer> = contents.size;
+    (lexer :: <lexer>)
+ => (builder, bpos, bline, bcol, epos, eline, ecol, unexpected-eof? :: <boolean>,
+     end-line-number, end-line-start-pos)
+  let contents :: <byte-vector> = lexer.lexer-source.contents;
+  let source-length :: <integer> = contents.size;
+
+  let start-pos :: <integer> = lexer.lexer-position;
+
   let unexpected-eof :: <boolean> = #f;
-  let saved-line :: false-or(<integer>) = #f;
-  let saved-line-start :: false-or(<integer>) = #f;
+  let saved-line-number :: false-or(<integer>) = #f;
+  let saved-line-start-pos :: false-or(<integer>) = #f;
 
-  let current-line :: <integer> = line;
-  let line-start :: <integer> = lstart;
+  let current-line-number :: <integer> = lexer.lexer-line-number;
+  let current-line-start-pos :: <integer> = lexer.lexer-line-start-position;
 
-  let result-kind = #f;
-  let result-start = start;
-  let result-end = #f;
+  let builder :: <fragment-builder> = #f;
+  let result-start-pos = start-pos;
+  let result-end-pos = #f;
 
   without-bounds-checks
     local
       // maybe-done is called when the state machine cannot be advanced any
       // further.  It just checks to see if we really are done or not.
-      method maybe-done (pos) => (pos, result-kind, result-start, result-end)
-        if (~instance?(result-kind, <symbol>))
-          values(pos, result-kind, result-start, result-end)
+      method maybe-done (pos) => (pos, builder, result-start-pos, result-end-pos)
+        if (~instance?(builder, <symbol>))
+          values(pos, builder, result-start-pos, result-end-pos)
         else
-          // result-kind is a symbol if this is one of the magic accepting
+          // builder is a symbol if this is one of the magic accepting
           // states.  Instead of returning some token, we do some special
           // processing depending on exactly what symbol it is, and then start
           // the state machine over at the initial state.
-          select (result-kind)
+          select (builder)
             #"whitespace" =>
               #f;
             #"newline" =>
-              current-line := current-line + 1;
-              line-start := result-end;
+              current-line-number := current-line-number + 1;
+              current-line-start-pos := result-end-pos;
             #"end-of-line-comment" =>
-              for (i :: <integer> from result-end below length,
+              for (i :: <integer> from result-end-pos below source-length,
                    until: (contents[i] == $newline-code))
               finally
-                result-end := i;
+                result-end-pos := i;
               end for;
             #"multi-line-comment" =>
-              saved-line := current-line;
-              saved-line-start := line-start;
+              saved-line-number := current-line-number;
+              saved-line-start-pos := current-line-start-pos;
               let (epos, nskipped, lstart)
-                = skip-multi-line-comment(contents, length, result-end);
-              result-end := epos;
-              current-line := current-line + nskipped;
-              line-start := lstart | line-start;
-              if (result-end)
-                saved-line := #f;
-                saved-line-start := #f;
+                = skip-multi-line-comment(contents, source-length, result-end-pos);
+              result-end-pos := epos;
+              current-line-number := current-line-number + nskipped;
+              current-line-start-pos := lstart | current-line-start-pos;
+              if (result-end-pos)
+                saved-line-number := #f;
+                saved-line-start-pos := #f;
               else
                 unexpected-eof := #t;
               end;
           end select;
-          result-kind := #f;
-          if (result-end)
-            result-start := result-end;
-            result-end := #f;
-            let result-start :: <integer> = result-start;
-            repeat($initial-state, result-start)
+          builder := #f;
+          if (result-end-pos)
+            result-start-pos := result-end-pos;
+            result-end-pos := #f;
+            let result-start-pos :: <integer> = result-start-pos;
+            repeat($initial-state, result-start-pos)
           else
-            values(pos, result-kind, result-start, result-end)
+            values(pos, builder, result-start-pos, result-end-pos)
           end if
         end if
       end method maybe-done,
 
       method repeat (state :: <state>, posn :: <integer>)
-                 => (posn, result-kind, result-start, result-end)
+                 => (posn, builder, result-start-pos, result-end-pos)
         let res = do-state-action(lexer, state);
         if (res == #t & state.state-fragment-builder)
           // An accepting state; record the result and where it ended.
-          result-kind := state.state-fragment-builder;
-          result-end := posn;
+          builder := state.state-fragment-builder;
+          result-end-pos := posn;
         end if;
         if (res == #"use-previous")
-          if (~result-kind)
+          if (~builder)
             error("the lexer expected a previous accepting state but there is none")
           end;
           maybe-done(posn)
-        elseif (posn >= length)
+        elseif (posn >= source-length)
           maybe-done(posn)
         else
           // Try advancing the state machine once more if possible.
@@ -537,42 +536,42 @@ define function get-token-1
         end iterate
       end method count-newlines;
 
-    let (posn, result-kind, result-start, result-end)
-      = repeat($initial-state, start);
-    if (~result-kind)
-      // If result-kind is #f, no accepting state was found.  Check to see if
+    // TODO: Kind of weird binding result-start-pos and result-end-pos here given that
+    // repeat and maybe-done just set the variables that are already in scope.
+    let (posn, builder, result-start-pos, result-end-pos)
+      = repeat($initial-state, start-pos);
+    if (~builder)
+      // If builder is #f, no accepting state was found.  Check to see if
       // that means we are at the end or hit an error.
-      if (result-start == length)
-        result-kind := fragment-builder(<eof-marker>);
-        result-end := result-start;
-      elseif (unexpected-eof | posn == length)
-        result-end := length;
+      if (result-start-pos == source-length)
+        builder := fragment-builder(<eof-marker>);
+        result-end-pos := result-start-pos;
+      elseif (unexpected-eof | posn == source-length)
+        result-end-pos := source-length;
         unexpected-eof := #t;
       else
-        result-end := result-start + 1;
+        result-end-pos := result-start-pos + 1;
       end if;
     end if;
     // TODO: This is such a hack. Can make-*-literal return the line count and
     // then we adjust the current line number in get-token, after get-token-1 returns?
-    if (result-kind == make-stringish-literal
-          | result-kind == make-raw-string-literal)
+    if (builder == make-stringish-literal
+          | builder == make-raw-string-literal)
       // multi-line string literals are the only tokens with embedded newlines
-      // so they require special treatment.  Increment current-line by the
+      // so they require special treatment.  Increment current-line-number by the
       // number of newlines in the string to keep source locations correct.
-      current-line := current-line + count-newlines(result-start, result-end);
+      current-line-number := current-line-number + count-newlines(result-start-pos, result-end-pos);
     end if;
 
     // Return enough information to make a source location for the current token.
-    let effective-line :: <integer> = saved-line | current-line;
-    let effective-line-start :: <integer> = saved-line-start | line-start;
-    let bpos = result-start;
-    let bline = effective-line;
-    let bcol = result-start - effective-line-start;
-    let eline = current-line;
-    let epos :: <integer> = result-end;
-    let ecol = epos - line-start;
-    values(result-kind, bpos, bline, bcol, epos, eline, ecol,
-           unexpected-eof, current-line, line-start)
+    let bpos = result-start-pos;
+    let bline = saved-line-number | current-line-number;
+    let bcol = result-start-pos - (saved-line-start-pos | current-line-start-pos);
+    let eline = current-line-number;
+    let epos :: <integer> = result-end-pos;
+    let ecol = epos - current-line-start-pos;
+    values(builder, bpos, bline, bcol, epos, eline, ecol,
+           unexpected-eof, current-line-start-pos)
   end without-bounds-checks
 end function get-token-1;
 

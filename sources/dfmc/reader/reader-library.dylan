@@ -248,6 +248,7 @@ define module dfmc-reader
   //// For test suite only.
   export
     <lexer>,
+    <fragment-builder>,
     $initial-state,
     get-token,
     get-token-1,

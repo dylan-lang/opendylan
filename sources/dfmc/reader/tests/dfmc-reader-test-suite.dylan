@@ -4,34 +4,34 @@ License: See License.txt in this distribution for details.
 // TODO: this can just use get-token and i think there's already a function to get the
 // fragment string.
 define function get-token-as-string
-    (source :: <string>, start :: <integer>) => (token :: <string>, kind)
+    (source :: <string>) => (token :: <string>, builder :: <fragment-builder>)
   let contents = as(<byte-vector>, source);
   let lexer = make-lexer(source);
-  let (kind, bpos, bline, bcol, epos, eline, ecol, unexpected-eof?, current-line, line-start)
-    = get-token-1(lexer, $initial-state, contents, start, 0, 0);
+  let (builder, bpos, bline, bcol, epos, eline, ecol, unexpected-eof?, line-start)
+    = get-token-1(lexer);
   values(as(<string>, copy-sequence(contents, start: bpos, end: epos)),
-         kind)
+         builder)
 end function get-token-as-string;
 
 define test lex-integer-test ()
-  let (tok, kind) = get-token-as-string("123,abc", 0);
+  let (tok, kind) = get-token-as-string("123,abc");
   assert-equal(tok, "123");
 end test lex-integer-test;
 
 define test lex-string-test ()
-  assert-equal(get-token-as-string("\"abc\"....", 0), "\"abc\"");
+  assert-equal(get-token-as-string("\"abc\"...."), "\"abc\"");
 end test lex-string-test;
 
 define test lex-multi-line-string-test ()
-  assert-equal(get-token-as-string("\"\"\"abc\"\"\"....", 0), "\"\"\"abc\"\"\"",
+  assert-equal(get-token-as-string("\"\"\"abc\"\"\"...."), "\"\"\"abc\"\"\"",
                "basic triple-quoted string");
-  assert-equal(get-token-as-string("\"\"\"ab\nc\"\"\"....", 0), "\"\"\"ab\nc\"\"\"",
+  assert-equal(get-token-as-string("\"\"\"ab\nc\"\"\"...."), "\"\"\"ab\nc\"\"\"",
                "embedded newline");
-  assert-equal(get-token-as-string("\"\"\"ab\"\nc\"\"\"", 0), "\"\"\"ab\"\nc\"\"\"",
+  assert-equal(get-token-as-string("\"\"\"ab\"\nc\"\"\""), "\"\"\"ab\"\nc\"\"\"",
                "embedded double quote before newline");
-  assert-equal(get-token-as-string("\"\"\"ab\"\"\nc\"\"\"", 0), "\"\"\"ab\"\"\nc\"\"\"",
+  assert-equal(get-token-as-string("\"\"\"ab\"\"\nc\"\"\""), "\"\"\"ab\"\"\nc\"\"\"",
                "two embedded double quotes before newline");
-  assert-equal(get-token-as-string("\"\"\"ab\"\n \"\nc\"\"\"", 0), "\"\"\"ab\"\n \"\nc\"\"\"",
+  assert-equal(get-token-as-string("\"\"\"ab\"\n \"\nc\"\"\""), "\"\"\"ab\"\n \"\nc\"\"\"",
                "embedded double quotes on different lines");
 end test lex-multi-line-string-test;
 
