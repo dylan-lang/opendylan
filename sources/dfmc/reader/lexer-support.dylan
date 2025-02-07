@@ -201,10 +201,6 @@ end function;
 define constant runtime-$minimum-integer = $minimum-integer;
 define constant runtime-$maximum-integer = $maximum-integer;
 
-define macro pprint-fields
-  { pprint-fields (?stuff:*) } => { ?=next-method() }
-end macro;
-
 define variable *current-module* = #f;
 
 define inline function contents

@@ -114,16 +114,12 @@ define serious-program-warning <unterminated-parser-expansion>
   format-arguments token-string;
 end serious-program-warning;
 
+// Note that this is only used by the parser. The lexer itself signals <invalid-token> if
+// it reaches EOF in the middle of a token.
 define serious-program-warning <invalid-end-of-input> (<reader-error>)
   format-string
     "Unexpected end of input encountered while reading form.";
 end serious-program-warning;
-
-define function invalid-end-of-input (lexer-location)
-  let location = lexer-location-source-location(lexer-location);
-  note(<invalid-end-of-input>,
-       source-location: location);
-end function;
 
 define function lexer-location-source-location (lexer-location)
   record-position-as-location

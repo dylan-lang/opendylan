@@ -18,9 +18,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //
 define constant $initial-state :: <state>
   = compile-state-machine
-  (state(#"start", #f,
-         #(" \t\f\r" . #"whitespace"),
-         #('\n' . #"newline"),
+  (state(#"not-allowed", #f),   // transition here to explicitly fail
+   state(#"start", #f,
+         #(" \t\f\n\r" . #"whitespace"),
          #('/' . #"slash"),
          #('#' . #"sharp"),
          #('(' . #"lparen"),
@@ -50,13 +50,46 @@ define constant $initial-state :: <state>
          #('"' . #"string-start"),
          #("0-9" . #"decimal")),
    state(#"whitespace", #"whitespace",
-         #(" \t\f\r" . #"whitespace")),
-   state(#"newline", #"newline"),
+         #(" \t\f\n\r" . #"whitespace")),
    state(#"slash", make-binary-operator,
-         #('/' . #"double-slash"),
-         #('*' . #"slash-star")),
-   state(#"double-slash", #"end-of-line-comment"),
-   state(#"slash-star", #"multi-line-comment"),
+         #('/' . #"single-line-comment"),
+         #('*' . #"delimited-comment-start")),
+
+   state(#"single-line-comment", #f,
+         // TODO: If we hit EOF before EOL we should still accept, but currently there's
+         // no way to specify a transition from EOF to an accepting state.
+         #("\n" . #"single-line-comment-end"),
+         #("\r" . #"single-line-comment-cr"),
+         #(#"otherwise" . #"single-line-comment")),
+   state(#"single-line-comment-cr", #"comment",
+         #('\n' . #"single-line-comment-end")),
+   state(#"single-line-comment-end", #"comment"),
+
+   // TODO: don't terminate the comment on valid NAME tokens like foo*/.
+   conditionally-accepting-state
+     (#"delimited-comment-start", #f, increment-delimited-comment-start-count,
+      #('/' . #"delimited-comment-slash"),
+      #('*' . #"delimited-comment-star"),
+      #(#"otherwise" . #"delimited-comment-body")),
+   state(#"delimited-comment-slash", #f,
+         #('/' . #"delimited-comment-slash-slash"),
+         #('*' . #"delimited-comment-start"),
+         #(#"otherwise" . #"delimited-comment-body")),
+   state(#"delimited-comment-slash-slash", #f,
+         #("\n\r" . #"delimited-comment-body"),
+         #(#"otherwise" . #"delimited-comment-slash-slash")),
+   state(#"delimited-comment-star", #f,
+         #('/' . #"delimited-comment-end"),
+         #('*' . #"delimited-comment-star"),
+         #(#"otherwise" . #"delimited-comment-body")),
+   state(#"delimited-comment-body", #f,
+         #('/' . #"delimited-comment-slash"),
+         #('*' . #"delimited-comment-star"),
+         #(#"otherwise" . #"delimited-comment-body")),
+   conditionally-accepting-state
+     (#"delimited-comment-end", #"comment", increment-delimited-comment-end-count,
+      #(#"otherwise" . #"delimited-comment-body")),
+
    state(#"sharp", #f,
          #('(' . #"sharp-paren"),
          #('[' . #"sharp-bracket"),
@@ -450,9 +483,9 @@ define constant $initial-state :: <state>
          #('-' . #"qname")),
 
    state(#"quote", #f,
-         #(" -&(-[]-~" . #"quote-char"),
-         pair($ascii-8-bit-extensions, #"quote-char"),
-         #('\\' . #"quote-escape")),
+         #("'"          . #"not-allowed"),
+         #('\\'         . #"quote-escape"),
+         #(#"otherwise" . #"quote-char")),
    state(#"quote-escape", #f,
          #("\\'\"abefnrt0" . #"quote-char"),
          #('<' . #"quote-escape-less")),
@@ -504,21 +537,21 @@ define constant $initial-state :: <state>
    // for every single character. Otherwise it could be one state.
    conditionally-accepting-state
      (#"multi-string-body", #f, reset-double-quote-end-count,
-      #('"'              . #"multi-string-end"),
-      #('\\'             . #"multi-string-escape"),
-      #("\t\r\n !#-[]-~" . #"multi-string-body-continue"),
-      pair($ascii-8-bit-extensions, #"multi-string-body-continue")),
+      #('"'          . #"multi-string-end"),
+      #('\\'         . #"multi-string-escape"),
+      #('\f'         . #"not-allowed"),
+      #(#"otherwise" . #"multi-string-body-continue")),
    state(#"multi-string-body-continue", #f,
-      #('"'              . #"multi-string-end"),
-      #('\\'             . #"multi-string-escape"),
-      #("\t\r\n !#-[]-~" . #"multi-string-body-continue"),
-      pair($ascii-8-bit-extensions, #"multi-string-body-continue")),
+         #('"'          . #"multi-string-end"),
+         #('\\'         . #"multi-string-escape"),
+         #('\f'         . #"not-allowed"),
+         #(#"otherwise" . #"multi-string-body-continue")),
    conditionally-accepting-state
      (#"multi-string-end", make-stringish-literal, increment-double-quote-end-count,
-      #('"'              . #"multi-string-end"),
-      #('\\'             . #"multi-string-escape"),
-      #("\t\r\n !#-[]-~" . #"multi-string-body"),
-      pair($ascii-8-bit-extensions, #"multi-string-body")),
+      #('"'          . #"multi-string-end"),
+      #('\\'         . #"multi-string-escape"),
+      #('\f'         . #"not-allowed"),
+      #(#"otherwise" . #"multi-string-body")),
    conditionally-accepting-state
      (#"multi-string-escape", #f, reset-double-quote-end-count,
       #("\\'\"abefnrt0" . #"multi-string-body-continue"),
@@ -534,7 +567,7 @@ define constant $initial-state :: <state>
    conditionally-accepting-state
      (#"raw-string-start", #f, increment-double-quote-start-count,
       #('"'       . #"raw-2-double-quotes"),
-      #("\t !#-~" . #"raw-one-line-string-body"),
+      #("\t !#-~" . #"raw-one-line-string-body"), // omit \n\r\f
       pair($ascii-8-bit-extensions, #"raw-one-line-string-body")),
    conditionally-accepting-state
      (#"raw-2-double-quotes", make-raw-string-literal, increment-double-quote-start-count,
@@ -543,32 +576,28 @@ define constant $initial-state :: <state>
    // Raw one-line strings #r"..." (no line breaks)
    state(#"raw-one-line-string-body", #f,
          #('"'       . #"raw-one-line-string-end"),
-         #("\t !#-~" . #"raw-one-line-string-body"),
+         #("\t !#-~" . #"raw-one-line-string-body"), // omit \n\r\f
          pair($ascii-8-bit-extensions, #"raw-one-line-string-body")),
    state(#"raw-one-line-string-end", make-raw-string-literal),
 
    // Raw multi-quoted strings #r"""...""" (>= 3 double quotes)
    conditionally-accepting-state
      (#"raw-multi-string-start", #f, increment-double-quote-start-count,
-      #('"'           . #"raw-multi-string-start"),
-      #("\t\r\n !#-~" . #"raw-multi-string-body"),
-      pair($ascii-8-bit-extensions, #"raw-multi-string-body")),
+      #('"'          . #"raw-multi-string-start"),
+      #(#"otherwise" . #"raw-multi-string-body")),
    // The string body is broken into two states so that the action function isn't called
    // for every single character. Otherwise it could be one state.
    conditionally-accepting-state
      (#"raw-multi-string-body", #f, reset-double-quote-end-count,
-      #('"'           . #"raw-multi-string-end"),
-      #("\t\r\n !#-~" . #"raw-multi-string-body-continue"),
-      pair($ascii-8-bit-extensions, #"raw-multi-string-body-continue")),
+      #('"'          . #"raw-multi-string-end"),
+      #(#"otherwise" . #"raw-multi-string-body-continue")),
    state(#"raw-multi-string-body-continue", #f,
-         #('"'           . #"raw-multi-string-end"),
-         #("\t\r\n !#-~" . #"raw-multi-string-body-continue"),
-         pair($ascii-8-bit-extensions, #"raw-multi-string-body-continue")),
+         #('"'          . #"raw-multi-string-end"),
+         #(#"otherwise" . #"raw-multi-string-body-continue")),
    conditionally-accepting-state
      (#"raw-multi-string-end", make-raw-string-literal, increment-double-quote-end-count,
-      #('"'              . #"raw-multi-string-end"),
-      #("\t\r\n !#-~" . #"raw-multi-string-body"),
-      pair($ascii-8-bit-extensions, #"raw-multi-string-body")),
+      #('"'          . #"raw-multi-string-end"),
+      #(#"otherwise" . #"raw-multi-string-body")),
 
    state(#"decimal", parse-integer-literal,
          #("0-9" . #"decimal"),

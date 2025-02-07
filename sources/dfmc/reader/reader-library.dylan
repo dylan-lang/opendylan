@@ -249,10 +249,9 @@ define module dfmc-reader
   export
     <lexer>,
     <fragment-builder>,
+    <eof-marker>,
     $full-character-set,
     $initial-state,
     make-transition-table,
-    get-token,
-    get-token-1,
-    skip-multi-line-comment;
+    get-token;
 end module dfmc-reader;
