@@ -67,6 +67,7 @@ define test character-literal-test ()
   assert-equal(as(<integer>, f.fragment-value), 255);
   verify-presentation(f, "'\\<FF>'");
 
+  assert-signals(<invalid-token>, read-fragment("''"));
   assert-signals(<invalid-token>, read-fragment("'21'"));
   assert-signals(<invalid-token>, read-fragment("'\\j'"));
   assert-signals(<invalid-token>, read-fragment("'\\<gg>'"));
@@ -328,6 +329,9 @@ define test test-multi-line-empty-strings ()
 
                                       """});
   assert-equal("", frag2.fragment-value, "multi-line empty string, with prefix");
+
+  assert-signals(<invalid-token>, read-fragment(#:string:{""""""}),
+                 "literal \\f not allowed in string literal");
 end test;
 
 define test test-multi-line-string-with-blank-lines ()
@@ -438,6 +442,22 @@ define test test-multi-line-string-escaping ()
   """});
   assert-equal("\nx", frag6.fragment-value,
                "Newline escape sequences, x shorter than prefix");
+end test;
+
+define test test-multi-line-string-error-source-location ()
+  let source = #:string:{"""
+    abc
+    def
+   ghi
+    """};
+  block ()
+    get-token(make-lexer(source));
+    assert-true(#f, "unreachable");
+  exception (ex :: <invalid-string-literal>)
+    let loc = ex.condition-source-location;
+    expect-equal(1, loc.source-location-start-line);
+    expect-equal(5, loc.source-location-end-line);
+  end;
 end test;
 
 define test string-literal-raw-one-line-test ()
@@ -610,6 +630,7 @@ define suite literal-test-suite ()
   test symbol-literal-test;
   test vector-literal-test;
   test hash-literal-test;
+  test test-multi-line-string-error-source-location;
   test test-multi-line-string-eol-handling;
   test test-multi-line-string-basics;
   test test-multi-line-string-escaping;
