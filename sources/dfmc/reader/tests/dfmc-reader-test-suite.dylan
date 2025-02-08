@@ -53,6 +53,31 @@ define test skip-multi-line-comment-test ()
   skip("/*..\n// /*\n*/", 2, 13, 2, 11, "nested // with /* in it");
 end test;
 
+define test test-otherwise-transition ()
+  expect-condition(<error>,
+                   make-transition-table(vector(#(#"otherwise" . #"bar"),
+                                                #(#"otherwise" . #"baz"))),
+                   "> 1 otherwise clause disallowed");
+
+  expect-condition(<error>,
+                   make-transition-table(vector(pair($full-character-set, #"orange"),
+                                                #(#"otherwise" . #"pear"))),
+                   "otherwise had no effect");
+
+  let transitions
+    = make-transition-table(vector(#('t' . #"tiger"),
+                                   #('j' . #"jaguar"),
+                                   #(#"otherwise" . #"lion")));
+  // spot checks...
+  expect-false(transitions[0],
+               "\\0 is not part of the valid Dylan source code character set");
+  expect-equal(#"lion", transitions[as(<integer>, '\t')]);
+  expect-equal(#"lion", transitions[128]);
+  expect-equal(#"lion", transitions[255]);
+  expect-equal(#"tiger", transitions[as(<integer>, 't')]);
+  expect-equal(#"jaguar", transitions[as(<integer>, 'j')]);
+end test;
+
 define suite dfmc-reader-test-suite ()
   suite literal-test-suite;
   suite comments-test-suite;
@@ -61,5 +86,6 @@ define suite dfmc-reader-test-suite ()
   test lex-integer-test;
   test lex-string-test;
   test lex-multi-line-string-test;
+  test test-otherwise-transition;
 end suite;
 

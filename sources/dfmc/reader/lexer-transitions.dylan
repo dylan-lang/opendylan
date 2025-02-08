@@ -11,9 +11,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // Copyright (c) 1994  Carnegie Mellon University
 // All rights reserved.
 
-define constant $ascii-8-bit-extensions
-  = as(<string>, vector(as(<character>, 128), '-', as(<character>, 255)));
-
 // Build the state graph and save the initial state.
 // Note that transition strings support ranges, like "A-Z".
 // Note that string literals allow tabs in order to detect them and give

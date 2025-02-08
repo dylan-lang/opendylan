@@ -14,6 +14,16 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $max-lexer-code :: <integer> = 255;
 
+define constant $ascii-8-bit-extensions
+  = as(<string>, vector(as(<character>, 128),
+                        '-',
+                        as(<character>, $max-lexer-code)));
+
+// All valid characters in source code, excludes various non-printing characters.
+// (\f and \r, are not required by the DRM. Nor obviously the 8-bit extensions.)
+define constant $full-character-set
+  = concatenate("\t\n\f\r -~", $ascii-8-bit-extensions);
+
 define constant $octothorp-code = as(<integer>, '#');
 
 // * #f indicates no builder, i.e., a non-accepting state.
@@ -73,83 +83,111 @@ define method do-state-action (lexer :: <lexer>, state :: <conditionally-accepti
   end
 end method;
 
-// Make as many entries as necessary to represent the transitions from
-// 'on' to new-state.  'on' can be a character or a byte-string.  If a
-// byte-string, then it supports ranges: "-abc-gz" = match on dash, a,
-// b, c through g, and z.
+// Make as many entries as necessary to represent the transitions from 'on' to new-state.
+// 'on' can be a character, a byte-string, or #"otherwise".  If a byte-string, then it
+// supports ranges: "-abc-gz" = match on dash, a, b, c through g, and z.
 //
 // Also check to see if this entry clashes with any earlier entries.
 // If so, it means someone messed up editing the state machine.
 //
 define method add-transition
-    (transitions :: <simple-object-vector>, on :: <character>, new-state :: <symbol>)
- => ()
+    (transitions :: <simple-object-vector>, on :: <character>, new-state :: <symbol>,
+     #key only-if-not-set? :: <boolean>)
+ => (any-set? :: <boolean>)
   let code = as(<integer>, on);
   if (transitions[code])
-    error("input %= transitions to both %= and %=",
-          on, transitions[code], new-state);
+    if (only-if-not-set?)
+      #f
+    else
+      error("input %= transitions to both %= and %=", on, transitions[code], new-state);
+    end
   else
     transitions[code] := new-state;
-  end if;
+    #t
+  end if
 end method add-transition;
 
 define method add-transition
-    (transitions :: <simple-object-vector>, on :: <byte-string>, new-state :: <symbol>)
- => ()
+    (transitions :: <simple-object-vector>, on :: <byte-string>, new-state :: <symbol>,
+     #key only-if-not-set? :: <boolean>)
+ => (any-set? :: <boolean>)
+  let any-set? = #f;
+  local method add-one (char)
+          let b = add-transition(transitions, char, new-state,
+                                 only-if-not-set?: only-if-not-set?);
+          any-set? := any-set? | b;
+        end;
   let last = #f;                // Last transition actually added.
   let range = #f;               // Just saw a hyphen (but not added yet).
   for (char :: <byte-character> in on)
     if (range)
       if (last)
         for (i :: <integer> from as(<integer>, last) + 1 to as(<integer>, char))
-          add-transition(transitions, as(<character>, i), new-state);
+          add-one(as(<character>, i));
         end for;
         last := #f;
       else
-        add-transition(transitions, '-', new-state);
-        add-transition(transitions, char, new-state);
+        add-one('-');
+        add-one(char);
         last := char;
       end if;
       range := #f;
     elseif (char == '-')
       range := #t;
     else
-      add-transition(transitions, char, new-state);
+      add-one(char);
       last := char;
     end if;
   end for;
+  any-set?
 end method add-transition;
 
-// Utility function for making states.  Expands the sequence of
-// transitions into a transition table and makes the state object.
-//
+define method add-transition
+    (transitions :: <simple-object-vector>, on == #"otherwise", new-state :: <symbol>, #key)
+ => (any-set? :: singleton(#t))
+  add-transition(transitions, $full-character-set, new-state, only-if-not-set?: #t)
+    | error("#\"otherwise\" => %= transition had no effect", new-state)
+end method;
+
+define function make-transition-table
+    (transitions :: <sequence>) => (t :: false-or(<simple-object-vector>))
+  let table = if (size(transitions) > 0)
+                make(<vector>, size: $max-lexer-code + 1, fill: #f)
+              end;
+  let otherwise? = #f;
+  for (transition in transitions,
+       i from 0)
+    let on = head(transition);
+    if (on == #"otherwise")
+      if (otherwise? | i < transitions.size - 1)
+        error("state %=: there can only be one #\"otherwise\" transition "
+                "and it must be last", name);
+      end;
+      otherwise? := #t;
+    end;
+    add-transition(table, on, tail(transition));
+  end for;
+  table
+end function;
+
 define method state
     (name :: <symbol>, builder :: <fragment-builder>, #rest transitions)
-  let table = size(transitions) > 0
-    & make(<vector>, size: $max-lexer-code + 1, fill: #f);
-  for (transition in transitions)
-    add-transition(table, head(transition), tail(transition));
-  end for;
+  let transitions = make-transition-table(transitions);
   make(<state>,
        name: name,
        fragment-builder: builder,
-       transitions: table);
+       transitions: transitions);
 end method state;
 
 define function conditionally-accepting-state
     (name :: <symbol>, builder :: <fragment-builder>, action :: <function>,
      #rest transitions)
-  let table = if (size(transitions) > 0)
-                make(<vector>, size: $max-lexer-code + 1, fill: #f)
-              end;
-  for (transition in transitions)
-    add-transition(table, head(transition), tail(transition));
-  end for;
+  let transitions = make-transition-table(transitions);
   make(<conditionally-accepting-state>,
        name: name,
        fragment-builder: builder,
        action: action,
-       transitions: table)
+       transitions: transitions)
 end function;
 
 // Build a state machine and return the start state, which must be
