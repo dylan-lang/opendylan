@@ -2015,27 +2015,12 @@ end method;
 
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <multiple-value-check-type>) => ()
-  do-emit-mv-check-type(back-end, m, c, temporary-value(c.computation-value));
-  next-method();
-end method;
-
-define method do-emit-mv-check-type
-    (back-end :: <llvm-back-end>, m :: <llvm-module>,
-     c :: <multiple-value-check-type>, mv :: <llvm-local-mv>)
- => ();
-  for (value in mv.llvm-mv-fixed, type in c.types)
-    emit-type-check(back-end, value, type);
-  end for;
-end method;
-
-define method do-emit-mv-check-type
-    (back-end :: <llvm-back-end>, m :: <llvm-module>,
-     c :: <multiple-value-check-type>, mv :: <llvm-global-mv>)
- => ();
+  let mv = temporary-value(c.computation-value);
   for (index from 0, type in c.types)
     let value = op--mv-extract(back-end, mv, index);
     emit-type-check(back-end, value, type);
   end for;
+  next-method();
 end method;
 
 define method emit-computation
