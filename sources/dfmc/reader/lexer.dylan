@@ -940,7 +940,7 @@ define method decode-string
      epos :: <integer>, escapes? :: <boolean>)
  => (string :: <byte-string>)
   local
-    method fail (format-string, #rest format-args)
+    method warn (format-string, #rest format-args)
       note(<invalid-string-literal>,
            source-location: source-location,
            token-string: extract-string(source-location),
@@ -961,7 +961,8 @@ define method decode-string
               values(bpos, bpos + 1)
             end;
           $tab-code =>
-            fail("tab character at index %d; use \\t or spaces instead", bpos);
+            warn("tab character at index %d; use \\t or spaces instead", bpos);
+            find-line-break(seq, bpos + 1, epos);
           otherwise =>
             find-line-break(seq, bpos + 1, epos);
         end
@@ -972,7 +973,7 @@ define method decode-string
         line
       else
         every?(\==, line, prefix)
-          | fail("each line must begin with the same whitespace prefix, got %=, want %=",
+          | warn("each line must begin with the same whitespace prefix, got %=, want %=",
                  as(<string>, line), as(<string>, prefix));
         // In keeping with the C# spec, any prefix of the prefix is allowed, so it is
         // valid here if line.size < prefix.size.
@@ -1048,18 +1049,17 @@ define method decode-string
     1 =>
       as(<string>, process-line(#f, parts[0])); // e.g., """abc"""
     2 =>
-      fail("multi-line strings must contain at least one line");
+      warn("multi-line strings must contain at least one line");
+      values("", 1);
     otherwise =>
       let prefix = parts.last;
-      if (~every?(whitespace-code?, prefix))
-        fail("prefix must be all whitespace, got %=", as(<string>, prefix));
-      end;
-      if (~every?(whitespace-code?, parts.first))
+      every?(whitespace-code?, prefix)
+        | warn("prefix must be all whitespace, got %=", as(<string>, prefix));
+      every?(whitespace-code?, parts.first)
         // TODO: put the actual delimiter in the error message, in case it has more than
         // 3 double quotes.
-        fail("only whitespace may follow the open delimiter \"\"\" on the"
-               " same line, got %=", parts.first);
-      end;
+        | warn("only whitespace may follow the open delimiter \"\"\" on the"
+                 " same line, got %=", parts.first);
       let parts = map(curry(process-line, prefix),
                       copy-sequence(parts, start: 1, end: parts.size - 1));
       as(<string>, join(parts, make(<byte-vector>, size: 1, fill: $newline-code)))
