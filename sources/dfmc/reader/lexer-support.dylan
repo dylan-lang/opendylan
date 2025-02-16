@@ -194,13 +194,6 @@ end function;
 
 //// Some stubs in support of the CMU style.
 
-// TODO: CORRECTNESS: Get these values from the back-end, since the
-// 32 bit values hardwired here aren't going to be correct for, say,
-// the Alpha.
-
-define constant runtime-$minimum-integer = $minimum-integer;
-define constant runtime-$maximum-integer = $maximum-integer;
-
 define variable *current-module* = #f;
 
 define inline function contents

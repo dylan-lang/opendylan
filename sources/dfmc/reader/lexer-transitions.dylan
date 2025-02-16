@@ -105,12 +105,7 @@ define constant $initial-state :: <state>
          #("nN" . #"sharp-n"), // #next
          #("rR" . #"sharp-r"), // #rest, #r"...", #r"""..."""
          #("kK" . #"sharp-k"), // # key
-         #("aA" . #"sharp-a")  // #all-keys
-           /* CMU
-           #("eE" . #"sharp-e"),
-           #("iI" . #"sharp-i")
-           */
-         ),
+         #("aA" . #"sharp-a")), // #all-keys
    state(#"sharp-paren", fragment-builder(<hash-lparen-fragment>)),
    state(#"sharp-bracket", fragment-builder(<hash-lbracket-fragment>)),
    state(#"sharp-brace", fragment-builder(<hash-lbrace-fragment>)),
@@ -178,32 +173,6 @@ define constant $initial-state :: <state>
    state(#"hex-integer-underscore", #f,
          #("0-9a-fA-F" . #"hex-integer")),
 
-   /* CMU
-     state(#"sharp-i", #f, #("fF" . #"sharp-if")),
-     state(#"sharp-if", fragment-builder(<hash-if-fragment>)),
-     state(#"sharp-e", #f,
-     #('-' . #"sharp-e-minus"),
-     #("0-9" . #"extended-integer"),
-     #("bB" . #"sharp-b"),
-     #("oO" . #"sharp-o"),
-     #("xX" . #"sharp-x"),
-     #("lL" . #"sharp-el"),
-     #("nN" . #"sharp-en")),
-     state(#"sharp-e-minus", #f,
-     #("0-9" . #"extended-integer")),
-     state(#"sharp-el", #f, #("sS" . #"sharp-els")),
-     state(#"sharp-els", #f, #("eE" . #"sharp-else")),
-     state(#"sharp-else", fragment-builder(<hash-else-fragment>),
-     #("iI" . #"sharp-elsei")),
-     state(#"sharp-elsei", #f, #("fF" . #"sharp-elseif")),
-     state(#"sharp-elseif", fragment-builder(<hash-elseif-fragment>)),
-     state(#"sharp-en", #f, #("dD" . #"sharp-end")),
-     state(#"sharp-end", #f, #("iI" . #"sharp-endi")),
-     state(#"sharp-endi", #f, #("fF" . #"sharp-endif")),
-     state(#"sharp-endif", fragment-builder(<hash-endif-fragment>)),
-     state(#"extended-integer", parse-integer-literal,
-     #("0-9" . #"extended-integer")),
-     */
    state(#"lparen", fragment-builder(<lparen-fragment>)),
    state(#"rparen", fragment-builder(<rparen-fragment>)),
    state(#"comma", fragment-builder(<comma-fragment>)),

@@ -996,45 +996,28 @@ define method parse-integer
   end;
 end method parse-integer;
 
-// Parse an integer and return a <literal-token> holding it.
+// Parse an integer and return a <literal-fragment> holding it.
 //
 define method parse-integer-literal
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
  => (res :: <abstract-integer-fragment>)
   let contents = source-location.source-location-record.contents;
   let posn = source-location.start-posn;
-  let extended = #f;
   let radix = 10;
-
   if (as(<character>, contents[posn]) == '#')
-    posn := posn + 1;
-    let char = as(<character>, contents[posn]);
-    if (char == 'e' | char == 'E')
-      posn := posn + 1;
-      char := as(<character>, contents[posn]);
-      extended := #t;
-    end if;
-    if (char == 'b' | char == 'B')
-      posn := posn + 1;
-      radix := 2;
-    elseif (char == 'o' | char == 'O')
-      posn := posn + 1;
-      radix := 8;
-    elseif (char == 'x' | char == 'X')
-      posn := posn + 1;
-      radix := 16;
-    end if;
+    let char = as(<character>, contents[posn + 1]);
+    posn := posn + 2;
+    radix := select (char)
+               'b', 'B' => 2;
+               'o', 'O' => 8;
+               'x', 'X' => 16;
+               otherwise =>
+                 // theoretically unreachable
+                 error("unexpected #%c integer literal prefix", char);
+             end;
   end if;
-
   let int = parse-integer(source-location, contents, radix: radix, start: posn);
-
-  if (~extended &
-        (int < runtime-$minimum-integer
-           | int > runtime-$maximum-integer))
-    extended := #t;
-  end if;
-
-  if (extended)
+  if (int < $minimum-integer | int > $maximum-integer)
     make(<big-integer-fragment>,
          record: source-location.source-location-record,
          source-position: source-location.source-location-source-position,
