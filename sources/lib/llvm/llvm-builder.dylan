@@ -332,10 +332,11 @@ define macro with-insert-before-terminator
     end }
     => { // Temporarily switch to the given basic block
 	 let current-bb = ?builder.llvm-builder-basic-block;
-	 ?builder.llvm-builder-basic-block := ?bb;
+         let insert-bb = ?bb;
+	 ?builder.llvm-builder-basic-block := insert-bb;
 
 	 // Temporarily remove the block terminator
-	 let instructions = ?bb.llvm-basic-block-instructions;
+	 let instructions = insert-bb.llvm-basic-block-instructions;
 	 let terminator :: <llvm-terminator-instruction> = instructions.last;
 	 instructions.size := instructions.size - 1;
 
@@ -343,10 +344,12 @@ define macro with-insert-before-terminator
 	 block ()
 	   ?body
 	 cleanup
-	   // Put the terminator back at the end and restore the previous
-	   // basic block
-	   add!(instructions, terminator);
-	   ?builder.llvm-builder-basic-block := current-bb;
+	   // Put the removed terminator at the end of the current
+	   // block (which might have changed)
+           builder-insert(?builder, terminator);
+
+           // Restore the original current basic block
+           ?builder.llvm-builder-basic-block := current-bb;
 	 end block }
 end macro;
 

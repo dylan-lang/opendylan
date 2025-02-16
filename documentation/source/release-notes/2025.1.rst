@@ -49,6 +49,10 @@ Compiler
   which suppressed error reporting within macro calls in slot
   initializer expressions, is now fixed.
 
+* `Issue 1660 <https://github.com/dylan-lang/opendylan/issues/1660>`_,
+  which caused code generation failures for certain usages of
+  multiple-value expressions, has been fixed.
+
 Tools
 =====
 

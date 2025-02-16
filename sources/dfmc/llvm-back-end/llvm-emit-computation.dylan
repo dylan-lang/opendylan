@@ -326,8 +326,8 @@ define method emit-merge-assignment
   for (i :: <integer> from 0 below results.size by 2)
     with-insert-before-terminator (back-end, results[i + 1])
       phi-operands[i] := emit-reference(back-end, module, results[i]);
+      phi-operands[i + 1] := back-end.llvm-builder-basic-block;
     end;
-    phi-operands[i + 1] := results[i + 1];
   end for;
   emit-result-assignment(back-end, c, temp, ins--phi(back-end, phi-operands));
 end method;
@@ -392,8 +392,8 @@ define method emit-local-merge-assignment
       let mv = temporary-value(results[i]);
       with-insert-before-terminator (back-end, results[i + 1])
         phi-operands[i] := op--mv-extract(back-end, mv, m);
+        phi-operands[i + 1] := back-end.llvm-builder-basic-block;
       end;
-      phi-operands[i + 1] := results[i + 1];
     end for;
     add!(fixed, ins--phi(back-end, phi-operands));
   end for;
@@ -406,8 +406,8 @@ define method emit-local-merge-assignment
           let mv = temporary-value(results[i]);
           with-insert-before-terminator (back-end, results[i + 1])
             phi-operands[i] := op--mv-extract-rest(back-end, mv, count);
+            phi-operands[i + 1] := back-end.llvm-builder-basic-block;
           end;
-          phi-operands[i + 1] := results[i + 1];
         end for;
         ins--phi(back-end, phi-operands);
       end if;
@@ -428,11 +428,12 @@ define method emit-global-merge-assignment
       with-insert-before-terminator (back-end, results[i + 1])
         let value = op--mv-extract(back-end, mv, 0);
         phi-operands[i] := op--global-mv-struct(back-end, value, i8(1));
+        phi-operands[i + 1] := back-end.llvm-builder-basic-block;
       end;
     else
       phi-operands[i] := mv.llvm-mv-struct;
+      phi-operands[i + 1] := results[i + 1];
     end if;
-    phi-operands[i + 1] := results[i + 1];
   end for;
 
   let phi = ins--phi(back-end, phi-operands);
@@ -2015,27 +2016,12 @@ end method;
 
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <multiple-value-check-type>) => ()
-  do-emit-mv-check-type(back-end, m, c, temporary-value(c.computation-value));
-  next-method();
-end method;
-
-define method do-emit-mv-check-type
-    (back-end :: <llvm-back-end>, m :: <llvm-module>,
-     c :: <multiple-value-check-type>, mv :: <llvm-local-mv>)
- => ();
-  for (value in mv.llvm-mv-fixed, type in c.types)
-    emit-type-check(back-end, value, type);
-  end for;
-end method;
-
-define method do-emit-mv-check-type
-    (back-end :: <llvm-back-end>, m :: <llvm-module>,
-     c :: <multiple-value-check-type>, mv :: <llvm-global-mv>)
- => ();
+  let mv = temporary-value(c.computation-value);
   for (index from 0, type in c.types)
     let value = op--mv-extract(back-end, mv, index);
     emit-type-check(back-end, value, type);
   end for;
+  next-method();
 end method;
 
 define method emit-computation
