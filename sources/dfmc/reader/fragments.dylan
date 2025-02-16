@@ -978,20 +978,6 @@ define class <parens-fragment> (<nested-fragment>) end;
 define class <brackets-fragment> (<nested-fragment>) end;
 define class <braces-fragment> (<nested-fragment>) end;
 
-//// Conditional compilation fragments.
-
-/* CMU only
-define abstract class <hash-directive-fragment> (<elementary-fragment>)
-  constant slot fragment-kind,
-    required-init-keyword: kind:;
-end;
-
-define class <hash-if-fragment> (<hash-directive-fragment>) end;
-define class <hash-else-fragment> (<hash-directive-fragment>) end;
-define class <hash-elseif-fragment> (<hash-directive-fragment>) end;
-define class <hash-endif-fragment> (<hash-directive-fragment>) end;
-*/
-
 //// Pseudo-fragments used to delimit the reparsing of macro constraints.
 
 define class <pseudo-fragment> (<elementary-fragment>)
