@@ -128,11 +128,21 @@ define test open-projects-test ()
               project-interface-type(*test-application*),
               #"gui");
   check-equal("Application project name",
+              project-name(*test-application*),
+              $test-application);
+  check-equal("Application project name",
               environment-object-primitive-name
                 (*test-application*, *test-application*),
               $test-application);
+  check-false("Application project not read-only",
+              project-read-only?(*test-application*));
+  check-true("Application project can be built",
+             project-can-be-built?(*test-application*));
+  check-true("Application project can be debugged",
+             project-can-be-debugged?(*test-application*));
   check-true("Application project compiled",
              project-compiled?(*test-application*));
+
   check-instance?("Library project open",
                   <project-object>, *test-library*);
   check-equal("Library project target type",
@@ -142,9 +152,18 @@ define test open-projects-test ()
               project-interface-type(*test-library*),
               #"console");
   check-equal("Library project name",
+              project-name(*test-library*),
+              $test-library);
+  check-equal("Library project name",
               environment-object-primitive-name
                 (*test-library*, *test-library*),
               $test-library);
+  check-false("Library project not read-only",
+              project-read-only?(*test-library*));
+  check-true("Library project can be built",
+             project-can-be-built?(*test-library*));
+  check-true("Library project can be debugged",
+             project-can-be-debugged?(*test-library*));
   check-true("Library project compiled",
              project-compiled?(*test-library*));
 end test open-projects-test;
