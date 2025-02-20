@@ -168,9 +168,30 @@ define test open-projects-test ()
              project-compiled?(*test-library*));
 end test open-projects-test;
 
+define test project-libraries-test ()
+  let application-lib = project-library(*test-application*);
+  check-instance?("Application project library",
+                  <library-object>, application-lib);
+  check-equal("Application project library project",
+              project-filename(*test-application*),
+              project-filename(library-project(*test-application*, application-lib)));
+
+  let application-used-libraries
+    = project-used-libraries(*test-application*, *test-application*);
+  let application-used-library-names
+    = map(curry(environment-object-basic-name, *test-application*),
+          application-used-libraries);
+  // See libraries referenced in test-application/library.dylan
+  for (name in #["common-dylan", "duim", "environment-test-library"])
+    check-true(format-to-string("Application library uses %s", name),
+               member?(name, application-used-library-names, test: \=));
+  end for;
+end test project-libraries-test;
+
 
 /// projects suite
 
 define suite projects-suite ()
   test open-projects-test;
+  test project-libraries-test;
 end suite projects-suite;
