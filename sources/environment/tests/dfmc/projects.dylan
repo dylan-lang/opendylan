@@ -188,10 +188,26 @@ define test project-libraries-test ()
   end for;
 end test project-libraries-test;
 
+define test project-source-files-test ()
+  check-equal("Library project filename",
+              test-project-location($test-library),
+              project-filename(*test-library*));
+  check-equal("Application project filename",
+              test-project-location($test-application),
+              project-filename(*test-application*));
+
+  check-true("Library project directory exists",
+             file-exists?(project-directory(*test-library*)));
+  for (s in project-sources(*test-library*))
+    check-true("Source file exists",
+               file-exists?(source-record-location(s)));
+  end for;
+end test;
 
 /// projects suite
 
 define suite projects-suite ()
   test open-projects-test;
   test project-libraries-test;
+  test project-source-files-test;
 end suite projects-suite;
