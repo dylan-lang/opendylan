@@ -247,7 +247,11 @@ define module dfmc-reader
 
   //// For test suite only.
   export
+    <lexer>,
+    <fragment-builder>,
+    <eof-marker>,
+    $full-character-set,
     $initial-state,
-    get-token-1,
-    skip-multi-line-comment;
+    make-transition-table,
+    get-token;
 end module dfmc-reader;
