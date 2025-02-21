@@ -13,6 +13,7 @@ define module dfmc-environment-test-suite
   use standard-io;
   use progress-stream;
   use locators;
+  use file-system;
 
   use source-records;
   use operating-system,
