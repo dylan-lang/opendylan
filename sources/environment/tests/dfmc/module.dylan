@@ -8,12 +8,14 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module dfmc-environment-test-suite
   use common-dylan;
-  use simple-format;
+  use simple-format, exclude: { format-to-string };
   use streams;
+  use format;
   use standard-io;
   use progress-stream;
   use locators;
   use file-system;
+  use threads;
 
   use source-records;
   use operating-system,
@@ -21,10 +23,15 @@ define module dfmc-environment-test-suite
 
   use testworks;
 
+  use channels;
+  use dylan-orb;
+
+  use access-path, import: { debugger-message };
+
   use environment-protocols,
     exclude: { application-filename,
                application-arguments };
-  use environment-commands;
+  use dfmc-application;
   use environment-test-suite;
 
   export dfmc-environment-suite;
