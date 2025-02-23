@@ -195,6 +195,37 @@ define test stack-trace-test ()
   end for;
 end test;
 
+define test registers-test ()
+  let gp-registers
+    = application-registers(*test-application*, category: #"general-purpose");
+  check-true("Some general-registers are known", gp-registers.size > 0);
+
+  for (register in gp-registers)
+    let register-name
+      = environment-object-primitive-name(*test-application*, register);
+    check-equal("General register can be looked up by name",
+                register,
+                lookup-register-by-name(*test-application*, register-name));
+  end for;
+
+  for (thread in *test-application-application*.application-threads)
+    let thread-name
+      = environment-object-primitive-name(*test-application*, thread);
+    let top-frame
+      = first(thread-complete-stack-trace(*test-application*, thread));
+    for (register in gp-registers)
+      let register-name
+        = environment-object-primitive-name(*test-application*, register);
+      let contents
+        = register-contents(*test-application*, register, thread,
+                            stack-frame-context: top-frame);
+      check-true(format-to-string("Thread %s top frame register %s readable",
+                                  thread-name, register-name),
+                 contents);
+    end for;
+  end for;
+end test;
+
 define suite dfmc-environment-debugging-suite
     (setup-function:   open-debugging-test-project,
      cleanup-function: close-debugging-test-project,
@@ -207,4 +238,5 @@ define suite dfmc-environment-debugging-suite
              end select
            end method)
   test stack-trace-test;
+  test registers-test;
 end suite;
