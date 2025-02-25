@@ -613,8 +613,8 @@ Body and macro pattern variables
         fragment until it reaches some word, called an `intermediate word`:dfn:.
         You must ensure that all your `?:body` pattern variables are either
         followed by a word, or followed by a pattern variable referring to an
-        auxiliary rule set whose rules all start with a word. Those word will
-        become the intermediate words that tells the parser to stop matching the
+        auxiliary rule set whose rules all start with a word. Those words will
+        become the intermediate words that tell the parser to stop matching the
         pattern variable.
 
         In this example, the `?:body` variable matches all code fragments up to
