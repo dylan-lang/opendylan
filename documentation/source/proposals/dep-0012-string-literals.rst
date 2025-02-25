@@ -10,9 +10,9 @@ Affects-DRM:     Yes
 Author:          Carl Gay
 Status:          Final
 Created:         22-Mar-2023
-Last-Modified:   19-Aug-2023
+Last-Modified:   17-Feb-2025
 Post-History:    `28-Mar-2023 <https://groups.google.com/g/dylan-lang/c/xhofah0KYt8>`_
-Target-Version:  2024.1
+Target-Version:  2025.1
 ===============  =============================================
 
 
@@ -44,21 +44,20 @@ have this ability for quick scripts, for encoding test data, and as simple
 format string templates.  Most modern programming languages provide this
 ability.
 
-For very short multi-line strings one can get away with using \\n or
-\\r\\n in a regular string::
+For very short multi-line strings it is reasonable to use \\n in a regular string::
 
   "line one\nline two"
 
-but readability quickly suffers as these strings get longer.  An alternative is
-to put one string on each line and rely on automatic string concatenation by
-the compiler::
+but readability quickly suffers as these strings get longer and more complex.  An
+alternative is to put one string on each line and rely on automatic string concatenation
+by the compiler::
 
   "line one\n"
   "line two"
 
-The problem here is that changing the contents of the string quickly becomes an
+However, changing the contents of the string quickly becomes an
 editing chore as the programmer attempts to keep the lines a similar length,
-and remembering to put the \\n at the end of each line.  Having a multi-line
+and to remember to put the \\n at the end of each line.  Having a multi-line
 string literal syntax would alleviate both of these problems.
 
 Raw String Literals
@@ -71,7 +70,9 @@ become difficult to interpret when they themselves contain many backslashes.
 
 Open Dylan has a fairly simple work-around for this problem, which it calls
 :doc:`parser expansions
-</library-reference/language-extensions/parser-expansions>`::
+</library-reference/language-extensions/parser-expansions>`:
+
+.. code:: dylan
 
    define function string-parser (s) s end;
    define constant s1 = "\\.\\[\\*\\\\\\]";     // standard Dylan
@@ -81,11 +82,12 @@ There are some problems with this mechanism:
 
 #. Because the parser can have any name ("string" in the above example) and
    various different delimiters, it's difficult to provide good editor support.
+   Similarly, the name may not be obvious to future code maintainers.
 
 #. The parser only allows a single character to delimit the string, meaning
    that that character is forbidden within the string literal.  For long string
    literals it can be hard to predict which delimiter character (if any) will
-   not be needed.
+   not be used in the string.
 
 #. For the relatively common task of specifying a raw string, each individual
    library needs to either define ``string-parser`` or import it. (This could
@@ -102,10 +104,18 @@ problems.
 Specification
 =============
 
-Multi-line string literals are delimited by three double quote characters on
-each end: ``"""``. Any string literal, whether one-line or multi-line, may be
-prefixed with ``#r`` or ``#R`` to disable backslash escape processing, i.e., to
-make it a "raw" string literal.
+Multi-line string literals are delimited by *at least* three double quote characters on
+each end: ``"""``. Any string literal, whether one-line or multi-line, may be prefixed
+with ``#r`` or ``#R`` to disable backslash escape processing, i.e., to make it a "raw"
+string literal.
+
+.. note::
+
+   Although we refer to "multi-line" string literals for convenience, because spanning
+   multiple lines is their primary purpose, they are not *required* to span multiple
+   lines.  For example, ``"""print("foo")"""`` is a perfectly valid "multi-line" string
+   even though it contains no Newline characters.  They could just as well be called
+   "multi-quoted" strings.
 
 Literal end-of-line sequences are always interpreted as a single LF character,
 in both raw and escaped string literals, regardless of operating system
@@ -124,10 +134,10 @@ All string literals, whether escaped, raw, one-line, or multi-line, continue to
 adhere to the rule that consecutive string literals separated by only
 whitespace are automatically concatenated.
 
-Because Dylan's quoted symbol syntax (also known as "unique string" syntax) is
-just `#` followed by any standard string, we also allow ``#"""`` to indicate a
-multi-line quoted symbol, to be consistent. No new syntax is provided to create
-"raw" quoted symbols, i.e., quoted symbols without escape processing.
+Because Dylan's quoted symbol syntax (also known as "unique string" syntax) is just ``#``
+followed by any standard string, we also allow ``#"""`` to indicate a multi-line quoted
+symbol. No new syntax is provided to create "raw" quoted symbols, i.e., quoted symbols
+without escape processing.
 
 The Rectangle Rule
 ------------------
@@ -181,24 +191,29 @@ resulting string literal token, so they may be moved (as a unit) left or right
 without affecting the result.
 
 To achieve this we adopt the techniques used for `raw strings in C#
-<https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/strings/#raw-string-literals>`_.
+<https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-11.0/raw-string-literal>`_.
+See same for many examples.
 
-The following rules apply to both raw and non-raw multi-line string literals:
+The following rules summarize the above C# specification, and they apply to both raw and
+non-raw multi-line string literals:
 
-* Starts and ends with a sequence of at least three double quote characters
+* Starts and ends with a sequence of *at least* three double quote characters
   (``"""``, ``#r"""``, or ``#R"""``). More than three consecutive ``"``
   characters are allowed to start and end the sequence in order to support
   string literals that contain three (or more) repeated ``"`` characters.
 
-* Single line string literals that use triple-double-quoting require the
-  opening and closing delimiters to be on the same line.
+* Single line string literals that use ``"""`` allow the opening and closing delimiters
+  to be on the same line.
 
 * In multi-line string literals, any whitespace to the left of the closing
   delimiter is removed from all lines of the string literal.
 
-* In multi-line string literals, whitespace to the left of the closing
-  delimiter must be identical on each line. For example, it is not valid to use
-  tab characters on one line and space characters on another.
+* In multi-line string literals, whitespace to the left of the closing delimiter must be
+  identical on each line.  Specifically, it is not valid to use tab characters in the
+  prefix on one line and space characters on another.  There is one exception to this
+  rule: a completely blank source code line is treated as though it contains only the
+  correct prefix. This is to prevent requiring end-of-line whitespace, which may not
+  interact well with some editors or style rules.
 
 * In multi-line string literals, whitespace following the opening delimiter on
   the same line is ignored.
@@ -286,11 +301,38 @@ is shown below.
 Examples
 --------
 
+``"""x"""`` is equivalent to ``"x"``.
+
+
+The empty string written on multiple lines::
+
+  """
+
+  """
+
+The above can be unintuitive at first. If we use ``|`` to indicate the beginning and end
+of the string content, the above is just
+
+::
+
+  """
+  ||
+  """
+
+which is the empty string.
+
+The following is a syntax error because multi-line string literals must have at least one
+line, even if it is empty::
+
+  """
+  """
+
 Strings equivalent to ``"abc"``::
 
   """abc"""
+  """""""abc"""""""
   #r"abc"
-  #r"""abc"""
+  #R"""abc"""
 
   """
   abc
@@ -307,8 +349,8 @@ Multi-line string equivalent to ``"line one\nline two"``::
              line two
              """;
 
-Same as above because whitespace *to the left of the closing delimiter* is
-removed::
+Same as above because there is no requirement for each line to align vertically with the
+**open** delimiter::
 
   let text = """
         line one
@@ -335,7 +377,13 @@ Equivalent to ``"let x = \"foo\";"``::
 
   """let x = "foo";"""
 
-Raw string for ``C:\users\``::
+Equivalent to ``format-out("""%s""")``::
+
+  """"
+  format-out("""%s""")
+  """"
+
+Raw string equivalent to ``C:\users\``::
 
   #R"C:\users\"
 
@@ -347,8 +395,9 @@ Equivalent to ``"^\\s*([0-9A-Fa-f]+)\\s*"``::
 Reference Implementation
 ========================
 
-The Open Dylan `dfmc-reader <https://github.com/dylan-lang/opendylan/tree/master/sources/dfmc/reader>`_
-contains the reference implementation.
+The Open Dylan `dfmc-reader library
+<https://github.com/dylan-lang/opendylan/tree/master/sources/dfmc/reader>`_ contains the
+reference implementation.
 
 
 Revision History

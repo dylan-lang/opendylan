@@ -14,9 +14,19 @@ define function make-compilation-record
   cr
 end function make-compilation-record;
 
+define function make-lexer
+    (source) => (lexer :: <lexer>)
+  make(<lexer>, source: make-compilation-record(source))
+end function;
+
 define function read-fragment
     (source :: <byte-string>) => (fragment :: false-or(<fragment>))
   let cr = make-compilation-record(source);
   let (fragment, new-state) = read-top-level-fragment(cr, #f);
   fragment
 end function read-fragment;
+
+define function get-source
+    (fragment :: <fragment>) => (source :: <string>)
+  source-location-string(fragment-source-location(fragment))
+end function;
