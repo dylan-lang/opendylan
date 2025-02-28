@@ -11,7 +11,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-20.04]
+        os: [ubuntu-latest]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -28,14 +28,14 @@ jobs:
       - name: Install bootstrap compiler
         run: |
             if [ "$RUNNER_OS" == "Linux" ]; then
-              curl -LO https://github.com/dylan-lang/opendylan/releases/download/v2020.1.0/opendylan-2020.1-x86_64-linux.tar.bz2
-              tar xvf opendylan-2020.1-x86_64-linux.tar.bz2
+              curl -LO https://github.com/dylan-lang/opendylan/releases/download/v2024.1.0/opendylan-2024.1-x86_64-linux.tar.bz2
+              tar xvf opendylan-2024.1-x86_64-linux.tar.bz2
             fi
             if [ "$RUNNER_OS" == "macOS" ]; then
-              curl -LO https://github.com/dylan-lang/opendylan/releases/download/v2020.1.0/opendylan-2020.1-x86_64-darwin.tar.bz2
+              curl -LO https://github.com/dylan-lang/opendylan/releases/download/v2024.1.0/opendylan-2024.1-x86_64-darwin.tar.bz2
               tar xvf opendylan-2020.1-x86_64-darwin.tar.bz2
             fi
-            echo "`pwd`/opendylan-2020.1/bin" >> $GITHUB_PATH
+            echo "`pwd`/opendylan-2024.1/bin" >> $GITHUB_PATH
       - name: Generate configure
         run: ./autogen.sh
       - name: Configure
