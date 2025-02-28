@@ -18,12 +18,7 @@ define method read-top-level-fragment
     (record :: <compilation-record>, lexer :: false-or(<lexer>))
  => (fragment, lexer)
   with-classification-cache
-    let lexer
-      = lexer | make(<lexer>,
-                     source: record,
-                     start-posn: 0,
-                     start-line: 1,
-                     line-start: 0);
+    let lexer = lexer | make(<lexer>, source: record);
     local method lex ()
       let fragment = get-token(lexer);
       values(fragment-kind(fragment), fragment, fragment)
@@ -56,7 +51,7 @@ define method read-top-level-fragment
 end method read-top-level-fragment;
 
 define function source-lines-read (lexer :: <lexer>) => (lines :: <integer>)
-  (lexer.line | -1) + 1
+  (lexer.lexer-line-number | -1) + 1
 end function;
 
 // Re-read using a given lexer function.
@@ -119,16 +114,12 @@ define serious-program-warning <unterminated-parser-expansion>
   format-arguments token-string;
 end serious-program-warning;
 
+// Note that this is only used by the parser. The lexer itself signals <invalid-token> if
+// it reaches EOF in the middle of a token.
 define serious-program-warning <invalid-end-of-input> (<reader-error>)
   format-string
     "Unexpected end of input encountered while reading form.";
 end serious-program-warning;
-
-define function invalid-end-of-input (lexer-location)
-  let location = lexer-location-source-location(lexer-location);
-  note(<invalid-end-of-input>,
-       source-location: location);
-end function;
 
 define function lexer-location-source-location (lexer-location)
   record-position-as-location
