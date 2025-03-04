@@ -24,6 +24,8 @@ define module dfmc-environment-test-suite
   use testworks;
 
   use channels;
+  use regular-expressions,
+    import: { compile-regex, regex-position };
   use dylan-orb;
 
   use access-path, import: { debugger-message };
