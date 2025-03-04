@@ -16,6 +16,7 @@ define library dfmc-environment-test-suite
 
   use testworks;
   use channels;
+  use regular-expressions;
   use dylan-orb;
 
   use environment-protocols;

@@ -7,8 +7,14 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $debugging-test-application = "cmu-test-suite";
+define constant $debugging-library-id
+  = make(<library-id>, name: $debugging-test-application);
+define constant $debugging-module-id
+  = make(<module-id>, name: "dylan-test", library: $debugging-library-id);
 
 define variable *test-application-application* :: false-or(<application>) = #f;
+
+define variable *transaction-id* = #f;
 
 define function dbg-machine () => (machine :: <machine>);
   let network-address = environment-variable("OPEN_DYLAN_DEBUGGING_MACHINE");
@@ -36,6 +42,18 @@ define function debugging-project-message-callback (message :: <project-message>
   end with-lock;
 end function;
 
+define method note-application-interactive-results
+    (context :: <object>, thread :: <thread-object>, transaction-id)
+ => ()
+  *transaction-id* := transaction-id;
+end method note-application-interactive-results;
+
+define function clear-project-messages ()
+  with-lock (associated-lock($project-message-notification))
+    $project-message-queue.size := 0;
+  end with-lock;
+end function;
+
 define function await-project-message () => (message :: <project-message>);
   with-lock (associated-lock($project-message-notification))
     while (empty?($project-message-queue))
@@ -49,7 +67,8 @@ define function initialize-application-client
     (client :: <object>, application :: <application>) => ()
   register-application-callbacks
     (application,
-     initialized-callback:         note-application-initialized);
+     initialized-callback:         note-application-initialized,
+     interactive-results-callback: note-application-interactive-results);
 end function;
 
 define function open-debugging-test-project () => ()
@@ -226,6 +245,105 @@ define test registers-test ()
   end for;
 end test;
 
+define constant $interactivity-spec
+  = #[
+      #("1 + 2;", "3"),
+      #("3 + 4;", "7"),
+      #("$0 + $1;", "10"),
+      #("""
+           define class <foo> (<object>)
+             slot a, init-keyword: a:;
+           end class <foo>;
+        """),
+      #("make(<foo>, a: 10);", "\\{<foo>: \\d{5}\\}"),
+      #("$3.a = 10;", "#t"),
+      #("""
+           define class <bar> (<foo>)
+             slot b, init-keyword: b:;
+           end class <bar>;
+        """),
+      #("make(<bar>, a: 20, b: 30);", "\\{<bar>: \\d{5}\\}"),
+      #("$5.a = 20;", "#t"),
+      #("$5.b = 30;", "#t"),
+      #("""
+           define function foo (x :: <integer>)
+             x + 1
+           end;
+        """),
+      #("foo(5);", "6"),
+      #("""
+           define function foo (x :: <integer>)
+             x + 2
+           end;
+        """),
+      #("foo(5);", "7")];
+
+define test interactivity-test ()
+  let module
+    = find-module(*test-application*, id-name($debugging-module-id));
+  let threads = *test-application-application*.application-threads;
+  let main-thread
+    = find-element(threads,
+                   method (thread :: <thread-object>)
+                     environment-object-primitive-name(*test-application*, thread)
+                       = "Main thread"
+                   end);
+  for (item in $interactivity-spec)
+    let top-frame
+      = first(thread-complete-stack-trace(*test-application*, main-thread));
+
+    *transaction-id* := #f;
+    clear-project-messages();
+
+    let code = item.head;
+    debugger-message("Evaluate: %s", code);
+
+    let transaction-id
+      = project-execute-code(*test-application*, code, main-thread,
+                             module: module,
+                             stack-frame: top-frame);
+    iterate loop()
+      let message = await-project-message();
+
+      select (message by instance?)
+        <application-state-changed-message> =>
+          let state = *test-application-application*.application-state;
+          debugger-message("  Application state is now %s", state);
+          select (state)
+            #"stopped" =>
+              #f;
+            otherwise =>
+              loop();
+          end select;
+
+        otherwise =>
+          debugger-message("%=", message);
+          loop();
+      end select;
+    end iterate;
+
+    check-equal("Check transaction ID", transaction-id, *transaction-id*);
+
+    let reference-values = item.tail;
+    let result-values
+      = fetch-interactor-return-values(*test-application*, transaction-id);
+    check-equal("Check return value count",
+                reference-values.size, result-values.size);
+    for (reference :: <string> in reference-values,
+         result :: <pair> in result-values)
+      let pattern = compile-regex(concatenate("^", reference, "$"));
+      let (name :: <string>, value :: <environment-object>)
+        = values(result.head, result.tail);
+      let value-string
+        = print-environment-object-to-string
+            (*test-application*, value, namespace: module);
+      debugger-message("  %s = %s", name, value-string);
+      check-true("Return value", regex-position(pattern, value-string));
+    end;
+    dispose-interactor-return-values(*test-application*, transaction-id);
+  end for;
+end test;
+
 define suite dfmc-environment-debugging-suite
     (setup-function:   open-debugging-test-project,
      cleanup-function: close-debugging-test-project,
@@ -239,4 +357,5 @@ define suite dfmc-environment-debugging-suite
            end method)
   test stack-trace-test;
   test registers-test;
+  test interactivity-test;
 end suite;
