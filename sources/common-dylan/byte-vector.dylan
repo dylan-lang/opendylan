@@ -28,6 +28,7 @@ end function;
 define sealed generic byte-vector-fill
     (target :: <byte-vector>, value :: <object>, #key start, end: last) => ();
 
+// Why not value :: <byte>?
 define sealed method byte-vector-fill
     (target :: <byte-vector>, value :: <integer>,
      #key start :: <integer> = 0, end: last = size(target)) => ()

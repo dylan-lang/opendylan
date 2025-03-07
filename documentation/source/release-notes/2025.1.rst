@@ -77,10 +77,14 @@ Library Updates
 collections
 -----------
 
-The ``collectors`` module is now `fully documented
-<https://opendylan.org/library-reference/collections/collectors.html>`_, the API has been
-made more consistent, and a bug in :drm:`<list>` collectors has been fixed. See `the pull
-request <https://github.com/dylan-lang/opendylan/pull/1627>`_ for details.
+* The ``collections`` convenience module, which re-exported names from some (but not all)
+  other modules in the ``collections`` library, has been removed as unnecessary
+  complexity.
+
+* The ``collectors`` module is now `fully documented
+  <https://opendylan.org/library-reference/collections/collectors.html>`_, the API has
+  been made more consistent, and a bug in :drm:`<list>` collectors has been fixed. See
+  `the pull request <https://github.com/dylan-lang/opendylan/pull/1627>`_ for details.
 
 Dylan
 -----
