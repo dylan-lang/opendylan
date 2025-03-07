@@ -89,6 +89,17 @@ define function open-debugging-test-project () => ()
 
   tune-in($project-channel, debugging-project-message-callback,
           message-type: <project-message>);
+end function;
+
+define function ensure-application-at-start ()
+  if (*test-application-application*
+        & *test-application-application*.application-state ~== #"closed")
+    debugger-message("Application in state %s, closing",
+                     *test-application-application*.application-state);
+    close-application(*test-application*, wait-for-termination?: #t)
+  end if;
+
+  clear-project-messages();
 
   let machine = dbg-machine();
   *test-application-application*
@@ -172,6 +183,8 @@ define function close-debugging-test-project () => ()
 end function;
 
 define test stack-trace-test ()
+  ensure-application-at-start();
+
   for (thread in *test-application-application*.application-threads)
     let thread-name
       = environment-object-primitive-name(*test-application*, thread);
@@ -215,6 +228,8 @@ define test stack-trace-test ()
 end test;
 
 define test registers-test ()
+  ensure-application-at-start();
+
   let gp-registers
     = application-registers(*test-application*, category: #"general-purpose");
   check-true("Some general-registers are known", gp-registers.size > 0);
@@ -279,6 +294,8 @@ define constant $interactivity-spec
       #("foo(5);", "7")];
 
 define test interactivity-test ()
+  ensure-application-at-start();
+
   let module
     = find-module(*test-application*, id-name($debugging-module-id));
   let threads = *test-application-application*.application-threads;
