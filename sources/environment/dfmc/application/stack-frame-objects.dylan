@@ -145,59 +145,6 @@ define method stack-frame-type
 end method stack-frame-type;
 
 
-///// STACK-FRAME-PREVIOUS-FRAME (Environment Protocol Method)
-//    Descends the stack trace.
-
-define method stack-frame-previous-frame
-    (application :: <dfmc-application>, sf :: <stack-frame-object>)
- => (prev :: false-or(<stack-frame-object>))
-  let prev-dm-frame = #f;
-  let target = application.application-target-app;
-  let dm-frame = sf.application-object-proxy;
-
-  perform-requiring-debugger-transaction
-    (target,
-     method ()
-       prev-dm-frame := previous-stack-frame(target, dm-frame);
-     end method);
-
-  if (prev-dm-frame)
-    make-environment-object(<stack-frame-object>,
-                            project: application.server-project,
-                            application-object-proxy: prev-dm-frame);
-  else
-    #f
-  end if;
-end method stack-frame-previous-frame;
-
-
-///// STACK-FRAME-NEXT-FRAME (Environment Protocol Method)
-//    Ascends the stack trace.
-
-define method stack-frame-next-frame
-    (application :: <dfmc-application>, sf :: <stack-frame-object>)
- => (prev :: false-or(<stack-frame-object>))
-
-  let nxt-dm-frame = #f;
-  let target = application.application-target-app;
-  let dm-frame = sf.application-object-proxy;
-
-  perform-requiring-debugger-transaction
-    (target,
-     method ()
-       nxt-dm-frame := next-stack-frame(target, dm-frame);
-     end method);
-
-  if (nxt-dm-frame)
-    make-environment-object(<stack-frame-object>,
-                            project: application.server-project,
-                            application-object-proxy: nxt-dm-frame);
-  else
-    #f
-  end if;
-end method stack-frame-next-frame;
-
-
 ///// STACK-FRAME-LOCAL-VARIABLES (Environment Protocol Method)
 //    Builds <local-variable-object>s for the variables known to be live
 //    in the given stack frame.
