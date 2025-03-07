@@ -221,19 +221,3 @@ define method call-debugger-function
     end with-lock;
   end if;
 end method;
-
-
-///// PERFORM-REQUIRING-DEBUGGER-TRANSACTION
-//    Takes a <target-application> and a <function>.
-//    With a claim on debugger access to the application, checks to see
-//    that a debugger transaction is in effect. If so, the client's
-//    callback is performed, otherwise just return to caller.
-
-define method perform-requiring-debugger-transaction
-    (application :: <target-application>, transaction :: <function>) => ()
-  if (application.under-management?)
-    if (application.in-debugger-transaction?)
-      perform-debugger-transaction(application, transaction);
-    end if;
-  end if;
-end method;

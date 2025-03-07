@@ -30,7 +30,6 @@ define module target-application
       kill-target-application,
       \with-debugger-transaction,
       perform-debugger-transaction,
-      perform-requiring-debugger-transaction,
       application-continuation-pending,
       application-shut-down-lock;
 end module target-application;
