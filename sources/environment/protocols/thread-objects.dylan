@@ -15,10 +15,6 @@ define class <thread-object> (<application-object>)
     init-value: #f;
 end class <thread-object>;
 
-define open generic thread-stack-trace
-    (server :: <server>, thread :: <thread-object>)
- => (top-frame :: <stack-frame-object>);
-
 define open generic thread-complete-stack-trace
     (server :: <server>, thread :: <thread-object>)
  => (all-frames :: <sequence>);
@@ -127,13 +123,6 @@ define method environment-object-type-name
     (object :: <thread-object>) => (label :: <string>)
   "Application thread"
 end method environment-object-type-name;
-
-define method thread-stack-trace
-    (project :: <project-object>, thread :: <thread-object>)
- => (top-frame :: <stack-frame-object>)
-  let server = choose-server(project, thread, error?: #t);
-  thread-stack-trace(server, thread)
-end method thread-stack-trace;
 
 define method thread-complete-stack-trace
     (project :: <project-object>, thread :: <thread-object>)
