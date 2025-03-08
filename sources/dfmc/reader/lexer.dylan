@@ -429,17 +429,23 @@ define function get-token
           lexer.delimited-comment-end-count := 0;
           // TODO: Optionally attach comments to the AST. For now drop them.
           start-over(pos)
-        elseif (acceptable == #t)
-          save-accepting-state(pos, bldr);
-          advance(state, pos)
-        elseif (acceptable == #"use-previous")
-          if (builder)
-            end-pos
-          else
-            error("the lexer expected a previous accepting state but there is none");
-          end
         else
-          advance(state, pos)
+          select (acceptable)
+            #t =>
+              save-accepting-state(pos, bldr);
+              advance(state, pos);
+            #"use-previous" =>
+              if (builder)
+                end-pos
+              else
+                error("the lexer expected a previous accepting state but there is none");
+              end;
+            #"accept" =>
+              save-accepting-state(pos, bldr);
+              end-pos;
+            otherwise =>
+              error("unexpected lexer accept action: %=", acceptable);
+          end select
         end if
       end method;
     let epos = repeat($initial-state, start-pos);
@@ -1083,6 +1089,7 @@ define function increment-double-quote-end-count
   let dq-end-count = (lexer.double-quote-end-count := lexer.double-quote-end-count + 1);
   dq-end-count == lexer.double-quote-start-count
     & dq-end-count ~== 2
+    & #"accept"                 // Accept and do not try to match more.
 end function;
 
 // The lexer is transitioning away from a sequence of double quotes that could
