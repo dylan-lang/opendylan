@@ -39,11 +39,13 @@ define sealed generic third
   (sequence :: <sequence>, #key default) => (value);
 
 
-// Open generics on <collection>
+// Open generics on <sequence>
 
 define open generic add
   (sequence :: <sequence>, new-element) => (new-sequence :: <sequence>);
 
+// Difference from DRM: we define this on <collection> in collection.dylan
+// so that it can be used for sets, for example.
 //define open generic add!
 //  (sequence :: <sequence>, new-element) => (new-sequence :: <sequence>);
 
@@ -59,6 +61,8 @@ define open generic remove
     (sequence :: <sequence>, value, #key test, count)
  => (new-sequence :: <sequence>);
 
+// Difference from DRM: we define this on <collection> in collection.dylan
+// so that it can be used for sets, for example.
 //define open generic remove!
 //    (sequence :: <sequence>, value, #key test, count)
 // => (new-sequence :: <sequence>);

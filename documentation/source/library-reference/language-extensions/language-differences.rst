@@ -1,5 +1,6 @@
+********************
 Language Differences
-====================
+********************
 
 .. current-library:: dylan
 .. current-module:: dylan
@@ -12,8 +13,25 @@ are several `known bugs
 <https://github.com/dylan-lang/opendylan/issues?q=is%3Aissue+is%3Aopen+label%3ADRM>`_
 related to compliance with the language standard as documented in the DRM.
 
+``add!`` and ``remove!``
+========================
+
+The :drm:`add!` and :drm:`remove!` generic functions are defined to work on all
+collections instead of only on sequences. This is because the methods are also useful for
+tables and sets.  Specifically, the generics are defined as follows:
+
+.. code:: dylan
+
+   define open generic add!
+       (coll :: <collection>, new-element)
+    => (possibly-new-coll :: <collection>);
+
+   define open generic remove!
+       (coll :: <collection>, value, #key test, count)
+    => (possibly-new-coll :: <collection>);
+
 Table Protocol
---------------
+==============
 
 For efficiency, Open Dylan adopts a slightly different table protocol
 to that described by the DRM. Hashing functions take an additional
