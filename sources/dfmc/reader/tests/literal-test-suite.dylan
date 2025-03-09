@@ -561,6 +561,22 @@ let y = """"abc"""";},
       """""""""});
 end test;
 
+// Most of the multi-line string tests above have the string literal ending at EOF, which
+// means the lexer won't greedily try and continue. If it did, it would continue all the
+// way through the second multi-line string (b). Reported in chat by housel, Mar 2025.
+define test test-multi-line-string-not-at-eof ()
+  let source = #:string:{
+    #[#("""
+        a
+        """),
+      #("""
+        b
+        """)]
+    };
+  let frag = read-fragment(source);
+  assert-equal(#[#("a"), #("b")], frag.fragment-value);
+end test;
+
 define test symbol-literal-test ()
   let kw = read-fragment("test:");
   verify-literal(kw, #"test", <keyword-syntax-symbol-fragment>);
@@ -635,6 +651,7 @@ define suite literal-test-suite ()
   test test-multi-line-string-basics;
   test test-multi-line-string-escaping;
   test test-multi-line-string-delimiter-rules;
+  test test-multi-line-string-not-at-eof;
   test test-multi-line-string-whitespace-relative-to-delimiters;
   test test-multi-line-string-with-blank-lines;
   test test-multi-line-empty-strings;
