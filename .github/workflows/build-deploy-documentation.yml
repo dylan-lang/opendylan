@@ -25,15 +25,19 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Add sphinx dependencies
-        run: |
-          echo furo >> documentation/requirements.txt
-          echo sphinx-copybutton >> documentation/requirements.txt
+      - name: Check links
+        uses: addnab/docker-run-action@v3
+        with:
+          image: ghcr.io/fraya/dylan-docs
+          options: -v ${{ github.workspace }}/documentation:/docs
+          run: make linkcheck
 
       - name: Build documentation
-        uses: ammaraskar/sphinx-action@master
+        uses: addnab/docker-run-action@v3
         with:
-          docs-folder: "documentation"
+          image: ghcr.io/fraya/dylan-docs
+          options: -v ${{ github.workspace }}/documentation:/docs
+          run: make html
 
       - name: Bypassing Jekyll on GH pages
         run: |
