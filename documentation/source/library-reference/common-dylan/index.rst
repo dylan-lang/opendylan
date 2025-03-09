@@ -12,6 +12,11 @@ The ``common-dylan`` library contains a number of features that were either
 omitted from the Dylan language described in the DRM, or that Open
 Dylan's developers have found useful in a broad range of situations.
 
+In addition to the modules documented below, the ``common-dylan`` library exports the
+``common-dylan`` module which re-exports everything in the :doc:`common-extensions
+<common-extensions>` module and :drm:`dylan <Index>` modules.  This is a convenience
+module that is very widely used.
+
 .. toctree::
    :maxdepth: 1
 
@@ -24,13 +29,10 @@ Dylan's developers have found useful in a broad range of situations.
    simple-timers
    transcendentals
 
-The ``common-dylan`` module re-exports everything in the
-``common-extensions`` and ``dylan`` modules.  This is a convenience module
-that is very widely used.
-
 .. TODO(cgay): streams-protocol, locators-protocol.
 
-It also re-exports these modules which are defined in :drm:`the DRM <Title>`.
+The ``common-dylan`` library also re-exports these modules which are defined in the
+``dylan`` library: 
 
 - `The dylan Module </books/drm/>`_
 - :doc:`../dylan/threads`

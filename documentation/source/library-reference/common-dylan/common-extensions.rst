@@ -7,42 +7,18 @@ The common-extensions Module
 
 .. module:: common-extensions
 
-The *common-extensions* module contains a variety of useful basic
-extensions to the Dylan language and is exported from the
-*common-dylan* library.  As a convenience, the *common-dylan* module
-re-exports everything from the *common-extensions* and *dylan* modules.
+The *common-extensions* module contains a variety of basic extensions to the Dylan
+language that are applicable to almost all programs. *common-extensions* is exported from
+the *common-dylan* library.  As a convenience, the *common-dylan* module re-exports
+everything from the *common-extensions* and *dylan* modules.
 
-The extensions are:
-
-- Collection model: :class:`<stretchy-sequence>`, :class:`<string-table>`,
-  :gf:`difference`, :func:`fill-table!`, :gf:`find-element`, :gf:`position`,
-  :gf:`remove-all-keys!`, :macro:`define table`, :gf:`split`, and :gf:`join`.
-- Condition system: :class:`<simple-condition>`, and :gf:`condition-to-string`.
-- Control flow: :macro:`iterate` and :macro:`when`.
-- Development conveniences:
-
-  - :func:`debug-message`
-  - :func:`ignore`, :func:`ignorable`
-  - :const:`$unsupplied`, :func:`unsupplied?`, :func:`unsupplied`,
-    :func:`supplied?`
-  - :const:`$unfound` :func:`unfound?`, :func:`found?`, :func:`unfound`
-  - :func:`one-of`
-
-- Handling application startup and shutdown:
-
-  - :func:`application-arguments`
-  - :func:`application-filename`
-  - :func:`application-name`
-  - :func:`exit-application`
-  - :func:`register-application-exit-function`
-  - :func:`tokenize-command-line`
-
-- Performance analysis: :macro:`timing`, :macro:`profiling`.
-- Type conversion functions: :func:`integer-to-string`,
-  :func:`string-to-integer`, and :func:`float-to-string`.
-- Byte storage access functions: :gf:`byte-storage-address`,
-  :gf:`byte-storage-offset-address`, which are re-exported from
-  the :doc:`byte-vector module <byte-vector>`.
+* Application startup and shutdown and access to application command line.
+* Extensions to the collections model.
+* Extensions to the condition system.
+* Additional control flow macros.
+* Additional types and ways to create new types.
+* Debugging utilities.
+* Type conversions.
 
 Applications
 ============
