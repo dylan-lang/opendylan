@@ -573,6 +573,7 @@ define constant $initial-state :: <state>
          #('/' . #"decimal-slash"),
          #('.' . #"decimal-dot"),
          #("eEsSdDxX" . #"decimal-e"),
+         #("ABCF-RT-WYZabcf-rt-wyz" . #"numeric-alpha"),
          #("_" . #"decimal-underscore")),
    state(#"decimal-underscore", #f,
          #("0-9" . #"decimal")),

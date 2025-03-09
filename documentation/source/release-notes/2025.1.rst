@@ -53,6 +53,9 @@ Compiler
   which caused code generation failures for certain usages of
   multiple-value expressions, has been fixed.
 
+* Fixed `issue 1395 <https://github.com/dylan-lang/opendylan/issues/1395>`_, which
+  prevented some valid variable names with a leading numeric from being parsed correctly.
+
 Tools
 =====
 
