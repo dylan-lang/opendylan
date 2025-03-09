@@ -5,6 +5,8 @@ The transcendentals Module
 .. current-library:: common-dylan
 .. current-module:: transcendentals
 
+.. module:: transcendentals
+
 The *transcendentals* module, exported from the :doc:`common-dylan <index>`
 library, provides a set of generic functions for ANSI C-like behavior over real
 numbers. The restrictions and error cases described in this document are
@@ -99,12 +101,14 @@ Functions
 
 .. method:: ^
    :specializer: <single-float>, <double-float>
+   :no-contents-entry:
 
    Converts the first argument to :drm:`<double-float>` and calls
    :meth:`^(<double-float>, <double-float>)`.
 
 .. method:: ^
    :specializer: <double-float>, <single-float>
+   :no-contents-entry:
 
    Converts the second argument to :drm:`<double-float>` and calls
    :meth:`^(<double-float>, <double-float>)`.
@@ -125,12 +129,14 @@ Functions
 
 .. method:: acos
    :specializer: <single-float>
+   :no-contents-entry:
 
    Single precision floating point implementation of :gf:`acos`. Returns a
    :drm:`<single-float>`.
 
 .. method:: acos
    :specializer: <double-float>
+   :no-contents-entry:
 
    Double precision floating point implementation of :gf:`acos`. Returns a
    :drm:`<double-float>`.
@@ -150,12 +156,14 @@ Functions
 
 .. method:: acosh
    :specializer: <single-float>
+   :no-contents-entry:
 
    Single precision floating point implementation of :gf:`acosh`. Returns a
    :drm:`<single-float>`.
 
 .. method:: acosh
    :specializer: <double-float>
+   :no-contents-entry:
 
    Double precision floating point implementation of :gf:`acosh`. Returns a
    :drm:`<double-float>`.
@@ -177,6 +185,7 @@ Functions
 .. method:: asin
    :specializer: <single-float>
    :sealed:
+   :no-contents-entry:
 
    Single precision floating point implementation of :gf:`asin`. Returns a
    :drm:`<single-float>`.
@@ -184,6 +193,7 @@ Functions
 .. method:: asin
    :specializer: <double-float>
    :sealed:
+   :no-contents-entry:
 
    Double precision floating point implementation of :gf:`asin`. Returns a
    :drm:`<double-float>`.
@@ -204,6 +214,7 @@ Functions
 .. method:: asinh
    :specializer: <single-float>
    :sealed:
+   :no-contents-entry:
 
    Single precision floating point implementation of :gf:`asinh`. Returns a
    :drm:`<single-float>`.
@@ -211,6 +222,7 @@ Functions
 .. method:: asinh
    :specializer: <double-float>
    :sealed:
+   :no-contents-entry:
 
    Double precision floating point implementation of :gf:`asinh`. Returns a
    :drm:`<double-float>`.
@@ -232,6 +244,7 @@ Functions
 .. method:: atan
    :specializer: <single-float>
    :sealed:
+   :no-contents-entry:
 
    Single precision floating point implementation of :gf:`atan`. Returns a
    :drm:`<single-float>`.
@@ -239,6 +252,7 @@ Functions
 .. method:: atan
    :specializer: <double-float>
    :sealed:
+   :no-contents-entry:
 
    Double precision floating point implementation of :gf:`atan`. Returns a
    :drm:`<double-float>`.
@@ -259,6 +273,7 @@ Functions
 .. method:: atan2
    :specializer: <single-float>, <single-float>
    :sealed:
+   :no-contents-entry:
 
    Single precision floating point implementation of :gf:`atan2`. Returns a
    :drm:`<single-float>`.
@@ -266,6 +281,7 @@ Functions
 .. method:: atan2
    :specializer: <double-float>, <double-float>
    :sealed:
+   :no-contents-entry:
 
    Double precision floating point implementation of :gf:`atan2`. Returns a
    :drm:`<double-float>`.
@@ -273,6 +289,7 @@ Functions
 .. method:: atan2
    :specializer: <single-float>, <double-float>
    :sealed:
+   :no-contents-entry:
 
    Converts the first argument to :drm:`<double-float>` and calls
    :meth:`atan2(<double-float>, <double-float>)`.
@@ -280,6 +297,7 @@ Functions
 .. method:: atan2
    :specializer: <double-float>, <single-float>
    :sealed:
+   :no-contents-entry:
 
    Converts the second argument to :drm:`<double-float>` and calls
    :meth:`atan2(<double-float>, <double-float>)`.
@@ -300,6 +318,7 @@ Functions
 .. method:: atanh
    :specializer: <single-float>
    :sealed:
+   :no-contents-entry:
 
    Single precision floating point implementation of :gf:`atanh`. Returns a
    :drm:`<single-float>`.
@@ -307,6 +326,7 @@ Functions
 .. method:: atanh
    :specializer: <double-float>
    :sealed:
+   :no-contents-entry:
 
    Double precision floating point implementation of :gf:`atanh`. Returns a
    :drm:`<double-float>`.
@@ -327,6 +347,7 @@ Functions
 .. method:: cos
    :specializer: <single-float>
    :sealed:
+   :no-contents-entry:
 
    Single precision floating point implementation of :gf:`cos`. Returns a
    :drm:`<single-float>`.
@@ -334,6 +355,7 @@ Functions
 .. method:: cos
    :specializer: <double-float>
    :sealed:
+   :no-contents-entry:
 
    Double precision floating point implementation of :gf:`cos`. Returns a
    :drm:`<double-float>`.
@@ -354,6 +376,7 @@ Functions
 .. method:: cosh
    :specializer: <single-float>
    :sealed:
+   :no-contents-entry:
 
    Single precision floating point implementation of :gf:`cosh`. Returns a
    :drm:`<single-float>`.
@@ -361,6 +384,7 @@ Functions
 .. method:: cosh
    :specializer: <double-float>
    :sealed:
+   :no-contents-entry:
 
    Double precision floating point implementation of :gf:`cosh`. Returns a
    :drm:`<double-float>`.
@@ -374,13 +398,14 @@ Functions
    :value y: An instance of type :drm:`<number>`.
 
    Returns *e*, the base of natural logarithms, raised to the power **x**.  The
-   floating point precision is given by the precision of **x**.
+   floating point precision of the result is given by the precision of **x**.
 
    :seealso: :drm:`^`, :func:`ilog2`, :gf:`log`, :func:`logn`
 
 .. method:: exp
    :specializer: <single-float>
    :sealed:
+   :no-contents-entry:
 
    Single precision floating point implementation of :gf:`exp`. Returns a
    :drm:`<single-float>`.
@@ -388,6 +413,7 @@ Functions
 .. method:: exp
    :specializer: <double-float>
    :sealed:
+   :no-contents-entry:
 
    Double precision floating point implementation of :gf:`exp`. Returns a
    :drm:`<double-float>`.
@@ -405,24 +431,28 @@ Functions
 
 .. method:: hypot
    :specializer: <single-float>, <single-float>
+   :no-contents-entry:
 
    Returns the Euclidean distance as a :drm:`<single-float>` without
    unnecessary overflow or underflow.
 
 .. method:: hypot
    :specializer: <double-float>, <double-float>
+   :no-contents-entry:
 
    Returns the Euclidean distance as a :drm:`<double-float>` without
    unnecessary overflow or underflow.
 
 .. method:: hypot
    :specializer: <single-float>, <double-float>
+   :no-contents-entry:
 
    Converts the first argument to :drm:`<double-float>` and calls
    :meth:`hypot(<double-float>, <double-float>)`.
 
 .. method:: hypot
    :specializer: <double-float>, <single-float>
+   :no-contents-entry:
 
    Converts the second argument to :drm:`<double-float>` and calls
    :meth:`hypot(<double-float>, <double-float>)`.
@@ -459,6 +489,7 @@ Functions
 
 .. method:: log
    :specializer: <single-float>
+   :no-contents-entry:
 
    :signature: log(x) => y
 
@@ -470,6 +501,7 @@ Functions
 
 .. method:: log
    :specializer: <double-float>
+   :no-contents-entry:
 
    :signature: log(x) => y
 
@@ -530,6 +562,7 @@ Functions
 .. method:: sin
    :specializer: <single-float>
    :sealed:
+   :no-contents-entry:
 
    Single precision floating point implementation of :gf:`sin`. Returns a
    :drm:`<single-float>`.
@@ -537,6 +570,7 @@ Functions
 .. method:: sin
    :specializer: <double-float>
    :sealed:
+   :no-contents-entry:
 
    Double precision floating point implementation of :gf:`sin`. Returns a
    :drm:`<double-float>`.
@@ -560,6 +594,7 @@ Functions
 .. method:: sincos
    :specializer: <single-float>
    :sealed:
+   :no-contents-entry:
 
    Single precision floating point implementation of :gf:`sincos`. Returns a
    :drm:`<single-float>`.
@@ -567,6 +602,7 @@ Functions
 .. method:: sincos
    :specializer: <double-float>
    :sealed:
+   :no-contents-entry:
 
    Double precision floating point implementation of :gf:`sincos`. Returns a
    :drm:`<double-float>`.
@@ -587,6 +623,7 @@ Functions
 .. method:: sinh
    :specializer: <single-float>
    :sealed:
+   :no-contents-entry:
 
    Single precision floating point implementation of :gf:`sinh`. Returns a
    :drm:`<single-float>`.
@@ -594,6 +631,7 @@ Functions
 .. method:: sinh
    :specializer: <double-float>
    :sealed:
+   :no-contents-entry:
 
    Double precision floating point implementation of :gf:`sinh`. Returns a
    :drm:`<double-float>`.
@@ -615,6 +653,7 @@ Functions
 .. method:: sqrt
    :specializer: <single-float>
    :sealed:
+   :no-contents-entry:
 
    Single precision floating point implementation of :gf:`sqrt`. Returns a
    :drm:`<single-float>`.
@@ -622,6 +661,7 @@ Functions
 .. method:: sqrt
    :specializer: <double-float>
    :sealed:
+   :no-contents-entry:
 
    Double precision floating point implementation of :gf:`sqrt`. Returns a
    :drm:`<double-float>`.
@@ -642,6 +682,7 @@ Functions
 .. method:: tan
    :specializer: <single-float>
    :sealed:
+   :no-contents-entry:
 
    Single precision floating point implementation of :gf:`tan`. Returns a
    :drm:`<single-float>`.
@@ -649,6 +690,7 @@ Functions
 .. method:: tan
    :specializer: <double-float>
    :sealed:
+   :no-contents-entry:
 
    Double precision floating point implementation of :gf:`tan`. Returns a
    :drm:`<double-float>`.
@@ -669,6 +711,7 @@ Functions
 .. method:: tanh
    :specializer: <single-float>
    :sealed:
+   :no-contents-entry:
 
    Single precision floating point implementation of :gf:`tanh`. Returns a
    :drm:`<single-float>`.
@@ -676,6 +719,7 @@ Functions
 .. method:: tanh
    :specializer: <double-float>
    :sealed:
+   :no-contents-entry:
 
    Double precision floating point implementation of :gf:`tanh`. Returns a
    :drm:`<double-float>`.

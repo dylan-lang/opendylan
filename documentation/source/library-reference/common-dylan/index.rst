@@ -4,6 +4,10 @@ The common-dylan Library
 
 .. current-library:: common-dylan
 
+.. library:: common-dylan
+
+.. module:: common-dylan
+
 The ``common-dylan`` library contains a number of features that were either
 omitted from the Dylan language described in the DRM, or that Open
 Dylan's developers have found useful in a broad range of situations.
@@ -26,8 +30,7 @@ that is very widely used.
 
 .. TODO(cgay): streams-protocol, locators-protocol.
 
-It also re-exports these modules which are defined in
-:doc:`the dylan library <../dylan/index>`:
+It also re-exports these modules which are defined in :drm:`the DRM <Title>`.
 
 - `The dylan Module </books/drm/>`_
 - :doc:`../dylan/threads`
