@@ -852,13 +852,19 @@ Control Flow
      wants to iterate another step. The form evaluates by calling the
      new function with the initial values specified.
 
-   :example:
+     Any values returned by `body` are returned from the ``iterate`` call.
+
+   :example: Compute the factorial of 5
 
      .. code-block:: dylan
 
-        iterate loop (x = 5)
-          if (x < 2) x else x * loop(x - 1) end
-        end
+        let fact5 = iterate loop (x = 5, result = 1)
+                      if (x == 1)
+                        result
+                      else
+                        loop(x - 1, result * x)
+                      end
+                    end;
 
 .. macro:: when
    :statement:
@@ -887,9 +893,9 @@ Control Flow
 
      .. code-block:: dylan
 
-       when (x < 0)
-         ~ x;
-       end;
+        when (*thread-count* = 0)
+	  exit-application(0)
+        end;
 
 Convenience
 ===========
