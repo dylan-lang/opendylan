@@ -354,6 +354,7 @@ define method do-execute-command
     (context,
      run-application, project,
      client:                    context,
+     initialize-client:         initialize-application-client,
      machine:                   machine | unsupplied(),
      startup-option:            case
                                   debug?    => #"debug";
@@ -662,7 +663,7 @@ end method parse-next-argument;
 
 /// Application callbacks
 
-define sideways method initialize-application-client
+define function initialize-application-client
     (context :: <environment-context>, application :: <application>) => ()
   register-application-callbacks
     (application,
@@ -690,7 +691,7 @@ define sideways method initialize-application-client
                     application.application-filename);
           end,
           message-type: <run-application-failed-message>);
-end method initialize-application-client;
+end function initialize-application-client;
 
 
 define method start-debugging
