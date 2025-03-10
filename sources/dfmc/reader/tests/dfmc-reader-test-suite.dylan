@@ -63,6 +63,25 @@ define test test-end-of-file-handling ()
   assert-signals(<invalid-token>, get-token(make-lexer("/* ")));
 end test;
 
+// Leading numeric - https://github.com/dylan-lang/opendylan/issues/1395
+define test test-name-with-leading-numeric ()
+  assert-instance?(<integer-fragment>, get-token(make-lexer("0q")),
+                   "variable names with leading numeric must have at least two"
+                     " alphabetics");
+
+  let frag = read-fragment("0yy ");
+  assert-instance?(<variable-name-fragment>, frag);
+  assert-equal(#"0yy", frag.fragment-name);
+
+  let frag = read-fragment("9xx ");
+  assert-instance?(<variable-name-fragment>, frag);
+  assert-equal(#"9xx", frag.fragment-name);
+
+  let frag = read-fragment("123ab");
+  assert-instance?(<variable-name-fragment>, frag);
+  assert-equal(#"123ab", frag.fragment-name);
+end test;
+
 define suite dfmc-reader-test-suite ()
   suite literal-test-suite;
   suite comments-test-suite;
@@ -72,4 +91,5 @@ define suite dfmc-reader-test-suite ()
   test lex-multi-line-string-test;
   test test-otherwise-transition;
   test test-end-of-file-handling;
+  test test-name-with-leading-numeric;
 end suite;
