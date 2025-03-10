@@ -5,6 +5,8 @@ The simple-profiling Module
 .. current-library:: common-dylan
 .. current-module:: simple-profiling
 
+.. module:: simple-profiling
+
 This module provides an easy to use interface for measuring application
 performance.
 
@@ -119,12 +121,15 @@ may be useful in some scenarios.
 
 .. method:: profiling-type-result
    :specializer: <profiling-state>, <cpu-profiling-type>
+   :no-contents-entry:
 
 .. method:: profiling-type-result
    :specializer: <profiling-state>, singleton(#"allocation")
+   :no-contents-entry:
 
 .. method:: profiling-type-result
    :specializer: <profiling-state>, singleton(#"allocation-stats")
+   :no-contents-entry:
 
 .. function:: start-profiling
 
@@ -148,12 +153,15 @@ may be useful in some scenarios.
 
 .. method:: start-profiling-type
    :specializer: <profiling-state>, <cpu-profiling-type>
+   :no-contents-entry:
 
 .. method:: start-profiling-type
    :specializer: <profiling-state>, singleton(#"allocation")
+   :no-contents-entry:
 
 .. method:: start-profiling-type
    :specializer: <profiling-state>, singleton(#"allocation-stats")
+   :no-contents-entry:
 
 .. function:: stop-profiling
 
@@ -173,9 +181,12 @@ may be useful in some scenarios.
 
 .. method:: stop-profiling-type
    :specializer: <profiling-state>, <cpu-profiling-type>
+   :no-contents-entry:
 
 .. method:: stop-profiling-type
    :specializer: <profiling-state>, singleton(#"allocation")
+   :no-contents-entry:
 
 .. method:: stop-profiling-type
    :specializer: <profiling-state>, singleton(#"allocation-stats")
+   :no-contents-entry:
