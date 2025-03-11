@@ -14,6 +14,7 @@ Some system dependencies need to be satisfied first:
 - Python 3 and its package manager pip3.
 - Git
 - Make
+- rsync
 
 On a Debian-derivative, they're quite easy to fetch::
 
