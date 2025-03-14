@@ -108,6 +108,7 @@ define open generic run-application
     (server :: <server>,
      #key startup-option,
           client,
+          initialize-client,
           filename,
           arguments,
           pause-before-termination?,
@@ -115,9 +116,6 @@ define open generic run-application
           working-directory,
           machine)
  => (application :: <application>);
-
-define open generic initialize-application-client
-    (client :: <object>, application :: <application>) => ();
 
 // There's no NOTE-RUN-APPLICATION-REQUESTED, we just do the relevant
 // work in RUN-APPLICATION.
@@ -182,11 +180,6 @@ define method perform-application-transaction
     function()
   end
 end method perform-application-transaction;
-
-define method initialize-application-client
-    (client :: <object>, application :: <application>) => ()
-  #f
-end method initialize-application-client;
 
 define method note-application-initialized
     (project :: <project-object>)
@@ -260,6 +253,7 @@ define method run-application
     (project :: <project-object>,
      #key startup-option = #"start",
           client = project,
+          initialize-client :: <function> = ignore,
           filename,
           arguments,
           working-directory,
@@ -297,7 +291,7 @@ define method run-application
   end if;
   broadcast($project-channel,
             make(<run-application-requested-message>, project: project));
-  initialize-application-client(client, application);
+  initialize-client(client, application);
   let host-machine? = machine == environment-host-machine();
   run-application(application,
                   startup-option: startup-option,
