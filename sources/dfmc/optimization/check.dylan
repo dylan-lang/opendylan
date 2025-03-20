@@ -59,6 +59,10 @@ define method check-optimized-reference
     (c :: <computation>, ref :: <object-reference>, f :: <&function>,
      check-forward-refs? :: <boolean>) => ()
   if (model-compile-stage-only?(f) | inlined-inline-only-function?(f))
+    note(<calling-inline-only-function-out-of-line>,
+	 source-location: dfm-source-location(c),
+	 context-id:      dfm-context-id(c),
+	 inline-only-function: f);
     let copy = find-inline-copy(current-compilation-record(), f);
     reference-value(ref) := copy
   end;
@@ -77,6 +81,10 @@ define method check-optimized-reference
   // format-out(">>> check-optimized-reference CHEN (%=) %= %= %=\n", object-class(c), c, ref, e);
   let f :: <&generic-function> = ^cache-header-engine-node-parent(e);
   if (model-compile-stage-only?(f) | inlined-inline-only-function?(f))
+    note(<calling-inline-only-function-out-of-line>,
+	 source-location: dfm-source-location(c),
+	 context-id:      dfm-context-id(c),
+	 inline-only-function: f);
     let copy = find-inline-copy(current-compilation-record(), f);
     ^cache-header-engine-node-parent(e) := copy;
   end;
