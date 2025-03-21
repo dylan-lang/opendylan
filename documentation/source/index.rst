@@ -102,6 +102,6 @@ articles, and all the library docs.
 
    Dylan Reference Manual <https://opendylan.org/books/drm/>
    Package Docs <https://package.opendylan.org/>
-   Open Dylan Libraries <library-reference/index>
-   All Documentation <documentation/index>
+   Bundled Libraries <library-reference/index>
+   Other Documentation <documentation/index>
    Full Index <genindex>

@@ -154,7 +154,6 @@ For Open Dylan Developers
    :hidden:
 
    News </news/index>
-   Cheat Sheets <cheatsheets/index>
    Publications <publications>
    Intro to Dylan </intro-dylan/index>
    CORBA Guide </corba-guide/index>
