@@ -8,11 +8,14 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define constant *print-lock* = make(<lock>);
+define constant $debug-threads-tests = #f;
 
 define method format-l (#rest args)
-  with-lock (*print-lock*)
-    apply(test-output, args);
-  end with-lock;
+  if ($debug-threads-tests)
+    with-lock (*print-lock*)
+      apply(test-output, args);
+    end;
+  end;
 end method;
 
 
