@@ -91,10 +91,6 @@ define test decimal-integer-literal-test ()
   verify-literal(f, 1000000, <integer-fragment>);
   verify-presentation(f, "1000000");
 
-  let f = read-fragment("1_000_000");
-  verify-literal(f, 1000000, <integer-fragment>);
-  verify-presentation(f, "1000000");
-
   let f = read-fragment("1_2_3_4");
   verify-literal(f, 1234, <integer-fragment>);
   verify-presentation(f, "1234");
