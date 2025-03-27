@@ -67,7 +67,11 @@ define not-inline function force-domain-error (f :: <float>)
   sqrt(f)
 end;
 
-define test test-<arithmetic-domain-error> ()
+// This uses when: rather than expected-to-fail-test: because (IIRC) it only fails on
+// certain versions of Darwin.  https://github.com/dylan-lang/opendylan/issues/1678
+define test test-<arithmetic-domain-error> (when: method ()
+                                                    $os-name ~== #"darwin"
+                                                  end)
   check-condition("sqrt(-1.0) signals <arithmetic-domain-error>",
                   <arithmetic-domain-error>,
                   force-domain-error(-1.0));
@@ -81,7 +85,11 @@ define not-inline function force-float-overflow (x :: <float>, f :: <float>)
   x * f
 end;
 
-define test test-<arithmetic-overflow-error> ()
+// This uses when: rather than expected-to-fail-test: because (IIRC) it only fails on
+// certain versions of Darwin.  https://github.com/dylan-lang/opendylan/issues/1678
+define test test-<arithmetic-overflow-error> (when: method ()
+                                                      $os-name ~== #"darwin"
+                                                    end)
   check-condition("$maximum-integer + 1 signals <arithmetic-overflow-error>",
                   <arithmetic-overflow-error>,
                   force-integer-overflow($maximum-integer, 1));
@@ -100,7 +108,11 @@ define not-inline function force-float-underflow (x :: <float>, f :: <float>)
   x * f
 end;
 
-define test test-<arithmetic-underflow-error> ()
+// This uses when: rather than expected-to-fail-test: because (IIRC) it only fails on
+// certain versions of Darwin.  https://github.com/dylan-lang/opendylan/issues/1678
+define test test-<arithmetic-underflow-error> (when: method ()
+                                                       $os-name ~== #"darwin"
+                                                     end)
   check-condition("1.0s-20 * 1.0s-20 signals <arithmetic-underflow-error>",
                   <arithmetic-underflow-error>,
                   force-float-underflow(1.0s-20, 1.0s-20));
