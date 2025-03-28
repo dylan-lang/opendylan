@@ -154,7 +154,11 @@ define test test-^ ()
 end test;
 
 
-define test test-sqrt ()
+// This uses when: rather than expected-to-fail-test: because (IIRC) it only fails on
+// certain versions of Darwin.  https://github.com/dylan-lang/opendylan/issues/1678
+define test test-sqrt (when: method ()
+                               $os-name ~== #"darwin"
+                             end)
   check-condition("sqrt(-1) errors",
                   <error>,
                   sqrt(-1));
