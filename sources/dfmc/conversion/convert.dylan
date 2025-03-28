@@ -1648,8 +1648,10 @@ define method convert-next-method-into
      next-ref :: <value-reference>)
  => ()
   f.^function-next? := #t;
+  let loc = lambda-source-location(f);
   let fragment
-    = with-expansion-source-form (model-definition(f))
+    = with-expansion-source-location (loc & source-location-record(loc),
+                                      loc & source-location-source-position(loc))
         generate-next-method-function-fragment(f, signature-spec, next-ref)
       end;
   let (f-start, f-end, f-temp) = convert-1(env, fragment);

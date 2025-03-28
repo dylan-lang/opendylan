@@ -309,7 +309,6 @@ define module environment-protocols
 
   // Threads objects
   export <thread-object>,
-         thread-stack-trace,
          thread-complete-stack-trace,
          thread-index,
          thread-state,
@@ -388,7 +387,6 @@ define module environment-protocols
          find-application-proxy,
          application-proxy-id,
          run-application,
-         initialize-application-client,
          attach-live-application,
          note-run-application-failed,
          stop-application,
@@ -636,8 +634,6 @@ define module environment-protocols
          stack-frame-source-location,
          stack-frame-thread,
          stack-frame-type,
-         stack-frame-next-frame,
-         stack-frame-previous-frame,
          stack-frame-local-variables,
          stack-frame-local-variable-count;
 
