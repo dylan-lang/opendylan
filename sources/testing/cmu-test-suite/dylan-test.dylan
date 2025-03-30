@@ -722,6 +722,3 @@ define method tautology (test == #"simple-typeunion")
   check("get union on #f v2", \==, method() gcall(simple-typeunion-method, #f) end, #"integer-union");
   check("get union on integer v2", \==, method() gcall(simple-typeunion-method, 3) end, #"integer-union");
 end method;
-
-
-// eof

@@ -2573,5 +2573,3 @@ tautologies := concatenate(tautologies, #(#"floats",
 					  #"more-instance?",
 					  #"dynamic-classes",
 					  #"duplicated-keyword-processing"));
-
-// eof

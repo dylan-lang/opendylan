@@ -15,5 +15,3 @@ define module dylan-test
   use dylan-extensions;
 //  use debug-dispatch;
 end;
-
-// eof

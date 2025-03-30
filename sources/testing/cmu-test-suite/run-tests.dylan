@@ -59,5 +59,3 @@ end if;
 
 
 do-tautologies(tautologies);
-
-// eof
