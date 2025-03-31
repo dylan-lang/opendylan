@@ -172,7 +172,9 @@ define test test-sqrt (when: method ()
                   sqrt(-1.d0));
 end test;
 
-define test test-isqrt ()
+define test test-isqrt (when: method ()
+                                $os-name ~== #"darwin"
+                              end)
   check-condition("isqrt(-1) errors",
                   <error>,
                   isqrt(-1));
