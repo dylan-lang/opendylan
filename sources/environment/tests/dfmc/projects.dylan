@@ -50,29 +50,23 @@ define function test-project-location
   let directory = root-directory();
   let location-name
     = format-to-string
-        ("%s/environment/tests/%s/%s.hdp",
+        ("%s/%s/%s.hdp",
          directory,
          select (name by \=)
-           "environment-test-application" => "test-application";
-           "environment-test-library"     => "test-library";
+           "environment-test-application" => "environment/tests/test-application";
+           "environment-test-library"     => "environment/tests/test-library";
+           "cmu-test-suite"               => "testing/cmu-test-suite";
          end,
          name);
   // format-out("project-location: %=\n", location-name);
   as(<file-locator>, location-name);
 end function test-project-location;
 
-define function open-test-projects () => ()
-  let library = open-project(test-project-location($test-library));
-  open-project-compiler-database
-    (library, error-handler: project-condition-handler);
-  let application = open-project(test-project-location($test-application));
-  open-project-compiler-database
-    (application, error-handler: project-condition-handler);
-
+define function test-project-build (project :: <project-object>, #key link?)
   let progress
     = make(<progress-stream>, inner-stream: *standard-output*);
-  build-project(application,
-                link?: #f,
+  build-project(project,
+                link?: link?,
                 save-databases?: #t,
                 error-handler: project-condition-handler,
                 progress-callback:
@@ -87,6 +81,17 @@ define function open-test-projects () => ()
                     show-progress(progress, position, range, label: label);
                   end);
   new-line(progress);
+end function;
+
+define function open-test-projects () => ()
+  let library = open-project(test-project-location($test-library));
+  open-project-compiler-database
+    (library, error-handler: project-condition-handler);
+  let application = open-project(test-project-location($test-application));
+  open-project-compiler-database
+    (application, error-handler: project-condition-handler);
+
+  test-project-build(application);
 
   unless (open-project-compiler-database
             (library, error-handler: project-condition-handler))
@@ -123,9 +128,21 @@ define test open-projects-test ()
               project-interface-type(*test-application*),
               #"gui");
   check-equal("Application project name",
+              project-name(*test-application*),
+              $test-application);
+  check-equal("Application project name",
               environment-object-primitive-name
                 (*test-application*, *test-application*),
               $test-application);
+  check-false("Application project not read-only",
+              project-read-only?(*test-application*));
+  check-true("Application project can be built",
+             project-can-be-built?(*test-application*));
+  check-true("Application project can be debugged",
+             project-can-be-debugged?(*test-application*));
+  check-true("Application project compiled",
+             project-compiled?(*test-application*));
+
   check-instance?("Library project open",
                   <project-object>, *test-library*);
   check-equal("Library project target type",
@@ -135,14 +152,62 @@ define test open-projects-test ()
               project-interface-type(*test-library*),
               #"console");
   check-equal("Library project name",
+              project-name(*test-library*),
+              $test-library);
+  check-equal("Library project name",
               environment-object-primitive-name
                 (*test-library*, *test-library*),
               $test-library);
+  check-false("Library project not read-only",
+              project-read-only?(*test-library*));
+  check-true("Library project can be built",
+             project-can-be-built?(*test-library*));
+  check-true("Library project can be debugged",
+             project-can-be-debugged?(*test-library*));
+  check-true("Library project compiled",
+             project-compiled?(*test-library*));
 end test open-projects-test;
 
+define test project-libraries-test ()
+  let application-lib = project-library(*test-application*);
+  check-instance?("Application project library",
+                  <library-object>, application-lib);
+  check-equal("Application project library project",
+              project-filename(*test-application*),
+              project-filename(library-project(*test-application*, application-lib)));
+
+  let application-used-libraries
+    = project-used-libraries(*test-application*, *test-application*);
+  let application-used-library-names
+    = map(curry(environment-object-basic-name, *test-application*),
+          application-used-libraries);
+  // See libraries referenced in test-application/library.dylan
+  for (name in #["common-dylan", "duim", "environment-test-library"])
+    check-true(format-to-string("Application library uses %s", name),
+               member?(name, application-used-library-names, test: \=));
+  end for;
+end test project-libraries-test;
+
+define test project-source-files-test ()
+  check-equal("Library project filename",
+              test-project-location($test-library),
+              project-filename(*test-library*));
+  check-equal("Application project filename",
+              test-project-location($test-application),
+              project-filename(*test-application*));
+
+  check-true("Library project directory exists",
+             file-exists?(project-directory(*test-library*)));
+  for (s in project-sources(*test-library*))
+    check-true("Source file exists",
+               file-exists?(source-record-location(s)));
+  end for;
+end test;
 
 /// projects suite
 
 define suite projects-suite ()
   test open-projects-test;
+  test project-libraries-test;
+  test project-source-files-test;
 end suite projects-suite;

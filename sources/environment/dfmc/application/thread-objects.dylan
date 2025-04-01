@@ -223,26 +223,6 @@ define method application-threads
 end method application-threads;
 
 
-///// THREAD-STACK-TRACE (Environment Protocol Method)
-//    Returns the frame at the top of the stack for this thread.
-
-define method thread-stack-trace
-    (application :: <dfmc-application>, thread :: <thread-object>)
- => (top-frame :: <stack-frame-object>)
-  let top-dm-frame = #f;
-  let target = application.application-target-app;
-  let remote-thread = thread.application-object-proxy;
-  perform-requiring-debugger-transaction
-     (target,
-      method ()
-        top-dm-frame := first-stack-frame(target, remote-thread);
-      end method);
-  make-environment-object(<stack-frame-object>,
-                          project: application.server-project,
-                          application-object-proxy: top-dm-frame);
-end method;
-
-
 ///// THREAD-COMPLETE-STACK-TRACE (Environment Protocol Method)
 //    Returns an ordered sequence of <stack-frame-object>s - all the frames
 //    in the call stack of the specified thread.

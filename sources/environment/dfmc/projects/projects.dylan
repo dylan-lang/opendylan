@@ -828,8 +828,6 @@ define sealed method project-can-be-debugged?
   //   | project-object.project-debug-filename ~= #f
 end method project-can-be-debugged?;
 
-define constant $build-makefile = "dylanmakefile";
-
 define sealed method project-compiled?
     (project :: <dfmc-project-object>)
  => (compiled? :: <boolean>)
@@ -839,7 +837,7 @@ define sealed method project-compiled?
     let makefile
       = make(<native-file-locator>,
              directory: as(<directory-locator>, build-location),
-             name:      $build-makefile);
+             name:      $build-system-makefile-name);
     file-exists?(makefile)
   else
     #t

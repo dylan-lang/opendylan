@@ -9,8 +9,6 @@ define constant $user-project-suffix   = "hdp";
 define constant $lid-project-suffix    = "lid";
 define constant $binary-project-suffix = "ddb";
 
-define constant $dylan-makefile = "dylanmakefile.mkf";
-
 define constant $dylan-file-type       = #"dylan";
 define constant $C-source-file-type    = #"C";
 define constant $C-header-file-type    = #"h";

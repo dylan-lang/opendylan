@@ -93,20 +93,6 @@ define open generic stack-frame-type
     (server :: <server>, stack-frame :: <stack-frame-object>)
  => (type :: <symbol>);
 
-/// stack-frame-next-frame
-///
-///
-define open generic stack-frame-next-frame
-    (server :: <server>, stack-frame :: <stack-frame-object>)
- => (next-one :: false-or(<stack-frame-object>));
-
-/// stack-frame-previous-frame
-///
-///
-define open generic stack-frame-previous-frame
-    (server :: <server>, stack-frame :: <stack-frame-object>)
- => (previous-one :: false-or(<stack-frame-object>));
-
 /// stack-frame-local-variables
 ///
 ///

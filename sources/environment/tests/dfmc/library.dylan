@@ -15,14 +15,21 @@ define library dfmc-environment-test-suite
   use source-records;
 
   use testworks;
+  use channels;
+  use regular-expressions;
+  use dylan-orb;
 
   use environment-protocols;
-  use environment-commands;
-  use environment-application-commands;
+  use dfmc-environment;
+  use dfmc-environment-projects;
+  use dfmc-environment-application;
   use environment-test-suite;
 
   // Back-ends
   use dfmc-back-end-implementations;
+  use access-path;
+  use local-access-path;
+  use remote-access-path;
 
   export dfmc-environment-test-suite;
 end library dfmc-environment-test-suite;

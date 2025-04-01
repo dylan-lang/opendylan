@@ -11,7 +11,7 @@ define sideways method makefile-exists?
   let make-locator
     = make(<file-locator>,
            directory: build,
-           name: $dylan-makefile);
+           name: $build-system-makefile-name);
   file-exists?(make-locator)
 end;
 
@@ -35,7 +35,7 @@ define sideways method generate-makefile (project :: <lid-project>)
   let make-locator
     = make(<file-locator>,
            directory: build,
-           name:      $dylan-makefile);
+           name:      $build-system-makefile-name);
   with-open-file(stream = make-locator, direction: #"output")
     write-comment(stream, "This build file is generated, please don't edit");
     save-single-value(stream, #"Library", project.project-lid-library-name);
