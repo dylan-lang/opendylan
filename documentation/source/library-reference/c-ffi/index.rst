@@ -1536,7 +1536,7 @@ these classes.
 .. index::
    single: = method
    single: methods; =
-   
+
 .. method:: =
    :specializer: <C-pointer>
 
@@ -1608,58 +1608,37 @@ general instance of :class:`<C-pointer>`.
 .. index::
    single: C-char-at function
 
-C-char-at
-^^^^^^^^^
+.. function:: C-char-at
 
-Function
+   :signature:
 
-Signature
-
-.. code-block:: dylan
-
-    C-char-at *C-pointer* #key *byte-index* *scaled-index* => *machine-word*
+     C-char-at *C-pointer* #key *byte-index* *scaled-index* => *machine-word*
 
 .. index::
    single: C-char-at-setter function
 
-C-char-at-setter
-^^^^^^^^^^^^^^^^
+.. function:: C-char-at-setter
 
-Function
+   :signature:
 
-Signature
-
-.. code-block:: dylan
-
-    C-char-at-setter *new* *C-pointer* #key *byte-index* *scaled-index*
-      => *machine-word*
+     C-char-at-setter *new* *C-pointer* #key *byte-index* *scaled-index* => *machine-word*
 
 .. index::
    single: functions; C-signed-char-at
 
-C-signed-char-at
-^^^^^^^^^^^^^^^^
+.. function:: C-signed-char-at
 
-Function
-
-Signature
-
-.. code-block:: dylan
+   :signature:
 
     C-signed-char-at *C-pointer* #key *byte-index* *scaled-index* =>
-      *machine-word*
+    *machine-word*
 
 .. index::
    single: C-signed-char-at-setter function
 
-C-signed-char-at-setter
-^^^^^^^^^^^^^^^^^^^^^^^
+.. function:: C-signed-char-at-setter
 
-Function
-
-Signature
-
-.. code-block:: dylan
+   :signature:
 
     C-signed-char-at-setter *new* *C-pointer* #key *byte-index*
       *scaled-index* => *machine-word*
@@ -1667,14 +1646,9 @@ Signature
 .. index::
    single: functions; C-unsigned-char-at
 
-C-unsigned-char-at
-^^^^^^^^^^^^^^^^^^
+.. function:: C-unsigned-char-at
 
-Function
-
-Signature
-
-.. code-block:: dylan
+   :signature:
 
     C-unsigned-char-at *C-pointer* #key *byte-index* *scaled-index* =>
       *machine-word*
@@ -1683,14 +1657,9 @@ Signature
    single: C-unsigned-char-at-setter function
    single: functions; C-unsigned-char-at-setter
 
-C-unsigned-char-at-setter
-^^^^^^^^^^^^^^^^^^^^^^^^^
+.. function:: C-unsigned-char-at-setter
 
-Function
-
-Signature
-
-.. code-block:: dylan
+   :signature:
 
     C-unsigned-char-at-setter *new* *C-pointer* #key *byte-index*
       *scaled-index* => *machine-word*
@@ -1702,14 +1671,9 @@ Signature
    single: C-char-at
    single: functions; C-unsigned-short-at
 
-C-unsigned-short-at
-^^^^^^^^^^^^^^^^^^^
+.. function:: C-unsigned-short-at
 
-Function
-
-Signature
-
-.. code-block:: dylan
+   :signature:
 
     C-unsigned-short-at *C-pointer* #key *byte-index* *scaled-index*
       => *machine-word*
@@ -1719,14 +1683,9 @@ Signature
    single: functions; C-char-at-setter
    single: functions; C-unsigned-short-at-setter
 
-C-unsigned-short-at-setter
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. function:: C-unsigned-short-at-setter
 
-Function
-
-Signature
-
-.. code-block:: dylan
+   :signature:
 
     C-unsigned-short-at-setter *new* *C-pointer* #key *byte-index*
       *scaled-index* => *machine-word*
@@ -1736,14 +1695,9 @@ Signature
    single: C-signed-short-at function
    single: functions; C-signed-short-at
 
-C-signed-short-at
-^^^^^^^^^^^^^^^^^
+.. function:: C-signed-short-at
 
-Function
-
-Signature
-
-.. code-block:: dylan
+   :signature:
 
     C-signed-short-at *C-pointer* #key *byte-index* *scaled-index* =>
       *machine-word*
@@ -1752,14 +1706,9 @@ Signature
    single: C-signed-short-at-setter function
    single: functions; C-signed-short-at-setter
 
-C-signed-short-at-setter
-^^^^^^^^^^^^^^^^^^^^^^^^
+.. function:: C-signed-short-at-setter
 
-Function
-
-Signature
-
-.. code-block:: dylan
+   :signature:
 
     C-signed-short-at-setter *new* *C-pointer* #key *byte-index*
       *scaled-index* => *machine-word*
@@ -1767,14 +1716,9 @@ Signature
 .. index::
    single: functions; C-short-at
 
-C-short-at
-^^^^^^^^^^
+.. function:: C-short-at
 
-Function
-
-Signature
-
-.. code-block:: dylan
+   :signature:
 
     C-short-at *C-pointer* #key *byte-index* *scaled-index* =>
       *machine-word*
@@ -1783,14 +1727,9 @@ Signature
    single: C-short-at-setter function
    single: functions; C-short-at-setter
 
-C-short-at-setter
-^^^^^^^^^^^^^^^^^
+.. function:: C-short-at-setter
 
-Function
-
-Signature
-
-.. code-block:: dylan
+   :signature:
 
     C-short-at-setter *new* *C-pointer* #key *byte-index* *scaled-index* =>
       *machine-word*
@@ -1799,14 +1738,9 @@ Signature
    single: C-unsigned-long-at function
    single: functions; C-unsigned-long-at
 
-C-unsigned-long-at
-^^^^^^^^^^^^^^^^^^
+.. function:: C-unsigned-long-at
 
-Function
-
-Signature
-
-.. code-block:: dylan
+   :signature:
 
     C-unsigned-long-at *C-pointer* #key *byte-index* *scaled-index* =>
       *machine-word*
@@ -1815,14 +1749,9 @@ Signature
    single: C-unsigned-long-at-setter function
    single: functions; C-unsigned-long-at-setter
 
-C-unsigned-long-at-setter
-^^^^^^^^^^^^^^^^^^^^^^^^^
+.. function:: C-unsigned-long-at-setter
 
-Function
-
-Signature
-
-.. code-block:: dylan
+   :signature:
 
     C-unsigned-long-at-setter *new* *C-pointer* #key *byte-index*
       *scaled-index* => *machine-word*
@@ -1831,109 +1760,9 @@ Signature
    single: C-signed-long-at function
    single: functions; C-signed-long-at
 
-C-signed-long-at
-^^^^^^^^^^^^^^^^
+.. function:: C-signed-int-at
 
-Function
-
-Signature
-
-.. code-block:: dylan
-
-    C-signed-long-at *C-pointer* #key *byte-index* *scaled-index* =>
-      *machine-word*
-
-.. index::
-   single: C-signed-long-at-setter function
-   single: functions; C-signed-long-at-setter
-
-C-signed-long-at-setter
-^^^^^^^^^^^^^^^^^^^^^^^
-
-Function
-
-Signature
-
-.. code-block:: dylan
-
-    C-signed-long-at-setter *new* *C-pointer* #key *byte-index*
-      *scaled-index* => *machine-word*
-
-.. index::
-   single: C-long-at function
-   single: functions; C-long-at
-
-C-long-at
-^^^^^^^^^
-
-Function
-
-Signature
-
-.. code-block:: dylan
-
-    C-long-at *C-pointer* #key *byte-index* *scaled-index* => *machine-word*
-
-.. index::
-   single: C-long-at-setter function
-   single: functions; C-long-at-setter
-
-C-long-at-setter
-^^^^^^^^^^^^^^^^
-
-Function
-
-Signature
-
-.. code-block:: dylan
-
-    C-long-at-setter *new* *C-pointer* #key *byte-index* *scaled-index* =>
-      *machine-word*
-
-.. index::
-   single: C-unsigned-int-at function
-   single: functions; C-unsigned-int-at
-
-C-unsigned-int-at
-^^^^^^^^^^^^^^^^^
-
-Function
-
-Signature
-
-.. code-block:: dylan
-
-    C-unsigned-int-at *C-pointer* #key *byte-index* *scaled-index* =>
-      *machine-word*
-
-.. index::
-   single: C-unsigned-int-at-setter function
-   single: functions; C-unsigned-int-at-setter
-
-C-unsigned-int-at-setter
-^^^^^^^^^^^^^^^^^^^^^^^^
-
-Function
-
-Signature
-
-.. code-block:: dylan
-
-    C-unsigned-int-at-setter *new* *C-pointer* #key *byte-index*
-      *scaled-index* => *machine-word*
-
-.. index::
-   single: C-signed-int-at function
-   single: functions; C-signed-int-at
-
-C-signed-int-at
-^^^^^^^^^^^^^^^
-
-Function
-
-Signature
-
-.. code-block:: dylan
+   :signature:
 
     C-signed-int-at *C-pointer* #key *byte-index* *scaled-index* =>
       *machine-word*
@@ -1942,14 +1771,9 @@ Signature
    single: C-signed-int-at-setter function
    single: functions; C-signed-int-at-setter
 
-C-signed-int-at-setter
-^^^^^^^^^^^^^^^^^^^^^^
+.. function:: C-signed-int-at-setter
 
-Function
-
-Signature
-
-.. code-block:: dylan
+   :signature:
 
     C-signed-int-at-setter *new* *C-pointer* #key *byte-index*
       *scaled-index* => *machine-word*
@@ -1958,14 +1782,9 @@ Signature
    single: C-int-at function
    single: functions; C-int-at
 
-C-int-at
-^^^^^^^^
+.. function:: C-int-at
 
-Function
-
-Signature
-
-.. code-block:: dylan
+   :signature:
 
     C-int-at *C-pointer* #key *byte-index* *scaled-index* => *machine-word*
 
@@ -1973,14 +1792,9 @@ Signature
    single: C-int-at-setter function
    single: functions; C-int-at-setter
 
-C-int-at-setter
-^^^^^^^^^^^^^^^
+.. function:: C-int-at-setter
 
-Function
-
-Signature
-
-.. code-block:: dylan
+   :signature:
 
     C-int-at-setter *new* *C-pointer* #key *byte-index* *scaled-index* =>
       *machine-word*
@@ -1989,14 +1803,117 @@ Signature
    single: C-double-at function
    single: functions; C-double-at
 
-C-double-at
-^^^^^^^^^^^
+.. function:: C-signed-long-at
 
-Function
+   :signature:
 
-Signature
+    C-signed-long-at *C-pointer* #key *byte-index* *scaled-index* =>
+      *machine-word*
 
-.. code-block:: dylan
+.. index::
+   single: C-signed-long-at-setter function
+   single: functions; C-signed-long-at-setter
+
+.. function:: C-signed-long-at-setter
+
+   :signature:
+
+    C-signed-long-at-setter *new* *C-pointer* #key *byte-index*
+      *scaled-index* => *machine-word*
+
+.. index::
+   single: C-long-at function
+   single: functions; C-long-at
+
+.. function:: C-long-at
+
+   :signature:
+
+    C-long-at *C-pointer* #key *byte-index* *scaled-index* => *machine-word*
+
+.. index::
+   single: C-long-at-setter function
+   single: functions; C-long-at-setter
+
+.. function:: C-long-at-setter
+
+   :signature:
+
+    C-long-at-setter *new* *C-pointer* #key *byte-index* *scaled-index* =>
+      *machine-word*
+
+.. index::
+   single: C-unsigned-int-at function
+   single: functions; C-unsigned-int-at
+
+.. function:: C-unsigned-int-at
+
+   :signature:
+
+    C-unsigned-int-at *C-pointer* #key *byte-index* *scaled-index* =>
+      *machine-word*
+
+.. index::
+   single: C-unsigned-int-at-setter function
+   single: functions; C-unsigned-int-at-setter
+
+.. function:: C-unsigned-int-at-setter
+
+   :signature:
+
+    C-unsigned-int-at-setter *new* *C-pointer* #key *byte-index*
+      *scaled-index* => *machine-word*
+
+.. index::
+   single: C-signed-int-at function
+   single: functions; C-signed-int-at
+
+.. function:: C-signed-int-at
+
+   :signature:
+
+    C-signed-int-at *C-pointer* #key *byte-index* *scaled-index* =>
+      *machine-word*
+
+.. index::
+   single: C-signed-int-at-setter function
+   single: functions; C-signed-int-at-setter
+
+.. function:: C-signed-int-at-setter
+
+   :signature:
+
+    C-signed-int-at-setter *new* *C-pointer* #key *byte-index*
+      *scaled-index* => *machine-word*
+
+.. index::
+   single: C-int-at function
+   single: functions; C-int-at
+
+.. function:: C-int-at
+
+   :signature:
+
+    C-int-at *C-pointer* #key *byte-index* *scaled-index* => *machine-word*
+
+.. index::
+   single: C-int-at-setter function
+   single: functions; C-int-at-setter
+
+.. function:: C-int-at-setter
+
+   :signature:
+
+    C-int-at-setter *new* *C-pointer* #key *byte-index* *scaled-index* =>
+      *machine-word*
+
+.. index::
+   single: C-double-at function
+   single: functions; C-double-at
+
+.. function:: C-double-at
+
+   :signature:
 
     C-double-at *C-pointer* #key *byte-index* *scaled-index* => *float*
 
@@ -2004,14 +1921,9 @@ Signature
    single: C-double-at-setter function
    single: functions; C-double-at-setter
 
-C-double-at-setter
-^^^^^^^^^^^^^^^^^^
+.. function:: C-double-at-setter
 
-Function
-
-Signature
-
-.. code-block:: dylan
+   :signature:
 
     C-double-at-setter *new-double-float* *C-pointer* #key *byte-index*
       *scaled-index* => *float*
@@ -2020,14 +1932,9 @@ Signature
    single: C-float-at function
    single: functions; C-float-at
 
-C-float-at
-^^^^^^^^^^
+.. function:: C-float-at
 
-Function
-
-Signature
-
-.. code-block:: dylan
+   :signature:
 
     C-float-at *C-pointer* #key *byte-index* *scaled-index* => *float*
 
@@ -2035,14 +1942,9 @@ Signature
    single: C-float-at-setter function
    single: functions; C-float-at-setter
 
-C-float-at-setter
-^^^^^^^^^^^^^^^^^
+.. function:: C-float-at-setter
 
-Function
-
-Signature
-
-.. code-block:: dylan
+   :signature:
 
     C-float-at-setter *new-single-float* *C-pointer* #key *byte-index*
       *scaled-index* => *float*
@@ -2051,14 +1953,9 @@ Signature
    single: C-pointer-at function
    single: functions; C-pointer-at
 
-C-pointer-at
-^^^^^^^^^^^^
+.. function:: C-pointer-at
 
-Function
-
-Signature
-
-.. code-block:: dylan
+   :signature:
 
     C-pointer-at *C-pointer* #key *byte-index* *scaled-index* => *C-pointer*
 
@@ -2066,66 +1963,40 @@ Signature
    single: C-pointer-at-setter function
    single: functions; C-pointer-at-setter
 
-C-pointer-at-setter
-^^^^^^^^^^^^^^^^^^^
+.. function:: C-pointer-at-setter
 
-Function
+   :signature:
 
-Signature
+    C-pointer-at-setter *new* *C-pointer* #key *byte-index* *scaled-index* =>
+      *C-pointer*
 
-.. code-block:: dylan
+.. function:: C-size-t-at
 
-    C-pointer-at-setter *new* *C-pointer* #key *byte-index* *scaled-index*
-      => *C-pointer*
-
-C-size-t-at
-^^^^^^^^^^^
-
-Function
-
-Signature
-
-.. code-block:: dylan
+   :signature:
 
     C-size-t-at *C-pointer* #key *byte-index* *scaled-index* =>
       *machine-word*
 
-C-size-t-at-setter
-^^^^^^^^^^^^^^^^^^
+.. function:: C-size-t-at-setter
 
-Function
-
-Signature
-
-.. code-block:: dylan
+   :signature:
 
     C-size-t-at-setter *new* *C-pointer* #key *byte-index* *scaled-index* =>
       *machine-word*
 
-C-ssize-t-at
-^^^^^^^^^^^^
+.. function:: C-ssize-t-at
 
-Function
-
-Signature
-
-.. code-block:: dylan
+   :signature:
 
     C-ssize-t-at *C-pointer* #key *byte-index* *scaled-index* =>
       *machine-word*
 
-C-ssize-t-at-setter
-^^^^^^^^^^^^^^^^^^^
+.. function:: C-ssize-t-at-setter
 
-Function
-
-Signature
-
-.. code-block:: dylan
+   :signature:
 
     C-ssize-t-at-setter *new* *C-pointer* #key *byte-index* *scaled-index* =>
       *machine-word*
-
 
 .. index::
    single: structure types
@@ -2260,7 +2131,7 @@ Defining specialized versions of designator classes
    existing designator class for that type.
 
    :macrocall:
-     .. parsed-literal:: 
+     .. parsed-literal::
 
         define [`modifiers`] C-subtype `name` (`superclasses`)
           [`slot-spec` ; ...] [;]
@@ -2424,7 +2295,7 @@ Defining specialized designator classes
    Allows you to define a name to which to bind a pointer designator.
 
    :macrocall:
-     .. parsed-literal:: 
+     .. parsed-literal::
 
         define [`modifier` ...] C-mapped-subtype `type-name` (`superclass` )
           [map `high-level-type`
@@ -2828,7 +2699,7 @@ Describing union types
    Describes C union types to the *c-ffi*.
 
    :macrocall:
-     .. parsed-literal:: 
+     .. parsed-literal::
 
         define C-union `name`
           [`slot-spec` ; ...] [;]
@@ -3232,7 +3103,7 @@ Describing Dylan functions for use by C
    the function.
 
    :macrocall:
-     .. parsed-literal:: 
+     .. parsed-literal::
 
         define C-callable-wrapper [`dylan-rep-name`] of `dylan-function`
           [`parameter-spec` ; ...] [;]
@@ -3465,7 +3336,7 @@ of that bridge are implemented within this library.
    Describe Objective C selectors to the *c-ffi*.
 
    :macrocall:
-     .. parsed-literal:: 
+     .. parsed-literal::
 
         define objc-selector `name`
           [`parameter-spec`; ...]
@@ -3520,7 +3391,7 @@ This section covers describing and accessing C variables.
    Describes C variables to the *c-ffi*.
 
    :macrocall:
-     .. parsed-literal:: 
+     .. parsed-literal::
 
         define C-variable `getter-name` :: `c-type`
           #key `setter` `c-name` import: `boolean`
@@ -3782,7 +3653,7 @@ function :func:`destroy`.
    Allocates an object within the scope of the body of the code.
 
    :macrocall:
-     .. parsed-literal:: 
+     .. parsed-literal::
 
         with-stack-structure (`name` :: `wrapper-type`
             #key `element-count`, `extra-bytes`)
@@ -3900,7 +3771,7 @@ using :macro:`define c-mapped-subtype`.
    Passes a C pointer to the contents of a :drm:`<byte-string>`.
 
    :macrocall:
-     .. parsed-literal:: 
+     .. parsed-literal::
 
         with-c-string (`variable` = `string-valued-expression`)
           `body`
