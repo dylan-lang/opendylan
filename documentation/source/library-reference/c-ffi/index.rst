@@ -2131,7 +2131,7 @@ Defining specialized versions of designator classes
    existing designator class for that type.
 
    :macrocall:
-     .. parsed-literal:: 
+     .. parsed-literal::
 
         define [`modifiers`] C-subtype `name` (`superclasses`)
           [`slot-spec` ; ...] [;]
@@ -2295,7 +2295,7 @@ Defining specialized designator classes
    Allows you to define a name to which to bind a pointer designator.
 
    :macrocall:
-     .. parsed-literal:: 
+     .. parsed-literal::
 
         define [`modifier` ...] C-mapped-subtype `type-name` (`superclass` )
           [map `high-level-type`
@@ -2699,7 +2699,7 @@ Describing union types
    Describes C union types to the *c-ffi*.
 
    :macrocall:
-     .. parsed-literal:: 
+     .. parsed-literal::
 
         define C-union `name`
           [`slot-spec` ; ...] [;]
@@ -3103,7 +3103,7 @@ Describing Dylan functions for use by C
    the function.
 
    :macrocall:
-     .. parsed-literal:: 
+     .. parsed-literal::
 
         define C-callable-wrapper [`dylan-rep-name`] of `dylan-function`
           [`parameter-spec` ; ...] [;]
@@ -3336,7 +3336,7 @@ of that bridge are implemented within this library.
    Describe Objective C selectors to the *c-ffi*.
 
    :macrocall:
-     .. parsed-literal:: 
+     .. parsed-literal::
 
         define objc-selector `name`
           [`parameter-spec`; ...]
@@ -3391,7 +3391,7 @@ This section covers describing and accessing C variables.
    Describes C variables to the *c-ffi*.
 
    :macrocall:
-     .. parsed-literal:: 
+     .. parsed-literal::
 
         define C-variable `getter-name` :: `c-type`
           #key `setter` `c-name` import: `boolean`
@@ -3653,7 +3653,7 @@ function :func:`destroy`.
    Allocates an object within the scope of the body of the code.
 
    :macrocall:
-     .. parsed-literal:: 
+     .. parsed-literal::
 
         with-stack-structure (`name` :: `wrapper-type`
             #key `element-count`, `extra-bytes`)
@@ -3771,7 +3771,7 @@ using :macro:`define c-mapped-subtype`.
    Passes a C pointer to the contents of a :drm:`<byte-string>`.
 
    :macrocall:
-     .. parsed-literal:: 
+     .. parsed-literal::
 
         with-c-string (`variable` = `string-valued-expression`)
           `body`
