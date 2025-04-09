@@ -229,7 +229,7 @@ The main entry point for the definition library is
 The building of definition objects relies heavily on the
 macro-expander, especially on procedural macros described in
 `D-Expressions: Lisp Power, Dylan Style
-<http://people.csail.mit.edu/jrb/Projects/dexprs.pdf>`_. Open Dylan
+<https://people.csail.mit.edu/jrb/Projects/dexprs.pdf>`_. Open Dylan
 extends the definitions with compiler, optimizer, primitive and
 shared-symbols, mainly used internally in the compiler.
 
