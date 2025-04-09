@@ -90,16 +90,19 @@ Syntax
 .. note::
 
    In Dylan, any words after an ``end`` (e.g.  ``end method``) are
-   optional.
+   optional but, if present, must match the corresponding "begin"
+   word.
 
 +----------------------------------+------------------------------------------+
 | Python                           | Dylan                                    |
 +==================================+==========================================+
 | .. code-block:: python           | .. code-block:: dylan                    |
 |                                  |                                          |
-|    var = exp                     |    define variable var = exp;            |
-|    VAR = exp # Convention        |    define variable var :: type = exp;    |
-|                                  |    define constant var = exp;            |
+|    var = exp                     |    let var = exp;                        |
+|                                  |    var := exp;                           |
+|                                  |    define variable var = exp;            |
+|                                  |    define variable var :: type = exp;    |
+|    VAR = exp # Convention        |    define constant var = exp;            |
 +----------------------------------+------------------------------------------+
 | .. code-block:: python           | .. code-block:: dylan                    |
 |                                  |                                          |
@@ -114,16 +117,9 @@ Syntax
 | .. code-block:: python           | .. code-block:: dylan                    |
 |                                  |                                          |
 |    lambda x, y, *z:              |    method (x, y, #rest z)                |
-|      print('hello')              |      say("hello");                       |
+|      print('hello')              |      format-out("hello");                |
 |      return f(x, y, z)           |      f(x, y, z)                          |
 |                                  |    end method                            |
-+----------------------------------+------------------------------------------+
-| .. code-block:: python           | .. code-block:: dylan                    |
-|                                  |                                          |
-|    x = 5                         |    begin                                 |
-|    body                          |      let x = 5;                          |
-|                                  |      body                                |
-|                                  |    end                                   |
 +----------------------------------+------------------------------------------+
 | .. code-block:: python           | .. code-block:: dylan                    |
 |                                  |                                          |
@@ -158,10 +154,6 @@ Syntax
 +----------------------------------+------------------------------------------+
 | .. code-block:: python           | .. code-block:: dylan                    |
 |                                  |                                          |
-|    var = value                   |    var := value                          |
-+----------------------------------+------------------------------------------+
-| .. code-block:: python           | .. code-block:: dylan                    |
-|                                  |                                          |
 |    a and b and c                 |    a & b & c                             |
 +----------------------------------+------------------------------------------+
 | .. code-block:: python           | .. code-block:: dylan                    |
@@ -179,9 +171,9 @@ Syntax
 +----------------------------------+------------------------------------------+
 | .. code-block:: python           | .. code-block:: dylan                    |
 |                                  |                                          |
-|    if exp in ('a', 2):           |    select (exp)                          |
-|      result1                     |      #"a", 2 => result1;                 |
-|    elif exp in ('a' 'b'):        |      'a', 'b' => result2;                |
+|    if exp in (1, 2):             |    select (exp)                          |
+|      result1                     |      1, 2 => result1;                    |
+|    elif exp in ('a', 'b'):       |      'a', 'b' => result2;                |
 |      result2                     |      otherwise => result                 |
 |    else:                         |    end select                            |
 |      result                      |                                          |
@@ -569,32 +561,56 @@ exception handling or generators.
 
 Here are approximate equivalents:
 
-+-----------------------------------+-----------------------------------------------+
-| Python                            | Dylan                                         |
-+===================================+===============================================+
-| .. code-block:: python            | .. code-block:: dylan                         |
-|                                   |                                               |
-|    def example():                 |    block (k)                                  |
-|      try:                         |      body                                     |
-|        body()                     |    exception (e :: <error>)                   |
-|      except Error:                |      handle-error()                           |
-|        handle_error()             |    cleanup                                    |
-|      finally:                     |      cleanup-stuff                            |
-|        cleanup_stuff()            |    end block                                  |
-+-----------------------------------+-----------------------------------------------+
-| N/A                               | .. code-block:: dylan                         |
-|                                   |                                               |
-|                                   |    define function top ()                     |
-|                                   |      block (exit-block)                       |
-|                                   |        bar(exit-block);                       |
-|                                   |        format-out("You won't see this.\n");   |
-|                                   |      end;                                     |
-|                                   |      format-out("Top done\n");                |
-|                                   |    end;                                       |
-|                                   |                                               |
-|                                   |    define function bar (thunk)                |
-|                                   |      thunk()                                  |
-|                                   |    end;                                       |
-|                                   |                                               |
-|                                   |    top();                                     |
-+-----------------------------------+-----------------------------------------------+
++-------------------------------------+-------------------------------------------------+
+| Python                              | Dylan                                           |
++=====================================+=================================================+
+| .. code-block:: python              | .. code-block:: dylan                           |
+|                                     |                                                 |
+|    def example():                   |    block (k)                                    |
+|      try:                           |      body                                       |
+|        body()                       |    exception (e :: <error>)                     |
+|      except Error as e:             |      handle-error()                             |
+|        handle_error()               |    cleanup                                      |
+|      finally:                       |      cleanup-stuff                              |
+|        cleanup_stuff()              |    end block                                    |
++-------------------------------------+-------------------------------------------------+
+| N/A                                 | .. code-block:: dylan                           |
+|                                     |                                                 |
+|                                     |    define function top ()                       |
+|                                     |      block (exit-block)                         |
+|                                     |        bar(exit-block);                         |
+|                                     |        format-out("You won't see this.\n");     |
+|                                     |      end;                                       |
+|                                     |      format-out("You WILL see this.\n");        |
+|                                     |    end;                                         |
+|                                     |                                                 |
+|                                     |    define function bar (thunk)                  |
+|                                     |      thunk()                                    |
+|                                     |    end;                                         | 
+|                                     |                                                 |
+|                                     |    top();                                       |
++-------------------------------------+-------------------------------------------------+
+
+Keyword arguments
+-----------------
+
++--------------------------------------------------+---------------------------------------------------+
+| Python                                           | Dylan                                             |
++==================================================+===================================================+
+| .. code-block:: python                           | .. code-block:: dylan                             |
+|                                                  |                                                   |
+|    def wrapper_fn (a, b, c, **keys):             |    define method wrapper-fn (a, b, c, #rest keys) |
+|      do_stuff(a, b, c)                           |      do-stuff(a, b, c);                           |
+|    return wrapped_fn(**keys)                     |      apply(wrapped-fn, keys)                      |
+|                                                  |    end;                                           |
+|    def wrapped_fn (one = 1, two = 2, three = 3): |                                                   |
+|      return [one, two, three]                    |    define method wrapped-fn                       |
+|                                                  |      (#key one = 1, two = 2, three = 3)           |
+|                                                  |      list(one, two, three)                        |
+|                                                  |    end;                                           |
++--------------------------------------------------+---------------------------------------------------+
+   
+Python collects any number of keyword arguments into a dictionary.  In
+Dylan, ``#rest keys`` collects the remaining arguments, not into a
+dictionary, but into a vector (like a property list or plist):
+alternating symbol-value pairs.
