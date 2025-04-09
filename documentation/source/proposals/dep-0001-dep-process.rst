@@ -497,7 +497,7 @@ References and Footnotes
    This is still in flux.  When in doubt, ask in IRC on the #dylan
    channel or on the hackers list.
 
-.. _Open Publication License: http://www.opencontent.org/openpub/
+.. _Open Publication License: https://opencontent.org/openpub/
 
 .. _reStructuredText: https://web.archive.org/web/20120114014252/https://docutils.sourceforge.net/rst.html
 
