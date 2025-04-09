@@ -38,7 +38,7 @@ Support for Dylan is available out of the box.
 However, enhanced support is available in
 `dylan-vim`_.
 
-.. _language-dylan: https://atom.io/packages/language-dylan
+.. _language-dylan: https://github.blog/news-insights/product-news/sunsetting-atom/
 .. _DeftIDEA: https://plugins.jetbrains.com/plugin/7325-deftidea
 .. _dylan.tmbundle: https://github.com/textmate/dylan.tmbundle
 .. _dylan-vim: https://github.com/dylan-lang/dylan-vim

@@ -77,7 +77,7 @@ Compiler
   <https://github.com/hannesm/visualization-middleware>`_.  A
   screencast showing an earlier implementation of this optimization
   visualization `can be seen here
-  <https://opendylan.org/~hannes/test4.avi>`_.
+  <https://web.archive.org/web/20141003023757/https://opendylan.org/~hannes/test4.avi>`_.
 
 * The C back-end would emit character constants that current versions
   of clang considered an error. The C back-end now generates a better

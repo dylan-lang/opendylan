@@ -7,7 +7,7 @@ The collections Library
 .. library:: collections
 
    The ``collections`` library source can be found `here
-   <https://github.com/dylan-lang/opendylan/sources/collections>`_.
+   <https://github.com/dylan-lang/opendylan/tree/master/sources/collections>`_.
 
    In addition to the modules documented here, the :lib:`collections` library also
    re-exports the :doc:`byte-vector <../common-dylan/byte-vector>` module, which is
