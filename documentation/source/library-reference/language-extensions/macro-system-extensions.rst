@@ -28,7 +28,7 @@ Template Calls
 
 .. note:: This extension was originally described in an appendix to
    `D-Expressions: Lisp Power, Dylan Style
-   <http://people.csail.mit.edu/jrb/Projects/dexprs.pdf>`_.
+   <https://people.csail.mit.edu/jrb/Projects/dexprs.pdf>`_.
    This text is largely copied from there.
 
 A number of limitations of local rewrite rules require resorting to
