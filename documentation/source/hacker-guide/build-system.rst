@@ -320,7 +320,7 @@ Editing Jam Files
 There is an `Emacs major mode`_ for editing Jam files.
 
 .. _Jam: https://www.perforce.com/resources/documentation/jam
-.. _Perforce Software: https://www.perforce.com/
+.. _Perforce Software: https://swarm.workshop.perforce.com/view/guest/perforce_software/jam/src/Jam.html
 .. _Jam manual page: https://swarm.workshop.perforce.com/view/guest/perforce_software/jam/src/Jam.html
 .. _Jambase: https://swarm.workshop.perforce.com/files/guest/perforce_software/jam/src/Jambase
 .. _Jambase reference: https://swarm.workshop.perforce.com/view/guest/perforce_software/jam/src/Jambase.html
