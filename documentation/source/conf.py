@@ -58,3 +58,21 @@ html_favicon = '_static/favicon.ico'
 
 # Skip line numbers and prompt characters
 copybutton_exclude = '.linenos, .gp'
+
+# -- Options for linkcheck --------------------------------------------------
+# Ignore links that work but cannot be checked with linkcheck
+
+linkcheck_ignore = [
+    r'https://zenodo.org/.*',
+    r'http://citeseerx.ist.psu.edu/.*',
+    r'https://citeseerx.ist.psu.edu/.*',
+    r'https://app.element.io/#/room/#dylan-language:matrix.org',
+    r'https://dl.acm.org/.*',
+    r'https://doi.org/.*',
+    r'https://www.researchgate.net/.*',
+    r'https://www.computerhope.com/issues/ch000549.htm',
+    r'https://software.intel.com/.*',
+    r'https://github.com/dylan-lang/opendylan/blob/.*',
+    r'https://wiki.gnome.org/.*',
+    r'https://matrix.to/.*'
+]
