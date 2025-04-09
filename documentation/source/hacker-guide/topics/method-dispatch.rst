@@ -30,7 +30,7 @@ Publications
 
 One paper has been written about the implementation of dispatch in Open Dylan:
 
-* **Partial Dispatch: Optimizing Dynamically-Dispatched Multimethod Calls with Compile-Time Types and Runtime Feedback** (by Jonathan Bachrach and Glenn Burke - Technical Report 2000 `pdf <http://people.csail.mit.edu/jrb/Projects/pd.pdf>`__)
+* **Partial Dispatch: Optimizing Dynamically-Dispatched Multimethod Calls with Compile-Time Types and Runtime Feedback** (by Jonathan Bachrach and Glenn Burke - Technical Report 2000 `pdf <https://people.csail.mit.edu/jrb/Projects/pd.pdf>`__)
 
 Generic Function Representation
 ===============================
@@ -236,4 +236,4 @@ Future Work
 .. _sources/dfmc/management/compilation-driver.dylan: https://github.com/dylan-lang/opendylan/blob/master/sources/dfmc/management/compilation-driver.dylan
 .. _sources/environment/deuce/dylanworks-mode.dylan: https://github.com/dylan-lang/opendylan/blob/master/sources/environment/deuce/dylanworks-mode.dylan
 .. _sources/project-manager/projects/implementation.dylan: https://github.com/dylan-lang/opendylan/blob/master/sources/project-manager/projects/implementation.dylan
-.. _sources/lib/dispatch-profiler: https://github.com/dylan-lang/opendylan/blob/master/sources/lib/dispatch-profiler
+.. _sources/lib/dispatch-profiler: https://github.com/dylan-lang/opendylan/tree/master/sources/lib/dispatch-profiler
