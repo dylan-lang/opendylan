@@ -59,7 +59,7 @@ Object Management Group, Inc. describe their CORBA architecture as follows:
 
 
 (At the time of writing, the text above was available at:
-http://www.omg.org/corba/whatiscorba.html
+https://www.omg.org/corba/
 It has been reproduced with permission.)
 
 About the Open Dylan ORB
