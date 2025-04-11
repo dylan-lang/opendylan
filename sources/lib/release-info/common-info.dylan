@@ -21,7 +21,9 @@ define constant $help-filename                = "opendylan.chm";
 /// Release constants
 define constant $release-product-name       = "Open Dylan";
 define constant $release-product-identifier = "opendylan";
-define constant $release-version            = "2025.1pre";
+
+// This string is replaced by Git filters on checkout. See the .gitattributes file.
+define constant $release-version = "DEVELOPMENT_VERSION";
 
 define constant $release-copyright
   = "Copyright (c) 1997-2004, Functional Objects, Inc.\n"
@@ -43,7 +45,7 @@ define method release-short-version () => (version :: <string>)
 end method release-short-version;
 
 define method release-version () => (version :: <string>)
-  concatenate("Version ", $release-version)
+  $release-version
 end method release-version;
 
 define method release-copyright () => (copyright :: <string>)

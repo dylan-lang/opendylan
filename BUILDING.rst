@@ -11,6 +11,9 @@ Clone the git repository::
 .. note:: It does not work to download a ZIP file of the repository from github
    because it doesn't include git submodules.
 
+.. note:: If you plan to build official releases, or you care about the output of
+   ``dylan-compiler -version``, then you must enable Git filters. See the top-level
+   .gitattributes file.
 
 UNIX
 ====
