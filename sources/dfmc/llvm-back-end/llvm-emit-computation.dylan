@@ -139,6 +139,23 @@ define method emit-local-tmp-definition
       end if;
     end if;
     temporary-value(tmp) := alloca;
+  else
+    let c = tmp.generator;
+    if (instance?(c, <make-closure>))
+      let o = function(c.computation-closure-method);
+      if (closure?(o) & c.closure-has-dynamic-extent?)
+        let class
+          = if (instance?(o, <&keyword-method>))
+              dylan-value(#"<keyword-closure-method>")
+            else
+              dylan-value(#"<simple-closure-method>");
+            end if;
+        let closure-size = closure-size(o.environment);
+        let closure = op--stack-allocate-closure(back-end, class, closure-size);
+        let result = ins--bitcast(back-end, closure, $llvm-object-pointer-type);
+        temporary-value(tmp) := result;
+      end if;
+    end if;
   end if;
 end method;
 
@@ -501,8 +518,12 @@ define method emit-computation
 
       let template = emit-reference(back-end, m, o);
       let closure-size = closure-size(env);
+      let class-type
+        = llvm-class-type(back-end, class, repeated-size: closure-size);
       let closure
-        = op--stack-allocate-closure(back-end, class, template, closure-size);
+        = ins--bitcast(back-end, temporary-value(c.temporary),
+                       llvm-pointer-to(back-end, class-type));
+      op--initialize-stack-allocated-closure(back-end, class, template, closure, closure-size);
 
       for (index from 0, init in closure-inits)
         let value = emit-reference(back-end, m, init);
@@ -519,9 +540,6 @@ define method emit-computation
           = op--getslotptr(back-end, closure, class, #"function-signature");
         ins--store(back-end, signature, signature-ptr);
       end if;
-
-      let result = ins--bitcast(back-end, closure, $llvm-object-pointer-type);
-      computation-result(back-end, c, result);
     else
       if (sigtmp)
         if (top-level?)

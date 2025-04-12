@@ -978,16 +978,24 @@ end method;
 // Stack allocate a closure
 define method op--stack-allocate-closure
     (back-end :: <llvm-back-end>, class :: <&class>,
-     template :: <llvm-value>, closure-size :: <integer>)
- => (new-vector :: <llvm-value>);
-  let module = back-end.llvm-builder-module;
+     closure-size :: <integer>)
+ => (closure :: <llvm-value>);
   let word-size = back-end-word-size(back-end);
-  let header-words = dylan-value(#"$number-header-words");
 
   let class-type
     = llvm-class-type(back-end, class, repeated-size: closure-size);
-  let closure
-    = ins--alloca(back-end, class-type, 1, alignment: word-size);
+  ins--alloca(back-end, class-type, 1, alignment: word-size)
+end method;
+
+// Initialize a stack-allocated closure
+define method op--initialize-stack-allocated-closure
+    (back-end :: <llvm-back-end>, class :: <&class>,
+     template :: <llvm-value>, closure :: <llvm-value>,
+     closure-size :: <integer>)
+ => ();
+  let module = back-end.llvm-builder-module;
+  let word-size = back-end-word-size(back-end);
+  let header-words = dylan-value(#"$number-header-words");
 
   // Copy from the template
   let fixed-size = header-words + ^instance-storage-size(class);
@@ -1003,7 +1011,5 @@ define method op--stack-allocate-closure
     = op--getslotptr(back-end, closure, class, #"environment-size");
   let size-ref = emit-reference(back-end, module, closure-size);
   ins--store(back-end, size-ref, size-slot-ptr);
-
-  closure
 end method;
 
