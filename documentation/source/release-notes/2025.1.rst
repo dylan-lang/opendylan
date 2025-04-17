@@ -56,6 +56,10 @@ Compiler
 * Fixed `issue 1395 <https://github.com/dylan-lang/opendylan/issues/1395>`_, which
   prevented some valid variable names with a leading numeric from being parsed correctly.
 
+* A bug in the LLVM back-end that could cause stack overflows in
+  long-running functions that capture closures (such as for
+  exception handlers) has been fixed.
+
 Tools
 =====
 
