@@ -8,6 +8,10 @@
  * for details.
  */
 
+#ifdef OPEN_DYLAN_PLATFORM_WINDOWS
+#define CONFIG_PLINTH_NONE
+#endif
+
 #include "mps.c"
 #include "fmtdy.c"
 #include "fmtno.c" // fmtdy "inherits" from fmtno.
