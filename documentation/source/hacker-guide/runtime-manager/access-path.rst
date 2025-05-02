@@ -16,7 +16,13 @@ document describes the part of the diagram labelled “Access Path”. It
 is target-independent, and runs in the same address space as the rest
 of the Open Dylan environment.
 
-.. figure:: ../images/access-path.png
+.. image:: ../images/access-path.png
+   :align: center
+   :class: only-light
+
+.. image:: ../images/access-path-dark.png
+   :align: center
+   :class: only-dark
 
 The “Debugger Nub” might be on the same machine as the development
 environment, or it might be on the same machine as the application (in
