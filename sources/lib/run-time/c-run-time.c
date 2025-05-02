@@ -976,28 +976,28 @@ dylan_value primitive_mep_apply_with_optionals (dylan_simple_method* fn, dylan_v
   teb->argument_count = vector_size((dylan_simple_object_vector*)args);
 
   switch (teb->argument_count) {
-  case  0: return(mep());
-  case  1: return(mep(v[0]));
-  case  2: return(mep(v[0],v[1]));
-  case  3: return(mep(v[0],v[1],v[2]));
-  case  4: return(mep(v[0],v[1],v[2],v[3]));
-  case  5: return(mep(v[0],v[1],v[2],v[3],v[4]));
-  case  6: return(mep(v[0],v[1],v[2],v[3],v[4],v[5]));
-  case  7: return(mep(v[0],v[1],v[2],v[3],v[4],v[5],v[6]));
-  case  8: return(mep(v[0],v[1],v[2],v[3],v[4],v[5],v[6],v[7]));
-  case  9: return(mep(v[0],v[1],v[2],v[3],v[4],v[5],v[6],v[7],v[8]));
+  case  0: return(mep.mep0());
+  case  1: return(mep.mep1(v[0]));
+  case  2: return(mep.mep2(v[0],v[1]));
+  case  3: return(mep.mep3(v[0],v[1],v[2]));
+  case  4: return(mep.mep4(v[0],v[1],v[2],v[3]));
+  case  5: return(mep.mep5(v[0],v[1],v[2],v[3],v[4]));
+  case  6: return(mep.mep6(v[0],v[1],v[2],v[3],v[4],v[5]));
+  case  7: return(mep.mep7(v[0],v[1],v[2],v[3],v[4],v[5],v[6]));
+  case  8: return(mep.mep8(v[0],v[1],v[2],v[3],v[4],v[5],v[6],v[7]));
+  case  9: return(mep.mep9(v[0],v[1],v[2],v[3],v[4],v[5],v[6],v[7],v[8]));
   default:
     if (teb->argument_count > 64) {
       primitive_break();
     }
-    return(mep(v[ 0], v[ 1], v[ 2], v[ 3], v[ 4], v[ 5], v[ 6], v[ 7],
-               v[ 8], v[ 9], v[10], v[11], v[12], v[13], v[14], v[15],
-               v[16], v[17], v[18], v[19], v[20], v[21], v[22], v[23],
-               v[24], v[25], v[26], v[27], v[28], v[29], v[30], v[31],
-               v[32], v[33], v[34], v[35], v[36], v[37], v[38], v[39],
-               v[40], v[41], v[42], v[43], v[44], v[45], v[46], v[47],
-               v[48], v[49], v[50], v[51], v[52], v[53], v[54], v[55],
-               v[56], v[57], v[58], v[59], v[60], v[61], v[62], v[63]));
+    return(mep.mep64(v[ 0], v[ 1], v[ 2], v[ 3], v[ 4], v[ 5], v[ 6], v[ 7],
+                     v[ 8], v[ 9], v[10], v[11], v[12], v[13], v[14], v[15],
+                     v[16], v[17], v[18], v[19], v[20], v[21], v[22], v[23],
+                     v[24], v[25], v[26], v[27], v[28], v[29], v[30], v[31],
+                     v[32], v[33], v[34], v[35], v[36], v[37], v[38], v[39],
+                     v[40], v[41], v[42], v[43], v[44], v[45], v[46], v[47],
+                     v[48], v[49], v[50], v[51], v[52], v[53], v[54], v[55],
+                     v[56], v[57], v[58], v[59], v[60], v[61], v[62], v[63]));
   }
 }
 
@@ -1022,14 +1022,14 @@ dylan_value primitive_engine_node_apply_with_optionals (dylan_value engD, dylan_
   teb->argument_count = vector_size((dylan_simple_object_vector*)args);
 
   switch (teb->argument_count) {
-  case 0: return(ep());
-  case 1: return(ep(a[0]));
-  case 2: return(ep(a[0],a[1]));
-  case 3: return(ep(a[0],a[1],a[2]));
-  case 4: return(ep(a[0],a[1],a[2],a[3]));
-  case 5: return(ep(a[0],a[1],a[2],a[3],a[4]));
-  case 6: return(ep(a[0],a[1],a[2],a[3],a[4],a[5]));
-  case 7: return(ep(a[0],a[1],a[2],a[3],a[4],a[5],a[6]));
+  case 0: return(ep.mep0());
+  case 1: return(ep.mep1(a[0]));
+  case 2: return(ep.mep2(a[0],a[1]));
+  case 3: return(ep.mep3(a[0],a[1],a[2]));
+  case 4: return(ep.mep4(a[0],a[1],a[2],a[3]));
+  case 5: return(ep.mep5(a[0],a[1],a[2],a[3],a[4]));
+  case 6: return(ep.mep6(a[0],a[1],a[2],a[3],a[4],a[5]));
+  case 7: return(ep.mep7(a[0],a[1],a[2],a[3],a[4],a[5],a[6]));
   };
   /* Over 7 implementation args, the engine-node calling sequence passes the
      implementation args as a vector, but the engine-node *might* be a method,
@@ -1038,7 +1038,7 @@ dylan_value primitive_engine_node_apply_with_optionals (dylan_value engD, dylan_
   if (FUNCTIONP(eng)) {
     return(primitive_mep_apply_with_optionals((dylan_simple_method*)eng, parent, args));
   } else {
-    return(ep(args));
+    return(ep.mep1(args));
   }
 }
 
@@ -1054,7 +1054,7 @@ dylan_value inline_invoke_engine_node (ENGINE* eng, int argcount, ...) {
   if (FUNCTIONP(eng)) {
     return(primitive_mep_apply_with_optionals((dylan_simple_method*)eng, teb->next_methods, argvec));
   } else {
-    return((eng->entry_point)((dylan_value)argvec));
+    return((eng->entry_point).mep1((dylan_value)argvec));
   }
 }
 
@@ -1103,27 +1103,27 @@ dylan_value primitive_mep_apply (dylan_simple_method* fn, dylan_value next_metho
 
 dylan_value iep_apply (DLFN iep, int n, dylan_value a[]) {
   switch (n) {
-  case 0: return(iep());
-  case 1: return(iep(a[0]));
-  case 2: return(iep(a[0],a[1]));
-  case 3: return(iep(a[0],a[1],a[2]));
-  case 4: return(iep(a[0],a[1],a[2],a[3]));
-  case 5: return(iep(a[0],a[1],a[2],a[3],a[4]));
-  case 6: return(iep(a[0],a[1],a[2],a[3],a[4],a[5]));
-  case 7: return(iep(a[0],a[1],a[2],a[3],a[4],a[5],a[6]));
-  case 8: return(iep(a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7]));
-  case 9: return(iep(a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8]));
+  case 0: return(iep.mep0());
+  case 1: return(iep.mep1(a[0]));
+  case 2: return(iep.mep2(a[0],a[1]));
+  case 3: return(iep.mep3(a[0],a[1],a[2]));
+  case 4: return(iep.mep4(a[0],a[1],a[2],a[3]));
+  case 5: return(iep.mep5(a[0],a[1],a[2],a[3],a[4]));
+  case 6: return(iep.mep6(a[0],a[1],a[2],a[3],a[4],a[5]));
+  case 7: return(iep.mep7(a[0],a[1],a[2],a[3],a[4],a[5],a[6]));
+  case 8: return(iep.mep8(a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7]));
+  case 9: return(iep.mep9(a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8]));
   default:
   if (n > 64) {
     primitive_break();
   }
-  return(iep(a[ 0],a[ 1],a[ 2],a[ 3],a[ 4],a[ 5],a[ 6],a[ 7],a[ 8],a[ 9],
-             a[10],a[11],a[12],a[13],a[14],a[15],a[16],a[17],a[18],a[19],
-             a[20],a[21],a[22],a[23],a[24],a[25],a[26],a[27],a[28],a[29],
-             a[30],a[31],a[32],a[33],a[34],a[35],a[36],a[37],a[38],a[39],
-             a[40],a[41],a[42],a[43],a[44],a[45],a[46],a[47],a[48],a[49],
-             a[50],a[51],a[52],a[53],a[54],a[55],a[56],a[57],a[58],a[59],
-             a[60],a[61],a[62],a[63]));
+  return(iep.mep64(a[ 0],a[ 1],a[ 2],a[ 3],a[ 4],a[ 5],a[ 6],a[ 7],a[ 8],a[ 9],
+                   a[10],a[11],a[12],a[13],a[14],a[15],a[16],a[17],a[18],a[19],
+                   a[20],a[21],a[22],a[23],a[24],a[25],a[26],a[27],a[28],a[29],
+                   a[30],a[31],a[32],a[33],a[34],a[35],a[36],a[37],a[38],a[39],
+                   a[40],a[41],a[42],a[43],a[44],a[45],a[46],a[47],a[48],a[49],
+                   a[50],a[51],a[52],a[53],a[54],a[55],a[56],a[57],a[58],a[59],
+                   a[60],a[61],a[62],a[63]));
   }
 }
 
@@ -1139,70 +1139,70 @@ dylan_value xep_0 (dylan_simple_method* fn, int n) {
   TEB* teb = get_teb();
   BASIC_REQUIRED_CALL_CHECK(fn, 0, n);
   teb->function = fn; teb->next_methods = DFALSE;
-  return((function_iep(fn))());
+  return((function_iep(fn)).mep0());
 }
 dylan_value xep_1 (dylan_simple_method* fn, int n, dylan_value a1) {
   TEB* teb = get_teb();
   BASIC_REQUIRED_CALL_CHECK(fn, 1, n);
   TYPE_CHECK_ARGS_1(fn, a1);
   teb->function = fn; teb->next_methods = DFALSE;
-  return((function_iep(fn))(a1));
+  return((function_iep(fn)).mep1(a1));
 }
 dylan_value xep_2 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2) {
   TEB* teb = get_teb();
   BASIC_REQUIRED_CALL_CHECK(fn, 2, n);
   TYPE_CHECK_ARGS_2(fn, a1, a2);
   teb->function = fn; teb->next_methods = DFALSE;
-  return(function_iep(fn)(a1,a2));
+  return(function_iep(fn).mep2(a1,a2));
 }
 dylan_value xep_3 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3) {
   TEB* teb = get_teb();
   BASIC_REQUIRED_CALL_CHECK(fn, 3, n);
   TYPE_CHECK_ARGS_3(fn, a1, a2, a3);
   teb->function = fn; teb->next_methods = DFALSE;
-  return(function_iep(fn)(a1,a2,a3));
+  return(function_iep(fn).mep3(a1,a2,a3));
 }
 dylan_value xep_4 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4) {
   TEB* teb = get_teb();
   BASIC_REQUIRED_CALL_CHECK(fn, 4, n);
   TYPE_CHECK_ARGS_4(fn, a1, a2, a3, a4);
   teb->function = fn; teb->next_methods = DFALSE;
-  return(function_iep(fn)(a1,a2,a3,a4));
+  return(function_iep(fn).mep4(a1,a2,a3,a4));
 }
 dylan_value xep_5 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5) {
   TEB* teb = get_teb();
   BASIC_REQUIRED_CALL_CHECK(fn, 5, n);
   TYPE_CHECK_ARGS_5(fn, a1, a2, a3, a4, a5);
   teb->function = fn; teb->next_methods = DFALSE;
-  return(function_iep(fn)(a1,a2,a3,a4,a5));
+  return(function_iep(fn).mep5(a1,a2,a3,a4,a5));
 }
 dylan_value xep_6 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6) {
   TEB* teb = get_teb();
   BASIC_REQUIRED_CALL_CHECK(fn, 6, n);
   TYPE_CHECK_ARGS_6(fn, a1, a2, a3, a4, a5, a6);
   teb->function = fn; teb->next_methods = DFALSE;
-  return(function_iep(fn)(a1,a2,a3,a4,a5,a6));
+  return(function_iep(fn).mep6(a1,a2,a3,a4,a5,a6));
 }
 dylan_value xep_7 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, dylan_value a7) {
   TEB* teb = get_teb();
   BASIC_REQUIRED_CALL_CHECK(fn, 7, n);
   TYPE_CHECK_ARGS_7(fn, a1, a2, a3, a4, a5, a6, a7);
   teb->function = fn; teb->next_methods = DFALSE;
-  return(function_iep(fn)(a1,a2,a3,a4,a5,a6,a7));
+  return(function_iep(fn).mep7(a1,a2,a3,a4,a5,a6,a7));
 }
 dylan_value xep_8 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, dylan_value a7, dylan_value a8) {
   TEB* teb = get_teb();
   BASIC_REQUIRED_CALL_CHECK(fn, 8, n);
   TYPE_CHECK_ARGS_8(fn, a1, a2, a3, a4, a5, a6, a7, a8);
   teb->function = fn; teb->next_methods = DFALSE;
-  return(function_iep(fn)(a1,a2,a3,a4,a5,a6,a7,a8));
+  return(function_iep(fn).mep8(a1,a2,a3,a4,a5,a6,a7,a8));
 }
 dylan_value xep_9 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, dylan_value a7, dylan_value a8, dylan_value a9) {
   TEB* teb = get_teb();
   BASIC_REQUIRED_CALL_CHECK(fn, 9, n);
   TYPE_CHECK_ARGS_9(fn, a1, a2, a3, a4, a5, a6, a7, a8, a9);
   teb->function = fn; teb->next_methods = DFALSE;
-  return(function_iep(fn)(a1,a2,a3,a4,a5,a6,a7,a8,a9));
+  return(function_iep(fn).mep9(a1,a2,a3,a4,a5,a6,a7,a8,a9));
 }
 dylan_value xep (dylan_simple_method* fn, int n, ...) {
   TEB* teb = get_teb();
@@ -1219,7 +1219,7 @@ dylan_value rest_xep_0 (dylan_simple_method* fn, int n, ...) {
   BUFFER_VARARGS(n, n, teb->arguments);
   BASIC_OPTIONAL_CALL_CHECK(fn, 0, n);
   teb->function = fn; teb->next_methods = DFALSE;
-  return((function_iep(fn))(make_vector_from_buffer(n, teb->arguments)));
+  return((function_iep(fn)).mep1(make_vector_from_buffer(n, teb->arguments)));
 }
 dylan_value rest_xep_1 (dylan_simple_method* fn, int n, dylan_value a1, ...) {
   TEB* teb = get_teb();
@@ -1227,7 +1227,7 @@ dylan_value rest_xep_1 (dylan_simple_method* fn, int n, dylan_value a1, ...) {
   BASIC_OPTIONAL_CALL_CHECK(fn, 1, n);
   TYPE_CHECK_ARGS_1(fn, a1);
   teb->function = fn; teb->next_methods = DFALSE;
-  return((function_iep(fn))(a1, make_vector_from_buffer(n - 1, teb->arguments)));
+  return((function_iep(fn)).mep2(a1, make_vector_from_buffer(n - 1, teb->arguments)));
 }
 dylan_value rest_xep_2 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, ...) {
   TEB* teb = get_teb();
@@ -1235,7 +1235,7 @@ dylan_value rest_xep_2 (dylan_simple_method* fn, int n, dylan_value a1, dylan_va
   BASIC_OPTIONAL_CALL_CHECK(fn, 2, n);
   TYPE_CHECK_ARGS_2(fn, a1, a2);
   teb->function = fn; teb->next_methods = DFALSE;
-  return(function_iep(fn)(a1,a2,make_vector_from_buffer(n - 2, teb->arguments)));
+  return(function_iep(fn).mep3(a1,a2,make_vector_from_buffer(n - 2, teb->arguments)));
 }
 dylan_value rest_xep_3 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, ...) {
   TEB* teb = get_teb();
@@ -1243,7 +1243,7 @@ dylan_value rest_xep_3 (dylan_simple_method* fn, int n, dylan_value a1, dylan_va
   BASIC_OPTIONAL_CALL_CHECK(fn, 3, n);
   TYPE_CHECK_ARGS_3(fn, a1, a2, a3);
   teb->function = fn; teb->next_methods = DFALSE;
-  return(function_iep(fn)(a1,a2,a3,make_vector_from_buffer(n - 3, teb->arguments)));
+  return(function_iep(fn).mep4(a1,a2,a3,make_vector_from_buffer(n - 3, teb->arguments)));
 }
 dylan_value rest_xep_4 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, ...) {
   TEB* teb = get_teb();
@@ -1251,7 +1251,7 @@ dylan_value rest_xep_4 (dylan_simple_method* fn, int n, dylan_value a1, dylan_va
   BASIC_OPTIONAL_CALL_CHECK(fn, 4, n);
   TYPE_CHECK_ARGS_4(fn, a1, a2, a3, a4);
   teb->function = fn; teb->next_methods = DFALSE;
-  return(function_iep(fn)(a1,a2,a3,a4,make_vector_from_buffer(n - 4, teb->arguments)));
+  return(function_iep(fn).mep5(a1,a2,a3,a4,make_vector_from_buffer(n - 4, teb->arguments)));
 }
 dylan_value rest_xep_5 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, ...) {
   TEB* teb = get_teb();
@@ -1259,7 +1259,7 @@ dylan_value rest_xep_5 (dylan_simple_method* fn, int n, dylan_value a1, dylan_va
   BASIC_OPTIONAL_CALL_CHECK(fn, 5, n);
   TYPE_CHECK_ARGS_5(fn, a1, a2, a3, a4, a5);
   teb->function = fn; teb->next_methods = DFALSE;
-  return(function_iep(fn)(a1,a2,a3,a4,a5,make_vector_from_buffer(n - 5, teb->arguments)));
+  return(function_iep(fn).mep6(a1,a2,a3,a4,a5,make_vector_from_buffer(n - 5, teb->arguments)));
 }
 dylan_value rest_xep_6 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, ...) {
   TEB* teb = get_teb();
@@ -1267,7 +1267,7 @@ dylan_value rest_xep_6 (dylan_simple_method* fn, int n, dylan_value a1, dylan_va
   BASIC_OPTIONAL_CALL_CHECK(fn, 6, n);
   TYPE_CHECK_ARGS_6(fn, a1, a2, a3, a4, a5, a6);
   teb->function = fn; teb->next_methods = DFALSE;
-  return(function_iep(fn)(a1,a2,a3,a4,a5,a6,make_vector_from_buffer(n - 6, teb->arguments)));
+  return(function_iep(fn).mep7(a1,a2,a3,a4,a5,a6,make_vector_from_buffer(n - 6, teb->arguments)));
 }
 dylan_value rest_xep_7 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, dylan_value a7, ...) {
   TEB* teb = get_teb();
@@ -1275,7 +1275,7 @@ dylan_value rest_xep_7 (dylan_simple_method* fn, int n, dylan_value a1, dylan_va
   BASIC_OPTIONAL_CALL_CHECK(fn, 7, n);
   TYPE_CHECK_ARGS_7(fn, a1, a2, a3, a4, a5, a6, a7);
   teb->function = fn; teb->next_methods = DFALSE;
-  return(function_iep(fn)(a1,a2,a3,a4,a5,a6,a7,make_vector_from_buffer(n - 7, teb->arguments)));
+  return(function_iep(fn).mep8(a1,a2,a3,a4,a5,a6,a7,make_vector_from_buffer(n - 7, teb->arguments)));
 }
 dylan_value rest_xep_8 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, dylan_value a7, dylan_value a8, ...) {
   TEB* teb = get_teb();
@@ -1283,7 +1283,7 @@ dylan_value rest_xep_8 (dylan_simple_method* fn, int n, dylan_value a1, dylan_va
   BASIC_OPTIONAL_CALL_CHECK(fn, 8, n);
   TYPE_CHECK_ARGS_8(fn, a1, a2, a3, a4, a5, a6, a7, a8);
   teb->function = fn; teb->next_methods = DFALSE;
-  return(function_iep(fn)(a1,a2,a3,a4,a5,a6,a7,a8,make_vector_from_buffer(n - 8, teb->arguments)));
+  return(function_iep(fn).mep9(a1,a2,a3,a4,a5,a6,a7,a8,make_vector_from_buffer(n - 8, teb->arguments)));
 }
 dylan_value rest_xep_9 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, dylan_value a7, dylan_value a8, dylan_value a9, ...) {
   TEB* teb = get_teb();
@@ -1291,7 +1291,7 @@ dylan_value rest_xep_9 (dylan_simple_method* fn, int n, dylan_value a1, dylan_va
   BASIC_OPTIONAL_CALL_CHECK(fn, 9, n);
   TYPE_CHECK_ARGS_9(fn, a1, a2, a3, a4, a5, a6, a7, a8, a9);
   teb->function = fn; teb->next_methods = DFALSE;
-  return(function_iep(fn)(a1,a2,a3,a4,a5,a6,a7,a8,a9,make_vector_from_buffer(n - 9, teb->arguments)));
+  return(function_iep(fn).mep10(a1,a2,a3,a4,a5,a6,a7,a8,a9,make_vector_from_buffer(n - 9, teb->arguments)));
 }
 
 dylan_value rest_xep (dylan_simple_method* fn, int n, ...) {
@@ -1478,7 +1478,7 @@ dylan_value rest_key_xep_1 (dylan_simple_method* fn, int n, ...) {
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
   dylan_value* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
   teb->function = fn; teb->next_methods = DFALSE;
-  return(keyword_function_iep(fn)(a[0]));
+  return(keyword_function_iep(fn).mep1(a[0]));
 }
 
 dylan_value rest_key_xep_2 (dylan_simple_method* fn, int n, ...) {
@@ -1491,7 +1491,7 @@ dylan_value rest_key_xep_2 (dylan_simple_method* fn, int n, ...) {
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
   dylan_value* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
   teb->function = fn; teb->next_methods = DFALSE;
-  return(keyword_function_iep(fn)(a[0],a[1]));
+  return(keyword_function_iep(fn).mep2(a[0],a[1]));
 }
 
 dylan_value rest_key_xep_3 (dylan_simple_method* fn, int n, ...) {
@@ -1504,7 +1504,7 @@ dylan_value rest_key_xep_3 (dylan_simple_method* fn, int n, ...) {
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
   dylan_value* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
   teb->function = fn; teb->next_methods = DFALSE;
-  return(keyword_function_iep(fn)(a[0],a[1],a[2]));
+  return(keyword_function_iep(fn).mep3(a[0],a[1],a[2]));
 }
 
 dylan_value rest_key_xep_4 (dylan_simple_method* fn, int n, ...) {
@@ -1517,7 +1517,7 @@ dylan_value rest_key_xep_4 (dylan_simple_method* fn, int n, ...) {
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
   dylan_value* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
   teb->function = fn; teb->next_methods = DFALSE;
-  return(keyword_function_iep(fn)(a[0],a[1],a[2],a[3]));
+  return(keyword_function_iep(fn).mep4(a[0],a[1],a[2],a[3]));
 }
 
 dylan_value rest_key_xep_5 (dylan_simple_method* fn, int n, ...) {
@@ -1530,7 +1530,7 @@ dylan_value rest_key_xep_5 (dylan_simple_method* fn, int n, ...) {
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
   dylan_value* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
   teb->function = fn; teb->next_methods = DFALSE;
-  return(keyword_function_iep(fn)(a[0],a[1],a[2],a[3],a[4]));
+  return(keyword_function_iep(fn).mep5(a[0],a[1],a[2],a[3],a[4]));
 }
 
 dylan_value rest_key_xep_6 (dylan_simple_method* fn, int n, ...) {
@@ -1543,7 +1543,7 @@ dylan_value rest_key_xep_6 (dylan_simple_method* fn, int n, ...) {
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
   dylan_value* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
   teb->function = fn; teb->next_methods = DFALSE;
-  return(keyword_function_iep(fn)(a[0],a[1],a[2],a[3],a[4],a[5]));
+  return(keyword_function_iep(fn).mep6(a[0],a[1],a[2],a[3],a[4],a[5]));
 }
 
 dylan_value rest_key_xep_7 (dylan_simple_method* fn, int n, ...) {
@@ -1556,7 +1556,7 @@ dylan_value rest_key_xep_7 (dylan_simple_method* fn, int n, ...) {
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
   dylan_value* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
   teb->function = fn; teb->next_methods = DFALSE;
-  return(keyword_function_iep(fn)(a[0],a[1],a[2],a[3],a[4],a[5],a[6]));
+  return(keyword_function_iep(fn).mep7(a[0],a[1],a[2],a[3],a[4],a[5],a[6]));
 }
 
 dylan_value rest_key_xep_8 (dylan_simple_method* fn, int n, ...) {
@@ -1569,7 +1569,7 @@ dylan_value rest_key_xep_8 (dylan_simple_method* fn, int n, ...) {
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
   dylan_value* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
   teb->function = fn; teb->next_methods = DFALSE;
-  return(keyword_function_iep(fn)(a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7]));
+  return(keyword_function_iep(fn).mep8(a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7]));
 }
 
 dylan_value rest_key_xep_9 (dylan_simple_method* fn, int n, ...) {
@@ -1582,7 +1582,7 @@ dylan_value rest_key_xep_9 (dylan_simple_method* fn, int n, ...) {
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
   dylan_value* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
   teb->function = fn; teb->next_methods = DFALSE;
-  return(keyword_function_iep(fn)(a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8]));
+  return(keyword_function_iep(fn).mep9(a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8]));
 }
 
 dylan_value rest_key_xep (dylan_simple_method* fn, int n, ...) {
@@ -1611,7 +1611,7 @@ dylan_value key_mep_1 (dylan_value a1, ...) {
   process_keyword_call_into
     (teb->iep_a, teb->function, teb->argument_count, number_required, teb->a,
      vector_size(rest), vector_data(rest), rest);
-  return(keyword_function_iep(teb->function)(teb->iep_a[0]));
+  return(keyword_function_iep(teb->function).mep1(teb->iep_a[0]));
 }
 
 dylan_value key_mep_2 (dylan_value a1, ...) {
@@ -1622,7 +1622,7 @@ dylan_value key_mep_2 (dylan_value a1, ...) {
   process_keyword_call_into
     (teb->iep_a, teb->function, teb->argument_count, number_required, teb->a,
      vector_size(rest), vector_data(rest), rest);
-  return(keyword_function_iep(teb->function)(teb->iep_a[0],teb->iep_a[1]));
+  return(keyword_function_iep(teb->function).mep2(teb->iep_a[0],teb->iep_a[1]));
 }
 
 dylan_value key_mep_3 (dylan_value a1, ...) {
@@ -1633,7 +1633,7 @@ dylan_value key_mep_3 (dylan_value a1, ...) {
   process_keyword_call_into
     (teb->iep_a, teb->function, teb->argument_count, number_required, teb->a,
      vector_size(rest), vector_data(rest), rest);
-  return(keyword_function_iep(teb->function)(teb->iep_a[0],teb->iep_a[1],teb->iep_a[2]));
+  return(keyword_function_iep(teb->function).mep3(teb->iep_a[0],teb->iep_a[1],teb->iep_a[2]));
 }
 
 dylan_value key_mep_4 (dylan_value a1, ...) {
@@ -1644,7 +1644,7 @@ dylan_value key_mep_4 (dylan_value a1, ...) {
   process_keyword_call_into
     (teb->iep_a, teb->function, teb->argument_count, number_required, teb->a,
      vector_size(rest), vector_data(rest), rest);
-  return(keyword_function_iep(teb->function)(teb->iep_a[0],teb->iep_a[1],teb->iep_a[2],teb->iep_a[3]));
+  return(keyword_function_iep(teb->function).mep4(teb->iep_a[0],teb->iep_a[1],teb->iep_a[2],teb->iep_a[3]));
 }
 
 dylan_value key_mep_5 (dylan_value a1, ...) {
@@ -1655,7 +1655,7 @@ dylan_value key_mep_5 (dylan_value a1, ...) {
   process_keyword_call_into
     (teb->iep_a, teb->function, teb->argument_count, number_required, teb->a,
      vector_size(rest), vector_data(rest), rest);
-  return(keyword_function_iep(teb->function)(teb->iep_a[0],teb->iep_a[1],teb->iep_a[2],teb->iep_a[3],teb->iep_a[4]));
+  return(keyword_function_iep(teb->function).mep5(teb->iep_a[0],teb->iep_a[1],teb->iep_a[2],teb->iep_a[3],teb->iep_a[4]));
 }
 
 dylan_value key_mep_6 (dylan_value a1, ...) {
@@ -1666,7 +1666,7 @@ dylan_value key_mep_6 (dylan_value a1, ...) {
   process_keyword_call_into
     (teb->iep_a, teb->function, teb->argument_count, number_required, teb->a,
      vector_size(rest), vector_data(rest), rest);
-  return(keyword_function_iep(teb->function)(teb->iep_a[0],teb->iep_a[1],teb->iep_a[2],teb->iep_a[3],teb->iep_a[4],teb->iep_a[5]));
+  return(keyword_function_iep(teb->function).mep6(teb->iep_a[0],teb->iep_a[1],teb->iep_a[2],teb->iep_a[3],teb->iep_a[4],teb->iep_a[5]));
 }
 
 dylan_value key_mep_7 (dylan_value a1, ...) {
@@ -1677,7 +1677,7 @@ dylan_value key_mep_7 (dylan_value a1, ...) {
   process_keyword_call_into
     (teb->iep_a, teb->function, teb->argument_count, number_required, teb->a,
      vector_size(rest), vector_data(rest), rest);
-  return(keyword_function_iep(teb->function)(teb->iep_a[0],teb->iep_a[1],teb->iep_a[2],teb->iep_a[3],teb->iep_a[4],teb->iep_a[5],teb->iep_a[6]));
+  return(keyword_function_iep(teb->function).mep7(teb->iep_a[0],teb->iep_a[1],teb->iep_a[2],teb->iep_a[3],teb->iep_a[4],teb->iep_a[5],teb->iep_a[6]));
 }
 
 dylan_value key_mep_8 (dylan_value a1, ...) {
@@ -1688,7 +1688,7 @@ dylan_value key_mep_8 (dylan_value a1, ...) {
   process_keyword_call_into
     (teb->iep_a, teb->function, teb->argument_count, number_required, teb->a,
      vector_size(rest), vector_data(rest), rest);
-  return(keyword_function_iep(teb->function)(teb->iep_a[0],teb->iep_a[1],teb->iep_a[2],teb->iep_a[3],teb->iep_a[4],teb->iep_a[5],teb->iep_a[6],teb->iep_a[7]));
+  return(keyword_function_iep(teb->function).mep8(teb->iep_a[0],teb->iep_a[1],teb->iep_a[2],teb->iep_a[3],teb->iep_a[4],teb->iep_a[5],teb->iep_a[6],teb->iep_a[7]));
 }
 
 dylan_value key_mep_9 (dylan_value a1, ...) {
@@ -1699,7 +1699,7 @@ dylan_value key_mep_9 (dylan_value a1, ...) {
   process_keyword_call_into
     (teb->iep_a, teb->function, teb->argument_count, number_required, teb->a,
      vector_size(rest), vector_data(rest), rest);
-  return(keyword_function_iep(teb->function)(teb->iep_a[0],teb->iep_a[1],teb->iep_a[2],teb->iep_a[3],teb->iep_a[4],teb->iep_a[5],teb->iep_a[6],teb->iep_a[7],teb->iep_a[8]));
+  return(keyword_function_iep(teb->function).mep9(teb->iep_a[0],teb->iep_a[1],teb->iep_a[2],teb->iep_a[3],teb->iep_a[4],teb->iep_a[5],teb->iep_a[6],teb->iep_a[7],teb->iep_a[8]));
 }
 
 dylan_value key_mep (dylan_value a1, ...) {
@@ -1722,7 +1722,7 @@ dylan_value gf_iep_0 () {
   ENGINE* e = gf->engine;
   teb->next_methods = (dylan_value)gf;
   teb->function = (dylan_value)e;
-  return((e->entry_point)());
+  return((e->entry_point).mep0());
 }
 
 dylan_value gf_iep_1 (dylan_value a1) {
@@ -1731,7 +1731,7 @@ dylan_value gf_iep_1 (dylan_value a1) {
   ENGINE* e = gf->engine;
   teb->next_methods = (dylan_value)gf;
   teb->function = (dylan_value)e;
-  return((e->entry_point)(a1));
+  return((e->entry_point).mep1(a1));
 }
 
 dylan_value gf_iep_2 (dylan_value a1, dylan_value a2) {
@@ -1740,7 +1740,7 @@ dylan_value gf_iep_2 (dylan_value a1, dylan_value a2) {
   ENGINE* e = gf->engine;
   teb->next_methods = (dylan_value)gf;
   teb->function = (dylan_value)e;
-  return((e->entry_point)(a1, a2));
+  return((e->entry_point).mep2(a1, a2));
 }
 
 dylan_value gf_iep_3 (dylan_value a1, dylan_value a2, dylan_value a3) {
@@ -1749,7 +1749,7 @@ dylan_value gf_iep_3 (dylan_value a1, dylan_value a2, dylan_value a3) {
   ENGINE* e = gf->engine;
   teb->next_methods = (dylan_value)gf;
   teb->function = (dylan_value)e;
-  return((e->entry_point)(a1, a2, a3));
+  return((e->entry_point).mep3(a1, a2, a3));
 }
 
 dylan_value gf_iep_4 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4) {
@@ -1758,7 +1758,7 @@ dylan_value gf_iep_4 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_valu
   ENGINE* e = gf->engine;
   teb->next_methods = (dylan_value)gf;
   teb->function = (dylan_value)e;
-  return((e->entry_point)(a1, a2, a3, a4));
+  return((e->entry_point).mep4(a1, a2, a3, a4));
 }
 
 dylan_value gf_iep_5 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5) {
@@ -1767,7 +1767,7 @@ dylan_value gf_iep_5 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_valu
   ENGINE* e = gf->engine;
   teb->next_methods = (dylan_value)gf;
   teb->function = (dylan_value)e;
-  return((e->entry_point)(a1, a2, a3, a4, a5));
+  return((e->entry_point).mep5(a1, a2, a3, a4, a5));
 }
 
 dylan_value gf_iep_6 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6) {
@@ -1776,7 +1776,7 @@ dylan_value gf_iep_6 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_valu
   ENGINE* e = gf->engine;
   teb->next_methods = (dylan_value)gf;
   teb->function = (dylan_value)e;
-  return((e->entry_point)(a1, a2, a3, a4, a5, a6));
+  return((e->entry_point).mep6(a1, a2, a3, a4, a5, a6));
 }
 
 dylan_value gf_iep_7 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, dylan_value a7) {
@@ -1785,7 +1785,7 @@ dylan_value gf_iep_7 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_valu
   ENGINE* e = gf->engine;
   teb->next_methods = (dylan_value)gf;
   teb->function = (dylan_value)e;
-  return((e->entry_point)(a1, a2, a3, a4, a5, a6, a7));
+  return((e->entry_point).mep7(a1, a2, a3, a4, a5, a6, a7));
 }
 
 dylan_value gf_iep (dylan_value new_arguments) {
@@ -1801,7 +1801,7 @@ dylan_value gf_iep (dylan_value new_arguments) {
   } else {
     teb->next_methods = (dylan_value)gf;
     teb->function = (dylan_value)e;
-    return((e->entry_point)(new_arguments));
+    return((e->entry_point).mep1(new_arguments));
   }
 }
 
@@ -1978,14 +1978,14 @@ dylan_value general_engine_node_1_engine (dylan_value a1) {
   TEB* teb = get_teb();
   ENGINE* e = (ENGINE*)teb->function;
   dylan_value parent = teb->next_methods;
-  return((e->callback)(a1, e, parent));
+  return((e->callback).mep3(a1, e, parent));
 }
 
 dylan_value general_engine_node_2_engine (dylan_value a1, dylan_value a2) {
   TEB* teb = get_teb();
   ENGINE* e = (ENGINE*)teb->function;
   dylan_value parent = teb->next_methods;
-  return((e->callback)(a1, a2, e, parent));
+  return((e->callback).mep4(a1, a2, e, parent));
 }
 
 
@@ -1994,7 +1994,7 @@ dylan_value general_engine_node_3_engine (dylan_value a1, dylan_value a2, dylan_
   ENGINE* e = (ENGINE*)teb->function;
   dylan_value parent = teb->next_methods;
   DLFN cb = e->callback;
-  return(cb(a1, a2, a3, e, parent));
+  return(cb.mep5(a1, a2, a3, e, parent));
 }
 
 dylan_value general_engine_node_n_engine (dylan_value a1, ...) {
@@ -2008,7 +2008,7 @@ dylan_value general_engine_node_n_engine (dylan_value a1, ...) {
   int impargs = nreq + signature_optionals_p(sig);
   if (impargs > 7) {
     /* The calling sequence passes just a vector of MEP args. */
-    return(cb(a1, e, parent));
+    return(cb.mep3(a1, e, parent));
   } else {
     /* The args are spread, last one may be a rest vector. */
     va_list ap;
@@ -2023,7 +2023,7 @@ dylan_value general_engine_node_n_engine (dylan_value a1, ...) {
         svdata[i] = argument;
       }
     }
-    return(cb(svec, e, parent));
+    return(cb.mep3(svec, e, parent));
   }
 }
 dylan_value general_engine_node_spread_engine (dylan_value a1, ...) {
@@ -2049,7 +2049,7 @@ dylan_value general_engine_node_spread_engine (dylan_value a1, ...) {
       int i;
       for (i=0; i<nreq; i++) svdata[i] = mepargdata[i];
       for (i=0; i<nopts; i++) svdata[i+nreq] = optargdata[i];
-      return(cb(svec, e, parent));
+      return(cb.mep3(svec, e, parent));
     } else {
       /* The arguments are spread, the last one is the optionals vector. */
       teb->arguments[0] = a1;
@@ -2062,11 +2062,11 @@ dylan_value general_engine_node_spread_engine (dylan_value a1, ...) {
       int i;
       for (i=0; i<nreq; i++) svdata[i] = teb->arguments[i];
       for (i=0; i<nopts; i++) svdata[i+nreq] = optargdata[i];
-      return(cb(svec, e, parent));
+      return(cb.mep3(svec, e, parent));
       }
   } else if (impargs > 7) {
     /* We have a vector of MEP args, and no optionals, so just use that vector. */
-    return(cb(a1, e, parent));
+    return(cb.mep3(a1, e, parent));
   } else {
     /* No optionals, args are spread, copy them into a vector.  */
     va_list ap;
@@ -2081,7 +2081,7 @@ dylan_value general_engine_node_spread_engine (dylan_value a1, ...) {
         svdata[i] = argument;
       }
     }
-    return(cb(svec, e, parent));
+    return(cb.mep3(svec, e, parent));
   }
 }
 
@@ -2212,14 +2212,15 @@ dylan_value raw_byte_repeated_instance_slot_setter_engine (dylan_value newval, d
 #define PARAMTEMPLATEPREFIX5 dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5,
 #define PARAMTEMPLATEPREFIX6 dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6,
 #define PARAMTEMPLATEPREFIX7 dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, dylan_value a7,
+#define ARGTEMPLATEPREFIXN(N) ARGTEMPLATEPREFIX##N
 #define ARGTEMPLATEPREFIX0
-#define ARGTEMPLATEPREFIX1 a1,
-#define ARGTEMPLATEPREFIX2 a1, a2,
-#define ARGTEMPLATEPREFIX3 a1, a2, a3,
-#define ARGTEMPLATEPREFIX4 a1, a2, a3, a4,
-#define ARGTEMPLATEPREFIX5 a1, a2, a3, a4, a5,
-#define ARGTEMPLATEPREFIX6 a1, a2, a3, a4, a5, a6,
-#define ARGTEMPLATEPREFIX7 a1, a2, a3, a4, a5, a6, a7,
+#define ARGTEMPLATEPREFIX1
+#define ARGTEMPLATEPREFIX2 a1,
+#define ARGTEMPLATEPREFIX3 a1, a2,
+#define ARGTEMPLATEPREFIX4 a1, a2, a3,
+#define ARGTEMPLATEPREFIX5 a1, a2, a3, a4,
+#define ARGTEMPLATEPREFIX6 a1, a2, a3, a4, a5,
+#define ARGTEMPLATEPREFIX7 a1, a2, a3, a4, a5, a6,
 #define PARAMTEMPLATESUFFIX0
 #define PARAMTEMPLATESUFFIX1 dylan_value a1
 #define PARAMTEMPLATESUFFIX2 dylan_value a1, dylan_value a2
@@ -2303,7 +2304,7 @@ dylan_value single_method_engine_##_nparams (PARAMTEMPLATE##_nparams) { \
     DLFN mep = ((dylan_simple_method*)meth)->mep; \
     teb->function = meth; \
     teb->next_methods = e->data; \
-    return(mep(ARGTEMPLATE##_nparams)); \
+    return(mep.mep##_nparams); \
                                    }
 
 
@@ -2357,7 +2358,6 @@ dylan_value check_unrestricted_kwds (dylan_simple_object_vector* optionals) {
   }
 }
 
-
 #define KEYED_SKIP_COUNT_explicit 1
 #define KEYED_SKIP_COUNT_implicit 2
 #define KEYED_SKIP_COUNT_unrestricted 0
@@ -2400,6 +2400,14 @@ extern dylan_value Kinvalid_keyword_trapVKeI(dylan_value gfargs, dylan_value gf,
      Kinvalid_keyword_trapVKeI((invargvec_), (invgf_), (invengine_), (invbadkwd_), \
                                                    DFALSE, DFALSE))
 
+#define PASS_OPTIONALS_IF_NPARAMS(N) PASS_OPTIONALS_IF_NPARAMS_##N
+#define PASS_OPTIONALS_IF_NPARAMS_0
+#define PASS_OPTIONALS_IF_NPARAMS_1 optionals
+#define PASS_OPTIONALS_IF_NPARAMS_2 optionals
+#define PASS_OPTIONALS_IF_NPARAMS_3 optionals
+#define PASS_OPTIONALS_IF_NPARAMS_4 optionals
+#define PASS_OPTIONALS_IF_NPARAMS_5 optionals
+#define PASS_OPTIONALS_IF_NPARAMS_6 optionals
 
 #define DEFINE_KEYED_SINGLE_METHOD_ENGINE(_how, _nparams) \
   dylan_value  _how##_keyed_single_method_engine_##_nparams (PARAMTEMPLATEPREFIX##_nparams dylan_simple_object_vector* optionals) \
@@ -2412,7 +2420,7 @@ extern dylan_value Kinvalid_keyword_trapVKeI(dylan_value gfargs, dylan_value gf,
     if (badkwd == NULL) { \
       teb->function = meth; \
       teb->next_methods = e->data; \
-      return((((dylan_simple_method*)meth)->mep)(ARGTEMPLATEPREFIX##_nparams optionals)); \
+      return((((dylan_simple_method*)meth)->mep.mep##_nparams)(ARGTEMPLATEPREFIXN(_nparams) PASS_OPTIONALS_IF_NPARAMS(_nparams))); \
     } else { \
       int _argvecsize = _nparams + 1; \
       DEF_STACK_VECTOR_INITTED(_argvec, _argvecsize); \
@@ -2488,7 +2496,7 @@ dylan_value cache_header_engine_##_nparams (PARAMTEMPLATE##_nparams) { \
     DLFN entrypt = nxt->entry_point; \
     teb->function = (dylan_simple_method*)nxt; \
     teb->next_methods = (dylan_value)e; \
-    return(entrypt(ARGTEMPLATE##_nparams)); \
+    return(entrypt.mep##_nparams(ARGTEMPLATE##_nparams)); \
    }
 
 extern dylan_value cache_header_engine_0 ();
@@ -2521,7 +2529,7 @@ dylan_value cache_header_engine_n (dylan_value theargvec) {
   } else {
     teb->function = (dylan_simple_method*)newengine;
     teb->next_methods = (dylan_value)e;
-    return((newengine->entry_point)(argvec));
+    return((newengine->entry_point).mep1(argvec)); // IS OK?
   }
 }
 
@@ -2535,7 +2543,7 @@ dylan_value profiling_cache_header_engine_##_nparams (PARAMTEMPLATE##_nparams) {
     teb->next_methods = (dylan_value)e; \
     e->count1 += 4; \
     if (unlikely((dylan_value)(e->count1) == I(0))) e->count2 += 4; \
-    return(entrypt(ARGTEMPLATE##_nparams)); \
+    return(entrypt.mep##_nparams(ARGTEMPLATE##_nparams)); \
    }
 
 extern dylan_value profiling_cache_header_engine_0 ();
@@ -2569,7 +2577,7 @@ dylan_value profiling_cache_header_engine_n (dylan_value theargvec) {
   } else {
     teb->function = (dylan_simple_method*)newengine;
     teb->next_methods = (dylan_value)e;
-    return((newengine->entry_point)(argvec));
+    return((newengine->entry_point).mep1(argvec));
   }
 }
 
@@ -2582,7 +2590,7 @@ dylan_value primitive_enable_cache_header_engine_node (dylan_value engine, dylan
   switch (etype) {
   case ENGINE_cache_header: {
     switch (signature_number_required(sig) + signature_optionals_p(sig)) {
-    case 0: e->entry_point = (DLFN)&cache_header_engine_0; break;
+    case 0: e->entry_point.mep0 = &cache_header_engine_0; break;
     case 1: e->entry_point = (DLFN)&cache_header_engine_1; break;
     case 2: e->entry_point = (DLFN)&cache_header_engine_2; break;
     case 3: e->entry_point = (DLFN)&cache_header_engine_3; break;
@@ -2595,7 +2603,7 @@ dylan_value primitive_enable_cache_header_engine_node (dylan_value engine, dylan
   }
   case ENGINE_profiling_cache_header: {
     switch (signature_number_required(sig) + signature_optionals_p(sig)) {
-    case 0: e->entry_point = (DLFN)&profiling_cache_header_engine_0; break;
+    case 0: e->entry_point.mep0 = &profiling_cache_header_engine_0; break;
     case 1: e->entry_point = (DLFN)&profiling_cache_header_engine_1; break;
     case 2: e->entry_point = (DLFN)&profiling_cache_header_engine_2; break;
     case 3: e->entry_point = (DLFN)&profiling_cache_header_engine_3; break;
@@ -2613,7 +2621,7 @@ dylan_value primitive_enable_cache_header_engine_node (dylan_value engine, dylan
 
 dylan_value primitive_invalidate_cache_engine_node (dylan_value engine, dylan_value genfun) {
   ignore(genfun);
-  ((ENGINE*)engine)->entry_point = (DLFN)&general_engine_node_n_engine;
+  ((ENGINE*)engine)->entry_point.mep3 = (DLFN3)&general_engine_node_n_engine;
   return(engine);
 }
 
@@ -2626,11 +2634,11 @@ dylan_value primitive_initialize_engine_node (dylan_value engine) {
   DUMINT etype = (props & EPROPS_M_ENTRY_TYPE) >> EPROPS_V_ENTRY_TYPE;
   switch (etype) {
   case ENGINE_absent:
-    eng->entry_point = (DLFN)general_engine_node_n_engine;
+    eng->entry_point.mep0 = (DLFN0)general_engine_node_n_engine;
     break;
   case ENGINE_ambiguous_methods:
   case ENGINE_inapplicable:
-    eng->entry_point = (DLFN)general_engine_node_spread_engine;
+    eng->entry_point.mep3 = (DLFN3)general_engine_node_spread_engine;
     break;
   case ENGINE_unkeyed_single_method:
   case ENGINE_implicit_keyed_single_method:
@@ -2644,54 +2652,54 @@ dylan_value primitive_initialize_engine_node (dylan_value engine) {
     switch (etype) {
     case ENGINE_unkeyed_single_method: {
       switch (impargs) {
-      case 0: e->entry_point = (DLFN)single_method_engine_0; break;
-      case 1: e->entry_point = (DLFN)single_method_engine_1; break;
-      case 2: e->entry_point = (DLFN)single_method_engine_2; break;
-      case 3: e->entry_point = (DLFN)single_method_engine_3; break;
-      case 4: e->entry_point = (DLFN)single_method_engine_4; break;
-      case 5: e->entry_point = (DLFN)single_method_engine_5; break;
-      case 6: e->entry_point = (DLFN)single_method_engine_6; break;
-      case 7: e->entry_point = (DLFN)single_method_engine_7; break;
-      default: e->entry_point = (DLFN)single_method_engine_n; break;
+      case 0: e->entry_point.mep0 = (DLFN0)single_method_engine_0; break;
+      case 1: e->entry_point.mep1 = (DLFN1)single_method_engine_1; break;
+      case 2: e->entry_point.mep2 = (DLFN2)single_method_engine_2; break;
+      case 3: e->entry_point.mep3 = (DLFN3)single_method_engine_3; break;
+      case 4: e->entry_point.mep4 = (DLFN4)single_method_engine_4; break;
+      case 5: e->entry_point.mep5 = (DLFN5)single_method_engine_5; break;
+      case 6: e->entry_point.mep6 = (DLFN6)single_method_engine_6; break;
+      case 7: e->entry_point.mep7 = (DLFN7)single_method_engine_7; break;
+      default: e->entry_point.mep3 = (DLFN3)single_method_engine_n; break;
       }
       break;
     }
     case ENGINE_explicit_keyed_single_method: {
       switch (nreq) {
-      case 0: e->entry_point = (DLFN)explicit_keyed_single_method_engine_0; break;
-      case 1: e->entry_point = (DLFN)explicit_keyed_single_method_engine_1; break;
-      case 2: e->entry_point = (DLFN)explicit_keyed_single_method_engine_2; break;
-      case 3: e->entry_point = (DLFN)explicit_keyed_single_method_engine_3; break;
-      case 4: e->entry_point = (DLFN)explicit_keyed_single_method_engine_4; break;
-      case 5: e->entry_point = (DLFN)explicit_keyed_single_method_engine_5; break;
-      case 6: e->entry_point = (DLFN)explicit_keyed_single_method_engine_6; break;
-      default: e->entry_point = (DLFN)explicit_keyed_single_method_engine_n; break;
+      case 0: e->entry_point.mep0 = (DLFN0)explicit_keyed_single_method_engine_0; break;
+      case 1: e->entry_point.mep1 = (DLFN1)explicit_keyed_single_method_engine_1; break;
+      case 2: e->entry_point.mep2 = (DLFN2)explicit_keyed_single_method_engine_2; break;
+      case 3: e->entry_point.mep3 = (DLFN3)explicit_keyed_single_method_engine_3; break;
+      case 4: e->entry_point.mep4 = (DLFN4)explicit_keyed_single_method_engine_4; break;
+      case 5: e->entry_point.mep5 = (DLFN5)explicit_keyed_single_method_engine_5; break;
+      case 6: e->entry_point.mep6 = (DLFN6)explicit_keyed_single_method_engine_6; break;
+      default: e->entry_point.mep64 = (DLFN64)explicit_keyed_single_method_engine_n; break;
       }
       break;
     }
     case ENGINE_implicit_keyed_single_method: {
       switch (nreq) {
-      case 0: e->entry_point = (DLFN)implicit_keyed_single_method_engine_0; break;
-      case 1: e->entry_point = (DLFN)implicit_keyed_single_method_engine_1; break;
-      case 2: e->entry_point = (DLFN)implicit_keyed_single_method_engine_2; break;
-      case 3: e->entry_point = (DLFN)implicit_keyed_single_method_engine_3; break;
-      case 4: e->entry_point = (DLFN)implicit_keyed_single_method_engine_4; break;
-      case 5: e->entry_point = (DLFN)implicit_keyed_single_method_engine_5; break;
-      case 6: e->entry_point = (DLFN)implicit_keyed_single_method_engine_6; break;
-      default: e->entry_point = (DLFN)implicit_keyed_single_method_engine_n; break;
+      case 0: e->entry_point.mep0 = (DLFN0)implicit_keyed_single_method_engine_0; break;
+      case 1: e->entry_point.mep1 = (DLFN1)implicit_keyed_single_method_engine_1; break;
+      case 2: e->entry_point.mep2 = (DLFN2)implicit_keyed_single_method_engine_2; break;
+      case 3: e->entry_point.mep3 = (DLFN3)implicit_keyed_single_method_engine_3; break;
+      case 4: e->entry_point.mep4 = (DLFN4)implicit_keyed_single_method_engine_4; break;
+      case 5: e->entry_point.mep5 = (DLFN5)implicit_keyed_single_method_engine_5; break;
+      case 6: e->entry_point.mep6 = (DLFN6)implicit_keyed_single_method_engine_6; break;
+      default: e->entry_point.mep64 = (DLFN64)implicit_keyed_single_method_engine_n; break;
       }
       break;
     }
     case ENGINE_unrestricted_keyed_single_method: {
       switch (nreq) {
-      case 0: e->entry_point = (DLFN)unrestricted_keyed_single_method_engine_0; break;
-      case 1: e->entry_point = (DLFN)unrestricted_keyed_single_method_engine_1; break;
-      case 2: e->entry_point = (DLFN)unrestricted_keyed_single_method_engine_2; break;
-      case 3: e->entry_point = (DLFN)unrestricted_keyed_single_method_engine_3; break;
-      case 4: e->entry_point = (DLFN)unrestricted_keyed_single_method_engine_4; break;
-      case 5: e->entry_point = (DLFN)unrestricted_keyed_single_method_engine_5; break;
-      case 6: e->entry_point = (DLFN)unrestricted_keyed_single_method_engine_6; break;
-      default: e->entry_point = (DLFN)unrestricted_keyed_single_method_engine_n; break;
+      case 0: e->entry_point.mep0 = (DLFN0)unrestricted_keyed_single_method_engine_0; break;
+      case 1: e->entry_point.mep1 = (DLFN1)unrestricted_keyed_single_method_engine_1; break;
+      case 2: e->entry_point.mep2 = (DLFN2)unrestricted_keyed_single_method_engine_2; break;
+      case 3: e->entry_point.mep3 = (DLFN3)unrestricted_keyed_single_method_engine_3; break;
+      case 4: e->entry_point.mep4 = (DLFN4)unrestricted_keyed_single_method_engine_4; break;
+      case 5: e->entry_point.mep5 = (DLFN5)unrestricted_keyed_single_method_engine_5; break;
+      case 6: e->entry_point.mep6 = (DLFN6)unrestricted_keyed_single_method_engine_6; break;
+      default: e->entry_point.mep64 = (DLFN64)unrestricted_keyed_single_method_engine_n; break;
       }
     break;
     }
@@ -2762,11 +2770,11 @@ dylan_value primitive_initialize_engine_node (dylan_value engine) {
     ENGINE* d_ = (ENGINE*)teb->function; \
     dylan_value parent_ = teb->next_methods; \
     DLFN cb_ = d_->callback; \
-    ENGINE* newengine_ = (ENGINE*)(cb_((ARGUMENTNAME##_argnum), parent_, d_)); \
+    ENGINE* newengine_ = (ENGINE*)(cb_.mep3((ARGUMENTNAME##_argnum), parent_, d_)); \
     DLFN ncb_ = newengine_->entry_point; \
     teb->function = (dylan_simple_method*)newengine_; \
     teb->next_methods = parent_; \
-    return(ncb_(ARGTEMPLATE##_nargs)); \
+    return(ncb_.mep##_nargs(ARGTEMPLATE##_nargs)); \
   }
 
 DEFINE_DISCRIMINATOR_ENGINE(1, 1)
@@ -2808,13 +2816,13 @@ dylan_value discriminate_engine_n_n (dylan_simple_object_vector* args) {
   long argnum = (props >> 8) & 0xFF;
   dylan_value* a = vector_data(args);
   dylan_value arg = a[argnum];
-  ENGINE* newengine = (ENGINE*)(cb(arg, parent, e));
+  ENGINE* newengine = (ENGINE*)(cb.mep3(arg, parent, e));
   if (FUNCTIONP(newengine)) {
     return(primitive_mep_apply_with_optionals((dylan_simple_method*)newengine, parent, args));
   } else {
     teb->function = (dylan_simple_method*)newengine;
     teb->next_methods = parent;
-    return((newengine->entry_point)(args));
+    return((newengine->entry_point).mep1(args));
   }
 }
 
@@ -2838,7 +2846,7 @@ extern dylan_value Ddirect_object_mm_wrappersVKi;
     DLFN ncb_ = newengine_->entry_point; \
     teb->function = (dylan_simple_method*)newengine_; \
     teb->next_methods = parent_; \
-    return(ncb_(ARGTEMPLATE##_nargs)); \
+    return(ncb_.mep##_nargs(ARGTEMPLATE##_nargs)); \
   }
 
 DEFINE_MONOMORPHIC_DISCRIMINATOR(1, 1)
@@ -2888,7 +2896,7 @@ dylan_value monomorphic_discriminator_engine_n_n (dylan_simple_object_vector* ar
   } else {
     teb->function = (dylan_simple_method*)newengine;
     teb->next_methods = parent;
-    return((newengine->entry_point)(args));
+    return((newengine->entry_point).mep1(args));
   }
 }
 
@@ -2907,7 +2915,7 @@ extern dylan_value Dinapplicable_engine_nodeVKg;
     DLFN ncb_ = newengine_->entry_point; \
     teb->function = (dylan_simple_method*)newengine_; \
     teb->next_methods = parent_; \
-    return(ncb_(ARGTEMPLATE##_nargs)); \
+    return(ncb_.mep##_nargs(ARGTEMPLATE##_nargs)); \
   }
 
 DEFINE_IF_TYPE_DISCRIMINATOR(1, 1)
@@ -2956,7 +2964,7 @@ dylan_value if_type_discriminator_engine_n_n (dylan_simple_object_vector* args) 
   } else {
     teb->function = (dylan_simple_method*)newengine;
     teb->next_methods = parent;
-    return((newengine->entry_point)(args));
+    return((newengine->entry_point).mep1(args)); // IS OK?
   }
 }
 
@@ -2975,7 +2983,7 @@ extern dylan_value Dinapplicable_engine_nodeVKg;
     DLFN ncb_ = newengine_->entry_point; \
     teb->function = (dylan_simple_method*)newengine_; \
     teb->next_methods = parent_; \
-    return(ncb_(ARGTEMPLATE##_nargs)); \
+    return(ncb_.mep##_nargs(ARGTEMPLATE##_nargs)); \
   }
 
 DEFINE_TYPECHECK_DISCRIMINATOR(1, 1)
@@ -3024,7 +3032,7 @@ dylan_value typecheck_discriminator_engine_n_n (dylan_simple_object_vector* args
   } else {
     teb->function = (dylan_simple_method*)newengine;
     teb->next_methods = parent;
-    return((newengine->entry_point)(args));
+    return((newengine->entry_point).mep1(args));
   }
 }
 
@@ -3041,234 +3049,234 @@ dylan_value primitive_initialize_discriminator(dylan_value discriminator) {
   DLFN handler;
   if (etype == ENGINE_if_type) {
     switch (impargs) {
-    case 1: handler = if_type_discriminator_engine_1_1; break;
+    case 1: handler.mep1 = if_type_discriminator_engine_1_1; break;
     case 2:
       switch (argnum) {
-      case 0: handler = if_type_discriminator_engine_1_2; break;
-      case 1: handler = if_type_discriminator_engine_2_2; break;
+      case 0: handler.mep2 = if_type_discriminator_engine_1_2; break;
+      case 1: handler.mep2 = if_type_discriminator_engine_2_2; break;
       }
       break;
     case 3:
       switch (argnum) {
-      case 0: handler = if_type_discriminator_engine_1_3; break;
-      case 1: handler = if_type_discriminator_engine_2_3; break;
-      case 2: handler = if_type_discriminator_engine_3_3; break;
+      case 0: handler.mep3 = if_type_discriminator_engine_1_3; break;
+      case 1: handler.mep3 = if_type_discriminator_engine_2_3; break;
+      case 2: handler.mep3 = if_type_discriminator_engine_3_3; break;
       }
       break;
     case 4:
       switch (argnum) {
-      case 0: handler = if_type_discriminator_engine_1_4; break;
-      case 1: handler = if_type_discriminator_engine_2_4; break;
-      case 2: handler = if_type_discriminator_engine_3_4; break;
-      case 3: handler = if_type_discriminator_engine_4_4; break;
+      case 0: handler.mep4 = if_type_discriminator_engine_1_4; break;
+      case 1: handler.mep4 = if_type_discriminator_engine_2_4; break;
+      case 2: handler.mep4 = if_type_discriminator_engine_3_4; break;
+      case 3: handler.mep4 = if_type_discriminator_engine_4_4; break;
       }
       break;
     case 5:
       switch (argnum) {
-      case 0: handler = if_type_discriminator_engine_1_5; break;
-      case 1: handler = if_type_discriminator_engine_2_5; break;
-      case 2: handler = if_type_discriminator_engine_3_5; break;
-      case 3: handler = if_type_discriminator_engine_4_5; break;
-      case 4: handler = if_type_discriminator_engine_5_5; break;
+      case 0: handler.mep5 = if_type_discriminator_engine_1_5; break;
+      case 1: handler.mep5 = if_type_discriminator_engine_2_5; break;
+      case 2: handler.mep5 = if_type_discriminator_engine_3_5; break;
+      case 3: handler.mep5 = if_type_discriminator_engine_4_5; break;
+      case 4: handler.mep5 = if_type_discriminator_engine_5_5; break;
       }
       break;
     case 6:
       switch (argnum) {
-      case 0: handler = if_type_discriminator_engine_1_6; break;
-      case 1: handler = if_type_discriminator_engine_2_6; break;
-      case 2: handler = if_type_discriminator_engine_3_6; break;
-      case 3: handler = if_type_discriminator_engine_4_6; break;
-      case 4: handler = if_type_discriminator_engine_5_6; break;
-      case 5: handler = if_type_discriminator_engine_6_6; break;
+      case 0: handler.mep6 = if_type_discriminator_engine_1_6; break;
+      case 1: handler.mep6 = if_type_discriminator_engine_2_6; break;
+      case 2: handler.mep6 = if_type_discriminator_engine_3_6; break;
+      case 3: handler.mep6 = if_type_discriminator_engine_4_6; break;
+      case 4: handler.mep6 = if_type_discriminator_engine_5_6; break;
+      case 5: handler.mep6 = if_type_discriminator_engine_6_6; break;
       }
       break;
     case 7:
       switch (argnum) {
-      case 0: handler = if_type_discriminator_engine_1_7; break;
-      case 1: handler = if_type_discriminator_engine_2_7; break;
-      case 2: handler = if_type_discriminator_engine_3_7; break;
-      case 3: handler = if_type_discriminator_engine_4_7; break;
-      case 4: handler = if_type_discriminator_engine_5_7; break;
-      case 5: handler = if_type_discriminator_engine_6_7; break;
-      case 6: handler = if_type_discriminator_engine_7_7; break;
+      case 0: handler.mep7 = if_type_discriminator_engine_1_7; break;
+      case 1: handler.mep7 = if_type_discriminator_engine_2_7; break;
+      case 2: handler.mep7 = if_type_discriminator_engine_3_7; break;
+      case 3: handler.mep7 = if_type_discriminator_engine_4_7; break;
+      case 4: handler.mep7 = if_type_discriminator_engine_5_7; break;
+      case 5: handler.mep7 = if_type_discriminator_engine_6_7; break;
+      case 6: handler.mep7 = if_type_discriminator_engine_7_7; break;
       }
       break;
     default:
-      handler = if_type_discriminator_engine_n_n;
+      handler.raw= if_type_discriminator_engine_n_n;
       break;
     }
   } else if (etype == ENGINE_typecheck) {
     switch (impargs) {
-    case 1: handler = typecheck_discriminator_engine_1_1; break;
+    case 1: handler.mep1 = typecheck_discriminator_engine_1_1; break;
     case 2:
       switch (argnum) {
-      case 0: handler = typecheck_discriminator_engine_1_2; break;
-      case 1: handler = typecheck_discriminator_engine_2_2; break;
+      case 0: handler.mep2 = typecheck_discriminator_engine_1_2; break;
+      case 1: handler.mep2 = typecheck_discriminator_engine_2_2; break;
       }
       break;
     case 3:
       switch (argnum) {
-      case 0: handler = typecheck_discriminator_engine_1_3; break;
-      case 1: handler = typecheck_discriminator_engine_2_3; break;
-      case 2: handler = typecheck_discriminator_engine_3_3; break;
+      case 0: handler.mep3 = typecheck_discriminator_engine_1_3; break;
+      case 1: handler.mep3 = typecheck_discriminator_engine_2_3; break;
+      case 2: handler.mep3 = typecheck_discriminator_engine_3_3; break;
       }
       break;
     case 4:
       switch (argnum) {
-      case 0: handler = typecheck_discriminator_engine_1_4; break;
-      case 1: handler = typecheck_discriminator_engine_2_4; break;
-      case 2: handler = typecheck_discriminator_engine_3_4; break;
-      case 3: handler = typecheck_discriminator_engine_4_4; break;
+      case 0: handler.mep4 = typecheck_discriminator_engine_1_4; break;
+      case 1: handler.mep4 = typecheck_discriminator_engine_2_4; break;
+      case 2: handler.mep4 = typecheck_discriminator_engine_3_4; break;
+      case 3: handler.mep4 = typecheck_discriminator_engine_4_4; break;
       }
       break;
     case 5:
       switch (argnum) {
-      case 0: handler = typecheck_discriminator_engine_1_5; break;
-      case 1: handler = typecheck_discriminator_engine_2_5; break;
-      case 2: handler = typecheck_discriminator_engine_3_5; break;
-      case 3: handler = typecheck_discriminator_engine_4_5; break;
-      case 4: handler = typecheck_discriminator_engine_5_5; break;
+      case 0: handler.mep5 = typecheck_discriminator_engine_1_5; break;
+      case 1: handler.mep5 = typecheck_discriminator_engine_2_5; break;
+      case 2: handler.mep5 = typecheck_discriminator_engine_3_5; break;
+      case 3: handler.mep5 = typecheck_discriminator_engine_4_5; break;
+      case 4: handler.mep5 = typecheck_discriminator_engine_5_5; break;
       }
       break;
     case 6:
       switch (argnum) {
-      case 0: handler = typecheck_discriminator_engine_1_6; break;
-      case 1: handler = typecheck_discriminator_engine_2_6; break;
-      case 2: handler = typecheck_discriminator_engine_3_6; break;
-      case 3: handler = typecheck_discriminator_engine_4_6; break;
-      case 4: handler = typecheck_discriminator_engine_5_6; break;
-      case 5: handler = typecheck_discriminator_engine_6_6; break;
+      case 0: handler.mep6 = typecheck_discriminator_engine_1_6; break;
+      case 1: handler.mep6 = typecheck_discriminator_engine_2_6; break;
+      case 2: handler.mep6 = typecheck_discriminator_engine_3_6; break;
+      case 3: handler.mep6 = typecheck_discriminator_engine_4_6; break;
+      case 4: handler.mep6 = typecheck_discriminator_engine_5_6; break;
+      case 5: handler.mep6 = typecheck_discriminator_engine_6_6; break;
       }
       break;
     case 7:
       switch (argnum) {
-      case 0: handler = typecheck_discriminator_engine_1_7; break;
-      case 1: handler = typecheck_discriminator_engine_2_7; break;
-      case 2: handler = typecheck_discriminator_engine_3_7; break;
-      case 3: handler = typecheck_discriminator_engine_4_7; break;
-      case 4: handler = typecheck_discriminator_engine_5_7; break;
-      case 5: handler = typecheck_discriminator_engine_6_7; break;
-      case 6: handler = typecheck_discriminator_engine_7_7; break;
+      case 0: handler.mep7 = typecheck_discriminator_engine_1_7; break;
+      case 1: handler.mep7 = typecheck_discriminator_engine_2_7; break;
+      case 2: handler.mep7 = typecheck_discriminator_engine_3_7; break;
+      case 3: handler.mep7 = typecheck_discriminator_engine_4_7; break;
+      case 4: handler.mep7 = typecheck_discriminator_engine_5_7; break;
+      case 5: handler.mep7 = typecheck_discriminator_engine_6_7; break;
+      case 6: handler.mep7 = typecheck_discriminator_engine_7_7; break;
       }
       break;
     default:
-      handler = typecheck_discriminator_engine_n_n;
+      handler.raw = typecheck_discriminator_engine_n_n;
       break;
     }
   } else if (etype == ENGINE_monomorphic) {
     switch (impargs) {
-    case 1: handler = monomorphic_discriminator_engine_1_1; break;
+    case 1: handler.mep1 = monomorphic_discriminator_engine_1_1; break;
     case 2:
       switch (argnum) {
-      case 0: handler = monomorphic_discriminator_engine_1_2; break;
-      case 1: handler = monomorphic_discriminator_engine_2_2; break;
+      case 0: handler.mep2 = monomorphic_discriminator_engine_1_2; break;
+      case 1: handler.mep2 = monomorphic_discriminator_engine_2_2; break;
       }
       break;
     case 3:
       switch (argnum) {
-      case 0: handler = monomorphic_discriminator_engine_1_3; break;
-      case 1: handler = monomorphic_discriminator_engine_2_3; break;
-      case 2: handler = monomorphic_discriminator_engine_3_3; break;
+      case 0: handler.mep3 = monomorphic_discriminator_engine_1_3; break;
+      case 1: handler.mep3 = monomorphic_discriminator_engine_2_3; break;
+      case 2: handler.mep3 = monomorphic_discriminator_engine_3_3; break;
       }
       break;
     case 4:
       switch (argnum) {
-      case 0: handler = monomorphic_discriminator_engine_1_4; break;
-      case 1: handler = monomorphic_discriminator_engine_2_4; break;
-      case 2: handler = monomorphic_discriminator_engine_3_4; break;
-      case 3: handler = monomorphic_discriminator_engine_4_4; break;
+      case 0: handler.mep4 = monomorphic_discriminator_engine_1_4; break;
+      case 1: handler.mep4 = monomorphic_discriminator_engine_2_4; break;
+      case 2: handler.mep4 = monomorphic_discriminator_engine_3_4; break;
+      case 3: handler.mep4 = monomorphic_discriminator_engine_4_4; break;
       }
       break;
     case 5:
       switch (argnum) {
-      case 0: handler = monomorphic_discriminator_engine_1_5; break;
-      case 1: handler = monomorphic_discriminator_engine_2_5; break;
-      case 2: handler = monomorphic_discriminator_engine_3_5; break;
-      case 3: handler = monomorphic_discriminator_engine_4_5; break;
-      case 4: handler = monomorphic_discriminator_engine_5_5; break;
+      case 0: handler.mep5 = monomorphic_discriminator_engine_1_5; break;
+      case 1: handler.mep5 = monomorphic_discriminator_engine_2_5; break;
+      case 2: handler.mep5 = monomorphic_discriminator_engine_3_5; break;
+      case 3: handler.mep5 = monomorphic_discriminator_engine_4_5; break;
+      case 4: handler.mep5 = monomorphic_discriminator_engine_5_5; break;
       }
       break;
     case 6:
       switch (argnum) {
-      case 0: handler = monomorphic_discriminator_engine_1_6; break;
-      case 1: handler = monomorphic_discriminator_engine_2_6; break;
-      case 2: handler = monomorphic_discriminator_engine_3_6; break;
-      case 3: handler = monomorphic_discriminator_engine_4_6; break;
-      case 4: handler = monomorphic_discriminator_engine_5_6; break;
-      case 5: handler = monomorphic_discriminator_engine_6_6; break;
+      case 0: handler.mep6 = monomorphic_discriminator_engine_1_6; break;
+      case 1: handler.mep6 = monomorphic_discriminator_engine_2_6; break;
+      case 2: handler.mep6 = monomorphic_discriminator_engine_3_6; break;
+      case 3: handler.mep6 = monomorphic_discriminator_engine_4_6; break;
+      case 4: handler.mep6 = monomorphic_discriminator_engine_5_6; break;
+      case 5: handler.mep6 = monomorphic_discriminator_engine_6_6; break;
       }
       break;
     case 7:
       switch (argnum) {
-      case 0: handler = monomorphic_discriminator_engine_1_7; break;
-      case 1: handler = monomorphic_discriminator_engine_2_7; break;
-      case 2: handler = monomorphic_discriminator_engine_3_7; break;
-      case 3: handler = monomorphic_discriminator_engine_4_7; break;
-      case 4: handler = monomorphic_discriminator_engine_5_7; break;
-      case 5: handler = monomorphic_discriminator_engine_6_7; break;
-      case 6: handler = monomorphic_discriminator_engine_7_7; break;
+      case 0: handler.mep7 = monomorphic_discriminator_engine_1_7; break;
+      case 1: handler.mep7 = monomorphic_discriminator_engine_2_7; break;
+      case 2: handler.mep7 = monomorphic_discriminator_engine_3_7; break;
+      case 3: handler.mep7 = monomorphic_discriminator_engine_4_7; break;
+      case 4: handler.mep7 = monomorphic_discriminator_engine_5_7; break;
+      case 5: handler.mep7 = monomorphic_discriminator_engine_6_7; break;
+      case 6: handler.mep7 = monomorphic_discriminator_engine_7_7; break;
       }
       break;
     default:
-      handler = monomorphic_discriminator_engine_n_n;
+      handler.raw = monomorphic_discriminator_engine_n_n;
       break;
     }
   } else {
     switch (impargs) {
-    case 1: handler = discriminate_engine_1_1; break;
+    case 1: handler.mep1 = discriminate_engine_1_1; break;
     case 2:
       switch (argnum) {
-      case 0: handler = discriminate_engine_1_2; break;
-      case 1: handler = discriminate_engine_2_2; break;
+      case 0: handler.mep2 = discriminate_engine_1_2; break;
+      case 1: handler.mep2 = discriminate_engine_2_2; break;
       }
       break;
     case 3:
       switch (argnum) {
-      case 0: handler = discriminate_engine_1_3; break;
-      case 1: handler = discriminate_engine_2_3; break;
-      case 2: handler = discriminate_engine_3_3; break;
+      case 0: handler.mep3 = discriminate_engine_1_3; break;
+      case 1: handler.mep3 = discriminate_engine_2_3; break;
+      case 2: handler.mep3 = discriminate_engine_3_3; break;
       }
       break;
     case 4:
       switch (argnum) {
-      case 0: handler = discriminate_engine_1_4; break;
-      case 1: handler = discriminate_engine_2_4; break;
-      case 2: handler = discriminate_engine_3_4; break;
-      case 3: handler = discriminate_engine_4_4; break;
+      case 0: handler.mep4 = discriminate_engine_1_4; break;
+      case 1: handler.mep4 = discriminate_engine_2_4; break;
+      case 2: handler.mep4 = discriminate_engine_3_4; break;
+      case 3: handler.mep4 = discriminate_engine_4_4; break;
       }
       break;
     case 5:
       switch (argnum) {
-      case 0: handler = discriminate_engine_1_5; break;
-      case 1: handler = discriminate_engine_2_5; break;
-      case 2: handler = discriminate_engine_3_5; break;
-      case 3: handler = discriminate_engine_4_5; break;
-      case 4: handler = discriminate_engine_5_5; break;
+      case 0: handler.mep5 = discriminate_engine_1_5; break;
+      case 1: handler.mep5 = discriminate_engine_2_5; break;
+      case 2: handler.mep5 = discriminate_engine_3_5; break;
+      case 3: handler.mep5 = discriminate_engine_4_5; break;
+      case 4: handler.mep5 = discriminate_engine_5_5; break;
       }
       break;
     case 6:
       switch (argnum) {
-      case 0: handler = discriminate_engine_1_6; break;
-      case 1: handler = discriminate_engine_2_6; break;
-      case 2: handler = discriminate_engine_3_6; break;
-      case 3: handler = discriminate_engine_4_6; break;
-      case 4: handler = discriminate_engine_5_6; break;
-      case 5: handler = discriminate_engine_6_6; break;
+      case 0: handler.mep6 = discriminate_engine_1_6; break;
+      case 1: handler.mep6 = discriminate_engine_2_6; break;
+      case 2: handler.mep6 = discriminate_engine_3_6; break;
+      case 3: handler.mep6 = discriminate_engine_4_6; break;
+      case 4: handler.mep6 = discriminate_engine_5_6; break;
+      case 5: handler.mep6 = discriminate_engine_6_6; break;
       }
       break;
     case 7:
       switch (argnum) {
-      case 0: handler = discriminate_engine_1_7; break;
-      case 1: handler = discriminate_engine_2_7; break;
-      case 2: handler = discriminate_engine_3_7; break;
-      case 3: handler = discriminate_engine_4_7; break;
-      case 4: handler = discriminate_engine_5_7; break;
-      case 5: handler = discriminate_engine_6_7; break;
-      case 6: handler = discriminate_engine_7_7; break;
+      case 0: handler.mep7 = discriminate_engine_1_7; break;
+      case 1: handler.mep7 = discriminate_engine_2_7; break;
+      case 2: handler.mep7 = discriminate_engine_3_7; break;
+      case 3: handler.mep7 = discriminate_engine_4_7; break;
+      case 4: handler.mep7 = discriminate_engine_5_7; break;
+      case 5: handler.mep7 = discriminate_engine_6_7; break;
+      case 6: handler.mep7 = discriminate_engine_7_7; break;
       }
       break;
     default:
-      handler = discriminate_engine_n_n;
+      handler.raw = discriminate_engine_n_n;
       break;
     }
   }

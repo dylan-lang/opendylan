@@ -220,7 +220,41 @@ static inline long atomic_cas(long *destination, long exchange, long compare) {
 /* BASIC DYLAN TYPES */
 
 typedef dylan_value (*DFN)(dylan_value,int,...);
-typedef dylan_value (*DLFN)();
+typedef dylan_value (*DLFN0)(void);
+typedef dylan_value (*DLFN1)(dylan_value);
+typedef dylan_value (*DLFN2)(dylan_value, dylan_value);
+typedef dylan_value (*DLFN3)(dylan_value, dylan_value, dylan_value);
+typedef dylan_value (*DLFN4)(dylan_value, dylan_value, dylan_value, dylan_value);
+typedef dylan_value (*DLFN5)(dylan_value, dylan_value, dylan_value, dylan_value, dylan_value);
+typedef dylan_value (*DLFN6)(dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value);
+typedef dylan_value (*DLFN7)(dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value);
+typedef dylan_value (*DLFN8)(dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value);
+typedef dylan_value (*DLFN9)(dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value);
+typedef dylan_value (*DLFN10)(dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value);
+typedef dylan_value (*DLFN64)(dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value,
+                              dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value,
+                              dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value,
+                              dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value,
+                              dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value,
+                              dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value,
+                              dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value,
+                              dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value);
+
+typedef union {
+  void* raw;
+  DLFN0 mep0;
+  DLFN1 mep1;
+  DLFN2 mep2;
+  DLFN3 mep3;
+  DLFN4 mep4;
+  DLFN5 mep5;
+  DLFN6 mep6;
+  DLFN7 mep7;
+  DLFN8 mep8;
+  DLFN9 mep9;
+  DLFN10 mep10;
+  DLFN64 mep64;
+} DLFN;
 
 struct _dylan_implementation_class;
 struct _dylan_type;
@@ -290,6 +324,8 @@ typedef struct _dylan_implementation_class {
 /* This corresponds to <type> defined in
  * dfmc/modeling/objects.dylan.
  */
+typedef dylan_value (*instancep_function_t)(dylan_value x, dylan_value y);
+
 typedef struct _dylan_type {
   Wrapper * mm_wrapper;
   DLFN      instancep_function;
@@ -863,7 +899,7 @@ extern dylan_value primitive_compare_words(dylan_value base1, DSINT offset1,
 
 /* COMPARISON PRIMITIVES */
 
-#define primitive_instanceQ(x, y)       ((((dylan_type*)(y))->instancep_function)((x),(y)))
+#define primitive_instanceQ(x, y)       ((((dylan_type*)(y))->instancep_function.mep2)((x),(y)))
 #define primitive_range_check(x, l, h)  (RAWASBOOL(((x) >= (l)) & ((x) < (h))))
 extern dylan_value primitive_type_check(dylan_value x, dylan_value t);
 
