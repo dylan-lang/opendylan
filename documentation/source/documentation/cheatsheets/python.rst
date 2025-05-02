@@ -700,9 +700,9 @@ break
 +==================================================+===================================================+
 | .. code-block:: python                           | .. code-block:: dylan                             |
 |                                                  |                                                   |
-|    for i in range(10):                           |    block(return)                                  |
+|    for i in range(10):                           |    block(break)                                   |
 |      if i == 5:                                  |      for (i from 0 below 10)                      |
-|        break                                     |        if (i = 5) return() end;                   |
+|        break                                     |        if (i = 5) break() end;                    |
 |      print(i)                                    |        format-out("%d\n", i);                     |
 |                                                  |      end;                                         |
 |                                                  |    end                                            |
@@ -717,8 +717,8 @@ continue
 | .. code-block:: python                           | .. code-block:: dylan                             |
 |                                                  |                                                   |
 |    for i in range(5):                            |    for (i from 0 below 5)                         |
-|      if i == 2:                                  |      block(return)                                |
-|        continue                                  |        if (i = 2) return() end;                   |
+|      if i == 2:                                  |      block(continue)                              |
+|        continue                                  |        if (i = 2) continue() end;                 |
 |      print(i)                                    |        format-out("%d\n", i);                     |
 |                                                  |      end;                                         |
 |                                                  |    end                                            |
@@ -758,9 +758,9 @@ match
 +--------------------------------------------------+---------------------------------------------------+
 | Python                                           | Dylan                                             |
 +==================================================+===================================================+
-| .. code-block:: python                           | Dylan has no pattern matching                     |
-|                                                  |                                                   |
-|    // point is an (x, y) tuple                   |                                                   |
+| .. code-block:: python                           | Dylan has no built-in pattern matching but        |
+|                                                  | *match* can be implemented in a library as a      |
+|    # point is an (x, y) tuple                    | macro.                                            |
 |    def say(point):                               |                                                   |
 |      match point:                                |                                                   |
 |        case (0, 0):                              |                                                   |
