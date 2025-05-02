@@ -67,8 +67,15 @@ Dylan object) contains a pointer to the class of the object it is
 wrapping, as well as some encoded information for the garbage collector
 about which slots should be traced.
 
-.. figure:: ../images/runtime-2.png
+.. image:: ../images/runtime-2.png
    :align: center
+   :class: only-light
+   :alt: Image of boxed objects
+
+.. image:: ../images/runtime-2-dark.png
+   :align: center
+   :class: only-dark
+   :alt: Image of boxed objects
 
 Boxed Objects
 -------------
@@ -97,10 +104,15 @@ tracing data of the wrapper so that the memory manager knows how to
 trace the repeated data. For example, an instance of the :drm:`<byte-string>`
 *"foo"* is represented as in:.
 
-.. figure:: ../images/runtime-3.png
+.. image:: ../images/runtime-3.png
    :align: center
+   :class: only-light
+   :alt: Image of <byte-string>
 
-   An Instance of :drm:`<byte-string>`
+.. image:: ../images/runtime-3-dark.png
+   :align: center
+   :class: only-dark
+   :alt: Image of <byte-string>
 
 Function Objects
 ----------------

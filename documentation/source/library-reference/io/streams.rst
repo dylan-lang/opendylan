@@ -185,8 +185,13 @@ the image below. Classes shown in bold are all instantiable.
    https://docs.google.com/drawings/d/1HGgJc2Ee-qFAPJqsYNGLhHTk8CmfxyWQdazuntLhcy4/
    There should be a link to request edit permission.
 
-.. figure:: ../images/streams.png
+.. image:: ../images/streams.png
    :align: center
+   :class: only-light
+
+.. image:: ../images/streams-dark.png
+   :align: center
+   :class: only-dark
 
 .. note:: :class:`<file-stream>` is included for completeness but is actually
    exported from the :doc:`file-system <../system/file-system>` module.
