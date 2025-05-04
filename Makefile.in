@@ -261,6 +261,9 @@ install-stage:
 	@install -d $(prefix)/bin $(prefix)/databases $(prefix)/lib $(DESTDIR)$(prefix)/lib/runtime
 	@install -d $(prefix)/share/opendylan $(DESTDIR)$(prefix)/include/opendylan
 	@cp -R $(abs_builddir)/Bootstrap.3/bin $(DESTDIR)$(prefix)
+	# Copy BOOTSTRAP_3_STATICS to /bin
+	@cp -R $(abs_builddir)/Bootstrap.3/sbin/* $(DESTDIR)$(prefix)/bin
+	@ln -sf $(DESTDIR)$(prefix)/bin/deft-app $(DESTDIR)$(prefix)/bin/deft
 	@cp -R $(abs_builddir)/Bootstrap.3/databases $(DESTDIR)$(prefix)
 	@-cp -R $(abs_builddir)/Bootstrap.3/include/opendylan $(DESTDIR)$(prefix)/include
 	@# We use force here because on macOS, the lib directory likely contains read-only
