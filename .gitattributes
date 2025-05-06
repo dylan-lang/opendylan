@@ -1,6 +1,0 @@
-# To actually use this filter you must run the following commands in the top-level repo
-# directory:
-#   git config filter.version.smudge ./tools/scripts/version-smudge.sh
-#   git config filter.version.clean ./tools/scripts/version-clean.sh
-# There is no way to configure that for all users of the repo.
-sources/lib/release-info/common-info.dylan filter=version
