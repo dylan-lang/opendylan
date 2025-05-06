@@ -23,12 +23,5 @@
       </sources>
       <description>The Testworks test suite</description>
     </library>
-    <library name="testworks-test-suite-app" title="Testworks test suite application">
-      <category>TestWorks</category>
-      <sources location="qa/test-apps/testworks-test-suite">
-        <project>testworks-test-suite-app.lid</project>
-      </sources>
-      <description>The standalone version of the Testworks test suite</description>
-    </library>
   </test-suites>
 </library-pack>
