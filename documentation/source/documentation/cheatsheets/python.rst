@@ -42,10 +42,9 @@ Literals
 +------------------------+-----------------------------------------------------+
 | N/A                    | .. code-block:: dylan                               |
 |                        |                                                     |
-| No                     |                                                     |
-| individual characters  |    'a'                                              |
-| other than integer     |    '\n'                                             |
-| character codes        |                                                     |
+| No character type,     |                                                     |
+| only integer character |    'a'                                              |
+| codes.                 |    '\n'                                             |
 +------------------------+-----------------------------------------------------+
 | .. code-block:: python | .. code-block:: dylan                               |
 |                        |                                                     |
@@ -63,6 +62,8 @@ Literals
 |        Hi, from        |            Hi, from                                 |
 |        Python          |            Dylan                                    |
 |        '''             |            """;                                     |
+|                        |                                                     |
+|                        | (See `rectangle rule`_.)                            |
 +------------------------+-----------------------------------------------------+
 | N/A                    | .. code-block:: dylan                               |
 |                        |                                                     |
@@ -774,3 +775,5 @@ match
 |        case _:                                   |                                                   |
 |          raise ValueError("Not a point")         |                                                   |
 +--------------------------------------------------+---------------------------------------------------+
+
+.. _rectangle rule: https://opendylan.org/proposals/dep-0012-string-literals.html#the-rectangle-rule
