@@ -33,6 +33,7 @@ set any available properties for the file.
 - :func:`file-property-setter`
 - :gf:`expand-pathname`
 - :gf:`shorten-pathname`
+- :gf:`create-symbolic-link`
 - :macro:`with-open-file`
 
 Manipulating directories
@@ -407,6 +408,49 @@ File-System module.
 
      - :func:`delete-directory`
 
+.. generic-function:: create-symbolic-link
+
+   Creates a symbolic link
+
+   :signature: create-symbolic-link *target* *link* => ()
+
+   :param target: An instance of `<pathname>`:class:.
+   :param link:   An instance of `<pathname>`:class:.
+
+   :description:
+
+     Creates a symbolic link to *target*.
+
+   :example:
+
+     Creates a symbolic link named *whattimeislove* to the *date* 
+     utility.
+
+     .. code-block:: dylan
+
+        create-symbolic-link("/usr/bin/date", "/tmp/whattimeislove"); 
+
+.. method:: create-symbolic-link
+   :specializer: <pathname>, <pathname>
+   :no-contents-entry:
+
+   :parameter target: An instance of :class:`<pathname>`.
+   :parameter link:   An instance of :class:`<pathname>`.
+
+.. method:: create-symbolic-link
+   :specializer: <string>, <string>
+   :no-contents-entry:
+
+   :parameter target: An instance of :drm:`<string>`.
+   :parameter link:   An instance of :drm:`<string>`.
+
+.. method:: create-symbolic-link
+   :specializer: <file-system-locator>, <file-system-locator>
+   :no-contents-entry:
+
+   :parameter target: An instance of :class:`<file-system-locator>`.
+   :parameter link:   An instance of :class:`<file-system-locator>`.
+
 .. function:: delete-directory
 
    Deletes the specified directory.
@@ -458,7 +502,7 @@ File-System module.
       and ".." directories are not included in the result.
 
 .. generic-function:: directory-empty?
-   
+
    Checks whether a directory is empty or not.
 
    :signature: directory-empty? *directory* => *empty?*
@@ -471,7 +515,7 @@ File-System module.
 
    :param directory: An instance of :class:`<file-system-directory>`.
    :value empty?: An instance of :class:`<boolean>`.
-   
+
 .. function:: do-directory
 
    Executes the supplied function once for each entity in the specified
@@ -917,6 +961,10 @@ File-System module.
       Repeatedly follows symbolic links starting with *file* until it finds a
       non-link file or directory, or a non-existent link target.
 
+   :seealso:
+
+     - :gf:`create-symbolic-link`
+
 .. _make:
 
 .. method:: make
@@ -1074,6 +1122,7 @@ File-System module.
      - :func:`home-directory`
      - :func:`link-target`
      - :func:`rename-file`
+     - :gf:`create-symbolic-link`
 
 .. class:: <posix-file-system-locator>
    :abstract:
