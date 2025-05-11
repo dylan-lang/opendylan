@@ -41,11 +41,9 @@ now here is a manual check-list.
 
 #. Update the version number in the sources
 
-   There are a few places that hard-code the major.minor release version.
-
-   * The configure.ac file.
-   * Do a ``git grep 2019.\\d`` to see if anything else needs to be updated. (Obviously
-     change the year.)
+   * In the release-info library
+   * In the configure.ac file
+   * Do a ``git grep 2019.\\d`` to see if anything else needs to be updated.
 
 #. Update version numbers in ``build/unix/release-with-batteries.sh``
    to the latest stable versions of the relevant software (Clang+LLVM,
@@ -59,43 +57,29 @@ now here is a manual check-list.
 
      git log --format=short --no-merges v2019.1.0..origin/master | grep '^Author: ' | sort | uniq -c | sort -n
 
-#. Enable Git filters if you haven't already
+#. Create a draft release on GitHub
 
-   Run the commands shown in the top-level .gitattributes file. You must do this once per
-   clone of the opendylan repository so that the Git filters will update the Open Dylan
-   release version constant on checkout.
+   This step is primarily to create the release tag in the git repo.
 
-   The filters ensure that the latest ``v*`` tag is included in the value of
-   ``$release-version`` and thereby also in ``dylan-compiler -version``.
+   On https://github.com/dylan-lang/opendylan/releases click the "Draft a
+   release" button and create a release with name similar to "Open Dylan
+   2019.1", tag similar to "v2019.1.0", any description you like, and make sure
+   the "This is a pre-release" box is checked.
 
-#. Create a Git tag for the release
-
-   .. note:: This step can be done via the GitHub UI if preferred, by drafting a release
-             in advance, but if you need to move the tag it can be a lot more cumbersome.
-
-   ::
-      git tag -a v2019.1.0
-      git push --tags [--force] origin master
-
-   It's important to match that exact tag format: ``vMAJOR.MINOR.PATCH`` The major
-   version is always the current year, the minor version is a number starting at 1 for
-   the current year, and the patch version starts at 0.
-
-   Add the ``-f`` flag to force tag creation if moving the tag after fixing a last-minute
-   bug.
+   The major version is always the current year, the minor version is a number
+   starting at 1 for the current year, and the patch version starts at 0.
 
 #. Build the binaries for supported platforms
 
-   It's best to build the release from a clean checkout to be sure that no uncommitted
-   files become part of the release tarball. In particular, the entire "sources"
-   directory is copied into the release, so any uncommitted files or a "_build" directory
-   could be copied.
+   It's best to build the release from a clean checkout to be sure that no
+   uncommitted files become part of the release tarball. In particular, the
+   entire "sources" directory is copied into the release, so any uncommitted
+   files or a "_build" directory could be copied.
 
    On unix platforms::
 
      $ git clone --recursive https://github.com/dylan-lang/opendylan
      $ cd opendylan
-     $ cat .gitattributes    # and run the commands it contains.
      $ git co v2019.1.0      # the tag you created above
      $ ./build/unix/release-with-batteries.sh
 
@@ -104,13 +88,6 @@ now here is a manual check-list.
    to indicate which version **can** be used to bootstrap the compiler.
 
    Ask Peter Housel to build the Windows release. :-)
-
-#. Create a release on GitHub
-
-   On https://github.com/dylan-lang/opendylan/releases click the "Draft a release" button
-   and create a release with name similar to "Open Dylan 2019.1", select the tag you
-   created above, any description you like, and make sure the "This is a pre-release" box
-   is checked.
 
 #. Upload the binaries to GitHub
 
