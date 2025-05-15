@@ -408,14 +408,14 @@ File-System module.
 
      - :func:`delete-directory`
 
-.. generic-function:: create-symbolic-link
+.. function:: create-symbolic-link
 
    Creates a symbolic link
 
    :signature: create-symbolic-link *target* *link* => ()
 
-   :param target: An instance of `<pathname>`:class:.
-   :param link:   An instance of `<pathname>`:class:.
+   :param target: An instance of :class:`<pathname>`.
+   :param link:   An instance of :class:`<pathname>`.
 
    :description:
 
@@ -428,28 +428,7 @@ File-System module.
 
      .. code-block:: dylan
 
-        create-symbolic-link("/usr/bin/date", "/tmp/whattimeislove"); 
-
-.. method:: create-symbolic-link
-   :specializer: <pathname>, <pathname>
-   :no-contents-entry:
-
-   :parameter target: An instance of :class:`<pathname>`.
-   :parameter link:   An instance of :class:`<pathname>`.
-
-.. method:: create-symbolic-link
-   :specializer: <string>, <string>
-   :no-contents-entry:
-
-   :parameter target: An instance of :drm:`<string>`.
-   :parameter link:   An instance of :drm:`<string>`.
-
-.. method:: create-symbolic-link
-   :specializer: <file-system-locator>, <file-system-locator>
-   :no-contents-entry:
-
-   :parameter target: An instance of :class:`<file-system-locator>`.
-   :parameter link:   An instance of :class:`<file-system-locator>`.
+        create-symbolic-link("/usr/bin/date", "/tmp/whattimeislove")
 
 .. function:: delete-directory
 
@@ -963,7 +942,7 @@ File-System module.
 
    :seealso:
 
-     - :gf:`create-symbolic-link`
+     - :func:`create-symbolic-link`
 
 .. _make:
 
@@ -1122,7 +1101,7 @@ File-System module.
      - :func:`home-directory`
      - :func:`link-target`
      - :func:`rename-file`
-     - :gf:`create-symbolic-link`
+     - :func:`create-symbolic-link`
 
 .. class:: <posix-file-system-locator>
    :abstract:
