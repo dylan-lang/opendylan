@@ -420,6 +420,7 @@ File-System module.
    :description:
 
      Creates a symbolic link to *target*.
+     Not supported in Win32.
 
    :example:
 
