@@ -516,3 +516,11 @@ define sideways method list-locator
      locator);
   locators
 end method list-locator;
+
+///
+
+define function create-symbolic-link
+    (target :: <pathname>, link :: <pathname>) => ()
+  %create-symbolic-link(as(<file-system-locator>, target),
+                        as(<file-system-locator>, link))
+end function create-symbolic-link;

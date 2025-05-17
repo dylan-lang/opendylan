@@ -682,3 +682,19 @@ end function %temp-directory;
 define function %root-directories () => (roots :: <sequence>)
   vector(as(<posix-directory-locator>, "/"))
 end function %root-directories;
+
+define function %create-symbolic-link
+    (target :: <posix-file-system-locator>, link :: <posix-file-system-locator>)
+ => ()
+  let target = %expand-pathname(target);
+  let link   = %expand-pathname(link);
+  if (primitive-raw-as-boolean
+        (%call-c-function("symlink") 
+             (target :: <raw-byte-string>, link :: <raw-byte-string>)
+          => (failed? :: <raw-c-signed-int>)
+           (primitive-string-as-raw(as(<byte-string>, target)),
+            primitive-string-as-raw(as(<byte-string>, link)))
+        end))
+    unix-file-error("symlink", "create symbolic link to %s from %s", target, link)
+  end
+end function %create-symbolic-link;
