@@ -630,5 +630,5 @@ end function %root-directories;
 define function %create-symbolic-link
     (target :: <microsoft-directory-locator>, link :: <microsoft-directory-locator>)
  => ()
-  win32-file-system-error("symlink", "create symbolic link. Not supported in Win32")
+  error("create-symbolic-link is not supported in Win32")
 end function %create-symbolic-link;
