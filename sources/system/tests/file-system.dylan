@@ -69,14 +69,16 @@ define test test-file-exists? ()
   assert-true(file-exists?(file));
   assert-true(file-exists?(dir));
 
-  // TODO: Create a symbolic link and test the follow-symlinks? parameter. We
-  // don't currently have a function to create symlinks.
-  // I created symlinks by hand and ran this to test once:
-  //   $ ln -s /tmp/nothing /tmp/symlink-bad
-  //   $ ln -s /usr /tmp/symlink-good
-  // assert-true(file-exists?("/tmp/symlink-good"));
-  // assert-false(file-exists?("/tmp/symlink-bad"));
-  // assert-true(file-exists?("/tmp/symlink-bad", follow-links?: #f));
+  let tmp-nothing  = file-locator(dir, "nothing");
+  let symlink-bad  = file-locator(dir, "symlink-bad");
+  let symlink-good = file-locator(dir, "symlink-good");
+
+  create-symbolic-link(tmp-nothing, symlink-bad);
+  create-symbolic-link("/usr", symlink-good);
+
+  assert-true(file-exists?(symlink-good));
+  assert-false(file-exists?(symlink-bad));
+  assert-true(file-exists?(symlink-bad, follow-links?: #f));
 end test;
 
 define test test-file-type ()
