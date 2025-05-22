@@ -1,0 +1,20 @@
+digraph G {
+
+  fontname="Arial,sans-serif";
+  node [shape=box, color=black];
+
+  physical_locator              [label="<physical-locator>\noa", style=dashed];
+  file_locator                  [label="<file-locator>\noa", style=dashed];
+  directory_locator             [label="<directory-locator>\noa",style=dashed];
+  file_system_locator           [label="<file-system-locator>\noa", style=bold, color="#17594A"];
+  file_system_file_locator      [label="<file-system-file-locator>", style=bold, color="#17594A"];
+  file_system_directory_locator [label="<file-system-directory-locator>", style=bold, color="#17594A"];
+
+  physical_locator              -> file_system_locator;
+  physical_locator              -> directory_locator;
+  physical_locator              -> file_locator;
+  file_system_locator           -> file_system_file_locator;
+  file_locator                  -> file_system_file_locator;
+  file_system_locator           -> file_system_directory_locator;
+  directory_locator             -> file_system_directory_locator;
+}

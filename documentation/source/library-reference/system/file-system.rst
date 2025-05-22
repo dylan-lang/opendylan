@@ -90,29 +90,17 @@ or a file within the file system.
 - :class:`<file-system-file-locator>`
 - :class:`<file-system-directory-locator>`
 
-.. graphviz::
-   :caption: File system locator class diagram. Dashed boxes are
-             classes from module `locators`.
+.. admonition:: File system locator hierarchy.
 
-   digraph G {
-     fontname="Arial,sans-serif";
-     node [shape=box, color=gray];
+   Dashed boxes are classes from module `locators`.
 
-     physical_locator              [label="<physical-locator>\noa", style=dashed];
-     file_locator                  [label="<file-locator>\noa", style=dashed];
-     directory_locator             [label="<directory-locator>\noa",style=dashed];
-     file_system_locator           [label="<file-system-locator>\noa", style=bold, color="#17594A"];
-     file_system_file_locator      [label="<file-system-file-locator>", style=bold, color="#17594A"];
-     file_system_directory_locator [label="<file-system-directory-locator>", style=bold, color="#17594A"];
+   .. image:: ../images/file-locators.png
+     :align: center
+     :class: only-light
 
-     physical_locator              -> file_system_locator;
-     physical_locator              -> directory_locator;
-     physical_locator              -> file_locator;
-     file_system_locator           -> file_system_file_locator;
-     file_locator                  -> file_system_file_locator;
-     file_system_locator           -> file_system_directory_locator;
-     directory_locator             -> file_system_directory_locator;
-   }
+   .. image:: ../images/file-locators-dark.png
+     :align: center
+     :class: only-dark
 
 On Posix systems:
 
@@ -120,39 +108,17 @@ On Posix systems:
 - :class:`<posix-directory-locator>`
 - :class:`<posix-file-locator>`
 
-.. graphviz::
-   :caption: Posix file system hierarchy. Dashed boxes are classes
-             from module `locators`.
+.. admonition:: Posix file system hierarchy
 
-   digraph G {
-     fontname="Arial,sans-serif";
-     node  [shape=box, color=gray];
+   Dashed boxes are classes from module `locators`.
 
-     physical_locator              [label="<physical-locator>\noa", style=dashed] ;
-     directory_locator             [label="<directory-locator>\noa",style=dashed];
+   .. image:: ../images/posix-file-system.png
+     :align: center
+     :class: only-light
 
-     file_locator                  [label="<file-locator>\noa", style=dashed];
-     file_system_locator           [label="<file-system-locator>\noa"];
-     file_system_file_locator      [label="<file-system-file-locator>"];
-     file_system_directory_locator [label="<file-system-directory-locator>"] ;
-
-     posix_file_system_locator     [label="<posix-file-system-locator>\noas", style=bold, color="#17594A"];
-     posix_directory_locator       [label="<posix-directory-locator>\ns", style=bold, color="#17594A"] ;
-     posix_file_locator            [label="<posix-file-locator>\ns", style=bold, color="#17594A"]
-
-     physical_locator              -> file_locator;
-     physical_locator              -> file_system_locator;
-     physical_locator              -> directory_locator;
-     directory_locator             -> file_system_directory_locator;
-     file_locator                  -> file_system_file_locator;
-     file_system_locator           -> file_system_file_locator;
-     file_system_locator           -> file_system_directory_locator;
-     file_system_locator           -> posix_file_system_locator;
-     file_system_directory_locator -> posix_directory_locator;
-     file_system_file_locator      -> posix_file_locator;
-     posix_file_system_locator     -> posix_directory_locator;
-     posix_file_system_locator     -> posix_file_locator;
-   }
+   .. image:: ../images/posix-file-system-dark.png
+     :align: center
+     :class: only-dark
 
 On Microsoft systems:
 
@@ -163,44 +129,17 @@ On Microsoft systems:
 - :class:`<microsoft-directory-locator>`
 - :class:`<microsoft-file-locator>`
 
-.. graphviz::
-   :caption: Microsoft file system hierarchy. Dashed boxes are classes
-             from module `locators`.
+.. admonition:: Microsoft file system hierarchy.
 
-   digraph G {
-     fontname="Arial,sans-serif";
-     node  [shape=box, color=gray];
+   Dashed boxes are classes from module `locators`.
 
-     locator                       [label="<locator>\noa",style=dashed];
-     physical_locator              [label="<physical-locator>\noa", style=dashed] ;
-     directory_locator             [label="<directory-locator>\noa",style=dashed];
-     server_locator                [label="<server-locator>\noa",style=dashed];
+   .. image:: ../images/microsoft-file-system.png
+      :align: center
+      :class: only-light
 
-     file_locator                  [label="<file-locator>\noa", style=dashed];
-     file_system_locator           [label="<file-system-locator>\noa"];
-
-     microsoft_file_system_locator [label="<microsoft-file-system-locator>\na", style=bold, color="#17594A"];
-     microsoft_server_locator      [label="<microsoft-server-locator>\nas", style=bold, color="#17594A"];
-     microsoft_unc_locator         [label="<microsoft-unc-locator>\ns", style=bold, color="#17594A"];
-     microsoft_volume_locator      [label="<microsoft-volume-locator>\ns", style=bold, color="#17594A"];
-     microsoft_directory_locator   [label="<microsoft-directory-locator>", style=bold, color="#17594A"];
-     microsoft_file_locator        [label="<microsoft-file-locator>", style=bold, color="#17594A"];
-
-     locator                       -> server_locator;
-     locator                       -> physical_locator;
-     physical_locator              -> file_locator;
-     physical_locator              -> file_system_locator;
-     physical_locator              -> directory_locator;
-     server_locator                -> microsoft_server_locator;
-     directory_locator             -> microsoft_directory_locator;
-     file_locator                  -> microsoft_file_locator;
-     file_system_locator           -> microsoft_file_system_locator;
-     microsoft_file_system_locator -> microsoft_directory_locator;
-     microsoft_file_system_locator -> microsoft_file_locator;
-     microsoft_server_locator      -> microsoft_unc_locator;
-     microsoft_server_locator      -> microsoft_volume_locator;
-   }
-
+   .. image:: ../images/microsoft-file-system-dark.png
+      :align: center
+      :class: only-dark
 
 Native locators, which are bound to the host platform:
 

@@ -1,0 +1,33 @@
+digraph G {
+  fontname="Arial,sans-serif";
+  node  [shape=box, color=gray];
+
+  locator                       [label="<locator>\noa",style=dashed];
+  physical_locator              [label="<physical-locator>\noa", style=dashed] ;
+  directory_locator             [label="<directory-locator>\noa",style=dashed];
+  server_locator                [label="<server-locator>\noa",style=dashed];
+
+  file_locator                  [label="<file-locator>\noa", style=dashed];
+  file_system_locator           [label="<file-system-locator>\noa"];
+
+  microsoft_file_system_locator [label="<microsoft-file-system-locator>\na", style=bold, color="#17594A"];
+  microsoft_server_locator      [label="<microsoft-server-locator>\nas", style=bold, color="#17594A"];
+  microsoft_unc_locator         [label="<microsoft-unc-locator>\ns", style=bold, color="#17594A"];
+  microsoft_volume_locator      [label="<microsoft-volume-locator>\ns", style=bold, color="#17594A"];
+  microsoft_directory_locator   [label="<microsoft-directory-locator>", style=bold, color="#17594A"];
+  microsoft_file_locator        [label="<microsoft-file-locator>", style=bold, color="#17594A"];
+
+  locator                       -> server_locator;
+  locator                       -> physical_locator;
+  physical_locator              -> file_locator;
+  physical_locator              -> file_system_locator;
+  physical_locator              -> directory_locator;
+  server_locator                -> microsoft_server_locator;
+  directory_locator             -> microsoft_directory_locator;
+  file_locator                  -> microsoft_file_locator;
+  file_system_locator           -> microsoft_file_system_locator;
+  microsoft_file_system_locator -> microsoft_directory_locator;
+  microsoft_file_system_locator -> microsoft_file_locator;
+  microsoft_server_locator      -> microsoft_unc_locator;
+  microsoft_server_locator      -> microsoft_volume_locator;
+}
