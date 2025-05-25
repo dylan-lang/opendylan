@@ -33,7 +33,8 @@ set any available properties for the file.
 - :func:`file-property-setter`
 - :gf:`expand-pathname`
 - :gf:`shorten-pathname`
-- :gf:`create-symbolic-link`
+- :function:`create-symbolic-link`
+- :function:`create-hard-link`
 - :macro:`with-open-file`
 
 Manipulating directories
@@ -575,6 +576,36 @@ File-System module.
      .. code-block:: dylan
 
         create-symbolic-link("/usr/bin/date", "/tmp/whattimeislove")
+
+    :seealso:
+
+      - :func:`create-hard-link`
+
+.. function:: create-hard-link
+
+   Creates a hard link
+
+   :signature: create-hard-link *target* *link* => ()
+
+   :param target: An instance of :class:`<pathname>`.
+   :param link:   An instance of :class:`<pathname>`.
+
+   :description:
+
+     Creates a directory entry that associates *link* with *target*.
+     Not yet supported in Win32.
+
+   :example:
+
+     Creates a hard link named *my-hard-link* to *myfile.txt*.
+
+     .. code-block:: dylan
+
+        create-hard-link("myfile.txt", "my-hard-link")
+
+    :seealso:
+
+      - :func:`create-symbolic-link`
 
 .. function:: delete-directory
 

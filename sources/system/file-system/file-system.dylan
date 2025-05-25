@@ -524,3 +524,9 @@ define function create-symbolic-link
   %create-symbolic-link(as(<file-system-locator>, target),
                         as(<file-system-locator>, link))
 end function create-symbolic-link;
+
+define function create-hard-link
+    (target :: <pathname>, link :: <pathname>) => ()
+  %create-hard-link(as(<file-system-locator>, target),
+                    as(<file-system-locator>, link))
+end function create-hard-link;
