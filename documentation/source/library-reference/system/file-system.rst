@@ -90,29 +90,71 @@ or a file within the file system.
 - :class:`<file-system-file-locator>`
 - :class:`<file-system-directory-locator>`
 
+The graphic below shows the file system locator hierarchy
+(dashed boxes are classes from module `locators`).
+
 .. graphviz::
-   :caption: File system locator class diagram. Dashed boxes are
-             classes from module `locators`.
+  :align: center
+  :class: only-light
 
-   digraph G {
-     fontname="Arial,sans-serif";
-     node [shape=box, color=gray];
+  digraph G {
 
-     physical_locator              [label="<physical-locator>\noa", style=dashed];
-     file_locator                  [label="<file-locator>\noa", style=dashed];
-     directory_locator             [label="<directory-locator>\noa",style=dashed];
-     file_system_locator           [label="<file-system-locator>\noa", style=bold, color="#17594A"];
-     file_system_file_locator      [label="<file-system-file-locator>", style=bold, color="#17594A"];
-     file_system_directory_locator [label="<file-system-directory-locator>", style=bold, color="#17594A"];
+    fontname="Helvetica,Arial,sans-serif";
+    node [shape=box, color=black];
 
-     physical_locator              -> file_system_locator;
-     physical_locator              -> directory_locator;
-     physical_locator              -> file_locator;
-     file_system_locator           -> file_system_file_locator;
-     file_locator                  -> file_system_file_locator;
-     file_system_locator           -> file_system_directory_locator;
-     directory_locator             -> file_system_directory_locator;
-   }
+    physical_locator              [label="<physical-locator>\noa", style=dashed];
+    file_locator                  [label="<file-locator>\noa", style=dashed];
+    directory_locator             [label="<directory-locator>\noa",style=dashed];
+    file_system_locator           [label="<file-system-locator>\noa"];
+    file_system_file_locator      [label="<file-system-file-locator>"];
+    file_system_directory_locator [label="<file-system-directory-locator>"];
+
+    physical_locator              -> file_system_locator;
+    physical_locator              -> directory_locator;
+    physical_locator              -> file_locator;
+    file_system_locator           -> file_system_file_locator;
+    file_locator                  -> file_system_file_locator;
+    file_system_locator           -> file_system_directory_locator;
+    directory_locator             -> file_system_directory_locator;
+  }
+
+.. graphviz::
+  :align: center
+  :class: only-dark
+
+  digraph G {
+
+    bgcolor="#131416";
+    fontname="Arial,Helvetica,sans-serif";
+
+    node [
+      fontcolor = "#e6e6e6",
+      style = filled,
+      shape=box,
+      color = "#e6e6e6",
+      fillcolor = "#333333"
+    ]
+
+    edge [
+      color = "#e6e6e6",
+      fontcolor = "#e6e6e6"
+    ]
+
+    physical_locator              [label="<physical-locator>\noa", style=dashed];
+    file_locator                  [label="<file-locator>\noa", style=dashed];
+    directory_locator             [label="<directory-locator>\noa",style=dashed];
+    file_system_locator           [label="<file-system-locator>\noa"];
+    file_system_file_locator      [label="<file-system-file-locator>"];
+    file_system_directory_locator [label="<file-system-directory-locator>"];
+
+    physical_locator              -> file_system_locator;
+    physical_locator              -> directory_locator;
+    physical_locator              -> file_locator;
+    file_system_locator           -> file_system_file_locator;
+    file_locator                  -> file_system_file_locator;
+    file_system_locator           -> file_system_directory_locator;
+    directory_locator             -> file_system_directory_locator;
+  }
 
 On Posix systems:
 
@@ -120,39 +162,88 @@ On Posix systems:
 - :class:`<posix-directory-locator>`
 - :class:`<posix-file-locator>`
 
+The graphic below shows the Posix file system hierarchy
+(dashed boxes are classes from module `locators`).
+
 .. graphviz::
-   :caption: Posix file system hierarchy. Dashed boxes are classes
-             from module `locators`.
+  :align: center
+  :class: only-light
 
-   digraph G {
-     fontname="Arial,sans-serif";
-     node  [shape=box, color=gray];
+  digraph G {
+    fontname="Helvetica,Arial,sans-serif";
+    node  [shape=box, color=black];
 
-     physical_locator              [label="<physical-locator>\noa", style=dashed] ;
-     directory_locator             [label="<directory-locator>\noa",style=dashed];
+    physical_locator              [label="<physical-locator>\noa", style=dashed] ;
+    directory_locator             [label="<directory-locator>\noa",style=dashed];
+    file_locator                  [label="<file-locator>\noa", style=dashed];
+    file_system_locator           [label="<file-system-locator>\noa"];
+    file_system_file_locator      [label="<file-system-file-locator>"];
+    file_system_directory_locator [label="<file-system-directory-locator>"];
 
-     file_locator                  [label="<file-locator>\noa", style=dashed];
-     file_system_locator           [label="<file-system-locator>\noa"];
-     file_system_file_locator      [label="<file-system-file-locator>"];
-     file_system_directory_locator [label="<file-system-directory-locator>"] ;
+    posix_file_system_locator     [label="<posix-file-system-locator>\noas"];
+    posix_directory_locator       [label="<posix-directory-locator>\ns"] ;
+    posix_file_locator            [label="<posix-file-locator>\ns"]
 
-     posix_file_system_locator     [label="<posix-file-system-locator>\noas", style=bold, color="#17594A"];
-     posix_directory_locator       [label="<posix-directory-locator>\ns", style=bold, color="#17594A"] ;
-     posix_file_locator            [label="<posix-file-locator>\ns", style=bold, color="#17594A"]
+    physical_locator              -> file_locator;
+    physical_locator              -> file_system_locator;
+    physical_locator              -> directory_locator;
+    directory_locator             -> file_system_directory_locator;
+    file_locator                  -> file_system_file_locator;
+    file_system_locator           -> file_system_file_locator;
+    file_system_locator           -> file_system_directory_locator;
+    file_system_locator           -> posix_file_system_locator;
+    file_system_directory_locator -> posix_directory_locator;
+    file_system_file_locator      -> posix_file_locator;
+    posix_file_system_locator     -> posix_directory_locator;
+    posix_file_system_locator     -> posix_file_locator;
+  }
 
-     physical_locator              -> file_locator;
-     physical_locator              -> file_system_locator;
-     physical_locator              -> directory_locator;
-     directory_locator             -> file_system_directory_locator;
-     file_locator                  -> file_system_file_locator;
-     file_system_locator           -> file_system_file_locator;
-     file_system_locator           -> file_system_directory_locator;
-     file_system_locator           -> posix_file_system_locator;
-     file_system_directory_locator -> posix_directory_locator;
-     file_system_file_locator      -> posix_file_locator;
-     posix_file_system_locator     -> posix_directory_locator;
-     posix_file_system_locator     -> posix_file_locator;
-   }
+.. graphviz::
+  :align: center
+  :class: only-dark
+
+  digraph G {
+
+    bgcolor="#131416";
+    fontname="Helvetica,Arial,sans-serif";
+
+    node [
+      fontcolor = "#e6e6e6",
+      style = filled,
+      shape=box,
+      color = "#e6e6e6",
+      fillcolor = "#333333"
+    ]
+
+    edge [
+      color = "#e6e6e6",
+      fontcolor = "#e6e6e6"
+    ]
+
+    physical_locator              [label="<physical-locator>\noa", style=dashed] ;
+    directory_locator             [label="<directory-locator>\noa",style=dashed];
+    file_locator                  [label="<file-locator>\noa", style=dashed];
+    file_system_locator           [label="<file-system-locator>\noa"];
+    file_system_file_locator      [label="<file-system-file-locator>"];
+    file_system_directory_locator [label="<file-system-directory-locator>"] ;
+
+    posix_file_system_locator     [label="<posix-file-system-locator>\noas"];
+    posix_directory_locator       [label="<posix-directory-locator>\ns"] ;
+    posix_file_locator            [label="<posix-file-locator>\ns"]
+
+    physical_locator              -> file_locator;
+    physical_locator              -> file_system_locator;
+    physical_locator              -> directory_locator;
+    directory_locator             -> file_system_directory_locator;
+    file_locator                  -> file_system_file_locator;
+    file_system_locator           -> file_system_file_locator;
+    file_system_locator           -> file_system_directory_locator;
+    file_system_locator           -> posix_file_system_locator;
+    file_system_directory_locator -> posix_directory_locator;
+    file_system_file_locator      -> posix_file_locator;
+    posix_file_system_locator     -> posix_directory_locator;
+    posix_file_system_locator     -> posix_file_locator;
+  }
 
 On Microsoft systems:
 
@@ -163,44 +254,98 @@ On Microsoft systems:
 - :class:`<microsoft-directory-locator>`
 - :class:`<microsoft-file-locator>`
 
+The graphic below shows the Microsoft file system hierarchy
+(dashed boxes are classes from module `locators`).
+
 .. graphviz::
-   :caption: Microsoft file system hierarchy. Dashed boxes are classes
-             from module `locators`.
+  :align: center
+  :class: only-light
 
-   digraph G {
-     fontname="Arial,sans-serif";
-     node  [shape=box, color=gray];
+  digraph G {
+    fontname="Helvetica,Arial,sans-serif";
+    node  [shape=box, color=black];
 
-     locator                       [label="<locator>\noa",style=dashed];
-     physical_locator              [label="<physical-locator>\noa", style=dashed] ;
-     directory_locator             [label="<directory-locator>\noa",style=dashed];
-     server_locator                [label="<server-locator>\noa",style=dashed];
+    locator                       [label="<locator>\noa",style=dashed];
+    physical_locator              [label="<physical-locator>\noa", style=dashed] ;
+    directory_locator             [label="<directory-locator>\noa",style=dashed];
+    server_locator                [label="<server-locator>\noa",style=dashed];
 
-     file_locator                  [label="<file-locator>\noa", style=dashed];
-     file_system_locator           [label="<file-system-locator>\noa"];
+    file_locator                  [label="<file-locator>\noa", style=dashed];
+    file_system_locator           [label="<file-system-locator>\noa"];
 
-     microsoft_file_system_locator [label="<microsoft-file-system-locator>\na", style=bold, color="#17594A"];
-     microsoft_server_locator      [label="<microsoft-server-locator>\nas", style=bold, color="#17594A"];
-     microsoft_unc_locator         [label="<microsoft-unc-locator>\ns", style=bold, color="#17594A"];
-     microsoft_volume_locator      [label="<microsoft-volume-locator>\ns", style=bold, color="#17594A"];
-     microsoft_directory_locator   [label="<microsoft-directory-locator>", style=bold, color="#17594A"];
-     microsoft_file_locator        [label="<microsoft-file-locator>", style=bold, color="#17594A"];
+    microsoft_file_system_locator [label="<microsoft-file-system-locator>\na"];
+    microsoft_server_locator      [label="<microsoft-server-locator>\nas"];
+    microsoft_unc_locator         [label="<microsoft-unc-locator>\ns"];
+    microsoft_volume_locator      [label="<microsoft-volume-locator>\ns"];
+    microsoft_directory_locator   [label="<microsoft-directory-locator>"];
+    microsoft_file_locator        [label="<microsoft-file-locator>"];
 
-     locator                       -> server_locator;
-     locator                       -> physical_locator;
-     physical_locator              -> file_locator;
-     physical_locator              -> file_system_locator;
-     physical_locator              -> directory_locator;
-     server_locator                -> microsoft_server_locator;
-     directory_locator             -> microsoft_directory_locator;
-     file_locator                  -> microsoft_file_locator;
-     file_system_locator           -> microsoft_file_system_locator;
-     microsoft_file_system_locator -> microsoft_directory_locator;
-     microsoft_file_system_locator -> microsoft_file_locator;
-     microsoft_server_locator      -> microsoft_unc_locator;
-     microsoft_server_locator      -> microsoft_volume_locator;
-   }
+    locator                       -> server_locator;
+    locator                       -> physical_locator;
+    physical_locator              -> file_locator;
+    physical_locator              -> file_system_locator;
+    physical_locator              -> directory_locator;
+    server_locator                -> microsoft_server_locator;
+    directory_locator             -> microsoft_directory_locator;
+    file_locator                  -> microsoft_file_locator;
+    file_system_locator           -> microsoft_file_system_locator;
+    microsoft_file_system_locator -> microsoft_directory_locator;
+    microsoft_file_system_locator -> microsoft_file_locator;
+    microsoft_server_locator      -> microsoft_unc_locator;
+    microsoft_server_locator      -> microsoft_volume_locator;
+  }
 
+.. graphviz::
+  :align: center
+  :class: only-dark
+
+  digraph G {
+
+    bgcolor="#131416";
+    fontname="Helvetica,Arial,sans-serif";
+
+    node [
+      fontcolor = "#e6e6e6",
+      style = filled,
+      shape=box,
+      color = "#e6e6e6",
+      fillcolor = "#333333"
+    ]
+
+    edge [
+      color = "#e6e6e6",
+      fontcolor = "#e6e6e6"
+    ]
+
+    locator                       [label="<locator>\noa",style=dashed];
+    physical_locator              [label="<physical-locator>\noa", style=dashed] ;
+    directory_locator             [label="<directory-locator>\noa",style=dashed];
+    server_locator                [label="<server-locator>\noa",style=dashed];
+
+    file_locator                  [label="<file-locator>\noa", style=dashed];
+    file_system_locator           [label="<file-system-locator>\noa"];
+
+    microsoft_file_system_locator [label="<microsoft-file-system-locator>\na"];
+    microsoft_server_locator      [label="<microsoft-server-locator>\nas"];
+    microsoft_unc_locator         [label="<microsoft-unc-locator>\ns"];
+    microsoft_volume_locator      [label="<microsoft-volume-locator>\ns"];
+    microsoft_directory_locator   [label="<microsoft-directory-locator>"];
+    microsoft_file_locator        [label="<microsoft-file-locator>"];
+
+    locator                       -> server_locator;
+    locator                       -> physical_locator;
+    physical_locator              -> file_locator;
+    physical_locator              -> file_system_locator;
+    physical_locator              -> directory_locator;
+    server_locator                -> microsoft_server_locator;
+    directory_locator             -> microsoft_directory_locator;
+    file_locator                  -> microsoft_file_locator;
+    file_system_locator           -> microsoft_file_system_locator;
+    microsoft_file_system_locator -> microsoft_directory_locator;
+    microsoft_file_system_locator -> microsoft_file_locator;
+    microsoft_server_locator      -> microsoft_unc_locator;
+    microsoft_server_locator      -> microsoft_volume_locator;
+  }
 
 Native locators, which are bound to the host platform:
 
