@@ -276,7 +276,8 @@ define module file-system
          working-directory, working-directory-setter,
          temp-directory,
          root-directories,
-         create-symbolic-link;
+         create-symbolic-link,
+         create-hard-link;
 end module file-system;
 
 define module file-system-internals
