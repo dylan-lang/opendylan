@@ -566,7 +566,6 @@ TESTWORKS_TEST_SUITE = $(INSTALL_BIN_DIRECTORY)\testworks-test-suite.dll
 C_FFI_TEST_SUITE_APP = $(INSTALL_BIN_DIRECTORY)\c-ffi-test-suite-app.exe
 LIBRARIES_TEST_SUITE = $(INSTALL_BIN_DIRECTORY)\libraries-test-suite.dll
 LIBRARIES_TEST_SUITE_APP = $(INSTALL_BIN_DIRECTORY)\libraries-test-suite-app.exe
-PENTIUM_TEST_SUITE_APP = $(INSTALL_BIN_DIRECTORY)\pentium-test-suite-app.exe
 SOCKETS_TEST_SUITE = $(INSTALL_BIN_DIRECTORY)\sockets-test-suite.dll
 IO_TEST_SUITE = $(INSTALL_BIN_DIRECTORY)\io-test-suite.dll
 SYSTEM_TEST_SUITE = $(INSTALL_BIN_DIRECTORY)\system-test-suite.dll
@@ -811,7 +810,6 @@ dylan-test-suite: $(DYLAN_TEST_SUITE)
 io-test-suite: $(IO_TEST_SUITE)
 libraries-test-suite-app: $(LIBRARIES_TEST_SUITE_APP)
 libraries-test-suite: $(LIBRARIES_TEST_SUITE)
-pentium-test-suite-app: $(PENTIUM_TEST_SUITE_APP)
 sockets-test-suite: $(SOCKETS_TEST_SUITE)
 system-test-suite: $(SYSTEM_TEST_SUITE)
 testworks-test-suite: $(TESTWORKS_TEST_SUITE)
@@ -839,7 +837,6 @@ dfmc-environment-test-suite-app: $(DFMC_ENVIRONMENT_TEST_SUITE_APP)
 testworks-libraries: testworks
 duim-test-suites: duim-test-suite-app duim-gui-test-suite win32-duim-gui-test-suite win32-duim-regression-test-suite
 test-suites: libraries-test-suite-app duim-test-suites
-pentium-test-suites: pentium-test-suite-app
 ole-test-suites: ole-test ole-coclass-test ole-macro-test
 database-test-suites: sql-odbc-test
 environment-test-suites: channels-test-suite dfmc-environment-test-suite-app
