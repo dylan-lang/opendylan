@@ -8,10 +8,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Environment suite
 
-define suite environment-suite ()
+define suite environment-test-suite ()
   suite environment-protocols-suite;
   //---*** andrewa: this needs a DUIM backend to work
   // suite environment-framework-suite;
   //---*** andrewa: the editor tests aren't automatic
   // suite suite-test-frontend; // editor-common testing
-end suite environment-suite;
+end suite;
