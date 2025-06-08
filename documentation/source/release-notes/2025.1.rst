@@ -113,6 +113,10 @@ System
   :const:`$machine-architecture`.  The old name will remain, for backward
   compatibility.
 
+* Add new functions :func:`create-symbolic-link` and
+  :func:`create-hard-link` to the module ``file-system``. Windows is
+  not yet supported.
+
 Other
 -----
 
