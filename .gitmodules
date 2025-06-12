@@ -37,3 +37,6 @@
 [submodule "sources/app/lsp-dylan"]
 	path = sources/app/lsp-dylan
 	url = https://github.com/dylan-lang/lsp-dylan
+[submodule "sources/lib/channels"]
+	path = sources/lib/channels
+	url = https://github.com/dylan-lang/channels

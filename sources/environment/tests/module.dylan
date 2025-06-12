@@ -15,5 +15,5 @@ define module environment-test-suite
 
   use testworks;
 
-  export environment-suite;
+  export environment-test-suite;
 end module environment-test-suite;
