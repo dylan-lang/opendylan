@@ -387,7 +387,7 @@ TEST_LIBS = \
 	command-line-parser-test-suite \
 	logging-test-suite \
 	regular-expressions-test-suite \
-	hash-algorithms-test
+	hash-algorithms-test-suite
 
 TEST_LOADS = $(shell for lib in $(TEST_LIBS); do echo "--load lib$${lib}.@shrext@ "; done)
 
