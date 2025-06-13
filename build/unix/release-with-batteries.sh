@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-LLVM_RELEASE=19.1.0
+LLVM_RELEASE=20.1.7
 LLVM_REL=$(echo $LLVM_RELEASE | sed s/-rc/rc/)
 
 LLVM_CLANG=$(echo $LLVM_RELEASE | sed 's/\([0-9]*\).*/\1/')
