@@ -40,3 +40,9 @@
 [submodule "sources/lib/channels"]
 	path = sources/lib/channels
 	url = https://github.com/dylan-lang/channels
+[submodule "sources/lib/uncommon-dylan"]
+	path = sources/lib/uncommon-dylan
+	url = https://github.com/cgay/uncommon-dylan
+[submodule "sources/lib/columnist"]
+	path = sources/lib/columnist
+	url = https://github.com/cgay/columnist
