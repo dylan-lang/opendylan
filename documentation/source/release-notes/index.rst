@@ -1,7 +1,7 @@
 Open Dylan Release Notes
 ========================
 
-* :doc:`2025.1` (coming soon)
+* :doc:`2025.1`
 * :doc:`2024.1`
 * :doc:`2023.1`
 * :doc:`2022.1`
