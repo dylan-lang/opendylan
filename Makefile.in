@@ -191,7 +191,7 @@ BOOTSTRAP_3_ROOT = $(abs_builddir)/Bootstrap.3
 BOOTSTRAP_3_LIBRARIES = \
 	dylan-compiler dylan-environment parser-compiler dswank
 BOOTSTRAP_3_STATICS = \
-	deft-app dylan-lsp-server
+	dylan-lsp-server
 
 BOOTSTRAP_3_COMPILER = \
         $(BOOTSTRAP_2_ROOT)/bin/dylan-compiler \
@@ -222,6 +222,18 @@ bootstrap-stage-3-statics:
 	@echo Building Open Dylan unified executables...
 	@$(BOOTSTRAP_3_ENV) $(FDMAKE) --compiler "$(BOOTSTRAP_3_COMPILER)" \
           --unify $(BOOTSTRAP_3_STATICS)
+	# `make -C` for deft would build using a different registry and _build directory,
+	# so here we repeat its logic for making `deft version` work. (TODO: make
+	# `make -C sources/app/deft build-for-opendylan` work instead.)
+	git_version=$(shell cd $(abs_srcdir)/sources/app/deft && git describe --tags --always --match 'v*'); \
+	  file="$(abs_srcdir)/sources/app/deft/sources/commands/version.dylan"; \
+	  orig=$$(mktemp); \
+	  temp=$$(mktemp); \
+	  cp -p $${file} $${orig}; \
+	  cat $${file} | sed "s|_NO_VERSION_SET_|$${git_version} built on $$(date -Iseconds)|g" > $${temp}; \
+	  mv $${temp} $${file}; \
+	  $(BOOTSTRAP_3_ENV) $(FDMAKE) --compiler "$(BOOTSTRAP_3_COMPILER)" --unify deft-app; \
+	  cp -p $${orig} $${file}
 
 BOOTSTRAP_3_LLVM_RTGVARSyes = \
         OPEN_DYLAN_LLVM_RUNTIME_GENERATOR=$(BOOTSTRAP_3_ROOT)/bin/$(RTG)
@@ -387,7 +399,7 @@ TEST_LIBS = \
 	command-line-parser-test-suite \
 	logging-test-suite \
 	regular-expressions-test-suite \
-	hash-algorithms-test
+	hash-algorithms-test-suite
 
 TEST_LOADS = $(shell for lib in $(TEST_LIBS); do echo "--load lib$${lib}.@shrext@ "; done)
 

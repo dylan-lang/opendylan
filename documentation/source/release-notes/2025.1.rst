@@ -2,8 +2,8 @@
 Open Dylan 2025.1
 *****************
 
-This document describes the 2025.1 release of Open Dylan, released DD
-MMM, 2024.  The highlights of the release are listed below.  For complete
+This document describes the 2025.1 release of Open Dylan, released 21
+June, 2024.  The highlights of the release are listed below.  For complete
 details see the `commit logs
 <https://github.com/dylan-lang/opendylan/compare/v2024.1.0...v2025.1.0>`_ for
 this release.
@@ -78,6 +78,11 @@ Tools
   compatibility (for example in GitHub workflows) but it will be removed in a
   future release.
 
+  A new command, `deft test <https://package.opendylan.org/deft/index.html#deft-test>`_,
+  has been added to run tests defined in your workspace. See the `Deft 0.13.0 release
+  notes <https://github.com/dylan-lang/deft/releases/tag/v0.13.0>`_ for a list of other
+  Deft changes.
+
 Library Updates
 ===============
 
@@ -127,4 +132,9 @@ Other
 
 Contributors
 ============
+
+* Carl Gay
+* Peter Housel
+* Bruce Mitchener
+* Fernando Raya
 

@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-LLVM_RELEASE=19.1.0
+LLVM_RELEASE=20.1.7
 LLVM_REL=$(echo $LLVM_RELEASE | sed s/-rc/rc/)
 
 LLVM_CLANG=$(echo $LLVM_RELEASE | sed 's/\([0-9]*\).*/\1/')
@@ -26,9 +26,11 @@ mkdir -p ${DISTDIR}
 
 MAKE=make
 TAR=tar
+LLVM_TARGETS=Native
 NEED_LIBUNWIND=:
 NEED_INSTALL_NAME=false
 SYSROOT=
+CFLAGS_ARCH=
 USE_LLD="-fuse-ld=lld"
 USE_LLD_OPTS="-DLLVM_ENABLE_LLD:BOOL=ON -DCLANG_DEFAULT_LINKER=lld"
 BUILD_SRC=false
@@ -65,6 +67,17 @@ case ${MACHINE}-${SYSTEM} in
         USE_LLD_OPTS=
         DYLAN_JOBS=$(getconf _NPROCESSORS_ONLN)
         ;;
+    arm64-Darwin)
+        TRIPLE=x86_64-apple-darwin
+        LLVM_TARGETS="AArch64;ARM;X86"
+        CFLAGS_ARCH="-arch x86_64"
+        NEED_LIBUNWIND=false
+        NEED_INSTALL_NAME=:
+        SYSROOT=" -isysroot $(xcrun --show-sdk-path)"
+        USE_LLD=
+        USE_LLD_OPTS=
+        DYLAN_JOBS=$(getconf _NPROCESSORS_ONLN)
+        ;;
 esac
 
 LLVM_DIST=llvm-project-${LLVM_REL}
@@ -89,9 +102,10 @@ fi
 (cd ${LLVM_DIST};
  cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_ASSERTIONS=OFF \
        -DCMAKE_INSTALL_PREFIX=${DISTDIR}/llvm \
-       -DLLVM_TARGETS_TO_BUILD:STRING="Native" \
+       -DLLVM_TARGETS_TO_BUILD:STRING="${LLVM_TARGETS}" \
        -DLLVM_ENABLE_PROJECTS="llvm;clang;lld" \
        ${RT_OPTS} ${USE_LLD_OPTS} \
+       -DLLVM_DISABLE_ASSEMBLY_FILES=ON \
        -DLLVM_ENABLE_TERMINFO=OFF \
        -DLLVM_ENABLE_LIBEDIT=OFF \
        -DLLVM_ENABLE_LIBXML2=OFF \
@@ -149,7 +163,7 @@ fi
 echo Building BDWGC in ${BDWGC_DIST}
 (cd ${BDWGC_DIST};
  ./autogen.sh;
- ./configure CC="$CC" -q --prefix=$DISTDIR \
+ ./configure CC="$CC" CFLAGS="-O2 ${CFLAGS_ARCH}" -q --prefix=$DISTDIR \
              --disable-docs --disable-static \
              --enable-threads=posix \
              --enable-parallel-mark \
@@ -166,7 +180,9 @@ done
 echo Building Open Dylan
 $top_srcdir/configure CC="$CC" CXX="$CXX" \
                       CPPFLAGS="-I${DISTDIR}/include" \
+                      CFLAGS="-O2 ${CFLAGS_ARCH}" \
                       LDFLAGS="-L${DISTDIR}/lib $USE_LLD" \
+                      --build ${TRIPLE} \
                       --with-gc=${DISTDIR} \
                       --with-harp-collector=boehm \
                       "$@"
