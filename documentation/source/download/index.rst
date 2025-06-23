@@ -34,6 +34,13 @@ current .NET platform SDK installed. `PellesC 8.00
 <https://web.archive.org/web/20191224014825/https://www.pellesc.de/index.php?page=download&lang=en&version=8.00>`_ is the
 best option.  (Note that PellesC 9.00 does not work.)
 
+.. warning:: When running the installer you **must** select a build option (Pelles, VC6,
+             etc.) rather than just taking the default, or the build script will be set
+             incorrectly in the IDE and you will not be able to open or create a project.
+             This can also be fixed after installation by navigating to Tools >
+             Environment Options ... > Build > Build Script and selecting the appropriate
+             build script for your setup.
+
 Your environment variables must be set such that the external build system
 (linker, resource compiler, etc.) can be found.  For example, for Pelles C set
 these environment variables in the System control panel (assuming installation
