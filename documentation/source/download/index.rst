@@ -60,7 +60,7 @@ Installing Older Versions
 
 Older builds can be found `on GitHub
 <https://github.com/dylan-lang/opendylan/releases>`_ or in the `download
-directories <../downloads/opendylan/>`_.
+directories <https://opendylan.org/downloads/opendylan/>`_.
 
 For the 2020.1 or newer releases just untar the downloaded file and add the
 ``bin`` directory to your :envvar:`PATH`.  Optionally, ``sudo apt install

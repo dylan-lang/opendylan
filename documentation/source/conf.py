@@ -74,5 +74,7 @@ linkcheck_ignore = [
     r'https://software.intel.com/.*',
     r'https://github.com/dylan-lang/opendylan/blob/.*',
     r'https://wiki.gnome.org/.*',
-    r'https://matrix.to/.*'
+    r'https://matrix.to/.*',
+    r'https://www.gnu.org/prep/standards/html_node/Errors.html',
+    r'https://web.archive.org/web/20150216030253/http://use.perl.org/use.perl.org/_autrijus/journal/25768.html'
 ]
