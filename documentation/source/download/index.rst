@@ -2,7 +2,7 @@
 Install Open Dylan
 ******************
 
-The current version for unix is **Open Dylan 2024.1**, for Windows **2023.1**.
+The current version for unix is **Open Dylan 2025.1**.
 
 Unix Platforms
 ==============
