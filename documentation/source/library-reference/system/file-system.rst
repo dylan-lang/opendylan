@@ -33,8 +33,8 @@ set any available properties for the file.
 - :func:`file-property-setter`
 - :gf:`expand-pathname`
 - :gf:`shorten-pathname`
-- :function:`create-symbolic-link`
-- :function:`create-hard-link`
+- :func:`create-symbolic-link`
+- :func:`create-hard-link`
 - :macro:`with-open-file`
 
 Manipulating directories

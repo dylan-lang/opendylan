@@ -779,6 +779,8 @@ Iteration Constructs
    clause must evaluate to instances of ``<machine-number>`` for this
    macro.
 
+.. _generic-arithmetic-library:
+
 The generic-arithmetic Library
 ==============================
 

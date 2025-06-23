@@ -52,7 +52,7 @@ Literals
 |                |  "123"        // A literal string      |                           |
 +----------------+----------------------------------------+---------------------------+
 
-.. _DEP 12: /proposals/dep-0012-string-literals.html
+.. _DEP-12: :doc:`/proposals/dep-0012-string-literals`
 
 
 Naming Conventions
