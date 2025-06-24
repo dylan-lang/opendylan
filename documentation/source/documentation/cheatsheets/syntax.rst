@@ -52,8 +52,7 @@ Literals
 |                |  "123"        // A literal string      |                           |
 +----------------+----------------------------------------+---------------------------+
 
-.. _DEP-12: :doc:`/proposals/dep-0012-string-literals`
-
+.. _DEP-12: https://opendylan.org/proposals/dep-0012-string-literals.html
 
 Naming Conventions
 ==================

@@ -9,7 +9,7 @@ Author:         Carl Gay
 Status:         Draft
 Created:        12-Feb-2013 (Darwin's birthday)
 Last-Modified:  16-Jan-2025
-Post-History:   04-Dec-2021 https://gitter.im/dylan-lang/general
+Post-History:   04-Dec-2021 `Matrix channel <https://app.element.io/#/room/#dylan-lang_general:gitter.im>`_
 Dylan-Version:  2025.1
 ==============  =============================================
 

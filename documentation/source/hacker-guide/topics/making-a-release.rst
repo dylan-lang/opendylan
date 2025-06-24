@@ -7,7 +7,7 @@ it's easy to forget one or two. Hopefully we can automate some of these but for
 now here is a manual check-list.
 
 #. Tell `the Matrix channel
-   <https://matrix.to/#/#dylan-lang_general:gitter.im>`_ that you plan to build
+   <https://app.element.io/#/room/#dylan-lang_general:gitter.im>`_ that you plan to build
    a release.
 
 #. Update submodules to the latest stable version tags and document the version

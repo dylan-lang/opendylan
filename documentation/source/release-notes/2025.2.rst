@@ -5,7 +5,7 @@ Open Dylan 2025.2 (coming soon)
 This document describes the 2025.2 release of Open Dylan, released DD
 MMM, 2025.  The highlights of the release are listed below.  For complete
 details see the `commit logs
-<https://github.com/dylan-lang/opendylan/compare/v2025.1.0...v2025.2.0>`_ for
+<https://github.com/dylan-lang/opendylan/compare/v2024.1.0...v2025.1.0>`_ for
 this release.
 
 .. note:: Some commit logs, for example for testworks and other libraries that
