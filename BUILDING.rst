@@ -57,7 +57,7 @@ with the ``--universal`` flag.
 On Ubuntu, Debian, etc, you can install the necessary dependencies
 with::
 
-    apt-get install autoconf automake clang-10 gcc libgc-dev libunwind-dev
+    apt-get install autoconf automake clang libgc-dev libunwind-dev
 
 The ``libunwind`` library is an optional dependency on Linux and
 FreeBSD. If available, it is used to display stack traces for
