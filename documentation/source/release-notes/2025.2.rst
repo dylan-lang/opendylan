@@ -1,6 +1,6 @@
-*****************
+*******************************
 Open Dylan 2025.2 (coming soon)
-*****************
+*******************************
 
 This document describes the 2025.2 release of Open Dylan, released DD
 MMM, 2025.  The highlights of the release are listed below.  For complete

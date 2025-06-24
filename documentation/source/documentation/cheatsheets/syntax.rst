@@ -28,7 +28,7 @@ Literals
 +----------------+----------------------------------------+---------------------------+
 | Strings        | .. code-block:: dylan                  | * :drm:`<character>`      |
 |                |                                        | * :drm:`<string>`         |
-|                |  'a'       // A character              | * `DEP 12`_               |
+|                |  'a'       // A character              | * `DEP-12`_               |
 |                |  "Hello"   // A simple string          |                           |
 |                |  "Hello\n" // An escape sequence       |                           |
 |                |  // Equivalent to "abc\ndef":          |                           |
