@@ -103,10 +103,9 @@ Equivalent to ``"\nfoo\nbar\n"``::
 Reference Implementation
 ========================
 
-A reference implementation can be found `on github
-<https://github.com/cgay/opendylan/commits/multi-line-strings>`_.  As of this
-writing, the implementation is functional but needs a few internal cleanups.
-
+As of :doc:`/release-notes/2025.1` a complete implementation is part of the `dfmc-reader
+<https://github.com/dylan-lang/opendylan/blob/f7086a1bbddd3920794acaf9d1af40c4933cfde0/sources/dfmc/reader/lexer-transitions.dylan#L480>`_
+library.
 
 Open Issues
 ===========
