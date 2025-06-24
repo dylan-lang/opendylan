@@ -1,6 +1,10 @@
 #!/bin/sh
 set -e
 
+# You may need to install the following packages for this script to work: autoconf
+# automake cmake ninja-build libtool.  On at least one system (aarch64 Debian) libtinfo5
+# was also needed.
+
 LLVM_RELEASE=20.1.7
 LLVM_REL=$(echo $LLVM_RELEASE | sed s/-rc/rc/)
 

@@ -1,4 +1,4 @@
-AC_INIT([Open Dylan], [2025.1])
+AC_INIT([Open Dylan], [2025.2pre])
 AC_PREREQ(2.50)
 
 # Directory for config.guess etc.

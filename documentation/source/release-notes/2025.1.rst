@@ -3,7 +3,7 @@ Open Dylan 2025.1
 *****************
 
 This document describes the 2025.1 release of Open Dylan, released 21
-June, 2024.  The highlights of the release are listed below.  For complete
+June, 2025.  The highlights of the release are listed below.  For complete
 details see the `commit logs
 <https://github.com/dylan-lang/opendylan/compare/v2024.1.0...v2025.1.0>`_ for
 this release.
