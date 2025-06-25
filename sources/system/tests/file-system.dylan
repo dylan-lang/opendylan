@@ -162,10 +162,59 @@ define test test-do-directory ()
   //---*** Fill this in.
 end;
 
-/// directory-contents is NYI currently ...
 define test test-directory-contents ()
-  //---*** Fill this in.
-end;
+  let tmpdir = test-temp-directory();
+  assert-true(empty?(directory-contents(tmpdir)));
+  let file1 = file-locator(tmpdir, "file1");
+  write-test-file(file1);
+  let dir1 = subdirectory-locator(tmpdir, "dir1");
+  create-directory(tmpdir, "dir1");
+  let link1 = file-locator(tmpdir, "link1");
+  create-symbolic-link(tmpdir.locator-directory, link1);
+
+  // Here we expect link1 to be a file locator, the link itself.
+  let contents1 = directory-contents(tmpdir);
+  assert-equal(3, contents1.size);
+  let count1 = 0;
+  for (locator in contents1)
+    select (locator.locator-name by \=)
+      "file1" =>
+        assert-instance?(<file-locator>, locator);
+        count1 := count1 + 1;
+      "dir1" =>
+        assert-instance?(<directory-locator>, locator);
+        count1 := count1 + 1;
+      "link1" =>
+        assert-instance?(<file-locator>, locator);
+        assert-equal("link1", locator.locator-name);
+        count1 := count1 + 1;
+      otherwise =>
+        assert-true(#f, "unexpected filename in contents1 %=", locator.locator-name);
+    end;
+  end;
+  assert-equal(3, count1, "didn't see all the expected files (1)");
+
+  // Here we expect link1 to resolve to a directory locator.
+  let contents2 = directory-contents(tmpdir, resolve-links?: #t);
+  assert-equal(3, contents2.size);
+  let count2 = 0;
+  for (locator in contents2)
+    select (locator.locator-name by \=)
+      "file1" =>
+        assert-instance?(<file-locator>, locator);
+        count2 := count2 + 1;
+      "dir1" =>
+        assert-instance?(<directory-locator>, locator);
+        count2 := count2 + 1;
+      tmpdir.locator-directory.locator-name =>
+        assert-instance?(<directory-locator>, locator);
+        count2 := count2 + 1;
+      otherwise =>
+        assert-true(#f, "unexpected filename in contents2 %=", locator.locator-name);
+    end;
+  end;
+  assert-equal(3, count2, "didn't see all the expected files (2)");
+end test;
 
 define test test-create-directory ()
   //---*** Fill this in.
@@ -1645,4 +1694,47 @@ define suite file-system-locators-test-suite ()
   test test-<posix-directory-locator>;
   test test-<posix-file-locator>;
   test test-<file-stream>;
+end suite;
+
+define test test-resolve-locator ()
+  let tmpdir = test-temp-directory();
+  assert-signals(<file-system-error>,
+                 resolve-locator(subdirectory-locator(tmpdir, "non-existent")));
+
+  create-directory(tmpdir, "foo");
+  create-directory(tmpdir, "bar");
+  let foo = subdirectory-locator(tmpdir, "foo");
+  let bar = subdirectory-locator(tmpdir, "bar");
+  let foob = subdirectory-locator(foo, "b");
+  create-directory(foo, "b");
+  let pname = as(<string>, bar);
+  assert-equal(as(<string>, resolve-locator(bar)), pname);
+  for (item in list(list(#["foo"], foo),
+                    list(#["bar"], bar),
+                    list(#["foo", "..", "bar"], bar),
+                    list(#["foo", ".."], tmpdir),
+                    list(#["foo", ".", "b", "..", "..", "foo"], foo)))
+    let (subdirs, want) = apply(values, item);
+    let orig = apply(subdirectory-locator, tmpdir, subdirs);
+    let got = resolve-locator(orig);
+    assert-equal(got, want, format-to-string("resolve-locator(%=) => %=", orig, got));
+  end;
+
+  let link1 = file-locator(tmpdir, "link1");
+  create-symbolic-link(foo, link1);
+  assert-equal(resolve-locator(foo), resolve-locator(link1),
+               "resolve-locator with valid link target");
+
+  let link2 = file-locator(tmpdir, "link2");
+  create-symbolic-link("nonexistent-target", link2);
+  assert-signals(<file-system-error>, resolve-locator(link2),
+                 "resolve-locator with non-existent link target signals");
+
+  assert-equal(working-directory(), resolve-locator(as(<file-system-locator>, ".")));
+  // Not testing ".." here because it would require changing the value of
+  // working-directory() to a directory that we know has a parent.
+end test;
+
+define suite file-system-test-suite ()
+  test test-resolve-locator;
 end suite;

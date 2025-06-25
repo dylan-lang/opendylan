@@ -316,37 +316,51 @@ end method do-directory;
 
 
 define generic directory-contents
-    (directory :: <pathname>) => (locators :: <sequence>);
+    (directory :: <pathname>, #key resolve-links?)
+ => (locators :: <sequence>);
 
 define method directory-contents
-    (directory :: <string>) => (locators :: <sequence>)
-  directory-contents(as(<file-system-directory-locator>, directory))
+    (directory :: <string>, #key resolve-links? :: <boolean>)
+ => (locators :: <sequence>)
+  directory-contents(as(<file-system-directory-locator>, directory),
+                     resolve-links?: resolve-links?)
 end;
 
-/// Return a locator for each file in the given directory.  The returned
-/// locators are guaranteed to be instances of <directory-locator> if the
-/// file is a directory, and instances of <file-locator> otherwise.
-///
+// Return a sequence of locators describing the files in `directory`.  If
+// `resolve-links?` is false then symbolic links are returned as instances of
+// <file-locator>.  If true, then symbolic links are resolved and the correct class of
+// locator is guaranteed.  Note that if a symlink points to another file in `directory`
+// then the resulting sequence may contain duplicates (in the sense of naming the same
+// file system entity, not Dylan object equality) when `resolve-links?` is true. (This
+// could be solved by resolving all the locators and checking for duplicates.)
 define method directory-contents
-    (directory :: <file-system-directory-locator>)
- => (contents :: <sequence>)
-  let contents = #();
-  local method add-file (directory, filename, type)
-          if (filename ~= "." & filename ~= "..")
-            let locator = if (type = #"directory")
-                            subdirectory-locator(directory, filename)
-                          else
-                            merge-locators(as(<file-locator>, filename), directory)
-                          end;
-            contents := pair(locator, contents);
-          end;
-        end;
-  do-directory(add-file, directory);
-  reverse!(contents)
+    (directory :: <file-system-directory-locator>, #key resolve-links? :: <boolean>)
+ => (locators :: <sequence>)
+  collecting ()
+    local method add-file (directory, name, type)
+            if (name ~= "." & name ~= "..")
+              select (type)
+                #"directory" => collect(subdirectory-locator(directory, name));
+                #"file" => collect(file-locator(directory, name));
+                #"link" =>
+                  let locator = file-locator(directory, name);
+                  if (resolve-links?)
+                    locator := resolve-locator(locator);
+                  end;
+                  collect(locator);
+              end;
+            end;
+          end method;
+    do-directory(add-file, directory);
+  end collecting
 end method directory-contents;
 
 
 ///
+// TODO(cgay): We could compatibly change this to create-directory(dir, #rest names).
+// Then if you've already cobbled together a directory locator you can just pass that.
+// If you pass multiple names, it's like create-directory(subdirectory-locator(dir,
+// names...)).  create-directory(dir) always was the intuitive API to me anyway.
 define generic create-directory (parent :: <pathname>, name :: <string>)
  => (directory :: <pathname>);
 
@@ -374,7 +388,7 @@ define method delete-directory
     (directory :: <file-system-directory-locator>, #key recursive? :: <boolean>)
  => ()
   if (recursive?)
-    for (file in directory-contents(directory))
+    for (file in directory-contents(directory, resolve-links?: #f))
       if (instance?(file, <directory-locator>))
         delete-directory(file, recursive?: #t);
       else
@@ -500,21 +514,7 @@ end method supports-list-locator?;
 ///
 define sideways method list-locator
     (locator :: <file-system-directory-locator>) => (locators :: <sequence>)
-  let locators :: <stretchy-object-vector> = make(<stretchy-object-vector>);
-  do-directory
-    (method (directory :: <pathname>, name :: <string>, type :: <file-type>)
-       ignore(directory);
-       let sublocator
-         = select (type)
-             #"file", #"link" =>
-               merge-locators(as(<file-locator>, name), locator);
-             #"directory" =>
-               subdirectory-locator(locator, name);
-           end;
-       add!(locators, sublocator)
-     end,
-     locator);
-  locators
+  directory-contents(locator)
 end method list-locator;
 
 ///

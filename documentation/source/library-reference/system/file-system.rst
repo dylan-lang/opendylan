@@ -646,16 +646,26 @@ File-System module.
 
    Returns a sequence of files and subdirectories contained in a directory.
 
-   :signature: directory-contents *directory* => *locators*
+   :signature: directory-contents *directory* #key *resolve-links?* => *locators*
 
    :parameter directory: An instance of :type:`<pathname>`.
+   :parameter #key resolve-links?: An instance of :drm:`<boolean>`. The default is :drm:`#f`.
    :value locators: A :drm:`<sequence>` of :class:`<locator>`.
 
    :description:
 
-      In the result, each file is represented by a :class:`<file-locator>` and
-      each directory is represented by a :class:`<directory-locator>`. The "."
-      and ".." directories are not included in the result.
+      Returns a sequence of locators describing the files contained in *directory*.  The
+      :file:`.` and :file:`..` directories are not included in the result.
+
+      If *resolve-links?* is false then symbolic links are returned as instances of
+      :class:`<file-locator>`.  If true, then symbolic links are resolved and the correct
+      class of locator, :class:`<file-locator>` or :class:`<directory-locator>`, is
+      determined based on the file type of the (fully resolved) link target.
+
+      Note that if a symbolic link points to another file in *directory* then the
+      resulting sequence may contain duplicates (in the sense of naming the same file
+      system entity, not in the sense of Dylan object equality) when *resolve-links?* is
+      true.
 
 .. generic-function:: directory-empty?
 
@@ -841,7 +851,7 @@ File-System module.
    :signature: file-exists? *file* #key *follow-links?* => *exists?*
 
    :parameter file: An instance of :type:`<pathname>`.
-   :parameter follow-links?: An instance of :drm:`<boolean>`. Defaults to
+   :parameter #key follow-links?: An instance of :drm:`<boolean>`. Defaults to
       :drm:`#t`.
    :value exists?: An instance of :drm:`<boolean>`.
 
@@ -1059,6 +1069,9 @@ File-System module.
      file system entity can either be a file, a directory, or a link to
      another file or directory.
 
+     This function does not resolve symbolic links.  To find the file type of the link
+     target call :func:`link-target` or :gf:`resolve-locator` on *file* first.
+
 .. type:: <file-type>
 
    The type representing all possible types of a file system entity.
@@ -1120,6 +1133,7 @@ File-System module.
    :seealso:
 
      - :func:`create-symbolic-link`
+     - :gf:`resolve-locator`
 
 .. _make:
 
@@ -1315,7 +1329,7 @@ File-System module.
 
    :parameter old-file: An instance of :type:`<pathname>`.
    :parameter new-file: An instance of :type:`<pathname>`.
-   :parameter if-exists: An instance of
+   :parameter #key if-exists: An instance of
      :type:`<copy/rename-disposition>`. Default value: ``#"signal"``.
 
    :description:

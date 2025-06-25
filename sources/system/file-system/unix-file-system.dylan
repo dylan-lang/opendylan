@@ -77,7 +77,7 @@ end function %shorten-pathname;
 
 define function %resolve-locator
     (locator :: <posix-file-system-locator>)
- => (resolved-locator :: <posix-file-system-locator>)
+ => (resolved-locator :: <string>)
   let path = as(<byte-string>, locator);
   with-storage (resolved-path, $path-max)
     let result
@@ -91,10 +91,9 @@ define function %resolve-locator
                        primitive-unwrap-machine-word(resolved-path)))
                 end));
     if (result = resolved-path)
-      let resolved = primitive-raw-as-string(
-                         primitive-cast-raw-as-pointer(
-                             primitive-unwrap-machine-word(resolved-path)));
-      string-as-locator(object-class(locator), resolved)
+      primitive-raw-as-string(
+          primitive-cast-raw-as-pointer(
+              primitive-unwrap-machine-word(resolved-path)))
     else
       unix-file-error("get realpath for", "%=", path);
     end

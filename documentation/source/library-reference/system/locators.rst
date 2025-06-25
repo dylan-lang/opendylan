@@ -398,7 +398,7 @@ The locators Module
    :signature: resolve-locator (locator) => (resolved-locator)
 
    :parameter locator: An instance of :class:`<physical-locator>`.
-   :value simplified-locator: An instance of :class:`<physical-locator>`.
+   :value resolved-locator: An instance of :class:`<physical-locator>`.
 
 
 .. generic-function:: string-as-locator

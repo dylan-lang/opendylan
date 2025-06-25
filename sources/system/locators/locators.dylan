@@ -216,12 +216,18 @@ end method;
 // inherits POSIX `realpath` semantics.
 define open generic resolve-locator
     (locator :: <physical-locator>)
- => (simplified-locator :: <physical-locator>);
+ => (resolved-locator :: <physical-locator>);
 
 define method resolve-locator
     (locator :: <physical-locator>)
- => (simplified-locator :: <physical-locator>)
-  %resolve-locator(locator)
+ => (resolved-locator :: <physical-locator>)
+  let resolved = %resolve-locator(locator);
+  let class = if (file-type(resolved) == #"directory")
+                <file-system-directory-locator>
+              else
+                <file-system-file-locator>
+              end;
+  as(class, resolved)
 end method;
 
 
