@@ -34,6 +34,6 @@ module that is very widely used.
 The ``common-dylan`` library also re-exports these modules which are defined in the
 ``dylan`` library: 
 
-- `The dylan Module </books/drm/>`_
+- `The dylan Module <https://opendylan.org/books/drm/>`_
 - :doc:`../dylan/threads`
 - :doc:`../dylan/finalization`

@@ -395,10 +395,9 @@ Equivalent to ``"^\\s*([0-9A-Fa-f]+)\\s*"``::
 Reference Implementation
 ========================
 
-The Open Dylan `dfmc-reader library
-<https://github.com/dylan-lang/opendylan/tree/master/sources/dfmc/reader>`_ contains the
-reference implementation.
-
+As of :doc:`/release-notes/2025.1` a complete implementation is part of the `dfmc-reader
+<https://github.com/dylan-lang/opendylan/blob/f7086a1bbddd3920794acaf9d1af40c4933cfde0/sources/dfmc/reader/lexer-transitions.dylan#L480>`_
+library.
 
 Revision History
 ================

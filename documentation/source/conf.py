@@ -76,5 +76,10 @@ linkcheck_ignore = [
     r'https://wiki.gnome.org/.*',
     r'https://matrix.to/.*',
     r'https://www.gnu.org/prep/standards/html_node/Errors.html',
-    r'https://web.archive.org/web/20150216030253/http://use.perl.org/use.perl.org/_autrijus/journal/25768.html'
+    r'https://web.archive.org/web/20150216030253/http://use.perl.org/use.perl.org/_autrijus/journal/25768.html',
+    r'https://stackoverflow.com/questions/tagged/dylan',
+    r'https://www.corba.org/',
+    r'https://www.reddit.com/r/dylanlang/',
+    r'https://app.element.io/.*', # The initial '#' in their URLs confuses linkcheck
+    r'https://news.ycombinator.com/item?id=8853095'
 ]

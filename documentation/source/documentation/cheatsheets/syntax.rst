@@ -28,7 +28,7 @@ Literals
 +----------------+----------------------------------------+---------------------------+
 | Strings        | .. code-block:: dylan                  | * :drm:`<character>`      |
 |                |                                        | * :drm:`<string>`         |
-|                |  'a'       // A character              | * `DEP 12`_               |
+|                |  'a'       // A character              | * `DEP-12`_               |
 |                |  "Hello"   // A simple string          |                           |
 |                |  "Hello\n" // An escape sequence       |                           |
 |                |  // Equivalent to "abc\ndef":          |                           |
@@ -52,8 +52,7 @@ Literals
 |                |  "123"        // A literal string      |                           |
 +----------------+----------------------------------------+---------------------------+
 
-.. _DEP-12: :doc:`/proposals/dep-0012-string-literals`
-
+.. _DEP-12: https://opendylan.org/proposals/dep-0012-string-literals.html
 
 Naming Conventions
 ==================

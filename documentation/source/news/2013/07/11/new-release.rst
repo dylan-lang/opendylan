@@ -27,9 +27,8 @@ On 64 bit Linux, you will need to have the Boehm GC installed for our
 executables to run. (Ubuntu: ``apt-get install libgc``)
 
 Also, remember that this weekend, July 13-14 is our `hack-a-thon`_ and we hope that you'll consider participating.
-You may also sign up for the hack-a-thon at our `Google Plus event page`_.
+You may also sign up for the hack-a-thon at our Google Plus event page [No longer active].
 
 Good luck and happy Dylan hacking!
 
 .. _hack-a-thon: https://opendylan.org/news/2013/06/30/dylan-hack-a-thon.html
-.. _Google Plus event page: https://accounts.google.com/ServiceLogin?passive=1209600&osid=1&continue=https://plus.google.com/&followup=https://plus.google.com/

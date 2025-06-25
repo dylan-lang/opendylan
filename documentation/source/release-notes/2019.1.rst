@@ -107,7 +107,7 @@ Compiler
   syntax that may be added in the future. Several additional delimiter
   characters may now be used: ```...```, ``'...'``, ``|...|``
 
-.. _syntax: https://opendylan.org/documentation/library-reference/language-extensions/parser-expansions.html
+.. _syntax: https://opendylan.org/library-reference/language-extensions/parser-expansions.html
 
 Run-time
 ========

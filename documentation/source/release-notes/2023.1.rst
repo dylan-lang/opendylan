@@ -31,7 +31,7 @@ Compiler
 * `Improvements to LLVM bitcode generation <https://github.com/dylan-lang/opendylan/pull/1469>`_
 
 * A bug in `parser expansions
-  <https://opendylan.org/documentation/library-reference/language-extensions/parser-expansions.html>`_
+  <https://opendylan.org/library-reference/language-extensions/parser-expansions.html>`_
   that could crash the compiler if the end delimiter was missing has been fixed.
 
 * `Bug 1490 <https://github.com/dylan-lang/opendylan/issues/1490>`_, which

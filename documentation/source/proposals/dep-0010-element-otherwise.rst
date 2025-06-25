@@ -6,7 +6,7 @@ Defaulted Element Reference Syntax
 DEP #:           10
 Type:            Standards Track
 Author:          Peter S. Housel
-Status:          Draft
+Status:          Withdrawn
 Created:         13-Oct-2018
 Last-Modified:   24-Feb-2019
 Post-History:    `04-Mar-2019 <https://groups.google.com/forum/#!topic/dylan-lang/AmXDa5iNJOU/discussion>`_
