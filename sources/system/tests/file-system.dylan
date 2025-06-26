@@ -1696,10 +1696,10 @@ define suite file-system-locators-test-suite ()
   test test-<file-stream>;
 end suite;
 
-define test test-resolve-locator ()
+define test test-resolve-file ()
   let tmpdir = test-temp-directory();
   assert-signals(<file-system-error>,
-                 resolve-locator(subdirectory-locator(tmpdir, "non-existent")));
+                 resolve-file(subdirectory-locator(tmpdir, "non-existent")));
 
   create-directory(tmpdir, "foo");
   create-directory(tmpdir, "bar");
@@ -1708,7 +1708,7 @@ define test test-resolve-locator ()
   let foob = subdirectory-locator(foo, "b");
   create-directory(foo, "b");
   let pname = as(<string>, bar);
-  assert-equal(as(<string>, resolve-locator(bar)), pname);
+  assert-equal(as(<string>, resolve-file(bar)), pname);
   for (item in list(list(#["foo"], foo),
                     list(#["bar"], bar),
                     list(#["foo", "..", "bar"], bar),
@@ -1716,25 +1716,25 @@ define test test-resolve-locator ()
                     list(#["foo", ".", "b", "..", "..", "foo"], foo)))
     let (subdirs, want) = apply(values, item);
     let orig = apply(subdirectory-locator, tmpdir, subdirs);
-    let got = resolve-locator(orig);
-    assert-equal(got, want, format-to-string("resolve-locator(%=) => %=", orig, got));
+    let got = resolve-file(orig);
+    assert-equal(got, want, format-to-string("resolve-file(%=) => %=", orig, got));
   end;
 
   let link1 = file-locator(tmpdir, "link1");
   create-symbolic-link(foo, link1);
-  assert-equal(resolve-locator(foo), resolve-locator(link1),
-               "resolve-locator with valid link target");
+  assert-equal(resolve-file(foo), resolve-file(link1),
+               "resolve-file with valid link target");
 
   let link2 = file-locator(tmpdir, "link2");
   create-symbolic-link("nonexistent-target", link2);
-  assert-signals(<file-system-error>, resolve-locator(link2),
-                 "resolve-locator with non-existent link target signals");
+  assert-signals(<file-system-error>, resolve-file(link2),
+                 "resolve-file with non-existent link target signals");
 
-  assert-equal(working-directory(), resolve-locator(as(<file-system-locator>, ".")));
+  assert-equal(working-directory(), resolve-file(as(<file-system-locator>, ".")));
   // Not testing ".." here because it would require changing the value of
   // working-directory() to a directory that we know has a parent.
 end test;
 
 define suite file-system-test-suite ()
-  test test-resolve-locator;
+  test test-resolve-file;
 end suite;

@@ -345,7 +345,7 @@ define method directory-contents
                 #"link" =>
                   let locator = file-locator(directory, name);
                   if (resolve-links?)
-                    locator := resolve-locator(locator);
+                    locator := resolve-file(locator);
                   end;
                   collect(locator);
               end;
@@ -354,6 +354,31 @@ define method directory-contents
     do-directory(add-file, directory);
   end collecting
 end method directory-contents;
+
+// Check the file system to resolve and expand links, and normalize the path.
+// Returns an absolute locator, using the current process's working directory
+// to resolve relative locators, or signals <file-system-error>. Note that lack
+// of an error does not mean that the resolved locator names an existing file,
+// but does mean the containing directory exists. In other words, this function
+// inherits POSIX `realpath` semantics.
+define open generic resolve-file
+    (path :: <pathname>) => (resolved :: <file-system-locator>);
+
+define method resolve-file
+    (path :: <string>) => (resolved :: <file-system-locator>)
+  let resolved = %resolve-file(path);
+  let class = if (file-type(resolved) == #"directory")
+                <file-system-directory-locator>
+              else
+                <file-system-file-locator>
+              end;
+  as(class, resolved)
+end method;
+
+define method resolve-file
+    (path :: <file-system-locator>) => (resolved :: <file-system-locator>)
+  resolve-file(as(<string>, path))
+end method;
 
 
 ///

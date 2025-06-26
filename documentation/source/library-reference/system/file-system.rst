@@ -80,6 +80,7 @@ properties of the file.
 - :func:`file-property`
 - :func:`file-type`
 - :func:`link-target`
+- :gf:`resolve-file`
 
 File system locators
 --------------------
@@ -1070,7 +1071,7 @@ File-System module.
      another file or directory.
 
      This function does not resolve symbolic links.  To find the file type of the link
-     target call :func:`link-target` or :gf:`resolve-locator` on *file* first.
+     target call :func:`link-target` or :gf:`resolve-file` on *file* first.
 
 .. type:: <file-type>
 
@@ -1133,7 +1134,29 @@ File-System module.
    :seealso:
 
      - :func:`create-symbolic-link`
-     - :gf:`resolve-locator`
+     - :gf:`resolve-file`
+
+.. generic-function:: resolve-file
+   :open:
+
+   Resolves a file path to its simplest representation containing no symbolic links.
+
+   :signature: resolve-file *path* => *resolved-path*
+
+   :description:
+
+      Resolves all links, parent references (``..``), self references (``.``), and
+      removes unnecessary path separators. Similar to :func:`simplify-locator` except
+      that it consults the file system to resolve links. A :class:`<file-system-error>`
+      is signaled if for any reason the path can't be resolved. Examples include
+      non-existent directory components, access denied, I/O error, etc.  In short, this
+      function follows the semantics of POSIX ``realpath(3)``.
+
+   :parameter path: An instance of :type:`<pathname>`.
+   :value resolved-path: An instance of :class:`<file-system-locator>`. More
+      specifically, the return value will be an instance of :class:`<file-locator>` or
+      :class:`<directory-locator>` depending on the type of the resolved file system
+      entity.
 
 .. _make:
 

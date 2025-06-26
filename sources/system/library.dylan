@@ -147,7 +147,7 @@ define module locators
     file-locator,
     merge-locators,
     relative-locator,
-    resolve-locator,
+    resolve-locator,            // deprecated, use resolve-file:file-system
     simplify-locator,
     subdirectory-locator;
 
@@ -256,6 +256,7 @@ define module file-system
          file-exists?,
          file-type,
          link-target,
+         resolve-file,
          delete-file,
          copy-file,
          rename-file,

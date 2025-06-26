@@ -65,34 +65,33 @@ define function %shorten-pathname
 end function %shorten-pathname;
 
 
-define function %resolve-locator
-    (locator :: <microsoft-file-system-locator>)
- => (resolved-locator :: <string>)
+define function %resolve-file
+    (path :: <string>) => (resolved :: <string>)
   with-stack-path (path-buffer)
-    let path-length = raw-as-integer
+    let new-length = raw-as-integer
       (%call-c-function ("GetFullPathNameA", c-modifiers: "__stdcall")
          (fileName :: <raw-c-pointer>,
           bufferLength :: <raw-c-unsigned-long>,
           bufferPtr :: <raw-c-pointer>,
           filePart :: <raw-c-pointer>)
          => (bufferUsed :: <raw-c-unsigned-long>)
-         (primitive-string-as-raw(as(<byte-string>, locator)),
+         (primitive-string-as-raw(path),
           integer-as-raw($MAX_PATH),
           primitive-string-as-raw(path-buffer),
           primitive-cast-raw-as-pointer(integer-as-raw(0)))
       end);
-    if (path-length = 0)
+    if (new-length = 0)
       if (win32-raw-last-error() = $ERROR_NOT_SUPPORTED)
-        locator
+        path
       else
-        win32-file-system-error("resolve", "%s", locator)
+        win32-file-system-error("resolve", "%s", path)
       end
-    elseif (path-length > $MAX_PATH)
-      win32-file-system-error("resolve", "%s", locator)
+    elseif (new-length > $MAX_PATH)
+      win32-file-system-error("resolve", "%s", path)
     elseif (~%file-exists?(locator, #t))
-      win32-file-system-error("resolve", "%s", locator)
+      win32-file-system-error("resolve", "%s", path)
     else
-      copy-sequence(path-buffer, end: path-length)
+      copy-sequence(path-buffer, end: new-length)
     end
   end
 end function;

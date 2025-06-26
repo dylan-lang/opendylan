@@ -35,14 +35,17 @@ Changes to libraries that are part of the `opendylan repository
 System
 ------
 
-* :gf:`resolve-locator` now returns the correct class of locator, :class:`<file-locator>`
-  or :class:`<directory-locator>`, depending on the actual file type of the fully
-  resolved locator.  It previously returned an instance of the same class as the locator
-  it was provided, but that is not always accurate when symbolic links are followed.
+* :gf:`resolve-file` (in the ``file-system`` module) replaces :const:`resolve-locator`
+  (in the ``locators`` module) because it is fundamentally a file-system operation.
+
+  :gf:`resolve-file` now returns the correct class of locator, a subclass of
+  :class:`<file-locator>` or class:`<directory-locator>`, depending on the actual file
+  type of the fully resolved file.  It previously returned an instance of the same
+  class as the locator it was provided, but that is not always accurate when symbolic
+  links are followed.
 
 * :gf:`directory-contents` has a new keyword argument ``resolve-links?``.  If true,
-  symbolic links are resolved as with :gf:`resolve-locator`.  See the
-  :gf:`directory-contents` documentation for caveats.
+  symbolic links are resolved as with :gf:`resolve-file`.
 
 Submoduled Library Updates
 ==========================

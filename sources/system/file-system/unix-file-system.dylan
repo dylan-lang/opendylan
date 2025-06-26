@@ -75,10 +75,8 @@ define function %shorten-pathname
   path
 end function %shorten-pathname;
 
-define function %resolve-locator
-    (locator :: <posix-file-system-locator>)
- => (resolved-locator :: <string>)
-  let path = as(<byte-string>, locator);
+define function %resolve-file
+    (path :: <string>) => (resolved :: <string>)
   with-storage (resolved-path, $path-max)
     let result
       = primitive-wrap-machine-word(
