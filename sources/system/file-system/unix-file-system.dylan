@@ -75,6 +75,7 @@ define function %shorten-pathname
   path
 end function %shorten-pathname;
 
+
 define function %resolve-file
     (path :: <string>) => (resolved :: <string>)
   with-storage (resolved-path, $path-max)
@@ -97,6 +98,7 @@ define function %resolve-file
     end
   end with-storage
 end function;
+
 
 define function %file-exists?
     (file :: <posix-file-system-locator>, follow-links? :: <boolean>)
@@ -122,9 +124,9 @@ define function %file-exists?
   end
 end function;
 
-///
+
 define function %file-type
-    (file :: <posix-file-system-locator>, #key if-not-exists = #f)
+    (file :: <posix-file-system-locator>, #key if-does-not-exist = unsupplied())
  => (file-type :: <file-type>)
   let file = %expand-pathname(file);
   with-stack-stat (st, file)
@@ -134,14 +136,14 @@ define function %file-type
              (primitive-string-as-raw(as(<byte-string>, file)),
               primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(st)))
            end))
-      if (unix-errno() = $ENOENT & if-not-exists)
-        if-not-exists
+      if (unix-errno() == $ENOENT & if-does-not-exist ~== unsupplied())
+        if-does-not-exist
       else
         unix-file-error("determine the type of", "%s", file)
       end
-    elseif (logand(st-mode(st), $S_IFMT) = $S_IFDIR)
+    elseif (logand(st-mode(st), $S_IFMT) == $S_IFDIR)
       #"directory"
-    elseif (logand(st-mode(st), $S_IFMT) = $S_IFLNK)
+    elseif (logand(st-mode(st), $S_IFMT) == $S_IFLNK)
       #"link"
     else
       #"file"
@@ -150,12 +152,12 @@ define function %file-type
 end function %file-type;
 
 
-///
 define function %link-target
     (link :: <posix-file-system-locator>) => (target :: <posix-file-system-locator>)
   let link = %expand-pathname(link);
-  while (%file-type(link, if-not-exists: #"file") == #"link")
-    let buffer = make(<byte-string>, size: 8192, fill: '\0');
+  while (%file-type(link, if-does-not-exist: #f) == #"link")
+    let bufsize = 8192;
+    let buffer = make(<byte-string>, size: bufsize, fill: '\0');
     let count
       = raw-as-integer(%call-c-function ("readlink")
                            (path :: <raw-byte-string>, buffer :: <raw-byte-string>,
@@ -163,10 +165,10 @@ define function %link-target
                         => (count :: <raw-c-ssize-t>)
                            (primitive-string-as-raw(as(<byte-string>, link)),
                             primitive-string-as-raw(buffer),
-                            integer-as-raw(8192))
+                            integer-as-raw(bufsize))
                        end);
-    if (count = -1)
-      unless (unix-errno() = $ENOENT | unix-errno() = $EINVAL)
+    if (count == -1)
+      unless (unix-errno() == $ENOENT | unix-errno() == $EINVAL)
         unix-file-error("readlink", "%s", link)
       end
     else
@@ -178,7 +180,6 @@ define function %link-target
 end function %link-target;
 
 
-///
 define function %delete-file
     (file :: <posix-file-system-locator>) => ()
   let file = %expand-pathname(file);
@@ -280,7 +281,6 @@ define function %copy-file
 end function %copy-file;
 
 
-///
 define function %rename-file
     (source :: <posix-file-system-locator>, destination :: <posix-file-system-locator>,
      #Key if-exists :: <copy/rename-disposition> = #"signal")
@@ -306,8 +306,6 @@ define function %rename-file
   end
 end function %rename-file;
 
-
-///
 define function %file-properties
     (file :: <posix-file-system-locator>)
  => (properties :: <explicit-key-collection>)
@@ -452,7 +450,7 @@ define function accessible?
            (primitive-string-as-raw(as(<byte-string>, file)), abstract-integer-as-raw(mode))
          end))
     let errno = unix-errno();
-    unless (errno = $EACCES | errno = $EROFS | errno = $ETXTBSY)
+    unless (errno == $EACCES | errno == $EROFS | errno == $ETXTBSY)
       unix-file-error("determine access to", "%s (errno = %=)", file, errno)
     end;
     #f
@@ -543,7 +541,6 @@ define method %file-property-setter
 end method %file-property-setter;
 
 
-///
 define constant $INVALID_DIRECTORY_FD = 0;
 define constant $NO_MORE_DIRENTRIES = 0;
 
@@ -611,7 +608,6 @@ define function %do-directory
 end function %do-directory;
 
 
-///
 define function %create-directory
     (directory :: <posix-directory-locator>)
  => (directory :: <posix-directory-locator>)
@@ -631,7 +627,6 @@ define function %create-directory
 end function %create-directory;
 
 
-///
 define function %delete-directory
     (directory :: <posix-directory-locator>) => ()
   let directory = %expand-pathname(directory);
@@ -661,7 +656,6 @@ define function %directory-empty?
 end function %directory-empty?;
 
 
-///
 define function %home-directory
     () => (home-directory :: false-or(<posix-directory-locator>))
   let path = environment-variable("HOME");
@@ -670,7 +664,8 @@ define function %home-directory
 end function %home-directory;
 
 
-///
+// The size argument is greater than zero but smaller than the length of the pathname
+// plus 1.
 define constant $ERANGE = 34;
 
 define function %working-directory
@@ -678,7 +673,7 @@ define function %working-directory
   let bufsiz :: <integer> = 128;
   let errno :: <integer> = $ERANGE;
   block (return)
-    while (errno = $ERANGE)
+    while (errno == $ERANGE)
       let buffer = make(<byte-string>, size: bufsiz, fill: '\0');
       if (primitive-machine-word-equal?
             (primitive-cast-pointer-as-raw(primitive-string-as-raw(buffer)),
@@ -700,8 +695,6 @@ define function %working-directory
   end
 end function %working-directory;
 
-
-///
 define function %working-directory-setter
     (new-working-directory :: <posix-directory-locator>)
  => (new-working-directory :: <posix-directory-locator>)
@@ -717,7 +710,6 @@ define function %working-directory-setter
 end function %working-directory-setter;
 
 
-///
 define variable *temp-directory* = #f;
 
 define function %temp-directory
