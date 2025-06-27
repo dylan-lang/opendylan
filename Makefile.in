@@ -379,6 +379,7 @@ dist: 3-stage-bootstrap
 	sed "s;`pwd`/release/opendylan-$(version);\$$(SYSTEM_ROOT);g" sources/jamfiles/config.jam >release/opendylan-$(version)/share/opendylan/build-scripts/config.jam
 	cp -R $(srcdir)/tools/lldb release/opendylan-$(version)/share/opendylan
 	cp -R $(srcdir)/tools/bash_completion release/opendylan-$(version)/share/opendylan
+	cp $(srcdir)/tools/scripts/dylan-lldb release/opendylan-$(version)/bin
 	cp $(srcdir)/License.txt release/opendylan-$(version)/
 	cp $(srcdir)/README.md release/opendylan-$(version)/
 	cp $(srcdir)/BUILDING.rst release/opendylan-$(version)/
