@@ -61,6 +61,36 @@ end;
 
 /// File-system function test cases
 
+define test test-expand-pathname ()
+  // expand-pathname on Windows does something different.
+  // https://github.com/dylan-lang/opendylan/issues/1728
+  if ($os-name ~== #"win32")
+    let user = login-name();
+    // login-name() returns #f on GitHub runners.
+    if (user)
+      assert-equal(home-directory(),
+                   expand-pathname(concatenate("~", user)),
+                   "expand ~user");
+      assert-equal(file-locator(home-directory(), "bar"),
+                   expand-pathname(concatenate("~", user, "/bar")),
+                   "expand ~user/bar");
+      assert-equal(home-directory(),
+                   expand-pathname(concatenate("~", user, "/")),
+                   "expand ~user/");
+    end;
+    assert-equal(home-directory(), expand-pathname("~"), "expand ~");
+    assert-equal(file-locator(home-directory(), "foo"),
+                 expand-pathname("~/foo"),
+                 "expand ~/foo");
+    assert-equal("a/~/c",
+                 as(<string>, expand-pathname("a/~/c")),
+                 "expand a/~/c is no-op");
+    assert-equal("a/b/~c",
+                 as(<string>, expand-pathname("a/b/~c")),
+                 "expand a/b/~c is no-op");
+  end;
+end test;
+
 define test test-file-exists? ()
   let dir = test-temp-directory();
   let file = file-locator(dir, "file");

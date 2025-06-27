@@ -769,26 +769,25 @@ File-System module.
 
 .. generic-function:: expand-pathname
 
-   Given a pathname, returns its fully expanded form.
+   Expands abbreviations in a pathname.  The implementation varies by platform.
 
-   :signature: expand-pathname *path* => *expanded-path*
+   :signature: expand-pathname *pathname* => *locator*
 
-   :param path: An instance of :class:`<pathname>`.
-   :value expanded-path: An instance of :class:`<pathname>`.
+   :param path: An instance of :type:`<pathname>`.
+   :value expanded: An instance of :class:`<locator>`.
 
-.. method:: expand-pathname
-   :specializer: <file-system-locator>
+   :description:
 
-   Expand a file path to its fully expanded form.
+      If *pathname* is an instance of :drm:`<string>` it is first converted to a
+      :class:`<file-system-locator>`.
 
-   :param path: An instance of :class:`<file-system-locator>`.
+      On Unix, if the first component of this locator begins with `~` it is replaced by
+      either the specified user's home directory (for ``~user``) or the current user's
+      home directory (for ``~``). Otherwise the locator is returned unmodified.  If the
+      specified ``~user`` doesn't exist no error is signaled and the locator is returned
+      without expansion being performed.
 
-.. method:: expand-pathname
-   :specializer: <string>
-
-   Expands a pathname given as a string.
-
-   :param path: An instance of :class:`<string>`.
+      On Windows, 8.3 file names are expanded to their long form.
 
 .. generic-function:: file-error-locator
 

@@ -47,6 +47,15 @@ System
 * :gf:`directory-contents` has a new keyword argument ``resolve-links?``.  If true,
   symbolic links are resolved as with :gf:`resolve-file`.
 
+* :gf:`expand-pathname` is no longer called by other ``file-system`` functions.  If you
+  depended on this behavior, call :gf:`expand-pathname` directly.
+
+  On Unix, ``~`` or ``~user`` are expanded to the specified user's home directory.  The
+  exact string "~" is now correctly expanded.  :gf:`expand-pathname` now uses the thread
+  safe function ``getpwnam_r`` on Unix systems.
+
+  On Windows, 8.3 short file names are expanded.
+
 Submoduled Library Updates
 ==========================
 

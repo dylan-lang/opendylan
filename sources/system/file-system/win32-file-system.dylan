@@ -6,7 +6,8 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-///
+
+// On Windows %expand-pathname expands 8.3 short file names.
 define function %expand-pathname
     (path :: <microsoft-file-system-locator>)
  => (expanded-path :: <microsoft-file-system-locator>)
@@ -26,13 +27,13 @@ define function %expand-pathname
                                 (primitive-unwrap-machine-word(unused-address)))
                            end);
       if (path-length > $MAX_PATH | path-length = 0)
-        win32-file-system-error("expand", "%s", path)
+        win32-file-system-error("GetFullPathNameA", "%s", path)
       else
         as(object-class(path), copy-sequence(path-buffer, end: path-length))
       end
     end
   end
-end function %expand-pathname;
+end function;
 
 
 ///

@@ -7,64 +7,81 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Expand "~" and "~USER" in a pathname.
-//
-// TODO(cgay): most file-system functions shouldn't call this, since file names
-// with ~ in them are perfectly valid; the functionality should be provided
-// only for user code to call explicitly.
 define method %expand-pathname
     (dir :: <posix-directory-locator>) => (expanded-path :: <locator>)
-  block (return)
-    if (~locator-relative?(dir))
-      return(dir);
-    end;
-    let elements = locator-path(dir);
-    if (empty?(elements))
-      return(dir);
-    end;
-    let first = elements[0];
-    if (~instance?(first, <string>) | first.size = 0 | first[0] ~= '~')
-      return(dir);
-    end;
-    let name = case
-                 first = "~" => login-name();
-                 otherwise   => copy-sequence(first, start: 1);
+  let path = locator-path(dir);
+  let name = ~empty?(path) & path[0];
+  if (~locator-relative?(dir)
+        | ~instance?(name, <string>)
+        | name.empty?
+        | name[0] ~== '~')
+    dir
+  else
+    let user = case
+                 name = "~" => login-name();
+                 otherwise  => copy-sequence(name, start: 1);
                end;
     let passwd = primitive-wrap-machine-word
                    (primitive-cast-pointer-as-raw
                       (%call-c-function ("getpwnam")
                            (name :: <raw-byte-string>) => (passwd :: <raw-c-pointer>)
-                           (primitive-string-as-raw(name))
-                       end));
+                           (primitive-string-as-raw(user))
+                      end));
     if (primitive-machine-word-equal?(primitive-unwrap-machine-word(passwd),
                                       integer-as-raw(0)))
       dir
     else
       let homedir = as(<native-directory-locator>, passwd-dir(passwd));
-      return(merge-locators(make(<native-directory-locator>,
-                                 path: copy-sequence(elements, start: 1),
-                                 relative?: #t),
-                            homedir))
+      merge-locators(make(<native-directory-locator>,
+                          path: copy-sequence(path, start: 1),
+                          relative?: #t),
+                     homedir)
     end
   end
 end method;
 
+// On Unix %expand-pathname expands ~ or ~user into a home directory if the user exists.
 define method %expand-pathname
     (file :: <posix-file-locator>) => (expanded-path :: <locator>)
   let directory = locator-directory(file);
-  let expanded-directory = directory & %expand-pathname(directory);
-  if (directory = expanded-directory)
-    file
+  if (directory)
+    let expanded-directory = %expand-pathname(directory);
+    if (directory == expanded-directory)
+      file
+    else
+      make(<native-file-locator>,
+           directory: expanded-directory,
+           base:      locator-base(file),
+           extension: locator-extension(file))
+    end
+  elseif (locator-extension(file))
+    file                        // ~foo.bar ?
   else
-    make(<native-file-locator>,
-         directory: expanded-directory,
-         base: locator-base(file),
-         extension: locator-extension(file))
+    // Because expand-pathname may be called with a string such as "~luser", and it is
+    // coerced to a locator with as(<file-system-locator>), which may result in a
+    // <file-locator> without a directory, we need to handle the case of no directory but
+    // an expandable base component.
+    let base = locator-base(file);
+    if (~base | empty?(base) | base[0] ~= '~')
+      file
+    elseif (base = "~")
+      home-directory()
+    else
+      let user = copy-sequence(base, start: 1);
+      let passwd = primitive-wrap-machine-word
+                     (primitive-cast-pointer-as-raw
+                        (%call-c-function ("getpwnam")
+                             (name :: <raw-byte-string>) => (passwd :: <raw-c-pointer>)
+                             (primitive-string-as-raw(user))
+                        end));
+      if (primitive-machine-word-equal?(primitive-unwrap-machine-word(passwd),
+                                        integer-as-raw(0)))
+        unix-file-error("get user homedir", "for %s", user);
+      else
+        as(<native-directory-locator>, passwd-dir(passwd))
+      end
+    end
   end
-end method;
-
-define method %expand-pathname
-    (path :: <posix-file-system-locator>) => (expanded-path :: <locator>)
-  path
 end method;
 
 
@@ -103,7 +120,6 @@ end function;
 define function %file-exists?
     (file :: <posix-file-system-locator>, follow-links? :: <boolean>)
  => (exists? :: <boolean>)
-  let file = %expand-pathname(file);
   with-stack-stat (st, file)
     ~primitive-raw-as-boolean(
       if (follow-links?)
@@ -128,7 +144,6 @@ end function;
 define function %file-type
     (file :: <posix-file-system-locator>, #key if-does-not-exist = unsupplied())
  => (file-type :: <file-type>)
-  let file = %expand-pathname(file);
   with-stack-stat (st, file)
     if (primitive-raw-as-boolean
           (%call-c-function ("system_lstat") (path :: <raw-byte-string>, st :: <raw-c-pointer>)
@@ -154,7 +169,6 @@ end function %file-type;
 
 define function %link-target
     (link :: <posix-file-system-locator>) => (target :: <posix-file-system-locator>)
-  let link = %expand-pathname(link);
   while (%file-type(link, if-does-not-exist: #f) == #"link")
     let bufsize = 8192;
     let buffer = make(<byte-string>, size: bufsize, fill: '\0');
@@ -182,7 +196,6 @@ end function %link-target;
 
 define function %delete-file
     (file :: <posix-file-system-locator>) => ()
-  let file = %expand-pathname(file);
   if (primitive-raw-as-boolean
         (%call-c-function ("unlink")
              (path :: <raw-byte-string>) => (failed? :: <raw-c-signed-int>)
@@ -285,8 +298,6 @@ define function %rename-file
     (source :: <posix-file-system-locator>, destination :: <posix-file-system-locator>,
      #Key if-exists :: <copy/rename-disposition> = #"signal")
  => ()
-  let source = %expand-pathname(source);
-  let destination = %expand-pathname(destination);
   // UNIX strikes again!  It's rename function always replaces the target.
   // So, if the caller doesn't want to overwrite an existing file, we have
   // to manually check beforehand.  (Sigh)
@@ -309,7 +320,6 @@ end function %rename-file;
 define function %file-properties
     (file :: <posix-file-system-locator>)
  => (properties :: <explicit-key-collection>)
-  let file = %expand-pathname(file);
   let properties = make(<table>);
   with-stack-stat (st, file)
     if (primitive-raw-as-boolean
@@ -343,7 +353,6 @@ end function %file-properties;
 define method %file-property
     (file :: <posix-file-system-locator>, key == #"author")
  => (author :: false-or(<string>))
-  let file = %expand-pathname(file);
   with-stack-stat (st, file)
     if (primitive-raw-as-boolean
           (%call-c-function ("system_stat") (path :: <raw-byte-string>, st :: <raw-c-pointer>)
@@ -371,7 +380,6 @@ end method %file-property;
 define method %file-property
     (file :: <posix-file-system-locator>, key == #"size")
  => (file-size :: <integer>)
-  let file = %expand-pathname(file);
   with-stack-stat (st, file)
     if (primitive-raw-as-boolean
           (%call-c-function ("system_stat") (path :: <raw-byte-string>, st :: <raw-c-pointer>)
@@ -389,7 +397,6 @@ end method %file-property;
 define method %file-property
     (file :: <posix-file-system-locator>, key == #"creation-date")
  => (creation-date :: <date>)
-  let file = %expand-pathname(file);
   with-stack-stat (st, file)
     if (primitive-raw-as-boolean
           (%call-c-function ("system_stat") (path :: <raw-byte-string>, st :: <raw-c-pointer>)
@@ -407,7 +414,6 @@ end method %file-property;
 define method %file-property
     (file :: <posix-file-system-locator>, key == #"access-date")
  => (access-date :: <date>)
-  let file = %expand-pathname(file);
   with-stack-stat (st, file)
     if (primitive-raw-as-boolean
           (%call-c-function ("system_stat") (path :: <raw-byte-string>, st :: <raw-c-pointer>)
@@ -425,7 +431,6 @@ end method %file-property;
 define method %file-property
     (file :: <posix-file-system-locator>, key == #"modification-date")
  => (modification-date :: <date>)
-  let file = %expand-pathname(file);
   with-stack-stat (st, file)
     if (primitive-raw-as-boolean
           (%call-c-function ("system_stat") (path :: <raw-byte-string>, st :: <raw-c-pointer>)
@@ -443,7 +448,6 @@ end method %file-property;
 define function accessible?
     (file :: <posix-file-system-locator>, mode :: <integer>)
  => (accessible? :: <boolean>)
-  let file = %expand-pathname(file);
   if (primitive-raw-as-boolean
         (%call-c-function ("access") (path :: <raw-byte-string>, mode :: <raw-c-signed-int>)
           => (failed? :: <raw-c-signed-int>)
@@ -462,7 +466,6 @@ end function accessible?;
 define function accessible?-setter
     (new-mode :: <integer>, file :: <posix-file-system-locator>, on? :: <boolean>)
  => (new-mode :: <integer>)
-  let file = %expand-pathname(file);
   with-stack-stat (st, file)
     if (primitive-raw-as-boolean
           (%call-c-function ("system_stat") (path :: <raw-byte-string>, st :: <raw-c-pointer>)
@@ -546,7 +549,6 @@ define constant $NO_MORE_DIRENTRIES = 0;
 
 define function %do-directory
     (f :: <function>, directory :: <posix-directory-locator>) => ()
-  let directory = %expand-pathname(directory);
   let directory-fd :: <machine-word> = as(<machine-word>, $INVALID_DIRECTORY_FD);
   block ()
     directory-fd := primitive-wrap-machine-word
@@ -611,7 +613,6 @@ end function %do-directory;
 define function %create-directory
     (directory :: <posix-directory-locator>)
  => (directory :: <posix-directory-locator>)
-  let directory = %expand-pathname(directory);
   if (primitive-raw-as-boolean
         (%call-c-function ("mkdir")
              (path :: <raw-byte-string>, mode :: <raw-c-unsigned-int>)
@@ -629,7 +630,6 @@ end function %create-directory;
 
 define function %delete-directory
     (directory :: <posix-directory-locator>) => ()
-  let directory = %expand-pathname(directory);
   if (primitive-raw-as-boolean
         (%call-c-function ("rmdir")
             (path :: <raw-byte-string>) => (failed? :: <raw-c-signed-int>)
@@ -698,15 +698,14 @@ end function %working-directory;
 define function %working-directory-setter
     (new-working-directory :: <posix-directory-locator>)
  => (new-working-directory :: <posix-directory-locator>)
-  let directory = %expand-pathname(new-working-directory);
   if (primitive-raw-as-boolean
         (%call-c-function ("chdir")
              (path :: <raw-byte-string>) => (failed? :: <raw-c-signed-int>)
-           (primitive-string-as-raw(as(<byte-string>, directory)))
+           (primitive-string-as-raw(as(<byte-string>, new-working-directory)))
          end))
-    unix-file-error("chdir", "%s", directory)
+    unix-file-error("chdir", "%s", new-working-directory)
   end;
-  directory
+  new-working-directory
 end function %working-directory-setter;
 
 
@@ -733,9 +732,6 @@ end function %root-directories;
 define function %create-symbolic-link
     (target :: <posix-file-system-locator>, link :: <posix-file-system-locator>)
  => ()
-  let target = %expand-pathname(target);
-  let link   = %expand-pathname(link);
-
   if (primitive-raw-as-boolean
         (%call-c-function("symlink")
              (target :: <raw-byte-string>, link :: <raw-byte-string>)
@@ -750,9 +746,6 @@ end function %create-symbolic-link;
 define function %create-hard-link
     (target :: <posix-file-system-locator>, link :: <posix-file-system-locator>)
  => ()
-  let target = %expand-pathname(target);
-  let link   = %expand-pathname(link);
-
   if (primitive-raw-as-boolean
         (%call-c-function("link")
              (target :: <raw-byte-string>, link :: <raw-byte-string>)
