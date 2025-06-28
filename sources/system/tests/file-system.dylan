@@ -111,7 +111,23 @@ define test test-delete-file ()
 end;
 
 define test test-copy-file ()
-  //---*** Fill this in.
+  let tmp-dir = test-temp-directory();
+  let src = write-test-file("src.txt", contents: "iota");
+  let dst = file-locator(tmp-dir, "dst.txt");
+
+  copy-file(src, dst);
+
+  assert-true(file-exists?(dst),
+              "Destination file exists");
+
+  assert-equal(file-property(src, #"size"),
+               file-property(dst, #"size"),
+               "Source and destination file have the same size");
+
+  with-open-file (fs = dst, direction: #"input")
+    assert-equal("iota", read-to-end(fs),
+                 "Destination and source file has the same content");
+  end;
 end;
 
 define test test-rename-file ()
