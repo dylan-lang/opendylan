@@ -17,25 +17,18 @@ define method %expand-pathname
         | name[0] ~== '~')
     dir
   else
-    let user = case
-                 name = "~" => login-name();
-                 otherwise  => copy-sequence(name, start: 1);
-               end;
-    let passwd = primitive-wrap-machine-word
-                   (primitive-cast-pointer-as-raw
-                      (%call-c-function ("getpwnam")
-                           (name :: <raw-byte-string>) => (passwd :: <raw-c-pointer>)
-                           (primitive-string-as-raw(user))
-                      end));
-    if (primitive-machine-word-equal?(primitive-unwrap-machine-word(passwd),
-                                      integer-as-raw(0)))
-      dir
+    let locator = make(<native-directory-locator>,
+                       path: copy-sequence(path, start: 1),
+                       relative?: #t);
+    if (name = "~")
+      merge-locators(locator, home-directory())
     else
-      let homedir = as(<native-directory-locator>, passwd-dir(passwd));
-      merge-locators(make(<native-directory-locator>,
-                          path: copy-sequence(path, start: 1),
-                          relative?: #t),
-                     homedir)
+      let homedir = user-home-directory(copy-sequence(name, start: 1));
+      if (homedir)
+        merge-locators(locator, as(<native-directory-locator>, homedir))
+      else
+        dir  // ~no-such-user
+      end
     end
   end
 end method;
@@ -55,7 +48,7 @@ define method %expand-pathname
            extension: locator-extension(file))
     end
   elseif (locator-extension(file))
-    file                        // ~foo.bar ?
+    file // ~foo.bar
   else
     // Because expand-pathname may be called with a string such as "~luser", and it is
     // coerced to a locator with as(<file-system-locator>), which may result in a
@@ -68,21 +61,36 @@ define method %expand-pathname
       home-directory()
     else
       let user = copy-sequence(base, start: 1);
-      let passwd = primitive-wrap-machine-word
-                     (primitive-cast-pointer-as-raw
-                        (%call-c-function ("getpwnam")
-                             (name :: <raw-byte-string>) => (passwd :: <raw-c-pointer>)
-                             (primitive-string-as-raw(user))
-                        end));
-      if (primitive-machine-word-equal?(primitive-unwrap-machine-word(passwd),
-                                        integer-as-raw(0)))
-        unix-file-error("get user homedir", "for %s", user);
+      let homedir = user-home-directory(user);
+      if (homedir)
+        as(<native-directory-locator>, homedir)
       else
-        as(<native-directory-locator>, passwd-dir(passwd))
+        file  // ~no-such-user
       end
     end
   end
 end method;
+
+define function user-home-directory
+    (user :: <string>) => (homedir :: false-or(<string>))
+  with-storage (homedir-buffer, $path-max)
+    let status
+      = (%call-c-function ("system_user_homedir")
+           (username :: <raw-byte-string>,
+            buffer :: <raw-byte-string>,
+            buffer-size :: <raw-c-unsigned-int>)
+           => (status :: <raw-c-signed-int>)
+           (primitive-string-as-raw(user),
+            primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(homedir-buffer)),
+            primitive-cast-integer-as-raw($path-max))
+          end);
+    if (zero?(raw-as-integer(status)))
+      primitive-raw-as-string(
+        primitive-cast-raw-as-pointer(
+          primitive-unwrap-machine-word(homedir-buffer)))
+    end
+  end with-storage
+end function;
 
 
 // No-op implementation for Windows-only feature.
@@ -362,6 +370,7 @@ define method %file-property
            end))
       unix-file-error("get the author of", "%s", file)
     end;
+    // TODO(cgay): use getpwuid_r, see system_user_homedir
     let passwd = primitive-wrap-machine-word
                    (primitive-cast-pointer-as-raw
                       (%call-c-function ("getpwuid")

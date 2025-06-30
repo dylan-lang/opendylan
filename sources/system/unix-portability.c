@@ -14,6 +14,9 @@
 #include <sys/stat.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <pwd.h>
+#include <string.h>
+
 
 #ifdef __APPLE__
 #include <crt_externs.h>

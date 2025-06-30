@@ -88,6 +88,10 @@ define test test-expand-pathname ()
     assert-equal("a/b/~c",
                  as(<string>, expand-pathname("a/b/~c")),
                  "expand a/b/~c is no-op");
+    assert-equal("~no-such-luser/foo",
+                 as(<string>, expand-pathname("~no-such-luser/foo")));
+    assert-equal("~no-such-luser",
+                 as(<string>, expand-pathname("~no-such-luser")));
   end;
 end test;
 
