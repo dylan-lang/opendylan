@@ -185,8 +185,14 @@ define test test-file-properties ()
 end;
 
 define test test-file-property ()
-  //---*** Fill this in.
-end;
+  // login-name returns #f on GitHub Ubuntu runners.
+  if (login-name())
+    let tmpdir = test-temp-directory();
+    let file1 = file-locator(tmpdir, "file1");
+    write-test-file(file1, contents: "abc");
+    assert-equal(login-name(), file-property(file1, #"author"));
+  end;
+end test;
 
 define test test-file-property-setter ()
   //---*** Fill this in.

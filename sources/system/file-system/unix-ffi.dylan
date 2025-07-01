@@ -92,14 +92,6 @@ define inline-only function st-ctime (st :: <machine-word>) => (ctime :: <abstra
 end function st-ctime;
 
 
-define inline-only function passwd-name (passwd :: <machine-word>) => (name :: <byte-string>)
-  primitive-raw-as-string
-    (primitive-c-pointer-at(primitive-unwrap-machine-word(passwd),
-                            integer-as-raw(0),
-                            integer-as-raw($pw-name-offset)))
-end function passwd-name;
-
-
 define inline-only function group-name (group :: <machine-word>) => (name :: <byte-string>)
   primitive-raw-as-string
     (primitive-c-pointer-at(primitive-unwrap-machine-word(group),

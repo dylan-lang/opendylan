@@ -21,8 +21,6 @@ define constant $st-atime-offset :: <integer> = 32;
 define constant $st-mtime-offset :: <integer> = 48;
 define constant $st-ctime-offset :: <integer> = 64;
 
-define constant $pw-name-offset :: <integer> = 0;
-
 define constant $gr-name-offset :: <integer> = 0;
 
 define constant $tm-sec-offset :: <integer> = 0;

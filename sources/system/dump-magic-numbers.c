@@ -47,9 +47,6 @@ main(void) {
     PRINT_OFFSETOF(struct stat, st_ctime, "$st-ctime-offset");
 
     printf("\n");
-    PRINT_OFFSETOF(struct passwd, pw_name, "$pw-name-offset");
-
-    printf("\n");
     PRINT_OFFSETOF(struct group, gr_name, "$gr-name-offset");
 
     printf("\n");

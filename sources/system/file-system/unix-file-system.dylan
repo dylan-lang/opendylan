@@ -370,21 +370,39 @@ define method %file-property
            end))
       unix-file-error("get the author of", "%s", file)
     end;
-    // TODO(cgay): use getpwuid_r, see system_user_homedir
-    let passwd = primitive-wrap-machine-word
-                   (primitive-cast-pointer-as-raw
-                      (%call-c-function ("getpwuid")
-                           (uid :: <raw-c-unsigned-int>) => (passwd :: <raw-c-pointer>)
-                         (abstract-integer-as-raw(st-uid(st)))
-                       end));
-    if (primitive-machine-word-not-equal?(primitive-unwrap-machine-word(passwd),
-                                          integer-as-raw(0)))
-      passwd-name(passwd)
-    else
-      unix-file-error("get the author of", "%s", file)
-    end
+    let uid = raw-as-integer(abstract-integer-as-raw(st-uid(st))); // ?? better way?
+    username-from-uid(uid)
   end
 end method %file-property;
+
+define function username-from-uid (uid :: <integer>) => (username :: <string>)
+  // I didn't find a platform-independent way to determine the maximum username size so
+  // we're going with "256 chars should be enough for anyone". LOGIN_NAME_MAX looks
+  // potentially useful on Linux? MAXLOGNAME on BSD systems? Can't we all just get along?
+  // POSIX sets a minumum size of 9 (byte?) characters.
+  let max-username-size = 256;
+  with-storage (username-buffer, max-username-size)
+    let status
+      = (%call-c-function ("system_passwd_username_from_uid")
+           (uid :: <raw-c-unsigned-int>,
+            username-buffer :: <raw-byte-string>,
+            username-buffer-size :: <raw-c-unsigned-int>)
+           => (status :: <raw-c-signed-int>)
+           (integer-as-raw(uid),
+            primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(username-buffer)),
+            primitive-cast-integer-as-raw(max-username-size))
+          end);
+    if (zero?(raw-as-integer(status)))
+      primitive-raw-as-string(
+        primitive-cast-raw-as-pointer(
+          primitive-unwrap-machine-word(username-buffer)))
+    else
+      error(make(<file-system-error>,
+                 format-string: "Can't get username for uid %d",
+                 format-arguments: list(uid)))
+    end
+  end with-storage
+end function;
 
 define method %file-property
     (file :: <posix-file-system-locator>, key == #"size")
