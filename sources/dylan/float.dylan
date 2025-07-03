@@ -152,13 +152,13 @@ define sealed inline method as (class == <single-float>, x :: <double-float>)
     (primitive-double-float-as-single(primitive-double-float-as-raw(x)))
 end method as;
 
-define inline-only function decode-single-float (x :: <single-float>)
+define inline function decode-single-float (x :: <single-float>)
  => (decoded :: <machine-word>)
   primitive-wrap-machine-word
     (primitive-cast-single-float-as-machine-word(primitive-single-float-as-raw(x)))
 end function decode-single-float;
 
-define inline-only function encode-single-float (x :: <machine-word>)
+define inline function encode-single-float (x :: <machine-word>)
  => (encoded :: <single-float>)
   primitive-raw-as-single-float
     (primitive-cast-machine-word-as-single-float(primitive-unwrap-machine-word(x)))
@@ -277,14 +277,14 @@ define sealed inline method as (class == <double-float>, x :: <single-float>)
     (primitive-single-float-as-double(primitive-single-float-as-raw(x)))
 end method as;
 
-define inline-only function decode-double-float (x :: <double-float>)
+define inline function decode-double-float (x :: <double-float>)
  => (low :: <machine-word>, high :: <machine-word>)
   let (low :: <raw-machine-word>, high :: <raw-machine-word>)
     = primitive-cast-double-float-as-machine-words(primitive-double-float-as-raw(x));
   values(primitive-wrap-machine-word(low), primitive-wrap-machine-word(high))
 end function decode-double-float;
 
-define inline-only function encode-double-float
+define inline function encode-double-float
     (low :: <machine-word>, high :: <machine-word>) => (encoded :: <double-float>)
   primitive-raw-as-double-float
     (primitive-cast-machine-words-as-double-float(primitive-unwrap-machine-word(low),
