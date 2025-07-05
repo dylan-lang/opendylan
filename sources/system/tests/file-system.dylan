@@ -68,7 +68,10 @@ define test test-file-exists? ()
   write-test-file(file);
   assert-true(file-exists?(file));
   assert-true(file-exists?(dir));
+end test;
 
+define test test-symbolic-link ()
+  let dir = test-temp-directory();
   let tmp-nothing  = file-locator(dir, "nothing");
   let tmp-something = write-test-file("something");
   let symlink-bad  = file-locator(dir, "symlink-bad");
@@ -80,15 +83,6 @@ define test test-file-exists? ()
   assert-true(file-exists?(symlink-good));
   assert-false(file-exists?(symlink-bad));
   assert-true(file-exists?(symlink-bad, follow-links?: #f));
-end test;
-
-define test test-symbolic-link ()
-  let tmp-dir = test-temp-directory();
-  let tmp-file = write-test-file("tmp.txt");
-  let symlink = file-locator(tmp-dir, "symlink-to-tmp");
-
-  create-symbolic-link(tmp-file, symlink);
-  assert-true(file-exists?(symlink));
 end;
 
 define test test-hard-link ()
