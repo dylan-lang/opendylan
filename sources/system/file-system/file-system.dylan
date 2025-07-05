@@ -8,7 +8,12 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Types
 
-/// Needs a better name, I think ...
+// Needs a better name, I think ...
+//
+// I'm guessing the author of the above comment was thinking of the potential confusion
+// between "file type" and "file extension", which in turn is related to the confusion
+// between "pathname" or "locator" and "file". Locators uses the "extension" terminology
+// consistently so I think <file-type> is okay.  <file-system-entity-type>? ;) --cgay
 define constant <file-type> = one-of(#"file", #"directory", #"link");
 
 define constant <copy/rename-disposition> = one-of(#"signal", #"replace");
@@ -138,14 +143,20 @@ end method file-type;
 
 
 ///
-define generic link-target (link :: <pathname>) => (target :: <pathname>);
+define generic link-target
+    (link :: <pathname>, #key follow-links?)
+ => (target :: false-or(<file-system-locator>));
 
-define method link-target (link :: <file-system-locator>) => (target :: <pathname>)
-  %link-target(link)
+define method link-target
+    (link :: <file-system-locator>, #key follow-links? :: <boolean> = #t)
+ => (target :: false-or(<file-system-locator>))
+  %link-target(link, follow-links?)
 end method link-target;
 
-define method link-target (link :: <string>) => (target :: <pathname>)
-  link-target(as(<file-system-locator>, link))
+define method link-target
+    (link :: <string>, #key follow-links? :: <boolean> = #t)
+ => (target :: false-or(<file-system-locator>))
+  link-target(as(<file-system-locator>, link), follow-links?: follow-links?)
 end method link-target;
 
 

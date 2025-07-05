@@ -79,7 +79,7 @@ properties of the file.
 - :func:`file-properties`
 - :func:`file-property`
 - :func:`file-type`
-- :func:`link-target`
+- :gf:`link-target`
 - :gf:`resolve-file`
 
 File system locators
@@ -1070,7 +1070,7 @@ File-System module.
      another file or directory.
 
      This function does not resolve symbolic links.  To find the file type of the link
-     target call :func:`link-target` or :gf:`resolve-file` on *file* first.
+     target call :gf:`link-target` or :gf:`resolve-file` on *file* first.
 
 .. type:: <file-type>
 
@@ -1118,17 +1118,33 @@ File-System module.
      permissions set on the file are incorrect or insufficient for
      your operation.
 
-.. function:: link-target
+.. generic-function:: link-target
 
    Returns the target of a symbolic link.
 
-   :signature: link-target *file* => *target*
+   .. note:: On Windows this function is not implemented; it always signals an error.
+
+   :signature: link-target *file* #key *follow-links?* => *target*
    :parameter file: An instance of type :type:`<pathname>`.
-   :value target: An instance of type :type:`<pathname>`.
+   :parameter #key follow-links?: An instance of type :drm:`<boolean>`. The default is
+      :drm:`#t`.
+   :value target: :drm:`#f` or an instance of type :class:`<file-system-locator>`.
    :description:
 
-      Repeatedly follows symbolic links starting with *file* until it finds a
-      non-link file or directory, or a non-existent link target.
+      Returns a locator identifying the target of symbolic link *file*.
+
+      Signals :class:`<file-system-error>` if the system call to read the link target
+      fails for any reason. For example, if *file* is not a symbolic link or if *file*
+      does not exist.
+
+      If ``follow-links?`` is true (the default) then links are followed until a file
+      that is not a symbolic link is found, and the locator for that file is returned. If
+      the final link in a chain of one or more symbolic links points to a non-existent
+      file, :drm:`#f` is returned.
+
+      If ``follow-links?`` is false, no attempt is made to follow the link or to check
+      whether the link target file exists.  A locator representing the target is
+      returned.
 
    :seealso:
 
@@ -1312,7 +1328,7 @@ File-System module.
      - :func:`file-property-setter`
      - :func:`file-type`
      - :func:`home-directory`
-     - :func:`link-target`
+     - :gf:`link-target`
      - :func:`rename-file`
      - :func:`create-symbolic-link`
 

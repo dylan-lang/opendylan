@@ -147,7 +147,8 @@ end function %file-type;
 
 ///
 define function %link-target
-    (link :: <microsoft-file-system-locator>) => (target :: <microsoft-file-system-locator>)
+    (link :: <microsoft-file-system-locator>, follow-links? :: <boolean>)
+ => (target :: <microsoft-file-system-locator>)
   error(make(<file-system-error>,
              format-string: "link-target is not available on this platform",
              format-arguments: #()))

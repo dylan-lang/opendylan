@@ -128,6 +128,25 @@ define test test-create-hard-link ()
   assert-true(file-exists?(new-path));
 end;
 
+define test test-link-target ()
+  if ($os-name ~== #"win32")    // link-target is not implemented on Windows
+    let tmp = test-temp-directory();
+    let aaa = file-locator(tmp, "aaa");
+    let bbb = file-locator(tmp, "bbb");
+    let ccc = file-locator(tmp, "ccc");
+    let ddd = file-locator(tmp, "ddd");
+    write-test-file(ddd, contents: "ddd");
+    create-symbolic-link(ddd, ccc);
+    create-symbolic-link(ccc, bbb);
+    create-symbolic-link(bbb, aaa);
+    assert-equal(link-target(aaa), ddd);
+    assert-equal(link-target(aaa, follow-links?: #f), bbb);
+    assert-signals(<file-system-error>, link-target(ddd), "ddd is not a symbolic link");
+    delete-file(ddd);
+    assert-false(link-target(aaa), "link target does not exist");
+  end if;
+end test;
+
 define test test-file-type ()
   //---*** Fill this in.
 end;

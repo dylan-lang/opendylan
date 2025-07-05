@@ -151,7 +151,7 @@ end function;
 
 define function %file-type
     (file :: <posix-file-system-locator>, #key if-does-not-exist = unsupplied())
- => (file-type :: <file-type>)
+ => (file-type :: <object>)
   with-stack-stat (st, file)
     if (primitive-raw-as-boolean
           (%call-c-function ("system_lstat") (path :: <raw-byte-string>, st :: <raw-c-pointer>)
@@ -176,11 +176,12 @@ end function %file-type;
 
 
 define function %link-target
-    (link :: <posix-file-system-locator>) => (target :: <posix-file-system-locator>)
-  while (%file-type(link, if-does-not-exist: #f) == #"link")
-    let bufsize = 8192;
+    (link :: <posix-file-system-locator>, follow-links? :: <boolean>)
+ => (target :: false-or(<posix-file-system-locator>))
+  iterate loop (link = link)
+    let bufsize = $path-max;
     let buffer = make(<byte-string>, size: bufsize, fill: '\0');
-    let count
+    let length
       = raw-as-integer(%call-c-function ("readlink")
                            (path :: <raw-byte-string>, buffer :: <raw-byte-string>,
                             bufsize :: <raw-c-size-t>)
@@ -189,16 +190,25 @@ define function %link-target
                             primitive-string-as-raw(buffer),
                             integer-as-raw(bufsize))
                        end);
-    if (count == -1)
-      unless (unix-errno() == $ENOENT | unix-errno() == $EINVAL)
-        unix-file-error("readlink", "%s", link)
-      end
+    if (length == -1)
+      unix-file-error("readlink", "%s", link);
     else
-      let target = as(<file-system-locator>, copy-sequence(buffer, end: count));
-      link := merge-locators(target, link)
+      let locator = as(<file-system-locator>, copy-sequence(buffer, end: length));
+      let target = merge-locators(locator, link);
+      if (~follow-links?)
+        target
+      else
+        let type = %file-type(target, if-does-not-exist: #f);
+        if (~type)
+          #f
+        elseif (type == #"link")
+          loop(target)
+        else
+          target
+        end
+      end
     end
-  end;
-  link
+  end iterate
 end function %link-target;
 
 

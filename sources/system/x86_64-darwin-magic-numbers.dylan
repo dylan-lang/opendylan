@@ -6,7 +6,6 @@ License: Public Domain
 define constant $ENOENT :: <integer> = 2;
 define constant $EINTR :: <integer> = 4;
 define constant $EACCES :: <integer> = 13;
-define constant $EINVAL :: <integer> = 22;
 define constant $ETXTBSY :: <integer> = 26;
 define constant $EROFS :: <integer> = 30;
 

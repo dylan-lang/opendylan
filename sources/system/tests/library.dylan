@@ -10,6 +10,7 @@ define library system-test-suite
   use common-dylan;
   use common-dylan-test-utilities;
   use io;
+  use strings;
   use system;
   use testworks;
 
@@ -27,6 +28,7 @@ define module system-test-suite
               test-stream-class };
   use streams;
   use streams-internals;
+  use strings;
   use testworks;
 
   // System modules to test
