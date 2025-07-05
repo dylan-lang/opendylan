@@ -87,12 +87,8 @@ end;
 
 define test test-hard-link ()
   let tmp-dir  = test-temp-directory();
-  let old-path = file-locator(tmp-dir, "hard-link");
+  let old-path = write-test-file("hard-link", contents: "stuff");
   let new-path = file-locator(tmp-dir, "new-link");
-
-  with-open-file (fs = old-path, direction: #"output")
-    write(fs, "stuff")
-  end;
 
   create-hard-link(old-path, new-path);
   assert-true(file-exists?(new-path));
