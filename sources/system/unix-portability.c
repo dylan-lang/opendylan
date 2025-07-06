@@ -2,6 +2,8 @@
 #define _DARWIN_C_SOURCE
 #endif
 
+#define _GNU_SOURCE
+
 #include <unistd.h>
 #include <signal.h>
 #include <errno.h>
@@ -143,3 +145,39 @@ int system_concurrent_thread_count(void)
   }
   return (int) count;
 }
+
+/*
+  Copy from 'in_fd' file (with 'in_size' bytes) to 'out_fd'.
+  Return 0 on success and -1 if there is an error.
+*/
+int system_copy_file_range(int in_fd, int out_fd, off_t in_size);
+
+#ifdef __APPLE__
+#include <copyfile.h>
+
+int system_copy_file_range(int in_fd, int out_fd, off_t in_size)
+{
+  return fcopyfile(in_fd, out_fd, NULL, COPYFILE_ALL);
+}
+
+#else
+
+int system_copy_file_range(int in_fd, int out_fd, off_t in_size)
+{
+  // offset: read from file adjusted by bytes copied
+  off_t *_Nullable offset = NULL;
+  // flags: used for future expansion, currently must be 0
+  unsigned int flags = 0;
+  // bytes copied
+  off_t copied = -1;
+
+  do {
+    copied = copy_file_range(in_fd, offset, out_fd, offset, in_size, flags);
+    if (copied == -1) return -1;
+    in_size -= copied;
+  } while (in_size > 0 && copied > 0);
+
+  return 0;
+}
+
+#endif
