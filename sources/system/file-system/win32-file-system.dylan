@@ -6,10 +6,22 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-///
+
+// TODO(cgay): Not yet implemented on Windows.
+//             https://github.com/dylan-lang/opendylan/issues/1728
 define function %expand-pathname
     (path :: <microsoft-file-system-locator>)
  => (expanded-path :: <microsoft-file-system-locator>)
+  path
+end function;
+
+// TODO(cgay): This used to be the implementation of %expand-pathname (above), but the
+// expand-pathname generic function has a different purpose. See
+// https://github.com/dylan-lang/opendylan/issues/1728#issuecomment-3014101087 for my
+// reasoning for keeping this.
+define function %absolute-path
+    (path :: <microsoft-file-system-locator>)
+ => (full-path :: <microsoft-file-system-locator>)
   with-stack-path (path-buffer)
     with-stack-dword (unused-address)
       let path-length = raw-as-integer
@@ -26,13 +38,13 @@ define function %expand-pathname
                                 (primitive-unwrap-machine-word(unused-address)))
                            end);
       if (path-length > $MAX_PATH | path-length = 0)
-        win32-file-system-error("expand", "%s", path)
+        win32-file-system-error("GetFullPathNameA", "%s", path)
       else
         as(object-class(path), copy-sequence(path-buffer, end: path-length))
       end
     end
   end
-end function %expand-pathname;
+end function;
 
 
 ///
@@ -65,34 +77,33 @@ define function %shorten-pathname
 end function %shorten-pathname;
 
 
-define function %resolve-locator
-    (locator :: <microsoft-file-system-locator>)
- => (resolved-locator :: <microsoft-file-system-locator>)
+define function %resolve-file
+    (path :: <string>) => (resolved :: <string>)
   with-stack-path (path-buffer)
-    let path-length = raw-as-integer
+    let new-length = raw-as-integer
       (%call-c-function ("GetFullPathNameA", c-modifiers: "__stdcall")
          (fileName :: <raw-c-pointer>,
           bufferLength :: <raw-c-unsigned-long>,
           bufferPtr :: <raw-c-pointer>,
           filePart :: <raw-c-pointer>)
          => (bufferUsed :: <raw-c-unsigned-long>)
-         (primitive-string-as-raw(as(<byte-string>, locator)),
+         (primitive-string-as-raw(path),
           integer-as-raw($MAX_PATH),
           primitive-string-as-raw(path-buffer),
           primitive-cast-raw-as-pointer(integer-as-raw(0)))
       end);
-    if (path-length = 0)
+    if (new-length = 0)
       if (win32-raw-last-error() = $ERROR_NOT_SUPPORTED)
-        locator
+        path
       else
-        win32-file-system-error("resolve", "%s", locator)
+        win32-file-system-error("resolve", "%s", path)
       end
-    elseif (path-length > $MAX_PATH)
-      win32-file-system-error("resolve", "%s", locator)
+    elseif (new-length > $MAX_PATH)
+      win32-file-system-error("resolve", "%s", path)
     elseif (~%file-exists?(locator, #t))
-      win32-file-system-error("resolve", "%s", locator)
+      win32-file-system-error("resolve", "%s", path)
     else
-      as(object-class(locator), copy-sequence(path-buffer, end: path-length))
+      copy-sequence(path-buffer, end: new-length)
     end
   end
 end function;
@@ -101,7 +112,7 @@ end function;
 define function %file-exists?
     (file :: <microsoft-file-system-locator>, follow-links? :: <boolean>)
  => (exists? :: <boolean>)
-  let file = %expand-pathname(file);
+  let file = %absolute-path(file);
   if (primitive-machine-word-not-equal?
         (%call-c-function ("GetFileAttributesA", c-modifiers: "__stdcall")
              (path :: <raw-byte-string>)
@@ -147,7 +158,8 @@ end function %file-type;
 
 ///
 define function %link-target
-    (link :: <microsoft-file-system-locator>) => (target :: <microsoft-file-system-locator>)
+    (link :: <microsoft-file-system-locator>, follow-links? :: <boolean>)
+ => (target :: <microsoft-file-system-locator>)
   error(make(<file-system-error>,
              format-string: "link-target is not available on this platform",
              format-arguments: #()))
@@ -157,7 +169,7 @@ end function %link-target;
 ///
 define function %delete-file
     (file :: <microsoft-file-system-locator>) => ()
-  let file = %expand-pathname(file);
+  let file = %absolute-path(file);
   // NOTE: Turn off the read-only flag or we won't be able to delete the file!
   %file-property(file, #"writeable?") := #t;
   unless (primitive-raw-as-boolean
@@ -176,8 +188,8 @@ define function %copy-file
     (source :: <microsoft-file-system-locator>, destination :: <microsoft-file-system-locator>,
      #key if-exists :: <copy/rename-disposition> = #"signal")
  => ()
-  let source = %expand-pathname(source);
-  let destination = %expand-pathname(destination);
+  let source = %absolute-path(source);
+  let destination = %absolute-path(destination);
   // NOTE: Contrary to the documentation, CopyFile won't copy over
   // an existing read-only file so we need to delete it manually.
   if (if-exists == #"replace" & %file-exists?(destination, #f))
@@ -206,8 +218,8 @@ define function %rename-file
     (source :: <microsoft-file-system-locator>, destination :: <microsoft-file-system-locator>,
      #key if-exists :: <copy/rename-disposition> = #"signal")
  => ()
-  let source = %expand-pathname(source);
-  let destination = %expand-pathname(destination);
+  let source = %absolute-path(source);
+  let destination = %absolute-path(destination);
   // NOTE: We can't use MoveFileEx which provides options to control
   // the move if the target exists because MoveFileEx isn't implemented
   // in Windows 95.  (When this code was originally written, the
@@ -308,7 +320,7 @@ end function writeable?;
 
 define method %file-property
     (file :: <microsoft-file-system-locator>, key == #"writeable?") => (writeable? :: <boolean>)
-  let file = %expand-pathname(file);
+  let file = %absolute-path(file);
   let attributes = primitive-wrap-machine-word
                      (%call-c-function ("GetFileAttributesA", c-modifiers: "__stdcall")
                           (path :: <raw-byte-string>)
@@ -327,7 +339,7 @@ end method %file-property;
 define method %file-property-setter
     (new-writeable? :: <boolean>, file :: <microsoft-file-system-locator>, key == #"writeable?")
  => (new-writeable? :: <boolean>)
-  let file = %expand-pathname(file);
+  let file = %absolute-path(file);
   let attributes = primitive-wrap-machine-word
                      (%call-c-function ("GetFileAttributesA", c-modifiers: "__stdcall")
                           (path :: <raw-byte-string>)
@@ -360,7 +372,7 @@ end method %file-property-setter;
 define method %file-property
     (file :: <microsoft-file-system-locator>, key == #"executable?")
  => (executable? :: <boolean>)
-  let file = %expand-pathname(file);
+  let file = %absolute-path(file);
   let executable? = primitive-raw-as-boolean
                       (%call-c-function ("SHGetFileInfoA", c-modifiers: "__stdcall")
                            (pszPath :: <raw-byte-string>,
@@ -399,7 +411,7 @@ end method %file-property;
 ///
 define function %do-directory
     (f :: <function>, directory :: <microsoft-directory-locator>) => ()
-  let directory = %expand-pathname(directory);
+  let directory = %absolute-path(directory);
   let wild-file = make(<microsoft-file-locator>, directory: directory, name: "*.*");
   let find-handle = primitive-wrap-machine-word(integer-as-raw($INVALID_HANDLE_VALUE));
   with-stack-win32-find-data (wfd, directory)
@@ -462,7 +474,7 @@ end function %do-directory;
 define function %create-directory
     (directory :: <microsoft-directory-locator>)
  => (directory :: <microsoft-directory-locator>)
-  let directory = %expand-pathname(directory);
+  let directory = %absolute-path(directory);
   if (primitive-raw-as-boolean
         (%call-c-function ("CreateDirectoryA", c-modifiers: "__stdcall")
              (dirPathname :: <raw-byte-string>, securityAttributes :: <raw-c-pointer>)
@@ -480,7 +492,7 @@ end function %create-directory;
 ///
 define function %delete-directory
     (directory :: <microsoft-directory-locator>) => ()
-  let directory = %expand-pathname(directory);
+  let directory = %absolute-path(directory);
   unless (primitive-raw-as-boolean
             (%call-c-function ("RemoveDirectoryA", c-modifiers: "__stdcall")
                  (dirPathname :: <raw-byte-string>)
@@ -557,7 +569,7 @@ end function %working-directory;
 define function %working-directory-setter
     (new-working-directory :: <microsoft-directory-locator>)
  => (new-working-directory :: <microsoft-directory-locator>)
-  let directory = %expand-pathname(new-working-directory);
+  let directory = %absolute-path(new-working-directory);
   unless (primitive-raw-as-boolean
             (%call-c-function ("SetCurrentDirectoryA", c-modifiers: "__stdcall")
                  (lpPathName :: <raw-byte-string>)

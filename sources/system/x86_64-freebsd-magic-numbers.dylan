@@ -7,7 +7,6 @@ License: Public Domain
 define constant $ENOENT = 2;
 define constant $EINTR = 4;
 define constant $EACCES = 13;
-define constant $EINVAL = 22;
 define constant $ETXTBSY = 26;
 define constant $EROFS = 30;
 define constant $path-max = 1024;

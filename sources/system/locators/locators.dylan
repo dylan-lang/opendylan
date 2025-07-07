@@ -208,22 +208,9 @@ define method simplify-locator
   end
 end method;
 
-// Check the file system to resolve and expand links, and normalize the path.
-// Returns an absolute locator, using the current process's working directory
-// to resolve relative locators, or signals <file-system-error>. Note that lack
-// of an error does not mean that the resolved locator names an existing file,
-// but does mean the containing directory exists. In other words, this function
-// inherits POSIX `realpath` semantics.
-define open generic resolve-locator
-    (locator :: <physical-locator>)
- => (simplified-locator :: <physical-locator>);
-
-define method resolve-locator
-    (locator :: <physical-locator>)
- => (simplified-locator :: <physical-locator>)
-  %resolve-locator(locator)
-end method;
-
+// resolve-locator is deprecated (as of 2025.2) in favor of resolve-file, in the
+// file-system module. It is fundamentally a file-system operation.
+define constant resolve-locator = resolve-file;
 
 
 /// Subdirectory locator

@@ -23,8 +23,42 @@ Compiler
 Tools
 =====
 
-Library Updates
-===============
+Libraries
+=========
+
+System
+------
+
+* :gf:`resolve-file` (in the ``file-system`` module) replaces :const:`resolve-locator`
+  (in the ``locators`` module) because it is fundamentally a file-system operation.
+
+  :gf:`resolve-file` now returns the correct class of locator, a subclass of
+  :class:`<file-locator>` or class:`<directory-locator>`, depending on the actual file
+  type of the fully resolved file.  It previously returned an instance of the same
+  class as the locator it was provided, but that is not always accurate when symbolic
+  links are followed.
+
+* :gf:`directory-contents` has a new keyword argument ``resolve-links?``.  If true,
+  symbolic links are resolved as with :gf:`resolve-file`.
+
+* :gf:`expand-pathname` is no longer called by other ``file-system`` functions. Whether
+  or not to expand ``~`` or ``~user`` in a pathname is up to the user.  The function has
+  been modified such that the :type:`<pathname>` comprised of the exact string ``"~"`` or
+  ``"~user"`` expands to the user's home directory.  Previously these were returned as
+  unexpanded instances of :class:`<file-locator>`.
+
+  :gf:`expand-pathname` now uses the thread safe function ``getpwnam_r`` on Unix systems.
+
+  On Windows :gf:`expand-pathname` simply returns its argument (converted to a
+  :class:`<locator>` if it was a :drm:`<string>`). In a future release it will be fixed
+  to do the same thing as the Unix implementation.  Previously it erroniously did the
+  same thing as :gf:`resolve-locator`.
+
+* `Issue 1408 <https://github.com/dylan-lang/opendylan/issues/1408>`_, which could result
+  in an infinite loop in :gf:`link-target`, has been fixed.  In addition, the
+  :gf:`link-target` function accepts a new keyword argument, ``follow-links?``, which
+  specifies whether to follow all links until a non-symlink file is found (the default)
+  or just return the direct target of the given symlink.
 
 Contributors
 ============

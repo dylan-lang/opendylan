@@ -264,6 +264,7 @@ define suite system-test-suite ()
   suite file-system-locators-specification-suite;
   suite file-system-locators-test-suite;
   suite file-system-specification-suite;
+  suite file-system-test-suite;
   suite more-locators-test-suite;
   suite operating-system-specification-suite;
   suite operating-system-test-suite;

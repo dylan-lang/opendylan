@@ -6,7 +6,7 @@
     "dependencies": [
         "collection-extensions@0.1",
         "command-line-parser@3.2",
-        "deft@0.12",
+        "deft@0.13",
         "json@1.1",
         "meta@0.1",
         "regular-expressions@0.2",
