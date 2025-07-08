@@ -2,7 +2,9 @@
 #define _DARWIN_C_SOURCE
 #endif
 
+#if defined(OPEN_DYLAN_PLATFORM_LINUX)
 #define _GNU_SOURCE
+#endif
 
 #include <unistd.h>
 #include <signal.h>
@@ -160,7 +162,14 @@ int system_copy_file_range(int in_fd, int out_fd, off_t in_size)
   return fcopyfile(in_fd, out_fd, NULL, COPYFILE_ALL);
 }
 
-#else
+#endif
+
+// FreeBSD needs <sys/types.h> for 'copy_file_range'
+#if defined(OPEN_DYLAN_PLATFORM_FREEBSD)
+#include <sys/types.h>
+#endif
+
+#if defined(OPEN_DYLAN_PLATFORM_LINUX) || defined(OPEN_DYLAN_PLATFORM_FREEBSD)
 
 int system_copy_file_range(int in_fd, int out_fd, off_t in_size)
 {

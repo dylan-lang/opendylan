@@ -203,48 +203,48 @@ define function %copy-file
           let file-descriptor
             = unix-open(as(<string>, locator), flags-mode, flags-create);
           if (file-descriptor < 0)
-            let errno = unix-errno();
-            if (errno = $e_access)
-              error(make(<invalid-file-permissions-error>,
-                         locator: as(<posix-file-locator>, locator)))
-            else
-              unix-file-error("open", "file %s", as(<string>, locator))
-            end
-          end;
+            select (unix-errno())
+              $e_access =>
+                error(make(<invalid-file-permissions-error>,
+                           locator: as(<posix-file-locator>, locator)));
+              $e_exists =>
+                error(make(<file-exists-error>,
+                           locator: as(<posix-file-locator>, locator)));
+              otherwise =>
+                unix-file-error("open", "file %s", as(<string>, locator));
+            end select;
+          end if;
           file-descriptor
-        end,
+        end method,
         method open-source-file(filename)
-          let flags-mode   = $O_RDONLY;
-          let flags-create = $O_RDONLY;
+          let flags-mode   = $o_rdonly;
+          let flags-create = 0;
           open-file(filename, flags-mode, flags-create);
-        end,
-        method open-destination-file(filename)
-          let flags-mode   = logior($O_WRONLY, $O_CREAT, $O_TRUNC);
-          let flags-create = logior($S_IRUSR, $S_IWUSR, $S_IWGRP, $S_IROTH);
+        end method,
+        method open-destination-file(filename, if-exists)
+          let flags-mode 
+            = if (if-exists = #"signal")
+                logior($o_wronly, $o_creat, $o_trunc, $o_excl)
+              else 
+                logior($o_wronly, $o_creat, $o_trunc)
+              end;
+          let flags-create 
+            = logior($s_irusr, $s_iwusr, $s_irgrp, $s_iwgrp, $s_iroth, $s_iwoth);
           open-file(filename, flags-mode, flags-create);
         end method;
 
   let source = %expand-pathname(source);
   let destination = %expand-pathname(destination);
-  // UNIX strikes again!  The copy command will overwrite its target if
-  // the user has write access and the only way to prevent it would
-  // require the user to respond to a question!  So, we have to manually
-  // check beforehand.  (Just another reason I'm a member of Unix-Haters)
-  if (if-exists = #"signal" & file-exists?(destination))
-    error(make(<file-system-error>,
-               format-string: "File exists: Can't copy %s to %s",
-               format-arguments: list(as(<string>, source),
-                                      as(<string>, destination))))
-  end;
 
-  let source-size    :: <integer> = file-property(source, #"size");
   let source-fd      :: <integer> = -1;
   let destination-fd :: <integer> = -1;
 
   block ()
 
     source-fd      := open-source-file(source);
-    destination-fd := open-destination-file(destination);
+    destination-fd := open-destination-file(destination, if-exists);
+
+    let source-size :: <integer> = file-property(source, #"size");
 
     let failed?
       = primitive-raw-as-boolean
@@ -260,15 +260,24 @@ define function %copy-file
 
     // fallback copy in case of error
     if (failed?)
-      unix-copy-file(source-fd, destination-fd);
+      let status = unix-copy-file(source-fd, destination-fd);
+      unless (status = #"ok")
+        unix-file-error(if (status = #"read-error") "read" else "write" end,
+                        "copy from file %s to %s",
+                        source, destination)
+      end;
     end;
 
   cleanup
     unless (source-fd < 0)
-      unix-close(source-fd)
+      if (unix-close(source-fd) = -1)
+        unix-file-error("close", "close file %s", source)
+      end
     end;
     unless (destination-fd < 0)
-      unix-close(destination-fd)
+      if (unix-close(destination-fd) = -1)
+        unix-file-error("close", "close file %s", destination)
+      end
     end;
   end block;
 end function %copy-file;

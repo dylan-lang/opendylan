@@ -123,26 +123,30 @@ define function unix-delete-file (path :: <byte-string>) => (ok :: <boolean>)
   end = 0;
 end function unix-delete-file;
 
+// Copy files in chunks of block-size.
+// Returns #"ok" on success, #"read-error" on read failure and 
+// #"write-error' on write failure. 
+// To know the exact error code use 'unix-errno()' or call 'unix-file-error'.
 define function unix-copy-file
     (source-fd :: <integer>, destination-fd :: <integer>, #key block-size = 2097152)
- => ()
+ => (status :: <symbol>)
   let buffer = make(<buffer>, size: block-size);
   let address 
     = primitive-wrap-machine-word
         (primitive-cast-pointer-as-raw
           (primitive-string-as-raw(buffer)));
 
-  block (finished?)
+  block (status)
     while (#t)
       let bytes-read = unix-raw-read(source-fd, address, block-size);
       select (bytes-read)
-         0 => finished?(#t);
-        -1 => unix-file-error("read", "unix-copy-file");
+         0 => status(#"ok");
+        -1 => status(#"read-error");
       otherwise => 
         let bytes-written 
           = unix-raw-write(destination-fd, address, bytes-read);
         unless (bytes-written > 0)
-          unix-file-error("write", "unix-copy-file");
+          status(#"write-error");
         end;
       end select;
     end while;
@@ -183,5 +187,12 @@ define constant $o_sync
       #"freebsd", #"darwin" => #x80;
     end;
 
+define constant $o_excl
+  = select ($os-name)
+      #"linux"              => 128;
+      #"freebsd", #"darwin" => #x800;
+    end;
+
 // standard unix error definitions
 define constant $e_access = 13;
+define constant $e_exists = 17;
