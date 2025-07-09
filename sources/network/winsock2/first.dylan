@@ -24,11 +24,11 @@ define inline-only constant <C-BYTE*> = <C-unsigned-char*>;
 define inline-only constant <LPINT> = <C-int*>;
 
 
-define inline-only function import-wchar
+define inline function import-wchar
     (value :: <integer>) => (char :: <character>)
   as(<character>, value)
 end;
-define inline-only function export-wchar
+define inline function export-wchar
     (value :: <character>) => (i :: <integer>)
   as(<integer>, value)
 end;
