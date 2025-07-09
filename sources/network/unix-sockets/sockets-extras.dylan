@@ -15,7 +15,7 @@ define C-struct <timeval>
   c-name: "timeval";
 end;
 
-define inline-only C-function unix-recv-buffer
+define inline C-function unix-recv-buffer
   parameter socket :: <C-int>;
   parameter buffer :: <C-buffer-offset>;
   parameter length :: <size-t>;
@@ -24,7 +24,7 @@ define inline-only C-function unix-recv-buffer
   c-name: "recv";
 end C-function;
 
-define inline-only C-function unix-send-buffer
+define inline C-function unix-send-buffer
   parameter socket :: <C-int>;
   parameter buffer :: <C-buffer-offset>;
   parameter length :: <size-t>;
@@ -33,7 +33,7 @@ define inline-only C-function unix-send-buffer
   c-name: "send";
 end C-function;
 
-define inline-only C-function unix-recv-buffer-from
+define inline C-function unix-recv-buffer-from
   parameter socket :: <C-int>;
   parameter buffer :: <C-buffer-offset>;
   parameter length :: <size-t>;
@@ -44,7 +44,7 @@ define inline-only C-function unix-recv-buffer-from
   c-name: "recvfrom";
 end C-function;
 
-define inline-only C-function unix-send-buffer-to
+define inline C-function unix-send-buffer-to
   parameter socket :: <C-int>;
   parameter message :: <C-buffer-offset>;
   parameter length :: <size-t>;

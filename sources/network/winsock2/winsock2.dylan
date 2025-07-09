@@ -34,7 +34,7 @@ define C-struct <fd-set>
   c-name: "struct fd_set";
 end C-struct <fd-set>;
 
-define inline-only C-function %-WSAFDIsSet
+define inline C-function %-WSAFDIsSet
   parameter socket1    :: <C-SOCKET>;
   parameter lpfdset2   :: <LPfd-set>;
   result value :: <C-int>;
@@ -46,8 +46,8 @@ define inline-only function FD-ISSET (fd, set);
 end;
 
 define C-struct <timeval>
-  sealed inline-only slot tv-sec-value   :: <C-both-long>;
-  sealed inline-only slot tv-usec-value  :: <C-both-long>;
+  sealed inline slot tv-sec-value   :: <C-both-long>;
+  sealed inline slot tv-usec-value  :: <C-both-long>;
   pointer-type-name: <LPTIMEVAL>;
 end C-struct;
 
@@ -204,9 +204,9 @@ define inline-only constant $INADDR-BROADCAST           = $FFFFFFFF;
 define inline-only constant $INADDR-NONE                = $FFFFFFFF;
 
 define C-struct <sockaddr-in>
-  sealed inline-only slot sin-family-value :: <C-short>;
-  sealed inline-only slot sin-port-value :: <u-short>;
-  sealed inline-only slot sin-addr-value :: <in-addr>;
+  sealed inline slot sin-family-value :: <C-short>;
+  sealed inline slot sin-port-value :: <u-short>;
+  sealed inline slot sin-addr-value :: <in-addr>;
   sealed inline-only array slot sin-zero-array :: <C-char>,
 	length: 8, address-getter: sin-zero-value;
   pointer-type-name: <LPSOCKADDR-IN>;
@@ -969,7 +969,7 @@ define inline constant <WSANAMESPACE-INFO> = <WSANAMESPACE-INFOA>;
 define inline constant <PWSANAMESPACE-INFO> = <PWSANAMESPACE-INFOA>;
 define inline constant <LPWSANAMESPACE-INFO> = <LPWSANAMESPACE-INFOA>;
 
-define inline-only C-function accept
+define inline C-function accept
   parameter s          :: <C-SOCKET>;
   parameter addr       :: <LPSOCKADDR>;
   parameter addrlen    :: <C-int*>;
@@ -977,7 +977,7 @@ define inline-only C-function accept
   c-name: "accept", c-modifiers: "__stdcall";
 end;
 
-define inline-only C-function bind
+define inline C-function bind
   parameter s          :: <C-SOCKET>;
   parameter name       ::  /* const */ <LPSOCKADDR>;
   parameter namelen    :: <C-int>;
@@ -985,13 +985,13 @@ define inline-only C-function bind
   c-name: "bind", c-modifiers: "__stdcall";
 end;
 
-define inline-only C-function closesocket
+define inline C-function closesocket
   parameter s          :: <C-SOCKET>;
   result value :: <C-int>;
   c-name: "closesocket", c-modifiers: "__stdcall";
 end;
 
-define inline-only C-function connect
+define inline C-function connect
   parameter s          :: <C-SOCKET>;
   parameter name       ::  /* const */ <LPSOCKADDR>;
   parameter namelen    :: <C-int>;
@@ -1033,13 +1033,13 @@ define inline-only C-function getsockopt
   c-name: "getsockopt", c-modifiers: "__stdcall";
 end;
 
-define inline-only C-function htonl
+define inline C-function htonl
   parameter hostlong   :: <C-raw-unsigned-long>;
   result value :: <C-raw-unsigned-long>;
   c-name: "htonl", c-modifiers: "__stdcall";
 end;
 
-define inline-only C-function htons
+define inline C-function htons
   parameter hostshort  :: <u-short>;
   result value :: <u-short>;
   c-name: "htons", c-modifiers: "__stdcall";
@@ -1057,20 +1057,20 @@ define inline-only C-function inet-ntoa
   c-name: "inet_ntoa", c-modifiers: "__stdcall";
 end;
 
-define inline-only C-function listen
+define inline C-function listen
   parameter s          :: <C-SOCKET>;
   parameter backlog    :: <C-int>;
   result value :: <C-int>;
   c-name: "listen", c-modifiers: "__stdcall";
 end;
 
-define inline-only C-function ntohl
+define inline C-function ntohl
   parameter netlong    :: <C-raw-unsigned-long>;
   result value :: <C-raw-unsigned-long>;
   c-name: "ntohl", c-modifiers: "__stdcall";
 end;
 
-define inline-only C-function ntohs
+define inline C-function ntohs
   parameter netshort   :: <u-short>;
   result value :: <u-short>;
   c-name: "ntohs", c-modifiers: "__stdcall";
@@ -1126,7 +1126,7 @@ define inline-only C-function sendto
   c-name: "sendto", c-modifiers: "__stdcall";
 end;
 
-define inline-only C-function setsockopt
+define inline C-function setsockopt
   parameter s          :: <C-SOCKET>;
   parameter level      :: <C-int>;
   parameter optname    :: <C-int>;
@@ -1143,7 +1143,7 @@ define inline-only C-function shutdown
   c-name: "shutdown", c-modifiers: "__stdcall";
 end;
 
-define inline-only C-function socket
+define inline C-function socket
   parameter af         :: <C-int>;
   parameter type       :: <C-int>;
   parameter protocol   :: <C-int>;

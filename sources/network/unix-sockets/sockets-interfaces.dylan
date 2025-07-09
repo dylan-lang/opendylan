@@ -15,7 +15,7 @@ define inline-only C-function ioctl
   c-name: "ioctl";
 end C-function;
 
-define inline-only C-function accept
+define inline C-function accept
   parameter socket :: <C-int>;
   parameter address :: <sockaddr*>;
   parameter address-len :: <socklen-t*>;
@@ -23,7 +23,7 @@ define inline-only C-function accept
   c-name: "accept";
 end C-function;
 
-define inline-only C-function bind
+define inline C-function bind
   parameter socket :: <C-int>;
   parameter address :: <sockaddr*>;
   parameter address-len :: <socklen-t>;
@@ -32,13 +32,13 @@ define inline-only C-function bind
 end C-function;
 
 // TODO: Shared: close
-define inline-only C-function close
+define inline C-function close
   parameter socket :: <C-int>;
   result val :: <C-int>;
   c-name: "close";
 end C-function;
 
-define inline-only C-function connect
+define inline C-function connect
   parameter socket :: <C-int>;
   parameter address :: <sockaddr*>;
   parameter address-len :: <socklen-t>;
@@ -51,7 +51,7 @@ end C-function;
 // Shared: fsetpos
 // Shared: ftell
 
-define inline-only C-function getpeername
+define inline C-function getpeername
   parameter socket :: <C-int>;
   parameter address :: <sockaddr*>;
   parameter address-len :: <socklen-t*>;
@@ -59,7 +59,7 @@ define inline-only C-function getpeername
   c-name: "getpeername";
 end C-function;
 
-define inline-only C-function getsockname
+define inline C-function getsockname
   parameter socket :: <C-int>;
   parameter address :: <sockaddr*>;
   parameter address-len :: <socklen-t*>;
@@ -77,7 +77,7 @@ define inline-only C-function getsockopt
   c-name: "getsockopt";
 end C-function;
 
-define inline-only C-function listen
+define inline C-function listen
   parameter socket :: <C-int>;
   parameter backlog :: <C-int>;
   result val :: <C-int>;
@@ -146,7 +146,7 @@ define inline-only C-function sendto
   c-name: "sendto";
 end C-function;
 
-define inline-only C-function setsockopt
+define inline C-function setsockopt
   parameter socket :: <C-int>;
   parameter level :: <C-int>;
   parameter option-name :: <C-int>;
@@ -156,14 +156,14 @@ define inline-only C-function setsockopt
   c-name: "setsockopt";
 end C-function;
 
-define inline-only C-function shutdown
+define inline C-function shutdown
   parameter socket :: <C-int>;
   parameter how :: <C-int>;
   result val :: <C-int>;
   c-name: "shutdown";
 end C-function;
 
-define inline-only C-function socket
+define inline C-function socket
   parameter domain :: <C-int>;
   parameter type :: <C-int>;
   parameter protocol :: <C-int>;

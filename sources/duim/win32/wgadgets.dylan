@@ -1793,7 +1793,7 @@ end method handle-scrolling;
 /// General collection gadget handling
 
 define class <win32-collection-gadget-mixin>
-    (<win32-gadget-mixin>)
+    (<collection-gadget>, <win32-gadget-mixin>)
 end class <win32-collection-gadget-mixin>;
 
 define sealed domain gadget-selection-mode (<win32-collection-gadget-mixin>);

@@ -74,25 +74,25 @@ define constant $INADDR-NONE = as(<machine-word>, #xffffffff);
 define constant <uint16-t> = <C-unsigned-short>;
 define constant <uint32-t> = <C-raw-unsigned-int>;
 
-define inline-only C-function ntohl
+define inline C-function ntohl
   parameter netlong :: <uint32-t>;
   result val :: <uint32-t>;
   c-name: "ntohl";
 end C-function;
 
-define inline-only C-function ntohs
+define inline C-function ntohs
   parameter netshort :: <uint16-t>;
   result val :: <uint16-t>;
   c-name: "ntohs";
 end C-function;
 
-define inline-only C-function htonl
+define inline C-function htonl
   parameter hostlong :: <uint32-t>;
   result val :: <uint32-t>;
   c-name: "htonl";
 end C-function;
 
-define inline-only C-function htons
+define inline C-function htons
   parameter hostshort :: <uint16-t>;
   result val :: <uint16-t>;
   c-name: "htons";

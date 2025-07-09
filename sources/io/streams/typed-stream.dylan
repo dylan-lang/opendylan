@@ -22,16 +22,25 @@ define function byte-to-byte (byte :: <byte>) => (byte :: <byte>)
   byte
 end function byte-to-byte;
 
+define function typed-tsm
+    (s :: <sequence>, ss :: <integer>, d :: <mutable-sequence>, ds :: <integer>, n :: <integer>)
+ => ()
+  copy-bytes(d, ds, s, ss, n);
+end;
+
+define function typed-fsm
+    (s :: <sequence>, ss :: <integer>, d :: <mutable-sequence>, ds :: <integer>, n :: <integer>)
+ => ()
+  copy-bytes(d, ds, s, ss, n)
+end;
 
 define open abstract class <typed-stream> (<basic-stream>)
   // Assume that
   slot sequence-type /* ---*** :: subclass(<sequence>) */ = <byte-string>;
   slot to-element-mapper    :: <function> = byte-to-byte-char;
   slot from-element-mapper  :: <function> = byte-char-to-byte;
-  constant slot to-sequence-mapper   :: <function> =
-      method (s, ss, d, ds, n) => () copy-bytes(d, ds, s, ss, n) end;
-  constant slot from-sequence-mapper :: <function> =
-      method (s, ss, d, ds, n) => () copy-bytes(d, ds, s, ss, n) end;
+  constant slot to-sequence-mapper   :: <function> = typed-tsm;
+  constant slot from-sequence-mapper :: <function> = typed-fsm;
 end class <typed-stream>;
 
 define open abstract class <general-typed-stream> (<typed-stream>)

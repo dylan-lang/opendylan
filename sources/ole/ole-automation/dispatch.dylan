@@ -154,11 +154,11 @@ define method apply-to-dispparams
 			   //  (usually <IDispatch>, but doesn't matter here.)
      parms :: <LPDISPPARAMS> // the function arguments.
        ); // (returns whatever the function returns)
-  let numparms = parms.cArgs-value; // total number of arguments
+  let numparms :: <integer> = parms.cArgs-value; // total number of arguments
   if ( zero?(numparms) ) // short cut when no parameters
     function(instance);
   else
-    let numnamed = parms.cNamedArgs-value; // number of named arguments
+    let numnamed :: <integer> = parms.cNamedArgs-value; // number of named arguments
     let numpos = numparms - numnamed; // number of positional arguments
     let argptr :: <LPVARIANT> = parms.rgvarg-value;
     if ( numpos = 1 & numnamed = 0 )
