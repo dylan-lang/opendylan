@@ -103,23 +103,43 @@ define test test-delete-file ()
 end;
 
 define test test-copy-file ()
+  local method read-all-file(locator)
+          with-open-file (fs = locator, direction: #"input")
+            read-to-end(fs)
+          end
+        end method,
+        method assert-copied-files(src, dst)
+          assert-true(file-exists?(dst),
+                      "Destination file exists");
+          assert-equal(file-property(src, #"size"),
+                       file-property(dst, #"size"),
+                       "Source and destination file have the same size");
+          assert-equal("iota", read-all-file(dst),
+                       "Source and destination have the same content");
+        end method;
+
   let tmp-dir = test-temp-directory();
   let src = write-test-file("src.txt", contents: "iota");
   let dst = file-locator(tmp-dir, "dst.txt");
+  
+  // Copy file
+  expect-no-condition(copy-file(src, dst), 
+                      "Copy file source to destination");
 
-  copy-file(src, dst);
+  assert-copied-files(src, dst);
 
-  assert-true(file-exists?(dst),
-              "Destination file exists");
+  // Copy file replacing destination
 
-  assert-equal(file-property(src, #"size"),
-               file-property(dst, #"size"),
-               "Source and destination file have the same size");
+  expect-no-condition(copy-file(src, dst, if-exists: #"replace"), 
+                      "Replace destination with source");
 
-  with-open-file (fs = dst, direction: #"input")
-    assert-equal("iota", read-to-end(fs),
-                 "Destination and source file has the same content");
-  end;
+  assert-copied-files(src, dst);
+
+  // Copy file where destination exists
+  
+  assert-signals(<file-exists-error>,
+                 copy-file(src, dst),
+                 "Signal error if destination file exists")
 end;
 
 define test test-rename-file ()

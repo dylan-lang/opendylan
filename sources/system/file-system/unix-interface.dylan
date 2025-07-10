@@ -83,6 +83,23 @@ define function unix-raw-read
   end
 end function unix-raw-read;
 
+define function unix-raw-write
+    (fd :: <integer>, address :: <machine-word>, count :: <integer>)
+ => (result :: <integer>)
+  with-interrupt-repeat
+    raw-as-integer
+      (%call-c-function ("write")
+           (fd :: <raw-c-signed-int>, address :: <raw-pointer>,
+            size :: <raw-c-size-t>)
+        => (result :: <raw-c-ssize-t>)
+         (integer-as-raw(fd),
+          primitive-cast-raw-as-pointer
+            (primitive-unwrap-machine-word(address)),
+          integer-as-raw(count))
+       end)
+  end  
+end;  
+
 /// HIGHER LEVEL INTERFACE
 
 define thread variable *stat-buffer* = make(<byte-vector>, size: $stat-size, fill: as(<byte>, '\0'));
@@ -105,6 +122,36 @@ define function unix-delete-file (path :: <byte-string>) => (ok :: <boolean>)
                             end)
   end = 0;
 end function unix-delete-file;
+
+// Copy files in chunks of block-size.
+// Returns #"ok" on success, #"read-error" on read failure and 
+// #"write-error' on write failure. 
+// To know the exact error code use 'unix-errno()' or call 'unix-file-error'.
+define function unix-copy-file
+    (source-fd :: <integer>, destination-fd :: <integer>, #key block-size = 2097152)
+ => (status :: <symbol>)
+  let buffer = make(<buffer>, size: block-size);
+  let address 
+    = primitive-wrap-machine-word
+        (primitive-cast-pointer-as-raw
+          (primitive-string-as-raw(buffer)));
+
+  block (status)
+    while (#t)
+      let bytes-read = unix-raw-read(source-fd, address, block-size);
+      select (bytes-read)
+         0 => status(#"ok");
+        -1 => status(#"read-error");
+      otherwise => 
+        let bytes-written 
+          = unix-raw-write(destination-fd, address, bytes-read);
+        unless (bytes-written > 0)
+          status(#"write-error");
+        end;
+      end select;
+    end while;
+  end block;
+end function unix-copy-file;
 
 // POSIX lseek whence definitions:
 
@@ -140,5 +187,12 @@ define constant $o_sync
       #"freebsd", #"darwin" => #x80;
     end;
 
+define constant $o_excl
+  = select ($os-name)
+      #"linux"              => 128;
+      #"freebsd", #"darwin" => #x800;
+    end;
+
 // standard unix error definitions
 define constant $e_access = 13;
+define constant $e_exists = 17;
