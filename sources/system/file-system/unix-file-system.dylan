@@ -195,33 +195,91 @@ define function %delete-file
 end function %delete-file;
 
 
-/// Whoever heard of an OS that doesn't provide a primitive to copy files?
-/// Why, the creators of UNIX, of course since it doesn't.  We have to resort
-/// to invoking the cp (copy) command via RUN-APPLICATION.
 define function %copy-file
     (source :: <posix-file-system-locator>, destination :: <posix-file-system-locator>,
      #key if-exists :: <copy/rename-disposition> = #"signal")
  => ()
+  local method open-file(locator, flags-mode, flags-create)
+          let file-descriptor
+            = unix-open(as(<string>, locator), flags-mode, flags-create);
+          if (file-descriptor < 0)
+            select (unix-errno())
+              $e_access =>
+                error(make(<invalid-file-permissions-error>,
+                           locator: as(<posix-file-locator>, locator)));
+              $e_exists =>
+                error(make(<file-exists-error>,
+                           locator: as(<posix-file-locator>, locator)));
+              otherwise =>
+                unix-file-error("open", "file %s", as(<string>, locator));
+            end select;
+          end if;
+          file-descriptor
+        end method,
+        method open-source-file(filename)
+          let flags-mode   = $o_rdonly;
+          let flags-create = 0;
+          open-file(filename, flags-mode, flags-create);
+        end method,
+        method open-destination-file(filename, if-exists)
+          let flags-mode 
+            = if (if-exists = #"signal")
+                logior($o_wronly, $o_creat, $o_trunc, $o_excl)
+              else 
+                logior($o_wronly, $o_creat, $o_trunc)
+              end;
+          let flags-create 
+            = logior($s_irusr, $s_iwusr, $s_irgrp, $s_iwgrp, $s_iroth, $s_iwoth);
+          open-file(filename, flags-mode, flags-create);
+        end method;
+
   let source = %expand-pathname(source);
   let destination = %expand-pathname(destination);
-  // UNIX strikes again!  The copy command will overwrite its target if
-  // the user has write access and the only way to prevent it would
-  // require the user to respond to a question!  So, we have to manually
-  // check beforehand.  (Just another reason I'm a member of Unix-Haters)
-  if (if-exists = #"signal" & file-exists?(destination))
-    error(make(<file-system-error>,
-               format-string: "File exists: Can't copy %s to %s",
-               format-arguments: list(as(<string>, source),
-                                      as(<string>, destination))))
-  end;
-  run-application
-    (concatenate
-       ("cp -p",
-        " \"",
-        as(<string>, source),
-        "\" \"",
-        as(<string>, destination),
-        "\""))
+
+  let source-fd      :: <integer> = -1;
+  let destination-fd :: <integer> = -1;
+
+  block ()
+
+    source-fd      := open-source-file(source);
+    destination-fd := open-destination-file(destination, if-exists);
+
+    let source-size :: <integer> = file-property(source, #"size");
+
+    let failed?
+      = primitive-raw-as-boolean
+        (%call-c-function ("system_copy_file_range")
+           (fd-in  :: <raw-c-signed-int>,
+            fd-out :: <raw-c-signed-int>,
+            size   :: <raw-c-size-t>)
+           => (failed? :: <raw-c-signed-int>)
+           (integer-as-raw(source-fd),
+            integer-as-raw(destination-fd),
+            integer-as-raw(source-size))
+        end);
+
+    // fallback copy in case of error
+    if (failed?)
+      let status = unix-copy-file(source-fd, destination-fd);
+      unless (status = #"ok")
+        unix-file-error(if (status = #"read-error") "read" else "write" end,
+                        "copy from file %s to %s",
+                        source, destination)
+      end;
+    end;
+
+  cleanup
+    unless (source-fd < 0)
+      if (unix-close(source-fd) = -1)
+        unix-file-error("close", "close file %s", source)
+      end
+    end;
+    unless (destination-fd < 0)
+      if (unix-close(destination-fd) = -1)
+        unix-file-error("close", "close file %s", destination)
+      end
+    end;
+  end block;
 end function %copy-file;
 
 
