@@ -280,3 +280,23 @@ end test;
 define test test-jam-target-build ()
   //---*** Fill this in...
 end test;
+
+define test test-jam-shell ()
+  let jam = make-test-instance(<jam-state>);
+  check-equal("SHELL",
+              #["value\n"],
+              jam-invoke-rule(jam, "SHELL", #["echo value"]));
+  check-equal("SHELL no-output",
+              #[""],
+              jam-invoke-rule(jam, "SHELL", #["echo value"], #["no-output"]));
+  check-equal("SHELL strip-eol",
+              #["value"],
+              jam-invoke-rule(jam, "SHELL", #["echo value"], #["strip-eol"]));
+  check-equal("SHELL exit-status",
+              #["value\n", "0"],
+              jam-invoke-rule(jam, "SHELL", #["echo value"], #["exit-status"]));
+  check-equal("SHELL combined options",
+              #["value", "0"],
+              jam-invoke-rule(jam, "SHELL", #["echo value"],
+                              #["strip-eol"], #["exit-status"]));
+end test;

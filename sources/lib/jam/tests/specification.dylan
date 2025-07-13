@@ -80,4 +80,5 @@ define suite jam-test-suite ()
   test test-jam-target-variable;
   test test-jam-variable-setter;
   test test-jam-variable;
+  test test-jam-shell;
 end suite;
