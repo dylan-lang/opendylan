@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <string.h>
 #include <setjmp.h>
 
 /* For ssize_t definition (POSIX extension) */
