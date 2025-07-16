@@ -715,6 +715,8 @@ define constant $slot-value-string
   = "SLOT_VALUE";
 define constant $slot-value-setter-string
   = "SLOT_VALUE_SETTER";
+define constant $raw-slot-value-setter-string
+  = "RAW_SLOT_VALUE_SETTER";
 
 define method emit-computation
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <slot-value>)
@@ -731,8 +733,14 @@ end method;
 define method emit-computation
     (b :: <c-back-end>, s :: <stream>, d :: <integer>,
      c :: <slot-value-setter>)
+  let slot-descriptor = c.computation-slot-descriptor;
   format-emit(b, s, d, "\t#~(@, @, ~);\n",
-              c.temporary, $slot-value-setter-string,
+              c.temporary,
+              if (raw-type?(slot-descriptor.^slot-type))
+                $raw-slot-value-setter-string
+              else
+                $slot-value-setter-string
+              end if,
               computation-new-value(c),
               computation-instance(c), computation-slot-offset(c))
 end method;

@@ -933,6 +933,8 @@ extern dylan_value primitive_slot_value(dylan_value object, DSINT position);
   ((((dylan_object*)object)->slots)[position])
 #define SLOT_VALUE_SETTER(new_value, object, position) \
   ((((dylan_object*)object)->slots)[position] = (new_value))
+#define RAW_SLOT_VALUE_SETTER(new_value, object, position) \
+  ((((dylan_object*)object)->slots)[position] = (dylan_value)(new_value))
 
 extern dylan_value SLOT_VALUE(dylan_value object, DSINT position);
 
