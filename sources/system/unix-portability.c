@@ -173,15 +173,13 @@ int system_copy_file_range(int in_fd, int out_fd, off_t in_size)
 
 int system_copy_file_range(int in_fd, int out_fd, off_t in_size)
 {
-  // offset: read from file adjusted by bytes copied
-  off_t *_Nullable offset = NULL;
   // flags: used for future expansion, currently must be 0
   unsigned int flags = 0;
-  // bytes copied
-  off_t copied = -1;
 
+  // bytes copied
+  ssize_t copied = 0;
   do {
-    copied = copy_file_range(in_fd, offset, out_fd, offset, in_size, flags);
+    copied = copy_file_range(in_fd, NULL, out_fd, NULL, in_size, flags);
     if (copied == -1) return -1;
     in_size -= copied;
   } while (in_size > 0 && copied > 0);
