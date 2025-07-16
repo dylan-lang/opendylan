@@ -270,8 +270,8 @@ install-stage:
 	@find $(DESTDIR)$(prefix)/sources -depth -name '.*' -exec rm -rf {} \;
 	@-rm -rf $(DESTDIR)$(prefix)/sources/bootstrap1-registry
 	@echo Installing Open Dylan in $(DESTDIR)$(prefix)
-	@install -d $(prefix)/bin $(prefix)/databases $(prefix)/lib $(DESTDIR)$(prefix)/lib/runtime
-	@install -d $(prefix)/share/opendylan $(DESTDIR)$(prefix)/include/opendylan
+	@install -d $(DESTDIR)/$(prefix)/bin $(DESTDIR)/$(prefix)/databases $(DESTDIR)/$(prefix)/lib $(DESTDIR)$(prefix)/lib/runtime
+	@install -d $(DESTDIR)/$(prefix)/share/opendylan $(DESTDIR)$(prefix)/include/opendylan
 	@cp -R $(abs_builddir)/Bootstrap.3/bin $(DESTDIR)$(prefix)
 	# Copy BOOTSTRAP_3_STATICS to /bin
 	@cp -R $(abs_builddir)/Bootstrap.3/sbin/* $(DESTDIR)$(prefix)/bin
