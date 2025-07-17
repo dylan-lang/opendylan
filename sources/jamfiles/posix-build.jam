@@ -201,6 +201,7 @@ rule DylanLibrary image : version {
 
   if $(COMPILER_BACK_END) = c {
     LINKFLAGS on $(_exe) += [ on $(_exe) FIncludes $(HDRS) ] ;
+    LINKFLAGS on $(_uexe) += [ on $(_uexe) FIncludes $(HDRS) ] ;
   }
 
   # If this is the top-level project, make the dll, exe, and clean

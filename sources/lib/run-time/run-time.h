@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <string.h>
 #include <setjmp.h>
 
 /* For ssize_t definition (POSIX extension) */
@@ -933,6 +934,8 @@ extern dylan_value primitive_slot_value(dylan_value object, DSINT position);
   ((((dylan_object*)object)->slots)[position])
 #define SLOT_VALUE_SETTER(new_value, object, position) \
   ((((dylan_object*)object)->slots)[position] = (new_value))
+#define RAW_SLOT_VALUE_SETTER(new_value, object, position) \
+  ((((dylan_object*)object)->slots)[position] = (dylan_value)(new_value))
 
 extern dylan_value SLOT_VALUE(dylan_value object, DSINT position);
 
@@ -1456,19 +1459,6 @@ void *primitive_alloc_rt(size_t size,
                          void *template);
 
 /* stack allocation */
-
-#ifdef OPEN_DYLAN_PLATFORM_WINDOWS
-#  include <malloc.h>
-#elif defined(OPEN_DYLAN_PLATFORM_FREEBSD) || defined(OPEN_DYLAN_PLATFORM_NETBSD)
-#  include <stdlib.h>
-#else
-#  include <alloca.h>
-#endif
-
-#define primitive_stack_allocate(sz) ((dylan_value)(alloca((int)(sz) * sizeof(dylan_value))))
-
-#define primitive_byte_stack_allocate(numwords, numbytes) \
-  ((dylan_value)alloca(numwords * sizeof(dylan_value)) + (numbytes))
 
 #define primitive_byte_stack_allocate_filled(size, class_wrapper, number_slots, fill_value, repeated_size, repeated_size_offset, repeated_fill_value) \
   initialize_byte_stack_allocate_filled((dylan_value*)primitive_byte_stack_allocate(size, repeated_size + 1), class_wrapper, number_slots, fill_value, repeated_size, repeated_size_offset, repeated_fill_value)
