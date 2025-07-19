@@ -153,6 +153,8 @@ override-parameters:
     { \#rest ?:name } => { #rest ?name }
     { ?variable-name, ... } => { ?variable-name, ... }
 variable-name:
+  { ?:name :: <raw-machine-word> }
+    => { ?name :: <&raw-machine-word> }
   { ?:name :: ?:expression ?ignore:* }
     => { ?name }
 end macro;

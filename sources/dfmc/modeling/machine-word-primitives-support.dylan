@@ -108,7 +108,7 @@ end function extract-mw-operand-signed;
 /// Identical to make-raw-literal but checks that the value will actually
 /// fit into a <machine-word> on the target system for use by folders for
 /// primitives which are supposed to signal overflow.
-define inline-only function make-raw-literal-with-overflow (object :: <abstract-integer>)
+define inline function make-raw-literal-with-overflow (object :: <abstract-integer>)
  => (literal :: <&raw-machine-word>)
   if (instance?(object, <integer>))
     make-raw-literal(object)

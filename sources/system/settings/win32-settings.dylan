@@ -469,17 +469,18 @@ define inline-only constant $WRITING-SAM
   = as(<LONG>, logior($KEY-QUERY-VALUE, $KEY-SET-VALUE,
                       $KEY-CREATE-SUB-KEY, $KEY-ENUMERATE-SUB-KEYS));
 
-define variable *settings-default-class* = "Open Dylan";
+define variable *settings-default-class* :: <byte-string> = "Open Dylan";
 
 define sealed method initialize-settings
     (settings :: <settings>, for-writing? :: <boolean>) => ()
   local method open ()
-          let parent  = element($settings-table, settings-parent(settings));
+          let parent :: <settings>
+            = element($settings-table, settings-parent(settings));
           initialize-settings(parent, for-writing?);
           let hKey    = settings-key-handle(parent);
           if (hKey)
-            let key   = settings-key-name(settings);
-            let class = *settings-default-class*;
+            let key :: <byte-string>  = settings-key-name(settings);
+            let class :: <byte-string> = *settings-default-class*;
             let (phkResult, result)
               = if (for-writing?)
                   RegCreateKeyEx(hKey, key, class, $REG-OPTION-NON-VOLATILE, $WRITING-SAM)
