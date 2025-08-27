@@ -12,11 +12,13 @@ define method jam-read-mkf
   let image = concatenate(element(variables, #"library"),
                           element(variables, #"executable", default: #()));
 
-  // DylanLibrary image : version ;
+  // DylanLibrary image : version : dir ;
   let version
     = concatenate(element(variables, #"major-version", default: #()),
                   element(variables, #"minor-version", default: #()));
-  jam-invoke-rule(jam, "DylanLibrary", image, version);
+  let source-directory
+    = element(variables, #"source-directory", default: #());
+  jam-invoke-rule(jam, "DylanLibrary", image, version, source-directory);
 
   // DylanLibraryLinkerOptions image : options ;
   // DylanLibraryBaseAddress image : address ;
