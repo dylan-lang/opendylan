@@ -228,6 +228,17 @@ rule MkDir
   }
 }
 
+rule ObjectHdrs
+{
+  # Add to HDRS for HdrScan's benefit.
+  # must reformat CCHDRS according to headers
+
+  local s = [ FGristFiles $(<:S=$(SUFOBJ)) ] ;
+
+  HDRS on $(s) += $(>) ;
+  CCHDRS on $(s) = [ on $(s) FIncludes $(HDRS) ] ;
+}
+
 rule RmTemps
 {
   Temporary $(>) ;

@@ -21,6 +21,8 @@
   BINDIR ?= $(_bin:P=$(PERSONAL_ROOT:E=$(.:P))) ;
   SBINDIR ?= $(_sbin:P=$(PERSONAL_ROOT:E=$(.:P))) ;
   HDRS ?= $(SYSTEM_INCDIR) ;
+
+  SEARCH_SOURCE ?= . ;
 }
 
 #
@@ -118,9 +120,9 @@ Always clean clean-all ;
 # the Library: header, and $(image[2]) contains the name from
 # the Executable: header (if present).
 
-rule DylanLibrary image : version {
-  # DylanLibrary image : version ;
-  #Echo DylanLibrary $(image) ":" $(version) ;
+rule DylanLibrary image : version : dir {
+  # DylanLibrary image : version : dir ;
+  #Echo DylanLibrary $(image) ":" $(version) ":" $(dir) ;
 
   # Link a Dylan library as a shared library or executable image.
 
@@ -159,6 +161,12 @@ rule DylanLibrary image : version {
       Depends $(_dll) $(_ulib) : $(_rtlib) ;
     }
   }
+
+  # Set SUBDIR to the library source directory as per Jambase rule SubDir
+  SUBDIR = $(dir) ;
+
+  # Include the library source directory in build file searches
+  SEARCH_SOURCE += $(SUBDIR) ;
 
   # We'll use the library name as the grist to identify referenced
   # source and object files.
@@ -346,6 +354,7 @@ rule DylanLibraryCSources image : sources {
       local _obj = [ FGristFiles $(_i:S=$(SUFOBJ)) ] ;
       MakeLocate $(_obj) : $(LOCATE_TARGET) ;
 
+      ObjectHdrs $(_obj) : $(SEARCH_SOURCE) ;
       Cc $(_obj) : $(_i) ;
 
       LinkDLL $(_dll) : $(_obj) ;
@@ -369,6 +378,7 @@ rule DylanLibraryC++Sources image : sources {
       local _obj = [ FGristFiles $(_i:S=$(SUFOBJ)) ] ;
       MakeLocate $(_obj) : $(LOCATE_TARGET) ;
 
+      ObjectHdrs $(_obj) : $(SEARCH_SOURCE) ;
       C++ $(_obj) : $(_i) ;
 
       LinkDLL $(_dll) : $(_obj) ;
