@@ -39,6 +39,8 @@ define sideways method generate-makefile (project :: <lid-project>)
   with-open-file(stream = make-locator, direction: #"output")
     write-comment(stream, "This build file is generated, please don't edit");
     save-single-value(stream, #"Library", project.project-lid-library-name);
+    save-single-value(stream, #"source-directory",
+                      project-source-location(project));
     save-lid-info(project, stream, flatten-extras?: #t);
     save-list-value(stream, #"Files",
                     compilation-context-object-names(context));
