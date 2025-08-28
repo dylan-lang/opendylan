@@ -300,3 +300,37 @@ define test test-jam-shell ()
               jam-invoke-rule(jam, "SHELL", #["echo value"],
                               #["strip-eol"], #["exit-status"]));
 end test;
+
+define test test-jam-split ()
+  let jam = make-test-instance(<jam-state>);
+  check-equal("Split indivisible",
+              #["I", "like", "peas."],
+              jam-invoke-rule(jam, "Split",
+                              #["I", "like", "peas."],
+                              #[" "]));
+  check-equal("Split straightforward",
+              #["I", "like", "peas."],
+              jam-invoke-rule(jam, "Split",
+                              #["I like peas."],
+                              #[" "]));
+  check-equal("Split multiple delimiters",
+              #["I", "like", "peas"],
+              jam-invoke-rule(jam, "Split",
+                              #["I like peas."],
+                              #[" ."]));
+  check-equal("Split not",
+              #["No", "splits", "here"],
+              jam-invoke-rule(jam, "Split",
+                              #["No", "splits", "here"],
+                              #["|"]));
+  check-equal("Split libs",
+              #["No", "splits", "here"],
+              jam-invoke-rule(jam, "Split",
+                              #["No", "splits", "here"],
+                              #["|"]));
+  check-equal("Split pkg-config",
+              #["-lgobject-2.0", "-lglib-2.0"],
+              jam-invoke-rule(jam, "Split",
+                              #["-lgobject-2.0 -lglib-2.0 "],
+                              #[" "]));
+end test;

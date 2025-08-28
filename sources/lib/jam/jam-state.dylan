@@ -143,4 +143,5 @@ define method initialize (jam :: <jam-state>, #key #all-keys) => ();
   jam-rule(jam, "Glob") := jam-rule(jam, "GLOB") := jam-builtin-glob;
   jam-rule(jam, "Match") := jam-rule(jam, "MATCH") := jam-builtin-match;
   jam-rule(jam, "SHELL") := jam-rule(jam, "COMMAND") := jam-builtin-shell;
+  jam-rule(jam, "Split") := jam-builtin-split;
 end method;
