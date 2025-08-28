@@ -313,17 +313,17 @@ define test test-jam-split ()
               jam-invoke-rule(jam, "Split",
                               #["I like peas."],
                               #[" "]));
-  check-equal("Split multiple delimiters",
+  check-equal("Split multiple delimiters (together)",
               #["I", "like", "peas"],
               jam-invoke-rule(jam, "Split",
                               #["I like peas."],
                               #[" ."]));
-  check-equal("Split not",
-              #["No", "splits", "here"],
+  check-equal("Split multiple delimiters (separate)",
+              #["I", "like", "peas"],
               jam-invoke-rule(jam, "Split",
-                              #["No", "splits", "here"],
-                              #["|"]));
-  check-equal("Split libs",
+                              #["I like peas."],
+                              #[" ", "."]));
+  check-equal("Split not",
               #["No", "splits", "here"],
               jam-invoke-rule(jam, "Split",
                               #["No", "splits", "here"],
