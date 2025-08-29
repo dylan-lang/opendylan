@@ -12,8 +12,8 @@ major-version:	2
 minor-version:	1
 target-type:	executable
 other-files:	remote-nub.spec
-RC-Files:	..\debugger-server.rc
-C-Header-Files: ..\debugger-server.ico
+RC-Files:       debugger-server.rc
+C-Header-Files: debugger-server.ico
 C-libraries: devnub.lib
              minvcrt.lib
              dbghelp.lib
