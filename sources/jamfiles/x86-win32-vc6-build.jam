@@ -336,6 +336,9 @@ rule DylanLibraryRCFiles image : rcfiles {
 rule DylanLibraryJamIncludes image : includes {
   # DylanLibraryJamIncludes image : includes ;
 
+  # Set for use within the body of the included file
+  local IMAGE = $(image) ;
+
   local _i ;
   for _i in [ FGristFiles $(includes) ] {
     SEARCH on $(_i) = $(SEARCH_SOURCE) ;
