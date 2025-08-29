@@ -20,6 +20,12 @@ this release.
 Compiler
 ========
 
+* The compiler no longer copies C/C++ source files, C/C++ header
+  files, C object files, Windows resource files, and Jam include files
+  into the build directory before performing the link build stage, and
+  instead makes the original source directory location available to
+  the build system (and the Jam build scripts).
+
 Tools
 =====
 
