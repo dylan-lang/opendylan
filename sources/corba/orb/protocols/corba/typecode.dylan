@@ -53,13 +53,13 @@ define method object-typecode (object :: CORBA/<TypeCode>)
   corba/$TypeCode-typecode;
 end method;
 
-define inline-only function CORBA/TCKind/as-symbol (integer :: <integer>)
+define inline function CORBA/TCKind/as-symbol (integer :: <integer>)
  => (s :: <symbol>)
   let typecode = class-typecode(CORBA/<TCKind>);
   typecode-members(typecode)[integer];
 end function;
 
-define inline-only function CORBA/TCKind/as-integer (symbol :: <symbol>)
+define inline function CORBA/TCKind/as-integer (symbol :: <symbol>)
  => (i :: <integer>)
   let typecode = class-typecode(CORBA/<TCKind>);
   typecode-symbol-index(typecode)[symbol];

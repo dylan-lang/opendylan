@@ -99,7 +99,7 @@ define inline-only C-function win32-send-buffer
   c-name: "send", c-modifiers: "__stdcall";
 end;
 
-define inline-only C-function win32-recv-buffer-from
+define inline C-function win32-recv-buffer-from
   parameter s          :: <C-SOCKET>;
   parameter buf        :: <C-buffer-offset>;
   parameter len        :: <C-int>;
@@ -110,7 +110,7 @@ define inline-only C-function win32-recv-buffer-from
   c-name: "recvfrom", c-modifiers: "__stdcall";
 end;
 
-define inline-only C-function win32-send-buffer-to
+define inline C-function win32-send-buffer-to
   parameter s          :: <C-SOCKET>;
   parameter buf        :: <C-buffer-offset>;
   parameter len        :: <C-int>;

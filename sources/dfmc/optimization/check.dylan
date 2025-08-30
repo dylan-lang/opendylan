@@ -10,10 +10,19 @@ define program-warning <calling-inline-only-function-out-of-line>
   slot condition-inline-only-function,
     required-init-keyword: inline-only-function:;
   format-string
-    "Failed to inline call to the inline-only function %s - making a "
+    "Failed to inline call to inline-only %s - making a "
     "local copy to call out of line";
   format-arguments inline-only-function;
 end program-warning;
+
+define program-error <calling-raw-value-function-out-of-line>
+  slot condition-raw-value-function,
+    required-init-keyword: raw-value-function:;
+  format-string
+    "Calls to %s with raw argument or return values must be inlined, "
+    "but could not be";
+  format-arguments raw-value-function;
+end program-error;
 
 define method check-optimized-computations (o :: <&lambda>)
   let checker = if (lambda-initializer?(o))
@@ -58,7 +67,16 @@ end method;
 define method check-optimized-reference
     (c :: <computation>, ref :: <object-reference>, f :: <&function>,
      check-forward-refs? :: <boolean>) => ()
-  if (model-compile-stage-only?(f) | inlined-inline-only-function?(f))
+  if (raw-value-function?(f))
+    note(<calling-raw-value-function-out-of-line>,
+	 source-location: dfm-source-location(c),
+	 context-id:      dfm-context-id(c),
+	 raw-value-function: f);
+  elseif (model-compile-stage-only?(f) | inlined-inline-only-function?(f))
+    note(<calling-inline-only-function-out-of-line>,
+	 source-location: dfm-source-location(c),
+	 context-id:      dfm-context-id(c),
+	 inline-only-function: f);
     let copy = find-inline-copy(current-compilation-record(), f);
     reference-value(ref) := copy
   end;
@@ -74,9 +92,17 @@ end method;
 define method check-optimized-reference
     (c :: <engine-node-call>, ref :: <object-reference>, e :: <&cache-header-engine-node>,
      check-forward-refs? :: <boolean>) => ()
-  // format-out(">>> check-optimized-reference CHEN (%=) %= %= %=\n", object-class(c), c, ref, e);
   let f :: <&generic-function> = ^cache-header-engine-node-parent(e);
-  if (model-compile-stage-only?(f) | inlined-inline-only-function?(f))
+  if (raw-value-function?(f))
+    note(<calling-raw-value-function-out-of-line>,
+	 source-location: dfm-source-location(c),
+	 context-id:      dfm-context-id(c),
+	 raw-value-function: f);
+  elseif (model-compile-stage-only?(f) | inlined-inline-only-function?(f))
+    note(<calling-inline-only-function-out-of-line>,
+	 source-location: dfm-source-location(c),
+	 context-id:      dfm-context-id(c),
+	 inline-only-function: f);
     let copy = find-inline-copy(current-compilation-record(), f);
     ^cache-header-engine-node-parent(e) := copy;
   end;
@@ -123,6 +149,13 @@ define method generators-through-merges
   end;
 end method;
 */
+
+define function raw-value-function?
+    (f :: <&function>) => (well? :: <boolean>)
+  let sig = ^function-signature(f);
+  any?(raw-type?, sig.^signature-required)
+    | any?(raw-type?, sig.^signature-values)
+end function;
 
 // An inlined inline-only function is one that's called from some function
 // that is itself declared inline and so is a copy that has ended up

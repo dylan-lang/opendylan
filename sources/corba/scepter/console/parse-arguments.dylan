@@ -53,7 +53,7 @@ define method canonicalize-arguments (arguments :: <sequence>)
  => (canonicalized-arguments :: <deque>)
   let canonicalized-arguments = make(<deque>);
   let skip? = #f;
-  for (argument in arguments)
+  for (argument :: <string> in arguments)
     if (skip? & keyword-argument?(argument))
       skip? := #f;
     end if;

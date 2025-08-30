@@ -20,6 +20,11 @@ this release.
 Compiler
 ========
 
+* The compiler will now issue a warning when it is unable to inline a
+  call to a function or method marked as ``inline-only``, and signal
+  an error if it does not inline a function with raw argumennt or
+  return values.
+
 Tools
 =====
 

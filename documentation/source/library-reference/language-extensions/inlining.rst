@@ -22,8 +22,10 @@ and have included those same adjectives in our language extension
 - ``inline`` Inline this item wherever the compiler can do so.
 
 In addition, ``define constant`` and ``define function`` permit the
-adjective ``inline-only``, which forces every reference to the constant
-or function to be inlined.
+adjective ``inline-only``, which forces every reference to the
+constant or function to be inlined. If a call can not be inlined
+(because, for example, the argument types are not known with enough
+specificity at compile time), then the compiler will issue a warning.
 
 .. note:: If you export from a library any variables created with
    ``may-inline``, ``inline``, or ``inline-only``, and then change the
