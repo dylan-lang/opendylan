@@ -174,17 +174,21 @@ define function jam-expand-arg-colon
     elseif (modifier == 'J')
       let joiner =
         if (replace?) copy-sequence(variable, start: i + 2) else "" end;
-      for (component in contents,
-           first? = #t then #f,
-           result = first(contents)
-             then if (first?)
-                    result
-                  else
-                    concatenate(result, joiner, component)
-                  end)
-      finally
-        vector(result)
-      end for
+      if (empty?(contents))
+        #[]
+      else
+        for (component in contents,
+             first? = #t then #f,
+             result = first(contents)
+               then if (first?)
+                      result
+                    else
+                      concatenate(result, joiner, component)
+                    end)
+        finally
+          vector(result)
+        end for
+      end if
     elseif (modifier == '@')
       if (empty?(contents))
         #[]

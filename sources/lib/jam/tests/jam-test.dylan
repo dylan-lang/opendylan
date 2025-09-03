@@ -186,6 +186,8 @@ end test;
 define test test-jam-expand-arg-with-J-modifier ()
   let jam = make-test-instance(<jam-state>);
   jam-variable(jam, "join") := #("one", "two", "three");
+  jam-variable(jam, "empty") := #();
+  jam-variable(jam, "one") := #("one");
 
   check-equal("$(join:J)",
               jam-expand-arg(jam, "$(join:J)"),
@@ -193,6 +195,12 @@ define test test-jam-expand-arg-with-J-modifier ()
   check-equal("$(join:J=!)",
               jam-expand-arg(jam, "$(join:J=!)"),
               #("one!two!three"));
+  check-equal("**$(empty:J=!)**",
+              #(),
+              jam-expand-arg(jam, "$(empty:J=!)"));
+  check-equal("%%$(one:J=!)%%",
+              #("%%one%%"),
+              jam-expand-arg(jam, "%%$(one:J=!)%%"));
 end test;
 
 define test test-jam-expand-arg-two-level-expansion-with-modifier ()
