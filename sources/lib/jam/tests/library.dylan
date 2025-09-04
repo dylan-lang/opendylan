@@ -19,6 +19,7 @@ define module jam-test-suite
   use common-dylan;
   use testworks;
   use locators;
+  use operating-system;
   use file-system;
   use streams;
   use threads;

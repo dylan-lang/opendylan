@@ -172,11 +172,36 @@ define test test-jam-expand-arg-L-expansion-and-replacement ()
 end test;
 
 define test test-jam-expand-arg-multi-modifier-expansion ()
-  //---*** Fill this in...
+  let jam = make-test-instance(<jam-state>);
+  jam-variable(jam, "JAMRULES") := #("Jamrules");
+  jam-variable(jam, "_top") := #("TOP");
+  jam-variable(jam, "TOP") := #("..");
+  check-equal("R replacement composed with G replacement",
+              #("<TOP>../Jamrules"),
+              jam-expand-arg(jam, "$(JAMRULES:R=$($(_top)):G=$(_top))"));
+
+  jam-variable(jam, "_s") := #("/usr/local/src/frabjous/frabjous.y");
+  check-equal("B modifier composed with S replacement",
+              #("frabjous.h"),
+              jam-expand-arg(jam, "$(_s:BS=.h)"));
 end test;
 
 define test test-jam-expand-arg-R-replacement ()
-  //---*** Fill this in...
+  let jam = make-test-instance(<jam-state>);
+  let expected
+    = select ($os-name)
+        #"win32" =>
+          jam-variable(jam, "SYSTEM_ROOT")
+            := #("C:\\Program Files\\Open Dylan");
+          "C:\\Program Files\\Open Dylan\\lib";
+        otherwise =>
+          jam-variable(jam, "SYSTEM_ROOT") := #("/opt/re:zero");
+          "/opt/re:zero/lib";
+      end select;
+  jam-variable(jam, "_lib") := #("lib");
+  check-equal("R replacement with expansion containing colon",
+              vector(expected),
+              jam-expand-arg(jam, "$(_lib:R=$(SYSTEM_ROOT))"));
 end test;
 
 define test test-jam-expand-arg-E-replacement ()
