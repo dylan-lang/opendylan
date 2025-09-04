@@ -367,3 +367,84 @@ define test test-jam-split ()
                               #["-lgobject-2.0 -lglib-2.0 "],
                               #[" "]));
 end test;
+
+define test test-jam-if-conditionals ()
+  let jam = make-test-instance(<jam-state>);
+
+  // Test cases (adapted from Boost Jam core-language tests by Steven Watanabe)
+  let v1 = #["", "", ""];
+  let v2 = #[];
+  let v3 = #["a", "b", "c"];
+  let v4 = #["a", "b", "c", "d"] ;
+  let v5 = #["a", "b", "d"] ;
+  let v6 = #["", "", "", "d"] ;
+
+  // Evaluator rule definitions
+  jam-read(jam,
+           """
+           rule eval-eq lhs : rhs
+           {
+             if $(lhs) = $(rhs) { return true ; } else { return false ; }
+           }
+           rule eval-ne lhs : rhs
+           {
+             if $(lhs) != $(rhs) { return true ; } else { return false ; }
+           }
+           rule eval-lt lhs : rhs
+           {
+             if $(lhs) < $(rhs) { return true ; } else { return false ; }
+           }
+           rule eval-le lhs : rhs
+           {
+             if $(lhs) <= $(rhs) { return true ; } else { return false ; }
+           }
+           rule eval-gt lhs : rhs
+           {
+             if $(lhs) > $(rhs) { return true ; } else { return false ; }
+           }
+           rule eval-ge lhs : rhs
+           {
+             if $(lhs) >= $(rhs) { return true ; } else { return false ; }
+           }
+           """, #f);
+
+  local
+    method check-comparison (id :: <string>, eq :: <string>, lt :: <string>, gt :: <string>)
+      let rule-name = concatenate("eval-", id);
+
+      check-equal(format-to-string("%s-empty-1", id),
+                  vector(eq),
+                  jam-invoke-rule(jam, rule-name, v1, v2));
+      check-equal(format-to-string("%s-empty-2", id),
+                  vector(eq),
+                  jam-invoke-rule(jam, rule-name, v2, v1));
+      check-equal(format-to-string("%s-equal", id),
+                  vector(eq),
+                  jam-invoke-rule(jam, rule-name, v3, v3));
+      check-equal(format-to-string("%s-less-1", id),
+                  vector(lt),
+                  jam-invoke-rule(jam, rule-name, v3, v4));
+      check-equal(format-to-string("%s-less-2", id),
+                  vector(lt),
+                  jam-invoke-rule(jam, rule-name, v3, v5));
+      check-equal(format-to-string("%s-less-3", id),
+                  vector(lt),
+                  jam-invoke-rule(jam, rule-name, v4, v5));
+      check-equal(format-to-string("%s-greater-1", id),
+                  vector(gt),
+                  jam-invoke-rule(jam, rule-name, v4, v3));
+      check-equal(format-to-string("%s-greater-2", id),
+                  vector(gt),
+                  jam-invoke-rule(jam, rule-name, v5, v3));
+      check-equal(format-to-string("%s-greater-3", id),
+                  vector(gt),
+                  jam-invoke-rule(jam, rule-name, v5, v4));
+    end method;
+
+  check-comparison("eq", "true", "false", "false");
+  check-comparison("ne", "false", "true", "true");
+  check-comparison("lt", "false", "true", "false");
+  check-comparison("le", "true", "true", "false");
+  check-comparison("gt", "false", "false", "true");
+  check-comparison("ge", "true", "false", "true");
+end test;

@@ -839,28 +839,64 @@ define method evaluate-expression
   end if
 end method;
 
+define function evaluate-comparison
+    (jam :: <jam-state>, statement :: <jam-composite-expression>)
+ => (cmp :: <integer>);
+  let left = evaluate-expression(jam, statement.composite-left);
+  let right = evaluate-expression(jam, statement.composite-right);
+  let limit = max(left.size, right.size);
+  iterate loop (i :: <integer> = 0)
+    if (i < limit)
+      let left-item :: <string> = element(left, i, default: "");
+      let right-item :: <string> = element(right, i, default: "");
+      if (left-item < right-item)
+        -1
+      elseif (left-item > right-item)
+        1
+      else
+        loop(i + 1)
+      end if
+    else
+      0
+    end if
+  end iterate
+end function;
+
 define method evaluate-expression
     (jam :: <jam-state>, statement :: <jam-eq-expression>)
  => (result :: <sequence>);
-  let left = evaluate-expression(jam, statement.composite-left);
-  let right = evaluate-expression(jam, statement.composite-right);
-  if (left = right) $jam-true else $jam-false end if
+  if (evaluate-comparison(jam, statement) = 0) $jam-true else $jam-false end if
 end method;
 
 define method evaluate-expression
     (jam :: <jam-state>, statement :: <jam-ne-expression>)
  => (result :: <sequence>);
-  let left = evaluate-expression(jam, statement.composite-left);
-  let right = evaluate-expression(jam, statement.composite-right);
-  if (left ~= right) $jam-true else $jam-false end if
+  if (evaluate-comparison(jam, statement) ~= 0) $jam-true else $jam-false end if
 end method;
 
-/* ### FIXME
-define class <jam-lt-expression> (<jam-composite-expression>) end;
-define class <jam-le-expression> (<jam-composite-expression>) end;
-define class <jam-gt-expression> (<jam-composite-expression>) end;
-define class <jam-ge-expression> (<jam-composite-expression>) end;
-*/
+define method evaluate-expression
+    (jam :: <jam-state>, statement :: <jam-lt-expression>)
+ => (result :: <sequence>);
+  if (evaluate-comparison(jam, statement) < 0) $jam-true else $jam-false end if
+end method;
+
+define method evaluate-expression
+    (jam :: <jam-state>, statement :: <jam-le-expression>)
+ => (result :: <sequence>);
+  if (evaluate-comparison(jam, statement) <= 0) $jam-true else $jam-false end if
+end method;
+
+define method evaluate-expression
+    (jam :: <jam-state>, statement :: <jam-gt-expression>)
+ => (result :: <sequence>);
+  if (evaluate-comparison(jam, statement) > 0) $jam-true else $jam-false end if
+end method;
+
+define method evaluate-expression
+    (jam :: <jam-state>, statement :: <jam-ge-expression>)
+ => (result :: <sequence>);
+  if (evaluate-comparison(jam, statement) >= 0) $jam-true else $jam-false end if
+end method;
 
 
 /// Rule invocation interface
