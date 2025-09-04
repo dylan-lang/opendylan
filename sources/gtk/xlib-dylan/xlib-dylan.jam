@@ -1,5 +1,6 @@
 {
-  local _dll = [ FDLLName $(image) ] ;
-  LINKLIBS on $(_dll) += `pkg-config --libs x11` ;
-  CCFLAGS += `pkg-config --cflags x11` ;
+  local _dll = [ FDLLName $(IMAGE) ] ;
+  local _modules = x11 ;
+  LinkPkgConfigLibraries $(_dll) : $(_modules) ;
+  #ObjectPkgConfigCcFlags $(_cs) : $(_modules) ;
 }

@@ -1,5 +1,6 @@
 {
-  local _dll = [ FDLLName $(image) ] ;
-  LINKLIBS on $(_dll) += `pkg-config --libs pango pangocairo` ;
-  CCFLAGS += `pkg-config --cflags pango pangocairo` ;
+  local _dll = [ FDLLName $(IMAGE) ] ;
+  local _modules = pango pangocairo ;
+  LinkPkgConfigLibraries $(_dll) : $(_modules) ;
+  #ObjectPkgConfigCcFlags $(_cs) : $(_modules) ;
 }

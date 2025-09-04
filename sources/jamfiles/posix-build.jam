@@ -491,6 +491,22 @@ rule DylanLibraryClosure image : libraries {
 }
 
 #
+# External package build dependency utilities
+#
+
+rule LinkPkgConfigLibraries
+{
+  LINKLIBS on $(<) += [ COMMAND "pkg-config --libs $(>:J= )" : strip-eol ] ;
+}
+
+rule ObjectPkgConfigCcFlags
+{
+  local _ccflags = [ COMMAND "pkg-config --cflags $(>:J= )" : strip-eol ] ;
+  CCFLAGS on [ FGristFiles $(<:S=$(SUFOBJ)) ] += $(_ccflags) ;
+}
+
+
+#
 # Build rules and actions
 #
 
