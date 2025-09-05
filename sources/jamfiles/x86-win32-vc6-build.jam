@@ -28,16 +28,16 @@ SUFMKF  ?= .mkf ;               # build-system files
   local _bin = bin ;
 
   # SYSTEM_ROOT is set by the build-system
-  SYSTEM_LIBDIR ?= $(_lib:P=$(SYSTEM_ROOT)) ;
-  SYSTEM_BINDIR ?= $(_bin:P=$(SYSTEM_ROOT)) ;
+  SYSTEM_LIBDIR ?= $(_lib:R=$(SYSTEM_ROOT)) ;
+  SYSTEM_BINDIR ?= $(_bin:R=$(SYSTEM_ROOT)) ;
 
   # PERSONAL_ROOT is set by the build-system
-  PERSONAL_LIBDIR ?= $(_lib:P=$(PERSONAL_ROOT)) ;
-  PERSONAL_BINDIR ?= $(_bin:P=$(PERSONAL_ROOT)) ;
+  PERSONAL_LIBDIR ?= $(_lib:R=$(PERSONAL_ROOT)) ;
+  PERSONAL_BINDIR ?= $(_bin:R=$(PERSONAL_ROOT)) ;
 
   # . is set by the build system
-  LIBDIR ?= $(_lib:P=$(PERSONAL_ROOT:E=$(.:P))) ;
-  BINDIR ?= $(_bin:P=$(PERSONAL_ROOT:E=$(.:P))) ;
+  LIBDIR ?= $(_lib:R=$(PERSONAL_ROOT:E=$(.:P))) ;
+  BINDIR ?= $(_bin:R=$(PERSONAL_ROOT:E=$(.:P))) ;
 
   SEARCH_SOURCE ?= . ;
 }
@@ -383,8 +383,8 @@ rule DylanLibraryUses image : library : dir {
         local _lib = lib ;
         local _bin = bin ;
 
-        LIBDIR = $(_lib:P=$(PERSONAL_ROOT:E=$(LOCATE_TARGET:P))) ;
-        BINDIR = $(_bin:P=$(PERSONAL_ROOT:E=$(LOCATE_TARGET:P))) ;
+        LIBDIR = $(_lib:R=$(PERSONAL_ROOT:E=$(LOCATE_TARGET:P))) ;
+        BINDIR = $(_bin:R=$(PERSONAL_ROOT:E=$(LOCATE_TARGET:P))) ;
       }
 
       local _mkf = $(MKF:G=$(library:L)) ;
