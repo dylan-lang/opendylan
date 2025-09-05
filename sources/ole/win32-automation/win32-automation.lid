@@ -13,6 +13,7 @@ Files:	library
 	strings
 	arrays
         variant
+Jam-Includes: win32-automation.jam
 C-Source-Files: c-auto.c
 C-Header-Files: c-auto.h
                 ../com/c-com.h
