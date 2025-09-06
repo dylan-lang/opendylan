@@ -1,5 +1,6 @@
 {
-  local _dll = [ FDLLName $(image) ] ;
-  LINKLIBS on $(_dll) += `pkg-config --libs glib-2.0 gobject-2.0` ;
-  CCFLAGS += `pkg-config --cflags glib-2.0 gobject-2.0` ;
+  local _dll = [ FDLLName $(IMAGE) ] ;
+  local _modules = glib-2.0 gobject-2.0 ;
+  LinkPkgConfigLibraries $(_dll) : $(_modules) ;
+  # ObjectPkgConfigCcFlags $(_cs) : $(_modules) ;
 }

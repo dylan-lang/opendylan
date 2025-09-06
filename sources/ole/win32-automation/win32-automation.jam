@@ -1,0 +1,4 @@
+{
+  local _com = ../com/ ;
+  ObjectHdrs c-auto.c : $(_com:R=$(SUBDIR)) ;
+}

@@ -119,11 +119,12 @@ define method jam-expand-arg-product
             if (c == ':' & member?(i, var-markers))
               let var-name = copy-sequence(var, end: i);
               let contents = jam-variable(jam, var-name, default: #f);
-              return(jam-expand-arg-colon(jam, contents, var, i + 1));
+              return(jam-expand-arg-colon(jam, contents, var, var-markers,
+                                          i + 1));
             elseif (c == '[' & member?(i, var-markers))
               let var-name = copy-sequence(var, end: i);
               return(jam-expand-arg-bracket(jam, jam-variable(jam, var-name),
-                                            var, i + 1));
+                                            var, var-markers, i + 1));
             end if;
           end for;
           jam-variable(jam, var);
@@ -153,38 +154,55 @@ define function jam-expand-arg-colon
     (jam :: <jam-state>,
      contents :: false-or(<sequence>),
      variable :: <byte-string>,
+     var-markers :: <bit-set>,
      i :: <integer>)
  => (result :: <sequence>);
   let variable-size :: <integer> = variable.size;
   if (i < variable-size)
     let modifier = variable[i];
-    let replace?
-      = i + 1 < variable.size
-      & element(variable, i + 1) == '=';
+    let (replacement :: false-or(<string>), next-i :: <integer>)
+      = if (element(variable, i + 1, default: '?') == '=')
+          iterate loop (next-i :: <integer> = i + 2)
+            if (next-i >= variable-size)
+              values(copy-sequence(variable, start: i + 2), next-i)
+            elseif (variable[next-i] == ':' & member?(next-i, var-markers))
+              values(copy-sequence(variable, start: i + 2, end: next-i),
+                     next-i + 1)
+            else
+              loop(next-i + 1)
+            end if
+          end iterate
+        else
+          values(#f, i + 1)
+        end if;
+
     let contents = contents | #[];
 
     if (modifier == 'E')
       if (~empty?(contents))
         contents
-      elseif (replace?)
-        vector(copy-sequence(variable, start: i + 2))
+      elseif (replacement)
+        vector(replacement)
       else
         #[""]
       end
     elseif (modifier == 'J')
-      let joiner =
-        if (replace?) copy-sequence(variable, start: i + 2) else "" end;
-      for (component in contents,
-           first? = #t then #f,
-           result = first(contents)
-             then if (first?)
-                    result
-                  else
-                    concatenate(result, joiner, component)
-                  end)
-      finally
-        vector(result)
-      end for
+      let joiner = replacement | "";
+      if (empty?(contents))
+        #[]
+      else
+        for (component in contents,
+             first? = #t then #f,
+             result = first(contents)
+               then if (first?)
+                      result
+                    else
+                      concatenate(result, joiner, component)
+                    end)
+        finally
+          vector(result)
+        end for
+      end if
     elseif (modifier == '@')
       if (empty?(contents))
         #[]
@@ -206,13 +224,13 @@ define function jam-expand-arg-colon
         select (modifier)
           // B - Filename base
           'B' =>
-            if (replace?)
+            if (replacement)
               method (name :: <byte-string>) => (modified :: <byte-string>);
                 let locator = as(<file-locator>, strip-grist(name));
                 as(<byte-string>,
                    make(<file-locator>,
                         directory: locator.locator-directory,
-                        base: copy-sequence(variable, start: i + 2),
+                        base: replacement,
                         extension: locator.locator-extension))
               end
             else
@@ -223,7 +241,7 @@ define function jam-expand-arg-colon
 
           // S - Filename suffix
           'S' =>
-            if (replace?)
+            if (replacement)
               method (name :: <byte-string>) => (modified :: <byte-string>);
                 let locator = as(<file-locator>, strip-grist(name));
 
@@ -231,7 +249,7 @@ define function jam-expand-arg-colon
                    make(<file-locator>,
                         directory: locator.locator-directory,
                         base: locator.locator-base,
-                        extension: copy-sequence(variable, start: i + 3)))
+                        extension: copy-sequence(replacement, start: 1)))
               end
             else
               method (name :: <byte-string>) => (extracted :: <byte-string>);
@@ -248,30 +266,29 @@ define function jam-expand-arg-colon
 
           // D - Directory path
           'D', 'P' =>
-            if (replace?)
+            if (replacement)
               method (name :: <byte-string>) => (modified :: <byte-string>);
                 let locator = as(<file-locator>, strip-grist(name));
                 add-grist(name,
                           as(<byte-string>,
                              make(<file-locator>,
                                   directory:
-                                    as(<directory-locator>,
-                                       copy-sequence(variable, start: i + 2)),
+                                    as(<directory-locator>, replacement),
                                   base: locator.locator-base,
                                   extension: locator.locator-extension)))
                          end
             else
               method (name :: <byte-string>) => (extracted :: <byte-string>);
                 let locator = as(<file-system-locator>, strip-grist(name));
-                add-grist(name,as(<byte-string>, locator.locator-directory | ""))
+                add-grist(name,
+                          as(<byte-string>, locator.locator-directory | ""))
               end
             end if;
 
           // R - Root directory path
           'R' =>
-            if (replace?)
-              let new-root = as(<directory-locator>,
-                                copy-sequence(variable, start: i + 2));
+            if (replacement)
+              let new-root = as(<directory-locator>, replacement);
               method (name :: <byte-string>) => (modified :: <byte-string>);
                 as(<byte-string>,
                    simplify-locator(merge-locators(as(<file-system-locator>, name),
@@ -283,22 +300,25 @@ define function jam-expand-arg-colon
 
           // G - "Grist"
           'G' =>
-            if (i + 2 = variable-size)
-              strip-grist
-            elseif (replace?)
-              let new-start
-                = if (variable[i + 2] == '<') i + 3 else i + 2 end if;
-              let new-end
-                = if (variable[variable-size - 1] == '>')
-                    variable-size - 1
-                  else
-                    variable-size
-                  end;
-              let grist
-                = copy-sequence(variable, start: new-start, end: new-end);
-              method (name :: <byte-string>) => (modified :: <byte-string>);
+            if (replacement)
+              if (empty?(replacement))
+                strip-grist
+              else
+                let replacement-size = replacement.size;
+                let new-start
+                  = if (first(replacement) == '<') 1 else 0 end if;
+                let new-end
+                  = if (replacement[replacement-size - 1] == '>')
+                      replacement-size - 1
+                    else
+                      replacement-size
+                    end;
+                let grist
+                = copy-sequence(replacement, start: new-start, end: new-end);
+                method (name :: <byte-string>) => (modified :: <byte-string>);
                   concatenate("<", grist, ">", strip-grist(name))
-              end
+                end
+              end if
             else
               extract-grist
             end if;
@@ -321,11 +341,7 @@ define function jam-expand-arg-colon
                   modifier, variable);
         end select;
       let contents = map(func, contents);
-      if (replace?)
-        contents
-      else
-        jam-expand-arg-colon(jam, contents, variable, i + 1)
-      end if
+      jam-expand-arg-colon(jam, contents, variable, var-markers, next-i)
     end if
   else
     contents | #[]
@@ -340,6 +356,7 @@ define function jam-expand-arg-bracket
     (jam :: <jam-state>,
      contents :: <sequence>,
      variable :: <byte-string>,
+     var-markers :: <bit-set>,
      start :: <integer>)
  => (result :: <sequence>);
   let variable-size :: <integer> = variable.size;
@@ -352,7 +369,7 @@ define function jam-expand-arg-bracket
     elseif (variable[after-n] == ']')
       let result = vector(contents[n - 1]);
       if (after-n + 1 < variable-size & variable[after-n + 1] == ':')
-        jam-expand-arg-colon(jam, result, variable, after-n + 2)
+        jam-expand-arg-colon(jam, result, variable, var-markers, after-n + 2)
       else
         result
       end if
@@ -360,7 +377,7 @@ define function jam-expand-arg-bracket
       if (after-n + 1 < variable-size & variable[after-n + 1] == ']')
         let result = copy-sequence(contents, start: n - 1);
         if (after-n + 2 < variable-size & variable[after-n + 2] == ':')
-          jam-expand-arg-colon(jam, result, variable, after-n + 3)
+          jam-expand-arg-colon(jam, result, variable, var-markers, after-n + 3)
         else
           result
         end if
@@ -376,7 +393,7 @@ define function jam-expand-arg-bracket
         if (after-m + 1 < variable-size
               & variable[after-m] == ']'
               & variable[after-m + 1] == ':')
-          jam-expand-arg-colon(jam, result, variable, after-m + 2)
+          jam-expand-arg-colon(jam, result, variable, var-markers, after-m + 2)
         else
           result
         end if
@@ -822,28 +839,64 @@ define method evaluate-expression
   end if
 end method;
 
+define function evaluate-comparison
+    (jam :: <jam-state>, statement :: <jam-composite-expression>)
+ => (cmp :: <integer>);
+  let left = evaluate-expression(jam, statement.composite-left);
+  let right = evaluate-expression(jam, statement.composite-right);
+  let limit = max(left.size, right.size);
+  iterate loop (i :: <integer> = 0)
+    if (i < limit)
+      let left-item :: <string> = element(left, i, default: "");
+      let right-item :: <string> = element(right, i, default: "");
+      if (left-item < right-item)
+        -1
+      elseif (left-item > right-item)
+        1
+      else
+        loop(i + 1)
+      end if
+    else
+      0
+    end if
+  end iterate
+end function;
+
 define method evaluate-expression
     (jam :: <jam-state>, statement :: <jam-eq-expression>)
  => (result :: <sequence>);
-  let left = evaluate-expression(jam, statement.composite-left);
-  let right = evaluate-expression(jam, statement.composite-right);
-  if (left = right) $jam-true else $jam-false end if
+  if (evaluate-comparison(jam, statement) = 0) $jam-true else $jam-false end if
 end method;
 
 define method evaluate-expression
     (jam :: <jam-state>, statement :: <jam-ne-expression>)
  => (result :: <sequence>);
-  let left = evaluate-expression(jam, statement.composite-left);
-  let right = evaluate-expression(jam, statement.composite-right);
-  if (left ~= right) $jam-true else $jam-false end if
+  if (evaluate-comparison(jam, statement) ~= 0) $jam-true else $jam-false end if
 end method;
 
-/* ### FIXME
-define class <jam-lt-expression> (<jam-composite-expression>) end;
-define class <jam-le-expression> (<jam-composite-expression>) end;
-define class <jam-gt-expression> (<jam-composite-expression>) end;
-define class <jam-ge-expression> (<jam-composite-expression>) end;
-*/
+define method evaluate-expression
+    (jam :: <jam-state>, statement :: <jam-lt-expression>)
+ => (result :: <sequence>);
+  if (evaluate-comparison(jam, statement) < 0) $jam-true else $jam-false end if
+end method;
+
+define method evaluate-expression
+    (jam :: <jam-state>, statement :: <jam-le-expression>)
+ => (result :: <sequence>);
+  if (evaluate-comparison(jam, statement) <= 0) $jam-true else $jam-false end if
+end method;
+
+define method evaluate-expression
+    (jam :: <jam-state>, statement :: <jam-gt-expression>)
+ => (result :: <sequence>);
+  if (evaluate-comparison(jam, statement) > 0) $jam-true else $jam-false end if
+end method;
+
+define method evaluate-expression
+    (jam :: <jam-state>, statement :: <jam-ge-expression>)
+ => (result :: <sequence>);
+  if (evaluate-comparison(jam, statement) >= 0) $jam-true else $jam-false end if
+end method;
 
 
 /// Rule invocation interface

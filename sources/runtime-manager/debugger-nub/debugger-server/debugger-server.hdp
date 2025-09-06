@@ -11,8 +11,8 @@ minor-version:	1
 target-type:	executable
 linker-options:	$(guilflags)
 other-files:	debugger-server.spec
-RC-Files:	..\debugger-server.rc
-C-Header-Files: ..\debugger-server.ico
+RC-Files:       debugger-server.rc
+C-Header-Files: debugger-server.ico
 C-libraries: devnub.lib
              dbghelp.lib
 comment:	additional keywords

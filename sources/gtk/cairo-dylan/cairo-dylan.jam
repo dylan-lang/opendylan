@@ -1,5 +1,6 @@
 {
-  local _dll = [ FDLLName $(image) ] ;
-  LINKLIBS on $(_dll) += `pkg-config --libs cairo cairo-gobject` ;
-  CCFLAGS += `pkg-config --cflags cairo cairo-gobject` ;
+  local _dll = [ FDLLName $(IMAGE) ] ;
+  local _modules = cairo cairo-gobject ;
+  LinkPkgConfigLibraries $(_dll) : $(_modules) ;
+  # ObjectPkgConfigCcFlags $(_cs) : $(_modules) ;
 }

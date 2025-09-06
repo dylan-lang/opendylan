@@ -28,16 +28,18 @@ SUFMKF  ?= .mkf ;               # build-system files
   local _bin = bin ;
 
   # SYSTEM_ROOT is set by the build-system
-  SYSTEM_LIBDIR ?= $(_lib:P=$(SYSTEM_ROOT)) ;
-  SYSTEM_BINDIR ?= $(_bin:P=$(SYSTEM_ROOT)) ;
+  SYSTEM_LIBDIR ?= $(_lib:R=$(SYSTEM_ROOT)) ;
+  SYSTEM_BINDIR ?= $(_bin:R=$(SYSTEM_ROOT)) ;
 
   # PERSONAL_ROOT is set by the build-system
-  PERSONAL_LIBDIR ?= $(_lib:P=$(PERSONAL_ROOT)) ;
-  PERSONAL_BINDIR ?= $(_bin:P=$(PERSONAL_ROOT)) ;
+  PERSONAL_LIBDIR ?= $(_lib:R=$(PERSONAL_ROOT)) ;
+  PERSONAL_BINDIR ?= $(_bin:R=$(PERSONAL_ROOT)) ;
 
   # . is set by the build system
-  LIBDIR ?= $(_lib:P=$(PERSONAL_ROOT:E=$(.:P))) ;
-  BINDIR ?= $(_bin:P=$(PERSONAL_ROOT:E=$(.:P))) ;
+  LIBDIR ?= $(_lib:R=$(PERSONAL_ROOT:E=$(.:P))) ;
+  BINDIR ?= $(_bin:R=$(PERSONAL_ROOT:E=$(.:P))) ;
+
+  SEARCH_SOURCE ?= . ;
 }
 
 LIBPATH   ?= $(PERSONAL_LIBDIR) $(SYSTEM_LIBDIR) ;
@@ -93,9 +95,9 @@ Always clean clean-all ;
 # the Library: header, and $(image[2]) contains the name from
 # the Executable: header (if present).
 
-rule DylanLibrary image : version {
-  # DylanLibrary image : version ;
-  #Echo DylanLibrary $(image) ":" $(version) ;
+rule DylanLibrary image : version : dir {
+  # DylanLibrary image : version : dir ;
+  #Echo DylanLibrary $(image) ":" $(version) ":" $(dir) ;
 
   # Link a Dylan library as a shared library or executable image.
 
@@ -115,6 +117,12 @@ rule DylanLibrary image : version {
   MakeLocate $(_dll) : $(BINDIR) ;
   MakeLocate $(_lib) : $(LIBDIR) ;
   MakeLocate $(_exe) : $(BINDIR) ;
+
+  # Set SUBDIR to the library source directory as per Jambase rule SubDir
+  SUBDIR = $(dir) ;
+
+  # Include the library source directory in build file searches
+  SEARCH_SOURCE += $(SUBDIR) ;
 
   # We'll use the library name as the grist to identify referenced
   # source and object files.
@@ -258,6 +266,7 @@ rule DylanLibraryCSources image : sources {
       local _obj = [ FGristFiles $(_i:S=$(SUFOBJ)) ] ;
       MakeLocate $(_obj) : $(LOCATE_TARGET) ;
 
+      ObjectHdrs $(_obj) : $(SEARCH_SOURCE) ;
       Cc $(_obj) : $(_i) ;
 
       LinkDLL $(_dll) $(_lib) : $(_obj) ;
@@ -290,6 +299,7 @@ rule DylanLibraryC++Sources image : sources {
       local _obj = [ FGristFiles $(_i:S=$(SUFOBJ)) ] ;
       MakeLocate $(_obj) : $(LOCATE_TARGET) ;
 
+      ObjectHdrs $(_obj) : $(SEARCH_SOURCE) ;
       C++ $(_obj) : $(_i) ;
 
       LinkDLL $(_dll) $(_lib) : $(_obj) ;
@@ -325,6 +335,9 @@ rule DylanLibraryRCFiles image : rcfiles {
 
 rule DylanLibraryJamIncludes image : includes {
   # DylanLibraryJamIncludes image : includes ;
+
+  # Set for use within the body of the included file
+  local IMAGE = $(image) ;
 
   local _i ;
   for _i in [ FGristFiles $(includes) ] {
@@ -370,8 +383,8 @@ rule DylanLibraryUses image : library : dir {
         local _lib = lib ;
         local _bin = bin ;
 
-        LIBDIR = $(_lib:P=$(PERSONAL_ROOT:E=$(LOCATE_TARGET:P))) ;
-        BINDIR = $(_bin:P=$(PERSONAL_ROOT:E=$(LOCATE_TARGET:P))) ;
+        LIBDIR = $(_lib:R=$(PERSONAL_ROOT:E=$(LOCATE_TARGET:P))) ;
+        BINDIR = $(_bin:R=$(PERSONAL_ROOT:E=$(LOCATE_TARGET:P))) ;
       }
 
       local _mkf = $(MKF:G=$(library:L)) ;
