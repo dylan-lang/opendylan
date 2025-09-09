@@ -26,6 +26,12 @@ Compiler
   instead makes the original source directory location available to
   the build system (and the Jam build scripts).
 
+* The compiler now signals an error when it is not able to inline a
+  call to a method that has either a method parameter or a return
+  value with a raw type. This provides explicit guidance when
+  encountering the situation outlined in `Issue 1377
+  <https://github.com/dylan-lang/opendylan/issues/1377>`_.
+
 Tools
 =====
 
