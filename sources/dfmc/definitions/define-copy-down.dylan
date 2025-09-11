@@ -6,7 +6,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-
 define &definition copy-down-method-definer
   { define ?mods:* \copy-down-method ?:name ?signature:* }
     => do-define-copy-down-method (form, mods, name, signature) ;
@@ -18,36 +17,9 @@ define &definition copy-down-method-definer
        end;
 end;
 
-/*
-define function do-define-copy-down-method (fragment, mods, name, signature)
-format-out ("in do-define-copy-down-method\n");
-  // let (options, adjectives) = parse-method-adjectives (name, mods);
-format-out ("copy-down-method signature is %s\n", signature) ;
-  // maybe should check body is empty
-  // ensure-next-method-binding (signature);  // not sure this useful
-//  let  args-list = macro-case (signature) { (?args:*) ?other:* } => args end;
-  let  method-form
-    = #{ define ?mods \method ?name ?signature end };
-  let  new-fragment = method-form.as-body ;
-  let  expanded-forms = top-level-convert (fragment, new-fragment) ;
-format-out ("expanded forms for copy-down method %s\n", expanded-forms) ;
-  let  interesting-form = first (expanded-forms) ;
-  interesting-form.form-class := #"copy-down-method" ;
-  expanded-forms
-end;
-*/
-define function do-define-copy-down-method (fragment, mods, name, signature)
-// format-out ("in do-define-copy-down-method\n");
+define function do-define-copy-down-method (fragment, mods, name, sig-fragment)
   let (options, adjectives) = parse-method-adjectives (name, mods);
-//  let signature-and-body = make (<sequence-fragment>,
-//                                 record: signature.fragment-record,
-//                                 source-position: signature.fragment-source-position,
-//                                 fragments:
-//                                   concatenate (signature . fragment-fragments,
-//                                                #{ #f }.template-fragments)) ;
-  let signature-and-body = signature ;
-  let (signature, body) = parse-method-signature(name, signature-and-body);
-// format-out ("copy-down-method signature is %s\n", signature) ;
+  let (signature, body) = parse-method-signature(name, sig-fragment);
   ensure-next-method-binding (signature);
   let method-definition
     = apply(make, <method-definition>,
@@ -56,15 +28,15 @@ define function do-define-copy-down-method (fragment, mods, name, signature)
             adjectives:      adjectives,
             signature:       signature,
             body:            body,
-            signature-and-body-fragment: signature,
+            signature-and-body-fragment: sig-fragment,
             options);
-  method-definition.form-class  := #"copy-down-method" ;
+  method-definition.form-class := #"copy-down-method" ;
   if (form-sealed?(method-definition))
     let domain-fragment
       = generate-implicit-domain-definition-fragment(method-definition);
-    let expanded-forms = top-level-convert(method-definition, domain-fragment) ;
-    pair (method-definition, expanded-forms)
+    let expanded-forms = top-level-convert(method-definition, domain-fragment);
+    pair(method-definition, expanded-forms)
   else
-    list (method-definition)
+    list(method-definition)
   end
 end;
