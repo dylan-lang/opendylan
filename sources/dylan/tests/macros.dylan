@@ -41,6 +41,28 @@ define test test-block ()
   //---*** Fill this in...
 end test;
 
+define test test-block--parallel-exception-clauses
+    (expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1750")
+  // https://opendylan.org/books/drm/Statement_Macros#IX-2062
+  //
+  // DRM: "Note that when the expressions in an exception body are executed, all handlers
+  // established by the block are no longer active."
+  //
+  // DRM: "All exception clauses are executed in the same dynamic environment. None of
+  // the handlers established in the block are visible during the execution of one of the
+  // handlers. This can be thought of as parallel installation of the handlers."
+  assert-signals(<simple-error>,
+                 block ()
+                   signal(make(<simple-error>))
+                 exception (e :: <simple-error>)
+                   signal(e)
+                 exception (e :: <error>)
+                   "this should not be executed"
+                 end,
+                 "other exception clauses should not be in effect when any one of them is executed");
+end test;
+
+
 define test test-case ()
   check-equal("case stop when test is five = five",
 	      case
@@ -567,6 +589,7 @@ end test;
 define suite dylan-macros-test-suite ()
   test test-begin;
   test test-block;
+  test test-block--parallel-exception-clauses;
   test test-case;
   test test-for;
   test test-if;
