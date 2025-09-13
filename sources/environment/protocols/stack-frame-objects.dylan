@@ -12,10 +12,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// All the interesting stuff is in the application-proxy-object.
 ///
 define class <stack-frame-object> (<application-object>)
-  slot next-frame-cache-slot :: false-or(<stack-frame-object>),
-    init-value: #f;
-  slot previous-frame-cache-slot :: false-or(<stack-frame-object>),
-    init-value: #f;
   slot local-variables-cache-slot :: false-or(<sequence>),
     init-value: #f;
 
@@ -29,12 +25,6 @@ define class <stack-frame-object> (<application-object>)
     init-value: #f;
 
   slot thread-cache-slot :: false-or(<thread-object>),
-    init-value: #f;
-
-  slot stack-frame-top? :: <boolean>,
-    init-value: #f;
-
-  slot stack-frame-bottom? :: <boolean>,
     init-value: #f;
 
   // The following slot caches the source location. The slot holds
@@ -185,50 +175,6 @@ define method stack-frame-thread
     end if;
   end unless;
   stack-frame.thread-cache-slot
-end method;
-
-define method stack-frame-next-frame
-    (project :: <project-object>, stack-frame :: <stack-frame-object>)
- => (next-one :: false-or(<stack-frame-object>))
-  if (stack-frame.stack-frame-top?)
-    #f
-  elseif (stack-frame.next-frame-cache-slot)
-    stack-frame.next-frame-cache-slot
-  else
-    let server = choose-server(project, stack-frame);
-    if (server)
-      let next-one = stack-frame-next-frame(server, stack-frame);
-      if (next-one)
-        next-one.previous-frame-cache-slot := stack-frame;
-        stack-frame.next-frame-cache-slot := next-one;
-      else
-        stack-frame.stack-frame-top? := #t
-      end if
-    end if;
-    stack-frame.next-frame-cache-slot
-  end if
-end method;
-
-define method stack-frame-previous-frame
-    (project :: <project-object>, stack-frame :: <stack-frame-object>)
- => (previous-one :: false-or(<stack-frame-object>))
-  if (stack-frame.stack-frame-bottom?)
-    #f
-  elseif (stack-frame.previous-frame-cache-slot)
-    stack-frame.previous-frame-cache-slot
-  else
-    let server = choose-server(project, stack-frame);
-    if (server)
-      let previous-one = stack-frame-previous-frame(server, stack-frame);
-      if (previous-one)
-        previous-one.next-frame-cache-slot := stack-frame;
-        stack-frame.previous-frame-cache-slot := previous-one;
-      else
-        stack-frame.stack-frame-bottom? := #t
-      end if
-    end if;
-    stack-frame.previous-frame-cache-slot
-  end if
 end method;
 
 define method stack-frame-type

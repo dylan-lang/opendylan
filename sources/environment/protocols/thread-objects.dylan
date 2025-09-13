@@ -134,40 +134,6 @@ define method thread-complete-stack-trace
 
     let stack = thread-complete-stack-trace(server, thread);
 
-    // Stack frame environment objects have cache slots that enable them to
-    // reference each other. These are filled in lazily, except when this
-    // method is called to get a complete stack trace all at once.
-    // So, in this case, we have to fill all the cache slots in now.
-    // Find out how many frames there are, and hence the indices in the
-    // sequence of the first (top) frame, and the last (bottom) frame.
-
-    let count = size(stack);
-    let last = count - 1;
-    stack[0].stack-frame-top? := #t;
-    stack[last].stack-frame-bottom? := #t;
-
-    // The stack must have at least one frame, but may conceivably
-    // (though this will probably never happen in real life) contain
-    // _only_ one frame, in which case 'last' is equal to zero. That's
-    // the reason for having these two 'unless' clauses. The bodies of
-    // these should almost always get executed, but it should also be
-    // impossible for an array-boundary error to occur.
-
-    unless (stack[0].stack-frame-bottom?)
-      stack[0].previous-frame-cache-slot := stack[1]
-    end unless;
-    unless (stack[last].stack-frame-top?)
-      stack[last].next-frame-cache-slot := stack[last - 1]
-    end unless;
-
-    // Now go through whatever frames might exist between the "top" and
-    // "bottom" frames, linking them together via their cache slots.
-
-    for (i from 1 below last)
-      stack[i].previous-frame-cache-slot := stack[i + 1];
-      stack[i].next-frame-cache-slot := stack[i - 1];
-    end for;
-
     // And return the sequence
     stack
   else
