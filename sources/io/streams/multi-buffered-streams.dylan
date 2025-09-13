@@ -592,12 +592,12 @@ end method do-force-output-buffers;
 define sealed method stream-position
     (stream :: <multi-buffered-stream>) => (position :: <integer>)
   if(stream.stream-open?)
-  if (stream-shared-buffer(stream))
-    stream-shared-buffer(stream).buffer-position
-      + stream-shared-buffer(stream).buffer-next
-  else
-    stream.current-position
-  end
+    let the-buffer = stream-shared-buffer(stream);
+    if (the-buffer)
+      the-buffer.buffer-position + the-buffer.buffer-next
+    else
+      stream.current-position
+    end
   else
     error(make(<stream-closed-error>, stream: stream,
                format-string: "Cant get the position of a closed stream"));
@@ -632,9 +632,9 @@ end method;
 define function multi-buffered-stream-position-setter
     (the-position :: <integer>, stream :: <multi-buffered-stream>)
  => (the-position :: <integer>)
-  if (stream-shared-buffer(stream))
-    let the-buffer :: <buffer> = stream-shared-buffer(stream);
-    if((the-buffer.buffer-position + the-buffer.buffer-next) == the-position)
+  let the-buffer = stream-shared-buffer(stream);
+  if (the-buffer)
+    if ((the-buffer.buffer-position + the-buffer.buffer-next) == the-position)
       /* do nothing, already there*/
     elseif (logand(the-buffer.buffer-off-page-bits, the-position)
               == the-buffer.buffer-position)
@@ -711,7 +711,6 @@ end method adjust-stream-position;
 define inline function write-4-aligned-bytes-from-word
     (stream :: <multi-buffered-stream>, word :: <machine-word>) => ()
   with-output-buffer (sb = stream)
-    let sb :: <buffer> = sb; // HACK: TYPE ONLY
     let bi :: <buffer-index> = sb.buffer-next;
     primitive-element
         (primitive-repeated-slot-as-raw(sb, primitive-repeated-slot-offset(sb)),
@@ -729,7 +728,6 @@ define inline function read-4-aligned-bytes-as-word
  => (word)
   with-input-buffer (sb = stream)
     if (sb)
-      let sb :: <buffer> = sb; // HACK: TYPE ONLY
       let bi :: <buffer-index> = sb.buffer-next;
       sb.buffer-next := bi + 4;
       primitive-wrap-machine-word
@@ -748,7 +746,6 @@ define function write-4-aligned-bytes
     (stream :: <multi-buffered-stream>, byte-1 :: <integer>,
      byte-2 :: <integer>, byte-3 :: <integer>, byte-4 :: <integer>) => ()
   with-output-buffer (sb = stream)
-    let sb :: <buffer> = sb; // HACK: TYPE ONLY
     let bi :: <buffer-index> = sb.buffer-next;
     without-bounds-checks
       sb[bi] := byte-1; sb[bi + 1] := byte-2; sb[bi + 2] := byte-3;
@@ -766,7 +763,6 @@ define function write-8-aligned-bytes
      byte-5 :: <integer>, byte-6 :: <integer>, byte-7 :: <integer>,
      byte-8 :: <integer>) => ()
   with-output-buffer (sb = stream)
-    let sb :: <buffer> = sb; // HACK: TYPE ONLY
     let bi :: <buffer-index> = sb.buffer-next;
     without-bounds-checks
       sb[bi] := byte-1; sb[bi + 1] := byte-2; sb[bi + 2] := byte-3;
@@ -786,7 +782,6 @@ define function read-4-aligned-bytes
      byte-4 :: <integer>)
   with-input-buffer (sb = stream)
     if (sb)
-      let sb :: <buffer> = sb; // HACK: TYPE ONLY
       let bi :: <buffer-index> = sb.buffer-next;
       sb.buffer-next := bi + 4;
       without-bounds-checks
@@ -806,7 +801,6 @@ define function read-8-aligned-bytes
      byte-7 :: <integer>, byte-8 :: <integer>)
   with-input-buffer (sb = stream)
     if (sb)
-      let sb :: <buffer> = sb; // HACK: TYPE ONLY
       let bi :: <buffer-index> = sb.buffer-next;
       sb.buffer-next := bi + 8;
       without-bounds-checks

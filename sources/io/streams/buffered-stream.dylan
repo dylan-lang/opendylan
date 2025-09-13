@@ -88,7 +88,6 @@ define inline function get-input-buffer
  => (buffer :: false-or(<buffer>))
   let sb = stream-input-buffer(stream);
   if (sb)
-    let sb :: <buffer> = sb;
     if (sb.buffer-next >= sb.buffer-end) // gone past last valid byte?
       do-next-input-buffer(stream, wait?: wait?, bytes: bytes)
         // This returns #f if number of bytes read is 0
@@ -172,7 +171,6 @@ define inline function get-output-buffer
  => (buffer :: false-or(<buffer>))
   let sb = stream-output-buffer(stream);
   if (sb)
-    let sb :: <buffer> = sb; // HACK: TYPE ONLY
     if (sb.buffer-next >= sb.buffer-size) // gone past the end of the buffer?
       do-next-output-buffer(stream, bytes: bytes)
     else
@@ -393,7 +391,6 @@ define method read-element
  => (element :: <object>)
   with-input-buffer (sb = stream)
     if (sb)
-      let sb :: <buffer> = sb; // HACK: TYPE ONLY
       let bi :: <buffer-index> = sb.buffer-next;
       let elt = coerce-to-element(stream, sb, bi);
       sb.buffer-next := bi + 1;
@@ -410,7 +407,6 @@ define method peek
  => (element :: <object>)
   with-input-buffer (sb = stream)
     if (sb)
-      let sb :: <buffer> = sb; // HACK: TYPE ONLY
       coerce-to-element(stream, sb, sb.buffer-next)
     else
       end-of-stream-value(stream, on-end-of-stream)
@@ -442,7 +438,6 @@ define method read-into!
       // Fill in the result sequence
       iterate loop (i :: <integer> = start, sb :: false-or(<buffer>) = sb)
         if (sb & (i < e))
-          let sb :: <buffer> = sb;
           let bi :: <buffer-index> = sb.buffer-next;
           let ei :: <buffer-index> = sb.buffer-end;
           if (bi >= ei)
@@ -545,7 +540,6 @@ define method read-line
             end method;
       iterate loop (sb :: false-or(<buffer>) = sb)
         if (sb & ~matched?)
-          let sb :: <buffer> = sb; // HACK: TYPE ONLY
           let bi :: <buffer-index> = sb.buffer-next;
           let ei :: <buffer-index> = sb.buffer-end;
           if (bi >= ei)
@@ -629,7 +623,6 @@ define method read-line-into!
     with-input-buffer (sb = stream)
       iterate loop (sb :: false-or(<buffer>) = sb)
         if (sb & ~matched?)
-          let sb :: <buffer> = sb; // HACK: TYPE ONLY
           let bi :: <buffer-index> = sb.buffer-next;
           let ei :: <buffer-index> = sb.buffer-end;
           if (bi >= ei)
@@ -684,7 +677,6 @@ define method read-skip
       let i :: <integer> = 0;
       let e :: <integer> = n;
       while (sb & (i < e))
-        let sb :: <buffer> = sb; // HACK: TYPE ONLY
         let bi :: <buffer-index> = sb.buffer-next;
         let ei :: <buffer-index> = sb.buffer-end;
         if (bi >= ei)
@@ -709,7 +701,6 @@ end method read-skip;
 define method write-element
     (stream :: <buffered-stream>, elt :: <object>) => ()
   with-output-buffer (sb = stream)
-    let sb :: <buffer> = sb; // HACK: TYPE ONLY
     let bi :: <buffer-index> = sb.buffer-next;
     coerce-from-element(stream, sb, bi, elt);
     sb.buffer-next := bi + 1;
@@ -725,7 +716,6 @@ define method write
     let e :: <integer> = _end | elements.size;
     iterate loop (i :: <integer> = _start, sb :: false-or(<buffer>) = sb)
       if (sb & i < e)
-        let sb :: <buffer> = sb; // HACK: TYPE ONLY
         let bi :: <buffer-index> = sb.buffer-next;
         let bufsiz :: <buffer-index> = sb.buffer-size;
         if (bi >= bufsiz)
@@ -755,23 +745,6 @@ define method write-line
     local method write-elts (elts :: <string>, i :: <integer>, e :: <integer>)
             iterate loop (i :: <integer> = i, sb :: false-or(<buffer>) = sb)
               if (sb & i < e)
-                /* ---*** There used to be a line here:
-
-                let sb :: <buffer> = sb; // HACK: TYPE ONLY
-
-                This was obviously intended to nail down the type of sb.
-                Now for some reason this led to a type estimate of "<bottom>"
-                in the call to coerce-from-sequence further down. Furthermore,
-                type inference should find out that sb is not #f all on itself,
-                because it is used in the condition of the if.
-
-                I suspect type inference for if statements and their condition
-                variables to be broken.  Needs to be researched and fixed.  I'm
-                taking out the quoted line to get rid of a serious warning that
-                might scare users.
-
-                -- Andreas Bogk, Oct 2005 */
-
                 let bi :: <buffer-index> = sb.buffer-next;
                 let bufsiz :: <buffer-index> = sb.buffer-size;
                 if (bi >= bufsiz)
@@ -805,7 +778,6 @@ define method write-fill
     let e :: <integer> = n;
     iterate loop (i :: <integer> = 0, sb :: false-or(<buffer>) = sb)
       if (sb & i < e)
-        let sb :: <buffer> = sb; // HACK: TYPE ONLY
         let bi :: <buffer-index> = sb.buffer-next;
         let bufsiz :: <buffer-index> = sb.buffer-size;
         if (bi >= bufsiz)
