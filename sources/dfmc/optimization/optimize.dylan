@@ -102,12 +102,6 @@ define sealed method really-run-compilation-passes (code :: <&lambda>)
                 eliminate-assignments(f);
               end;
             end for-all-lambdas;
-            opt-trace(#"start-phase-for-code", "rename temporaries");
-            for-all-lambdas (f in code)
-              if (f == code | lambda-used?(f))
-                maybe-rename-temporaries-in-conditionals(f);
-              end;
-            end for-all-lambdas;
             opt-trace
               (#"start-phase-for-code",
                "dead code removal, constant fold, call upgrading, inlining");
@@ -281,5 +275,10 @@ define method optimize (c :: <unwind-protect>) => (b :: <boolean>)
     end if;
   end if;
   next-method()
+end method optimize;
+
+define method optimize (c :: <if>) => (b :: <boolean>)
+  next-method()
+    | run-optimizer("RENAME", maybe-rename-temporaries-in-conditional, c)
 end method optimize;
 

@@ -134,16 +134,6 @@ end method convert-set-cell-value!;
 // the worst that will happen is that the new temporary will have the same type
 // as the original variable.
 
-define method maybe-rename-temporaries-in-conditionals (f :: <&lambda>)
-  for-computations (c in f)
-    maybe-rename-temporaries-in-conditional(c, f)
-  end;
-end;
-
-define method maybe-rename-temporaries-in-conditional
-  (c :: <computation>, f :: <&lambda>)
-end;
-
 define method type-minus-false (te :: <type-estimate>) => (type == #f)
   #f
 end method;
@@ -177,36 +167,46 @@ define method type-minus-false
 end method;
 
 define method maybe-rename-temporaries-in-conditional
-  (c :: <if>, f :: <&lambda>)
-  let gen-arg0 = c.test;
-  let (rename?, to-be-renamed, constraint) =
-    if (instance?(gen-arg0, <lexical-variable>))
-      values(#t, gen-arg0, type-minus-false(type-estimate(gen-arg0)))
-    end;
-  if (rename?) // So we need to introduce a new temporary
+    (c :: <if>) => (b :: <boolean>)
+  let test-reference = c.test;
+  let test-temporary
+    = instance?(test-reference, <temporary>)
+    & test-reference;
+  let te = type-estimate(test-temporary);
+  let constraint
+    = test-temporary
+    & type-minus-false(te);
+  if (constraint) // So we need to introduce a new temporary
     with-parent-computation (c)
       let (tt-c, tt-t) =
         make-with-temporary
           (c.environment, <constrain-type>,
-           value: to-be-renamed, type: constraint);
+           value: test-temporary, type: constraint);
       let then-f = c.consequent;
       let merge-c :: <if-merge> = c.next-computation;
       let changed? = #f;
-      rename-temporary!(to-be-renamed, tt-t);
+      rename-temporary!(test-temporary, tt-t);
       for-computations(tc from then-f before merge-c)
-        let now-changed? = rename-temporary-references!(tc, to-be-renamed, tt-t);
-        changed? := (changed? | now-changed?);
+        let now-changed?
+          = if (instance?(tc, <constrain-type>))
+              tc.type := constraint;
+              #f
+            else
+              rename-temporary-references!(tc, test-temporary, tt-t)
+            end if;
+        changed? := (now-changed? | changed?);
       end;
       // The left side of the merge is also part of the consequent
-      if (merge-c.merge-left-value == to-be-renamed)
-        merge-replace-left-value!(merge-c, to-be-renamed, tt-t);
+      if (merge-c.merge-left-value == test-temporary)
+        merge-replace-left-value!(merge-c, test-temporary, tt-t);
         changed? := #t;
       end;
       if (changed?)
         insert-computation-before-reference!(then-f, tt-c, tt-t);
       else // It's not used in the consequent, so get rid of it.
-        remove-user!(to-be-renamed, tt-c);
+        remove-user!(test-temporary, tt-c);
       end;
-    end;
-  end;
+      changed?
+    end
+  end
 end method;
