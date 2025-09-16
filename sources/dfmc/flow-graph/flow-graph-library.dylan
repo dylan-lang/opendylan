@@ -33,13 +33,7 @@ define module dfmc-flow-graph
   use dfmc-reader;
 
   export
-    ensure-invariants,
-    <closure-entry-strength>,
-    $no-closure-entry,
-    $weak-closure-entry,
-    $strong-closure-entry,
-    do-over-lambda-users,
-    analyze-environments;
+    ensure-invariants;
 
   export
     <inlined-origin>,
@@ -289,6 +283,7 @@ define module dfmc-flow-graph
     inners, inners-setter,
     lambda, lambda-setter,
     closure, closure-setter,
+    lifture, lifture-setter,
     entries, entries-setter,
     loops, loops-setter,
     lambda-loop, lambda-loop-setter,

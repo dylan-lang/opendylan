@@ -1,4 +1,4 @@
-Module: dfmc-flow-graph
+Module: dfmc-optimization
 Author: Jonathan Bachrach
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
@@ -276,18 +276,6 @@ define function close-over
       // end;
     end;
   end if;
-end function;
-
-define function lambda-make-closure
-    (lambda :: <&lambda>) => (res :: false-or(<make-closure>))
-  block (return)
-    for (user in users(lambda))
-      if (instance?(user, <make-closure>))
-        return(user)
-      end if;
-    end for;
-    #f
-  end block;
 end function;
 
 define function reference-liftable?

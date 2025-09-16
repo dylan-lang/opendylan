@@ -517,6 +517,18 @@ define method extract-lambda (code :: <&code>) => ()
   extract-lambda(function(code))
 end;
 
+define function lambda-make-closure
+    (lambda :: <&lambda>) => (res :: false-or(<make-closure>))
+  block (return)
+    for (user in users(lambda))
+      if (instance?(user, <make-closure>))
+        return(user)
+      end if;
+    end for;
+    #f
+  end block;
+end function;
+
 // Walk the lexical variables of the environment in inside out order.
 
 // define generic do-lexical-variables-in-scope

@@ -8,7 +8,6 @@ Files:   flow-graph-library
          computation
          c-computation
          utilities
-         closure
          checker
          walker
          queue-ops
