@@ -1188,7 +1188,9 @@ define type-inference-rules type-infer-checks
   // See description in optimization/assignment for motivation.
   ct :: <constrain-type> ==
     begin
-      let values-te = type-estimate-in-cache(computation-value(ct), cache);
+      let val = computation-value(ct);
+      *current-rhs* := add!(*current-rhs*, val);
+      let values-te = type-estimate-in-cache(val, cache);
       let pruned-values-te =
         if (ct.type)
           poor-mans-check-type-intersection(values-te, ct.type, cache)
