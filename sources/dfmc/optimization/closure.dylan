@@ -314,11 +314,11 @@ define function lift-reference
   // callers. Any callers within the scope of the function
   // are modified to refer to the new argument. Otherwise,
   // they refer to the original.
-  // for (closed-ref in closed-ref*)
   // format-out("convert-closure: fixing %=\n", closed-ref);
   let new-arg-name
     = name(closed-ref) | dylan-variable-name(#"implicit-argument");
-  let new-temp = add-function-argument(ref-env, new-arg-name);
+  let new-arg-type = as(<&type>, type-estimate(closed-ref));
+  let new-temp = add-function-argument(ref-env, new-arg-name, new-arg-type);
   ref-env.lifture
     := add-alias(ref-env.lifture, closed-ref, new-temp);
   do-over-lambda-using-computations
@@ -385,17 +385,16 @@ define function nested-environment?
 end function;
 
 define method add-function-argument
-    (env :: <lambda-lexical-environment>, name)
+    (env :: <lambda-lexical-environment>, name, type :: <&type>)
  => (arg :: <lexical-required-variable>)
   let f = env.lambda;
-  let object-type = dylan-value(#"<object>");
   // Hack the function object.
   let sig = ^function-signature(f);
   let sig-n-required = ^signature-number-required(sig);
   let new-sig
      = make(<&signature>,
             number-required: sig-n-required + 1,
-            required: concatenate(vector(object-type),
+            required: concatenate(vector(type),
                                   copy-sequence(^signature-required(sig),
                                                 end: sig-n-required)),
             key?: ^signature-key?(sig),
@@ -415,6 +414,9 @@ define method add-function-argument
             sealed-domain?: ^signature-sealed-domain?(sig));
   ^function-signature(f) := new-sig;
   let sig-spec = signature-spec(f);
+  // Note that we can't easily add a type-expression to the new
+  // variable spec, but this should only affect DFM dumps from
+  // dfmc-debug-back-end
   let new-sig-spec
     = make(<signature-spec>,
            argument-required-variable-specs:
@@ -437,7 +439,7 @@ define method add-function-argument
   let arg = make(<lexical-required-variable>,
                  name: name,
                  environment: env,
-                 specializer: object-type);
+                 specializer: type);
   let argv = vector(arg);
   f.parameters
     := concatenate(argv, f.parameters);
@@ -450,4 +452,5 @@ define method add-call-argument
     (c :: <simple-call>, arg :: <value-reference>) => ()
   add-user!(arg, c);
   c.arguments := concatenate(vector(arg), c.arguments);
+  re-optimize(c);
 end method;
