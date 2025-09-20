@@ -12,9 +12,9 @@ define compiler-sideways method print-object
     (o :: <named-object>, stream :: <stream>) => ()
   if (o.named?)
     if (*verbose-objects?*)
-      format(stream, "{%s %s}", o.object-class, o.name);
+      format(stream, "{%s %s/%=}", o.object-class, o.name, o.node-id);
     else
-      format(stream, "{%s}", o.name);
+      format(stream, "{%s/%=}", o.name, o.node-id);
     end if;
   else
     next-method();
