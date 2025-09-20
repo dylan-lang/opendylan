@@ -26,19 +26,6 @@ define constant make-type-estimate = make;
 /// [3] how to infer those types from dfm objects.
 ///
 
-// You can display a LispWorks graph of these with:
-/*
-(progn
-(defun browz (&rest names)
-  (tools:make-class-browser
-     :root (mapcar #'(lambda (x) (find-class (intern x 'dylan))) names)))
-
-;(browz "<ENVIRONMENT>")
-;(browz "<&RAW-TYPE>")
-(browz "<COMPUTATION>")
-(browz "<&OBJECT>") ;really <MODEL-VALUE>, nowadays.
-(browz "<BINDING>" "<TEMPORARY>"))
-*/
 // Input to the typist.
 define constant <dfm-ref> = type-union(<computation>, <model-value>,
                                        <binding>, <value-reference>);
