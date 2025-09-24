@@ -57,13 +57,11 @@ define open class <byte-file-stream>
   keyword encoding:;
 end class;
 
-/*---*** andrewa: how can we get these to work?
 define copy-down-buffered-stream <byte-char-file-stream>
    element <byte-character> sequence <byte-string>;
 
 define copy-down-buffered-stream <byte-file-stream>
    element <byte> sequence <byte-string>;
-*/
 
 /// Creating file streams
 
