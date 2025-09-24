@@ -59,18 +59,10 @@ end function;
 // to the dynamic case, in which case any problems are reported
 // as for references in code.
 
-/*
 define program-warning <dynamic-specializer-expressions>
-  slot condition-form,
-    init-keyword: form:;
-  slot condition-specializer-expressions,
-    init-keyword: specializer-expressions:;
   format-string
-    "The specializers %= of %= cannot be computed at compile-time -- optimizations may be missed.";
-  format-arguments
-    specializer-expressions, form;
+    "Specializers cannot be computed at compile-time -- optimizations may be missed.";
 end program-warning;
-*/
 
 define function compute-variable-specs-types
     (form, variable-specs :: <variable-specs>)

@@ -249,6 +249,7 @@ define module-with-models dfmc-modeling
     <&initializer-method>,
     <&slot-initializer-method>,
     <&copy-down-method>,
+      slot specializing-signature,
     <&accessor-method>,
       &slot method-slot-descriptor,
 //    <&getter-accessor-method>,
