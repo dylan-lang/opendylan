@@ -32,11 +32,40 @@ Compiler
   encountering the situation outlined in `Issue 1377
   <https://github.com/dylan-lang/opendylan/issues/1377>`_.
 
+* Repeated optimization involving lifting closures to top level now
+  properly preserves types of local bindings.
+
+* Optimization of the type estimation of :drm:`if` expressions can now
+  be repeated multiple times as the function is iteratively improved.
+
+* The compiler now supports an extended version of
+  ``copy-down-method-definer`` allowing a ``specializing`` clause
+  selecting which of the more-general methods should be selected for
+  inlining in the case of dispatch ambiguity. Additionally, ambiguous
+  ``copy-down-method`` definitions are now signaled as serious
+  warnings rather than allowing a random applicable method to be
+  chosen for inlining.
+
 Tools
 =====
 
 Library Updates
 ===============
+
+Dylan
+-----
+
+* A number of ``copy-down-method`` definitions in the :lib:`dylan`
+  library that were previously marked as ambiguous have been
+  corrected.
+
+io
+---
+
+* Specific versions of the stream functions sealed on
+  ``<byte-char-file-stream>`` and ``<byte-file-stream>`` are provided,
+  significantly improving the performance of these stream operations.
+
 
 Contributors
 ============
