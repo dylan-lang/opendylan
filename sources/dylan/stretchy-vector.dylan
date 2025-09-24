@@ -658,13 +658,19 @@ define method limited
 end method;
 
 define inline copy-down-method map-into-stretchy-one
-  (fun :: <function>, target :: <array>, coll :: <stretchy-object-vector>) =>
-  (target :: <mutable-collection>);
+    (fun :: <function>, target :: <array>, coll :: <stretchy-object-vector>)
+ => (target :: <array>);
 
 define inline copy-down-method map-into-rigid-one
-  (fun :: <function>, target :: <mutable-collection>, coll :: <stretchy-object-vector>) =>
-  (target :: <mutable-collection>);
+    (fun :: <function>, target :: <mutable-collection>, coll :: <stretchy-object-vector>)
+ => (target :: <mutable-collection>)
+  specializing
+    (fun :: <function>, target :: <mutable-sequence>, coll :: <sequence>)
+ => (target :: <mutable-sequence>);
 
 define inline copy-down-method map-into-rigid-one
-  (fun :: <function>, target :: <mutable-sequence>, coll :: <stretchy-object-vector>) =>
-  (target :: <mutable-collection>);
+    (fun :: <function>, target :: <mutable-sequence>, coll :: <stretchy-object-vector>)
+ => (target :: <mutable-collection>)
+  specializing
+    (fun :: <function>, target :: <mutable-sequence>, coll :: <sequence>)
+ => (target :: <mutable-sequence>);

@@ -889,38 +889,34 @@ end method;
 define method map-as-one
     (type :: <mutable-collection-type>,
      function :: <function>, collection ::  <infinite-range>)
- => (new-collection :: <vector>); // actually :: type
+ => (new-collection :: <mutable-collection>);
   // TODO: make a proper error class
   error(make(<infinite-range-error>,
              format-string: "Cannot map over an infinite range"))
 end method map-as-one;
 
 define inline copy-down-method map-as-one
-  (type == <list>, function :: <function>, collection ::  <infinite-range>) =>
-  (new-collection :: <vector>); // actually :: type
+    (type == <list>, function :: <function>, collection ::  <infinite-range>)
+ => (new-collection :: <list>)
+  specializing
+    (type :: <mutable-collection-type>, function :: <function>,
+     collection :: <infinite-range>)
+ => (new-collection :: <mutable-collection>);
 
-/*
-define method map-as-one
-    (type == <deque>,
-     function :: <function>, collection ::  <infinite-range>)
- => (new-collection :: <vector>); // actually :: type
-  // TODO: make a proper error class
-  error(make(<infinite-range-error>, format-string: "Cannot map over an infinite range"))
-end method map-as-one;
+define copy-down-method map-as-one
+    (type == <deque>, function :: <function>,
+     collection ::  <infinite-range>)
+ => (new-collection :: <deque>)
+  specializing
+    (type :: <mutable-collection-type>, function :: <function>,
+     collection :: <infinite-range>)
+ => (new-collection :: <mutable-collection-type>);
 
-define method map-as-one
-    (type == <object-deque>,
-     function :: <function>, collection ::  <infinite-range>)
- => (new-collection :: <vector>); // actually :: type
-  // TODO: make a proper error class
-  error(make(<infinite-range-error>, format-string: "Cannot map over an infinite range"))
-end method map-as-one;
-
-define method map-as-one
-    (type == <list>,
-     function :: <function>, collection ::  <infinite-range>)
- => (new-collection :: <vector>); // actually :: type
-  // TODO: make a proper error class
-  error(make(<infinite-range-error>, format-string: "Cannot map over an infinite range"))
-end method map-as-one;
-*/
+define copy-down-method map-as-one
+    (type == <object-deque>, function :: <function>,
+     collection ::  <infinite-range>)
+ => (new-collection :: <object-deque>)
+  specializing
+    (type :: <mutable-collection-type>, function :: <function>,
+     collection :: <infinite-range>)
+ => (new-collection :: <mutable-collection>);

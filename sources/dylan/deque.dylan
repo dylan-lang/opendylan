@@ -677,44 +677,23 @@ define sealed method as (class == <list>, v :: <object-deque>)
 end;
 
 /* ambiguity resolvers */
-define copy-down-method map-as-one (type == <deque>,
-                                    function :: <function>,
-                                    collection ::  <infinite-range>) =>
-  (new-collection :: <vector>); // actually :: type
-define copy-down-method map-as-one (type == <object-deque>,
-                                    function :: <function>,
-                                    collection ::  <infinite-range>) =>
-  (new-collection :: <vector>); // actually :: type
+define copy-down-method map-as-one
+    (type == <deque>, function :: <function>,
+     collection ::  <explicit-key-collection>)
+ => (new-collection :: <deque>)
+  specializing
+    (type :: <mutable-collection-type>, function :: <function>,
+     collection :: <explicit-key-collection>)
+ => (new-collection :: <mutable-collection>);
 
-define copy-down-method map-as-one (type == <deque>,
-                                    function :: <function>,
-                                    collection ::  <explicit-key-collection>) =>
-  (new-collection :: <vector>);
-
-define copy-down-method map-as-one (type == <object-deque>,
-                                    function :: <function>,
-                                    collection ::  <explicit-key-collection>) =>
-  (new-collection :: <vector>);
-
-/*
-define method map-as-one
-    (type == <deque>,
-     function :: <function>, collection ::  <explicit-key-collection>)
- => (new-collection :: <deque>); // actually :: type
-  let acc = make(<keyed-accumulator>);
-  for (e keyed-by k in collection) acc[k] := function(e) end for;
-  convert-accumulator-as(type, acc)
-end method map-as-one;
-
-define method map-as-one
-    (type == <object-deque>,
-     function :: <function>, collection ::  <explicit-key-collection>)
- => (new-collection :: <object-deque>);
-  let acc = make(<keyed-accumulator>);
-  for (e keyed-by k in collection) acc[k] := function(e) end for;
-  convert-accumulator-as(type, acc)
-end method map-as-one;
-*/
+define copy-down-method map-as-one
+    (type == <object-deque>, function :: <function>,
+     collection ::  <explicit-key-collection>)
+ => (new-collection :: <object-deque>)
+  specializing
+    (type :: <mutable-collection-type>, function :: <function>,
+     collection :: <explicit-key-collection>)
+ => (new-collection :: <mutable-collection>);
 
 define inline method map-as-one
     (type == <deque>, function :: <function>, collection ::  <sequence>)
