@@ -328,7 +328,7 @@ define method do-get-output-buffer
                  "Can't write to read-only stream"));
   else
     error("Internal error: output buffer missing");
-  end if;a:;
+  end if;
   #f
 end method do-get-output-buffer;
 
