@@ -63,6 +63,38 @@ define copy-down-buffered-stream <byte-char-file-stream>
 define copy-down-buffered-stream <byte-file-stream>
    element <byte> sequence <byte-string>;
 
+define sealed inline method coerce-to-sequence
+    (stream :: <byte-char-file-stream>,
+     buffer :: <buffer>, buf-start :: <integer>,
+     sequence :: <byte-string>, seq-start :: <integer>,
+     count :: <integer>) => ()
+  copy-bytes(sequence, seq-start, buffer, buf-start, count)
+end method coerce-to-sequence;
+
+define sealed inline method coerce-to-sequence
+    (stream :: <byte-file-stream>,
+     buffer :: <buffer>, buf-start :: <integer>,
+     sequence :: <byte-string>, seq-start :: <integer>,
+     count :: <integer>) => ()
+  copy-bytes(sequence, seq-start, buffer, buf-start, count)
+end method coerce-to-sequence;
+
+define sealed inline method coerce-from-sequence
+    (stream :: <byte-char-file-stream>,
+     buffer :: <buffer>, buf-start :: <integer>,
+     sequence :: <byte-string>, seq-start :: <integer>,
+     count :: <integer>) => ()
+  copy-bytes(buffer, buf-start, sequence, seq-start, count)
+end method coerce-from-sequence;
+
+define sealed inline method coerce-from-sequence
+    (stream :: <byte-file-stream>,
+     buffer :: <buffer>, buf-start :: <integer>,
+     sequence :: <byte-string>, seq-start :: <integer>,
+     count :: <integer>) => ()
+  copy-bytes(buffer, buf-start, sequence, seq-start, count)
+end method coerce-from-sequence;
+
 /// Creating file streams
 
 define method initialize

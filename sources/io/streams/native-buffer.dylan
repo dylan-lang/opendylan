@@ -259,7 +259,7 @@ define function copy-bytes-range-error
         src-start, dst-start, n, src, dst);
 end function;
 
-define sealed method copy-bytes
+define sealed inline method copy-bytes
     (dst :: <byte-string>, dst-start :: <integer>,
      src :: <buffer>, src-start :: <integer>, n :: <integer>) => ()
   let src-end :: <integer> = src-start + n;
@@ -274,7 +274,7 @@ define sealed method copy-bytes
   end if;
 end method;
 
-define sealed method copy-bytes
+define sealed inline method copy-bytes
     (dst :: <buffer>, dst-start :: <integer>,
      src :: <byte-string>, src-start :: <integer>, n :: <integer>) => ()
   let src-end :: <integer> = src-start + n;
@@ -290,7 +290,7 @@ define sealed method copy-bytes
   end if;
 end method;
 
-define sealed method copy-bytes
+define sealed inline method copy-bytes
     (dst :: <buffer>, dst-start :: <integer>,
      src :: <buffer>, src-start :: <integer>, n :: <integer>) => ()
   let src-end :: <integer> = src-start + n;
@@ -305,7 +305,7 @@ define sealed method copy-bytes
   end if;
 end method;
 
-define sealed method copy-bytes
+define sealed inline method copy-bytes
     (dst :: <byte-vector>, dst-start :: <integer>,
      src :: <buffer>, src-start :: <integer>, n :: <integer>) => ()
   let src-end :: <integer> = src-start + n;
@@ -320,7 +320,7 @@ define sealed method copy-bytes
   end if;
 end method;
 
-define sealed method copy-bytes
+define sealed inline method copy-bytes
     (dst :: <buffer>, dst-start :: <integer>,
      src :: <byte-vector>, src-start :: <integer>, n :: <integer>) => ()
   let src-end :: <integer> = src-start + n;
