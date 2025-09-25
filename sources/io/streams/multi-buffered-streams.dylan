@@ -55,11 +55,6 @@ define inline function buffer-map-entry-deposit-empty
   logbit-deposit(~v, 0, bme)
 end function;
 
-define inline function buffer-map-entry-dirty?
-    (bme :: <buffer-map-entry>) => (res :: <boolean>)
-  logbit?(1, bme)
-end function;
-
 define inline function buffer-map-entry-deposit-dirty
     (v :: <boolean>, bme :: <buffer-map-entry>)
   logbit-deposit(v, 1, bme)
@@ -316,9 +311,6 @@ define sealed method do-get-buffer (the-stream :: <multi-buffered-stream>,
     = if (buffer-map-entry-empty?(map-entry))
         let buffer-index =
           preempt-buffer(the-stream, the-position, wait?: wait?, bytes: bytes);
-        unless (buffer-map-entry-dirty?(map-entry))
-          *multi-buffer-working-set* := *multi-buffer-working-set* + 1;
-        end unless;
         buffer-map[buffer-map-index]
           := buffer-map-entry-deposit-index(buffer-index, map-entry);
         buffer-index
@@ -357,42 +349,6 @@ define function grow-buffer-map
     end unless;
   end iterate;
 end function;
-
-define function multi-buffer-total-bytes () => (res :: <integer>)
-  *multi-buffer-bytes*
-end function;
-
-define variable *multi-buffer-reads* :: <integer> = 0;
-
-define function multi-buffer-total-reads () => (res :: <integer>)
-  *multi-buffer-reads*
-end function;
-
-define variable *multi-buffer-working-set* :: <integer> = 0;
-
-define function multi-buffer-total-working-set () => (res :: <integer>)
-  *multi-buffer-working-set*
-end function;
-
-define method multi-buffer-reads (stream :: <multi-buffered-stream>) => (res :: <integer>)
-  // TODO
-  multi-buffer-total-reads()
-end method;
-
-define method multi-buffer-bytes (stream :: <multi-buffered-stream>) => (res :: <integer>)
-  // TODO
-  multi-buffer-total-bytes()
-end method;
-
-define method multi-buffer-working-set (stream :: <multi-buffered-stream>) => (res :: <integer>)
-  let count :: <integer> = 0;
-  for (map-entry in stream.buffer-map)
-    when (buffer-map-entry-dirty?(map-entry))
-      count := count + 1;
-    end when;
-  end for;
-  count
-end method;
 
 // Find an empty buffer slot or else preempt an existing buffer, load the
 // buffer from the underlying file and return the index of buffer in the
@@ -485,7 +441,6 @@ define function preempt-buffer
     load-buffer-and-fill(the-stream, the-buffer, new-buffer-position, start,
                          the-size);
   end if;
-  *multi-buffer-reads* := *multi-buffer-reads* + 1;
   the-buffer.buffer-position := new-buffer-position;
   the-buffer.buffer-start := 0;
   the-buffer.buffer-dirty? := #f;
@@ -637,12 +592,12 @@ end method do-force-output-buffers;
 define sealed method stream-position
     (stream :: <multi-buffered-stream>) => (position :: <integer>)
   if(stream.stream-open?)
-  if (stream-shared-buffer(stream))
-    stream-shared-buffer(stream).buffer-position
-      + stream-shared-buffer(stream).buffer-next
-  else
-    stream.current-position
-  end
+    let the-buffer = stream-shared-buffer(stream);
+    if (the-buffer)
+      the-buffer.buffer-position + the-buffer.buffer-next
+    else
+      stream.current-position
+    end
   else
     error(make(<stream-closed-error>, stream: stream,
                format-string: "Cant get the position of a closed stream"));
@@ -677,9 +632,9 @@ end method;
 define function multi-buffered-stream-position-setter
     (the-position :: <integer>, stream :: <multi-buffered-stream>)
  => (the-position :: <integer>)
-  if (stream-shared-buffer(stream))
-    let the-buffer :: <buffer> = stream-shared-buffer(stream);
-    if((the-buffer.buffer-position + the-buffer.buffer-next) == the-position)
+  let the-buffer = stream-shared-buffer(stream);
+  if (the-buffer)
+    if ((the-buffer.buffer-position + the-buffer.buffer-next) == the-position)
       /* do nothing, already there*/
     elseif (logand(the-buffer.buffer-off-page-bits, the-position)
               == the-buffer.buffer-position)
@@ -756,7 +711,6 @@ end method adjust-stream-position;
 define inline function write-4-aligned-bytes-from-word
     (stream :: <multi-buffered-stream>, word :: <machine-word>) => ()
   with-output-buffer (sb = stream)
-    let sb :: <buffer> = sb; // HACK: TYPE ONLY
     let bi :: <buffer-index> = sb.buffer-next;
     primitive-element
         (primitive-repeated-slot-as-raw(sb, primitive-repeated-slot-offset(sb)),
@@ -774,7 +728,6 @@ define inline function read-4-aligned-bytes-as-word
  => (word)
   with-input-buffer (sb = stream)
     if (sb)
-      let sb :: <buffer> = sb; // HACK: TYPE ONLY
       let bi :: <buffer-index> = sb.buffer-next;
       sb.buffer-next := bi + 4;
       primitive-wrap-machine-word
@@ -793,7 +746,6 @@ define function write-4-aligned-bytes
     (stream :: <multi-buffered-stream>, byte-1 :: <integer>,
      byte-2 :: <integer>, byte-3 :: <integer>, byte-4 :: <integer>) => ()
   with-output-buffer (sb = stream)
-    let sb :: <buffer> = sb; // HACK: TYPE ONLY
     let bi :: <buffer-index> = sb.buffer-next;
     without-bounds-checks
       sb[bi] := byte-1; sb[bi + 1] := byte-2; sb[bi + 2] := byte-3;
@@ -811,7 +763,6 @@ define function write-8-aligned-bytes
      byte-5 :: <integer>, byte-6 :: <integer>, byte-7 :: <integer>,
      byte-8 :: <integer>) => ()
   with-output-buffer (sb = stream)
-    let sb :: <buffer> = sb; // HACK: TYPE ONLY
     let bi :: <buffer-index> = sb.buffer-next;
     without-bounds-checks
       sb[bi] := byte-1; sb[bi + 1] := byte-2; sb[bi + 2] := byte-3;
@@ -831,8 +782,6 @@ define function read-4-aligned-bytes
      byte-4 :: <integer>)
   with-input-buffer (sb = stream)
     if (sb)
-      *multi-buffer-bytes* := *multi-buffer-bytes* + 4;
-      let sb :: <buffer> = sb; // HACK: TYPE ONLY
       let bi :: <buffer-index> = sb.buffer-next;
       sb.buffer-next := bi + 4;
       without-bounds-checks
@@ -852,8 +801,6 @@ define function read-8-aligned-bytes
      byte-7 :: <integer>, byte-8 :: <integer>)
   with-input-buffer (sb = stream)
     if (sb)
-      *multi-buffer-bytes* := *multi-buffer-bytes* + 8;
-      let sb :: <buffer> = sb; // HACK: TYPE ONLY
       let bi :: <buffer-index> = sb.buffer-next;
       sb.buffer-next := bi + 8;
       without-bounds-checks

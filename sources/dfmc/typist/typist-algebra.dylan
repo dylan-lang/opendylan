@@ -578,6 +578,7 @@ define method type-estimate-union (te1 :: <type-estimate>, te2 :: <type-estimate
     //   No subtype either way:    106 / 74145
     //   Left arg is bottom:     67217 / 74145
     instance?(te1, <type-estimate-bottom>) => te2;
+    instance?(te2, <type-estimate-bottom>) => te1;
     type-estimate-subtype?(te1, te2)       => te2;
     type-estimate-subtype?(te2, te1)       => te1;
     otherwise                              => type-estimate-union-internal(te1, te2);

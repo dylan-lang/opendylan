@@ -679,6 +679,10 @@ end method;
 // markt, this represents a copy-down method skeleton.
 
 define &class <copy-down-method> (<method>)
+  // Compile-time slots.
+  slot specializing-signature :: false-or(<&signature>),
+    init-value: #f,
+    init-keyword: specializing-signature:;
 end &class;
 
 define &class <simple-copy-down-method> (<copy-down-method>, <simple-method>)

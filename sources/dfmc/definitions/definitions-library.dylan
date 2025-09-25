@@ -161,6 +161,9 @@ define module dfmc-definitions
     form-handled-by-make-when-dynamic?,
     ensure-next-method-binding;
 
+  export <copy-down-method-definition>,
+    form-specializing-signature;
+
   export <domain-definition>,
     domain-definition?,
     form-domain-type-expressions;

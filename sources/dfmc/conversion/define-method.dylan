@@ -240,6 +240,23 @@ define compiler-sideways method compute-form-model-object
   end;
 end method;
 
+define compiler-sideways method compute-form-model-object
+    (form :: <copy-down-method-definition>, name :: <variable-name-fragment>)
+ => (model :: false-or(<&method>));
+  let method-object = next-method();
+  if (form.form-specializing-signature)
+    let (specializing-sig-object, static?)
+      = compute-signature(form, form.form-specializing-signature);
+    if (static?)
+      method-object.specializing-signature := specializing-sig-object;
+    else
+      note(<dynamic-specializer-expressions>,
+           source-location: form-source-location(form));
+    end if;
+  end if;
+  method-object
+end method;
+
 define compiler-sideways method form-top-level-methods
     (form :: <method-definition>) => (methods :: <sequence>)
   let inits = next-method();

@@ -73,9 +73,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 ///   a type in Common Lisp.)  Inferred only in case of an error, or unreachable
 ///   code.  Can result from promiscuous intersection or difference operations.
 ///
-/// You can display a LispWorks graph of these with:
-/// (tools:make-class-browser :root (list (find-class 'dylan::<type-estimate>)))
-///
 
 define constant <unionee-sequence> = <list>;
 define constant <fixed-sequence>   = <simple-object-vector>;

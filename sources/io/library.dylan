@@ -156,8 +156,7 @@ define module streams-internals
          final-position;
 
   // Buffers and buffered streams
-  export *multi-buffer-bytes*,
-         <power-of-two-buffer>,
+  export <power-of-two-buffer>,
          <single-buffered-stream>,
          <double-buffered-stream>,
          make-<power-of-two-buffer>,
@@ -195,12 +194,6 @@ define module streams-internals
          read-4-aligned-bytes-as-word,
          write-4-aligned-bytes, write-8-aligned-bytes,
          read-4-aligned-bytes, read-8-aligned-bytes,
-         multi-buffer-working-set,
-         multi-buffer-reads,
-         multi-buffer-bytes,
-         multi-buffer-total-working-set,
-         multi-buffer-total-reads,
-         multi-buffer-total-bytes,
          <general-multi-buffered-stream>,
          <byte-multi-buffered-stream>,
          <byte-char-multi-buffered-stream>;

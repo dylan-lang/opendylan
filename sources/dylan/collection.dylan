@@ -325,7 +325,7 @@ define inline copy-down-method map-as-one
 define inline method map-as-one
     (type == <simple-object-vector>,
      function :: <function>, collection :: <simple-object-vector>)
- => (new-collection :: <vector>); // actually :: type
+ => (new-collection :: <simple-object-vector>);
   let result = make(<simple-object-vector>, size: collection.size);
   without-bounds-checks
     for (i :: <integer> from 0 below collection.size)
@@ -337,37 +337,24 @@ end method map-as-one;
 
 
 // And now some tie-breakers...
+//////////////////////////////////////////////////////////////////////////////
+define copy-down-method map-as-one
+    (type :: subclass(<vector>), function :: <function>,
+     collection :: <explicit-key-collection>)
+ => (new-collection :: <vector>)
+  specializing
+    (type :: <mutable-collection-type>, function :: <function>,
+     collection :: <explicit-key-collection>)
+ => (new-collection :: <mutable-collection>);
 
-define copy-down-method map-as-one (type :: subclass(<vector>),
-                                    function :: <function>,
-                                    collection ::  <explicit-key-collection>) =>
-  (new-collection :: <vector>);
-
-define copy-down-method map-as-one (type == <list>,
-                                    function :: <function>,
-                                    collection ::  <explicit-key-collection>) =>
-  (new-collection :: <vector>);
-
-/*
-define method map-as-one
-    (type :: subclass(<vector>),
-     function :: <function>, collection ::  <explicit-key-collection>)
- => (new-collection :: <vector>); // actually :: type
-  let acc = make(<keyed-accumulator>);
-  for (e keyed-by k in collection) acc[k] := function(e) end for;
-  convert-accumulator-as(type, acc)
-end method map-as-one;
-
-define method map-as-one
-    (type == <list>,
-     function :: <function>, collection ::  <explicit-key-collection>)
- => (new-collection :: <list>); // actually :: type
-  let acc = make(<keyed-accumulator>);
-  for (e keyed-by k in collection) acc[k] := function(e) end for;
-  convert-accumulator-as(type, acc)
-end method map-as-one;
-*/
-
+define copy-down-method map-as-one
+    (type == <list>, function :: <function>,
+     collection :: <explicit-key-collection>)
+ => (new-collection :: <list>)
+  specializing
+    (type :: <mutable-collection-type>, function :: <function>,
+     collection :: <explicit-key-collection>)
+ => (new-collection :: <mutable-collection>);
 
 //
 // MAP-INTO
@@ -414,6 +401,9 @@ end;
 
 define copy-down-method map-into-stretchy-one
     (fun :: <function>, target :: <mutable-collection>, coll :: <sequence>)
+ => (target :: <mutable-collection>)
+  specializing
+    (fun :: <function>, target :: <mutable-collection>, coll :: <collection>)
  => (target :: <mutable-collection>);
 
 /*
@@ -586,13 +576,19 @@ define method map-into-rigid-one
   target
 end method map-into-rigid-one;
 
-// markt, some more useful copy-downs
 define inline copy-down-method map-into-rigid-one
-  (fun :: <function>, target :: <mutable-collection>, coll :: <list>) =>
-  (target :: <mutable-collection>);
+    (fun :: <function>, target :: <mutable-collection>, coll :: <list>)
+ => (target :: <mutable-collection>)
+  specializing
+    (fun :: <function>, target :: <mutable-collection>, coll :: <sequence>)
+ => (target :: <mutable-collection>);
+
 define inline copy-down-method map-into-rigid-one
-  (fun :: <function>, target :: <mutable-collection>, coll :: <simple-object-vector>) =>
-  (target :: <mutable-collection>);
+    (fun :: <function>, target :: <mutable-collection>, coll :: <simple-object-vector>)
+ => (target :: <mutable-collection>)
+  specializing
+    (fun :: <function>, target :: <mutable-collection>, coll :: <sequence>)
+ => (target :: <mutable-collection>);
 
 // Subclasses of array should have sublinear implementations of element,
 // so let's exploit this.
@@ -651,7 +647,7 @@ end method map-into-rigid-one;
 
 define method map-into-rigid-one
     (fun :: <function>, target :: <mutable-sequence>, coll :: <sequence>)
- => (target :: <mutable-collection>);
+ => (target :: <mutable-sequence>);
   with-fip-of target /* Use with-setter? */
     for (state = initial-state then next-state(target, state),
          val in coll,
@@ -662,13 +658,19 @@ define method map-into-rigid-one
   target
 end method map-into-rigid-one;
 
-// markt
 define inline copy-down-method map-into-rigid-one
-  (fun :: <function>, target :: <mutable-sequence>, coll :: <list>) =>
-  (target :: <mutable-collection>);
+    (fun :: <function>, target :: <mutable-sequence>, coll :: <list>)
+ => (target :: <mutable-sequence>)
+  specializing
+    (fun :: <function>, target :: <mutable-sequence>, coll :: <sequence>)
+ => (target :: <mutable-sequence>);
+
 define inline copy-down-method map-into-rigid-one
-  (fun :: <function>, target :: <mutable-sequence>, coll :: <simple-object-vector>) =>
-  (target :: <mutable-collection>);
+    (fun :: <function>, target :: <mutable-sequence>, coll :: <simple-object-vector>)
+ => (target :: <mutable-sequence>)
+  specializing
+    (fun :: <function>, target :: <mutable-sequence>, coll :: <sequence>)
+ => (target :: <mutable-sequence>);
 
 
 // And finally the case where both source and target are arrays.

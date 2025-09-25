@@ -281,10 +281,10 @@ define method extract-lambda-body-extent (body, env) => (first, last, return-c)
   end if
 end method;
 
-define program-warning <ambiguous-copy-down-method>
+define serious-program-warning <ambiguous-copy-down-method>
   slot condition-method, required-init-keyword: meth:;
   slot condition-other-methods, required-init-keyword: other-methods:;
-  format-string "Multiple applicable copy-down methods for %s, picking one at random";
+  format-string "Multiple applicable copy-down methods for %s";
   format-arguments meth;
 end;
 
@@ -330,42 +330,62 @@ define method find-copy-downable-methods
                  | ~guaranteed-method-precedes?(them, m, req-te*)
              end method,
              methods-known);
-  guaranteed-sorted-applicable-methods(methods, req-te*);
+  guaranteed-sorted-applicable-methods(methods, req-te*)
 end method;
 
-// markt, copy-down inlining, first cut (still generates a type-check warning)
-define compiler-sideways method copy-down-body (m :: <&copy-down-method>) => ()
-  let (sorted-applicable-methods, others) = find-copy-downable-methods(m);
-  local method real-method (a) ~instance?(a, <&copy-down-method>) & a end;
+define function specializers-match?
+    (s1 :: <&signature>, s2 :: <&signature>)
+ => (match? :: <boolean>)
+  let types1 = ^signature-required(s1);
+  let types2 = ^signature-required(s2);
+  types1.size = types2.size
+    & every?(^type-equivalent?, types1, types2)
+end function;
 
-  let meth = any?(real-method, sorted-applicable-methods) |
-              begin
-                let others = choose(real-method, others);
-                if (others.size == 1)
-                  others.first
-                else
-                  let lib = model-library(m);
-                  let kludge = any?(method (a) model-library(a) == lib & a end,
-                                    others);
-                  if (kludge)
-                    note(<ambiguous-copy-down-method>,
-                         meth: m,
-                         other-methods: others,
-                         source-location: m.model-source-location,
-                         subnotes: map(method (m)
-                                         make(<ambiguous-copy-down-method-option>,
-                                              meth: m,
-                                              source-location: m.model-source-location)
-                                       end,
-                                       others));
-                    kludge
-                  end;
-                end;
-              end;
+define compiler-sideways method copy-down-body
+    (m :: <&copy-down-method>) => ()
+  let (sorted-applicable-methods, others) = find-copy-downable-methods(m);
+  let meth
+    = case
+        m.specializing-signature =>
+          let specializing-sig = m.specializing-signature;
+          block (found)
+            for (candidate in sorted-applicable-methods)
+              if (candidate ~== m
+                    & specializers-match?(candidate.^function-signature, specializing-sig))
+                found(candidate);
+              end if;
+            end for;
+            for (candidate in others)
+              if (candidate ~== m
+                    & specializers-match?(candidate.^function-signature, specializing-sig))
+                found(candidate);
+              end if;
+            end for;
+          end block;
+        size(sorted-applicable-methods) >= 2 =>
+          assert(first(sorted-applicable-methods) == m);
+          second(sorted-applicable-methods);
+        otherwise =>
+          #f;
+      end case;
   if (~meth)
-    note(<missing-copy-down-method>,
-         meth: m,
-         source-location: m.model-source-location);
+    if (empty?(others))
+      note(<missing-copy-down-method>,
+           meth: m,
+           source-location: m.model-source-location);
+    else
+      note(<ambiguous-copy-down-method>,
+           meth: m,
+           other-methods: others,
+           source-location: m.model-source-location,
+           subnotes: map(method (m)
+                           make(<ambiguous-copy-down-method-option>,
+                                meth: m,
+                                source-location: m.model-source-location)
+                         end,
+                         remove(others, m)));
+    end if;
   else
     let  callee = meth.^iep ;
     let  f = callee.function ;
@@ -373,9 +393,10 @@ define compiler-sideways method copy-down-body (m :: <&copy-down-method>) => ()
     // this required to set up copy source method ready for splicing:
     ensure-method-dfm (f) ;
 
-    debug-assert(f.body, "No body to copy-down?");
+    assert(f.body, "No body to copy-down?");
     f.lambda-copied-down? := #t;
 
+    assert(meth ~== m, "Cannot copy-down yourself");
     //format-out ("copy-down inlining body of %s for %s\n", f, m) ;
 
     really-run-compilation-passes (f);

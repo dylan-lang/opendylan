@@ -222,13 +222,7 @@ define module file-system
               write-4-aligned-bytes-from-word,
               read-4-aligned-bytes-as-word,
               write-4-aligned-bytes, write-8-aligned-bytes,
-              read-4-aligned-bytes, read-8-aligned-bytes,
-              multi-buffer-working-set,
-              multi-buffer-reads,
-              multi-buffer-bytes,
-              multi-buffer-total-working-set,
-              multi-buffer-total-reads,
-              multi-buffer-total-bytes };
+              read-4-aligned-bytes, read-8-aligned-bytes };
 
   // File system locators
   create <file-system-locator>,

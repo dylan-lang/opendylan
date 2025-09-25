@@ -88,7 +88,6 @@ define inline function get-input-buffer
  => (buffer :: false-or(<buffer>))
   let sb = stream-input-buffer(stream);
   if (sb)
-    let sb :: <buffer> = sb;
     if (sb.buffer-next >= sb.buffer-end) // gone past last valid byte?
       do-next-input-buffer(stream, wait?: wait?, bytes: bytes)
         // This returns #f if number of bytes read is 0
@@ -172,7 +171,6 @@ define inline function get-output-buffer
  => (buffer :: false-or(<buffer>))
   let sb = stream-output-buffer(stream);
   if (sb)
-    let sb :: <buffer> = sb; // HACK: TYPE ONLY
     if (sb.buffer-next >= sb.buffer-size) // gone past the end of the buffer?
       do-next-output-buffer(stream, bytes: bytes)
     else
@@ -330,7 +328,7 @@ define method do-get-output-buffer
                  "Can't write to read-only stream"));
   else
     error("Internal error: output buffer missing");
-  end if;a:;
+  end if;
   #f
 end method do-get-output-buffer;
 
@@ -393,7 +391,6 @@ define method read-element
  => (element :: <object>)
   with-input-buffer (sb = stream)
     if (sb)
-      let sb :: <buffer> = sb; // HACK: TYPE ONLY
       let bi :: <buffer-index> = sb.buffer-next;
       let elt = coerce-to-element(stream, sb, bi);
       sb.buffer-next := bi + 1;
@@ -410,7 +407,6 @@ define method peek
  => (element :: <object>)
   with-input-buffer (sb = stream)
     if (sb)
-      let sb :: <buffer> = sb; // HACK: TYPE ONLY
       coerce-to-element(stream, sb, sb.buffer-next)
     else
       end-of-stream-value(stream, on-end-of-stream)
@@ -431,23 +427,16 @@ define method read
   end
 end method read;
 
-//---*** andrewa: this is a bad name, since this isn't meant to know about
-//---*** multi-buffered-streams!
-define variable *multi-buffer-bytes* :: <integer> = 0;
-
 define method read-into!
     (stream :: <buffered-stream>, n :: <integer>, seq :: <mutable-sequence>,
      #key start :: <integer> = 0, on-end-of-stream = unsupplied())
   => (n-read)
-  let n-read = n;
-  if (n > 0)
-    with-input-buffer (sb = stream)
-      let e :: <integer> = start + n;
-      // Fill in the result sequence
-      *multi-buffer-bytes* := *multi-buffer-bytes* + n;
-      iterate loop (i :: <integer> = start, sb :: false-or(<buffer>) = sb)
-        if (sb & (i < e))
-          let sb :: <buffer> = sb;
+  with-input-buffer (sb = stream)
+    let e :: <integer> = start + n;
+    // Fill in the result sequence
+    iterate loop (i :: <integer> = start, sb :: false-or(<buffer>) = sb)
+      if (i < e)
+        if (sb)
           let bi :: <buffer-index> = sb.buffer-next;
           let ei :: <buffer-index> = sb.buffer-end;
           if (bi >= ei)
@@ -461,21 +450,20 @@ define method read-into!
         else
           // Signal error if we didn't get enough data
           if (n > i - start)
-            n := i - start;
             if (supplied?(on-end-of-stream))
-              n-read := on-end-of-stream;
+              on-end-of-stream
             else
-              n-read := i - start;
               signal(make(<incomplete-read-error>,
                           stream: stream,
-                          count: n-read, sequence: seq))
+                          count: i - start, sequence: seq))
             end
           end
         end
-      end iterate
-    end;
-  end;
-  n-read
+      else
+        i - start
+      end
+    end iterate
+  end with-input-buffer
 end method read-into!;
 
 
@@ -550,7 +538,6 @@ define method read-line
             end method;
       iterate loop (sb :: false-or(<buffer>) = sb)
         if (sb & ~matched?)
-          let sb :: <buffer> = sb; // HACK: TYPE ONLY
           let bi :: <buffer-index> = sb.buffer-next;
           let ei :: <buffer-index> = sb.buffer-end;
           if (bi >= ei)
@@ -634,7 +621,6 @@ define method read-line-into!
     with-input-buffer (sb = stream)
       iterate loop (sb :: false-or(<buffer>) = sb)
         if (sb & ~matched?)
-          let sb :: <buffer> = sb; // HACK: TYPE ONLY
           let bi :: <buffer-index> = sb.buffer-next;
           let ei :: <buffer-index> = sb.buffer-end;
           if (bi >= ei)
@@ -686,25 +672,25 @@ define method read-skip
     (stream :: <buffered-stream>, n :: <integer>) => ()
   if (n > 0)
     with-input-buffer (sb = stream)
-      let i :: <integer> = 0;
       let e :: <integer> = n;
-      while (sb & (i < e))
-        let sb :: <buffer> = sb; // HACK: TYPE ONLY
-        let bi :: <buffer-index> = sb.buffer-next;
-        let ei :: <buffer-index> = sb.buffer-end;
-        if (bi >= ei)
-          sb := do-next-input-buffer(stream)
-        else
-          let count = min(ei - bi, e - i);
-          i := i + count;
-          sb.buffer-next := bi + count
-        end
-      end
-    end
-  end
+      iterate loop (i :: <integer> = 0, sb :: false-or(<buffer>) = sb)
+        if (i < e)
+          if (sb)
+            let bi :: <buffer-index> = sb.buffer-next;
+            let ei :: <buffer-index> = sb.buffer-end;
+            if (bi >= ei)
+              loop(i, do-next-input-buffer(stream));
+            else
+              let count = min(ei - bi, e - i);
+              sb.buffer-next := bi + count;
+              loop(i + count, sb);
+            end;
+          end;
+        end if;
+      end iterate;
+    end;
+  end;
 end method read-skip;
-
-
 
 /// Writable stream protocol
 // This all uses the new buffer-dirty? flag.  Although double buffered
@@ -714,7 +700,6 @@ end method read-skip;
 define method write-element
     (stream :: <buffered-stream>, elt :: <object>) => ()
   with-output-buffer (sb = stream)
-    let sb :: <buffer> = sb; // HACK: TYPE ONLY
     let bi :: <buffer-index> = sb.buffer-next;
     coerce-from-element(stream, sb, bi, elt);
     sb.buffer-next := bi + 1;
@@ -729,22 +714,21 @@ define method write
   with-output-buffer (sb = stream)
     let e :: <integer> = _end | elements.size;
     iterate loop (i :: <integer> = _start, sb :: false-or(<buffer>) = sb)
-      if (sb & i < e)
-        let sb :: <buffer> = sb; // HACK: TYPE ONLY
-        let bi :: <buffer-index> = sb.buffer-next;
-        let bufsiz :: <buffer-index> = sb.buffer-size;
-        if (bi >= bufsiz)
-          loop(i, do-next-output-buffer(stream))
+      if (i < e)
+        if (sb)
+          let bi :: <buffer-index> = sb.buffer-next;
+          let bufsiz :: <buffer-index> = sb.buffer-size;
+          if (bi >= bufsiz)
+            loop(i, do-next-output-buffer(stream))
+          else
+            let count :: <buffer-index> = min(bufsiz - bi, e - i);
+            coerce-from-sequence(stream, sb, bi, elements, i, count);
+            sb.buffer-dirty? := #t;
+            sb.buffer-next := bi + count;
+            sb.buffer-end  := max(bi + count, sb.buffer-end);
+            loop(i + count, sb)
+          end
         else
-          let count :: <buffer-index> = min(bufsiz - bi, e - i);
-          coerce-from-sequence(stream, sb, bi, elements, i, count);
-          sb.buffer-dirty? := #t;
-          sb.buffer-next := bi + count;
-          sb.buffer-end  := max(bi + count, sb.buffer-end);
-          loop(i + count, sb)
-        end
-      else
-        if (i < e)
           signal(make(<end-of-stream-error>, stream: stream))
         end
       end
@@ -759,45 +743,28 @@ define method write-line
   with-output-buffer (sb = stream)
     local method write-elts (elts :: <string>, i :: <integer>, e :: <integer>)
             iterate loop (i :: <integer> = i, sb :: false-or(<buffer>) = sb)
-              if (sb & i < e)
-                /* ---*** There used to be a line here:
-
-                let sb :: <buffer> = sb; // HACK: TYPE ONLY
-
-                This was obviously intended to nail down the type of sb.
-                Now for some reason this led to a type estimate of "<bottom>"
-                in the call to coerce-from-sequence further down. Furthermore,
-                type inference should find out that sb is not #f all on itself,
-                because it is used in the condition of the if.
-
-                I suspect type inference for if statements and their condition
-                variables to be broken.  Needs to be researched and fixed.  I'm
-                taking out the quoted line to get rid of a serious warning that
-                might scare users.
-
-                -- Andreas Bogk, Oct 2005 */
-
-                let bi :: <buffer-index> = sb.buffer-next;
-                let bufsiz :: <buffer-index> = sb.buffer-size;
-                if (bi >= bufsiz)
-                  loop(i, do-next-output-buffer(stream))
+              if (i < e)
+                if (sb)
+                  let bi :: <buffer-index> = sb.buffer-next;
+                  let bufsiz :: <buffer-index> = sb.buffer-size;
+                  if (bi >= bufsiz)
+                    loop(i, do-next-output-buffer(stream))
+                  else
+                    let count :: <buffer-index> = min(bufsiz - bi, e - i);
+                    coerce-from-sequence(stream, sb, bi, elts, i, count);
+                    sb.buffer-dirty? := #t;
+                    sb.buffer-next := bi + count;
+                    sb.buffer-end  := max(bi + count, sb.buffer-end);
+                    loop(i + count, sb)
+                  end
                 else
-                  let count :: <buffer-index> = min(bufsiz - bi, e - i);
-                  coerce-from-sequence(stream, sb, bi, elts, i, count);
-                  sb.buffer-dirty? := #t;
-                  sb.buffer-next := bi + count;
-                  sb.buffer-end  := max(bi + count, sb.buffer-end);
-                  loop(i + count, sb)
-                end
-              else
-                if (i < e)
                   signal(make(<end-of-stream-error>, stream: stream))
                 end
               end
             end iterate
           end method;
     write-elts(elements, _start, _end | elements.size);
-    write-elts(stream.newline-sequence, 0, size(stream.newline-sequence))
+    write-elts(stream.newline-sequence, 0, size(stream.newline-sequence));
   end
 end method write-line;
 
@@ -809,20 +776,21 @@ define method write-fill
   with-output-buffer (sb = stream)
     let e :: <integer> = n;
     iterate loop (i :: <integer> = 0, sb :: false-or(<buffer>) = sb)
-      if (sb & i < e)
-        let sb :: <buffer> = sb; // HACK: TYPE ONLY
-        let bi :: <buffer-index> = sb.buffer-next;
-        let bufsiz :: <buffer-index> = sb.buffer-size;
-        if (bi >= bufsiz)
-          loop(i, do-next-output-buffer(stream))
-        else
-          let count = min(bufsiz - bi, e - i);
-          let rep = stream.from-element-mapper(elt);
-          buffer-fill(sb, rep, start: bi, end: bi + count);
-          sb.buffer-dirty? := #t;
-          sb.buffer-next := bi + count;
-          sb.buffer-end  := max(bi + count, sb.buffer-end);
-          loop(i + count, sb)
+      if (i < e)
+        if (sb)
+          let bi :: <buffer-index> = sb.buffer-next;
+          let bufsiz :: <buffer-index> = sb.buffer-size;
+          if (bi >= bufsiz)
+            loop(i, do-next-output-buffer(stream))
+          else
+            let count = min(bufsiz - bi, e - i);
+            let rep = stream.from-element-mapper(elt);
+            buffer-fill(sb, rep, start: bi, end: bi + count);
+            sb.buffer-dirty? := #t;
+            sb.buffer-next := bi + count;
+            sb.buffer-end  := max(bi + count, sb.buffer-end);
+            loop(i + count, sb)
+          end
         end
       end
     end iterate
