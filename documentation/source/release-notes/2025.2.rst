@@ -46,6 +46,10 @@ Compiler
   warnings rather than allowing a random applicable method to be
   chosen for inlining.
 
+* The overhead for critical runtime code used for type checking and
+  method dispatch has been reduced by ensuring that certain object
+  slots could never be considered uninitialized.
+
 Tools
 =====
 
