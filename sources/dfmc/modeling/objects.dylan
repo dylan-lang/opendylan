@@ -456,6 +456,7 @@ define concrete primary &class <implementation-class> (<object>)
     init-value: default-class-constructor;
 
   lazy &slot direct-superclasses :: <simple-object-vector>,
+    init-value: #[],
     init-keyword: superclasses:;
 
   // RCPL fast subclass slots, markt, 2-Apr-97
