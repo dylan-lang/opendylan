@@ -375,13 +375,14 @@ end;
 
 define function slot-guaranteed-initialized-in-class?
     (sd :: <&slot-descriptor>, class :: <&class>)
-  ^init-supplied?(^effective-initial-value-descriptor(sd, class)) |
-    begin
-      let key-descriptor =
-        ^effective-initialization-argument-descriptor(sd, class);
-      ^init-keyword-required?(key-descriptor) |
-        ^init-supplied?(key-descriptor)
-    end
+  ^init-supplied?(^effective-initial-value-descriptor(sd, class))
+    | begin
+        let key-descriptor
+          = ^effective-initialization-argument-descriptor(sd, class);
+        ^init-keyword-required?(key-descriptor)
+          | ^init-supplied?(key-descriptor)
+      end
+    | class == dylan-value(#"<class>") // for class-implementation-class
 end;
 
 // default methods
