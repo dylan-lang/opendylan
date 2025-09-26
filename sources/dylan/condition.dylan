@@ -8,10 +8,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //// HANDLERS
 
 define primary class <handler> (<object>)
-  constant slot handler-type, init-keyword: type:;
-  constant slot handler-function, init-keyword: function:;
-  constant slot handler-test, init-keyword: test:;
-  constant slot handler-init-arguments, init-keyword: init-arguments:;
+  constant slot handler-type, required-init-keyword: type:;
+  constant slot handler-function, required-init-keyword: function:;
+  constant slot handler-test, required-init-keyword: test:;
+  constant slot handler-init-arguments, required-init-keyword: init-arguments:;
 end class <handler>;
 
 define sealed domain make (singleton(<handler>));

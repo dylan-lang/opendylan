@@ -1427,14 +1427,18 @@ end function;
 
 //// Handle-missed-dispatch
 
+// NB: Slot initializations are not respected when <dispatch-state>
+// instances are allocated using system-allocate-simple-instance, but
+// are included so that the compiler sees the slots as
+// guaranteed-initialized.
 
 define primary class <dispatch-state> (<object>)
-  slot %ds-gf :: <generic-function>;
-  slot %ds-parent :: <dispatch-starter>;
-  slot %ds-args :: <simple-object-vector>;
-  slot %ds-argnum-set :: <argnum-set>;
+  slot %ds-gf :: <generic-function> = sorted-applicable-methods;
+  slot %ds-parent :: <dispatch-starter> = sorted-applicable-methods;
+  slot %ds-args :: <simple-object-vector> = #[];
+  slot %ds-argnum-set :: <argnum-set> = #(0);
   slot %ds-args-to-check-first :: <list> = #();
-  slot %ds-headed-methods :: <pair>;
+  slot %ds-headed-methods :: <pair> = #(#f);
   slot %ds-cache = #f;
   slot %ds-result = #f;
   slot %ds-conditions = #();
