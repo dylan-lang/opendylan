@@ -252,29 +252,27 @@ define method llvm-reference-type
     type
   else
     let elements = make(<stretchy-object-vector>);
-    do(curry(add-llvm-struct-member, back-end, elements),
-       o.raw-aggregate-members);
+    let elements
+      = map(curry(llvm-aggregate-member-type, back-end),
+            o.raw-aggregate-members);
     element(type-table, name)
       := make(<llvm-struct-type>, name: name, elements: elements)
   end
 end method;
 
-define method add-llvm-struct-member
-    (back-end :: <llvm-back-end>, elements :: <stretchy-object-vector>,
-     member :: <raw-aggregate-member>)
- => ();
-  add!(elements, llvm-reference-type(back-end, member.member-raw-type));
+define method llvm-aggregate-member-type
+    (back-end :: <llvm-back-end>, member :: <raw-aggregate-member>)
+ => (type :: <llvm-type>);
+  llvm-reference-type(back-end, member.member-raw-type);
 end method;
 
-define method add-llvm-struct-member
-    (back-end :: <llvm-back-end>, elements :: <stretchy-object-vector>,
-     member :: <raw-aggregate-array-member>)
- => ();
+define method llvm-aggregate-member-type
+    (back-end :: <llvm-back-end>, member :: <raw-aggregate-array-member>)
+ => (type :: <llvm-type>);
   let element-type = llvm-reference-type(back-end, member.member-raw-type);
-  add!(elements,
-       make(<llvm-array-type>,
-	    size: member.member-array-length,
-	    element-type: element-type));
+  make(<llvm-array-type>,
+       size: member.member-array-length,
+       element-type: element-type)
 end method;
 
 // References to most objects use the object pointer type

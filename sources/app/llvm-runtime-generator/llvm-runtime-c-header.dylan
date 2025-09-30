@@ -100,7 +100,7 @@ define method print-runtime-variable-declaration
 
   let thread-local?
     = member?(#"thread-local", descriptor.runtime-variable-attributes)
-    & llvm-thread-local-support?(be);
+    & llvm-runtime-thread-local-support?(be);
   if (thread-local?)
     format(stream, "__thread ");
   end if;

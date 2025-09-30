@@ -26,12 +26,12 @@ define dood-class <temporary> (<value-reference>)
     reinit-expression: #f;
 end dood-class;
 
-define method environment (c :: <temporary>)
+define sealed inline method environment (c :: <temporary>)
  => (res :: false-or(<lambda-lexical-environment>))
   c.%environment
 end;
 
-define method environment-setter
+define sealed method environment-setter
     (e :: false-or(<lambda-lexical-environment>), c :: <temporary>)
  => (res :: false-or(<lambda-lexical-environment>))
   c.%environment := e;
@@ -39,11 +39,11 @@ define method environment-setter
   e
 end;
 
-define method generator (t :: <temporary>) => (res :: false-or(<computation>))
+define inline method generator (t :: <temporary>) => (res :: false-or(<computation>))
   t.%generator
 end;
 
-define method generator-setter
+define sealed method generator-setter
     (g :: false-or(<computation>), t :: <temporary>)
  => (res :: false-or(<computation>))
   trace-dfm-connection(#"generator-setter", t, g);

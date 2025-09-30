@@ -44,6 +44,7 @@ define module dfmc-llvm-back-end
     llvm-back-end-dbg-compile-unit,
     llvm-back-end-dbg-compile-unit-setter,
 
+    llvm-runtime-thread-local-support?,
     llvm-thread-local-support?,
     llvm-teb-struct-type,
 

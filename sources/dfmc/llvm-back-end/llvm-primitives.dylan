@@ -704,7 +704,7 @@ define macro runtime-variable-definer
            = make(<llvm-runtime-variable-descriptor>,
 		  name: ?#"name",
                   type-name: ?#"type-name",
-                  init-function: method() ?init end,
+                  init-function: method(?=be :: <llvm-back-end>) ?init end,
 		  attributes: #[?adjectives],
                   section: ?section);
          do-define-llvm-runtime-variable-descriptor
@@ -745,7 +745,7 @@ define method llvm-runtime-variable
     let attributes = descriptor.runtime-variable-attributes;
     let thread-local?
       = member?(#"thread-local", attributes)
-      & llvm-thread-local-support?(back-end);
+      & llvm-runtime-thread-local-support?(back-end);
     let section
       = llvm-section-name(back-end, descriptor.runtime-variable-section,
                           thread-local?: thread-local?);
@@ -755,12 +755,16 @@ define method llvm-runtime-variable
 	     type: llvm-pointer-to(back-end, type),
 	     initializer:
 	       if (initialized?)
-		 let init-value = descriptor.runtime-variable-init-function();
-		 if (init-value)
-		   emit-reference(back-end, module, init-value)
-		 else
-		   make(<llvm-null-constant>, type: type)
-		 end if
+		 let init-value
+                   = descriptor.runtime-variable-init-function(back-end);
+                 select (init-value by instance?)
+                   singleton(#f) =>
+                     make(<llvm-null-constant>, type: type);
+                   <llvm-constant-value> =>
+                     init-value;
+                   otherwise =>
+                     emit-reference(back-end, module, init-value)
+		 end select
 	       end,
 	     constant?: #f,
 	     linkage: linkage,
