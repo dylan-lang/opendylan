@@ -782,7 +782,7 @@ This section lists the socket condition classes in the Network library.
      able to take some remedial action.
 
      For instance, a web browser receiving such conditions as
-     :class:`<connection-refused>` or :class:`<host-not-found>` would
+     :class:`<connection-failed>` or :class:`<host-not-found>` would
      normally expect to report those conditions to the user and continue
      with some other connection request from the user, while a server
      receiving a :class:`<connection-closed>` condition from a connected
