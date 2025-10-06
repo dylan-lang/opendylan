@@ -140,7 +140,7 @@ end method;
 define method close-all-sockets (manager :: <socket-manager>) => ()
   let sockets
     = with-lock (socket-manager-lock(manager))
-        map-as(<vector>, identity, socket-manager-sockets(manager))
+        key-sequence(socket-manager-sockets(manager))
       end;
   block (exit-loop)
     for (socket in sockets)
@@ -159,7 +159,7 @@ end method;
 define method shutdown-all-sockets (manager :: <socket-manager>) => ()
   let sockets
     = with-lock (socket-manager-lock(manager))
-        map-as(<vector>, identity, socket-manager-sockets(manager))
+        key-sequence(socket-manager-sockets(manager))
       end;
   block (exit-loop)
     for (socket in sockets)
