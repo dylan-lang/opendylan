@@ -35,7 +35,7 @@ define function unix-open
     (path :: <byte-string>, mode :: <integer>, create-flags :: <integer>) => (fd :: <integer>)
   with-interrupt-repeat
     raw-c-signed-as-integer
-      (%call-c-function ("open")
+      (%call-c-function ("system_open")
            (path :: <raw-byte-string>, oflag :: <raw-c-unsigned-int>,
             mode :: <raw-c-unsigned-int>)
         => (fd :: <raw-c-signed-int>)

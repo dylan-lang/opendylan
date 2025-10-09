@@ -7,6 +7,7 @@
 #endif
 
 #include <unistd.h>
+#include <fcntl.h>
 #include <signal.h>
 #include <errno.h>
 #include <dlfcn.h>
@@ -117,6 +118,11 @@ struct dirent *system_readdir(DIR *dirp)
 const char *system_dirent_name(struct dirent *dirent)
 {
   return dirent->d_name;
+}
+
+int system_open(const char *path, int oflag, mode_t mode)
+{
+  return (oflag & O_CREAT) ? open(path, oflag, mode) : open(path, oflag);
 }
 
 int system_stat(const char* path, struct stat* buf)
