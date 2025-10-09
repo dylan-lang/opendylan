@@ -57,26 +57,9 @@ define variable *application-arguments* :: <simple-object-vector> = #[];
 
 define inline-only function ensure-application-name-filename-and-arguments () => ()
   unless (*application-name*)
-    let (cmdline, arguments) = get-application-commandline();
-    let (name, arguments) =
-      if (arguments)
-        values(cmdline, arguments)
-      else
-        let tokens = make(<stretchy-vector>);
-        let _start :: <integer> = 0;
-        let _end :: <integer> = size(cmdline);
-        let _skip :: <integer> = 0;
-        while (_start < _end)
-          let _next :: <integer>
-            = position(cmdline, '\0', test: \=, skip: _skip) | _end;
-          add!(tokens, copy-sequence(cmdline, start: _start, end: _next));
-          _start := _next + 1;
-          _skip := _skip + 1;
-        end;
-        values(tokens[0], apply(vector, copy-sequence(tokens, start: 1)))
-      end;
-    *application-name* := name;
-    *application-arguments* := arguments;
+    let arguments = primitive-application-arguments();
+    *application-name* := element(arguments, 0, default: #f);
+    *application-arguments* := copy-sequence(arguments, start: 1);
     unless (*application-filename*)
       *application-filename* := get-application-filename();
     end;
