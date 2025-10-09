@@ -441,7 +441,8 @@ define &module dylan-primitives
 
   // Operating System
   create
-    primitive-exit-application;
+    primitive-exit-application,
+    primitive-application-arguments;
 
   // threads
   create
