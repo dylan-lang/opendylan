@@ -65,6 +65,13 @@ define method llvm-back-end-va-list-type-alignment
   values(struct-type, 8)
 end method;
 
+define method llvm-back-end-va-list-type-alignment
+    (back-end :: <llvm-aarch64-darwin-back-end>)
+ => (type :: <llvm-type>, alignment :: <integer>);
+  // Darwin on AArch64 doesn't use AAPCS
+  values($llvm-i8*-type, dylan-value(#"<raw-pointer>").raw-type-alignment)
+end method;
+
 define method op--va-decl-start
     (back-end :: <llvm-back-end>) => (va-list :: <llvm-value>);
   // Allocate a va_list stack variable
@@ -82,7 +89,8 @@ end method;
 
 // By default we assume the va_arg instruction works. For target
 // platforms where this is not the case, see the definitions for the
-// EmitVAArg method in clang's lib/CodeGen/TargetInfo.cpp
+// EmitVAArg method in clang's lib/CodeGen/ABIInfo.cpp and in the Targets
+// that override it.
 define method op--va-arg
     (back-end :: <llvm-back-end>, va-list :: <llvm-value>, type :: <llvm-type>)
  => (value :: <llvm-value>);
@@ -188,6 +196,14 @@ define method op--va-arg
   let addr-cast
     = ins--bitcast(back-end, addr, llvm-pointer-to(back-end, type));
   ins--load(back-end, addr-cast, alignment: 8)
+end method;
+
+define method op--va-arg
+    (back-end :: <llvm-aarch64-darwin-back-end>, va-list :: <llvm-value>,
+     type :: <llvm-pointer-type>)
+ => (value :: <llvm-value>);
+  // Darwin on AArch64 doesn't use AAPCS
+  ins--va-arg(back-end, va-list, type)
 end method;
 
 define method op--va-list-to-stack-vector
