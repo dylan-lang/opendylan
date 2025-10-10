@@ -29,35 +29,17 @@ void timer_get_point_in_time(uint32_t time[2])
 #elif OPEN_DYLAN_PLATFORM_DARWIN
 
 /* From https://developer.apple.com/library/mac/qa/qa1398/_index.html */
+#define _DARWIN_C_SOURCE
 #include <assert.h>
 #include <mach/mach.h>
 #include <mach/mach_time.h>
 #include <stdint.h>
+#include <time.h>
 #include <unistd.h>
 
 void timer_get_point_in_time(uint32_t time[2])
 {
-    uint64_t        now;
-    uint64_t        nowNano;
-    static mach_timebase_info_data_t    sTimebaseInfo;
-
-    now = mach_absolute_time();
-
-    // Convert to nanoseconds.
-
-    // If this is the first time we've run, get the timebase.
-    // We can use denom == 0 to indicate that sTimebaseInfo is
-    // uninitialised because it makes no sense to have a zero
-    // denominator is a fraction.
-
-    if ( sTimebaseInfo.denom == 0 ) {
-        (void) mach_timebase_info(&sTimebaseInfo);
-    }
-
-    // Do the maths. We hope that the multiplication doesn't
-    // overflow; the price you pay for working in fixed point.
-
-    nowNano = now * sTimebaseInfo.numer / sTimebaseInfo.denom;
+    uint64_t now = clock_gettime_nsec_np(CLOCK_MONOTONIC_RAW);
 
     time[0] = now / 1000000000;
     time[1] = now % 1000000000;
