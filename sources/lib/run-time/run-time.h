@@ -1931,11 +1931,8 @@ extern dylan_value primitive_values (dylan_value v);
 
 /* OPERATING SYSTEM PRIMITIVES */
 
-extern dylan_value Tcommand_nameT;
-extern dylan_value pseudo_primitive_command_name (void);
-
 extern dylan_value Tcommand_argumentsT;
-extern dylan_value pseudo_primitive_command_arguments (void);
+extern dylan_value primitive_application_arguments(void);
 
 extern void  primitive_exit_application (DSINT code) NORETURN_FUNCTION;
 

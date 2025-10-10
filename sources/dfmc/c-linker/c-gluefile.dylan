@@ -13,20 +13,15 @@ define sideways method emit-mainfile
     write(stream, "#include \"opendylan/run-time.h\"\n\n");
 
     format(stream, "int main (int argc, char *argv[]) {\n");
-    format(stream, "  extern void %s ();\n", glue-name(lib-name));
+    format(stream, "  extern void %s (void);\n", glue-name(lib-name));
     format(stream, "  extern %s %s;\n", $dylan-type-string, command-arguments-name());
-    format(stream, "  extern %s %s;\n", $dylan-type-string, command-name-name());
 
-    format(stream, "  %s args = primitive_make_vector((argc > 0) ? argc - 1 : 0);\n", $dylan-type-string);
+    format(stream, "  %s args = primitive_make_vector(argc);\n", $dylan-type-string);
     write (stream, "  int i;\n");
-    format(stream, "  if (argc > 0)\n");
-    format(stream, "    %s = primitive_raw_as_string(argv[0]);\n", command-name-name());
-    format(stream, "  else\n");
-    format(stream, "    %s = primitive_raw_as_string(\"unknown\");\n", command-name-name());
-    write (stream, "  for (i = 1; i < argc; i++) \n");
+    write (stream, "  for (int i = 0; i < argc; i++) \n");
     write (stream, "    primitive_vector_element_setter\n");
     write (stream, "      (primitive_raw_as_string(argv[i]), args,\n");
-    write (stream, "       primitive_raw_as_integer(i - 1));\n");
+    write (stream, "       primitive_raw_as_integer(i));\n");
     format(stream, "  %s = (%s)args;\n", command-arguments-name(), $dylan-type-string);
     format(stream, "  %s();\n", glue-name(lib-name));
     format(stream, "  return(0);\n");
@@ -45,10 +40,9 @@ define sideways method emit-gluefile
     let rt-init-names = list(glue-name-raw("Run_Time"));
     let init-names = concatenate(rt-init-names, used-glue-names, cr-init-names);
     write (stream, "#include \"opendylan/run-time.h\"\n\n");
-    format(stream, "void %s () __attribute__((constructor));\n", glue-name(lib-name));
-    format(stream, "void %s () {\n", glue-name(lib-name));
+    format(stream, "void %s (void) {\n", glue-name(lib-name));
     for (name in init-names)
-      format(stream, "  extern void %s();\n", name);
+      format(stream, "  extern void %s(void);\n", name);
     end for;
     format(stream, "  static int initp = 0;\n");
     format(stream, "  if (!initp) {\n");
@@ -73,10 +67,6 @@ end method;
 
 define method command-arguments-name ()
   c-raw-mangle("*command-arguments*");
-end method;
-
-define method command-name-name ()
-  c-raw-mangle("*command-name*");
 end method;
 
 define method cr-init-name (ld, cr-name)
