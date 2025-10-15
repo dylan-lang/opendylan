@@ -32,7 +32,7 @@ define test ipv4-numeric-address-test ()
   assert-equal("127.0.0.1", as(<string>, num1))
 end test;
 
-define test ipv6-address-test (expected-failure?: #t)
+define test ipv6-address-test (expected-to-fail-reason: "No IPV6 yet")
   let address = make(<internet-address>, address: "::1");
   assert-equal("::1", host-address(address));
 end test;
@@ -61,7 +61,7 @@ define function tcp-server-one-shot ()
 end function;
 
 define test tcp-test ()
-  let server :: <thread> = make (<thread>, function: tcp-server-one-shot);
+  let server :: <thread> = make(<thread>, function: tcp-server-one-shot);
   sleep(0.5);
   let conn :: <socket> = make(<socket>, host: "localhost", port: 8888);
   block ()
@@ -132,20 +132,25 @@ define test server-socket-test ()
                                   service: "socks",
                                   protocol: "tcp"));
   if (socket)
-    assert-equal(1080, local-port(socket));
-    assert-instance?(<internet-address>, local-host(socket));
-    close(socket);
+    block ()
+      assert-equal(1080, local-port(socket));
+      assert-instance?(<internet-address>, local-host(socket));
+    cleanup
+      close(socket, abort?: #t);
+    end;
   end if;
 
   assert-no-errors(socket := make(<server-socket>,
                                   port: 8888,
                                   protocol: "tcp"));
   if (socket)
-    assert-equal(8888, local-port(socket));
-    assert-instance?(<internet-address>, local-host(socket));
-    close(socket);
+    block ()
+      assert-equal(8888, local-port(socket));
+      assert-instance?(<internet-address>, local-host(socket));
+    cleanup
+      close(socket, abort?: #t);
+    end;
   end if;
-
 end test;
 
 define suite address-test-suite ()
