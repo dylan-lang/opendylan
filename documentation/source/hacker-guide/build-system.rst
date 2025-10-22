@@ -82,7 +82,7 @@ supplied build scripts include the following:
 The default build script is ``platform-name-build.jam``. You can
 select a different build script from the :guilabel:`Link` page of the
 :guilabel:`Environment Options` dialog in the IDE, or using the
-:option:`-build-script` option on the console compiler or console
+``-build-script`` option on the console compiler or console
 environment command-line.
 
 Build scripts are written using the Jam script language, as described in
@@ -168,7 +168,7 @@ script to define the following pseudo (``NotFile``) targets:
     Link the project as an executable program, with all Dylan libraries
     statically linked.
 ``release``
-    Not currently supported. (Requested when the build :option:`-release`
+    Not currently supported. (Requested when the build ``-release``
     option is used. This option was intended, prior to the open-source
     release, to copy Redistributable versions of referenced system
     Dylan libraries into the target build.)
