@@ -618,3 +618,5 @@ define raw-field-primitive c-int <raw-c-unsigned-int>;
 
 define side-effecting stateless dynamic-extent &primitive primitive-exit-application
     (code :: <raw-integer>) => ();
+define side-effect-free stateless dynamic-extent &primitive primitive-application-arguments
+    () => (res :: <simple-object-vector>);

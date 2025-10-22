@@ -6,53 +6,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-
-define inline-only function get-application-commandline
- () => (res :: <string>, arguments == #f)
-  let cmdline-path = "/proc/self/cmdline";
-  let cmdline-fd = -1;
-  let cmdline :: <byte-string> = "";
-  block ()
-    cmdline-fd
-      := raw-as-integer(%call-c-function ("open")
-                          (path :: <raw-byte-string>,
-                           flags :: <raw-c-signed-int>,
-                           mode :: <raw-c-signed-int>)
-                          => (fd :: <raw-c-signed-int>)
-                          (primitive-string-as-raw(cmdline-path),
-                           integer-as-raw(0),
-                           integer-as-raw(0))
-                       end);
-    if (cmdline-fd > 0)
-      let count :: <integer> = 1;
-      while (count > 0)
-        let buffer = make(<byte-string>, size: 8192, fill: '\0');
-        count
-          := raw-as-integer(%call-c-function ("read")
-                              (fd :: <raw-c-signed-int>,
-                               buffer :: <raw-byte-string>,
-                               size :: <raw-c-size-t>)
-                              => (count :: <raw-c-ssize-t>)
-                              (integer-as-raw(cmdline-fd),
-                               primitive-string-as-raw(buffer),
-                               integer-as-raw(8192))
-                           end);
-        if (count > 0)
-          cmdline := concatenate(cmdline, copy-sequence(buffer, end: count));
-        end;
-      end;
-    end;
-  cleanup
-    if (cmdline-fd > 0)
-      %call-c-function ("close")
-        (fd :: <raw-c-signed-int>) => (ok? :: <raw-c-signed-int>)
-        (integer-as-raw(cmdline-fd))
-      end
-    end
-  end;
-  values(cmdline, #f)
-end;
-
 define inline-only function get-application-filename
     () => (filename :: false-or(<byte-string>))
   let exe-path = "/proc/self/exe";

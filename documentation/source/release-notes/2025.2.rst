@@ -63,6 +63,14 @@ Dylan
   library that were previously marked as ambiguous have been
   corrected.
 
+Common-Dylan
+------------
+
+* A problem with retrieving :func:`application-name` and
+  :func:`application-arguments` results from the operating system when
+  running Dylan applications under tools such as :program:`valgrind` has
+  been fixed.
+
 io
 ---
 

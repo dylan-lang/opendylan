@@ -3669,15 +3669,10 @@ dylan_value SLOT_VALUE(dylan_value object, DSINT position)
 
 /* OPERATING SYSTEM */
 
-dylan_value Tcommand_nameT;
-
-dylan_value pseudo_primitive_command_name () {
-  return(Tcommand_nameT);
-}
-
 dylan_value Tcommand_argumentsT;
 
-dylan_value pseudo_primitive_command_arguments () {
+dylan_value primitive_application_arguments(void)
+{
   return(Tcommand_argumentsT);
 }
 

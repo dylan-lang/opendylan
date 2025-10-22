@@ -11,11 +11,42 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define side-effecting stateless dynamic-extent &c-primitive-descriptor primitive-exit-application
     (code :: <raw-integer>) => ();
 
+// These are set by the generated main() function
 define runtime-variable *argc* :: <raw-c-signed-int>
   = ^make(<&raw-c-signed-int>, value: 0);
 
 define runtime-variable *argv* :: <raw-c-pointer>
   = ^make(<&raw-c-pointer>, value: 0);
+
+define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor primitive-application-arguments
+    () => (res :: <simple-object-vector>);
+  let m = be.llvm-builder-module;
+  let sov-class :: <&class> = dylan-value(#"<simple-object-vector>");
+
+  let argc = ins--load(be, llvm-runtime-variable(be, m, #"*argc*"));
+  let argc-ext = ins--sext(be, argc, be.%type-table["iWord"]);
+  let argv = ins--load(be, llvm-runtime-variable(be, m, #"*argv*"));
+  let argv-cast = ins--bitcast(be, argv, llvm-pointer-to(be, $llvm-i8*-type));
+
+  let arguments
+    = op--object-pointer-cast(be, op--allocate-vector(be, argc-ext),
+                              sov-class);
+
+  ins--iterate loop (be, i = 0)
+    let cmp = ins--icmp-slt(be, i, argc-ext);
+    ins--if (be, cmp)
+      let argp = ins--gep-inbounds(be, argv-cast, i);
+      let arg = call-primitive(be, primitive-raw-as-string-descriptor,
+                               ins--load(be, argp));
+      let entry
+        = op--getslotptr(be, arguments, sov-class, #"vector-element", i);
+      ins--store(be, ins--bitcast(be, arg, $llvm-object-pointer-type), entry);
+      let i-inc = ins--add(be, i, 1);
+      loop(i-inc)
+    end ins--if;
+  end ins--iterate;
+  arguments
+end;
 
 define c-callable auxiliary &runtime-primitive-descriptor call-application-exit-functions-internal () => ();
   let m = be.llvm-builder-module;
