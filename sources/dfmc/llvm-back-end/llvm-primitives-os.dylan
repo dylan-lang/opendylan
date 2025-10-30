@@ -28,9 +28,8 @@ define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor p
   let argv = ins--load(be, llvm-runtime-variable(be, m, #"*argv*"));
   let argv-cast = ins--bitcast(be, argv, llvm-pointer-to(be, $llvm-i8*-type));
 
-  let arguments
-    = op--object-pointer-cast(be, op--allocate-vector(be, argc-ext),
-                              sov-class);
+  let arguments = op--allocate-vector(be, argc-ext);
+  let arguments-cast = op--object-pointer-cast(be, arguments, sov-class);
 
   ins--iterate loop (be, i = 0)
     let cmp = ins--icmp-slt(be, i, argc-ext);
@@ -39,7 +38,7 @@ define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor p
       let arg = call-primitive(be, primitive-raw-as-string-descriptor,
                                ins--load(be, argp));
       let entry
-        = op--getslotptr(be, arguments, sov-class, #"vector-element", i);
+        = op--getslotptr(be, arguments-cast, sov-class, #"vector-element", i);
       ins--store(be, ins--bitcast(be, arg, $llvm-object-pointer-type), entry);
       let i-inc = ins--add(be, i, 1);
       loop(i-inc)
