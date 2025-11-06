@@ -300,6 +300,7 @@ define function make-entry-point-dbg-function
                              0,
                              dbg-function-type,
                              definition?: #t,
+                             module: back-end.llvm-builder-module,
                              function: function);
 
   let all-parameter-names
