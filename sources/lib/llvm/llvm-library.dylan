@@ -179,6 +179,7 @@ define module llvm
     $llvm-attribute-non-lazy-bind,
     llvm-attribute-merge,
     <llvm-attribute-list>,
+    $llvm-empty-attribute-list,
 
     $llvm-calling-convention-c,
     $llvm-calling-convention-fast,
