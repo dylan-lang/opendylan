@@ -618,13 +618,12 @@ which are worth describing here:
   found by the C-FFI if you pass a *c-name* argument to the corresponding
   C-FFI definition.
 
-  The sole exception to this is the ``define objc-selector`` form which
+  The sole exception to this is the :macro:`define objc-selector` form which
   instead takes a ``selector:`` keyword.
 
-- A *pointer-type-name* argument. All the type-defining forms allow you
-  to name the type for a pointer to the type being defined. This is
-  normally specified throughout the *pointer-type-name:* keyword
-  option.
+- A *pointer-type-name* argument. All the type-defining forms (except for :macro:`define
+  c-pointer-type`) allow you to name the type for a pointer to the type being defined.
+  This is specified with the ``pointer-type-name:`` keyword option.
 
 .. index::
    single: classes; designator
@@ -718,9 +717,9 @@ programmatically, but others are implicit and only really exist in the
 compiler. Some of the properties may be empty.
 
 A *referenced type* is the designator type to which a pointer refers. A
-designator's *referenced-type* only has a value for subtypes of
+designator's *referenced type* only has a value for subtypes of
 :class:`<C-statically-typed-pointer>`. Programs can access the
-referenced type through the function *referenced-type*.
+referenced type through the function :func:`referenced-type`.
 
 .. index::
    single: <C-pointer> class
@@ -793,7 +792,7 @@ Designator class basics
      *import-type*, so you cannot use it when designating a transition
      between C and Dylan.
 
-     This class is only useful in that it is the *referenced-type* for
+     This class is only useful in that it is the *referenced type* for
      :class:`<C-void*>`.
 
 .. index::
@@ -1072,9 +1071,9 @@ and unsafe integer designator types exported from the C-FFI module.
    | ``<C-raw-ssize-t>``           | ``ssize_t``        | ``<machine-word>`` |
    +-------------------------------+--------------------+--------------------+
 
-For each of the fundamental integer designator types, *<C-* *xxx* *>*,
-there is also a type designating pointers to that type called *<C-*
-*xxx* *\*>*. In addition, the C-FFI defines methods for
+For each of the fundamental integer designator types, ``<C-foo>``,
+there is also a type designating pointers to that type called ``<C-foo*>``
+In addition, the C-FFI defines methods for
 :gf:`pointer-value` and :gf:`pointer-value-setter`, with appropriate
 translation behavior for each of the types designating pointers to the
 fundamental integer designator types.
@@ -1294,7 +1293,7 @@ these classes.
      Defines a constant bound to a pointer class designating pointers to
      *designator-class-name*. Note that the pointer type may already
      exist. The class defined will be open, abstract and instantiable.
-     Objects returned by ``make(*pointer-class-name*)`` will be
+     Objects returned by ``make(pointer-class-name)`` will be
      instances of a sealed concrete subclass of *pointer-class-name*.
 
 .. index::
@@ -1314,7 +1313,7 @@ these classes.
    :description:
 
      Returns the class designating the contents type of the C pointer
-     type designated by pointer-designator-class. The same designator
+     type designated by *pointer-designator-class*. The same designator
      class is returned whenever *referenced-type* is called with the
      same argument.
 
@@ -2019,9 +2018,8 @@ Structure types
 
    :description:
 
-     The abstract superclass of all classes designating a C struct type.
-     It is a subclass of :class:`<C-value>`. It is a subclass of
-     :class:`<C-value>`. You can describe new struct types using the
+     The abstract superclass of all classes designating a C struct type.  It is a
+     subclass of :class:`<C-value>`.  You can describe new struct types using the
      :macro:`define C-struct` macro.
 
      Classes designating C structs are not instantiable. Where a slot,
@@ -2091,7 +2089,7 @@ can be described with these definitions:
       slot string-val :: <C-string>;
     end C-union;
 
-    define C-struct <anonymous-struct-1>
+    define C-struct <something>
       slot name :: <C-string>;
       slot flags :: <C-long>;
       slot val :: <anonymous-union-1>;
@@ -2153,11 +2151,11 @@ Defining specialized versions of designator classes
      superclasses, slot-specs, and *modifiers* are passed on to :drm:`define
      class` unchanged. In effect, it expands to:
 
-     .. code-block:: dylan
+     .. parsed-literal:: 
 
-       define class *name* (*superclasses*)
-         *slot-spec* ; ...
-       end class;
+        define class `name` ( `superclasses` )
+          `slot-spec` ; ...
+        end class;
 
      .. index::
 	single: define C-subtype definition macro
@@ -2395,7 +2393,7 @@ Defining specialized designator classes
 	single: classes; <byte-string>
 	single: classes; <C-example-string>
 
-     Mapped string example: an alternate version of C-string which
+     Mapped string example: an alternate version of C string which
      automatically converts instances of :drm:`<byte-string>` to instances
      of ``<C-example-string>`` on export.
 
@@ -2560,15 +2558,15 @@ Describing structure types
 
      A slot-spec has the following syntax:
 
-     .. code-block:: dylan
+     .. parsed-literal:: 
 
-       [*slot-adjective* ] slot *getter-name* :: *c-type* #key *setter*
-         *address-getter* *c-name length* *width*
+       [ `slot-adjective` ] slot `getter-name` :: `c-type` #key `setter`
+         `address-getter`, `c-name`, `length`, `width`
 
      The *slot-adjective* can be *constant*,  *array* or *bitfield*. The
      *array* slot adjective indicates that the slot is repeated and the
-     *dimensions* option is used to indicate how many repetitions are
-     defined, and how it is accessed. The *bitfield* slot adjective
+     *length* option indicates how many repetitions are
+     defined. The *bitfield* slot adjective
      indicates that the slot is really a bitfield. If *bitfield* is
      given then the *width* option must also be given. The *c-type*
      given for a *bitfield* slot must be an integer designator. The
@@ -2589,7 +2587,7 @@ Describing structure types
 
      The optional setter keyword specifies the generic function to which
      the setter method for the structure slot will be added. It defaults
-     to getter-name*-setter*. No setter method is defined if the
+     to *getter-name*-setter. No setter method is defined if the
      *setter* option is :drm:`#f`. If the *constant* keyword is supplied, no
      *setter* option should be supplied.
 
@@ -2598,15 +2596,13 @@ Describing structure types
 	single: classes; <C-pointer>
 
      The optional *address-getter* specifies the name of a function that
-     can be used to return a pointer to the data in the member. It must
-     return a ``<C-pointer>`` object that points to a C type. No
+     can be used to return a pointer to the data in the member. It
+     returns a ``<C-pointer>`` object that points to a C type. No
      *address-getter* is defined by default.
 
-     You can use the *dimensions* keyword only if you used the *array*
-     slot adjective. This *dimensions* value can be either a list of
-     integers or a single integer. The accessor for an array slot is
-     defined to take an extra integer parameter for each dimension
-     given.
+     You can use the ``length:`` keyword only if you used the ``array`` slot
+     adjective. The accessor for an array slot is defined to take an extra integer
+     parameter indicating an index into the array.
 
      You can use the *width* keyword option only if you used the
      *bitfield* adjective.
@@ -3377,7 +3373,7 @@ of that bridge are implemented within this library.
    single: C-FFI library; variables
 
 Variables
----------
+=========
 
 This section covers describing and accessing C variables.
 
@@ -3555,7 +3551,7 @@ function :func:`destroy`.
      subclasses of :class:`<C-pointer>` and returns an instance of its
      argument class.
 
-     If the address option is provided, no new storage is allocated, but
+     If the *address* option is provided, no new storage is allocated, but
      instead, a new pointer with the given machine word address is
      returned.
 
@@ -3565,25 +3561,25 @@ function :func:`destroy`.
      :class:`<machine-word>` that represents the address of the memory it
      allocated.
 
-     The amount of storage allocated by default is the result of::
+     The amount of storage allocated by default is equivalent to::
 
          size-of(*pointer-wrapper-class*.referenced-type)
 
-     If a positive integer is passed as an extra-bytes option, that
+     If a positive integer is passed in the *extra-bytes* option, that
      number of extra bytes is also allocated.
 
-     If a positive integer is passed as a element-count option, space
-     for element-count copies of the referenced type is allocated,
-     taking into account the extra-bytes option for each of them. The
-     element-count argument can be used for allocating arrays of sizes
-     that are not known statically. The keyword element-count is used
-     for this option rather than size in order to avoid conflict with
-     the size collection keyword. The logical size of a collection
+     If a positive integer is passed in the *element-count* option, space
+     for *element-count* copies of the referenced type is allocated,
+     taking into account the *extra-bytes* option for each of them. The
+     *element-count* argument can be used for allocating arrays of sizes
+     that are not known statically. The keyword ``element-count:`` is used
+     for this option rather than ``size:`` in order to avoid conflict with
+     the ``size:`` collection keyword. The logical size of a collection
      represented by a pointer wrapper and the number of array elements
      that implement it may differ; a null-terminated string is an
      example of such a case.
 
-     This ``make`` method calls ``initialize`` on the wrapper object it
+     This :drm:`make` method calls :drm:`initialize` on the wrapper object it
      generates before returning it.
 
      ::
@@ -3601,16 +3597,15 @@ function :func:`destroy`.
          0
 
          ? define variable *space-for-ten-ints*
-         = make(<C-int*>, element-count: 10);
+             = make(<C-int*>, element-count: 10);
 
          ? define C-struct <Z-properties>
-           slot type :: <C-int>;
-           array slot properties :: <C-int>,
-         end C-struct <Z-properties>;
+             slot type :: <C-int>;
+             array slot properties :: <C-int>,
+           end C-struct <Z-properties>;
 
-         ? define variable *props* =
-           make(<Z-properties>,
-             extra-bytes: 10 * size-of(<C-int>));
+         ? define variable *props*
+             = make(<Z-properties>, extra-bytes: 10 * size-of(<C-int>));
 
 .. index::
    single: <C-statically-typed-pointer> class
@@ -3623,10 +3618,10 @@ function :func:`destroy`.
 
    Frees the allocated heap memory at a specified address.
 
-   :signature: destroy *C-pointer* #key *de-allocator* => ()
+   :signature: destroy *C-pointer* #key *deallocator* => ()
 
    :parameter c-pointer: An instance of :class:`<C-pointer>`.
-   :parameter #key de-allocator: An instance of :drm:`<function>`.
+   :parameter #key deallocator: An instance of :drm:`<function>`.
 
    :description:
 
@@ -3637,9 +3632,9 @@ function :func:`destroy`.
      serve as a deallocation facility. It must accept an address as a
      :class:`<machine-word>` and free the storage allocated at that address.
 
-     You should only use ``destroy`` on pointers allocated using
-     ``make`` where no address was given. If *allocator* was passed to
-     ``make``, the matching deallocator should be passed to ``destroy``.
+     You should only use :gf:`destroy` on pointers allocated using
+     :drm:`make` where no address was given. If *allocator* was passed to
+     :drm:`make`, the matching deallocator should be passed to :gf:`destroy`.
 
      There is a default method for destroy on
      :class:`<C-statically-typed-pointer>`.
@@ -3668,7 +3663,7 @@ function :func:`destroy`.
    :description:
 
      Allocates an object *name* within the scope of a *body*. The
-     *element-count* and *extra-bytes* options behave as in ``make``.
+     *element-count* and *extra-bytes* options behave as in :drm:`make`.
      The memory that was allocated is freed after *body* exits.
 
      This macro gives the object *dynamic extent*.
