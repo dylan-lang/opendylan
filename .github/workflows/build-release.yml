@@ -31,7 +31,7 @@ jobs:
       - name: "Build with batteries"
         run: ./build/unix/release-with-batteries.sh
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: opendylan-release-tarball
           # The - in the path is to omit the opendylan.tar.bz2 symlink.
