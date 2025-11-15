@@ -35,7 +35,7 @@ void simplest_foreign_function()
 
 void ffi_no_result(unsigned short i)
 {
-  printf("calling ffi_no_result %d\n");
+  printf("calling ffi_no_result %d\n", i);
 }
 
 unsigned short ffi_no_parameters()
