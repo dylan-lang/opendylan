@@ -60,8 +60,7 @@ end method;
 
 define method load-dll (name :: <symbol>) => ()
   // format-out("DLL LOADING %=\n", name);
-  let merged-name = merged-project-name(name);
-  let project = lookup-named-project(merged-name);
+  let project = lookup-named-project(name);
   let dll-name = project & project.project-executable-name;
   // format-out("  DLL-NAME %s\n", dll-name);
   unless (dll-name)

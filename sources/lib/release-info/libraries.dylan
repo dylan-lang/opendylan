@@ -70,8 +70,6 @@ define class <library-info> (<described-release-info>)
     init-keyword: binary:;
   slot info-binary-name :: false-or(<string>) = #f,
     init-keyword: binary-name:;
-  slot info-merge-parent :: false-or(<library-info>) = #f,
-    init-keyword: merge-parent:;
   slot info-database :: false-or(<string>) = #f,
     init-keyword: database:;
   slot info-lib :: false-or(<string>) = #f,
@@ -89,8 +87,6 @@ end method initialize;
 define class <library-binary-info> (<release-info>)
   constant slot info-binary-name :: <string>,
     required-init-keyword: binary-name:;
-  constant slot info-merged-libraries :: <sequence> = #[],
-    init-keyword: merged-libraries:;
 end class <library-binary-info>;
 
 define class <library-release-info> (<release-info>)
@@ -345,14 +341,7 @@ define method interpret-library-binary-xml
     (name :: <symbol>, node :: <xml-node>) => (info :: <library-binary-info>)
   let merge-parent = element(*libraries*, name);
   make(<library-binary-info>,
-       binary-name: node-attribute(node, "file"),
-       merged-libraries: map(method (merge-node :: <xml-node>)
-                               let library-name = as(<symbol>, merge-node.node-text);
-                               let library = element(*libraries*, library-name);
-                               library.info-merge-parent := merge-parent;
-                               library
-                             end,
-                             select-nodes(node, "merge")))
+       binary-name: node-attribute(node, "file"))
 end method interpret-library-binary-xml;
 
 // Install the default library packs
@@ -375,36 +364,6 @@ if (file-exists?(release-library-packs-directory()))
                end,
                release-library-packs-directory());
 end if;
-
-
-/// Merged library DLL information
-
-define method merged-project-name
-    (library :: <symbol>) => (merged-library :: <symbol>)
-  let info = find-library-info(library);
-  let merge-parent = info & info.info-merge-parent;
-  if (merge-parent)
-    merge-parent.info-name
-  else
-    library
-  end
-end method merged-project-name;
-
-define method merged-project-libraries
-    (library :: <symbol>)
- => (parent :: <symbol>, libraries :: <sequence>)
-  let library-info = find-library-info(library);
-  let parent-info =
-    if (library-info) library-info.info-merge-parent | library-info end;
-  let parent-binary-info = parent-info & parent-info.info-binary;
-  let parent = if (parent-info) parent-info.info-name else library end;
-  values(parent,
-         if (parent-binary-info)
-           map(info-name, parent-binary-info.info-merged-libraries);
-         else
-           #[]
-         end)
-end method merged-project-libraries;
 
 
 /// Library category handling

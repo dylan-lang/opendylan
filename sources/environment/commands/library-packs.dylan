@@ -158,7 +158,6 @@ define method describe-state
      #key prefix :: <string> = "",
           full? :: <boolean> = #t)
  => ()
-  let parent-info = info.info-merge-parent | info;
   let location = info.info-location;
   message(context, "%s%s: %s:",
           prefix,
@@ -174,14 +173,9 @@ define method describe-state
   if (full?)
     message(context, "%s  Location: %s%s", prefix, location,
             if (~file-exists?(location)) " (not installed)" else "" end);
-    message(context, "%s  Merge parent: %s", prefix, parent-info.info-name);
     let binary-info = info.info-binary;
     if (binary-info)
       message(context, "%s  Binary name: %s", prefix, info.info-binary-name | "#f");
-      if (~empty?(binary-info.info-merged-libraries))
-        message(context, "%s  Merged libraries: %=",
-                prefix, map(info-name, binary-info.info-merged-libraries))
-      end
     end
   end
 end method describe-state;

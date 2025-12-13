@@ -58,8 +58,6 @@ define module release-info
          info-library-pack,
          info-location,
          info-manual,
-         info-merged-libraries,
-         info-merge-parent,
          info-modules,
          info-name,
          info-platform,
@@ -85,10 +83,6 @@ define module release-info
          library-pack-name,
          library-pack-full-name,
          library-pack-number;
-
-  // Merged library DLL information
-  export merged-project-name,
-         merged-project-libraries;
 
   // Library category information
   export <library-category-info>,
