@@ -148,13 +148,6 @@
         <project>button-ocx.hdp</project>
       </sources>
     </library>
-    <library name="asp-view" title="ASP View">
-      <category>Technologies/OLE/Automation</category>
-      <description>A WWW server-side automation component using ASP (Active Server Pages)</description>
-      <sources location="ole/asp-view">
-        <project>asp-view.hdp</project>
-      </sources>
-    </library>
     <library name="bank-client" title="Bank Client">
       <category>Technologies/COM</category>
       <description>The client side of a 3-tier COM banking demo</description>

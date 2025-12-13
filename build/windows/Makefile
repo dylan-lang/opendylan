@@ -128,8 +128,6 @@ NETWORK_EXAMPLES_INSTALL_DIRECTORY = $(EXAMPLES_INSTALL_DIRECTORY)\network
 
 BUILD_LOGS = $(OPEN_DYLAN_BUILD_LOGS)
 
-ASP_VIEW_SOURCE = $(OLE_EXAMPLES_DIRECTORY)\asp-view
-ASP_VIEW_INSTALL_DIRECTORY = $(OLE_EXAMPLES_INSTALL_DIRECTORY)\asp-view
 BIG_INTEGERS_SOURCE = $(LIB_DIRECTORY)\big-integers
 BUG_REPORT_TEMPLATE = $(TEMPLATES_INSTALL_DIRECTORY)\bug-report.txt
 BUILD_X86_WIN32_SOURCE = $(BUILD_DIRECTORY)\x86-win32
@@ -623,7 +621,6 @@ WIN32_SCRIBBLE = $(INSTALL_BIN_DIRECTORY)\win32-scribble.exe
 
 PLONKER = $(INSTALL_BIN_DIRECTORY)\plonker.exe
 
-ASP_VIEW = $(INSTALL_BIN_DIRECTORY)\asp-view.exe
 SAMPLE_AUTOMATION_CONTROLLER = $(INSTALL_BIN_DIRECTORY)\sample-automation-controller.exe
 SAMPLE_AUTOMATION_SERVER = $(INSTALL_BIN_DIRECTORY)\sample-automation-server.exe
 SAMPLE_OLE_CONTAINER = $(INSTALL_BIN_DIRECTORY)\sample-ole-container.exe
@@ -947,7 +944,6 @@ install-win32-scribble: $(WIN32_SCRIBBLE_INSTALL_DIRECTORY)
 
 install-plonker: $(PLONKER_INSTALL_DIRECTORY)
 
-install-asp-view: $(ASP_VIEW_INSTALL_DIRECTORY)
 install-com-bank-demo: $(COM_BANK_DEMO_INSTALL_DIRECTORY)
 install-win32-ole-container: $(WIN32_OLE_CONTAINER_INSTALL_DIRECTORY)
 install-win32-ole-server-examples: $(WIN32_OLE_SERVER_EXAMPLES_INSTALL_DIRECTORY)
@@ -986,7 +982,7 @@ install-win32-examples: install-windows-ffi-example install-windows-gadgets-exam
 install-database-examples: install-database-viewer install-database-stress-tool
 install-duim-examples: install-duim-gl-demo install-duim-gui-test-suite install-duim-resource-example install-flying-squares install-interface-builder install-life install-reversi install-pente install-scribble install-tic-tac-toe install-tetris install-windows-viewer install-win32-duim-gui-test-suite install-win32-scribble install-standalone-deuce
 install-duim-ole-examples: install-button-ocx install-ole-scribble install-ocx-scribble install-sample-duim-container
-install-ole-examples: install-asp-view install-com-bank-demo install-win32-ole-server-examples install-win32-ole-container install-win32-invisible-control install-sample-automation-controller install-automation-server-examples install-sample-ole-server install-sample-ole-container 
+install-ole-examples: install-com-bank-demo install-win32-ole-server-examples install-win32-ole-container install-win32-invisible-control install-sample-automation-controller install-automation-server-examples install-sample-ole-server install-sample-ole-container 
 install-corba-examples: install-corba-hello-world install-corba-bank-demo install-corba-pente install-chat-demo
 install-midi-examples: install-plonker
 install-network-examples: install-daytime-client install-daytime-server install-echo-client install-echo-server install-simple-daytime-client install-simple-daytime-server
@@ -1022,7 +1018,6 @@ windows-ffi-example: $(WINDOWS_FFI_EXAMPLE)
 windows-gadgets-example: $(WINDOWS_GADGETS_EXAMPLE)
 windows-resource-example: $(WINDOWS_RESOURCE_EXAMPLE)
 
-asp-view: $(ASP_VIEW)
 sample-automation-controller: $(SAMPLE_AUTOMATION_CONTROLLER)
 sample-automation-server: $(SAMPLE_AUTOMATION_SERVER)
 sample-ole-container: $(SAMPLE_OLE_CONTAINER)
@@ -2618,12 +2613,6 @@ $(PLONKER_INSTALL_DIRECTORY):
   $(COPY) $(PLONKER_SOURCE)\*.* $(PLONKER_INSTALL_DIRECTORY) >nul
   $(REMOVE) $(PLONKER_INSTALL_DIRECTORY)\*.lid
 
-
-$(ASP_VIEW_INSTALL_DIRECTORY):
-  $(ENSURE_SOURCES) ole-examples $(OLE_EXAMPLES_DIRECTORY)
-  $(ENSURE_DIRECTORY) $(ASP_VIEW_INSTALL_DIRECTORY)
-  $(RECURSIVE_COPY) $(ASP_VIEW_SOURCE) $(ASP_VIEW_INSTALL_DIRECTORY) >nul
-  $(ENSURE_WRITEABLE_HDP_FILES) $(ASP_VIEW_INSTALL_DIRECTORY)
 
 $(COM_BANK_DEMO_INSTALL_DIRECTORY):
   $(ENSURE_SOURCES) ole-examples $(OLE_EXAMPLES_DIRECTORY)
