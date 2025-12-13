@@ -50,6 +50,12 @@ Compiler
   method dispatch has been reduced by ensuring that certain object
   slots could never be considered uninitialized.
 
+* The implementation of ``define thread variable`` has changed to
+  improve the integration with the garbage collector, reducing the
+  number of GC roots that need to be registered to one per thread,
+  thus increasing the number of threads that can be run. (No
+  significant change in execution performance is expected.)
+
 Tools
 =====
 
