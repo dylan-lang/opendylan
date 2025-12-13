@@ -39,7 +39,6 @@ Open Proposals (under consideration)
 ==== ============= ========== =============================================
 1    Process       Draft      :doc:`dep-0001-dep-process`
 6    Standard      Draft      :doc:`dep-0006-single-file-library`
-10   Standard      Draft      :doc:`dep-0010-element-otherwise`
 13   Standard      Draft      :doc:`dep-0013-multi-assignment`
 ==== ============= ========== =============================================
 
@@ -58,7 +57,7 @@ All Proposals by Number
 6    Standard      Draft      :doc:`dep-0006-single-file-library`
 7    Standard      Draft      :doc:`dep-0007-collection-type-safety`
 8    Standard      Withdrawn  :doc:`dep-0008-multi-line-strings`
-10   Standard      Draft      :doc:`dep-0010-element-otherwise`
+10   Standard      Withdrawn  :doc:`dep-0010-element-otherwise`
 11   Standard      Final      :doc:`dep-0011-numeric-literal-syntax`
 12   Standard      Final      :doc:`dep-0012-string-literals`
 13   Standard      Draft      :doc:`dep-0013-multi-assignment`
