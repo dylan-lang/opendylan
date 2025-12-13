@@ -430,7 +430,6 @@ define function project-set-compilation-parameters
     add-setting(back-end: project-compiler-back-end(project));
   end;
   add-setting(build-location: project-build-location(project));
-  add-setting(library-pack: project-library-pack(project));
   context.compilation-context-compiler-settings := compiler-settings;
   context
 end;

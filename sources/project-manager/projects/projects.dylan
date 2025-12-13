@@ -99,17 +99,6 @@ define open generic project-minor-version (project :: <project>)
 define open generic project-minor-version-setter (version :: <integer>, project :: <project>)
  => (version :: <integer>);
 
-define open generic project-library-pack (project :: <project>)
- => (library-pack :: <integer>);
-
-define method project-library-pack (project :: <project>) => (library-pack :: <integer>)
-  0
-end method project-library-pack;
-
-define open generic project-library-pack-setter
-    (library-pack :: <integer>, project :: <project>)
- => (library-pack :: <integer>);
-
 define constant <project-target-type> = one-of(#"executable", #"dll");
 
 define open generic project-target-type(project :: <project>)
@@ -181,7 +170,6 @@ define variable *default-inter-library-binding* = #"tight";
 
 define variable *default-library-major-version* = 0;
 define variable *default-library-minor-version* = 0;
-define variable *default-library-library-pack*  = 0;
 
 define variable *session-properties* = make(<table>);
 

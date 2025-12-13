@@ -27,7 +27,6 @@ define constant $standard-lid-keyword = #[#"comment",
                                           #"rc-files",
                                           #"major-version",
                                           #"minor-version",
-                                          #"library-pack",
                                           #"jam-includes"];
 
 define constant $simple-build-keyword = #[#"executable",
@@ -38,8 +37,7 @@ define constant $simple-build-keyword = #[#"executable",
                                           #"debug-directory",
                                           #"start-function",
                                           #"major-version",
-                                          #"minor-version",
-                                          #"library-pack"];
+                                          #"minor-version"];
 
 
 define constant $list-build-keyword = #[#"linker-options",
@@ -69,9 +67,6 @@ define open abstract class <lid-project> (<project>)
   slot project-minor-version :: <integer>,
     init-keyword: minor-version:,
     setter: project-minor-version-slot-setter;
-  slot project-library-pack :: <integer> = 0,
-    init-keyword: library-pack:,
-    setter: project-library-pack-slot-setter;
   slot project-library-loose-bindings :: <sequence> = #(),
     init-keyword: loose-bindings:,
     setter: project-library-loose-bindings-slot-setter;
@@ -324,15 +319,6 @@ define method project-minor-version-setter
   project.project-minor-version-slot := version
 end;
 
-define method project-library-pack-setter
-    (library-pack :: <integer>, project :: <lid-project>)
- => (version :: <integer>)
-  project-keyword-property(project, #"library-pack")
-    := list(integer-to-string(library-pack));
-  project.project-library-pack-slot := library-pack;
-  project-compiler-setting(project, library-pack:) := library-pack
-end;
-
 define method project-compilation-mode-setter (mode, project :: <lid-project>)
   project-compilation-mode-slot(project) := mode;
   project-keyword-property(project, #"compilation-mode") := list(mode);
@@ -424,17 +410,6 @@ define method reinitialize-lid-project
   if (minor-version) minor-version := string-to-integer(minor-version.first)
   else minor-version := *default-library-minor-version* end;
   project-minor-version-slot(project) := minor-version;
-
-  let library-pack = element(properties, #"library-pack", default: #f);
-  when (library-pack)
-    let string = library-pack.first;
-    let (pack, unused) = string-to-integer(string, default: -1);
-    when (pack = -1 | unused < size(string))
-      pack := library-pack-number(as(<symbol>, string))
-    end;
-    library-pack := pack
-  end;
-  project-library-pack-slot(project) := library-pack | *default-library-library-pack*;
 
   // those two slots are defaulted in the class definition
   let target-type = element(properties, #"target-type", default: #f);

@@ -169,7 +169,6 @@ define function save-lid-info
   save-list-value(stream, #"jam-includes", relative(jam-includes));
   save-single-value(stream, #"major-version", p.project-major-version);
   save-single-value(stream, #"minor-version", p.project-minor-version);
-  save-single-value(stream, #"library-pack", p.project-library-pack);
   save-single-value(stream, #"compilation-mode", p.project-compilation-mode);
   save-single-value(stream, #"target-type", p.project-target-type);
   save-list-value(stream, #"loose-library-bindings", p.project-library-loose-bindings);
