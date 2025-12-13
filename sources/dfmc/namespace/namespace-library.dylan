@@ -180,8 +180,6 @@ define module dfmc-namespace
       library-description-major-version-setter,
     library-description-minor-version,
       library-description-minor-version-setter,
-    library-description-library-pack,
-      library-description-library-pack-setter,
     library-description-compilation-aborted?,
       library-description-compilation-aborted?-setter,
     library-description-built?,

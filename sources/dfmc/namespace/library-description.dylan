@@ -101,9 +101,6 @@ define dood-class <project-library-description>
   slot library-description-major-version = 0, init-keyword: major-version:;
   // backwards compatible has to be 'greater then or equal'
   slot library-description-minor-version = 0, init-keyword: minor-version:;
-  // If non-zero, the indicated library pack must be present in order
-  // to use this library.  (We check when opening the database...)
-  slot library-description-library-pack = 0, init-keyword: library-pack:;
   // Flag used to notice when compilation is aborted, so know to start over
   // next time.  This is in place of doing the cleanup at the time of the
   // abort, because library cleanup can be time consuming so that it has a
