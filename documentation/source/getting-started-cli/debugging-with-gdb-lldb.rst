@@ -149,19 +149,25 @@ Any LLDB arguments can be specified, as normal.
 The support library provides some extra commands and specialized
 summarizers for commonly-encountered Dylan objects.
 
-Note that if you're using the Boehm GC, which is the default on Unix systems,
-it is necessary to tell ``lldb`` not to stop on the signals used by the GC.
-Which signals are used varies depending on the platform. For Linux::
+Note that if you're using the Boehm GC, which is the default on Unix systems, it is
+necessary to tell ``lldb`` not to stop on the signals used by the GC, or on ``SIGPIPE``,
+which is normally ignored by the Dylan run-time.  Which signals are used varies depending
+on the platform. For Linux::
 
   (lldb) process handle -p yes -s no -n no SIGPWR
   (lldb) process handle -p yes -s no -n no SIGXCPU
+  (lldb) process handle -p yes -s no -n no SIGPIPE
 
 For FreeBSD::
 
   (lldb) process handle -p yes -s no -n no SIGUSR1
   (lldb) process handle -p yes -s no -n no SIGUSR2
+  (lldb) process handle -p yes -s no -n no SIGPIPE
 
-On macOS (Darwin) Boehm GC doesn't use any signals.
+For macOS (Darwin) Boehm GC doesn't use any signals but you may still want tell ``lldb``
+not to stop on ``SIGPIPE``::
+
+  (lldb) process handle -p yes -s no -n no SIGPIPE
 
 The command ``dylan-bt`` prints a Dylan-friendly backtrace by
 stripping out all frames which refer to internal runtime functions,
@@ -222,7 +228,6 @@ as plain hex values, for example:
 With the helper, extra information is added to the right:
 
 .. code-block:: none
-
 
   (dylan_value) T33 = 0x0000000100c38060 {<symbol>: #"libraries-test-suite-app"}
   (dylan_value) T35_0 = 0x00007ffeefbfe370 {<simple-object-vector>: size: 1}
