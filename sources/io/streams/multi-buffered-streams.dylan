@@ -230,22 +230,22 @@ end method stream-input-available?;
 define sealed method stream-size
     (the-stream :: <multi-buffered-stream>) => (the-size :: <integer>);
   if (the-stream.stream-open?)
-  // If the last buffer for this stream is paged in and modified then
-  // use the maximum of buffer-end for that last buffer and the
-  // accessor file size, otherwise use the accessor file size.
-  let last-buffer :: false-or(<power-of-two-buffer>) =
-    if ((the-stream.buffer-map.size > 0)
-          & ~buffer-map-entry-empty?(the-stream.buffer-map.last))
-      let index = buffer-map-entry-index(the-stream.buffer-map.last);
-      the-stream.buffer-vector.buffers[index]
-    end if;
-  if (last-buffer & last-buffer.buffer-dirty?)
-    let last-buffer :: <buffer> = last-buffer; // HACK: TYPE ONLY
-    max(last-buffer.buffer-position + last-buffer.buffer-end,
+    // If the last buffer for this stream is paged in and modified then
+    // use the maximum of buffer-end for that last buffer and the
+    // accessor file size, otherwise use the accessor file size.
+    let last-buffer :: false-or(<power-of-two-buffer>) =
+      if ((the-stream.buffer-map.size > 0)
+            & ~buffer-map-entry-empty?(the-stream.buffer-map.last))
+        let index = buffer-map-entry-index(the-stream.buffer-map.last);
+        the-stream.buffer-vector.buffers[index]
+      end if;
+    if (last-buffer & last-buffer.buffer-dirty?)
+      let last-buffer :: <buffer> = last-buffer; // HACK: TYPE ONLY
+      max(last-buffer.buffer-position + last-buffer.buffer-end,
           the-stream.accessor.accessor-size)
-  else
+    else
       the-stream.accessor.accessor-size
-  end if
+    end if
   else
     error(make(<stream-closed-error>, stream: the-stream,
                format-string: "Cant get the size of a closed stream"));
