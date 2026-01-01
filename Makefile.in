@@ -357,17 +357,14 @@ html:
 version = @VERSION@
 
 dist: 3-stage-bootstrap
+	@echo "Copying files to release directory..."
 	mkdir -p release/opendylan-$(version)/bin
 	mkdir -p release/opendylan-$(version)/databases
 	mkdir -p release/opendylan-$(version)/include/opendylan
 	mkdir -p release/opendylan-$(version)/lib
 	mkdir -p release/opendylan-$(version)/sources
 	mkdir -p release/opendylan-$(version)/share/opendylan
-	@echo Copying sources...
 	cp -R $(srcdir)/sources release/opendylan-$(version)/
-	@echo Removing unnecessary directories...
-	find release/opendylan-$(version)/sources -depth -name '.*' -exec rm -rf {} \;
-	rm -rf release/opendylan-$(version)/sources/bootstrap1-registry
 	cp -R Bootstrap.3/bin release/opendylan-$(version)/
 	cp -R Bootstrap.3/sbin/* release/opendylan-$(version)/bin
 	ln -sf deft-app release/opendylan-$(version)/bin/deft
@@ -383,10 +380,16 @@ dist: 3-stage-bootstrap
 	cp $(srcdir)/License.txt release/opendylan-$(version)/
 	cp $(srcdir)/README.md release/opendylan-$(version)/
 	cp $(srcdir)/BUILDING.rst release/opendylan-$(version)/
+
+	@echo "Cleaning up release directory..."
+	find release/opendylan-$(version)/sources -depth -name '.*' -exec rm -rf {} \;
+	rm -rf release/opendylan-$(version)/sources/bootstrap1-registry
+	rm -rf release/opendylan-$(version)/bin/*-test* # not testworks-run
+
+	@echo "Making tarball..."
 	cd release \
 	  && tar cjf opendylan-$(version)-$(TARGET_PLATFORM).tar.bz2 opendylan-$(version) \
 	  && ln -sf opendylan-$(version)-$(TARGET_PLATFORM).tar.bz2 opendylan.tar.bz2
-
 
 TEST_LIBS = \
 	libraries-test-suite \
