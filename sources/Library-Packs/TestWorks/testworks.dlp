@@ -1,27 +1,12 @@
 <library-pack name="Testworks" title="Testworks">
   <description>A simple Dylan unit testing framework</description>
-  <copyright>Copyright (c) 1995-2001 Functional Objects, Inc. All rights reserved.</copyright>
-  <company>Functional Developer</company>
-  <libraries>
-    <library name="testworks" title="Testworks">
-      <sources location="qa/testworks/">
-	<project platform="x86-win32">win32-testworks.lid</project>
-	<project>testworks.lid</project>
-      </sources>
-      <documentation location="Documentation/testworks/index.htm"/>
-      <release product="Functional Developer" version="2.1" platform="x86-win32">
-	<binary file="DxTSTWKS.dll"/>
-	<lib file="DxTSTWKS.lib"/>
-      </release>
-    </library>
-  </libraries>
   <test-suites>
     <library name="testworks-test-suite" title="Testworks test suite">
       <category>TestWorks</category>
-      <sources location="qa/testworks/tests">
-        <project>testworks-test-suite.lid</project>
-      </sources>
       <description>The Testworks test suite</description>
+      <sources location="lib/testworks/tests/">
+        <project platform="x86-win32">testworks-test-suite.lid</project>
+      </sources>
     </library>
   </test-suites>
 </library-pack>
