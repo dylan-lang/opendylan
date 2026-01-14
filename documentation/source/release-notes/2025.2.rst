@@ -56,6 +56,13 @@ Compiler
   thus increasing the number of threads that can be run. (No
   significant change in execution performance is expected.)
 
+IDE
+===
+
+* Paths for the example and test suite projects accessible from the
+  :menuselection:`Tools --> Open Example Project...` dialog have been
+  fixed.
+
 Tools
 =====
 
