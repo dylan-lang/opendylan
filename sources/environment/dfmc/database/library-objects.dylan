@@ -57,21 +57,7 @@ define method project-executable-pathname
      #key type, full-path?)
  => (name :: <file-locator>)
   let library-name :: <symbol> = project.project-library-name;
-  let merged-name :: <symbol> = merged-project-name(library-name);
-  let dll-project :: <project>
-    = if (merged-name = library-name)
-        project
-      else
-        let project-object = server.server-project;
-        let database = project-object.project-compiler-database;
-        //---*** How can we close the project opened through
-        //---*** lookup-named-project again without accidentally
-        //---*** closing it if the user already had it open?
-        if (database)
-          find-project-for-library-name(database, merged-name, error?: #f)
-        end
-          | lookup-named-project(merged-name)
-      end;
+  let dll-project :: <project> = project;
   let platform = dll-project.project-platform-name;
   let base = dll-project.project-executable-name;
   let filename

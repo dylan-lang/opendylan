@@ -88,11 +88,6 @@ define method library-description-minor-version
   ild.interactive-library-minor-version
 end method;
 
-define method library-description-library-pack
-    (ild :: <interactive-library-description>) => (vers :: <integer>)
-  ild.interactive-library-project-library.library-description-library-pack
-end method;
-
 define method library-description-build-location
     (ild :: <interactive-library-description>) => (build-location)
   ild.interactive-library-project-library.library-description-build-location;

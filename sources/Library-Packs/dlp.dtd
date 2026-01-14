@@ -1,22 +1,49 @@
 <!-- Document type for Dylan Library Pack specification files -->
 
-<!ELEMENT library-pack	(description?, author?, copyright?, company?,
+<!ELEMENT library-pack  (description?, (author | copyright | company)*,
                          libraries?, examples?, test-suites?)>
-<!ATTLIST library-pack	name	CDATA	#REQUIRED
-			title	CDATA	#REQUIRED
-			number	NMTOKEN	#IMPLIED>
+<!ATTLIST library-pack  name    CDATA   #REQUIRED
+                        title   CDATA   #REQUIRED
+                        number  NMTOKEN #IMPLIED>
 
-<!ELEMENT description	(#PCDATA)*>
-<!ELEMENT copyright	(#PCDATA)*>
-<!ELEMENT company	(#PCDATA)*>
+<!ELEMENT description   (#PCDATA)*>
+<!ELEMENT author        (#PCDATA)*>
+<!ELEMENT copyright     (#PCDATA)*>
+<!ELEMENT company       (#PCDATA)*>
 
-<!ELEMENT libraries	(library+)>
-<!ELEMENT examples	(library+)>
-<!ELEMENT test-suites	(library+)>
+<!ELEMENT libraries     (library*)>
+<!ELEMENT examples      (library*)>
+<!ELEMENT test-suites   (library*)>
 
-<!ELEMENT library	(category*, description?, sources?, release*)>
-<!ATTLIST library	name	CDATA	#REQUIRED
-			title	CDATA	#IMPLIED>
+<!ELEMENT library       (category*, (description | requires | sources | release | documentation)*)>
+<!ATTLIST library       name    CDATA   #REQUIRED
+                        title   CDATA   #IMPLIED>
 
-<!ELEMENT category	(#PCDATA)*>
+<!ELEMENT category      (#PCDATA)*>
 
+<!ELEMENT requires      (#PCDATA)*>
+
+<!ELEMENT sources       (project+)>
+<!ATTLIST sources       location CDATA  #REQUIRED>
+
+<!ELEMENT project       (#PCDATA)*>
+<!ATTLIST project       platform CDATA  #IMPLIED>
+
+<!ELEMENT release       (binary | lib | database)*>
+<!ATTLIST release       platform CDATA  #IMPLIED
+                        version  CDATA  #IMPLIED
+                        product  CDATA  #IMPLIED>
+
+<!ELEMENT binary        (merge*)>
+<!ATTLIST binary        file CDATA  #REQUIRED>
+
+<!ELEMENT merge         (#PCDATA)*>
+
+<!ELEMENT lib           EMPTY>
+<!ATTLIST lib           file CDATA  #REQUIRED>
+
+<!ELEMENT database      EMPTY>
+<!ATTLIST database      file CDATA  #REQUIRED>
+
+<!ELEMENT documentation EMPTY>
+<!ATTLIST documentation location CDATA  #REQUIRED>

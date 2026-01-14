@@ -86,8 +86,7 @@ define function compilation-context-compiler-settings
   list(platform-name: ld.dfmc-library-description-platform-name,
            back-end: ld.dfmc-library-description-compiler-back-end-name,
        mode: ld.dfmc-library-description-compilation-mode,
-       build-location: ld.dfmc-library-description-build-location,
-       library-pack: ld.dfmc-library-description-library-pack)
+       build-location: ld.dfmc-library-description-build-location)
 end function;
 
 define function compilation-context-compiler-settings-setter
@@ -95,8 +94,7 @@ define function compilation-context-compiler-settings-setter
   local method setter (ld, #key platform-name = unsupplied(),
                         back-end = unsupplied(),
                                 mode = unsupplied(),
-                                build-location = unsupplied(),
-                                library-pack = unsupplied())
+                                build-location = unsupplied())
           if (supplied?(platform-name))
             ld.dfmc-library-description-platform-name := platform-name
           end;
@@ -108,9 +106,6 @@ define function compilation-context-compiler-settings-setter
           end;
           if (supplied?(build-location))
             ld.dfmc-library-description-build-location := build-location
-          end;
-          if (supplied?(library-pack))
-            ld.dfmc-library-description-library-pack := library-pack
           end;
         end;
   apply(setter, ld, settings)

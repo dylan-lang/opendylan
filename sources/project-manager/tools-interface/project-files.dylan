@@ -34,8 +34,6 @@ define class <project-information> (<object>)
     init-keyword: major-version:;
   slot project-information-minor-version :: <integer> = 0,
     init-keyword: minor-version:;
-  slot project-information-library-pack :: <integer> = 0,
-    init-keyword: library-pack:;
   slot project-information-base-address :: false-or(<machine-word>) = #f,
     init-keyword: base-address:;
   slot project-information-remaining-keys :: false-or(<table>) = #f,
@@ -102,7 +100,6 @@ define function write-project-to-stream
   t[compilation-mode:] := as(<string>, p.project-information-compilation-mode);
   t[major-version:] := integer-to-string(p.project-information-major-version);
   t[minor-version:] := integer-to-string(p.project-information-minor-version);
-  t[library-pack:] := integer-to-string(p.project-information-library-pack);
   if (p.project-information-base-address)
     t[base-address:]
       := machine-word-to-string(p.project-information-base-address, prefix: "0x");
@@ -233,16 +230,6 @@ define function read-project-from-stream
       p.project-information-minor-version := i;
     else
       err("minor-version \"%s\" is not a number", list(minor-version), line: line);
-    end if;
-  end if;
-
-  let (library-pack, line) = single-key((library-pack:).key, library-pack:);
-  if (library-pack)
-    let i = string-to-integer(library-pack, default: #f);
-    if (i)
-      p.project-information-library-pack := i;
-    else
-      err("library-pack \"%s\" is not a number", list(library-pack), line: line);
     end if;
   end if;
 
