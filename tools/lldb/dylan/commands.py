@@ -30,7 +30,7 @@ def dylan_bt(debugger, command, result, internal_dict):
     return
 
   thread = process.GetSelectedThread()
-    
+
   for frame_idx, frame in enumerate(thread):
     function = frame.GetFunction()
     language = function.GetLanguage()
