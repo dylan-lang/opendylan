@@ -1,6 +1,6 @@
 Module:       llvm-internals
 Author:       Peter S. Housel
-Copyright:    Original Code is Copyright 2009-2018 Gwydion Dylan Maintainers
+Copyright:    Original Code is Copyright 2009-2026 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
@@ -287,6 +287,17 @@ define function llvm-make-dbg-lexical-block
        file: dbg-file,
        line: line-number,
        column: column-number)
+end function;
+
+define function llvm-make-dbg-lexical-block-file
+    (scope :: <llvm-metadata>,
+     dbg-file :: <llvm-metadata>,
+     discriminator :: <integer>)
+ => (dbg-lexical-block :: <llvm-metadata>);
+  make(<llvm-DILexicalBlockFile-metadata>,
+       scope: scope,
+       file: dbg-file,
+       discriminator: discriminator)
 end function;
 
 define function llvm-make-dbg-local-variable

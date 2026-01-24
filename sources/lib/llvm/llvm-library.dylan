@@ -1,6 +1,6 @@
 Module:       Dylan-User
 Author:       Peter S. Housel
-Copyright:    Original Code is Copyright 2009-2018 Gwydion Dylan Maintainers
+Copyright:    Original Code is Copyright 2009-2026 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
@@ -547,6 +547,7 @@ define module llvm-debug
     llvm-make-dbg-function-type,
     llvm-make-dbg-function,
     llvm-make-dbg-lexical-block,
+    llvm-make-dbg-lexical-block-file,
     llvm-make-dbg-local-variable,
     llvm-make-dbg-basic-type,
     llvm-make-dbg-derived-type,
