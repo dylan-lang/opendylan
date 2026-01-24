@@ -4,14 +4,20 @@
     "contact": "dylan-lang@googlegroups.com",
     "description": "The Open Dylan compiler, IDE, and core libraries",
     "dependencies": [
+        "channels@0.1",
         "collection-extensions@0.1",
-        "command-line-parser@3.2",
-        "deft@0.12",
-        "json@1.1",
-        "meta@0.1",
+        "columnist@0.3",
+        "command-line-parser@3.2.2",
+        "deft@0.13",
+        "hash-algorithms@1.1",
+        "json@1.1.2",
+        "logging@2.2.1",
+        "lsp-dylan@0.2",
+        "meta@0.2",
         "regular-expressions@0.2",
-        "strings@1.2",
-        "xml-parser@0.2"
+        "strings@2.0.1",
+        "uncommon-dylan@1.0",
+        "xml-parser@0.2.1"
     ],
     "dev-dependencies": [
         "dylan-reference-manual",

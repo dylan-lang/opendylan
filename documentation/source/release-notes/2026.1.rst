@@ -1,16 +1,11 @@
-*******************************
-Open Dylan 2025.2 (coming soon)
-*******************************
+*****************
+Open Dylan 2026.1
+*****************
 
-This document describes the 2025.2 release of Open Dylan, released DD
-MMM, 2025.  The highlights of the release are listed below.  For complete
-details see the `commit logs
-<https://github.com/dylan-lang/opendylan/compare/v2024.1.0...v2025.1.0>`_ for
-this release.
-
-.. note:: Some commit logs, for example for testworks and other libraries that
-          are included in Open Dylan as git submodules, may be in other
-          repositories.
+This document describes the 2026.1 release of Open Dylan, released 29 Jan, 2026.  The
+highlights of the release are listed below.  For complete details see the `commit logs
+<https://github.com/dylan-lang/opendylan/compare/v2025.1.0...v2026.1.0>`_ for this
+release.
 
 * Download the release: https://opendylan.org/download
 * Read documentation: https://opendylan.org
@@ -63,18 +58,19 @@ IDE
   :menuselection:`Tools --> Open Example Project...` dialog have been
   fixed.
 
-Tools
-=====
+Bundled Library Updates
+=======================
 
-Library Updates
-===============
+Changes to libraries that are part of the `opendylan repository
+<https://github.com/dylan-lang/opendylan>`_.
 
 Dylan
 -----
 
-* A number of ``copy-down-method`` definitions in the :lib:`dylan`
-  library that were previously marked as ambiguous have been
-  corrected.
+* A number of ``copy-down-method`` definitions in the :lib:`dylan` library that were
+  previously marked as ambiguous have been corrected.  This removes the vast majority of
+  the warnings that were generated during the initial build of a project due to
+  recompiling the ``dylan`` library.
 
 Common-Dylan
 ------------
@@ -91,6 +87,26 @@ io
   ``<byte-char-file-stream>`` and ``<byte-file-stream>`` are provided,
   significantly improving the performance of these stream operations.
 
+Submoduled Library Updates
+==========================
+
+The following changes were made to Open Dylan dependencies that are included as Git
+submodules.
+
+* The logging library: `b0b469a -> v2.2.1
+  <https://github.com/dylan-lang/logging/compare/b0b469abc291a07312dbb8a4b1e57f55c31b8cba...v2.2.1>`_
+* The strings library: `v2.0.0 -> v2.0.1
+  <https://github.com/dylan-lang/strings/compare/v2.0.0...v2.0.1>`_
+* The testworks library: `v3.3.0 -> v3.4.0
+  <https://github.com/dylan-lang/testworks/compare/v3.3.0...v3.4.0>`_
 
 Contributors
 ============
+
+We'd like to thank all the people that made contributions to this release and
+to surrounding libraries in the Dylan ecosystem....
+
+* Peter S. Housel
+* Jan Sucan
+* Fernando Raya
+* Carl Gay
