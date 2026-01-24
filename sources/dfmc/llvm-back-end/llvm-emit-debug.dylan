@@ -1,6 +1,6 @@
 Module: dfmc-llvm-back-end
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
-              Additional code is Copyright 2009-2011 Gwydion Dylan Maintainers
+              Additional code is Copyright 2009-2026 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
@@ -174,7 +174,8 @@ define method emit-lambda-dbg-function
   end unless;
 
   // Assign debug scopes to each computation
-  assign-computations-dbg-scope(back-end, dbg-function, o.body, #f);
+  assign-computations-dbg-scope(back-end, dbg-function, dbg-file,
+                                o.body, #f);
 end method;
 
 define method llvm-signature-dbg-types
@@ -392,25 +393,41 @@ define thread variable *computation-dbg-scope-table* :: false-or(<object-table>)
 
 define method assign-computations-dbg-scope
     (back-end :: <llvm-back-end>, scope :: <llvm-metadata>,
+     scope-dbg-file :: <llvm-metadata>,
      c :: <computation>, last)
  => ()
   iterate loop (c :: false-or(<computation>) = c,
-                scope :: <llvm-metadata> = scope)
+                scope :: <llvm-metadata> = scope,
+                scope-dbg-file :: <llvm-metadata> = scope-dbg-file)
     if (c & c ~== last)
       let loc = dfm-source-location(c);
       let temp = c.temporary;
-      if (loc & temp & temp.named?)
+      if (loc)
         let (dbg-file :: <llvm-metadata>,
              dbg-line :: <integer>,
              dbg-column :: <integer>)
           = source-location-dbg-loc(back-end, loc);
-        let inner-scope
-          = llvm-make-dbg-lexical-block(scope, dbg-file, dbg-line, dbg-column);
-        assign-computation-dbg-scope(back-end, inner-scope, c);
-        loop(c.next-computation, inner-scope);
+        if (temp & temp.named?)
+          let inner-scope
+            = llvm-make-dbg-lexical-block(scope, dbg-file,
+                                          dbg-line, dbg-column);
+          assign-computation-dbg-scope(back-end, inner-scope, dbg-file,
+                                       c);
+          loop(c.next-computation, inner-scope, dbg-file);
+        elseif (dbg-file ~== scope-dbg-file)
+          let inner-scope
+            = llvm-make-dbg-lexical-block-file(scope, dbg-file, 0);
+          assign-computation-dbg-scope(back-end, inner-scope, dbg-file,
+                                       c);
+          loop(c.next-computation, inner-scope, dbg-file);
+        else
+          assign-computation-dbg-scope(back-end, scope, scope-dbg-file,
+                                       c);
+          loop(c.next-computation, scope, scope-dbg-file);
+        end if;
       else
-        assign-computation-dbg-scope(back-end, scope, c);
-        loop(c.next-computation, scope);
+        assign-computation-dbg-scope(back-end, scope, scope-dbg-file, c);
+        loop(c.next-computation, scope, scope-dbg-file);
       end if;
     end if;
   end iterate;
@@ -418,6 +435,7 @@ end method;
 
 define method assign-computation-dbg-scope
     (back-end :: <llvm-back-end>, scope :: <llvm-metadata>,
+     scope-dbg-file :: <llvm-metadata>,
      c :: <computation>)
  => ()
   *computation-dbg-scope-table*[c] := scope;
@@ -425,38 +443,44 @@ end method;
 
 define method assign-computation-dbg-scope
     (back-end :: <llvm-back-end>, scope :: <llvm-metadata>,
+     scope-dbg-file :: <llvm-metadata>,
      c :: <if>)
  => ()
   next-method();
   let merge :: <if-merge> = next-computation(c);
-  assign-computations-dbg-scope(back-end, scope, c.consequent, merge);
-  assign-computations-dbg-scope(back-end, scope, c.alternative, merge);
+  assign-computations-dbg-scope(back-end, scope, scope-dbg-file,
+                                c.consequent, merge);
+  assign-computations-dbg-scope(back-end, scope, scope-dbg-file,
+                                c.alternative, merge);
 end method;
 
 define method assign-computation-dbg-scope
     (back-end :: <llvm-back-end>, scope :: <llvm-metadata>,
+     scope-dbg-file :: <llvm-metadata>,
      c :: <loop>)
  => ()
   next-method();
-  assign-computations-dbg-scope(back-end, scope,
+  assign-computations-dbg-scope(back-end, scope, scope-dbg-file,
                                 c.loop-body, c.next-computation);
 end method;
 
 define method assign-computation-dbg-scope
     (back-end :: <llvm-back-end>, scope :: <llvm-metadata>,
+     scope-dbg-file :: <llvm-metadata>,
      c :: <block>)
  => ()
   next-method();
-  assign-computations-dbg-scope(back-end, scope,
+  assign-computations-dbg-scope(back-end, scope, scope-dbg-file,
                                 c.body, c.next-computation);
 end method;
 
 define method assign-computation-dbg-scope
     (back-end :: <llvm-back-end>, scope :: <llvm-metadata>,
+     scope-dbg-file :: <llvm-metadata>,
      c :: <unwind-protect>)
  => ()
   next-method();
-  assign-computations-dbg-scope(back-end, scope,
+  assign-computations-dbg-scope(back-end, scope, scope-dbg-file,
                                 c.cleanups, c.next-computation);
 end method;
 
