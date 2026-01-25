@@ -5,12 +5,17 @@ set -e
 # automake cmake ninja-build libtool.  On at least one system (aarch64 Debian) libtinfo5
 # was also needed.
 
-LLVM_RELEASE=20.1.7
+# https://releases.llvm.org/
+LLVM_RELEASE=21.1.8
 LLVM_REL=$(echo $LLVM_RELEASE | sed s/-rc/rc/)
 
 LLVM_CLANG=$(echo $LLVM_RELEASE | sed 's/\([0-9]*\).*/\1/')
 
-BDWGC_RELEASE=8.2.8
+# https://github.com/bdwgc/bdwgc
+# Note: For 8.2.8 and earlier the URL was https://github.com/ivmai/bdwgc. There does
+# appear to be a forwarding pointer but not all the earlier releases (ex: 8.2.8) are
+# there.
+BDWGC_RELEASE=8.2.10
 
 srcdir=`dirname $0`
 test -z "$srcdir" && srcdir=.
@@ -94,7 +99,7 @@ fi
 
 if [ ! -d ${BDWGC_DIST} ]; then
     echo Cloning BDW GC tag ${BDWGC_RELEASE}
-    git clone --depth 1 --branch v${BDWGC_RELEASE} https://github.com/ivmai/bdwgc.git ${BDWGC_DIST}
+    git clone --depth 1 --branch v${BDWGC_RELEASE} https://github.com/bdwgc/bdwgc.git ${BDWGC_DIST}
 fi
 
 RT_OPTS=
