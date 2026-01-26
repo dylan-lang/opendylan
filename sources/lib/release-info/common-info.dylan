@@ -21,11 +21,11 @@ define constant $help-filename                = "opendylan.chm";
 /// Release constants
 define constant $release-product-name       = "Open Dylan";
 define constant $release-product-identifier = "opendylan";
-define constant $release-version            = "2025.2pre";
+define constant $release-version            = "2026.1";
 
 define constant $release-copyright
   = "Copyright (c) 1997-2004, Functional Objects, Inc.\n"
-    "Portions Copyright (c) 2004-2023, Dylan Hackers\n"
+    "Portions Copyright (c) 2004-2026, Dylan Hackers\n"
     "Portions Copyright (c) 2001-2013, Ravenbrook Ltd.";
 
 

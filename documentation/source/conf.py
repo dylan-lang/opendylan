@@ -8,9 +8,9 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'Open Dylan'
-copyright = '2011-2024, Dylan Hackers'
+copyright = '2011-2026, Dylan Hackers'
 author = 'Dylan Hackers'
-release = '2025.1.0'
+release = '2026.1.0'
 
 
 # -- General configuration ---------------------------------------------------
