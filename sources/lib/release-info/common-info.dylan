@@ -38,12 +38,8 @@ define method release-product-identifier () => (name :: <string>)
   $release-product-identifier
 end method release-product-identifier;
 
-define method release-short-version () => (version :: <string>)
-  $release-version
-end method release-short-version;
-
 define method release-version () => (version :: <string>)
-  concatenate("Version ", $release-version)
+  $release-version
 end method release-version;
 
 define method release-copyright () => (copyright :: <string>)
@@ -61,7 +57,7 @@ end function release-full-name;
 
 define function release-full-copyright
     () => (full-copyright :: <string>)
-  format-to-string("%s\n%s\n%s\n\n%s",
+  format-to-string("%s\n%s\nVersion %s\n\n%s",
                    release-product-name(),
                    release-copyright(),
                    release-version(),

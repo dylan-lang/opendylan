@@ -179,7 +179,7 @@ define method do-execute-command
             $success-exit-code
           end method run;
     if (command.%help?)
-      message(context, "%s %s\n", release-product-name(), release-short-version());
+      message(context, "%s %s\n", release-product-name(), release-version());
       run(<help-command>)
     elseif (command.%version?)
       run(<version-command>)
@@ -189,7 +189,7 @@ define method do-execute-command
       if (command.%logo?)
         message(context, dylan-banner());
       else
-        message(context, "%s %s\n", release-product-name(), release-short-version());
+        message(context, "%s %s\n", release-product-name(), release-version());
       end;
       let personal-root = command.%personal-root;
       let system-root   = command.%system-root;

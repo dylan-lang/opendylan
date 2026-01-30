@@ -34,12 +34,12 @@ end command-line version;
 define sealed method do-execute-command
     (context :: <server-context>, command :: <version-command>)
  => ()
-  let ver = if (command.%short)
-              release-short-version()
-            else
-              release-version()
-            end;
-  message(context, ver)
+  let ver = release-version();
+  message(context, if (command.%short)
+                     ver
+                   else
+                     concatenate(release-product-name(), " ", ver)
+                   end)
 end method do-execute-command;
 
 

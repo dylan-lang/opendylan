@@ -29,7 +29,7 @@ end function main;
 define function dylan-banner
     () => (banner :: <string>)
   format-to-string
-    ("Welcome to %s, %s.\n"
+    ("Welcome to %s version %s.\n"
        "\n"
        "For documentation on %s, see %s.\n"
        "See %s/getting-started-cli/ for an introduction to the command line tools.\n"

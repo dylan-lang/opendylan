@@ -50,7 +50,7 @@ end function license-agreement-text;
 
 define function about-box-info-text
     () => (text :: <sequence>)
-  vector(release-version())
+  vector(concatenate("Version", release-version()))
 end function about-box-info-text;
 
 define frame <about-box> (<dialog-frame>)
@@ -94,7 +94,7 @@ define frame <about-box> (<dialog-frame>)
     end;
   keyword title: = format-to-string("About %s %s",
                                     release-product-name(),
-                                    release-short-version());
+                                    release-version());
   keyword exit-buttons?: = #f;
   keyword center?: = #t;
   //--- This would be a good idea if DUIM didn't screw it up!
