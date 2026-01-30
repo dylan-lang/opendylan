@@ -43,7 +43,7 @@ command for more.
 
     $ export PATH=/opt/opendylan/bin:$PATH
     $ cd dime-test         # Created by deft new application, above.
-    $ emacs dime-test-app.dylan
+    $ emacs src/app/main.dylan
     M-x dime <Enter>
 
 You should now have a buffer called ``*dime-repl nil*`` that looks
@@ -56,31 +56,28 @@ This is the Open Dylan compiler interactive shell.  You can issue
 commands directly here if you like, but mostly you'll issue dime
 commands from your Dylan source buffers.
 
-**Change projects:** Switch back to the :file:`dime-test.dylan` buffer and type
+**Change projects:** Switch back to the :file:`main.dylan` buffer and type
 ``C-c M-p dime-test-app`` to tell DIME to switch to the dime-test-app project.
 If DIME doesn't let you enter "dime-test-app" as the project name that means it
 couldn't find the registry entry.  Make sure ``OPEN_DYLAN_USER_REGISTRIES``
 (see above) is set correctly.
 
-.. hint:: Press <Tab> to see a complete list of available projects and in the
-          ``*dime-repl nil*`` buffer run the "show registries" command to see
-          the active registries the order they're searched.
+.. hint:: When entering the project name press tab to see a complete list of available
+          projects and in the ``*dime-repl nil*`` buffer run the "show registries"
+          command to see the active registries in the order they're searched.
 
-**Compile:** To build the project, type ``C-c C-k``.  You should see something
-like "Compilation finished: 15 notes".  (The reason there are so many notes is
-because there are some non-serious warnings in the dylan library itself.  This
-is a bug that should be fixed eventually.)
+**Compile:** To build the project, type ``C-c C-k`` in the :file:`main.dylan` buffer.
+You should see "Compilation finished: 1 note" (or similar) in the emacs message line.
 
-**Edit definition:** There's not much code in :file:`dime-test-app.dylan`
-except for a ``main`` function.  Move the cursor onto the call to "format-out"
-and type ``M-.``.  It should jump to the format-out definition in the
-``io-internals`` module.
+**Edit definition:** There's not much code in :file:`main.dylan` except for a ``main``
+function.  Move the cursor onto the call to "format-out" and type ``M-.``.  It should
+jump to the ``format-out`` definition in the ``io-internals`` module.
 
-**Compiler warnings:** Switch back to the :file:`dime-test-app.dylan` buffer
-and make a change that causes a compiler warning, such as removing the
-semicolon at the end of the ``format-out`` line.  Recompile with ``C-c C-k``
-and you should see something like "Compilation finished: 3 warnings, 15 notes".
-You can jump to the first warning using the standard for emacs: ``C-x ```.
+**Compiler warnings:** Switch back to the :file:`main.dylan` buffer using ``M-,`` and
+make a change that causes a compiler warning, such as changing ``format-out`` to
+``xformat-out``.  Recompile with ``C-c C-k`` and you should see something like
+"Compilation finished: 1 warning, 1 note".  You can jump to the first warning using the
+standard for emacs: ``C-x ```.
 
 **Argument lists:** Note that when you type an open parenthesis, or
 comma, or space after a function name dime will display the **argument
