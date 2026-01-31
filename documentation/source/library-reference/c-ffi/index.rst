@@ -2624,7 +2624,7 @@ Describing structure types
 
      Example C declaration:
 
-     .. code-block:: dylan
+     .. code-block:: c
 
        struct Point {
          unsigned short x;
@@ -2654,7 +2654,9 @@ Describing structure types
          c-name: "PointArray";
        end C-function;
 
-     Example transactions::
+     Example transactions:
+
+     .. code-block:: dylan-repl
 
        ? define variable p = one-point();
        // Defined p.
