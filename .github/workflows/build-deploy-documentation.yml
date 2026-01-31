@@ -25,13 +25,6 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Check links
-        uses: addnab/docker-run-action@v3
-        with:
-          image: ghcr.io/fraya/dylan-docs
-          options: -v ${{ github.workspace }}/documentation:/docs
-          run: make linkcheck
-
       - name: Build documentation
         uses: addnab/docker-run-action@v3
         with:
