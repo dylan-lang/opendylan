@@ -107,8 +107,17 @@ end method print-object;
 
 define compiler-sideways method print-object
     (condition :: <simple-error>, stream :: <stream>) => ()
-  let body = apply(format-to-ppml, condition.condition-format-string,
-                                   condition.condition-format-arguments);
+  let format-string = condition.condition-format-string;
+  let format-arguments = condition.condition-format-arguments;
+  if (format-string.empty?)
+    // Because format-string: and format-arguments: are not required init keywords for
+    // <simple-condition> they may take on the default values. Some subclasses (notably
+    // subclasses of <file-system-error>) leave them empty and use their own
+    // condition-to-string method, so we fall back to that here.
+    format-string := "%s";
+    format-arguments := vector(condition-to-string(condition));
+  end;
+  let body = apply(format-to-ppml, format-string, format-arguments);
   let ppml-condition = ppml-block(vector(ppml-string("Error: "),
                                          ppml-break(offset: 2, space: 0),
                                          body),
