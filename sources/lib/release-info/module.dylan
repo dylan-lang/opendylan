@@ -24,7 +24,6 @@ define module release-info
          release-product-name,
          release-product-identifier,
          release-version,
-         release-short-version,
          release-copyright,
          release-web-address,
          release-full-name,
