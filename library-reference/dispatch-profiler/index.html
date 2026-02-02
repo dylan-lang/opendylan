@@ -1,15 +1,15 @@
 <!doctype html>
-<html class="no-js" lang="en" data-content_root="">
+<html class="no-js" lang="en" data-content_root="../../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="The DOOD library" href="../dood/index.html" /><link rel="prev" title="The transcendentals Module" href="../common-dylan/transcendentals.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.08.06 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>The DISPATCH-PROFILER library - Open Dylan</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
-    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=302659d7" />
     
@@ -243,6 +243,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/topics/porting.html">Porting to a New Target Platform</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/topics/ppml.html">The PPML library</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/topics/making-a-release.html">Release Check-list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/topics/opendylan.org.html">Maintaining opendylan.org</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../hacker-guide/glossary.html">Glossary</a></li>
@@ -304,6 +305,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../documentation/cheatsheets/collections.html">Collections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../documentation/cheatsheets/iteration.html">Iteration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../documentation/cheatsheets/scheme.html">For Schemers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/cheatsheets/python.html">For Pythonistas</a></li>
 </ul>
 </li>
 </ul>
@@ -311,7 +313,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/drm/">Dylan Reference Manual</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://package.opendylan.org/">Package Docs</a></li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">Open Dylan Libraries</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Open Dylan Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">Bundled Libraries</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Bundled Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2 has-children"><a class="reference internal" href="../language-extensions/index.html">Dylan Language Extensions</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle navigation of Dylan Language Extensions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../language-extensions/language-differences.html">Language Differences</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../language-extensions/define-function.html">Function Definition</a></li>
@@ -381,18 +383,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../documentation/index.html">All Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of All Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../documentation/index.html">Other Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of Other Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../news/index.html">News</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../documentation/cheatsheets/index.html">Cheat Sheets</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of Cheat Sheets</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/syntax.html">Syntax</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/conditionals.html">Conditionals</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/collections.html">Collections</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/iteration.html">Iteration</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/scheme.html">For Schemers</a></li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="../../documentation/publications.html">Publications</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../intro-dylan/index.html">Intro to Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of Intro to Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../intro-dylan/index.html">Intro to Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of Intro to Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/why-dylan.html">Why Dylan?</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/expressions-variables.html">Expressions &amp; Variables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/methods-generic-functions.html">Methods &amp; Generic Functions</a></li>
@@ -403,7 +397,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../corba-guide/index.html">CORBA Guide</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of CORBA Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../corba-guide/index.html">CORBA Guide</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of CORBA Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../corba-guide/preface.html">Preface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../corba-guide/intro.html">About Open Dylan CORBA</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../corba-guide/getstart.html">Quick Start Tutorial</a></li>
@@ -417,7 +411,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../corba-guide/idl-app.html">An IDL Binding for Dylan</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../building-with-duim/index.html">DUIM Guide</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of DUIM Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../building-with-duim/index.html">DUIM Guide</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of DUIM Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/preface.html">Preface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/intro.html">Introduction</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/design.html">Designing A Simple DUIM Application</a></li>
@@ -430,7 +424,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../duim-reference/index.html">DUIM Reference</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of DUIM Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../duim-reference/index.html">DUIM Reference</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of DUIM Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../duim-reference/conventions.html">Conventions in this Manual</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../duim-reference/geom.html">DUIM-Geometry Library</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../duim-reference/ext-geom.html">DUIM-Extended-Geometry Library</a></li>
@@ -443,7 +437,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../duim-reference/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../getting-started-ide/index.html">Getting Started / IDE</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Getting Started / IDE</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../getting-started-ide/index.html">Getting Started / IDE</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of Getting Started / IDE</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/preface.html">Preface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/quick-start.html">Quick Start</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/expanding.html">Fixing Bugs</a></li>
@@ -459,7 +453,9 @@
 <li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../release-notes/index.html">Release Notes</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../release-notes/index.html">Release Notes</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2026.1.html">Open Dylan 2026.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2025.1.html">Open Dylan 2025.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../release-notes/2024.1.html">Open Dylan 2024.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../release-notes/2023.1.html">Open Dylan 2023.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../release-notes/2022.1.html">Open Dylan 2022.1</a></li>
@@ -473,8 +469,8 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../style-guide/index.html">Style Guide</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../history/index.html">Dylan History</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" role="switch" type="checkbox"/><label for="toctree-checkbox-26"><div class="visually-hidden">Toggle navigation of Dylan History</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../../history/apple-dylan/index.html">Apple Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" role="switch" type="checkbox"/><label for="toctree-checkbox-27"><div class="visually-hidden">Toggle navigation of Apple Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../history/index.html">Dylan History</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle navigation of Dylan History</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../history/apple-dylan/index.html">Apple Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" role="switch" type="checkbox"/><label for="toctree-checkbox-26"><div class="visually-hidden">Toggle navigation of Apple Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../history/apple-dylan/apple-cambridge.html">Apple Cambridge</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../history/apple-dylan/eulogy.html">Apple Dylan Eulogy</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../history/apple-dylan/technology-release.html">Apple Dylan Technology Release</a></li>
@@ -535,7 +531,7 @@
         </div>
         <article role="main" id="furo-main-content">
           <section id="the-dispatch-profiler-library">
-<h1>The DISPATCH-PROFILER library<a class="headerlink" href="#the-dispatch-profiler-library" title="Permalink to this heading">¶</a></h1>
+<h1>The DISPATCH-PROFILER library<a class="headerlink" href="#the-dispatch-profiler-library" title="Link to this heading">¶</a></h1>
 <p>The dispatch profiler library exposes the multimethod dispatch
 profiling capability built in to the Open Dylan run-time library,
 making it possible to identify costly function calls in code. While
@@ -548,7 +544,7 @@ as a polished tool. We hope that in the future this functionality can
 be incorporated into the debugger, making direct use of this library
 unnecessary.</p>
 <section id="preparing-for-profiling">
-<h2>Preparing for Profiling<a class="headerlink" href="#preparing-for-profiling" title="Permalink to this heading">¶</a></h2>
+<h2>Preparing for Profiling<a class="headerlink" href="#preparing-for-profiling" title="Link to this heading">¶</a></h2>
 <p>Before dispatch profiling can be enabled during program execution, you
 will need to request that the compiler generate generic function call
 data structures (with slightly higher overhead) that are capable of
@@ -560,7 +556,7 @@ non-empty string when invoking the compiler:</p>
 </div>
 </section>
 <section id="report-output-format">
-<h2>Report Output Format<a class="headerlink" href="#report-output-format" title="Permalink to this heading">¶</a></h2>
+<h2>Report Output Format<a class="headerlink" href="#report-output-format" title="Link to this heading">¶</a></h2>
 <p>After a profiling run, upon collection of dispatch statistics a
 profiling report can be written out. The report, sorted by <code class="docutils literal notranslate"><span class="pre">COST</span></code>
 field, lists generic functions and call sites for which any method
@@ -623,10 +619,10 @@ discrimination tests.</p>
 </dl>
 </section>
 <section id="the-dispatch-profiler-module">
-<h2>The DISPATCH-PROFILER module<a class="headerlink" href="#the-dispatch-profiler-module" title="Permalink to this heading">¶</a></h2>
+<h2>The DISPATCH-PROFILER module<a class="headerlink" href="#the-dispatch-profiler-module" title="Link to this heading">¶</a></h2>
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="dispatch-profiler:dispatch-profiler:with-dispatch-profiling-report">
-<span class="sig-name descname"><span class="pre">with-dispatch-profiling-report</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#dispatch-profiler:dispatch-profiler:with-dispatch-profiling-report" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">with-dispatch-profiling-report</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#dispatch-profiler:dispatch-profiler:with-dispatch-profiling-report" title="Link to this definition">¶</a></dt>
 <dd><p>Performs dispatch profiling over a body of code and prints out a
 profiling report.</p>
 <dl class="field-list">
@@ -667,7 +663,7 @@ a report using <a class="reference internal" href="#dispatch-profiler:dispatch-p
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dispatch-profiler:dispatch-profiler:decache-all-generics">
-<span class="sig-name descname"><span class="pre">decache-all-generics</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dispatch-profiler:dispatch-profiler:decache-all-generics" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">decache-all-generics</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dispatch-profiler:dispatch-profiler:decache-all-generics" title="Link to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Restores dispatch caches of generic functions in the given
 library and dependent libraries to their initial states.</p>
@@ -686,7 +682,7 @@ library and dependent libraries to their initial states.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dispatch-profiler:dispatch-profiler:clear-dispatch-profiling">
-<span class="sig-name descname"><span class="pre">clear-dispatch-profiling</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dispatch-profiler:dispatch-profiler:clear-dispatch-profiling" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">clear-dispatch-profiling</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dispatch-profiler:dispatch-profiler:clear-dispatch-profiling" title="Link to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Resets call site profile counts and discriminator hit counts.</p>
 </div></blockquote>
@@ -709,7 +705,7 @@ given library and dependent libraries.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dispatch-profiler:dispatch-profiler:make-dispatch-statistics">
-<span class="sig-name descname"><span class="pre">make-dispatch-statistics</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dispatch-profiler:dispatch-profiler:make-dispatch-statistics" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">make-dispatch-statistics</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dispatch-profiler:dispatch-profiler:make-dispatch-statistics" title="Link to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Instantiates a new object for collecting dispatch statistics in
 preparation for report output.</p>
@@ -733,7 +729,7 @@ preparation for report output.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dispatch-profiler:dispatch-profiler:clear-dispatch-statistics!">
-<span class="sig-name descname"><span class="pre">clear-dispatch-statistics!</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dispatch-profiler:dispatch-profiler:clear-dispatch-statistics!" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">clear-dispatch-statistics!</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dispatch-profiler:dispatch-profiler:clear-dispatch-statistics!" title="Link to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Resets a <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;application-profile-results&gt;</span></code> to its initial state.</p>
 </div></blockquote>
@@ -751,7 +747,7 @@ preparation for report output.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dispatch-profiler:dispatch-profiler:collect-dispatch-statistics">
-<span class="sig-name descname"><span class="pre">collect-dispatch-statistics</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dispatch-profiler:dispatch-profiler:collect-dispatch-statistics" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">collect-dispatch-statistics</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dispatch-profiler:dispatch-profiler:collect-dispatch-statistics" title="Link to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Traverses generic function call sites in the given library and
 collects dispatch statistics into the given profile results
@@ -772,7 +768,7 @@ object.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dispatch-profiler:dispatch-profiler:print-dispatch-statistics">
-<span class="sig-name descname"><span class="pre">print-dispatch-statistics</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dispatch-profiler:dispatch-profiler:print-dispatch-statistics" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">print-dispatch-statistics</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dispatch-profiler:dispatch-profiler:print-dispatch-statistics" title="Link to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Prints out a summary of dispatch profiling results.</p>
 </div></blockquote>
@@ -812,7 +808,7 @@ invoked.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dispatch-profiler:dispatch-profiler:enable-generic-caches-only">
-<span class="sig-name descname"><span class="pre">enable-generic-caches-only</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dispatch-profiler:dispatch-profiler:enable-generic-caches-only" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">enable-generic-caches-only</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dispatch-profiler:dispatch-profiler:enable-generic-caches-only" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p><p>enable-generic-caches-only (library) =&gt; ()</p>
@@ -835,7 +831,7 @@ dispatch mechanisms.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="dispatch-profiler:dispatch-profiler:enable-call-site-caches-only">
-<span class="sig-name descname"><span class="pre">enable-call-site-caches-only</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dispatch-profiler:dispatch-profiler:enable-call-site-caches-only" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">enable-call-site-caches-only</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#dispatch-profiler:dispatch-profiler:enable-call-site-caches-only" title="Link to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Configures the dispatch mechanisms in the Open Dylan run-time to
 use call-site specific method dispatch caches.</p>
@@ -884,7 +880,7 @@ use call-site specific method dispatch caches.</p>
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2011-2024, Dylan Hackers
+                Copyright &#169; 2011-2026, Dylan Hackers
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -913,7 +909,18 @@ use call-site specific method dispatch caches.</p>
 <li><a class="reference internal" href="#">The DISPATCH-PROFILER library</a><ul>
 <li><a class="reference internal" href="#preparing-for-profiling">Preparing for Profiling</a></li>
 <li><a class="reference internal" href="#report-output-format">Report Output Format</a></li>
-<li><a class="reference internal" href="#the-dispatch-profiler-module">The DISPATCH-PROFILER module</a></li>
+<li><a class="reference internal" href="#the-dispatch-profiler-module">The DISPATCH-PROFILER module</a><ul>
+<li><a class="reference internal" href="#dispatch-profiler:dispatch-profiler:with-dispatch-profiling-report"><code class="docutils literal notranslate"><span class="pre">with-dispatch-profiling-report</span></code></a></li>
+<li><a class="reference internal" href="#dispatch-profiler:dispatch-profiler:decache-all-generics"><code class="docutils literal notranslate"><span class="pre">decache-all-generics</span></code></a></li>
+<li><a class="reference internal" href="#dispatch-profiler:dispatch-profiler:clear-dispatch-profiling"><code class="docutils literal notranslate"><span class="pre">clear-dispatch-profiling</span></code></a></li>
+<li><a class="reference internal" href="#dispatch-profiler:dispatch-profiler:make-dispatch-statistics"><code class="docutils literal notranslate"><span class="pre">make-dispatch-statistics</span></code></a></li>
+<li><a class="reference internal" href="#dispatch-profiler:dispatch-profiler:clear-dispatch-statistics!"><code class="docutils literal notranslate"><span class="pre">clear-dispatch-statistics!</span></code></a></li>
+<li><a class="reference internal" href="#dispatch-profiler:dispatch-profiler:collect-dispatch-statistics"><code class="docutils literal notranslate"><span class="pre">collect-dispatch-statistics</span></code></a></li>
+<li><a class="reference internal" href="#dispatch-profiler:dispatch-profiler:print-dispatch-statistics"><code class="docutils literal notranslate"><span class="pre">print-dispatch-statistics</span></code></a></li>
+<li><a class="reference internal" href="#dispatch-profiler:dispatch-profiler:enable-generic-caches-only"><code class="docutils literal notranslate"><span class="pre">enable-generic-caches-only</span></code></a></li>
+<li><a class="reference internal" href="#dispatch-profiler:dispatch-profiler:enable-call-site-caches-only"><code class="docutils literal notranslate"><span class="pre">enable-call-site-caches-only</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -925,9 +932,9 @@ use call-site specific method dispatch caches.</p>
       
     </aside>
   </div>
-</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=7cccf125"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
-    <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+</div><script src="../../_static/documentation_options.js?v=b916904f"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=35a8b989"></script>

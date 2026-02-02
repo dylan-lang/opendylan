@@ -2,8 +2,8 @@
 Open Dylan 2025.1
 *****************
 
-This document describes the 2025.1 release of Open Dylan, released DD
-MMM, 2024.  The highlights of the release are listed below.  For complete
+This document describes the 2025.1 release of Open Dylan, released 21
+June, 2025.  The highlights of the release are listed below.  For complete
 details see the `commit logs
 <https://github.com/dylan-lang/opendylan/compare/v2024.1.0...v2025.1.0>`_ for
 this release.
@@ -53,6 +53,13 @@ Compiler
   which caused code generation failures for certain usages of
   multiple-value expressions, has been fixed.
 
+* Fixed `issue 1395 <https://github.com/dylan-lang/opendylan/issues/1395>`_, which
+  prevented some valid variable names with a leading numeric from being parsed correctly.
+
+* A bug in the LLVM back-end that could cause stack overflows in
+  long-running functions that capture closures (such as for
+  exception handlers) has been fixed.
+
 Tools
 =====
 
@@ -71,16 +78,25 @@ Tools
   compatibility (for example in GitHub workflows) but it will be removed in a
   future release.
 
+  A new command, `deft test <https://package.opendylan.org/deft/index.html#deft-test>`_,
+  has been added to run tests defined in your workspace. See the `Deft 0.13.0 release
+  notes <https://github.com/dylan-lang/deft/releases/tag/v0.13.0>`_ for a list of other
+  Deft changes.
+
 Library Updates
 ===============
 
 collections
 -----------
 
-The ``collectors`` module is now `fully documented
-<https://opendylan.org/library-reference/collections/collectors.html>`_, the API has been
-made more consistent, and a bug in :drm:`<list>` collectors has been fixed. See `the pull
-request <https://github.com/dylan-lang/opendylan/pull/1627>`_ for details.
+* The ``collections`` convenience module, which re-exported names from some (but not all)
+  other modules in the ``collections`` library, has been removed as unnecessary
+  complexity.
+
+* The ``collectors`` module is now `fully documented
+  <https://opendylan.org/library-reference/collections/collectors.html>`_, the API has
+  been made more consistent, and a bug in :drm:`<list>` collectors has been fixed. See
+  `the pull request <https://github.com/dylan-lang/opendylan/pull/1627>`_ for details.
 
 Dylan
 -----
@@ -102,6 +118,10 @@ System
   :const:`$machine-architecture`.  The old name will remain, for backward
   compatibility.
 
+* Add new functions :func:`create-symbolic-link` and
+  :func:`create-hard-link` to the module ``file-system``. Windows is
+  not yet supported.
+
 Other
 -----
 
@@ -112,4 +132,9 @@ Other
 
 Contributors
 ============
+
+* Carl Gay
+* Peter Housel
+* Bruce Mitchener
+* Fernando Raya
 

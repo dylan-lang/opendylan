@@ -1,15 +1,15 @@
 <!doctype html>
-<html class="no-js" lang="en" data-content_root="">
+<html class="no-js" lang="en" data-content_root="../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Type-Safe Limited Collections" href="dep-0007-collection-type-safety.html" /><link rel="prev" title="Subclass" href="dep-0005-subclass-function.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.08.06 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>Single File Libraries - Open Dylan</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
-    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
     
@@ -243,6 +243,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/porting.html">Porting to a New Target Platform</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/ppml.html">The PPML library</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/making-a-release.html">Release Check-list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/opendylan.org.html">Maintaining opendylan.org</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../hacker-guide/glossary.html">Glossary</a></li>
@@ -304,6 +305,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../documentation/cheatsheets/collections.html">Collections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../documentation/cheatsheets/iteration.html">Iteration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../documentation/cheatsheets/scheme.html">For Schemers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../documentation/cheatsheets/python.html">For Pythonistas</a></li>
 </ul>
 </li>
 </ul>
@@ -311,7 +313,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/drm/">Dylan Reference Manual</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://package.opendylan.org/">Package Docs</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../library-reference/index.html">Open Dylan Libraries</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Open Dylan Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../library-reference/index.html">Bundled Libraries</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Bundled Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/language-extensions/index.html">Dylan Language Extensions</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle navigation of Dylan Language Extensions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/language-differences.html">Language Differences</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/define-function.html">Function Definition</a></li>
@@ -381,18 +383,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../library-reference/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../documentation/index.html">All Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of All Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../documentation/index.html">Other Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of Other Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../news/index.html">News</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../documentation/cheatsheets/index.html">Cheat Sheets</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of Cheat Sheets</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/syntax.html">Syntax</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/conditionals.html">Conditionals</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/collections.html">Collections</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/iteration.html">Iteration</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/scheme.html">For Schemers</a></li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="../documentation/publications.html">Publications</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../intro-dylan/index.html">Intro to Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of Intro to Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../intro-dylan/index.html">Intro to Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of Intro to Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../intro-dylan/why-dylan.html">Why Dylan?</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../intro-dylan/expressions-variables.html">Expressions &amp; Variables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../intro-dylan/methods-generic-functions.html">Methods &amp; Generic Functions</a></li>
@@ -403,7 +397,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../intro-dylan/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../corba-guide/index.html">CORBA Guide</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of CORBA Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../corba-guide/index.html">CORBA Guide</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of CORBA Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../corba-guide/preface.html">Preface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../corba-guide/intro.html">About Open Dylan CORBA</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../corba-guide/getstart.html">Quick Start Tutorial</a></li>
@@ -417,7 +411,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../corba-guide/idl-app.html">An IDL Binding for Dylan</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../building-with-duim/index.html">DUIM Guide</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of DUIM Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../building-with-duim/index.html">DUIM Guide</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of DUIM Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../building-with-duim/preface.html">Preface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../building-with-duim/intro.html">Introduction</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../building-with-duim/design.html">Designing A Simple DUIM Application</a></li>
@@ -430,7 +424,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../building-with-duim/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../duim-reference/index.html">DUIM Reference</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of DUIM Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../duim-reference/index.html">DUIM Reference</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of DUIM Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../duim-reference/conventions.html">Conventions in this Manual</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../duim-reference/geom.html">DUIM-Geometry Library</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../duim-reference/ext-geom.html">DUIM-Extended-Geometry Library</a></li>
@@ -443,7 +437,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../duim-reference/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../getting-started-ide/index.html">Getting Started / IDE</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Getting Started / IDE</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../getting-started-ide/index.html">Getting Started / IDE</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of Getting Started / IDE</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/preface.html">Preface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/quick-start.html">Quick Start</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/expanding.html">Fixing Bugs</a></li>
@@ -459,7 +453,9 @@
 <li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../release-notes/index.html">Release Notes</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../release-notes/index.html">Release Notes</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2026.1.html">Open Dylan 2026.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2025.1.html">Open Dylan 2025.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../release-notes/2024.1.html">Open Dylan 2024.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../release-notes/2023.1.html">Open Dylan 2023.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../release-notes/2022.1.html">Open Dylan 2022.1</a></li>
@@ -473,8 +469,8 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../style-guide/index.html">Style Guide</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../history/index.html">Dylan History</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" role="switch" type="checkbox"/><label for="toctree-checkbox-26"><div class="visually-hidden">Toggle navigation of Dylan History</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../history/apple-dylan/index.html">Apple Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" role="switch" type="checkbox"/><label for="toctree-checkbox-27"><div class="visually-hidden">Toggle navigation of Apple Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../history/index.html">Dylan History</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle navigation of Dylan History</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../history/apple-dylan/index.html">Apple Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" role="switch" type="checkbox"/><label for="toctree-checkbox-26"><div class="visually-hidden">Toggle navigation of Apple Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../history/apple-dylan/apple-cambridge.html">Apple Cambridge</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../history/apple-dylan/eulogy.html">Apple Dylan Eulogy</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../history/apple-dylan/technology-release.html">Apple Dylan Technology Release</a></li>
@@ -535,7 +531,7 @@
         </div>
         <article role="main" id="furo-main-content">
           <section id="single-file-libraries">
-<h1>Single File Libraries<a class="headerlink" href="#single-file-libraries" title="Permalink to this heading">¶</a></h1>
+<h1>Single File Libraries<a class="headerlink" href="#single-file-libraries" title="Link to this heading">¶</a></h1>
 <div class="table-wrapper docutils container">
 <table class="docutils align-default">
 <tbody>
@@ -558,7 +554,7 @@
 <td><p>16-Jan-2025</p></td>
 </tr>
 <tr class="row-odd"><td><p>Post-History:</p></td>
-<td><p>04-Dec-2021 <a class="reference external" href="https://gitter.im/dylan-lang/general">https://gitter.im/dylan-lang/general</a></p></td>
+<td><p>04-Dec-2021 <a class="reference external" href="https://app.element.io/#/room/#dylan-lang_general:gitter.im">Matrix channel</a></p></td>
 </tr>
 <tr class="row-even"><td><p>Dylan-Version:</p></td>
 <td><p>2025.1</p></td>
@@ -567,12 +563,12 @@
 </table>
 </div>
 <section id="revision-history">
-<h2>Revision History<a class="headerlink" href="#revision-history" title="Permalink to this heading">¶</a></h2>
+<h2>Revision History<a class="headerlink" href="#revision-history" title="Link to this heading">¶</a></h2>
 <p>The revision history of this document is available on GitHub:
 <a class="reference external" href="https://github.com/dylan-lang/opendylan/commits/master/documentation/source/proposals/dep-0006-single-file-library.rst">https://github.com/dylan-lang/opendylan/commits/master/documentation/source/proposals/dep-0006-single-file-library.rst</a></p>
 </section>
 <section id="abstract">
-<h2>Abstract<a class="headerlink" href="#abstract" title="Permalink to this heading">¶</a></h2>
+<h2>Abstract<a class="headerlink" href="#abstract" title="Link to this heading">¶</a></h2>
 <p>Open Dylan currently requires users to create three source files to
 define a simple library like hello-world:</p>
 <ol class="arabic simple">
@@ -588,7 +584,7 @@ propose a change to the Dylan language itself.  In particular it is
 proposed as an enhancement for Open Dylan.</p>
 </section>
 <section id="rationale">
-<h2>Rationale<a class="headerlink" href="#rationale" title="Permalink to this heading">¶</a></h2>
+<h2>Rationale<a class="headerlink" href="#rationale" title="Link to this heading">¶</a></h2>
 <p>The three files described above are a lot of overhead for new users
 who want to get a feel for the language, who are generally used to
 creating a single file and running it directly, perhaps after
@@ -624,7 +620,7 @@ but it has limitations that this DEP removes, specifically the
 inability to deal with import conflicts.</p>
 </section>
 <section id="goals">
-<h2>Goals<a class="headerlink" href="#goals" title="Permalink to this heading">¶</a></h2>
+<h2>Goals<a class="headerlink" href="#goals" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Make it possible to use the full power of the Dylan module system, or close to it, when
 defining a library in a single file.</p></li>
@@ -635,7 +631,7 @@ already used to Dylan what’s going on.</p></li>
 </ul>
 </section>
 <section id="background">
-<h2>Background<a class="headerlink" href="#background" title="Permalink to this heading">¶</a></h2>
+<h2>Background<a class="headerlink" href="#background" title="Link to this heading">¶</a></h2>
 <p>A typical hello-world application written in Dylan might look like
 this:</p>
 <p><strong>hello-world.lid</strong></p>
@@ -688,9 +684,9 @@ in the DRM, with a set of headers, followed by a blank line, followed
 by a <em>code body</em>.</p>
 </section>
 <section id="specification">
-<h2>Specification<a class="headerlink" href="#specification" title="Permalink to this heading">¶</a></h2>
+<h2>Specification<a class="headerlink" href="#specification" title="Link to this heading">¶</a></h2>
 <section id="replacing-the-lid-file">
-<h3>Replacing the LID File<a class="headerlink" href="#replacing-the-lid-file" title="Permalink to this heading">¶</a></h3>
+<h3>Replacing the LID File<a class="headerlink" href="#replacing-the-lid-file" title="Link to this heading">¶</a></h3>
 <p>LID files have the same format as the header section of a Dylan
 Interchange Format source file.  When defining a Dylan project in a
 single source file, all LID keywords may appear in the header section.
@@ -700,22 +696,22 @@ between the keywords used in LID files and those used in Dylan source
 files.  See <a class="reference internal" href="../library-reference/lid.html"><span class="doc">LID File Format</span></a>
 for existing Open Dylan LID file keywords.</p>
 <section id="module-header">
-<h4>Module Header<a class="headerlink" href="#module-header" title="Permalink to this heading">¶</a></h4>
+<h4>Module Header<a class="headerlink" href="#module-header" title="Link to this heading">¶</a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">Module</span></code> header is required in a single-source library.</p>
 </section>
 <section id="library-header">
-<h4>Library Header<a class="headerlink" href="#library-header" title="Permalink to this heading">¶</a></h4>
+<h4>Library Header<a class="headerlink" href="#library-header" title="Link to this heading">¶</a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">Library</span></code> header is optional. If missing, the library name is the same as
 the module name specified by the <code class="docutils literal notranslate"><span class="pre">Module</span></code> header.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<div class="admonition-rationale admonition">
+<p class="admonition-title">Rationale</p>
 <p>This decision could have gone the other way, with <code class="docutils literal notranslate"><span class="pre">Library</span></code> required and <code class="docutils literal notranslate"><span class="pre">Module</span></code>
 optional. However, it is normal for each .dylan file to have a <code class="docutils literal notranslate"><span class="pre">Module</span></code> header
 already, so this is consistent with current practice.</p>
 </div>
 </section>
 <section id="files-header">
-<h4>Files Header<a class="headerlink" href="#files-header" title="Permalink to this heading">¶</a></h4>
+<h4>Files Header<a class="headerlink" href="#files-header" title="Link to this heading">¶</a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">Files</span></code> header should not appear in a single-file library.  If
 present, the behavior is undefined.</p>
 <div class="admonition note">
@@ -729,7 +725,7 @@ proposal.</p>
 </section>
 </section>
 <section id="replacing-library-dylan">
-<h3>Replacing library.dylan<a class="headerlink" href="#replacing-library-dylan" title="Permalink to this heading">¶</a></h3>
+<h3>Replacing library.dylan<a class="headerlink" href="#replacing-library-dylan" title="Link to this heading">¶</a></h3>
 <p>A single-file Dylan library is divided into three logical sections:</p>
 <ol class="arabic simple">
 <li><p>Dylan Interchange Format headers, including all headers that are allowed in
@@ -741,18 +737,21 @@ the <code class="docutils literal notranslate"><span class="pre">Module</span></
 </ol>
 <p>In the library and module definitions section of the source file normal Dylan
 code comments are allowed and there must be:</p>
-<ul class="simple">
+<ul>
 <li><p>Any code needed by the library and module definitions.  For example, it is possible to
-define a macro to help define multiple modules. Note, however, that any code in this
-section is in the <code class="docutils literal notranslate"><span class="pre">dylan-user</span></code> module, which is defined by the Dylan implementation,
-so there is no way to export the code for use in other modules.  More specifically,
-there is no way to use the code in the main body of the same source file.</p></li>
+define a macro to help define multiple modules.  Note, however, that any code in this
+section is defined in the <code class="docutils literal notranslate"><span class="pre">dylan-user</span></code> module, which is defined by the Dylan
+implementation, so there is no way to export the code for use in other modules.  More
+specifically, there is no way to use the code in the main body of the same source file.</p>
+<p>This is no different from multi-file projects but may be less intuitive due to the code
+being in the same file.  This is acceptable because it happens extremely rarely.</p>
+</li>
 <li><p><em>Exactly one</em> <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">library</span></code> expression and its name must match the name
 specified in the <code class="docutils literal notranslate"><span class="pre">Library</span></code> header, or the <code class="docutils literal notranslate"><span class="pre">Module</span></code> header if there is no
 <code class="docutils literal notranslate"><span class="pre">Library</span></code> header.</p></li>
-<li><p><em>At least</em> one <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">module</span></code> expression whose name matches the name in the
-<code class="docutils literal notranslate"><span class="pre">Module</span></code> header.  This module definition terminates the library and module
-definition section of the source file.</p></li>
+<li><p><em>Exactly one</em> <code class="docutils literal notranslate"><span class="pre">define</span> <span class="pre">module</span></code> expression whose name matches the name in the
+<code class="docutils literal notranslate"><span class="pre">Module</span></code> header.  This module definition terminates the library and module definition
+section of the source file.  Other module definitions may precede it.</p></li>
 </ul>
 <p>This construction allows the full power of Dylan’s module system to be used,
 for example defining both implementation and interface modules, exporting the
@@ -760,7 +759,7 @@ implementation module for use by a (possibly also single-file) test library,
 etc.</p>
 </section>
 <section id="open-dylan-support">
-<h3>Open Dylan Support<a class="headerlink" href="#open-dylan-support" title="Permalink to this heading">¶</a></h3>
+<h3>Open Dylan Support<a class="headerlink" href="#open-dylan-support" title="Link to this heading">¶</a></h3>
 <p>Some changes will need to be made to Open Dylan to support single-file libraries.
 A non-exhaustive list:</p>
 <ul class="simple">
@@ -768,68 +767,23 @@ A non-exhaustive list:</p>
 <code class="docutils literal notranslate"><span class="pre">.dylan</span></code> extension and attempt to open them as projects, giving an appropriate error
 if the file is badly formed.</p></li>
 <li><p>Registry files must be able to point to <code class="docutils literal notranslate"><span class="pre">.dylan</span></code> files in addition to <code class="docutils literal notranslate"><span class="pre">.lid</span></code> files.</p></li>
-<li><p>The IDE will need to handle single-file libraries specially:</p>
-<ul>
-<li><p>It should be possible to open a new project by selecting a <code class="docutils literal notranslate"><span class="pre">.dylan</span></code> file, with an
-appropriate error if the file doesn’t contain library and module definitions.</p></li>
-<li><p>The library and module definitions should be treated as if in the <code class="docutils literal notranslate"><span class="pre">dylan-user</span></code>
-module.</p></li>
-</ul>
-</li>
+<li><p>The IDE could optionally be made to handle single-file libraries specially. However, it
+seems likely that there are deep assumptions built into the IDE about the meaning and
+behavior of “.dylan” and “.lid” files that would require more work than can be
+justified.  In contrast, on the command-line the context is quite clear, for example
+when invoking <code class="docutils literal notranslate"><span class="pre">dylan-compiler</span> <span class="pre">-build</span> <span class="pre">foo.dylan</span></code>.</p></li>
 </ul>
 </section>
 </section>
 <section id="model-implementation">
-<h2>Model Implementation<a class="headerlink" href="#model-implementation" title="Permalink to this heading">¶</a></h2>
-<p>A simple way to implement this proposal would be via the following source
-transformations. (Such a simplistic implementation is not recommended because
-it would cause problems mapping error messages back to the original source
-files, among other issues.  This example is provided primarily to demonstrate
-that a single-file library has the same semantics as a multi-file library.)</p>
-<ol class="arabic">
-<li><p>Generate a <code class="docutils literal notranslate"><span class="pre">library.dylan</span></code> file containing the entire library and module
-definitions section, verbatim, but in the <code class="docutils literal notranslate"><span class="pre">dylan-user</span></code> module. Using the
-hello-world example from above, we generate:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-------</span> <span class="n">file</span><span class="p">:</span> <span class="n">library</span><span class="o">.</span><span class="n">dylan</span> <span class="o">-------</span>
-<span class="n">Module</span><span class="p">:</span> <span class="n">dylan</span><span class="o">-</span><span class="n">user</span>
-
-<span class="n">define</span> <span class="n">libary</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span>
-  <span class="n">use</span> <span class="n">common</span><span class="o">-</span><span class="n">dylan</span><span class="p">;</span>
-  <span class="n">use</span> <span class="n">io</span><span class="p">;</span>
-<span class="n">end</span><span class="p">;</span>
-
-<span class="n">define</span> <span class="n">module</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span>
-  <span class="n">use</span> <span class="n">common</span><span class="o">-</span><span class="n">dylan</span><span class="p">;</span>
-  <span class="n">use</span> <span class="nb">format</span><span class="o">-</span><span class="n">out</span><span class="p">;</span>
-<span class="n">end</span><span class="p">;</span>
-</pre></div>
-</div>
-</li>
-<li><p>Generate a “main.dylan” file containing the entire headers section and the
-entire main Dylan code section:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-------</span> <span class="n">file</span><span class="p">:</span> <span class="n">main</span><span class="o">.</span><span class="n">dylan</span> <span class="o">-------</span>
-<span class="n">Module</span><span class="p">:</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span>
-
-<span class="nb">format</span><span class="o">-</span><span class="n">out</span><span class="p">(</span><span class="s2">&quot;Hello, world!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</li>
-<li><p>Generate a LID file that includes the entire headers section. Add a
-<code class="docutils literal notranslate"><span class="pre">Library</span></code> header matching the <code class="docutils literal notranslate"><span class="pre">Module</span></code> header if none was provided, and
-add “library.dylan” and “main.dylan” to the <code class="docutils literal notranslate"><span class="pre">Files</span></code> header:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-------</span> <span class="n">file</span><span class="p">:</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">.</span><span class="n">lid</span> <span class="o">-------</span>
-<span class="n">Library</span><span class="p">:</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span>
-<span class="n">Module</span><span class="p">:</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span>
-<span class="n">Files</span><span class="p">:</span> <span class="n">library</span><span class="o">.</span><span class="n">dylan</span>
-       <span class="n">main</span><span class="o">.</span><span class="n">dylan</span>
-</pre></div>
-</div>
-</li>
-<li><p>Compile the generated LID file in the normal way.</p></li>
-</ol>
+<h2>Model Implementation<a class="headerlink" href="#model-implementation" title="Link to this heading">¶</a></h2>
+<p>A simple way to implement this proposal would be to reverse the source file
+transformations shown in the <a class="reference internal" href="#background">Background</a> section, going from one file to three, and
+then compiling the <code class="docutils literal notranslate"><span class="pre">.lid</span></code> file in the normal way.  A mechanism for mapping compiler
+warning source code locations back to the original file would have to be devised.</p>
 </section>
 <section id="alternatives-considered">
-<h2>Alternatives Considered<a class="headerlink" href="#alternatives-considered" title="Permalink to this heading">¶</a></h2>
+<h2>Alternatives Considered<a class="headerlink" href="#alternatives-considered" title="Link to this heading">¶</a></h2>
 <p>The initial version of this DEP considered adding special Dylan Interchange
 Format headers (<code class="docutils literal notranslate"><span class="pre">Use-library</span></code>, <code class="docutils literal notranslate"><span class="pre">Use-module</span></code>, etc.) in which the library and
 module imports would be specified. That version was rejected because it did not
@@ -867,7 +821,7 @@ of this file for more detail.</p>
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2011-2024, Dylan Hackers
+                Copyright &#169; 2011-2026, Dylan Hackers
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -923,9 +877,9 @@ of this file for more detail.</p>
       
     </aside>
   </div>
-</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=7cccf125"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
-    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+</div><script src="../_static/documentation_options.js?v=b916904f"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=5fa4622c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=35a8b989"></script>

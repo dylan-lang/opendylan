@@ -10,3 +10,4 @@ Cheat Sheets
    Collections <collections>
    Iteration <iteration>
    For Schemers <scheme>
+   For Pythonistas <python>

@@ -1,15 +1,15 @@
 <!doctype html>
-<html class="no-js" lang="en" data-content_root="">
+<html class="no-js" lang="en" data-content_root="../../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="A Dylan Primer for Scheme Programmers" href="scheme.html" /><link rel="prev" title="Collections Cheat Sheet" href="collections.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.08.06 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>Iteration Cheat Sheet - Open Dylan</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
-    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=302659d7" />
     
@@ -243,6 +243,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/topics/porting.html">Porting to a New Target Platform</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/topics/ppml.html">The PPML library</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/topics/making-a-release.html">Release Check-list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/topics/opendylan.org.html">Maintaining opendylan.org</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../hacker-guide/glossary.html">Glossary</a></li>
@@ -302,16 +303,17 @@
 <li class="toctree-l2"><a class="reference internal" href="syntax.html">Syntax</a></li>
 <li class="toctree-l2"><a class="reference internal" href="conditionals.html">Conditionals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="collections.html">Collections</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Iteration</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Iteration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="scheme.html">For Schemers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python.html">For Pythonistas</a></li>
 </ul>
 </li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/drm/">Dylan Reference Manual</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://package.opendylan.org/">Package Docs</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../library-reference/index.html">Open Dylan Libraries</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Open Dylan Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../library-reference/index.html">Bundled Libraries</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Bundled Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../library-reference/language-extensions/index.html">Dylan Language Extensions</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle navigation of Dylan Language Extensions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../library-reference/language-extensions/language-differences.html">Language Differences</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../library-reference/language-extensions/define-function.html">Function Definition</a></li>
@@ -381,18 +383,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../library-reference/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">All Documentation</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of All Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../index.html">Other Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of Other Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../news/index.html">News</a></li>
-<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">Cheat Sheets</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of Cheat Sheets</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="syntax.html">Syntax</a></li>
-<li class="toctree-l3"><a class="reference internal" href="conditionals.html">Conditionals</a></li>
-<li class="toctree-l3"><a class="reference internal" href="collections.html">Collections</a></li>
-<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">Iteration</a></li>
-<li class="toctree-l3"><a class="reference internal" href="scheme.html">For Schemers</a></li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="../publications.html">Publications</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../intro-dylan/index.html">Intro to Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of Intro to Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../intro-dylan/index.html">Intro to Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of Intro to Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/why-dylan.html">Why Dylan?</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/expressions-variables.html">Expressions &amp; Variables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/methods-generic-functions.html">Methods &amp; Generic Functions</a></li>
@@ -403,7 +397,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../corba-guide/index.html">CORBA Guide</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of CORBA Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../corba-guide/index.html">CORBA Guide</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of CORBA Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../corba-guide/preface.html">Preface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../corba-guide/intro.html">About Open Dylan CORBA</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../corba-guide/getstart.html">Quick Start Tutorial</a></li>
@@ -417,7 +411,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../corba-guide/idl-app.html">An IDL Binding for Dylan</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../building-with-duim/index.html">DUIM Guide</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of DUIM Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../building-with-duim/index.html">DUIM Guide</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of DUIM Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/preface.html">Preface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/intro.html">Introduction</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/design.html">Designing A Simple DUIM Application</a></li>
@@ -430,7 +424,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../duim-reference/index.html">DUIM Reference</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of DUIM Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../duim-reference/index.html">DUIM Reference</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of DUIM Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../duim-reference/conventions.html">Conventions in this Manual</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../duim-reference/geom.html">DUIM-Geometry Library</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../duim-reference/ext-geom.html">DUIM-Extended-Geometry Library</a></li>
@@ -443,7 +437,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../duim-reference/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../getting-started-ide/index.html">Getting Started / IDE</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Getting Started / IDE</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../getting-started-ide/index.html">Getting Started / IDE</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of Getting Started / IDE</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/preface.html">Preface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/quick-start.html">Quick Start</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/expanding.html">Fixing Bugs</a></li>
@@ -459,7 +453,9 @@
 <li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../release-notes/index.html">Release Notes</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../release-notes/index.html">Release Notes</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2026.1.html">Open Dylan 2026.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2025.1.html">Open Dylan 2025.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../release-notes/2024.1.html">Open Dylan 2024.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../release-notes/2023.1.html">Open Dylan 2023.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../release-notes/2022.1.html">Open Dylan 2022.1</a></li>
@@ -473,8 +469,8 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../style-guide/index.html">Style Guide</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../history/index.html">Dylan History</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" role="switch" type="checkbox"/><label for="toctree-checkbox-26"><div class="visually-hidden">Toggle navigation of Dylan History</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../../history/apple-dylan/index.html">Apple Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" role="switch" type="checkbox"/><label for="toctree-checkbox-27"><div class="visually-hidden">Toggle navigation of Apple Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../history/index.html">Dylan History</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle navigation of Dylan History</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../history/apple-dylan/index.html">Apple Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" role="switch" type="checkbox"/><label for="toctree-checkbox-26"><div class="visually-hidden">Toggle navigation of Apple Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../history/apple-dylan/apple-cambridge.html">Apple Cambridge</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../history/apple-dylan/eulogy.html">Apple Dylan Eulogy</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../history/apple-dylan/technology-release.html">Apple Dylan Technology Release</a></li>
@@ -535,9 +531,9 @@
         </div>
         <article role="main" id="furo-main-content">
           <section id="iteration-cheat-sheet">
-<h1>Iteration Cheat Sheet<a class="headerlink" href="#iteration-cheat-sheet" title="Permalink to this heading">¶</a></h1>
+<h1>Iteration Cheat Sheet<a class="headerlink" href="#iteration-cheat-sheet" title="Link to this heading">¶</a></h1>
 <section id="simple-iteration-with-while-and-until">
-<h2>Simple iteration with <code class="docutils literal notranslate"><span class="pre">while</span></code> and <code class="docutils literal notranslate"><span class="pre">until</span></code><a class="headerlink" href="#simple-iteration-with-while-and-until" title="Permalink to this heading">¶</a></h2>
+<h2>Simple iteration with <code class="docutils literal notranslate"><span class="pre">while</span></code> and <code class="docutils literal notranslate"><span class="pre">until</span></code><a class="headerlink" href="#simple-iteration-with-while-and-until" title="Link to this heading">¶</a></h2>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">condition?</span><span class="p">)</span>
 <span class="w">  </span><span class="c1">// do something while the test condition? is true</span>
 <span class="k">end</span><span class="p">;</span>
@@ -551,11 +547,11 @@
 <p>Read more in the DRM: <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#while"><code class="xref drm docutils literal notranslate"><span class="pre">while</span></code></a> and <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#until"><code class="xref drm docutils literal notranslate"><span class="pre">until</span></code></a>.</p>
 </section>
 <section id="the-for-loop">
-<h2>The <code class="docutils literal notranslate"><span class="pre">for</span></code> loop<a class="headerlink" href="#the-for-loop" title="Permalink to this heading">¶</a></h2>
+<h2>The <code class="docutils literal notranslate"><span class="pre">for</span></code> loop<a class="headerlink" href="#the-for-loop" title="Link to this heading">¶</a></h2>
 <p>The <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#for"><code class="xref drm docutils literal notranslate"><span class="pre">for</span></code></a> loop can be used in many different ways. We demonstrate some of the
 most commonly used features here:</p>
 <section id="iterating-over-a-collection">
-<h3>Iterating over a collection<a class="headerlink" href="#iterating-over-a-collection" title="Permalink to this heading">¶</a></h3>
+<h3>Iterating over a collection<a class="headerlink" href="#iterating-over-a-collection" title="Link to this heading">¶</a></h3>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="nb">element</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">collection</span><span class="p">)</span>
 <span class="w">  </span><span class="c1">// do something with element</span>
 <span class="k">end</span><span class="p">;</span>
@@ -563,7 +559,7 @@ most commonly used features here:</p>
 </div>
 </section>
 <section id="iterating-over-a-range">
-<h3>Iterating over a range<a class="headerlink" href="#iterating-over-a-range" title="Permalink to this heading">¶</a></h3>
+<h3>Iterating over a range<a class="headerlink" href="#iterating-over-a-range" title="Link to this heading">¶</a></h3>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">below</span><span class="w"> </span><span class="n">num</span><span class="p">)</span>
 <span class="w">  </span><span class="c1">// do work</span>
 <span class="w">  </span><span class="c1">// count ranges from 0 to the integer below num</span>
@@ -584,7 +580,7 @@ most commonly used features here:</p>
 </div>
 </section>
 <section id="iterating-over-a-table">
-<h3>Iterating over a table<a class="headerlink" href="#iterating-over-a-table" title="Permalink to this heading">¶</a></h3>
+<h3>Iterating over a table<a class="headerlink" href="#iterating-over-a-table" title="Link to this heading">¶</a></h3>
 <p>The easiest way to iterate over a table is to use an extension to
 the standard <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#for"><code class="xref drm docutils literal notranslate"><span class="pre">for</span></code></a> loop that Open Dylan supports:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="n">keyed-by</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">table</span><span class="p">)</span>
@@ -602,7 +598,7 @@ the standard <a class="reference external" href="https://opendylan.org/books/drm
 </section>
 </section>
 <section id="breaking-out-of-a-loop">
-<h2>Breaking out of a loop<a class="headerlink" href="#breaking-out-of-a-loop" title="Permalink to this heading">¶</a></h2>
+<h2>Breaking out of a loop<a class="headerlink" href="#breaking-out-of-a-loop" title="Link to this heading">¶</a></h2>
 <p>Breaking out of a loop is just like any other non-local exit in Dylan.
 Combine any loop with a <a class="reference external" href="https://opendylan.org/books/drm/Statement_Macros#block"><code class="xref drm docutils literal notranslate"><span class="pre">block</span></code></a> expression:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">block</span><span class="w"> </span><span class="p">(</span><span class="n">exit-block</span><span class="p">)</span>
@@ -621,7 +617,7 @@ is the last expression in the block. If <code class="docutils literal notranslat
 result is <code class="docutils literal notranslate"><span class="pre">1</span></code> because that was the value passed to <code class="docutils literal notranslate"><span class="pre">exit-block</span></code>.</p>
 </section>
 <section id="collection-functions">
-<h2>Collection Functions<a class="headerlink" href="#collection-functions" title="Permalink to this heading">¶</a></h2>
+<h2>Collection Functions<a class="headerlink" href="#collection-functions" title="Link to this heading">¶</a></h2>
 <p>When working with a collection, some additional operations are available
 that remove the need for explicit iteration over the collection.</p>
 <p>In all of these, the function passed in can be any of:</p>
@@ -633,7 +629,7 @@ that remove the need for explicit iteration over the collection.</p>
 <a class="reference external" href="https://opendylan.org/books/drm/Functional_Operations#rcurry"><code class="xref drm docutils literal notranslate"><span class="pre">rcurry</span></code></a> or other <a class="reference external" href="https://opendylan.org/books/drm/Functional_Operations">functional operations</a>.</p></li>
 </ul>
 <section id="do">
-<h3><code class="docutils literal notranslate"><span class="pre">do</span></code><a class="headerlink" href="#do" title="Permalink to this heading">¶</a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">do</span></code><a class="headerlink" href="#do" title="Link to this heading">¶</a></h3>
 <p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#do"><code class="xref drm docutils literal notranslate"><span class="pre">do</span></code></a> iterates over one or more collections, performing side effects:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">do</span><span class="p">(</span><span class="nb">method</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="w">     </span><span class="n">format-out</span><span class="p">(</span><span class="s">&quot;%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
@@ -643,7 +639,7 @@ that remove the need for explicit iteration over the collection.</p>
 </div>
 </section>
 <section id="map-map-as-map-into">
-<h3><code class="docutils literal notranslate"><span class="pre">map</span></code>, <code class="docutils literal notranslate"><span class="pre">map-as</span></code>, <code class="docutils literal notranslate"><span class="pre">map-into</span></code><a class="headerlink" href="#map-map-as-map-into" title="Permalink to this heading">¶</a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">map</span></code>, <code class="docutils literal notranslate"><span class="pre">map-as</span></code>, <code class="docutils literal notranslate"><span class="pre">map-into</span></code><a class="headerlink" href="#map-map-as-map-into" title="Link to this heading">¶</a></h3>
 <p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#map"><code class="xref drm docutils literal notranslate"><span class="pre">map</span></code></a> iterates over one or more collections, applying a function and
 returns the results in a new collection.  <a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#map-as"><code class="xref drm docutils literal notranslate"><span class="pre">map-as</span></code></a> and <a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#map-into"><code class="xref drm docutils literal notranslate"><span class="pre">map-into</span></code></a>
 allow control over the way that the results are returned.</p>
@@ -659,7 +655,7 @@ allow control over the way that the results are returned.</p>
 <p>Read more in the DRM: <a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#map"><code class="xref drm docutils literal notranslate"><span class="pre">map</span></code></a>, <a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#map-as"><code class="xref drm docutils literal notranslate"><span class="pre">map-as</span></code></a>, <a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#map-into"><code class="xref drm docutils literal notranslate"><span class="pre">map-into</span></code></a>.</p>
 </section>
 <section id="reduce-reduce1">
-<h3><code class="docutils literal notranslate"><span class="pre">reduce</span></code>, <code class="docutils literal notranslate"><span class="pre">reduce1</span></code><a class="headerlink" href="#reduce-reduce1" title="Permalink to this heading">¶</a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">reduce</span></code>, <code class="docutils literal notranslate"><span class="pre">reduce1</span></code><a class="headerlink" href="#reduce-reduce1" title="Link to this heading">¶</a></h3>
 <p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#reduce"><code class="xref drm docutils literal notranslate"><span class="pre">reduce</span></code></a> combines the elements of a collection and a seed value into
 a single value by repeatedly applying a binary function.</p>
 <p><a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#reduce1"><code class="xref drm docutils literal notranslate"><span class="pre">reduce1</span></code></a> is similar to <a class="reference external" href="https://opendylan.org/books/drm/Collection_Operations#reduce"><code class="xref drm docutils literal notranslate"><span class="pre">reduce</span></code></a>, except that the first value of
@@ -677,7 +673,7 @@ the collection is used as the seed value.</p>
 </section>
 </section>
 <section id="iteration-with-tail-recursion">
-<h2>Iteration with Tail Recursion<a class="headerlink" href="#iteration-with-tail-recursion" title="Permalink to this heading">¶</a></h2>
+<h2>Iteration with Tail Recursion<a class="headerlink" href="#iteration-with-tail-recursion" title="Link to this heading">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">iterate</span></code> macro in the <code class="docutils literal notranslate"><span class="pre">common-dylan</span></code> library is another powerful way to do
 iteration. It relies on the fact that Dylan implementations are required to optimize
 tail recursion.</p>
@@ -729,7 +725,7 @@ macro makes it more concise.</p>
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2011-2024, Dylan Hackers
+                Copyright &#169; 2011-2026, Dylan Hackers
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -782,9 +778,9 @@ macro makes it more concise.</p>
       
     </aside>
   </div>
-</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=7cccf125"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
-    <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+</div><script src="../../_static/documentation_options.js?v=b916904f"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=35a8b989"></script>

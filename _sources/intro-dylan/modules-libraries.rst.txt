@@ -40,7 +40,7 @@ Like all normal modules, this one uses the ``dylan`` module, which
 contains all of the standard built-in functions and classes. In turn,
 the ``vehicles`` module exports all three of the vehicle classes, the
 generic function ``tax``, several getter functions, and a single
-:drm:`setter <setters>` function.
+:drm:`setter <slots>` function.
 
 To make a :drm:`slot <slots>` public export its getter and setter functions. To
 make the slot read-only, export just the getter function. To make it private,
@@ -61,7 +61,8 @@ Dylan allows very precise control over how bindings are imported from
 other modules. For example, individual bindings may be imported by
 name. They may be renamed, either one at a time, or by adding a prefix
 to all of a module's names at once. Some or all of them may be
-re-exported immediately. See the DRM for :drm:`specific examples <define module>`.
+re-exported immediately. See the DRM :drm:`define module` for specific
+examples.
 
 Dylan's module system has a number of advantages. Name conflicts
 occur rarely. Programmers don't need to define or maintain function

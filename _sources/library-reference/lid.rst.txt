@@ -216,9 +216,9 @@ LID file keyword
     C-Source-Files: *c-source-files*
 
 Identifies one or more C source files which are to be included as part
-of the library. Dylan environments copy these files to their build area
-and ensure that they are compiled by the appropriate batch file. The
-filenames specified must include the ``.c`` suffix.
+of the library. The filenames specified must include the ``.c``
+suffix.
+
 
 C-Header-Files:
 ^^^^^^^^^^^^^^^
@@ -230,11 +230,10 @@ LID file keyword
     C-Header-Files: *c-header-files*
 
 Identifies one or more C header files included as part of the library.
-Dylan environments copy these files to their build area and ensure that
-they are compiled by the appropriate batch file. Any files specified
-using the *C-Source-Files:* or *RC-Files:* keywords depend on these
-header files in order to decide when they need to be recompiled. The
-file names given here must include the ``.h`` suffix.
+Any files specified using the *C-Source-Files:* or *RC-Files:*
+keywords depend on these header files in order to decide when they
+need to be recompiled. The file names given here must include the
+``.h`` suffix.
 
 C-Object-Files:
 ^^^^^^^^^^^^^^^
@@ -246,15 +245,14 @@ LID file keyword
     C-Object-Files: *c-object-files*
 
 Identifies one or more C object files included as part of the library.
-Dylan environments copy these files to their build area and ensure that
-they are compiled by the appropriate batch file and included in the
+Dylan environments ensure that they included in the
 final output as ``.DLL`` or ``.EXE`` files. The file names given here must
 include the ``.obj`` suffix on Windows or ``.o`` on other platforms, except
 when using this keyword in conjunction with a static library.
 
-In some situations, a static library needs to be copied into the build area
-and linked into the project. This is typically when writing a binding for
-an external library written in C. In this situation, the ``C-Object-Files``
+In some situations, a static library needs to be linked into the
+project. This is typically when writing a binding for an external
+library written in C. In this situation, the ``C-Object-Files``
 keyword may be useful.
 
 RC-Files:
@@ -267,11 +265,10 @@ LID file keyword
     RC-Files: *resource-files*
 
 Identifies one or more resource files to be included as part of the
-library. Dylan environments copy these files to their build area and
-ensure that they are compiled by the appropriate batch file. The
-resulting resource object files are included in the ``.DLL`` or ``.EXE``
-built for the library. The file names given here must include the ``.rc``
-suffix.
+library. Dylan environments ensure that they are compiled and that the
+resulting resource object files are included in the ``.DLL`` or
+``.EXE`` built for the library. The file names given here must include
+the ``.rc`` suffix.
 
 .. _lid-c-libraries:
 

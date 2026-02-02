@@ -9,7 +9,7 @@ Author:         Carl Gay
 Status:         Draft
 Created:        12-Feb-2013 (Darwin's birthday)
 Last-Modified:  16-Jan-2025
-Post-History:   04-Dec-2021 https://gitter.im/dylan-lang/general
+Post-History:   04-Dec-2021 `Matrix channel <https://app.element.io/#/room/#dylan-lang_general:gitter.im>`_
 Dylan-Version:  2025.1
 ==============  =============================================
 
@@ -187,7 +187,7 @@ Library Header
 The ``Library`` header is optional. If missing, the library name is the same as
 the module name specified by the ``Module`` header.
 
-.. note::
+.. admonition:: Rationale
 
    This decision could have gone the other way, with ``Library`` required and ``Module``
    optional. However, it is normal for each .dylan file to have a ``Module`` header
@@ -225,18 +225,21 @@ In the library and module definitions section of the source file normal Dylan
 code comments are allowed and there must be:
 
 * Any code needed by the library and module definitions.  For example, it is possible to
-  define a macro to help define multiple modules. Note, however, that any code in this
-  section is in the ``dylan-user`` module, which is defined by the Dylan implementation,
-  so there is no way to export the code for use in other modules.  More specifically,
-  there is no way to use the code in the main body of the same source file.
+  define a macro to help define multiple modules.  Note, however, that any code in this
+  section is defined in the ``dylan-user`` module, which is defined by the Dylan
+  implementation, so there is no way to export the code for use in other modules.  More
+  specifically, there is no way to use the code in the main body of the same source file.
+
+  This is no different from multi-file projects but may be less intuitive due to the code
+  being in the same file.  This is acceptable because it happens extremely rarely.
 
 * *Exactly one* ``define library`` expression and its name must match the name
   specified in the ``Library`` header, or the ``Module`` header if there is no
   ``Library`` header.
 
-* *At least* one ``define module`` expression whose name matches the name in the
-  ``Module`` header.  This module definition terminates the library and module
-  definition section of the source file.
+* *Exactly one* ``define module`` expression whose name matches the name in the
+  ``Module`` header.  This module definition terminates the library and module definition
+  section of the source file.  Other module definitions may precede it.
 
 This construction allows the full power of Dylan's module system to be used,
 for example defining both implementation and interface modules, exporting the
@@ -255,59 +258,19 @@ A non-exhaustive list:
 
 * Registry files must be able to point to ``.dylan`` files in addition to ``.lid`` files.
 
-* The IDE will need to handle single-file libraries specially:
-
-  - It should be possible to open a new project by selecting a ``.dylan`` file, with an
-    appropriate error if the file doesn't contain library and module definitions.
-
-  - The library and module definitions should be treated as if in the ``dylan-user``
-    module.
+* The IDE could optionally be made to handle single-file libraries specially. However, it
+  seems likely that there are deep assumptions built into the IDE about the meaning and
+  behavior of ".dylan" and ".lid" files that would require more work than can be
+  justified.  In contrast, on the command-line the context is quite clear, for example
+  when invoking ``dylan-compiler -build foo.dylan``.
 
 Model Implementation
 ====================
 
-A simple way to implement this proposal would be via the following source
-transformations. (Such a simplistic implementation is not recommended because
-it would cause problems mapping error messages back to the original source
-files, among other issues.  This example is provided primarily to demonstrate
-that a single-file library has the same semantics as a multi-file library.)
-
-1.  Generate a ``library.dylan`` file containing the entire library and module
-    definitions section, verbatim, but in the ``dylan-user`` module. Using the
-    hello-world example from above, we generate::
-
-      ------- file: library.dylan -------
-      Module: dylan-user
-
-      define libary hello-world
-        use common-dylan;
-        use io;
-      end;
-
-      define module hello-world
-        use common-dylan;
-        use format-out;
-      end;
-
-2.  Generate a "main.dylan" file containing the entire headers section and the
-    entire main Dylan code section::
-
-      ------- file: main.dylan -------
-      Module: hello-world
-
-      format-out("Hello, world!\n")
-
-#. Generate a LID file that includes the entire headers section. Add a
-   ``Library`` header matching the ``Module`` header if none was provided, and
-   add "library.dylan" and "main.dylan" to the ``Files`` header::
-
-     ------- file: hello-world.lid -------
-     Library: hello-world
-     Module: hello-world
-     Files: library.dylan
-            main.dylan
-
-#. Compile the generated LID file in the normal way.
+A simple way to implement this proposal would be to reverse the source file
+transformations shown in the `Background`_ section, going from one file to three, and
+then compiling the ``.lid`` file in the normal way.  A mechanism for mapping compiler
+warning source code locations back to the original file would have to be devised.
 
 Alternatives Considered
 =======================

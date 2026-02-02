@@ -254,8 +254,9 @@ The bit-set Module
      Alters ``set1`` so that it also contains the elements in ``set2``.
      ``new-set == set1``.
 
-.. generic-function:: size
+.. method:: size
    :sealed:
+   :specializer: <bit-set>
 
    :signature: size *set* => *false-or-integer*
 

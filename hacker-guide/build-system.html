@@ -1,15 +1,15 @@
 <!doctype html>
-<html class="no-js" lang="en" data-content_root="">
+<html class="no-js" lang="en" data-content_root="../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="DFMC, The Dylan Flow Machine Compiler" href="compiler/index.html" /><link rel="prev" title="Example documentation" href="documentation/example.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.08.06 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>Jam-based Build System - Open Dylan</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
-    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
     
@@ -243,6 +243,7 @@
 <li class="toctree-l3"><a class="reference internal" href="topics/porting.html">Porting to a New Target Platform</a></li>
 <li class="toctree-l3"><a class="reference internal" href="topics/ppml.html">The PPML library</a></li>
 <li class="toctree-l3"><a class="reference internal" href="topics/making-a-release.html">Release Check-list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/opendylan.org.html">Maintaining opendylan.org</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="glossary.html">Glossary</a></li>
@@ -304,6 +305,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../documentation/cheatsheets/collections.html">Collections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../documentation/cheatsheets/iteration.html">Iteration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../documentation/cheatsheets/scheme.html">For Schemers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../documentation/cheatsheets/python.html">For Pythonistas</a></li>
 </ul>
 </li>
 </ul>
@@ -311,7 +313,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/drm/">Dylan Reference Manual</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://package.opendylan.org/">Package Docs</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../library-reference/index.html">Open Dylan Libraries</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Open Dylan Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../library-reference/index.html">Bundled Libraries</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Bundled Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/language-extensions/index.html">Dylan Language Extensions</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle navigation of Dylan Language Extensions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/language-differences.html">Language Differences</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/define-function.html">Function Definition</a></li>
@@ -381,18 +383,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../library-reference/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../documentation/index.html">All Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of All Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../documentation/index.html">Other Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of Other Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../news/index.html">News</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../documentation/cheatsheets/index.html">Cheat Sheets</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of Cheat Sheets</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/syntax.html">Syntax</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/conditionals.html">Conditionals</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/collections.html">Collections</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/iteration.html">Iteration</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/scheme.html">For Schemers</a></li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="../documentation/publications.html">Publications</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../intro-dylan/index.html">Intro to Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of Intro to Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../intro-dylan/index.html">Intro to Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of Intro to Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../intro-dylan/why-dylan.html">Why Dylan?</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../intro-dylan/expressions-variables.html">Expressions &amp; Variables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../intro-dylan/methods-generic-functions.html">Methods &amp; Generic Functions</a></li>
@@ -403,7 +397,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../intro-dylan/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../corba-guide/index.html">CORBA Guide</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of CORBA Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../corba-guide/index.html">CORBA Guide</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of CORBA Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../corba-guide/preface.html">Preface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../corba-guide/intro.html">About Open Dylan CORBA</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../corba-guide/getstart.html">Quick Start Tutorial</a></li>
@@ -417,7 +411,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../corba-guide/idl-app.html">An IDL Binding for Dylan</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../building-with-duim/index.html">DUIM Guide</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of DUIM Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../building-with-duim/index.html">DUIM Guide</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of DUIM Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../building-with-duim/preface.html">Preface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../building-with-duim/intro.html">Introduction</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../building-with-duim/design.html">Designing A Simple DUIM Application</a></li>
@@ -430,7 +424,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../building-with-duim/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../duim-reference/index.html">DUIM Reference</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of DUIM Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../duim-reference/index.html">DUIM Reference</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of DUIM Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../duim-reference/conventions.html">Conventions in this Manual</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../duim-reference/geom.html">DUIM-Geometry Library</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../duim-reference/ext-geom.html">DUIM-Extended-Geometry Library</a></li>
@@ -443,7 +437,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../duim-reference/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../getting-started-ide/index.html">Getting Started / IDE</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Getting Started / IDE</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../getting-started-ide/index.html">Getting Started / IDE</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of Getting Started / IDE</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/preface.html">Preface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/quick-start.html">Quick Start</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/expanding.html">Fixing Bugs</a></li>
@@ -459,7 +453,9 @@
 <li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../release-notes/index.html">Release Notes</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../release-notes/index.html">Release Notes</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2026.1.html">Open Dylan 2026.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2025.1.html">Open Dylan 2025.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../release-notes/2024.1.html">Open Dylan 2024.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../release-notes/2023.1.html">Open Dylan 2023.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../release-notes/2022.1.html">Open Dylan 2022.1</a></li>
@@ -473,8 +469,8 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../style-guide/index.html">Style Guide</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../history/index.html">Dylan History</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" role="switch" type="checkbox"/><label for="toctree-checkbox-26"><div class="visually-hidden">Toggle navigation of Dylan History</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../history/apple-dylan/index.html">Apple Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" role="switch" type="checkbox"/><label for="toctree-checkbox-27"><div class="visually-hidden">Toggle navigation of Apple Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../history/index.html">Dylan History</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle navigation of Dylan History</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../history/apple-dylan/index.html">Apple Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" role="switch" type="checkbox"/><label for="toctree-checkbox-26"><div class="visually-hidden">Toggle navigation of Apple Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../history/apple-dylan/apple-cambridge.html">Apple Cambridge</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../history/apple-dylan/eulogy.html">Apple Dylan Eulogy</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../history/apple-dylan/technology-release.html">Apple Dylan Technology Release</a></li>
@@ -535,34 +531,39 @@
         </div>
         <article role="main" id="furo-main-content">
           <section id="jam-based-build-system">
-<h1>Jam-based Build System<a class="headerlink" href="#jam-based-build-system" title="Permalink to this heading">¶</a></h1>
-<p>The purpose of the Open Dylan <code class="docutils literal notranslate"><span class="pre">build-system</span></code> is to
+<h1>Jam-based Build System<a class="headerlink" href="#jam-based-build-system" title="Link to this heading">¶</a></h1>
+<p>The purpose of the Open Dylan <code class="xref dylan dylan-lib docutils literal notranslate"><span class="pre">build-system</span></code> is to
 coordinate the final stages in the building of a Dylan library project.
 The Open Dylan compiler takes a Dylan library in the form of
-Dylan source files, and directly generates x86 or PPC machine language
-object files (in either COFF or ELF format, depending on the target
-platform). These object files need to be linked together to construct
-either an executable object file, or a loadable dynamically-linked
-library (also called a shared library). This link needs to be performed
-by an external tool such as the Microsoft or GNU linker. The
-<code class="docutils literal notranslate"><span class="pre">build-system</span></code> component, controlled by a user-specified script file,
-directs the execution of these external tools.</p>
+Dylan source files, and depending on the selected back-end produces:</p>
+<ul class="simple">
+<li><p>LLVM bitcode files (<code class="docutils literal notranslate"><span class="pre">llvm</span></code> back-end)</p></li>
+<li><p>C source files (<code class="docutils literal notranslate"><span class="pre">c</span></code> back-end)</p></li>
+<li><p>x86 machine language object files in COFF format (<code class="docutils literal notranslate"><span class="pre">harp</span></code> back-end)</p></li>
+</ul>
+<p>For the first two cases a final code generation step needs to be
+invoked, and in all cases object files need to be linked together to
+construct either an executable object file, or a loadable
+dynamically-linked library (also called a shared library). This link
+needs to be performed by an external tool such as the Microsoft or GNU
+linker. The <code class="xref dylan dylan-lib docutils literal notranslate"><span class="pre">build-system</span></code> component, controlled by a user-specified
+script file, directs the execution of these external tools.</p>
 <section id="why-jam-based">
-<h2>Why Jam-based?<a class="headerlink" href="#why-jam-based" title="Permalink to this heading">¶</a></h2>
-<p>Use of the Jam scripting language increases the flexibility of
-Open Dylan for users, and makes it more maintainable by
-removing hard-coded assumptions spread throughout various layers of the
-compiler. Previous versions of the Open Dylan <code class="docutils literal notranslate"><span class="pre">build-system</span></code>
-component permitted users to choose either the Microsoft or GNU Binutils
-linker on the Win32 platform, and always used the GNU Binutils ELF
-linker on Linux platforms. New versions of these tools require
-modifications that go beyond the current flexibility of the
-<code class="docutils literal notranslate"><span class="pre">build-system</span></code> component, as will new Open Dylan target
+<h2>Why Jam-based?<a class="headerlink" href="#why-jam-based" title="Link to this heading">¶</a></h2>
+<p>Use of the Jam scripting language increases the flexibility of Open
+Dylan for users, and makes it more maintainable by removing hard-coded
+assumptions spread throughout various layers of the compiler. Early
+versions of the Open Dylan <code class="xref dylan dylan-lib docutils literal notranslate"><span class="pre">build-system</span></code> component permitted users
+to choose either the Microsoft or GNU Binutils linker on the Win32
+platform, and always used the GNU Binutils ELF linker on Linux
+platforms. Later versions of these linkers and associated toolchains
+required modifications that went beyond the original flexibility of
+the <code class="xref dylan dylan-lib docutils literal notranslate"><span class="pre">build-system</span></code> component, as did newer Open Dylan target
 platforms.</p>
-<p>Though the logic of <code class="docutils literal notranslate"><span class="pre">build-system</span></code> (and a former companion library,
-<code class="docutils literal notranslate"><span class="pre">linker-support</span></code>) was hard-coded, it did allow a limited amount of
-parameterization using script files. A typical parameterization, from
-the Microsoft linker script, looked like this:</p>
+<p>Though the logic of the original <code class="xref dylan dylan-lib docutils literal notranslate"><span class="pre">build-system</span></code> (and a former
+companion library, <code class="xref dylan dylan-lib docutils literal notranslate"><span class="pre">linker-support</span></code>) was hard-coded, it did allow a
+limited amount of parameterization using script files. A typical
+parameterization, from the Microsoft linker script, looked like this:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#
 linkdll
 link /NODEFAULTLIB /INCREMENTAL:NO /PDB:NONE /NOLOGO \
@@ -575,9 +576,9 @@ link /NODEFAULTLIB /INCREMENTAL:NO /PDB:NONE /NOLOGO \
 <p>Though these script files were poorly documented and insufficiently
 flexible, they did inspire the introduction of a real scripting language
 to direct the final stages of compilation in Open Dylan.</p>
-<p><a class="reference external" href="https://www.perforce.com/resources/documentation/jam">Jam</a> is a build tool designed by Christopher Seiwald, founder of
-<a class="reference external" href="https://www.perforce.com/">Perforce Software</a>. It is similar in some ways to
-<code class="docutils literal notranslate"><span class="pre">make</span></code>, the traditional Unix build tool. However, instead of using
+<p><a class="reference external" href="https://swarm.workshop.perforce.com/view/guest/perforce_software/jam/src/Jam.html">Jam</a> is a build tool designed by Christopher Seiwald, founder of
+<a class="reference external" href="https://swarm.workshop.perforce.com/view/guest/perforce_software/jam/src/Jam.html">Perforce Software</a>. It is similar in some ways to
+<strong class="program">make</strong>, the traditional Unix build tool. However, instead of using
 only simple declarative rules to define build targets and the
 dependencies between them, Jam contains a full scripting language,
 allowing build script authors to define high-level build instructions
@@ -587,25 +588,26 @@ libraries from C, C++, and Fortran sources.</p>
 <p>The original Jam tool is a standalone program written in C and YACC.
 Peter Housel re-implemented the Jam language interpreter and build logic
 as a reusable Dylan library for use in the Open Dylan
-<code class="docutils literal notranslate"><span class="pre">build-system</span></code>.</p>
+<code class="xref dylan dylan-lib docutils literal notranslate"><span class="pre">build-system</span></code>.</p>
 </section>
 <section id="choosing-build-scripts">
-<h2>Choosing Build Scripts<a class="headerlink" href="#choosing-build-scripts" title="Permalink to this heading">¶</a></h2>
+<h2>Choosing Build Scripts<a class="headerlink" href="#choosing-build-scripts" title="Link to this heading">¶</a></h2>
 <p>Normally you can simply use the build script supplied with Open Dylan
 that corresponds to the external linker you will be using. The
 supplied build scripts include the following:</p>
 <dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">x86-win32-vc6-build.jam</span></code></dt><dd><p>Build script for Microsoft Visual C++ 6.0.</p>
+<dt><code class="file docutils literal notranslate"><span class="pre">x86_64-linux-build.jam</span></code></dt><dd><p>Build script for x86_64 Linux systems using Clang or gcc.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">x86-win32-vc7-build.jam</span></code></dt><dd><p>Build script for Microsoft Visual C++ .NET.</p>
+<dt><code class="file docutils literal notranslate"><span class="pre">x86-win32-vc6-build.jam</span></code></dt><dd><p>Build script for Microsoft Visual C++ 6.0.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">x86-linux-build.jam</span></code></dt><dd><p>Build script for x86 Linux systems using gcc.</p>
+<dt><code class="file docutils literal notranslate"><span class="pre">x86-win32-vc7-build.jam</span></code></dt><dd><p>Build script for Microsoft Visual C++ .NET.</p>
 </dd>
 </dl>
-<p>The default build script is <code class="docutils literal notranslate"><span class="pre">platform-name-build.jam</span></code>. You can select
-a different build script from the Link page of the Environment Options
-dialog in the IDE, or using the <code class="docutils literal notranslate"><span class="pre">-build-script</span></code> option on the console
-compiler or console environment command-line.</p>
+<p>The default build script is <code class="docutils literal notranslate"><span class="pre">platform-name-build.jam</span></code>. You can
+select a different build script from the <span class="guilabel">Link</span> page of the
+<span class="guilabel">Environment Options</span> dialog in the IDE, or using the
+<code class="docutils literal notranslate"><span class="pre">-build-script</span></code> option on the console compiler or console
+environment command-line.</p>
 <p>Build scripts are written using the Jam script language, as described in
 the <a class="reference external" href="https://swarm.workshop.perforce.com/view/guest/perforce_software/jam/src/Jam.html">Jam manual page</a>. Most Open Dylan build scripts <code class="docutils literal notranslate"><span class="pre">include</span></code> the
 <code class="docutils literal notranslate"><span class="pre">mini-jambase.jam</span></code> file, which contains excerpts from the <a class="reference external" href="https://swarm.workshop.perforce.com/files/guest/perforce_software/jam/src/Jambase">Jambase</a>
@@ -615,13 +617,13 @@ Open Dylan build system, as described in <a class="reference internal" href="#ad
 and <a class="reference internal" href="#built-in-jam-variables">Built-In Jam Variables</a>.</p>
 </section>
 <section id="how-the-compiler-uses-the-build-system">
-<h2>How the Compiler Uses the Build System<a class="headerlink" href="#how-the-compiler-uses-the-build-system" title="Permalink to this heading">¶</a></h2>
+<h2>How the Compiler Uses the Build System<a class="headerlink" href="#how-the-compiler-uses-the-build-system" title="Link to this heading">¶</a></h2>
 <p>When you compile a library, the Open Dylan compiler constructs
-a new <code class="docutils literal notranslate"><span class="pre">build</span></code> directory and places the generated object files in it.
-It also constructs a text file called <code class="docutils literal notranslate"><span class="pre">dylanmakefile.mkf</span></code> to be read
+a new <code class="file docutils literal notranslate"><span class="pre">build</span></code> directory and places the generated object files in it.
+It also constructs a text file called <code class="file docutils literal notranslate"><span class="pre">dylanmakefile.mkf</span></code> to be read
 by the build system. This file contains information imported from the
 original LID or HDP project file, as well as information generated
-during compilation. Here is a sample <code class="docutils literal notranslate"><span class="pre">dylanmakefile.mkf</span></code>, in this case
+during compilation. Here is a sample <code class="file docutils literal notranslate"><span class="pre">dylanmakefile.mkf</span></code>, in this case
 the one generated for the <code class="docutils literal notranslate"><span class="pre">build-system</span></code> component itself:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">comment</span><span class="p">:</span>        <span class="n">This</span> <span class="n">build</span> <span class="n">file</span> <span class="ow">is</span> <span class="n">generated</span><span class="p">,</span> <span class="n">please</span> <span class="n">don</span><span class="s1">&#39;t edit</span>
 <span class="n">library</span><span class="p">:</span>        <span class="n">build</span><span class="o">-</span><span class="n">system</span>
@@ -663,28 +665,30 @@ the one generated for the <code class="docutils literal notranslate"><span class
 </div>
 <p>External files are used to communicate with the build system in order
 for the information to persist between invocations of the compiler. On
-the Win32 platform, <code class="docutils literal notranslate"><span class="pre">dylanmakefile.mkf</span></code> files are also copied into the
-<code class="docutils literal notranslate"><span class="pre">lib</span></code> directory on installation so that other libraries can link
+the Win32 platform, <code class="file docutils literal notranslate"><span class="pre">dylanmakefile.mkf</span></code> files are also copied into the
+<code class="file docutils literal notranslate"><span class="pre">lib</span></code> directory on installation so that other libraries can link
 against the actual DLL (whose name might not be identical to the library
 name).</p>
 <p>When Open Dylan needs to link a project, it calls the
-<code class="docutils literal notranslate"><span class="pre">build-system</span></code>, passing the name of the build directory and a list of
-targets to be built. The build system reads the <code class="docutils literal notranslate"><span class="pre">dylanmakefile.mkf</span></code>
+<code class="xref dylan dylan-lib docutils literal notranslate"><span class="pre">build-system</span></code>, passing the name of the build directory and a list of
+targets to be built. The build system reads the <code class="file docutils literal notranslate"><span class="pre">dylanmakefile.mkf</span></code>
 file and builds the targets accordingly.</p>
 <p>The Open Dylan compiler’s project manager expects the build
 script to define the following pseudo (<code class="docutils literal notranslate"><span class="pre">NotFile</span></code>) targets:</p>
 <dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">exports</span></code></dt><dd><p>Describe exports.</p>
-</dd>
-<dt><code class="docutils literal notranslate"><span class="pre">unify-dll</span></code></dt><dd><p>Describe unify-dll.</p>
-</dd>
 <dt><code class="docutils literal notranslate"><span class="pre">dll</span></code></dt><dd><p>Link the project as a dynamically-linked library.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">unify-exe</span></code></dt><dd><p>Describe unify-exe.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">unify-dll</span></code></dt><dd><p>Not currently supported.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">exe</span></code></dt><dd><p>Link the project as an executable program.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">release</span></code></dt><dd><p>Describe release.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">unify-exe</span></code></dt><dd><p>Link the project as an executable program, with all Dylan libraries
+statically linked.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">release</span></code></dt><dd><p>Not currently supported. (Requested when the build <code class="docutils literal notranslate"><span class="pre">-release</span></code>
+option is used. This option was intended, prior to the open-source
+release, to copy Redistributable versions of referenced system
+Dylan libraries into the target build.)</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">clean-all</span></code></dt><dd><p>Remove build products in the top-level project, and in all of the
 non-system libraries that it uses.</p>
@@ -694,8 +698,8 @@ non-system libraries that it uses.</p>
 </dl>
 </section>
 <section id="automatically-invoked-jam-rules">
-<h2>Automatically-invoked Jam Rules<a class="headerlink" href="#automatically-invoked-jam-rules" title="Permalink to this heading">¶</a></h2>
-<p>When the build system reads a <code class="docutils literal notranslate"><span class="pre">dylanmakefile.mkf</span></code> file, it invokes
+<h2>Automatically-invoked Jam Rules<a class="headerlink" href="#automatically-invoked-jam-rules" title="Link to this heading">¶</a></h2>
+<p>When the build system reads a <code class="file docutils literal notranslate"><span class="pre">dylanmakefile.mkf</span></code> file, it invokes
 several of the Jam rules (functions) defined in the user’s build script.
 These rules in turn register the necessary targets and their
 dependencies with the Jam build mechanism.</p>
@@ -705,70 +709,102 @@ this is a list whose first element is the library name (from the
 component is the base name of the executable or shared library (from the
 <code class="docutils literal notranslate"><span class="pre">Executable:</span></code> keyword of the <code class="docutils literal notranslate"><span class="pre">.mkf</span></code> file).</p>
 <dl>
-<dt><code class="docutils literal notranslate"><span class="pre">DylanLibrary</span> <span class="pre">*image*</span> <span class="pre">:</span> <span class="pre">*version*</span> <span class="pre">;</span></code></dt><dd><p>Link a Dylan library as a shared library or executable image. This is
+<dt><code class="docutils literal notranslate"><span class="pre">DylanLibrary</span></code> <em>image</em> <code class="docutils literal notranslate"><span class="pre">:</span></code> <em>version</em> <code class="docutils literal notranslate"><span class="pre">:</span></code> <em>dir</em> <code class="docutils literal notranslate"><span class="pre">;</span></code></dt><dd><p>Link a Dylan library as a shared library or executable image. This is
 always the first rule invoked for a given library, and it is usually
-charged with establishing the library target and setting global and
+charged with establishing the library targets and setting global and
 target-specific variables.</p>
 <p>The <em>version</em> argument normally contains two components, the first
 obtained from the <code class="docutils literal notranslate"><span class="pre">Major-version:</span></code> keyword of the <code class="docutils literal notranslate"><span class="pre">.mkf</span></code> file, and
 the second from the <code class="docutils literal notranslate"><span class="pre">Minor-version:</span></code> keyword.</p>
+<p>The <em>dir</em> argument points to the project source directory (where
+the LID file is located). This is used to set the <code class="docutils literal notranslate"><span class="pre">SEARCH_SOURCE</span></code>
+during the processing of the <code class="docutils literal notranslate"><span class="pre">.mkf</span></code> file.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">DylanLibraryLinkerOptions</span> <span class="pre">*image*</span> <span class="pre">:</span> <span class="pre">*options*</span> <span class="pre">;</span></code></dt><dd><p>Add the given options to the link command line of the shared library and
+<dt><code class="docutils literal notranslate"><span class="pre">DylanLibraryLinkerOptions</span></code> <em>image</em> <code class="docutils literal notranslate"><span class="pre">:</span></code> <em>options</em> <code class="docutils literal notranslate"><span class="pre">;</span></code></dt><dd><p>Add the given options to the link command line of the shared library and
 executable images. The link options provided in the <code class="docutils literal notranslate"><span class="pre">Linker-options:</span></code>
 keyword of the <code class="docutils literal notranslate"><span class="pre">.mkf</span></code> file are expanded using the usual Jam variable
 expansion rules before being passed to this rule. (This allows
 <code class="docutils literal notranslate"><span class="pre">Linker-options:</span></code> keywords in LID and HDP files to refer to
 platform-specific variables such as <code class="docutils literal notranslate"><span class="pre">$(guilflags)</span></code>).</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">DylanLibraryBaseAddress</span> <span class="pre">*image*</span> <span class="pre">:</span> <span class="pre">*address*</span> <span class="pre">;</span></code></dt><dd><p>Set the base address of the shared library. The compiler-computed base
-addresses are probably only usable on the Win32 platform.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">DylanLibraryBaseAddress</span></code> <em>image</em> <code class="docutils literal notranslate"><span class="pre">:</span></code> <em>address</em> <code class="docutils literal notranslate"><span class="pre">;</span></code></dt><dd><p>Set the base address of the shared library. The compiler-computed
+base addresses are only usable on the Win32 platform.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">DylanLibraryCLibraries</span> <span class="pre">*image*</span> <span class="pre">:</span> <span class="pre">*libraries*</span> <span class="pre">;</span></code></dt><dd><p>Link C (or other externally-derived) libraries into the shared library.
+<dt><code class="docutils literal notranslate"><span class="pre">DylanLibraryCLibraries</span></code> <em>image</em> <code class="docutils literal notranslate"><span class="pre">:</span></code> <em>libraries</em> <code class="docutils literal notranslate"><span class="pre">;</span></code></dt><dd><p>Link C (or other externally-derived) libraries into the shared library.
 The link options provided in the <code class="docutils literal notranslate"><span class="pre">C-libraries:</span></code> keyword of the
 <code class="docutils literal notranslate"><span class="pre">.mkf</span></code> file are expanded using the usual Jam variable expansion rules
 before being passed to this rule.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">DylanLibraryCObjects</span> <span class="pre">*image*</span> <span class="pre">:</span> <span class="pre">*objects*</span> <span class="pre">;</span></code></dt><dd><p>Link C (or other externally-derived) object files into the shared
+<dt><code class="docutils literal notranslate"><span class="pre">DylanLibraryCObjects</span></code> <em>image</em> <code class="docutils literal notranslate"><span class="pre">:</span></code> <em>objects</em> <code class="docutils literal notranslate"><span class="pre">;</span></code></dt><dd><p>Link C (or other externally-derived) object files into the shared
 library.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">DylanLibraryCSources</span> <span class="pre">*image*</span> <span class="pre">:</span> <span class="pre">*sources*</span> <span class="pre">;</span></code></dt><dd><p>Link C source files into the shared library.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">DylanLibraryCSources</span></code> <em>image</em> <code class="docutils literal notranslate"><span class="pre">:</span></code> <em>sources</em> <code class="docutils literal notranslate"><span class="pre">;</span></code></dt><dd><p>Link C source files into the shared library.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">DylanLibraryCHeaders</span> <span class="pre">*image*</span> <span class="pre">:</span> <span class="pre">*headers*</span> <span class="pre">;</span></code></dt><dd><p>This rule normally does nothing. The <code class="docutils literal notranslate"><span class="pre">C-header-files:</span></code> HDP/LID file is
-normally used to ensure that files of various sorts (not just C header
-files) are copied into the build directory.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">DylanLibraryCHeaders</span></code> <em>image</em> <code class="docutils literal notranslate"><span class="pre">:</span></code> <em>headers</em> <code class="docutils literal notranslate"><span class="pre">;</span></code></dt><dd><p>This rule normally does nothing. The <code class="docutils literal notranslate"><span class="pre">C-header-files:</span></code> HDP/LID
+file keyword that corresponds to it was originally used to ensure
+that files of various sorts (not just C header files) were copied
+into the build directory, but this is no longer done.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">DylanLibraryC++Sources</span> <span class="pre">*image*</span> <span class="pre">:</span> <span class="pre">*sources*</span> <span class="pre">;</span></code></dt><dd><p>Link C++ source files into the shared library.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">DylanLibraryC++Sources</span></code> <em>image</em> <code class="docutils literal notranslate"><span class="pre">:</span></code> <em>sources</em> <code class="docutils literal notranslate"><span class="pre">;</span></code></dt><dd><p>Link C++ source files into the shared library.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">DylanLibraryRCFiles</span> <span class="pre">*image*</span> <span class="pre">:</span> <span class="pre">*rcfiles*</span> <span class="pre">;</span></code></dt><dd><p>Link Win32 resource files into the shared library and executable.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">DylanLibraryRCFiles</span></code> <em>image</em> <code class="docutils literal notranslate"><span class="pre">:</span></code> <em>rcfiles</em> <code class="docutils literal notranslate"><span class="pre">;</span></code></dt><dd><p>Link Win32 resource files into the shared library and executable.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">DylanLibraryJamIncludes</span> <span class="pre">*image*</span> <span class="pre">:</span> <span class="pre">*includes*</span> <span class="pre">;</span></code></dt><dd><p>Include other Jam files into the build definition. This is typically
+<dt><code class="docutils literal notranslate"><span class="pre">DylanLibraryJamIncludes</span></code> <em>image</em> <code class="docutils literal notranslate"><span class="pre">:</span></code> <em>includes</em> <code class="docutils literal notranslate"><span class="pre">;</span></code></dt><dd><p>Include other Jam files into the build definition. This is typically
 used via the <code class="docutils literal notranslate"><span class="pre">jam-includes:</span></code> keyword in the HDP/LID file. It is
 useful for setting up extensions to library or include search
-paths.</p>
+paths. Within the body of the included file, the <code class="docutils literal notranslate"><span class="pre">IMAGE</span></code> variable
+is bound to the <em>image</em> argument values.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">DylanLibraryUses</span> <span class="pre">*image*</span> <span class="pre">:</span> <span class="pre">*library*</span> <span class="pre">:</span> <span class="pre">*dir*</span> <span class="pre">;</span></code></dt><dd><p>Link other Dylan libraries into the shared library. The <em>library</em>
-argument gives the name of the other library, and the <em>dir</em> argument
-gives the name of the other library’s build directory. If <em>dir</em> is
-<code class="docutils literal notranslate"><span class="pre">system</span></code>, then the library is an installed system library.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">DylanLibraryUses</span></code> <em>image</em> <code class="docutils literal notranslate"><span class="pre">:</span></code> <em>library</em> <code class="docutils literal notranslate"><span class="pre">:</span></code> <em>dir</em> <code class="docutils literal notranslate"><span class="pre">;</span></code></dt><dd><p>Link other Dylan libraries into the shared library or
+executable. The <em>library</em> argument gives the name of the other
+library, and the <em>dir</em> argument gives the name of the other
+library’s build directory. If <em>dir</em> is <code class="docutils literal notranslate"><span class="pre">system</span></code>, then the
+library is an installed system library.</p>
 </dd>
 </dl>
 </section>
 <section id="additional-built-in-jam-rules">
-<h2>Additional Built-In Jam Rules<a class="headerlink" href="#additional-built-in-jam-rules" title="Permalink to this heading">¶</a></h2>
+<h2>Additional Built-In Jam Rules<a class="headerlink" href="#additional-built-in-jam-rules" title="Link to this heading">¶</a></h2>
 <p>The build system defines the following additional built-in rules.</p>
 <dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">IncludeMKF</span> <span class="pre">*includes*</span> <span class="pre">;</span></code></dt><dd><p>Read each of the given <code class="docutils literal notranslate"><span class="pre">.mkf</span></code> files and invoke Jam rules as described
+<dt><code class="docutils literal notranslate"><span class="pre">IncludeMKF</span></code> <em>includes</em> <code class="docutils literal notranslate"><span class="pre">;</span></code></dt><dd><p>Read each of the given <code class="docutils literal notranslate"><span class="pre">.mkf</span></code> files and invoke Jam rules as described
 in <a class="reference internal" href="#automatically-invoked-jam-rules">Automatically-invoked Jam Rules</a>.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">DFMCMangle</span> <span class="pre">*name*</span> <span class="pre">;</span></code></dt><dd><p>Mangle the given <em>name</em> according to the Open Dylan compiler’s
+<dt><code class="docutils literal notranslate"><span class="pre">DFMCMangle</span></code> <em>name</em> <code class="docutils literal notranslate"><span class="pre">;</span></code></dt><dd><p>Mangle the given <em>name</em> according to the Open Dylan compiler’s
 mangling rules. If <em>name</em> has a single component, it is considered to be
 a raw name; if there are three components they correspond to the
 variable-name, module-name, and library-name respectively.</p>
 </dd>
 </dl>
+<p>The <code class="xref dylan dylan-lib docutils literal notranslate"><span class="pre">jam</span></code> engine itself defines the following rules, which were not
+included in the original Perforce Jam but are found in extended
+implementations such as Boost Jam, FT Jam, or JamPlus.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">COMMAND</span></code> <em>command</em> <code class="docutils literal notranslate"><span class="pre">;</span></code></dt><dd><p>Execute the named <em>command</em> in a subshell at Jamfile processing
+time and return the standard output as the first component of the
+return value. This can be useful for running configuration tools
+such as (for example) <strong class="program">pkg-config</strong> or
+<strong class="program">pg_config</strong> when building or linking against FFI
+libraries.</p>
+<p>If additional options are provided, they modify the return value
+as follows:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">exit-status</span></code></dt><dd><p>Return the exit status of <em>command</em> as the second component.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">no-output</span></code></dt><dd><p>Return an empty string in place of the contents of standard output.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">strip-eol</span></code></dt><dd><p>Strip trailing LF and CR characters from the end of the
+returned string.</p>
+</dd>
+</dl>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Split</span></code> <em>strings</em> <code class="docutils literal notranslate"><span class="pre">:</span></code> <em>split_characters</em> <code class="docutils literal notranslate"><span class="pre">;</span></code></dt><dd><p>Split each of the <em>strings</em> at the <em>split-characters</em> delimiters,
+with empty splits removed.</p>
+</dd>
+</dl>
 </section>
 <section id="built-in-jam-variables">
-<h2>Built-In Jam Variables<a class="headerlink" href="#built-in-jam-variables" title="Permalink to this heading">¶</a></h2>
+<h2>Built-In Jam Variables<a class="headerlink" href="#built-in-jam-variables" title="Link to this heading">¶</a></h2>
 <p>By default, the Jam build system is provided with some values. Some of these
 are derived from the base Jam implementation and are documented in the
 <a class="reference external" href="https://swarm.workshop.perforce.com/view/guest/perforce_software/jam/src/Jam.html">Jam manual page</a> while others are Open Dylan extensions.</p>
@@ -791,7 +827,7 @@ like <code class="docutils literal notranslate"><span class="pre">linux</span></
 typically be something like <code class="docutils literal notranslate"><span class="pre">x86</span></code> or <code class="docutils literal notranslate"><span class="pre">x86_64</span></code>.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">PERSONAL_ROOT</span></code></dt><dd><p>The root of the destination build path, when the <code class="docutils literal notranslate"><span class="pre">-personal-root</span></code> compiler
-option or the <code class="docutils literal notranslate"><span class="pre">OPEN_DYLAN_USER_ROOT</span></code> environment variable is set.</p>
+option or the <span class="target" id="index-0"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">OPEN_DYLAN_USER_ROOT</span></code> environment variable is set.</p>
 <p><em>Open Dylan extension.</em></p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">SYSTEM_BUILD_SCRIPTS</span></code></dt><dd><p>The path where the installed build scripts can be found.</p>
@@ -809,7 +845,7 @@ like <code class="docutils literal notranslate"><span class="pre">x86-linux</spa
 </dl>
 </section>
 <section id="editing-jam-files">
-<h2>Editing Jam Files<a class="headerlink" href="#editing-jam-files" title="Permalink to this heading">¶</a></h2>
+<h2>Editing Jam Files<a class="headerlink" href="#editing-jam-files" title="Link to this heading">¶</a></h2>
 <p>There is an <a class="reference external" href="https://web.archive.org/web/20100211015821/http://www.tenfoot.org.uk/index.html">Emacs major mode</a> for editing Jam files.</p>
 </section>
 </section>
@@ -843,7 +879,7 @@ like <code class="docutils literal notranslate"><span class="pre">x86-linux</spa
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2011-2024, Dylan Hackers
+                Copyright &#169; 2011-2026, Dylan Hackers
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -888,9 +924,9 @@ like <code class="docutils literal notranslate"><span class="pre">x86-linux</spa
       
     </aside>
   </div>
-</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=7cccf125"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
-    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+</div><script src="../_static/documentation_options.js?v=b916904f"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=5fa4622c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=35a8b989"></script>

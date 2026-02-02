@@ -1,0 +1,112 @@
+*****************
+Open Dylan 2026.1
+*****************
+
+This document describes the 2026.1 release of Open Dylan, released 29 Jan, 2026.  The
+highlights of the release are listed below.  For complete details see the `commit logs
+<https://github.com/dylan-lang/opendylan/compare/v2025.1.0...v2026.1.0>`_ for this
+release.
+
+* Download the release: https://opendylan.org/download
+* Read documentation: https://opendylan.org
+* Report problems: https://github.com/dylan-lang/opendylan/issues
+
+
+Compiler
+========
+
+* The compiler no longer copies C/C++ source files, C/C++ header
+  files, C object files, Windows resource files, and Jam include files
+  into the build directory before performing the link build stage, and
+  instead makes the original source directory location available to
+  the build system (and the Jam build scripts).
+
+* The compiler now signals an error when it is not able to inline a
+  call to a method that has either a method parameter or a return
+  value with a raw type. This provides explicit guidance when
+  encountering the situation outlined in `Issue 1377
+  <https://github.com/dylan-lang/opendylan/issues/1377>`_.
+
+* Repeated optimization involving lifting closures to top level now
+  properly preserves types of local bindings.
+
+* Optimization of the type estimation of :drm:`if` expressions can now
+  be repeated multiple times as the function is iteratively improved.
+
+* The compiler now supports an extended version of
+  ``copy-down-method-definer`` allowing a ``specializing`` clause
+  selecting which of the more-general methods should be selected for
+  inlining in the case of dispatch ambiguity. Additionally, ambiguous
+  ``copy-down-method`` definitions are now signaled as serious
+  warnings rather than allowing a random applicable method to be
+  chosen for inlining.
+
+* The overhead for critical runtime code used for type checking and
+  method dispatch has been reduced by ensuring that certain object
+  slots could never be considered uninitialized.
+
+* The implementation of ``define thread variable`` has changed to
+  improve the integration with the garbage collector, reducing the
+  number of GC roots that need to be registered to one per thread,
+  thus increasing the number of threads that can be run. (No
+  significant change in execution performance is expected.)
+
+IDE
+===
+
+* Paths for the example and test suite projects accessible from the
+  :menuselection:`Tools --> Open Example Project...` dialog have been
+  fixed.
+
+Bundled Library Updates
+=======================
+
+Changes to libraries that are part of the `opendylan repository
+<https://github.com/dylan-lang/opendylan>`_.
+
+Dylan
+-----
+
+* A number of ``copy-down-method`` definitions in the :lib:`dylan` library that were
+  previously marked as ambiguous have been corrected.  This removes the vast majority of
+  the warnings that were generated during the initial build of a project due to
+  recompiling the ``dylan`` library.
+
+Common-Dylan
+------------
+
+* A problem with retrieving :func:`application-name` and
+  :func:`application-arguments` results from the operating system when
+  running Dylan applications under tools such as :program:`valgrind` has
+  been fixed.
+
+io
+---
+
+* Specific versions of the stream functions sealed on
+  ``<byte-char-file-stream>`` and ``<byte-file-stream>`` are provided,
+  significantly improving the performance of these stream operations.
+
+Submoduled Library Updates
+==========================
+
+The following changes were made to Open Dylan dependencies that are included as Git
+submodules.
+
+* The logging library: `b0b469a -> v2.2.1
+  <https://github.com/dylan-lang/logging/compare/b0b469abc291a07312dbb8a4b1e57f55c31b8cba...v2.2.1>`_
+* The strings library: `v2.0.0 -> v2.0.1
+  <https://github.com/dylan-lang/strings/compare/v2.0.0...v2.0.1>`_
+* The testworks library: `v3.3.0 -> v3.4.0
+  <https://github.com/dylan-lang/testworks/compare/v3.3.0...v3.4.0>`_
+
+Contributors
+============
+
+We'd like to thank all the people that made contributions to this release and
+to surrounding libraries in the Dylan ecosystem....
+
+* Peter S. Housel
+* Jan Sucan
+* Fernando Raya
+* Carl Gay

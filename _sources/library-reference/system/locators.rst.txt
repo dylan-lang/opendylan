@@ -40,7 +40,7 @@ The locators Module
 
    .. note:: Locator classes representing file system objects are documented
              in :doc:`file-system`.
-   
+
 .. class:: <directory-locator>
    :open:
    :abstract:
@@ -164,7 +164,7 @@ The locators Module
 
    :signature: locator-as-string (class locator) => (string)
 
-   :parameter class: An instance of :drm:`subclass(<string>) <<string>>`.
+   :parameter class: A subclass of :drm:`<string>`.
    :parameter locator: An instance of :class:`<locator>`.
    :value string: An instance of :drm:`<string>`.
 
@@ -174,7 +174,7 @@ The locators Module
    :signature: locator-base (locator) => (base)
 
    :parameter locator: An instance of :class:`<locator>`.
-   :value base: An instance of :drm:`false-or(<string>) <<string>>`.
+   :value base: :drm:`#f` or an instance of :drm:`<string>`.
 
    :description:
     Returns the locator name without extension. For example, if a file locator's
@@ -186,7 +186,7 @@ The locators Module
    :signature: locator-directory (locator) => (directory)
 
    :parameter locator: An instance of :class:`<locator>`.
-   :value directory: An instance of :class:`false-or(<directory-locator>) <<directory-locator>`.
+   :value directory: :drm:`#f` or an instance of :class:`<directory-locator>`.
 
    :description:
     Returns the enclosing directory of a locator, or :drm:`#f` if it
@@ -206,7 +206,7 @@ The locators Module
    :signature: locator-extension (locator) => (extension)
 
    :parameter locator: An instance of :class:`<locator>`.
-   :value extension: An instance of :drm:`false-or(<string>) <<string>>`.
+   :value extension: :drm:`#f` or an instance of :drm:`<string>`.
 
    :description:
     Returns the extension part of the locator name. For example, if a file locator's
@@ -233,7 +233,7 @@ The locators Module
    :signature: locator-host (locator) => (host)
 
    :parameter locator: An instance of :class:`<locator>`.
-   :value host: An instance of :drm:`false-or(<string>) <<string>>`.
+   :value host: :drm:`#f` or an instance of :drm:`<string>`.
 
    :description:
 
@@ -247,7 +247,7 @@ The locators Module
    :signature: locator-name (locator) => (name)
 
    :parameter locator: An instance of :class:`<locator>`.
-   :value name: An instance of :drm:`false-or(<string>) <<string>>`.
+   :value name: :drm:`#f` or an instance of :drm:`<string>`.
 
    :description:
 
@@ -325,7 +325,7 @@ The locators Module
    :signature: locator-server (locator) => (server)
 
    :parameter locator: An instance of :class:`<locator>`.
-   :value server: An instance of :class:`false-or(<server-locator>) <<server-locator>>`.
+   :value server: :drm:`#f` or an instance of :class:`<server-locator>`.
 
 .. generic-function:: locator-volume
    :open:
@@ -333,7 +333,7 @@ The locators Module
    :signature: locator-volume (locator) => (volume)
 
    :parameter locator: An instance of :class:`<locator>`.
-   :value volume: An instance of :drm:`false-or(<string>) <<string>>`.
+   :value volume: :drm:`#f` or an instance of :drm:`<string>`.
 
 .. generic-function:: merge-locators
    :open:
@@ -408,7 +408,7 @@ The locators Module
 
    :signature: string-as-locator (class string) => (locator)
 
-   :parameter class: An instance of ``subclass(<locator>)``.
+   :parameter class: A subclass of :class:`<locator>`.
    :parameter string: An instance of :drm:`<string>`.
    :value locator: An instance of :class:`<locator>`.
 
@@ -612,7 +612,7 @@ The locators Module
    :sealed:
 
    A locator using the file protocol.
-   
+
    :superclasses: :class:`<server-url>`
 
 .. generic-function:: locator-default-port
@@ -622,7 +622,7 @@ The locators Module
    :signature: locator-default-port(locator) => (port)
 
    :param locator: An instance of :class:`<server-url>`
-   :value port: An instance of :drm:`false-or(<integer>) <<integer>>`
+   :value port: :drm:`#f` or an instance of :drm:`<integer>`
 
    :example:
 

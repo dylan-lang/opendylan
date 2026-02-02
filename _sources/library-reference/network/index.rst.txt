@@ -566,10 +566,18 @@ The <socket> class
      one of ``#"input"``, ``#"output"``, and ``#"input-output"``. This
      keyword is an inherited streams class keyword. See :doc:`../io/streams`
      for a full description.
+
    :keyword element-type: An instance of :drm:`<class>`. Useful values are
-     :class:`<byte-character>` and ``<byte>``. This keyword is an
+     :class:`<byte-character>` and :class:`<byte>`. This keyword is an
      inherited streams class keyword. See :doc:`../io/streams`
      for a full description.
+
+   :keyword protocol: An instance of :drm:`<string>` or :drm:`<symbol>` naming the
+     protocol.  Currently ``#"tcp"`` and ``#"udp"`` are the only supported protocols.
+     You can create instances of protocol-specific subclasses as an alternative to using
+     the ``protocol:`` keyword. For example ``make(<socket>, protocol: #"tcp", ...)`` is
+     equivalent to ``make(<tcp-socket>, ...)``. :drm:`make` on :class:`<socket>` returns
+     an instance of :class:`<tcp-socket>` by default.
 
 The <buffered-socket> class
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -620,13 +628,6 @@ The class of TCP client sockets.
      containing an abstract name for a service with a "well-known" port,
      such as ``"ftp"`` or ``"daytime"``. Valid names depend on the
      configuration of the DNS. Required unless ``port:`` is supplied.
-   :keyword protocol: An instance of :drm:`<string>` naming the protocol.
-     Currently ``#"tcp"`` and ``#"udp"`` are the only supported protocols.
-     You can create instances of protocol-specific subclasses as an
-     alternative to using the ``protocol:`` keyword. For example
-     ``make(<socket>, protocol: #"tcp", ...)`` is equivalent to
-     ``make(<tcp-socket>, ...)``. :drm:`make` on :class:`<socket>` returns
-     an instance of :class:`<tcp-socket>` by default.
    :keyword port: An instance of :drm:`<integer>` representing the remote
      port to connect to. Required unless ``service:`` is supplied.
    :keyword element-type: An instance of :drm:`<class>`. Useful values for
@@ -782,7 +783,7 @@ This section lists the socket condition classes in the Network library.
      able to take some remedial action.
 
      For instance, a web browser receiving such conditions as
-     :class:`<connection-refused>` or :class:`<host-not-found>` would
+     :class:`<connection-failed>` or :class:`<host-not-found>` would
      normally expect to report those conditions to the user and continue
      with some other connection request from the user, while a server
      receiving a :class:`<connection-closed>` condition from a connected

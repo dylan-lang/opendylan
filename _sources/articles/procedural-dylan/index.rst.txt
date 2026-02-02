@@ -27,6 +27,6 @@ addition to one's bag of tricks.
 This essay is intended to be used as a tutorial introduction and not as
 a complete reference work. To avoid bogging down the discussion, much
 has been omitted and some details have been ignored. For more complete
-information, see the `Dylan Reference Manual </books/drm/>`_.
+information, see the `Dylan Reference Manual <https://opendylan.org/books/drm/>`.
 
 Copyright © 1995 Paul Haahr. All rights reserved.

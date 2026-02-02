@@ -145,9 +145,8 @@ uses the ``dylan`` library.
    The result is an :class:`<abstract-integer>` with the same value the machine word when
    interpreted as a signed integer value.
 
-   This method is primarily useful in combination with the `generic-arithmetic
-   </library-reference/language-extensions/numbers.html#the-generic-arithmetic-library>`_
-   library.
+   This method is primarily useful in combination with the :ref:`generic-arithmetic
+   <generic-arithmetic-library>` library.
 
    :seealso: :drm:`as`
 

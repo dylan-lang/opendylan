@@ -1,15 +1,15 @@
 <!doctype html>
-<html class="no-js" lang="en" data-content_root="">
+<html class="no-js" lang="en" data-content_root="../../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="The ACCESS-PATH library" href="access-path.html" /><link rel="prev" title="Startup" href="../runtime/startup.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.08.06 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>Runtime Manager - Open Dylan</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
-    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=302659d7" />
     
@@ -243,6 +243,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../topics/porting.html">Porting to a New Target Platform</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../topics/ppml.html">The PPML library</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../topics/making-a-release.html">Release Check-list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../topics/opendylan.org.html">Maintaining opendylan.org</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../glossary.html">Glossary</a></li>
@@ -304,6 +305,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../documentation/cheatsheets/collections.html">Collections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../documentation/cheatsheets/iteration.html">Iteration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../documentation/cheatsheets/scheme.html">For Schemers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/cheatsheets/python.html">For Pythonistas</a></li>
 </ul>
 </li>
 </ul>
@@ -311,7 +313,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/drm/">Dylan Reference Manual</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://package.opendylan.org/">Package Docs</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../library-reference/index.html">Open Dylan Libraries</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Open Dylan Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../library-reference/index.html">Bundled Libraries</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Bundled Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../library-reference/language-extensions/index.html">Dylan Language Extensions</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle navigation of Dylan Language Extensions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../library-reference/language-extensions/language-differences.html">Language Differences</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../library-reference/language-extensions/define-function.html">Function Definition</a></li>
@@ -381,18 +383,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../library-reference/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../documentation/index.html">All Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of All Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../documentation/index.html">Other Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of Other Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../news/index.html">News</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../documentation/cheatsheets/index.html">Cheat Sheets</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of Cheat Sheets</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/syntax.html">Syntax</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/conditionals.html">Conditionals</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/collections.html">Collections</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/iteration.html">Iteration</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/scheme.html">For Schemers</a></li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="../../documentation/publications.html">Publications</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../intro-dylan/index.html">Intro to Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of Intro to Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../intro-dylan/index.html">Intro to Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of Intro to Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/why-dylan.html">Why Dylan?</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/expressions-variables.html">Expressions &amp; Variables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/methods-generic-functions.html">Methods &amp; Generic Functions</a></li>
@@ -403,7 +397,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../corba-guide/index.html">CORBA Guide</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of CORBA Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../corba-guide/index.html">CORBA Guide</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of CORBA Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../corba-guide/preface.html">Preface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../corba-guide/intro.html">About Open Dylan CORBA</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../corba-guide/getstart.html">Quick Start Tutorial</a></li>
@@ -417,7 +411,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../corba-guide/idl-app.html">An IDL Binding for Dylan</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../building-with-duim/index.html">DUIM Guide</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of DUIM Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../building-with-duim/index.html">DUIM Guide</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of DUIM Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/preface.html">Preface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/intro.html">Introduction</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/design.html">Designing A Simple DUIM Application</a></li>
@@ -430,7 +424,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../duim-reference/index.html">DUIM Reference</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of DUIM Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../duim-reference/index.html">DUIM Reference</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of DUIM Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../duim-reference/conventions.html">Conventions in this Manual</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../duim-reference/geom.html">DUIM-Geometry Library</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../duim-reference/ext-geom.html">DUIM-Extended-Geometry Library</a></li>
@@ -443,7 +437,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../duim-reference/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../getting-started-ide/index.html">Getting Started / IDE</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Getting Started / IDE</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../getting-started-ide/index.html">Getting Started / IDE</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of Getting Started / IDE</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/preface.html">Preface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/quick-start.html">Quick Start</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/expanding.html">Fixing Bugs</a></li>
@@ -459,7 +453,9 @@
 <li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../release-notes/index.html">Release Notes</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../release-notes/index.html">Release Notes</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2026.1.html">Open Dylan 2026.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2025.1.html">Open Dylan 2025.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../release-notes/2024.1.html">Open Dylan 2024.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../release-notes/2023.1.html">Open Dylan 2023.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../release-notes/2022.1.html">Open Dylan 2022.1</a></li>
@@ -473,8 +469,8 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../style-guide/index.html">Style Guide</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../history/index.html">Dylan History</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" role="switch" type="checkbox"/><label for="toctree-checkbox-26"><div class="visually-hidden">Toggle navigation of Dylan History</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../../history/apple-dylan/index.html">Apple Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" role="switch" type="checkbox"/><label for="toctree-checkbox-27"><div class="visually-hidden">Toggle navigation of Apple Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../history/index.html">Dylan History</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle navigation of Dylan History</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../history/apple-dylan/index.html">Apple Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" role="switch" type="checkbox"/><label for="toctree-checkbox-26"><div class="visually-hidden">Toggle navigation of Apple Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../history/apple-dylan/apple-cambridge.html">Apple Cambridge</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../history/apple-dylan/eulogy.html">Apple Dylan Eulogy</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../history/apple-dylan/technology-release.html">Apple Dylan Technology Release</a></li>
@@ -535,81 +531,722 @@
         </div>
         <article role="main" id="furo-main-content">
           <section id="runtime-manager">
-<h1>Runtime Manager<a class="headerlink" href="#runtime-manager" title="Permalink to this heading">¶</a></h1>
+<h1>Runtime Manager<a class="headerlink" href="#runtime-manager" title="Link to this heading">¶</a></h1>
 <p>Open Dylan’s <em>runtime manager</em> is a set of components that underlie
 the development environment’s debugging functionality.</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="access-path.html">The ACCESS-PATH library</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="access-path.html#the-access-path-module">The ACCESS-PATH Module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="access-path.html#creating-and-attaching-access-paths">Creating and Attaching Access Paths</a></li>
-<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path-functions">Access Path Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#creating-and-attaching-access-paths">Creating and Attaching Access Paths</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[access-path]"><code class="docutils literal notranslate"><span class="pre">&lt;access-path&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[application-access-path]"><code class="docutils literal notranslate"><span class="pre">&lt;application-access-path&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[access-path-creation-error]"><code class="docutils literal notranslate"><span class="pre">&lt;access-path-creation-error&gt;</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path-functions">Access Path Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:access-path-abstract-handle"><code class="docutils literal notranslate"><span class="pre">access-path-abstract-handle</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:access-path-abstract-handle-setter"><code class="docutils literal notranslate"><span class="pre">access-path-abstract-handle-setter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:access-path-application-object"><code class="docutils literal notranslate"><span class="pre">access-path-application-object</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:access-path-application"><code class="docutils literal notranslate"><span class="pre">access-path-application</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:access-path-arguments"><code class="docutils literal notranslate"><span class="pre">access-path-arguments</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:access-path-process"><code class="docutils literal notranslate"><span class="pre">access-path-process</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:access-path-core-file"><code class="docutils literal notranslate"><span class="pre">access-path-core-file</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:$max-spy-function-arguments"><code class="docutils literal notranslate"><span class="pre">$max-spy-function-arguments</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:spy-function-argument-remote-vector"><code class="docutils literal notranslate"><span class="pre">spy-function-argument-remote-vector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:spy-function-argument-remote-vector-setter"><code class="docutils literal notranslate"><span class="pre">spy-function-argument-remote-vector-setter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:$max-stepping-locations"><code class="docutils literal notranslate"><span class="pre">$max-stepping-locations</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:stepping-locations-remote-vector"><code class="docutils literal notranslate"><span class="pre">stepping-locations-remote-vector</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:stepping-locations-remote-vector-setter"><code class="docutils literal notranslate"><span class="pre">stepping-locations-remote-vector-setter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:$access-ok"><code class="docutils literal notranslate"><span class="pre">$access-ok</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="access-path.html#modeling-remote-objects">Modeling Remote Objects</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="access-path.html#debugger-connections">Debugger Connections</a></li>
-<li class="toctree-l3"><a class="reference internal" href="access-path.html#remote-processes">Remote Processes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="access-path.html#remote-threads">Remote Threads</a></li>
-<li class="toctree-l3"><a class="reference internal" href="access-path.html#remote-libraries">Remote Libraries</a></li>
-<li class="toctree-l3"><a class="reference internal" href="access-path.html#remote-object-files">Remote Object Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#debugger-connections">Debugger Connections</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[debugger-connection]"><code class="docutils literal notranslate"><span class="pre">&lt;debugger-connection&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:*open-debugger-connections*"><code class="docutils literal notranslate"><span class="pre">*open-debugger-connections*</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:connection-hostname"><code class="docutils literal notranslate"><span class="pre">connection-hostname</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:connection-hostname-setter"><code class="docutils literal notranslate"><span class="pre">connection-hostname-setter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:connection-open?"><code class="docutils literal notranslate"><span class="pre">connection-open?</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:connection-open?-setter"><code class="docutils literal notranslate"><span class="pre">connection-open?-setter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:connection-password"><code class="docutils literal notranslate"><span class="pre">connection-password</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:describe-debugger-connection"><code class="docutils literal notranslate"><span class="pre">describe-debugger-connection</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:describe-debugger-connection([local-debugger-connection])"><code class="docutils literal notranslate"><span class="pre">describe-debugger-connection(&lt;local-debugger-connection&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:describe-debugger-connection([remote-debugger-connection])"><code class="docutils literal notranslate"><span class="pre">describe-debugger-connection(&lt;remote-debugger-connection&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:do-open-debugger-connections"><code class="docutils literal notranslate"><span class="pre">do-open-debugger-connections</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[access-connection]"><code class="docutils literal notranslate"><span class="pre">&lt;access-connection&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:make-access-connection"><code class="docutils literal notranslate"><span class="pre">make-access-connection</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:do-open-access-connections"><code class="docutils literal notranslate"><span class="pre">do-open-access-connections</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:connection-open-tethers"><code class="docutils literal notranslate"><span class="pre">connection-open-tethers</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:connection-process"><code class="docutils literal notranslate"><span class="pre">connection-process</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:connection-process-list"><code class="docutils literal notranslate"><span class="pre">connection-process-list</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:connection-process-list-setter"><code class="docutils literal notranslate"><span class="pre">connection-process-list-setter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:connection-process-setter"><code class="docutils literal notranslate"><span class="pre">connection-process-setter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:connection-network-address"><code class="docutils literal notranslate"><span class="pre">connection-network-address</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:host-machine"><code class="docutils literal notranslate"><span class="pre">host-machine</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:$local-hostname"><code class="docutils literal notranslate"><span class="pre">$local-hostname</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:do-processes"><code class="docutils literal notranslate"><span class="pre">do-processes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:get-process-page-fault-count"><code class="docutils literal notranslate"><span class="pre">get-process-page-fault-count</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#remote-processes">Remote Processes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[remote-process]"><code class="docutils literal notranslate"><span class="pre">&lt;remote-process&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:remote-process-name"><code class="docutils literal notranslate"><span class="pre">remote-process-name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:remote-process-system-identifier"><code class="docutils literal notranslate"><span class="pre">remote-process-system-identifier</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:remote-process-actual-identifier"><code class="docutils literal notranslate"><span class="pre">remote-process-actual-identifier</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#remote-threads">Remote Threads</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[remote-thread]"><code class="docutils literal notranslate"><span class="pre">&lt;remote-thread&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:do-threads"><code class="docutils literal notranslate"><span class="pre">do-threads</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:register-thread"><code class="docutils literal notranslate"><span class="pre">register-thread</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:thread-name"><code class="docutils literal notranslate"><span class="pre">thread-name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:thread-access-path"><code class="docutils literal notranslate"><span class="pre">thread-access-path</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:get-thread-cpu-time"><code class="docutils literal notranslate"><span class="pre">get-thread-cpu-time</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:get-process-wall-clock-time"><code class="docutils literal notranslate"><span class="pre">get-process-wall-clock-time</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:number-of-active-threads"><code class="docutils literal notranslate"><span class="pre">number-of-active-threads</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:thread-state"><code class="docutils literal notranslate"><span class="pre">thread-state</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:thread-priority"><code class="docutils literal notranslate"><span class="pre">thread-priority</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:thread-suspended?"><code class="docutils literal notranslate"><span class="pre">thread-suspended?</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:thread-permanently-suspended?"><code class="docutils literal notranslate"><span class="pre">thread-permanently-suspended?</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:thread-permanently-suspended?-setter"><code class="docutils literal notranslate"><span class="pre">thread-permanently-suspended?-setter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:stack-size"><code class="docutils literal notranslate"><span class="pre">stack-size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:stack-size-setter"><code class="docutils literal notranslate"><span class="pre">stack-size-setter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:stack-size-valid?"><code class="docutils literal notranslate"><span class="pre">stack-size-valid?</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:stack-size-valid?-setter"><code class="docutils literal notranslate"><span class="pre">stack-size-valid?-setter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:stack-trace-valid?"><code class="docutils literal notranslate"><span class="pre">stack-trace-valid?</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:stack-trace-valid?-setter"><code class="docutils literal notranslate"><span class="pre">stack-trace-valid?-setter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:thread-stack"><code class="docutils literal notranslate"><span class="pre">thread-stack</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:thread-stack-setter"><code class="docutils literal notranslate"><span class="pre">thread-stack-setter</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#remote-libraries">Remote Libraries</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[remote-library]"><code class="docutils literal notranslate"><span class="pre">&lt;remote-library&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:do-libraries"><code class="docutils literal notranslate"><span class="pre">do-libraries</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:library-version"><code class="docutils literal notranslate"><span class="pre">library-version</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:library-base-address"><code class="docutils literal notranslate"><span class="pre">library-base-address</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:library-image-name"><code class="docutils literal notranslate"><span class="pre">library-image-name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:library-core-name"><code class="docutils literal notranslate"><span class="pre">library-core-name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:library-object-files"><code class="docutils literal notranslate"><span class="pre">library-object-files</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:extend-remote-library"><code class="docutils literal notranslate"><span class="pre">extend-remote-library</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:find-or-make-library"><code class="docutils literal notranslate"><span class="pre">find-or-make-library</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:self-contained-component?"><code class="docutils literal notranslate"><span class="pre">self-contained-component?</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:self-contained-component?-setter"><code class="docutils literal notranslate"><span class="pre">self-contained-component?-setter</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#remote-object-files">Remote Object Files</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[remote-object-file]"><code class="docutils literal notranslate"><span class="pre">&lt;remote-object-file&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:remote-object-file-core-name"><code class="docutils literal notranslate"><span class="pre">remote-object-file-core-name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:remote-object-file-source-extension"><code class="docutils literal notranslate"><span class="pre">remote-object-file-source-extension</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:remote-object-file-object-extension"><code class="docutils literal notranslate"><span class="pre">remote-object-file-object-extension</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:remote-object-file-path"><code class="docutils literal notranslate"><span class="pre">remote-object-file-path</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:remote-object-file-library"><code class="docutils literal notranslate"><span class="pre">remote-object-file-library</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:remote-object-file-language"><code class="docutils literal notranslate"><span class="pre">remote-object-file-language</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:remote-object-file-client-data"><code class="docutils literal notranslate"><span class="pre">remote-object-file-client-data</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="access-path.html#reading-and-writing-memory">Reading and Writing Memory</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="access-path.html#functions-for-querying-page-protection">Functions for Querying Page Protection</a></li>
-<li class="toctree-l3"><a class="reference internal" href="access-path.html#functions-for-reading-and-writing">Functions for Reading and Writing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:[remote-value]"><code class="docutils literal notranslate"><span class="pre">&lt;remote-value&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:=([remote-value],[remote-value])"><code class="docutils literal notranslate"><span class="pre">=(&lt;remote-value&gt;,</span> <span class="pre">&lt;remote-value&gt;)</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:as-integer"><code class="docutils literal notranslate"><span class="pre">as-integer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:as-integer([remote-value])"><code class="docutils literal notranslate"><span class="pre">as-integer(&lt;remote-value&gt;)</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:as-integer([descriptor-pointer])"><code class="docutils literal notranslate"><span class="pre">as-integer(&lt;descriptor-pointer&gt;)</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:as-integer-losing-precision"><code class="docutils literal notranslate"><span class="pre">as-integer-losing-precision</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:as-remote-value"><code class="docutils literal notranslate"><span class="pre">as-remote-value</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:as-remote-pointer"><code class="docutils literal notranslate"><span class="pre">as-remote-pointer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:indexed-remote-value"><code class="docutils literal notranslate"><span class="pre">indexed-remote-value</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:byte-indexed-remote-value"><code class="docutils literal notranslate"><span class="pre">byte-indexed-remote-value</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:remote-value-byte-size"><code class="docutils literal notranslate"><span class="pre">remote-value-byte-size</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:tagged-remote-value-as-integer"><code class="docutils literal notranslate"><span class="pre">tagged-remote-value-as-integer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:tagged-remote-value-as-character"><code class="docutils literal notranslate"><span class="pre">tagged-remote-value-as-character</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:integer-as-tagged-remote-value"><code class="docutils literal notranslate"><span class="pre">integer-as-tagged-remote-value</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:character-as-tagged-remote-value"><code class="docutils literal notranslate"><span class="pre">character-as-tagged-remote-value</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:remote-value-["><code class="docutils literal notranslate"><span class="pre">remote-value-&lt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:remote-value-[="><code class="docutils literal notranslate"><span class="pre">remote-value-&lt;=</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:remote-value-="><code class="docutils literal notranslate"><span class="pre">remote-value-=</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:remote-value-as-string"><code class="docutils literal notranslate"><span class="pre">remote-value-as-string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:string-as-remote-value"><code class="docutils literal notranslate"><span class="pre">string-as-remote-value</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:remote-value-low-order-bits"><code class="docutils literal notranslate"><span class="pre">remote-value-low-order-bits</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:[remote-register]"><code class="docutils literal notranslate"><span class="pre">&lt;remote-register&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:[unassigned-remote-register]"><code class="docutils literal notranslate"><span class="pre">&lt;unassigned-remote-register&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:[active-remote-register]"><code class="docutils literal notranslate"><span class="pre">&lt;active-remote-register&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:register-name"><code class="docutils literal notranslate"><span class="pre">register-name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:do-registers"><code class="docutils literal notranslate"><span class="pre">do-registers</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:find-register"><code class="docutils literal notranslate"><span class="pre">find-register</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:active-register"><code class="docutils literal notranslate"><span class="pre">active-register</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:[remote-location]"><code class="docutils literal notranslate"><span class="pre">&lt;remote-location&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:[remote-type]"><code class="docutils literal notranslate"><span class="pre">&lt;remote-type&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#functions-for-querying-page-protection">Functions for Querying Page Protection</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:page-read-permission?"><code class="docutils literal notranslate"><span class="pre">page-read-permission?</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:page-write-permission?"><code class="docutils literal notranslate"><span class="pre">page-write-permission?</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:page-execute-permission?"><code class="docutils literal notranslate"><span class="pre">page-execute-permission?</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:remote-virtual-page-size"><code class="docutils literal notranslate"><span class="pre">remote-virtual-page-size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:remote-address-page-number"><code class="docutils literal notranslate"><span class="pre">remote-address-page-number</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:page-relative-address"><code class="docutils literal notranslate"><span class="pre">page-relative-address</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:calculate-stack-address"><code class="docutils literal notranslate"><span class="pre">calculate-stack-address</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="access-path.html#controlling-the-application">Controlling the Application</a></li>
-<li class="toctree-l2"><a class="reference internal" href="access-path.html#remote-function-calling">Remote Function Calling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="access-path.html#breakpoints-and-watchpoints">Breakpoints and Watchpoints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#functions-for-reading-and-writing">Functions for Reading and Writing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[remote-access-violation-error]"><code class="docutils literal notranslate"><span class="pre">&lt;remote-access-violation-error&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:read-value"><code class="docutils literal notranslate"><span class="pre">read-value</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:read-value([access-path],[active-remote-register])"><code class="docutils literal notranslate"><span class="pre">read-value(&lt;access-path&gt;,</span> <span class="pre">&lt;active-remote-register&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:read-value([access-path],[remote-value])"><code class="docutils literal notranslate"><span class="pre">read-value(&lt;access-path&gt;,</span> <span class="pre">&lt;remote-value&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:write-value"><code class="docutils literal notranslate"><span class="pre">write-value</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:write-value([access-path],[active-remote-register],[remote-value])"><code class="docutils literal notranslate"><span class="pre">write-value(&lt;access-path&gt;,</span> <span class="pre">&lt;active-remote-register&gt;,</span> <span class="pre">&lt;remote-value&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:write-value([access-path],[remote-value],[remote-value])"><code class="docutils literal notranslate"><span class="pre">write-value(&lt;access-path&gt;,</span> <span class="pre">&lt;remote-value&gt;,</span> <span class="pre">&lt;remote-value&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:read-8b"><code class="docutils literal notranslate"><span class="pre">read-8b</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:write-8b"><code class="docutils literal notranslate"><span class="pre">write-8b</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:read-16b"><code class="docutils literal notranslate"><span class="pre">read-16b</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:write-16b"><code class="docutils literal notranslate"><span class="pre">write-16b</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:read-32b"><code class="docutils literal notranslate"><span class="pre">read-32b</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:write-32b"><code class="docutils literal notranslate"><span class="pre">write-32b</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:read-64b"><code class="docutils literal notranslate"><span class="pre">read-64b</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:write-64b"><code class="docutils literal notranslate"><span class="pre">write-64b</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:read-single-float"><code class="docutils literal notranslate"><span class="pre">read-single-float</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:read-single-float([access-path],[active-remote-register])"><code class="docutils literal notranslate"><span class="pre">read-single-float(&lt;access-path&gt;,</span> <span class="pre">&lt;active-remote-register&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:read-single-float([access-path],[remote-value])"><code class="docutils literal notranslate"><span class="pre">read-single-float(&lt;access-path&gt;,</span> <span class="pre">&lt;remote-value&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:write-single-float"><code class="docutils literal notranslate"><span class="pre">write-single-float</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:write-single-float([access-path],[active-remote-register],[single-float])"><code class="docutils literal notranslate"><span class="pre">write-single-float(&lt;access-path&gt;,</span> <span class="pre">&lt;active-remote-register&gt;,</span> <span class="pre">&lt;single-float&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:write-single-float([access-path],[remote-value],[single-float])"><code class="docutils literal notranslate"><span class="pre">write-single-float(&lt;access-path&gt;,</span> <span class="pre">&lt;remote-value&gt;,</span> <span class="pre">&lt;single-float&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:read-double-float"><code class="docutils literal notranslate"><span class="pre">read-double-float</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:read-double-float([access-path],[active-remote-register])"><code class="docutils literal notranslate"><span class="pre">read-double-float(&lt;access-path&gt;,</span> <span class="pre">&lt;active-remote-register&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:read-double-float([access-path],[remote-value])"><code class="docutils literal notranslate"><span class="pre">read-double-float(&lt;access-path&gt;,</span> <span class="pre">&lt;remote-value&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:write-double-float"><code class="docutils literal notranslate"><span class="pre">write-double-float</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:write-double-float([access-path],[active-remote-register],[double-float])"><code class="docutils literal notranslate"><span class="pre">write-double-float(&lt;access-path&gt;,</span> <span class="pre">&lt;active-remote-register&gt;,</span> <span class="pre">&lt;double-float&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:write-double-float([access-path],[remote-value],[double-float])"><code class="docutils literal notranslate"><span class="pre">write-double-float(&lt;access-path&gt;,</span> <span class="pre">&lt;remote-value&gt;,</span> <span class="pre">&lt;double-float&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:read-byte-string"><code class="docutils literal notranslate"><span class="pre">read-byte-string</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:write-byte-string"><code class="docutils literal notranslate"><span class="pre">write-byte-string</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="access-path.html#controlling-the-application">Controlling the Application</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:restart"><code class="docutils literal notranslate"><span class="pre">restart</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:stop"><code class="docutils literal notranslate"><span class="pre">stop</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:continue"><code class="docutils literal notranslate"><span class="pre">continue</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:continue-unhandled"><code class="docutils literal notranslate"><span class="pre">continue-unhandled</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:suspend-thread"><code class="docutils literal notranslate"><span class="pre">suspend-thread</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:resume-thread"><code class="docutils literal notranslate"><span class="pre">resume-thread</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:dylan-resume-thread"><code class="docutils literal notranslate"><span class="pre">dylan-resume-thread</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:step"><code class="docutils literal notranslate"><span class="pre">step</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:step-over"><code class="docutils literal notranslate"><span class="pre">step-over</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:step-out"><code class="docutils literal notranslate"><span class="pre">step-out</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:application-state-running?"><code class="docutils literal notranslate"><span class="pre">application-state-running?</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:application-state-stopped?"><code class="docutils literal notranslate"><span class="pre">application-state-stopped?</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:application-state-unstarted?"><code class="docutils literal notranslate"><span class="pre">application-state-unstarted?</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:application-state-post-mortem?"><code class="docutils literal notranslate"><span class="pre">application-state-post-mortem?</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:kill-application"><code class="docutils literal notranslate"><span class="pre">kill-application</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:close-application"><code class="docutils literal notranslate"><span class="pre">close-application</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:register-exit-process-function"><code class="docutils literal notranslate"><span class="pre">register-exit-process-function</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="access-path.html#remote-function-calling">Remote Function Calling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:remote-call"><code class="docutils literal notranslate"><span class="pre">remote-call</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:remote-call-result"><code class="docutils literal notranslate"><span class="pre">remote-call-result</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:remote-restore-context"><code class="docutils literal notranslate"><span class="pre">remote-restore-context</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:remote-call-spy"><code class="docutils literal notranslate"><span class="pre">remote-call-spy</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="access-path.html#breakpoints-and-watchpoints">Breakpoints and Watchpoints</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:enable-breakpoint"><code class="docutils literal notranslate"><span class="pre">enable-breakpoint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:disable-breakpoint"><code class="docutils literal notranslate"><span class="pre">disable-breakpoint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:query-breakpoint?"><code class="docutils literal notranslate"><span class="pre">query-breakpoint?</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:enable-read-watchpoint"><code class="docutils literal notranslate"><span class="pre">enable-read-watchpoint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:disable-read-watchpoint"><code class="docutils literal notranslate"><span class="pre">disable-read-watchpoint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:query-read-watchpoint?"><code class="docutils literal notranslate"><span class="pre">query-read-watchpoint?</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:enable-write-watchpoint"><code class="docutils literal notranslate"><span class="pre">enable-write-watchpoint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:disable-write-watchpoint"><code class="docutils literal notranslate"><span class="pre">disable-write-watchpoint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:query-write-watchpoint?"><code class="docutils literal notranslate"><span class="pre">query-write-watchpoint?</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:recover-breakpoint"><code class="docutils literal notranslate"><span class="pre">recover-breakpoint</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="access-path.html#stop-reasons">Stop Reasons</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="access-path.html#receiving-and-processing-stop-reasons">Receiving and Processing Stop Reasons</a></li>
-<li class="toctree-l3"><a class="reference internal" href="access-path.html#stepping-at-source-code-level">Stepping at Source Code Level</a></li>
-<li class="toctree-l3"><a class="reference internal" href="access-path.html#the-class-hierarchy-of-stop-reasons">The Class Hierarchy of Stop Reasons</a></li>
-<li class="toctree-l3"><a class="reference internal" href="access-path.html#first-chance-exceptions">First-Chance Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#receiving-and-processing-stop-reasons">Receiving and Processing Stop Reasons</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:wait-for-stop-reason"><code class="docutils literal notranslate"><span class="pre">wait-for-stop-reason</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:inform-profiling-started"><code class="docutils literal notranslate"><span class="pre">inform-profiling-started</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:inform-profiling-stopped"><code class="docutils literal notranslate"><span class="pre">inform-profiling-stopped</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#stepping-at-source-code-level">Stepping at Source Code Level</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:$step-operation-step-into"><code class="docutils literal notranslate"><span class="pre">$step-operation-step-into</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:$step-operation-step-out"><code class="docutils literal notranslate"><span class="pre">$step-operation-step-out</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:$step-operation-step-over"><code class="docutils literal notranslate"><span class="pre">$step-operation-step-over</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:apply-thread-stepping-control"><code class="docutils literal notranslate"><span class="pre">apply-thread-stepping-control</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:remove-all-stepping-control-for-thread"><code class="docutils literal notranslate"><span class="pre">remove-all-stepping-control-for-thread</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#the-class-hierarchy-of-stop-reasons">The Class Hierarchy of Stop Reasons</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[internal-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;internal-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[basic-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;basic-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[language-level-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;language-level-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[unhandled-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;unhandled-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[external-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;external-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[profiler-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;profiler-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[profiler-unhandled-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;profiler-unhandled-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[timeout-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;timeout-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:stop-reason-process"><code class="docutils literal notranslate"><span class="pre">stop-reason-process</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:stop-reason-thread"><code class="docutils literal notranslate"><span class="pre">stop-reason-thread</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[process-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;process-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[create-process-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;create-process-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:stop-reason-executable-component"><code class="docutils literal notranslate"><span class="pre">stop-reason-executable-component</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[exit-process-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;exit-process-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:stop-reason-process-exit-code"><code class="docutils literal notranslate"><span class="pre">stop-reason-process-exit-code</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[thread-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;thread-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[create-thread-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;create-thread-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:create-thread-event-handler"><code class="docutils literal notranslate"><span class="pre">create-thread-event-handler</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:create-thread-event-handler([access-path])"><code class="docutils literal notranslate"><span class="pre">create-thread-event-handler(&lt;access-path&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:interactive-thread-break-event-handler([access-path])"><code class="docutils literal notranslate"><span class="pre">interactive-thread-break-event-handler(&lt;access-path&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[exit-thread-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;exit-thread-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:interactive-thread-break-event-handler"><code class="docutils literal notranslate"><span class="pre">interactive-thread-break-event-handler</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:stop-reason-thread-exit-code"><code class="docutils literal notranslate"><span class="pre">stop-reason-thread-exit-code</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[library-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;library-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:stop-reason-library"><code class="docutils literal notranslate"><span class="pre">stop-reason-library</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[load-library-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;load-library-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[unload-library-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;unload-library-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[rip-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;rip-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:stop-reason-exit-code"><code class="docutils literal notranslate"><span class="pre">stop-reason-exit-code</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[debug-point-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;debug-point-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:stop-reason-debug-point-address"><code class="docutils literal notranslate"><span class="pre">stop-reason-debug-point-address</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[breakpoint-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;breakpoint-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[single-step-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;single-step-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[source-step-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;source-step-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[source-step-into-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;source-step-into-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[source-step-out-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;source-step-out-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[source-step-over-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;source-step-over-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[watchpoint-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;watchpoint-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[read-watchpoint-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;read-watchpoint-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[write-watchpoint-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;write-watchpoint-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[exception-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;exception-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:stop-reason-exception-address"><code class="docutils literal notranslate"><span class="pre">stop-reason-exception-address</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:stop-reason-exception-first-chance?"><code class="docutils literal notranslate"><span class="pre">stop-reason-exception-first-chance?</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[invoke-debugger-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;invoke-debugger-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[system-initialized-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;system-initialized-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[system-invoke-debugger-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;system-invoke-debugger-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[memory-exception-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;memory-exception-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[access-violation-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;access-violation-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:stop-reason-access-violation-address"><code class="docutils literal notranslate"><span class="pre">stop-reason-access-violation-address</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:stop-reason-access-violation-operation"><code class="docutils literal notranslate"><span class="pre">stop-reason-access-violation-operation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:$access-violation-on-execute"><code class="docutils literal notranslate"><span class="pre">$access-violation-on-execute</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:$access-violation-on-read"><code class="docutils literal notranslate"><span class="pre">$access-violation-on-read</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:$access-violation-on-write"><code class="docutils literal notranslate"><span class="pre">$access-violation-on-write</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:$access-violation-undecidable"><code class="docutils literal notranslate"><span class="pre">$access-violation-undecidable</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[array-bounds-exception-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;array-bounds-exception-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[instruction-exception-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;instruction-exception-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[illegal-instruction-exception-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;illegal-instruction-exception-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[privileged-instruction-exception-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;privileged-instruction-exception-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[arithmetic-exception-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;arithmetic-exception-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[float-exception-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;float-exception-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[denormal-exception-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;denormal-exception-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[float-divide-by-zero-exception-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;float-divide-by-zero-exception-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[inexact-result-exception-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;inexact-result-exception-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[invalid-float-operation-exception-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;invalid-float-operation-exception-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[float-overflow-exception-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;float-overflow-exception-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[float-underflow-exception-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;float-underflow-exception-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[float-stack-check-exception-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;float-stack-check-exception-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[integer-exception-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;integer-exception-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[integer-divide-by-zero-exception-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;integer-divide-by-zero-exception-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[integer-overflow-exception-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;integer-overflow-exception-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[noncontinuable-exception-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;noncontinuable-exception-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[stack-overflow-exception-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;stack-overflow-exception-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[unclassified-exception-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;unclassified-exception-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[output-debug-string-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;output-debug-string-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:stop-reason-debug-string"><code class="docutils literal notranslate"><span class="pre">stop-reason-debug-string</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#first-chance-exceptions">First-Chance Exceptions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:first-chance-exception?"><code class="docutils literal notranslate"><span class="pre">first-chance-exception?</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:receivable-first-chance-exceptions"><code class="docutils literal notranslate"><span class="pre">receivable-first-chance-exceptions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:receiving-first-chance?"><code class="docutils literal notranslate"><span class="pre">receiving-first-chance?</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:receiving-first-chance?-setter"><code class="docutils literal notranslate"><span class="pre">receiving-first-chance?-setter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:exception-name"><code class="docutils literal notranslate"><span class="pre">exception-name</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="access-path.html#stack-backtraces">Stack Backtraces</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="access-path.html#stack-frames">Stack Frames</a></li>
-<li class="toctree-l3"><a class="reference internal" href="access-path.html#frame-arguments-and-lexicals">Frame Arguments and Lexicals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#stack-frames">Stack Frames</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[stack-frame]"><code class="docutils literal notranslate"><span class="pre">&lt;stack-frame&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:link-next"><code class="docutils literal notranslate"><span class="pre">link-next</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:link-next-setter"><code class="docutils literal notranslate"><span class="pre">link-next-setter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:link-previous"><code class="docutils literal notranslate"><span class="pre">link-previous</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:link-previous-setter"><code class="docutils literal notranslate"><span class="pre">link-previous-setter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[function-frame]"><code class="docutils literal notranslate"><span class="pre">&lt;function-frame&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:initialize-stack-trace"><code class="docutils literal notranslate"><span class="pre">initialize-stack-trace</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:number-of-frames-on-stack"><code class="docutils literal notranslate"><span class="pre">number-of-frames-on-stack</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:next-frame"><code class="docutils literal notranslate"><span class="pre">next-frame</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:previous-frame"><code class="docutils literal notranslate"><span class="pre">previous-frame</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:frame-pointer"><code class="docutils literal notranslate"><span class="pre">frame-pointer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:frame-return-address"><code class="docutils literal notranslate"><span class="pre">frame-return-address</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:frame-instruction-address"><code class="docutils literal notranslate"><span class="pre">frame-instruction-address</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:older-stack-frame?"><code class="docutils literal notranslate"><span class="pre">older-stack-frame?</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:register-interactive-code-segment"><code class="docutils literal notranslate"><span class="pre">register-interactive-code-segment</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:lexicals"><code class="docutils literal notranslate"><span class="pre">lexicals</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:lexicals-setter"><code class="docutils literal notranslate"><span class="pre">lexicals-setter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:stack-frame-pointer"><code class="docutils literal notranslate"><span class="pre">stack-frame-pointer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:frame-thread"><code class="docutils literal notranslate"><span class="pre">frame-thread</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:full-lexicals-read?"><code class="docutils literal notranslate"><span class="pre">full-lexicals-read?</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:full-lexicals-read?-setter"><code class="docutils literal notranslate"><span class="pre">full-lexicals-read?-setter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:partial-lexicals-read?"><code class="docutils literal notranslate"><span class="pre">partial-lexicals-read?</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:partial-lexicals-read?-setter"><code class="docutils literal notranslate"><span class="pre">partial-lexicals-read?-setter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:lexicals-count"><code class="docutils literal notranslate"><span class="pre">lexicals-count</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:lexicals-count-setter"><code class="docutils literal notranslate"><span class="pre">lexicals-count-setter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:lexicals-nub-table"><code class="docutils literal notranslate"><span class="pre">lexicals-nub-table</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:lexicals-nub-table-setter"><code class="docutils literal notranslate"><span class="pre">lexicals-nub-table-setter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:next-instruction"><code class="docutils literal notranslate"><span class="pre">next-instruction</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#frame-arguments-and-lexicals">Frame Arguments and Lexicals</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:[lexical-variable]"><code class="docutils literal notranslate"><span class="pre">&lt;lexical-variable&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:lexical-variable-name"><code class="docutils literal notranslate"><span class="pre">lexical-variable-name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:lexical-variable-address"><code class="docutils literal notranslate"><span class="pre">lexical-variable-address</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:do-frame-arguments"><code class="docutils literal notranslate"><span class="pre">do-frame-arguments</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:do-frame-lexicals"><code class="docutils literal notranslate"><span class="pre">do-frame-lexicals</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="access-path.html#access-path:access-path:find-lexical-variable"><code class="docutils literal notranslate"><span class="pre">find-lexical-variable</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="access-path.html#continuing-and-restarting-frames">Continuing and Restarting Frames</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="access-path.html#symbol-lookup">Symbol Lookup</a></li>
-<li class="toctree-l2"><a class="reference internal" href="access-path.html#disassembly">Disassembly</a></li>
-<li class="toctree-l2"><a class="reference internal" href="access-path.html#source-code">Source Code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="access-path.html#dylan-specific-extensions">Dylan-specific Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="access-path.html#symbol-lookup">Symbol Lookup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:[remote-symbol]"><code class="docutils literal notranslate"><span class="pre">&lt;remote-symbol&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:[remote-function]"><code class="docutils literal notranslate"><span class="pre">&lt;remote-function&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:remote-function-debug-start"><code class="docutils literal notranslate"><span class="pre">remote-function-debug-start</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:remote-function-debug-end"><code class="docutils literal notranslate"><span class="pre">remote-function-debug-end</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:remote-function-end"><code class="docutils literal notranslate"><span class="pre">remote-function-end</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:first-frame-breakable-address"><code class="docutils literal notranslate"><span class="pre">first-frame-breakable-address</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:first-frame-breakable-address([remote-symbol])"><code class="docutils literal notranslate"><span class="pre">first-frame-breakable-address(&lt;remote-symbol&gt;)</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:first-frame-breakable-address([remote-function])"><code class="docutils literal notranslate"><span class="pre">first-frame-breakable-address(&lt;remote-function&gt;)</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:last-frame-breakable-address"><code class="docutils literal notranslate"><span class="pre">last-frame-breakable-address</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:last-frame-breakable-address([remote-symbol])"><code class="docutils literal notranslate"><span class="pre">last-frame-breakable-address(&lt;remote-symbol&gt;)</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:last-frame-breakable-address([remote-function])"><code class="docutils literal notranslate"><span class="pre">last-frame-breakable-address(&lt;remote-function&gt;)</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:remote-symbol-name"><code class="docutils literal notranslate"><span class="pre">remote-symbol-name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:remote-symbol-address"><code class="docutils literal notranslate"><span class="pre">remote-symbol-address</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:remote-symbol-language"><code class="docutils literal notranslate"><span class="pre">remote-symbol-language</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:$symbol-language-basic"><code class="docutils literal notranslate"><span class="pre">$symbol-language-basic</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:$symbol-language-c"><code class="docutils literal notranslate"><span class="pre">$symbol-language-c</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:$symbol-language-c++"><code class="docutils literal notranslate"><span class="pre">$symbol-language-c++</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:$symbol-language-cobol"><code class="docutils literal notranslate"><span class="pre">$symbol-language-cobol</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:$symbol-language-dylan"><code class="docutils literal notranslate"><span class="pre">$symbol-language-dylan</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:$symbol-language-fortran"><code class="docutils literal notranslate"><span class="pre">$symbol-language-fortran</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:$symbol-language-masm"><code class="docutils literal notranslate"><span class="pre">$symbol-language-masm</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:$symbol-language-pascal"><code class="docutils literal notranslate"><span class="pre">$symbol-language-pascal</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:remote-symbol-library"><code class="docutils literal notranslate"><span class="pre">remote-symbol-library</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:remote-symbol-object-file"><code class="docutils literal notranslate"><span class="pre">remote-symbol-object-file</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:remote-symbol-storage-status"><code class="docutils literal notranslate"><span class="pre">remote-symbol-storage-status</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:remote-symbol-source-location-map"><code class="docutils literal notranslate"><span class="pre">remote-symbol-source-location-map</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:remote-symbol-source-location-map-setter"><code class="docutils literal notranslate"><span class="pre">remote-symbol-source-location-map-setter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:definitely-no-source-locations"><code class="docutils literal notranslate"><span class="pre">definitely-no-source-locations</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:definitely-no-source-locations-setter"><code class="docutils literal notranslate"><span class="pre">definitely-no-source-locations-setter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:do-symbols"><code class="docutils literal notranslate"><span class="pre">do-symbols</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:nearest-symbols"><code class="docutils literal notranslate"><span class="pre">nearest-symbols</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:find-symbol"><code class="docutils literal notranslate"><span class="pre">find-symbol</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:symbol-relative-address"><code class="docutils literal notranslate"><span class="pre">symbol-relative-address</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:address-within-definition?"><code class="docutils literal notranslate"><span class="pre">address-within-definition?</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:address-within-definition?([remote-symbol],[remote-value])"><code class="docutils literal notranslate"><span class="pre">address-within-definition?(&lt;remote-symbol&gt;,</span> <span class="pre">&lt;remote-value&gt;)</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:address-within-definition?([remote-function],[remote-value])"><code class="docutils literal notranslate"><span class="pre">address-within-definition?(&lt;remote-function&gt;,</span> <span class="pre">&lt;remote-value&gt;)</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:function-bounding-addresses"><code class="docutils literal notranslate"><span class="pre">function-bounding-addresses</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:classify-symbolic-name"><code class="docutils literal notranslate"><span class="pre">classify-symbolic-name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="access-path.html#disassembly">Disassembly</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:interpret-instruction-at-current-location"><code class="docutils literal notranslate"><span class="pre">interpret-instruction-at-current-location</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:$flowcalldirect"><code class="docutils literal notranslate"><span class="pre">$flowcalldirect</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:$flowcallindirect"><code class="docutils literal notranslate"><span class="pre">$flowcallindirect</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:$flowillegal"><code class="docutils literal notranslate"><span class="pre">$flowillegal</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:$flowinterrupt"><code class="docutils literal notranslate"><span class="pre">$flowinterrupt</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:$flowjumpdirect"><code class="docutils literal notranslate"><span class="pre">$flowjumpdirect</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:$flowjumpindirect"><code class="docutils literal notranslate"><span class="pre">$flowjumpindirect</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:$flowlinear"><code class="docutils literal notranslate"><span class="pre">$flowlinear</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:$flowreturn"><code class="docutils literal notranslate"><span class="pre">$flowreturn</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="access-path.html#source-code">Source Code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:[source-location-map]"><code class="docutils literal notranslate"><span class="pre">&lt;source-location-map&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:function-source-location-map"><code class="docutils literal notranslate"><span class="pre">function-source-location-map</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:source-filename"><code class="docutils literal notranslate"><span class="pre">source-filename</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:number-of-locations"><code class="docutils literal notranslate"><span class="pre">number-of-locations</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:base-linenumber"><code class="docutils literal notranslate"><span class="pre">base-linenumber</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:base-address"><code class="docutils literal notranslate"><span class="pre">base-address</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:source-location-description"><code class="docutils literal notranslate"><span class="pre">source-location-description</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:nearest-source-locations"><code class="docutils literal notranslate"><span class="pre">nearest-source-locations</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:resolve-source-location"><code class="docutils literal notranslate"><span class="pre">resolve-source-location</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:function-recorded-source-locations"><code class="docutils literal notranslate"><span class="pre">function-recorded-source-locations</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="access-path.html#dylan-specific-extensions">Dylan-specific Extensions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:dylan-thread-environment-block-address"><code class="docutils literal notranslate"><span class="pre">dylan-thread-environment-block-address</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:dylan-thread-mv-buffer-live?"><code class="docutils literal notranslate"><span class="pre">dylan-thread-mv-buffer-live?</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:dylan-calculate-destination-for-step-into"><code class="docutils literal notranslate"><span class="pre">dylan-calculate-destination-for-step-into</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="access-path.html#access-path:access-path:dylan-current-function"><code class="docutils literal notranslate"><span class="pre">dylan-current-function</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="debugger-manager.html">The DEBUGGER-MANAGER library</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#introduction">Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#model-of-the-debugger-manager">Model of the Debugger Manager</a></li>
-<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#debug-targets">Debug Targets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#debugger-transaction-caching-utilities">Debugger Transaction Caching Utilities</a></li>
-<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#stop-reasons">Stop Reasons</a></li>
-<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#managing-application-control">Managing Application Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#debug-targets">Debug Targets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[debug-target]"><code class="docutils literal notranslate"><span class="pre">&lt;debug-target&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:debug-target-access-path"><code class="docutils literal notranslate"><span class="pre">debug-target-access-path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:debug-target-symbol-table"><code class="docutils literal notranslate"><span class="pre">debug-target-symbol-table</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:debug-target-compilation-context"><code class="docutils literal notranslate"><span class="pre">debug-target-compilation-context</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:debug-target-compilation-context-setter"><code class="docutils literal notranslate"><span class="pre">debug-target-compilation-context-setter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:find-library-called"><code class="docutils literal notranslate"><span class="pre">find-library-called</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:obtain-component-name"><code class="docutils literal notranslate"><span class="pre">obtain-component-name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:obtain-component-name([debug-target],[string])"><code class="docutils literal notranslate"><span class="pre">obtain-component-name(&lt;debug-target&gt;,</span> <span class="pre">&lt;string&gt;)</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[interactor-return-breakpoint]"><code class="docutils literal notranslate"><span class="pre">&lt;interactor-return-breakpoint&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:interaction-request-application-state"><code class="docutils literal notranslate"><span class="pre">interaction-request-application-state</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:interaction-request-application-state([interactor-return-breakpoint])"><code class="docutils literal notranslate"><span class="pre">interaction-request-application-state(&lt;interactor-return-breakpoint&gt;)</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:interaction-request-application-state-setter"><code class="docutils literal notranslate"><span class="pre">interaction-request-application-state-setter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:interaction-request-application-state-setter([object],[interactor-return-breakpoint])"><code class="docutils literal notranslate"><span class="pre">interaction-request-application-state-setter(&lt;object&gt;,</span> <span class="pre">&lt;interactor-return-breakpoint&gt;)</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#debugger-transaction-caching-utilities">Debugger Transaction Caching Utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[page-relative-object-table]"><code class="docutils literal notranslate"><span class="pre">&lt;page-relative-object-table&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[page-relative-object-table-entry]"><code class="docutils literal notranslate"><span class="pre">&lt;page-relative-object-table-entry&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:add-object"><code class="docutils literal notranslate"><span class="pre">add-object</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:add-object([page-relative-object-table],[remote-value],[page-relative-object-table-entry])"><code class="docutils literal notranslate"><span class="pre">add-object(&lt;page-relative-object-table&gt;,</span> <span class="pre">&lt;remote-value&gt;,</span> <span class="pre">&lt;page-relative-object-table-entry&gt;)</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:enquire-object"><code class="docutils literal notranslate"><span class="pre">enquire-object</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:enquire-object([page-relative-object-table],[remote-value])"><code class="docutils literal notranslate"><span class="pre">enquire-object(&lt;page-relative-object-table&gt;,</span> <span class="pre">&lt;remote-value&gt;)</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:remove-object"><code class="docutils literal notranslate"><span class="pre">remove-object</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:remove-object([page-relative-object-table],[remote-value])"><code class="docutils literal notranslate"><span class="pre">remove-object(&lt;page-relative-object-table&gt;,</span> <span class="pre">&lt;remote-value&gt;)</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:invalidate-page-relative-object-table"><code class="docutils literal notranslate"><span class="pre">invalidate-page-relative-object-table</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:invalidate-page-relative-object-table([page-relative-object-table])"><code class="docutils literal notranslate"><span class="pre">invalidate-page-relative-object-table(&lt;page-relative-object-table&gt;)</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#stop-reasons">Stop Reasons</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:stop-reason-debug-points"><code class="docutils literal notranslate"><span class="pre">stop-reason-debug-points</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[debugger-generated-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;debugger-generated-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:stop-reason-client-data"><code class="docutils literal notranslate"><span class="pre">stop-reason-client-data</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[debugger-stop-application-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;debugger-stop-application-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[dylan-invoke-debugger-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;dylan-invoke-debugger-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:dylan-error-message-string"><code class="docutils literal notranslate"><span class="pre">dylan-error-message-string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[dylan-debug-message-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;dylan-debug-message-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:dylan-debug-message-string"><code class="docutils literal notranslate"><span class="pre">dylan-debug-message-string</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[source-code-alignment-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;source-code-alignment-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[interactor-return-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;interactor-return-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[interactive-thread-initialized-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;interactive-thread-initialized-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:interactive-thread-name"><code class="docutils literal notranslate"><span class="pre">interactive-thread-name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:interactor-transaction-id"><code class="docutils literal notranslate"><span class="pre">interactor-transaction-id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:interactor-return-values"><code class="docutils literal notranslate"><span class="pre">interactor-return-values</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:setup-interactor"><code class="docutils literal notranslate"><span class="pre">setup-interactor</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:handle-interactor-return"><code class="docutils literal notranslate"><span class="pre">handle-interactor-return</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:handle-interactor-return([debug-target],[remote-thread],[object])"><code class="docutils literal notranslate"><span class="pre">handle-interactor-return(&lt;debug-target&gt;,</span> <span class="pre">&lt;remote-thread&gt;,</span> <span class="pre">&lt;object&gt;)</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[class-breakpoint-stop-reason]"><code class="docutils literal notranslate"><span class="pre">&lt;class-breakpoint-stop-reason&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:class-breakpoint-class"><code class="docutils literal notranslate"><span class="pre">class-breakpoint-class</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:class-breakpoint-size"><code class="docutils literal notranslate"><span class="pre">class-breakpoint-size</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#managing-application-control">Managing Application Control</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:stop-application"><code class="docutils literal notranslate"><span class="pre">stop-application</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:kill-application"><code class="docutils literal notranslate"><span class="pre">kill-application</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:restart-application"><code class="docutils literal notranslate"><span class="pre">restart-application</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:manage-running-application"><code class="docutils literal notranslate"><span class="pre">manage-running-application</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:application-stopped?"><code class="docutils literal notranslate"><span class="pre">application-stopped?</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:application-stopped?-setter"><code class="docutils literal notranslate"><span class="pre">application-stopped?-setter</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#registering-debug-points">Registering Debug Points</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[debug-point]"><code class="docutils literal notranslate"><span class="pre">&lt;debug-point&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[breakpoint]"><code class="docutils literal notranslate"><span class="pre">&lt;breakpoint&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[watchpoint]"><code class="docutils literal notranslate"><span class="pre">&lt;watchpoint&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[tracepoint]"><code class="docutils literal notranslate"><span class="pre">&lt;tracepoint&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[entry-tracepoint]"><code class="docutils literal notranslate"><span class="pre">&lt;entry-tracepoint&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[return-tracepoint]"><code class="docutils literal notranslate"><span class="pre">&lt;return-tracepoint&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:make-return-tracepoint"><code class="docutils literal notranslate"><span class="pre">make-return-tracepoint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:make-return-tracepoint([debug-target],[entry-tracepoint],[remote-thread])"><code class="docutils literal notranslate"><span class="pre">make-return-tracepoint(&lt;debug-target&gt;,</span> <span class="pre">&lt;entry-tracepoint&gt;,</span> <span class="pre">&lt;remote-thread&gt;)</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:make-return-tracepoint([debug-target],[starting-dynamic-initialization],[remote-thread])"><code class="docutils literal notranslate"><span class="pre">make-return-tracepoint(&lt;debug-target&gt;,</span> <span class="pre">&lt;starting-dynamic-initialization&gt;,</span> <span class="pre">&lt;remote-thread&gt;)</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:initialize-return-tracepoint"><code class="docutils literal notranslate"><span class="pre">initialize-return-tracepoint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:initialize-return-tracepoint([debug-target],[return-tracepoint],[remote-thread])"><code class="docutils literal notranslate"><span class="pre">initialize-return-tracepoint(&lt;debug-target&gt;,</span> <span class="pre">&lt;return-tracepoint&gt;,</span> <span class="pre">&lt;remote-thread&gt;)</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:corresponding-entry-tracepoint"><code class="docutils literal notranslate"><span class="pre">corresponding-entry-tracepoint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:dylan-trace-entry-arguments"><code class="docutils literal notranslate"><span class="pre">dylan-trace-entry-arguments</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:dylan-trace-return-values"><code class="docutils literal notranslate"><span class="pre">dylan-trace-return-values</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:handle-debug-point-event"><code class="docutils literal notranslate"><span class="pre">handle-debug-point-event</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:register-debug-point"><code class="docutils literal notranslate"><span class="pre">register-debug-point</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:deregister-debug-point"><code class="docutils literal notranslate"><span class="pre">deregister-debug-point</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[debug-point-error]"><code class="docutils literal notranslate"><span class="pre">&lt;debug-point-error&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:application-running-on-code-entry?"><code class="docutils literal notranslate"><span class="pre">application-running-on-code-entry?</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:application-running-on-code-entry?-setter"><code class="docutils literal notranslate"><span class="pre">application-running-on-code-entry?-setter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:application-just-interacted?"><code class="docutils literal notranslate"><span class="pre">application-just-interacted?</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:application-just-interacted?-setter"><code class="docutils literal notranslate"><span class="pre">application-just-interacted?-setter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:interactor-deferred-id-table"><code class="docutils literal notranslate"><span class="pre">interactor-deferred-id-table</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#example-simple-function-tracing">Example - simple function tracing</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#dylan-name-context">Dylan Name Context</a></li>
-<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#transactions-on-dylan-values">Transactions on dylan values</a></li>
-<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#printing-and-inspecting-dylan-objects">Printing and Inspecting Dylan Objects</a></li>
-<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#mapping-between-symbolic-names-and-objects">Mapping Between Symbolic Names and Objects</a></li>
-<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#convenience-interfaces-for-dylan-objects">Convenience Interfaces for Dylan Objects</a></li>
-<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#debugger-transactions-and-remote-object-registration">Debugger Transactions and Remote Object Registration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#stack-backtracing">Stack Backtracing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#restarts">Restarts</a></li>
-<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#source-level-stepping">Source-Level Stepping</a></li>
-<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#mappings-between-addresses-and-source-locators">Mappings Between Addresses and Source Locators</a></li>
-<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#foreign-code-debugging">Foreign Code Debugging</a></li>
-<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#runtime-context">Runtime Context</a></li>
-<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#profiling">Profiling</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#controlling-the-profiler-manager">Controlling the Profiler Manager</a></li>
-<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#extracting-the-data">Extracting the data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#dylan-name-context">Dylan Name Context</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[dylan-name-context]"><code class="docutils literal notranslate"><span class="pre">&lt;dylan-name-context&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:context-library"><code class="docutils literal notranslate"><span class="pre">context-library</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:context-library-setter"><code class="docutils literal notranslate"><span class="pre">context-library-setter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:context-module"><code class="docutils literal notranslate"><span class="pre">context-module</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:context-module-setter"><code class="docutils literal notranslate"><span class="pre">context-module-setter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:demangle-dylan-name"><code class="docutils literal notranslate"><span class="pre">demangle-dylan-name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:demangle-local-dylan-name"><code class="docutils literal notranslate"><span class="pre">demangle-local-dylan-name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:mangle-local-dylan-name"><code class="docutils literal notranslate"><span class="pre">mangle-local-dylan-name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:mangle-in-context"><code class="docutils literal notranslate"><span class="pre">mangle-in-context</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#extension-interfaces">Extension Interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#transactions-on-dylan-values">Transactions on dylan values</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:read-dylan-value"><code class="docutils literal notranslate"><span class="pre">read-dylan-value</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:write-dylan-value"><code class="docutils literal notranslate"><span class="pre">write-dylan-value</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:read-instance-slot-element"><code class="docutils literal notranslate"><span class="pre">read-instance-slot-element</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#printing-and-inspecting-dylan-objects">Printing and Inspecting Dylan Objects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:print-dylan-object"><code class="docutils literal notranslate"><span class="pre">print-dylan-object</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:describe-dylan-object"><code class="docutils literal notranslate"><span class="pre">describe-dylan-object</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:get-inspector-values"><code class="docutils literal notranslate"><span class="pre">get-inspector-values</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:dylan-class-browser-information"><code class="docutils literal notranslate"><span class="pre">dylan-class-browser-information</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:dylan-class-slot-storage"><code class="docutils literal notranslate"><span class="pre">dylan-class-slot-storage</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:dylan-object?"><code class="docutils literal notranslate"><span class="pre">dylan-object?</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:dylan-object-size"><code class="docutils literal notranslate"><span class="pre">dylan-object-size</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#mapping-between-symbolic-names-and-objects">Mapping Between Symbolic Names and Objects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:resolve-dylan-name"><code class="docutils literal notranslate"><span class="pre">resolve-dylan-name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:resolve-dylan-keyword"><code class="docutils literal notranslate"><span class="pre">resolve-dylan-keyword</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:dylan-keyword-name"><code class="docutils literal notranslate"><span class="pre">dylan-keyword-name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:find-dylan-name"><code class="docutils literal notranslate"><span class="pre">find-dylan-name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:find-closest-symbolic-name"><code class="docutils literal notranslate"><span class="pre">find-closest-symbolic-name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:resolve-symbolic-name"><code class="docutils literal notranslate"><span class="pre">resolve-symbolic-name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#convenience-interfaces-for-dylan-objects">Convenience Interfaces for Dylan Objects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:dylan-generic-function-methods"><code class="docutils literal notranslate"><span class="pre">dylan-generic-function-methods</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:dylan-method-iep"><code class="docutils literal notranslate"><span class="pre">dylan-method-iep</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:dylan-method-specializers"><code class="docutils literal notranslate"><span class="pre">dylan-method-specializers</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:dylan-slot-descriptor-getter"><code class="docutils literal notranslate"><span class="pre">dylan-slot-descriptor-getter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:remote-instance?"><code class="docutils literal notranslate"><span class="pre">remote-instance?</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:dylan-value-unbound?"><code class="docutils literal notranslate"><span class="pre">dylan-value-unbound?</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:dylan-object-immediate-value"><code class="docutils literal notranslate"><span class="pre">dylan-object-immediate-value</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#debugger-transactions-and-remote-object-registration">Debugger Transactions and Remote Object Registration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[remote-object]"><code class="docutils literal notranslate"><span class="pre">&lt;remote-object&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:register-remote-object"><code class="docutils literal notranslate"><span class="pre">register-remote-object</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:free-remote-object"><code class="docutils literal notranslate"><span class="pre">free-remote-object</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:remote-object-value"><code class="docutils literal notranslate"><span class="pre">remote-object-value</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[object-registration-error]"><code class="docutils literal notranslate"><span class="pre">&lt;object-registration-error&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:object-requires-registration?"><code class="docutils literal notranslate"><span class="pre">object-requires-registration?</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:call-debugger-function"><code class="docutils literal notranslate"><span class="pre">call-debugger-function</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:call-debugger-function([debug-target],[function])"><code class="docutils literal notranslate"><span class="pre">call-debugger-function(&lt;debug-target&gt;,</span> <span class="pre">&lt;function&gt;)</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#stack-backtracing">Stack Backtracing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[application-stack-frame]"><code class="docutils literal notranslate"><span class="pre">&lt;application-stack-frame&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:first-stack-frame"><code class="docutils literal notranslate"><span class="pre">first-stack-frame</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:next-stack-frame"><code class="docutils literal notranslate"><span class="pre">next-stack-frame</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:previous-stack-frame"><code class="docutils literal notranslate"><span class="pre">previous-stack-frame</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[dylan-stack-frame-mixin]"><code class="docutils literal notranslate"><span class="pre">&lt;dylan-stack-frame-mixin&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[call-frame]"><code class="docutils literal notranslate"><span class="pre">&lt;call-frame&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:call-frame-description"><code class="docutils literal notranslate"><span class="pre">call-frame-description</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:call-frame-return-address"><code class="docutils literal notranslate"><span class="pre">call-frame-return-address</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:call-frame-frame-pointer"><code class="docutils literal notranslate"><span class="pre">call-frame-frame-pointer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:call-frame-nearest-source-locator"><code class="docutils literal notranslate"><span class="pre">call-frame-nearest-source-locator</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:call-frame-aligned-at-source-locator?"><code class="docutils literal notranslate"><span class="pre">call-frame-aligned-at-source-locator?</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:call-frame-function"><code class="docutils literal notranslate"><span class="pre">call-frame-function</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:number-of-lexical-variables"><code class="docutils literal notranslate"><span class="pre">number-of-lexical-variables</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:active-dylan-lexical-variables"><code class="docutils literal notranslate"><span class="pre">active-dylan-lexical-variables</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:live-frame-lexical-variables"><code class="docutils literal notranslate"><span class="pre">live-frame-lexical-variables</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[dylan-call-frame]"><code class="docutils literal notranslate"><span class="pre">&lt;dylan-call-frame&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:dylan-call-frame?"><code class="docutils literal notranslate"><span class="pre">dylan-call-frame?</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[implementation-stack-frame]"><code class="docutils literal notranslate"><span class="pre">&lt;implementation-stack-frame&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[bind-exit-frame]"><code class="docutils literal notranslate"><span class="pre">&lt;bind-exit-frame&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[unwind-protect-frame]"><code class="docutils literal notranslate"><span class="pre">&lt;unwind-protect-frame&gt;</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#restarts">Restarts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[remote-restart]"><code class="docutils literal notranslate"><span class="pre">&lt;remote-restart&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:remote-restart-description"><code class="docutils literal notranslate"><span class="pre">remote-restart-description</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:available-restarts-for-thread"><code class="docutils literal notranslate"><span class="pre">available-restarts-for-thread</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:signal-restart-on-thread"><code class="docutils literal notranslate"><span class="pre">signal-restart-on-thread</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#source-level-stepping">Source-Level Stepping</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:instruct-thread-to-step-over"><code class="docutils literal notranslate"><span class="pre">instruct-thread-to-step-over</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:instruct-thread-to-step-into"><code class="docutils literal notranslate"><span class="pre">instruct-thread-to-step-into</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:instruct-thread-to-step-out"><code class="docutils literal notranslate"><span class="pre">instruct-thread-to-step-out</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:align-thread-to-source-location"><code class="docutils literal notranslate"><span class="pre">align-thread-to-source-location</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#mappings-between-addresses-and-source-locators">Mappings Between Addresses and Source Locators</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:remote-address-source-location"><code class="docutils literal notranslate"><span class="pre">remote-address-source-location</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:source-location-remote-address"><code class="docutils literal notranslate"><span class="pre">source-location-remote-address</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#foreign-code-debugging">Foreign Code Debugging</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:foreign-object-type"><code class="docutils literal notranslate"><span class="pre">foreign-object-type</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#runtime-context">Runtime Context</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[runtime-context]"><code class="docutils literal notranslate"><span class="pre">&lt;runtime-context&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:runtime-context-debug-target"><code class="docutils literal notranslate"><span class="pre">runtime-context-debug-target</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:runtime-context-frame"><code class="docutils literal notranslate"><span class="pre">runtime-context-frame</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:runtime-context-thread"><code class="docutils literal notranslate"><span class="pre">runtime-context-thread</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:active-lexical-variables([runtime-context])"><code class="docutils literal notranslate"><span class="pre">active-lexical-variables(&lt;runtime-context&gt;)</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:runtime-context-lexical-variable-value"><code class="docutils literal notranslate"><span class="pre">runtime-context-lexical-variable-value</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:current-runtime-context"><code class="docutils literal notranslate"><span class="pre">current-runtime-context</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#profiling">Profiling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#controlling-the-profiler-manager">Controlling the Profiler Manager</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:application-profiling?"><code class="docutils literal notranslate"><span class="pre">application-profiling?</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:control-profiling"><code class="docutils literal notranslate"><span class="pre">control-profiling</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:start-profiling"><code class="docutils literal notranslate"><span class="pre">start-profiling</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:stop-profiling"><code class="docutils literal notranslate"><span class="pre">stop-profiling</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:profile-data"><code class="docutils literal notranslate"><span class="pre">profile-data</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:profile-data([profile-state])"><code class="docutils literal notranslate"><span class="pre">profile-data(&lt;profile-state&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:profile-data([debug-target])"><code class="docutils literal notranslate"><span class="pre">profile-data(&lt;debug-target&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:reset-profile-data"><code class="docutils literal notranslate"><span class="pre">reset-profile-data</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#extracting-the-data">Extracting the data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[application-profile]"><code class="docutils literal notranslate"><span class="pre">&lt;application-profile&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:application-snapshot-skip"><code class="docutils literal notranslate"><span class="pre">application-snapshot-skip</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:application-snapshots"><code class="docutils literal notranslate"><span class="pre">application-snapshots</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:application-profile-threads"><code class="docutils literal notranslate"><span class="pre">application-profile-threads</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[application-snapshot]"><code class="docutils literal notranslate"><span class="pre">&lt;application-snapshot&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:application-thread-snapshot"><code class="docutils literal notranslate"><span class="pre">application-thread-snapshot</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:wall-time-increment"><code class="docutils literal notranslate"><span class="pre">wall-time-increment</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:page-faults-increment"><code class="docutils literal notranslate"><span class="pre">page-faults-increment</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:thread-snapshots"><code class="docutils literal notranslate"><span class="pre">thread-snapshots</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[thread-snapshot]"><code class="docutils literal notranslate"><span class="pre">&lt;thread-snapshot&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[instruction-pointers]"><code class="docutils literal notranslate"><span class="pre">&lt;instruction-pointers&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:profile-thread"><code class="docutils literal notranslate"><span class="pre">profile-thread</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:cpu-time-increment"><code class="docutils literal notranslate"><span class="pre">cpu-time-increment</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:allocation-increment"><code class="docutils literal notranslate"><span class="pre">allocation-increment</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:allocated-class"><code class="docutils literal notranslate"><span class="pre">allocated-class</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:instruction-pointers"><code class="docutils literal notranslate"><span class="pre">instruction-pointers</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:set-application-class-breakpoint"><code class="docutils literal notranslate"><span class="pre">set-application-class-breakpoint</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:clear-application-class-breakpoint"><code class="docutils literal notranslate"><span class="pre">clear-application-class-breakpoint</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:clear-application-class-breakpoints"><code class="docutils literal notranslate"><span class="pre">clear-application-class-breakpoints</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="debugger-manager.html#extension-interfaces">Extension Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:load-runtime-component"><code class="docutils literal notranslate"><span class="pre">load-runtime-component</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:spy-function-definer"><code class="docutils literal notranslate"><span class="pre">spy-function-definer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[c-spy-function-descriptor]"><code class="docutils literal notranslate"><span class="pre">&lt;c-spy-function-descriptor&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:spy-function-runtime-name"><code class="docutils literal notranslate"><span class="pre">spy-function-runtime-name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:spy-function-runtime-component"><code class="docutils literal notranslate"><span class="pre">spy-function-runtime-component</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:call-spy"><code class="docutils literal notranslate"><span class="pre">call-spy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:call-spy-on-thread"><code class="docutils literal notranslate"><span class="pre">call-spy-on-thread</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[spy-call-error]"><code class="docutils literal notranslate"><span class="pre">&lt;spy-call-error&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:spy-call-function-descriptor"><code class="docutils literal notranslate"><span class="pre">spy-call-function-descriptor</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:spy-call-debug-target"><code class="docutils literal notranslate"><span class="pre">spy-call-debug-target</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:spy-call-arguments"><code class="docutils literal notranslate"><span class="pre">spy-call-arguments</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[spy-function-not-located]"><code class="docutils literal notranslate"><span class="pre">&lt;spy-function-not-located&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[spy-call-aborted]"><code class="docutils literal notranslate"><span class="pre">&lt;spy-call-aborted&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[spy-call-no-available-thread]"><code class="docutils literal notranslate"><span class="pre">&lt;spy-call-no-available-thread&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:[spy-call-cannot-use-thread]"><code class="docutils literal notranslate"><span class="pre">&lt;spy-call-cannot-use-thread&gt;</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugger-manager.html#debugger-manager:debugger-manager:spy-call-selected-thread"><code class="docutils literal notranslate"><span class="pre">spy-call-selected-thread</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -645,7 +1282,7 @@ the development environment’s debugging functionality.</p>
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2011-2024, Dylan Hackers
+                Copyright &#169; 2011-2026, Dylan Hackers
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -665,9 +1302,9 @@ the development environment’s debugging functionality.</p>
       
     </aside>
   </div>
-</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=7cccf125"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
-    <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+</div><script src="../../_static/documentation_options.js?v=b916904f"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=35a8b989"></script>

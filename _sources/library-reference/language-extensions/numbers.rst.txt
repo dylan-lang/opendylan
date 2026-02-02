@@ -14,7 +14,7 @@ functions, especially integer arithmetic. It describes a number of
 extensions to the Dylan language, which are available from the Dylan
 library. It also describes a generic arithmetic facility that, through
 the use of other libraries, allows you to extend arithmetic to special
-number types, such as "big" (64-bit) integers.
+number types, such as "big" (double machine word) integers.
 
 Throughout this document, arguments are instances of the class specified
 by the argument name (ignoring any numeric suffixes), unless otherwise
@@ -779,6 +779,8 @@ Iteration Constructs
    clause must evaluate to instances of ``<machine-number>`` for this
    macro.
 
+.. _generic-arithmetic-library:
+
 The generic-arithmetic Library
 ==============================
 
@@ -990,8 +992,8 @@ As noted in `The Generic-Arithmetic library`_, the Generic-Arithmetic
 library provides an extensible protocol for adding specialized arithmetic
 functionality to your applications. By using the Generic-Arithmetic
 library alongside a special implementation library, you can make the
-standard arithmetic operations support number types such as big (128-bit
-or 64-bit) integers, or complex numbers.
+standard arithmetic operations support number types such as big (double
+machine word) integers, or complex numbers.
 
 This section provides an example of extending the basic Dylan arithmetic
 features using the Generic-Arithmetic library and the Big-Integers

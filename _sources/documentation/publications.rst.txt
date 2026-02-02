@@ -86,7 +86,7 @@ Publications about Dylan
 
     https://dl.acm.org/doi/book/10.5555/867862
 
-**Partial Dispatch: Optimizing Dynamically-Dispatched Multimethod Calls with Compile-Time Types and Runtime Feedback** (by Jonathan Bachrach and Glenn Burke - Technical Report 2000 `pdf <http://people.csail.mit.edu/jrb/Projects/pd.pdf>`__ `bib <../_static/documentation/bachrach2000.bib>`__)
+**Partial Dispatch: Optimizing Dynamically-Dispatched Multimethod Calls with Compile-Time Types and Runtime Feedback** (by Jonathan Bachrach and Glenn Burke - Technical Report 2000 `pdf <https://people.csail.mit.edu/jrb/Projects/pd.pdf>`__ `bib <../_static/documentation/bachrach2000.bib>`__)
     We presented an approach to gaining back complete class hierarchy
     information by delaying the construction of dispatch caches until
     the whole class hierarchy is available at run- time. Run-time
@@ -102,7 +102,7 @@ Publications about Dylan
     components, multi-threaded runtime, incremental development, “pay
     as you go philosophy”, and interoperability with standard tools.
 
-**D-Expressions: Lisp Power, Dylan Style** (by Jonathan Bachrach and Keith Playford - Technical Report 1999 `pdf <http://people.csail.mit.edu/jrb/Projects/dexprs.pdf>`__ `bib <../_static/documentation/bachrach1999.bib>`__)
+**D-Expressions: Lisp Power, Dylan Style** (by Jonathan Bachrach and Keith Playford - Technical Report 1999 `pdf <https://people.csail.mit.edu/jrb/Projects/dexprs.pdf>`__ `bib <../_static/documentation/bachrach1999.bib>`__)
     This paper aims to demonstrate that it is possible for a language
     with a rich, conventional syntax to provide Lisp-style macro power
     and simplicity. We describe a macro system and syntax manipulation

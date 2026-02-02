@@ -16,13 +16,9 @@ The Java Age
 ============
 
 We have been living through the Java age. It is somewhat of an understatement
-to say that there has been a great deal of interest in the `Java programming
-language
-<https://web.archive.org/web/20030409041302/http://java.sun.com/docs/books/jls/html/index.html>`_
--- although as far as hype goes `XML
-<https://web.archive.org/web/20030409041302/http://www.xml.org/>`_ is now
-overshadowing it. Initially Java, outside `Sun Microsystems
-<https://web.archive.org/web/20030409041302/http://www.sun.com/>`_ at least, was
+to say that there has been a great deal of interest in the Java programming
+language -- although as far as hype goes XML is now
+overshadowing it. Initially Java, outside Sun Microsystems at least, was
 seen as a programming language purely for the Internet. In particular, it came
 with a virtual machine that could be embedded in web browsers and a security
 model to control the activity of Java programs running in such browsers.
@@ -31,12 +27,12 @@ These days, however, Java has moved on and developers are using the language
 for all sorts of applications. Java is perceived as a reasonable general
 purpose programming language -- one that is good enough. The tools are
 evolving. JIT compilers like `Sun's Hotspot
-<https://web.archive.org/web/20030409041302/http://www.javasoft.com/products/hotspot/>`_
+<https://en.wikipedia.org/wiki/HotSpot_(virtual_machine)>`_
 are making Java code run faster. UML-based design tools like `Rational Rose
-<https://web.archive.org/web/20030409041302/http://www.rational.com/products/rose/index.jtmpl>`_
+<https://en.wikipedia.org/wiki/IBM_Rational_Rose>`_
 are finding Java's rigid syntax amenable to round-trip engineering. EJB-based
 Application Servers like `BEA's WebLogic
-<https://web.archive.org/web/20030409041302/http://www.bea.com/>`_ are providing
+<https://en.wikipedia.org/wiki/BEA_Systems>`_ are providing
 the background of services needed for many kinds of business applications.
 
 So what's the problem?
@@ -61,7 +57,7 @@ problems:
 * no extensible syntax
 * poor iteration/collection integration
 
------- 
+------
 
 The Solutions
 =============
@@ -71,7 +67,7 @@ Java. This need not mean going back to C++. After all, Java's popularization of
 garbage collection and pointer-free programming has probably significantly
 advanced the cause of reliable software. This also does not mean stepping
 sideways to `C#
-<https://web.archive.org/web/20030409041302/http://msdn.microsoft.com/vstudio/nextgen/technology/csharpintro.asp>`_
+<https://en.wikipedia.org/wiki/C_Sharp_(programming_language)>`_
 -- a similar language with many of the same problems.
 
 The alternative programming language that I'm proposing in this article is
@@ -90,12 +86,12 @@ An Example
 ==========
 
 Since, according to `Samuel Johnson
-<https://web.archive.org/web/20030409041302/http://www.samueljohnson.com/>`_,
+<https://www.samueljohnson.com/contempl.html>`_
 "example is always more efficacious than precept", I will examine a real
 programming task that is made more awkward by Java and more elegant by Dylan.
 
 In the last few years I've personally been working on some `CORBA
-<https://web.archive.org/web/20030409041302/http://www.corba.org/>`_
+<https://www.corba.org/>`_
 projects. In particular, I've written compilers in both Dylan and Java for
 CORBA's Interface Definition Language (IDL), so I feel able to show how a
 language like Dylan can simplify application development compared to Java. In
@@ -268,7 +264,7 @@ constraint might be coded as follows:
 
 
 Constrast this with the Dylan code which can dynamically dispatch
-on both arguments in the signature: 
+on both arguments in the signature:
 
 .. code-block:: dylan
 
@@ -608,7 +604,7 @@ the size of an IDL array. Suppose that we want to access that size in Java:
 
 .. code-block:: java
 
-     ( ( Long ) 
+     ( ( Long )
        ( ( IDLConstant )
          node.resolveIdentifier( name )
        ).expression().evaluate()
@@ -689,7 +685,7 @@ for dumping out the IDL for an interface as follows:
      node.dumpInherits();
      this.stream.start(); // write out a '{' and increase the indention
      {
-       node.dumpBody()  
+       node.dumpBody()
      }
      this.stream.finish(); // decrease the indentation and write out a '}'
    }
@@ -816,7 +812,7 @@ every use of the pattern:
      try
      {
        this.stream.start(); // write out a '{' and increase the indention
-       node.dumpBody()  
+       node.dumpBody()
      }
      finally
      {

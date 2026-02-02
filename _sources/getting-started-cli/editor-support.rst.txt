@@ -5,15 +5,14 @@ Dylan support is available in a broad range of editors.
 
 In alphabetical order:
 
-Atom
-----
-
-See the `language-dylan`_ package.
-
 Emacs
 -----
 
-See :doc:`dylan-mode-for-emacs`.
+The `dylan-emacs-support <https://github.com/dylan-lang/dylan-emacs-support>`_ repository
+provides ``dylan-mode``, ``dylan-opt-mode``, ``dylan-lid-mode``, and DIME (Dylan
+Interaction Mode for Emacs).  See that repository's README for an overview and pointers
+to documentation.  Available in MELPA as the `dylan <https://melpa.org/#/dylan>`_ and
+`dime <https://melpa.org/#/dime>`_ packages.
 
 IntelliJ
 --------
@@ -38,7 +37,6 @@ Support for Dylan is available out of the box.
 However, enhanced support is available in
 `dylan-vim`_.
 
-.. _language-dylan: https://atom.io/packages/language-dylan
 .. _DeftIDEA: https://plugins.jetbrains.com/plugin/7325-deftidea
 .. _dylan.tmbundle: https://github.com/textmate/dylan.tmbundle
 .. _dylan-vim: https://github.com/dylan-lang/dylan-vim

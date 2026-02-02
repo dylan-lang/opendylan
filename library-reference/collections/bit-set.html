@@ -1,15 +1,15 @@
 <!doctype html>
-<html class="no-js" lang="en" data-content_root="">
+<html class="no-js" lang="en" data-content_root="../../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="The bit-vector Module" href="bit-vector.html" /><link rel="prev" title="The collections Library" href="index.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.08.06 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>The bit-set Module - Open Dylan</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
-    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=302659d7" />
     
@@ -180,7 +180,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -243,6 +243,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/topics/porting.html">Porting to a New Target Platform</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/topics/ppml.html">The PPML library</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/topics/making-a-release.html">Release Check-list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/topics/opendylan.org.html">Maintaining opendylan.org</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../hacker-guide/glossary.html">Glossary</a></li>
@@ -304,6 +305,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../documentation/cheatsheets/collections.html">Collections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../documentation/cheatsheets/iteration.html">Iteration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../documentation/cheatsheets/scheme.html">For Schemers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/cheatsheets/python.html">For Pythonistas</a></li>
 </ul>
 </li>
 </ul>
@@ -311,7 +313,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/drm/">Dylan Reference Manual</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://package.opendylan.org/">Package Docs</a></li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">Open Dylan Libraries</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Open Dylan Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">Bundled Libraries</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Bundled Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2 has-children"><a class="reference internal" href="../language-extensions/index.html">Dylan Language Extensions</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle navigation of Dylan Language Extensions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../language-extensions/language-differences.html">Language Differences</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../language-extensions/define-function.html">Function Definition</a></li>
@@ -381,18 +383,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../documentation/index.html">All Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of All Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../documentation/index.html">Other Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of Other Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../news/index.html">News</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../documentation/cheatsheets/index.html">Cheat Sheets</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of Cheat Sheets</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/syntax.html">Syntax</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/conditionals.html">Conditionals</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/collections.html">Collections</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/iteration.html">Iteration</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/scheme.html">For Schemers</a></li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="../../documentation/publications.html">Publications</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../intro-dylan/index.html">Intro to Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of Intro to Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../intro-dylan/index.html">Intro to Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of Intro to Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/why-dylan.html">Why Dylan?</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/expressions-variables.html">Expressions &amp; Variables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/methods-generic-functions.html">Methods &amp; Generic Functions</a></li>
@@ -403,7 +397,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../corba-guide/index.html">CORBA Guide</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of CORBA Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../corba-guide/index.html">CORBA Guide</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of CORBA Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../corba-guide/preface.html">Preface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../corba-guide/intro.html">About Open Dylan CORBA</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../corba-guide/getstart.html">Quick Start Tutorial</a></li>
@@ -417,7 +411,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../corba-guide/idl-app.html">An IDL Binding for Dylan</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../building-with-duim/index.html">DUIM Guide</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of DUIM Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../building-with-duim/index.html">DUIM Guide</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of DUIM Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/preface.html">Preface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/intro.html">Introduction</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/design.html">Designing A Simple DUIM Application</a></li>
@@ -430,7 +424,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../duim-reference/index.html">DUIM Reference</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of DUIM Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../duim-reference/index.html">DUIM Reference</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of DUIM Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../duim-reference/conventions.html">Conventions in this Manual</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../duim-reference/geom.html">DUIM-Geometry Library</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../duim-reference/ext-geom.html">DUIM-Extended-Geometry Library</a></li>
@@ -443,7 +437,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../duim-reference/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../getting-started-ide/index.html">Getting Started / IDE</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Getting Started / IDE</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../getting-started-ide/index.html">Getting Started / IDE</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of Getting Started / IDE</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/preface.html">Preface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/quick-start.html">Quick Start</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/expanding.html">Fixing Bugs</a></li>
@@ -459,7 +453,9 @@
 <li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../release-notes/index.html">Release Notes</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../release-notes/index.html">Release Notes</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2026.1.html">Open Dylan 2026.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2025.1.html">Open Dylan 2025.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../release-notes/2024.1.html">Open Dylan 2024.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../release-notes/2023.1.html">Open Dylan 2023.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../release-notes/2022.1.html">Open Dylan 2022.1</a></li>
@@ -473,8 +469,8 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../style-guide/index.html">Style Guide</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../history/index.html">Dylan History</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" role="switch" type="checkbox"/><label for="toctree-checkbox-26"><div class="visually-hidden">Toggle navigation of Dylan History</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../../history/apple-dylan/index.html">Apple Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" role="switch" type="checkbox"/><label for="toctree-checkbox-27"><div class="visually-hidden">Toggle navigation of Apple Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../history/index.html">Dylan History</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle navigation of Dylan History</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../history/apple-dylan/index.html">Apple Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" role="switch" type="checkbox"/><label for="toctree-checkbox-26"><div class="visually-hidden">Toggle navigation of Apple Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../history/apple-dylan/apple-cambridge.html">Apple Cambridge</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../history/apple-dylan/eulogy.html">Apple Dylan Eulogy</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../history/apple-dylan/technology-release.html">Apple Dylan Technology Release</a></li>
@@ -528,17 +524,17 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main" id="furo-main-content">
           <section id="the-bit-set-module">
-<h1>The bit-set Module<a class="headerlink" href="#the-bit-set-module" title="Permalink to this heading">¶</a></h1>
+<h1>The bit-set Module<a class="headerlink" href="#the-bit-set-module" title="Link to this heading">¶</a></h1>
 <dl class="dylan class">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:[bit-set]">
-<span class="sig-name descname"><span class="pre">&lt;bit-set&gt;</span></span> <em class="property"><span class="pre">Primary</span> <span class="pre">Class</span></em><a class="headerlink" href="#collections:bit-set:[bit-set]" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">&lt;bit-set&gt;</span></span> <em class="property"><span class="pre">Primary</span> <span class="pre">Class</span></em><a class="headerlink" href="#collections:bit-set:[bit-set]" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="set.html#collections:set:[set]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;set&gt;</span></code></a></p>
@@ -549,10 +545,10 @@
 created will be infinite. All integers greater than
 or equal to the one supplied will be members of the
 set. The default is <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p></li>
-<li><p><strong>member-vector</strong> – </p></li>
+<li><p><strong>member-vector</strong></p></li>
 <li><p><strong>members</strong> – If supplied, this gives the initial elements of the
 set as a sequence of integers.</p></li>
-<li><p><strong>pad</strong> – </p></li>
+<li><p><strong>pad</strong></p></li>
 <li><p><strong>upper-bound-hint</strong> – An integer which indicates that all the elements of
 the set are expected to below this value. This is
 merely an aid to the implementation when allocating
@@ -572,7 +568,7 @@ complement of a finite set.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:copy-bit-set!">
-<span class="sig-name descname"><span class="pre">copy-bit-set!</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-set:copy-bit-set!" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">copy-bit-set!</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-set:copy-bit-set!" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>copy-bit-set! <em>set1</em> <em>set2</em> =&gt; ()</p>
@@ -593,7 +589,7 @@ any structure.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:empty-bit-set!">
-<span class="sig-name descname"><span class="pre">empty-bit-set!</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-set:empty-bit-set!" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">empty-bit-set!</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-set:empty-bit-set!" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>empty-bit-set! <em>set</em> =&gt; ()</p>
@@ -611,7 +607,7 @@ any structure.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:infinite?">
-<span class="sig-name descname"><span class="pre">infinite?</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:infinite?" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">infinite?</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:infinite?" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>infinite? <em>set</em> =&gt; <em>result</em></p>
@@ -634,7 +630,7 @@ any structure.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:member?">
-<span class="sig-name descname"><span class="pre">member?</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:member?" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">member?</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:member?" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>member? <em>set</em> <em>element</em> =&gt; <em>result</em></p>
@@ -659,7 +655,7 @@ any structure.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:set-add">
-<span class="sig-name descname"><span class="pre">set-add</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-add" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">set-add</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-add" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>set-add <em>set</em> <em>element</em> =&gt; <em>new-set</em></p>
@@ -684,7 +680,7 @@ any structure.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:set-add!">
-<span class="sig-name descname"><span class="pre">set-add!</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-add!" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">set-add!</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-add!" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>set-add! <em>set</em> <em>element</em> =&gt; <em>new-set</em></p>
@@ -709,7 +705,7 @@ any structure.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:set-complement">
-<span class="sig-name descname"><span class="pre">set-complement</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-complement" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">set-complement</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-complement" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>set-complement <em>set</em> =&gt; <em>new-set</em></p>
@@ -732,7 +728,7 @@ any structure.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:set-complement!">
-<span class="sig-name descname"><span class="pre">set-complement!</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-complement!" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">set-complement!</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-complement!" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>set-complement! <em>set</em> =&gt; <em>new-set</em></p>
@@ -756,7 +752,7 @@ any structure.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:set-difference">
-<span class="sig-name descname"><span class="pre">set-difference</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-difference" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">set-difference</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-difference" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>set-difference <em>set1</em> <em>set2</em> =&gt; <em>new-set</em></p>
@@ -782,7 +778,7 @@ from <code class="docutils literal notranslate"><span class="pre">set1</span></c
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:set-difference!">
-<span class="sig-name descname"><span class="pre">set-difference!</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-difference!" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">set-difference!</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-difference!" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>set-difference! <em>set1</em> <em>set2</em> =&gt; <em>new-set</em></p>
@@ -807,7 +803,7 @@ from <code class="docutils literal notranslate"><span class="pre">set1</span></c
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:set-intersection">
-<span class="sig-name descname"><span class="pre">set-intersection</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-intersection" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">set-intersection</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-intersection" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>set-intersection <em>set1</em> <em>set2</em> =&gt; <em>new-set</em></p>
@@ -832,7 +828,7 @@ from <code class="docutils literal notranslate"><span class="pre">set1</span></c
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:set-intersection!">
-<span class="sig-name descname"><span class="pre">set-intersection!</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-intersection!" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">set-intersection!</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-intersection!" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>set-intersection! <em>set1</em> <em>set2</em> =&gt; <em>new-set</em></p>
@@ -857,7 +853,7 @@ members of <code class="docutils literal notranslate"><span class="pre">set2</sp
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:set-remove">
-<span class="sig-name descname"><span class="pre">set-remove</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-remove" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">set-remove</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-remove" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>set-remove <em>set</em> <em>element</em> =&gt; <em>new-set</em></p>
@@ -882,7 +878,7 @@ for <code class="docutils literal notranslate"><span class="pre">element</span><
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:set-remove!">
-<span class="sig-name descname"><span class="pre">set-remove!</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-remove!" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">set-remove!</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-remove!" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>set-remove! <em>set</em> <em>element</em> =&gt; <em>new-set</em></p>
@@ -908,7 +904,7 @@ integer.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:set-union">
-<span class="sig-name descname"><span class="pre">set-union</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-union" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">set-union</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-union" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>set-union <em>set1</em> <em>set2</em> =&gt; <em>new-set</em></p>
@@ -933,7 +929,7 @@ integer.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:set-union!">
-<span class="sig-name descname"><span class="pre">set-union!</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-union!" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">set-union!</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:set-union!" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>set-union! <em>set1</em> <em>set2</em> =&gt; <em>new-set</em></p>
@@ -956,9 +952,9 @@ integer.</p>
 </dl>
 </dd></dl>
 
-<dl class="dylan generic-function">
-<dt class="sig sig-object dylan-api dylan" id="collections:bit-set:size">
-<span class="sig-name descname"><span class="pre">size</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#collections:bit-set:size" title="Permalink to this definition">¶</a></dt>
+<dl class="dylan method">
+<dt class="sig sig-object dylan-api dylan" id="collections:bit-set:size([bit-set])">
+<span class="sig-name descname"><span class="pre">size(&lt;bit-set&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#collections:bit-set:size([bit-set])" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>size <em>set</em> =&gt; <em>false-or-integer</em></p>
@@ -982,7 +978,7 @@ infinite. This operation may be relatively slow.</p>
 
 <dl class="dylan function">
 <dt class="sig sig-object dylan-api dylan" id="collections:bit-set:universal-bit-set!">
-<span class="sig-name descname"><span class="pre">universal-bit-set!</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-set:universal-bit-set!" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">universal-bit-set!</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#collections:bit-set:universal-bit-set!" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
 <dd class="field-odd"><p>universal-bit-set! <em>set</em> =&gt; ()</p>
@@ -1030,7 +1026,7 @@ as members.</p>
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2011-2024, Dylan Hackers
+                Copyright &#169; 2011-2026, Dylan Hackers
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -1044,15 +1040,52 @@ as members.</p>
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">The bit-set Module</a><ul>
+<li><a class="reference internal" href="#collections:bit-set:[bit-set]"><code class="docutils literal notranslate"><span class="pre">&lt;bit-set&gt;</span></code></a></li>
+<li><a class="reference internal" href="#collections:bit-set:copy-bit-set!"><code class="docutils literal notranslate"><span class="pre">copy-bit-set!</span></code></a></li>
+<li><a class="reference internal" href="#collections:bit-set:empty-bit-set!"><code class="docutils literal notranslate"><span class="pre">empty-bit-set!</span></code></a></li>
+<li><a class="reference internal" href="#collections:bit-set:infinite?"><code class="docutils literal notranslate"><span class="pre">infinite?</span></code></a></li>
+<li><a class="reference internal" href="#collections:bit-set:member?"><code class="docutils literal notranslate"><span class="pre">member?</span></code></a></li>
+<li><a class="reference internal" href="#collections:bit-set:set-add"><code class="docutils literal notranslate"><span class="pre">set-add</span></code></a></li>
+<li><a class="reference internal" href="#collections:bit-set:set-add!"><code class="docutils literal notranslate"><span class="pre">set-add!</span></code></a></li>
+<li><a class="reference internal" href="#collections:bit-set:set-complement"><code class="docutils literal notranslate"><span class="pre">set-complement</span></code></a></li>
+<li><a class="reference internal" href="#collections:bit-set:set-complement!"><code class="docutils literal notranslate"><span class="pre">set-complement!</span></code></a></li>
+<li><a class="reference internal" href="#collections:bit-set:set-difference"><code class="docutils literal notranslate"><span class="pre">set-difference</span></code></a></li>
+<li><a class="reference internal" href="#collections:bit-set:set-difference!"><code class="docutils literal notranslate"><span class="pre">set-difference!</span></code></a></li>
+<li><a class="reference internal" href="#collections:bit-set:set-intersection"><code class="docutils literal notranslate"><span class="pre">set-intersection</span></code></a></li>
+<li><a class="reference internal" href="#collections:bit-set:set-intersection!"><code class="docutils literal notranslate"><span class="pre">set-intersection!</span></code></a></li>
+<li><a class="reference internal" href="#collections:bit-set:set-remove"><code class="docutils literal notranslate"><span class="pre">set-remove</span></code></a></li>
+<li><a class="reference internal" href="#collections:bit-set:set-remove!"><code class="docutils literal notranslate"><span class="pre">set-remove!</span></code></a></li>
+<li><a class="reference internal" href="#collections:bit-set:set-union"><code class="docutils literal notranslate"><span class="pre">set-union</span></code></a></li>
+<li><a class="reference internal" href="#collections:bit-set:set-union!"><code class="docutils literal notranslate"><span class="pre">set-union!</span></code></a></li>
+<li><a class="reference internal" href="#collections:bit-set:size([bit-set])"><code class="docutils literal notranslate"><span class="pre">size(&lt;bit-set&gt;)</span></code></a></li>
+<li><a class="reference internal" href="#collections:bit-set:universal-bit-set!"><code class="docutils literal notranslate"><span class="pre">universal-bit-set!</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
   </div>
-</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=7cccf125"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
-    <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+</div><script src="../../_static/documentation_options.js?v=b916904f"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=35a8b989"></script>

@@ -1,15 +1,15 @@
 <!doctype html>
-<html class="no-js" lang="en" data-content_root="">
+<html class="no-js" lang="en" data-content_root="../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Programming in Open Dylan" href="model.html" /><link rel="prev" title="Quick Start" href="quick-start.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.08.06 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>Fixing Bugs - Open Dylan</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
-    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
     
@@ -243,6 +243,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/porting.html">Porting to a New Target Platform</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/ppml.html">The PPML library</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/making-a-release.html">Release Check-list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/opendylan.org.html">Maintaining opendylan.org</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../hacker-guide/glossary.html">Glossary</a></li>
@@ -304,6 +305,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../documentation/cheatsheets/collections.html">Collections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../documentation/cheatsheets/iteration.html">Iteration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../documentation/cheatsheets/scheme.html">For Schemers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../documentation/cheatsheets/python.html">For Pythonistas</a></li>
 </ul>
 </li>
 </ul>
@@ -311,7 +313,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/drm/">Dylan Reference Manual</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://package.opendylan.org/">Package Docs</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../library-reference/index.html">Open Dylan Libraries</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Open Dylan Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../library-reference/index.html">Bundled Libraries</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Bundled Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/language-extensions/index.html">Dylan Language Extensions</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle navigation of Dylan Language Extensions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/language-differences.html">Language Differences</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/define-function.html">Function Definition</a></li>
@@ -381,18 +383,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../library-reference/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="../documentation/index.html">All Documentation</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of All Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../documentation/index.html">Other Documentation</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of Other Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../news/index.html">News</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../documentation/cheatsheets/index.html">Cheat Sheets</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of Cheat Sheets</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/syntax.html">Syntax</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/conditionals.html">Conditionals</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/collections.html">Collections</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/iteration.html">Iteration</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/scheme.html">For Schemers</a></li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="../documentation/publications.html">Publications</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../intro-dylan/index.html">Intro to Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of Intro to Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../intro-dylan/index.html">Intro to Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of Intro to Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../intro-dylan/why-dylan.html">Why Dylan?</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../intro-dylan/expressions-variables.html">Expressions &amp; Variables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../intro-dylan/methods-generic-functions.html">Methods &amp; Generic Functions</a></li>
@@ -403,7 +397,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../intro-dylan/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../corba-guide/index.html">CORBA Guide</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of CORBA Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../corba-guide/index.html">CORBA Guide</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of CORBA Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../corba-guide/preface.html">Preface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../corba-guide/intro.html">About Open Dylan CORBA</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../corba-guide/getstart.html">Quick Start Tutorial</a></li>
@@ -417,7 +411,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../corba-guide/idl-app.html">An IDL Binding for Dylan</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../building-with-duim/index.html">DUIM Guide</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of DUIM Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../building-with-duim/index.html">DUIM Guide</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of DUIM Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../building-with-duim/preface.html">Preface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../building-with-duim/intro.html">Introduction</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../building-with-duim/design.html">Designing A Simple DUIM Application</a></li>
@@ -430,7 +424,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../building-with-duim/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../duim-reference/index.html">DUIM Reference</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of DUIM Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../duim-reference/index.html">DUIM Reference</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of DUIM Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../duim-reference/conventions.html">Conventions in this Manual</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../duim-reference/geom.html">DUIM-Geometry Library</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../duim-reference/ext-geom.html">DUIM-Extended-Geometry Library</a></li>
@@ -443,7 +437,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../duim-reference/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">Getting Started / IDE</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Getting Started / IDE</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">Getting Started / IDE</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of Getting Started / IDE</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="preface.html">Preface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="quick-start.html">Quick Start</a></li>
 <li class="toctree-l3 current current-page"><a class="current reference internal" href="#">Fixing Bugs</a></li>
@@ -459,7 +453,9 @@
 <li class="toctree-l3"><a class="reference internal" href="copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../release-notes/index.html">Release Notes</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../release-notes/index.html">Release Notes</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2026.1.html">Open Dylan 2026.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../release-notes/2025.1.html">Open Dylan 2025.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../release-notes/2024.1.html">Open Dylan 2024.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../release-notes/2023.1.html">Open Dylan 2023.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../release-notes/2022.1.html">Open Dylan 2022.1</a></li>
@@ -473,8 +469,8 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../style-guide/index.html">Style Guide</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../history/index.html">Dylan History</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" role="switch" type="checkbox"/><label for="toctree-checkbox-26"><div class="visually-hidden">Toggle navigation of Dylan History</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../history/apple-dylan/index.html">Apple Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" role="switch" type="checkbox"/><label for="toctree-checkbox-27"><div class="visually-hidden">Toggle navigation of Apple Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../history/index.html">Dylan History</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle navigation of Dylan History</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../history/apple-dylan/index.html">Apple Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" role="switch" type="checkbox"/><label for="toctree-checkbox-26"><div class="visually-hidden">Toggle navigation of Apple Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../history/apple-dylan/apple-cambridge.html">Apple Cambridge</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../history/apple-dylan/eulogy.html">Apple Dylan Eulogy</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../history/apple-dylan/technology-release.html">Apple Dylan Technology Release</a></li>
@@ -535,7 +531,7 @@
         </div>
         <article role="main" id="furo-main-content">
           <section id="fixing-bugs">
-<h1>Fixing Bugs<a class="headerlink" href="#fixing-bugs" title="Permalink to this heading">¶</a></h1>
+<h1>Fixing Bugs<a class="headerlink" href="#fixing-bugs" title="Link to this heading">¶</a></h1>
 <p>Though we can play Reversi, we cannot save games in progress and resume
 play at a later date. In this section, we add a save feature to the
 game, available through <strong>Save</strong>, <strong>Save As</strong> and <strong>Open</strong> commands on the
@@ -545,7 +541,7 @@ moment, you will see that those items are disabled.)</p>
 we must correct before the feature will work properly. In doing so, we
 will see the editor, debugger, and browser tools.</p>
 <section id="rebuilding-the-application">
-<h2>Rebuilding the application<a class="headerlink" href="#rebuilding-the-application" title="Permalink to this heading">¶</a></h2>
+<h2>Rebuilding the application<a class="headerlink" href="#rebuilding-the-application" title="Link to this heading">¶</a></h2>
 <p>There is another prepared Dylan source file with the changes we need to
 implement the game-saving facility.</p>
 <p>In the Reversi project window, go to the Sources page and select
@@ -574,7 +570,7 @@ project window after rebuilding Reversi:</p>
 and how the environment helps us deal with them.</p>
 </section>
 <section id="problems-at-compile-time">
-<h2>Problems at compile time<a class="headerlink" href="#problems-at-compile-time" title="Permalink to this heading">¶</a></h2>
+<h2>Problems at compile time<a class="headerlink" href="#problems-at-compile-time" title="Link to this heading">¶</a></h2>
 <p>In this section we look at how the compiler handles problems that it
 comes across in a project’s source code. When we rebuilt Reversi in
 <a class="reference internal" href="#rebuilding-the-application">Rebuilding the application</a>, the compiler
@@ -596,7 +592,7 @@ automatically.</p>
 <figure class="align-center" id="id3">
 <img alt="../_images/warnings2-0b1.png" src="../_images/warnings2-0b1.png" />
 <figcaption>
-<p><span class="caption-text">The project window’s Warnings page.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+<p><span class="caption-text">The project window’s Warnings page.</span><a class="headerlink" href="#id3" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The table has four columns:</p>
@@ -645,7 +641,7 @@ redisplay.</p>
 <figure class="align-center" id="id4">
 <img alt="../_images/editor.png" src="../_images/editor.png" />
 <figcaption>
-<p><span class="caption-text">The Open Dylan editor.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+<p><span class="caption-text">The Open Dylan editor.</span><a class="headerlink" href="#id4" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Now we can see the cause of the first serious warning. A semi-colon is
@@ -697,7 +693,7 @@ addressed, all the other serious warnings that were follow-on effects of
 the missing semi-colon have gone away. In addition, the single ordinary
 warning was removed by the <em>end</em> -clause fix.</p>
 <section id="controlling-the-compiler-s-treatment-of-warnings">
-<span id="index-4"></span><h3>Controlling the compiler’s treatment of warnings<a class="headerlink" href="#controlling-the-compiler-s-treatment-of-warnings" title="Permalink to this heading">¶</a></h3>
+<span id="index-4"></span><h3>Controlling the compiler’s treatment of warnings<a class="headerlink" href="#controlling-the-compiler-s-treatment-of-warnings" title="Link to this heading">¶</a></h3>
 <p>We have seen that serious warnings are caused by code that, if executed,
 would lead to a run-time exception. Some programming language compilers
 would refuse to link an executable file or DLL for such code, on the
@@ -714,7 +710,7 @@ setting.</p>
 </section>
 </section>
 <section id="problems-at-run-time">
-<span id="id1"></span><h2>Problems at run time<a class="headerlink" href="#problems-at-run-time" title="Permalink to this heading">¶</a></h2>
+<span id="id1"></span><h2>Problems at run time<a class="headerlink" href="#problems-at-run-time" title="Link to this heading">¶</a></h2>
 <p>Now we have taken a brief look at how Open Dylan treats
 compile-time problems, we will look at how it lets us debug problems
 that only emerge as exceptions at run time.</p>
@@ -736,7 +732,7 @@ the Reversi window.</p>
 <figure class="align-center" id="id5">
 <span id="dylan-runtime-application-error"></span><img alt="../_images/error2-0.png" src="../_images/error2-0.png" />
 <figcaption>
-<p><span class="caption-text">A Dylan run-time application error.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+<p><span class="caption-text">A Dylan run-time application error.</span><a class="headerlink" href="#id5" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The dialog appeared because the Open Dylan debugger caught an
@@ -775,7 +771,7 @@ debugger. The default filter setting is “Filtered visible frames”.</p>
 <figure class="align-center" id="id6">
 <img alt="../_images/errstack2-0.png" src="../_images/errstack2-0.png" />
 <figcaption>
-<p><span class="caption-text">The Reversi application stack after a game-saving error.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+<p><span class="caption-text">The Reversi application stack after a game-saving error.</span><a class="headerlink" href="#id6" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Each item in the list is a call frame on the stack for the thread being
@@ -789,7 +785,7 @@ of the icons and their meanings, but note for now that the green arrow
 icon represents the current location of the stack pointer — that is, the
 call at which the thread was paused.</p>
 <section id="searching-the-stack-backtrace-for-the-cause-of-the-error">
-<span id="searching-stack-backtrace-for-cause"></span><h3>Searching the stack backtrace for the cause of the error<a class="headerlink" href="#searching-the-stack-backtrace-for-the-cause-of-the-error" title="Permalink to this heading">¶</a></h3>
+<span id="searching-stack-backtrace-for-cause"></span><h3>Searching the stack backtrace for the cause of the error<a class="headerlink" href="#searching-the-stack-backtrace-for-the-cause-of-the-error" title="Link to this heading">¶</a></h3>
 <p>In this section we examine the backtrace and see what events led up to
 the unhandled exception.</p>
 <p>Looking at the top of the backtrace, we can see that the most recent
@@ -851,7 +847,7 @@ Debugger Options…</strong>, see <a class="reference internal" href="debug.html
 <figure class="align-center" id="id7">
 <img alt="../_images/unfilterederrstack2-0.png" src="../_images/unfilterederrstack2-0.png" />
 <figcaption>
-<p><span class="caption-text">Stack pane showing call frames from all modules.</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+<p><span class="caption-text">Stack pane showing call frames from all modules.</span><a class="headerlink" href="#id7" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>So the question is whether the call to <code class="docutils literal notranslate"><span class="pre">coerce-from-element</span></code> failed, or
@@ -925,7 +921,7 @@ the squares being represented by integers, and the file stream being
 composed of byte characters.</p>
 </section>
 <section id="browsing-local-variables">
-<span id="id2"></span><h3>Browsing local variables<a class="headerlink" href="#browsing-local-variables" title="Permalink to this heading">¶</a></h3>
+<span id="id2"></span><h3>Browsing local variables<a class="headerlink" href="#browsing-local-variables" title="Link to this heading">¶</a></h3>
 <p>In this section we use the Open Dylan browser to help confirm the
 cause of the unhandled Dylan exception.</p>
 <p>Expand the call frame for <code class="docutils literal notranslate"><span class="pre">reversi-board-write-data</span></code>.</p>
@@ -935,7 +931,7 @@ arguments are listed first: <em>board</em> and <em>stream</em>, followed by the
 <figure class="align-center" id="id8">
 <img alt="../_images/locvars.png" src="../_images/locvars.png" />
 <figcaption>
-<p><span class="caption-text">Local variables in the <code class="docutils literal notranslate"><span class="pre">reversi-board-write-data</span></code> call frame.</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
+<p><span class="caption-text">Local variables in the <code class="docutils literal notranslate"><span class="pre">reversi-board-write-data</span></code> call frame.</span><a class="headerlink" href="#id8" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The notation</p>
@@ -953,7 +949,7 @@ we come across in Open Dylan.</p>
 <figure class="align-center" id="id9">
 <img alt="../_images/firstbrowse.png" src="../_images/firstbrowse.png" />
 <figcaption>
-<p><span class="caption-text">Browsing an instance of <code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code>.</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
+<p><span class="caption-text">Browsing an instance of <code class="docutils literal notranslate"><span class="pre">&lt;reversi-board&gt;</span></code>.</span><a class="headerlink" href="#id9" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The browser shows us in its Object field that we are browsing an
@@ -985,7 +981,7 @@ to browsing them.</p>
 <figure class="align-center" id="id10">
 <img alt="../_images/collsquares.png" src="../_images/collsquares.png" />
 <figcaption>
-<p><span class="caption-text">Browsing the elements of a collection.</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
+<p><span class="caption-text">Browsing the elements of a collection.</span><a class="headerlink" href="#id10" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Now we can see the elements of the <em>reversi-board-squares</em> collection.</p>
@@ -1017,7 +1013,7 @@ from. However, we have yet to check what goes on in
 elements in the <em>reversi-board-squares</em> sequence into integers?</p>
 </section>
 <section id="browsing-definitions">
-<h3>Browsing definitions<a class="headerlink" href="#browsing-definitions" title="Permalink to this heading">¶</a></h3>
+<h3>Browsing definitions<a class="headerlink" href="#browsing-definitions" title="Link to this heading">¶</a></h3>
 <p>In this section, we browse the definition of <code class="docutils literal notranslate"><span class="pre">reversi-square-write-data</span></code>
 to see whether it converts the board squares into integers.</p>
 <p>To browse the definition, we have the option of locating it on the
@@ -1055,7 +1051,7 @@ that the board square representations are converted into integers. This
 is where the integer that caused the exception came from.</p>
 </section>
 <section id="fixing-the-error">
-<h3>Fixing the error<a class="headerlink" href="#fixing-the-error" title="Permalink to this heading">¶</a></h3>
+<h3>Fixing the error<a class="headerlink" href="#fixing-the-error" title="Link to this heading">¶</a></h3>
 <p>In this section, we fix the Reversi project source code to eliminate the
 cause of the exception we have been tracking down.</p>
 <p>This is what we have learned about the error so far:</p>
@@ -1143,7 +1139,7 @@ application.</p>
 <p>The save operation now works without raising an unhandled exception.</p>
 </section>
 <section id="loading-the-saved-game-back-in">
-<h3>Loading the saved game back in<a class="headerlink" href="#loading-the-saved-game-back-in" title="Permalink to this heading">¶</a></h3>
+<h3>Loading the saved game back in<a class="headerlink" href="#loading-the-saved-game-back-in" title="Link to this heading">¶</a></h3>
 <p>The next step is to test the code for loading a saved game. To test this
 we need to change the state of the board from what it was like when we
 saved the game.</p>
@@ -1185,7 +1181,7 @@ saved the game into, and click <strong>Open</strong>.</p>
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2011-2024, Dylan Hackers
+                Copyright &#169; 2011-2026, Dylan Hackers
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -1236,9 +1232,9 @@ saved the game into, and click <strong>Open</strong>.</p>
       
     </aside>
   </div>
-</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=7cccf125"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
-    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+</div><script src="../_static/documentation_options.js?v=b916904f"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=5fa4622c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=35a8b989"></script>

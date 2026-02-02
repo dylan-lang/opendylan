@@ -39,7 +39,7 @@ This is the first joint release on all major platforms:
 
 The C back-end currently does not support multi-threaded programs.
 
-We also developed a SLIME (https://common-lisp.net/project/slime/)
+We also developed a SLIME (https://slime.common-lisp.dev/)
 back-end, so you can develop in Emacs and get cross references, M-.
 and arguments.
 

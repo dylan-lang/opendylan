@@ -61,5 +61,5 @@ Installation
 
 You need the following pieces:
 
-   * `dylan-mode <https://github.com/dylan-lang/dylan-mode>`_, and extend your ``~/.emacs`` as documented in the README
+   * `dylan-mode <https://github.com/dylan-lang/dylan-emacs-support>`_, and extend your ``~/.emacs`` as documented in the README
    * dswank itself is shipped with the 2011.1 release

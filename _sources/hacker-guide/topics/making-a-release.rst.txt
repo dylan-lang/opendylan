@@ -7,7 +7,7 @@ it's easy to forget one or two. Hopefully we can automate some of these but for
 now here is a manual check-list.
 
 #. Tell `the Matrix channel
-   <https://matrix.to/#/#dylan-lang_general:gitter.im>`_ that you plan to build
+   <https://app.element.io/#/room/#dylan-lang_general:gitter.im>`_ that you plan to build
    a release.
 
 #. Update submodules to the latest stable version tags and document the version
@@ -97,7 +97,7 @@ now here is a manual check-list.
 #. Test the tarballs
 
    In your own branch, modify the `libraries-test-suite.yml workflow
-   <https://github.com/dylan-lang/opendylan/blob/master/.github/workflows/libraries-test-suite.yml#L28>`_
+   <https://github.com/dylan-lang/opendylan/blob/ee21ac1e65f8aa921a2d76e197fb4ba652f3b8a1/.github/workflows/libraries-test-suite.yml#L28>`_
    to explicitly specify the new release version and tag so that it will be
    installed and tested on a clean machine on multiple platforms. You'll have
    to go to your fork in the GitHub UI, click on Actions, and find the workflow

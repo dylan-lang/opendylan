@@ -1,15 +1,15 @@
 <!doctype html>
-<html class="no-js" lang="en" data-content_root="">
+<html class="no-js" lang="en" data-content_root="../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Open Dylan 2011.1 Release Notes" href="2011.1.html" /><link rel="prev" title="Open Dylan 2013.1 Release Notes" href="2013.1.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.08.06 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>Open Dylan 2012.1 Release Notes - Open Dylan</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
-    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
     
@@ -243,6 +243,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/porting.html">Porting to a New Target Platform</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/ppml.html">The PPML library</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/making-a-release.html">Release Check-list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../hacker-guide/topics/opendylan.org.html">Maintaining opendylan.org</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../hacker-guide/glossary.html">Glossary</a></li>
@@ -304,6 +305,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../documentation/cheatsheets/collections.html">Collections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../documentation/cheatsheets/iteration.html">Iteration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../documentation/cheatsheets/scheme.html">For Schemers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../documentation/cheatsheets/python.html">For Pythonistas</a></li>
 </ul>
 </li>
 </ul>
@@ -311,7 +313,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/drm/">Dylan Reference Manual</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://package.opendylan.org/">Package Docs</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../library-reference/index.html">Open Dylan Libraries</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Open Dylan Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../library-reference/index.html">Bundled Libraries</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Bundled Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../library-reference/language-extensions/index.html">Dylan Language Extensions</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle navigation of Dylan Language Extensions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/language-differences.html">Language Differences</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library-reference/language-extensions/define-function.html">Function Definition</a></li>
@@ -381,18 +383,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../library-reference/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="../documentation/index.html">All Documentation</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of All Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../documentation/index.html">Other Documentation</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of Other Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../news/index.html">News</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../documentation/cheatsheets/index.html">Cheat Sheets</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of Cheat Sheets</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/syntax.html">Syntax</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/conditionals.html">Conditionals</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/collections.html">Collections</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/iteration.html">Iteration</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../documentation/cheatsheets/scheme.html">For Schemers</a></li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="../documentation/publications.html">Publications</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../intro-dylan/index.html">Intro to Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of Intro to Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../intro-dylan/index.html">Intro to Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of Intro to Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../intro-dylan/why-dylan.html">Why Dylan?</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../intro-dylan/expressions-variables.html">Expressions &amp; Variables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../intro-dylan/methods-generic-functions.html">Methods &amp; Generic Functions</a></li>
@@ -403,7 +397,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../intro-dylan/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../corba-guide/index.html">CORBA Guide</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of CORBA Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../corba-guide/index.html">CORBA Guide</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of CORBA Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../corba-guide/preface.html">Preface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../corba-guide/intro.html">About Open Dylan CORBA</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../corba-guide/getstart.html">Quick Start Tutorial</a></li>
@@ -417,7 +411,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../corba-guide/idl-app.html">An IDL Binding for Dylan</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../building-with-duim/index.html">DUIM Guide</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of DUIM Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../building-with-duim/index.html">DUIM Guide</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of DUIM Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../building-with-duim/preface.html">Preface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../building-with-duim/intro.html">Introduction</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../building-with-duim/design.html">Designing A Simple DUIM Application</a></li>
@@ -430,7 +424,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../building-with-duim/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../duim-reference/index.html">DUIM Reference</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of DUIM Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../duim-reference/index.html">DUIM Reference</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of DUIM Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../duim-reference/conventions.html">Conventions in this Manual</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../duim-reference/geom.html">DUIM-Geometry Library</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../duim-reference/ext-geom.html">DUIM-Extended-Geometry Library</a></li>
@@ -443,7 +437,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../duim-reference/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../getting-started-ide/index.html">Getting Started / IDE</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Getting Started / IDE</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../getting-started-ide/index.html">Getting Started / IDE</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of Getting Started / IDE</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/preface.html">Preface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/quick-start.html">Quick Start</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/expanding.html">Fixing Bugs</a></li>
@@ -459,7 +453,9 @@
 <li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">Release Notes</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">Release Notes</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="2026.1.html">Open Dylan 2026.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2025.1.html">Open Dylan 2025.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="2024.1.html">Open Dylan 2024.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="2023.1.html">Open Dylan 2023.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="2022.1.html">Open Dylan 2022.1</a></li>
@@ -473,8 +469,8 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../style-guide/index.html">Style Guide</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../history/index.html">Dylan History</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" role="switch" type="checkbox"/><label for="toctree-checkbox-26"><div class="visually-hidden">Toggle navigation of Dylan History</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../history/apple-dylan/index.html">Apple Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" role="switch" type="checkbox"/><label for="toctree-checkbox-27"><div class="visually-hidden">Toggle navigation of Apple Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../history/index.html">Dylan History</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle navigation of Dylan History</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../history/apple-dylan/index.html">Apple Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" role="switch" type="checkbox"/><label for="toctree-checkbox-26"><div class="visually-hidden">Toggle navigation of Apple Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../history/apple-dylan/apple-cambridge.html">Apple Cambridge</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../history/apple-dylan/eulogy.html">Apple Dylan Eulogy</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../history/apple-dylan/technology-release.html">Apple Dylan Technology Release</a></li>
@@ -535,9 +531,9 @@
         </div>
         <article role="main" id="furo-main-content">
           <section id="open-dylan-2012-1-release-notes">
-<h1>Open Dylan 2012.1 Release Notes<a class="headerlink" href="#open-dylan-2012-1-release-notes" title="Permalink to this heading">¶</a></h1>
+<h1>Open Dylan 2012.1 Release Notes<a class="headerlink" href="#open-dylan-2012-1-release-notes" title="Link to this heading">¶</a></h1>
 <section id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
 <p>This document describes the 2012.1 release of Open Dylan, released
 December 19, 2012.</p>
 <ul class="simple">
@@ -547,11 +543,11 @@ December 19, 2012.</p>
 </ul>
 </section>
 <section id="language-specification-changes">
-<h2>Language Specification Changes<a class="headerlink" href="#language-specification-changes" title="Permalink to this heading">¶</a></h2>
+<h2>Language Specification Changes<a class="headerlink" href="#language-specification-changes" title="Link to this heading">¶</a></h2>
 <p>We try to keep changes to the language definition few and far between
 and limited to things that are either necessary or clear advantages.</p>
 <section id="c3-superclass-linearization">
-<h3>C3 Superclass Linearization<a class="headerlink" href="#c3-superclass-linearization" title="Permalink to this heading">¶</a></h3>
+<h3>C3 Superclass Linearization<a class="headerlink" href="#c3-superclass-linearization" title="Link to this heading">¶</a></h3>
 <p>Open Dylan now uses the C3 superclass linearization algorithm.  This
 algorithm was originally designed for Dylan but for historical reasons
 was never implemented in Dylan, until now.  In most cases this change
@@ -563,7 +559,7 @@ warning will be removed completely.</p>
 </section>
 </section>
 <section id="library-changes">
-<h2>Library Changes<a class="headerlink" href="#library-changes" title="Permalink to this heading">¶</a></h2>
+<h2>Library Changes<a class="headerlink" href="#library-changes" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>The <code class="docutils literal notranslate"><span class="pre">CL-plists</span></code> module in the <code class="docutils literal notranslate"><span class="pre">cl</span></code> library has been removed.
 Any usages of it can be replaced by using the <code class="docutils literal notranslate"><span class="pre">plists</span></code> module
@@ -601,7 +597,7 @@ or pass <code class="docutils literal notranslate"><span class="pre">synchronize
 </ul>
 </section>
 <section id="documentation-improvements">
-<h2>Documentation Improvements<a class="headerlink" href="#documentation-improvements" title="Permalink to this heading">¶</a></h2>
+<h2>Documentation Improvements<a class="headerlink" href="#documentation-improvements" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>All documentation has been converted to the Sphinx document
 generator.  This is a huge improvement in our ability to keep the
@@ -616,9 +612,9 @@ Started Guide</span></a>.</p></li>
 </ul>
 </section>
 <section id="dylan-compiler-improvements">
-<h2>dylan-compiler Improvements<a class="headerlink" href="#dylan-compiler-improvements" title="Permalink to this heading">¶</a></h2>
+<h2>dylan-compiler Improvements<a class="headerlink" href="#dylan-compiler-improvements" title="Link to this heading">¶</a></h2>
 <section id="relocatable-executables-and-libraries">
-<h3>Relocatable Executables and Libraries<a class="headerlink" href="#relocatable-executables-and-libraries" title="Permalink to this heading">¶</a></h3>
+<h3>Relocatable Executables and Libraries<a class="headerlink" href="#relocatable-executables-and-libraries" title="Link to this heading">¶</a></h3>
 <p>Previously, the executables and libraries built by the Dylan
 compiler had to reside at a fixed path (set during compilation).</p>
 <p>This has now been loosened up significantly on Linux, Mac OS X
@@ -630,7 +626,7 @@ dynamic linker.  On Mac OS X, this uses <code class="docutils literal notranslat
 in Mac OS X 10.5 and later.</p>
 </section>
 <section id="usability-output-and-locating-libraries">
-<h3>Usability - Output and Locating Libraries<a class="headerlink" href="#usability-output-and-locating-libraries" title="Permalink to this heading">¶</a></h3>
+<h3>Usability - Output and Locating Libraries<a class="headerlink" href="#usability-output-and-locating-libraries" title="Link to this heading">¶</a></h3>
 <p>To simplify the build process, two changes were made to
 <code class="docutils literal notranslate"><span class="pre">dylan-compiler</span></code>:</p>
 <ol class="arabic simple">
@@ -659,7 +655,7 @@ initially have to build all dependencies, down to and including the
 <code class="docutils literal notranslate"><span class="pre">dylan</span></code> library.</p>
 </section>
 <section id="debug-back-end-improvements">
-<h3>Debug Back-end Improvements<a class="headerlink" href="#debug-back-end-improvements" title="Permalink to this heading">¶</a></h3>
+<h3>Debug Back-end Improvements<a class="headerlink" href="#debug-back-end-improvements" title="Link to this heading">¶</a></h3>
 <p>The debug back-end is used for printing the internal compiler
 state (the DFM).</p>
 <ul class="simple">
@@ -669,7 +665,7 @@ state (the DFM).</p>
 </ul>
 </section>
 <section id="documentation-generation">
-<h3>Documentation Generation<a class="headerlink" href="#documentation-generation" title="Permalink to this heading">¶</a></h3>
+<h3>Documentation Generation<a class="headerlink" href="#documentation-generation" title="Link to this heading">¶</a></h3>
 <p>In addition to the documentation updates, we’ve also enhanced the
 documentation generation feature within <code class="docutils literal notranslate"><span class="pre">dylan-compiler</span></code> to output
 the new format.  This can be used by, first loading and compiling
@@ -681,7 +677,7 @@ a library and then:</p>
 documentation will be removed.</p>
 </section>
 <section id="dependency-graph-generation">
-<h3>Dependency Graph Generation<a class="headerlink" href="#dependency-graph-generation" title="Permalink to this heading">¶</a></h3>
+<h3>Dependency Graph Generation<a class="headerlink" href="#dependency-graph-generation" title="Link to this heading">¶</a></h3>
 <p>You can now generate a dependency graph (at the library level) for a
 project in both text and GraphViz <code class="docutils literal notranslate"><span class="pre">.dot</span></code> format.  Open a project and:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">export</span> <span class="o">-</span><span class="nb">format</span> <span class="n">dot</span> <span class="n">dependency</span><span class="o">-</span><span class="n">graph</span>
@@ -694,9 +690,9 @@ project in both text and GraphViz <code class="docutils literal notranslate"><sp
 </section>
 </section>
 <section id="code-generation-improvements">
-<h2>Code Generation Improvements<a class="headerlink" href="#code-generation-improvements" title="Permalink to this heading">¶</a></h2>
+<h2>Code Generation Improvements<a class="headerlink" href="#code-generation-improvements" title="Link to this heading">¶</a></h2>
 <section id="limited-collections">
-<h3>Limited Collections<a class="headerlink" href="#limited-collections" title="Permalink to this heading">¶</a></h3>
+<h3>Limited Collections<a class="headerlink" href="#limited-collections" title="Link to this heading">¶</a></h3>
 <p>There were some bugs and some missed opportunities for optimization in
 the limited collections code.</p>
 <p>Consider the following constant:</p>
@@ -758,7 +754,7 @@ lead towards code which the C compiler could not compile
 <p>This required a fix in the typist.</p>
 </section>
 <section id="miscellaneous-fixes">
-<h3>Miscellaneous Fixes<a class="headerlink" href="#miscellaneous-fixes" title="Permalink to this heading">¶</a></h3>
+<h3>Miscellaneous Fixes<a class="headerlink" href="#miscellaneous-fixes" title="Link to this heading">¶</a></h3>
 <p>The control flow graph could be incorrect if an unwind-protect without
 a body is optimized.</p>
 <p>Some slot initializer constants (floats in particular) when inherited
@@ -770,9 +766,9 @@ specifications.</p>
 </section>
 </section>
 <section id="c-back-end-changes">
-<h2>C Back-end Changes<a class="headerlink" href="#c-back-end-changes" title="Permalink to this heading">¶</a></h2>
+<h2>C Back-end Changes<a class="headerlink" href="#c-back-end-changes" title="Link to this heading">¶</a></h2>
 <section id="multi-threading">
-<h3>Multi-threading<a class="headerlink" href="#multi-threading" title="Permalink to this heading">¶</a></h3>
+<h3>Multi-threading<a class="headerlink" href="#multi-threading" title="Link to this heading">¶</a></h3>
 <p>The C back-end now fully supports multi-threading.  Several bugs
 unrelated to threading were also fixed in this work, which should
 improve the stability of the C back-end in general.</p>
@@ -780,7 +776,7 @@ improve the stability of the C back-end in general.</p>
 performance issues.  Further feedback is welcome.</p>
 </section>
 <section id="performance-improvements">
-<h3>Performance Improvements<a class="headerlink" href="#performance-improvements" title="Permalink to this heading">¶</a></h3>
+<h3>Performance Improvements<a class="headerlink" href="#performance-improvements" title="Link to this heading">¶</a></h3>
 <p>Previously, the C run-time was allocating unwind-protect control
 structures on the heap using the Garbage Collector. Additionally,
 unwind-protect was preserving signal state on some platforms, notably
@@ -793,13 +789,13 @@ of the I/O libraries which make heavy use of unwind-protect.</p>
 arguments. It now correctly only performs this check once.</p>
 </section>
 <section id="shared-library-initialization">
-<h3>Shared Library Initialization<a class="headerlink" href="#shared-library-initialization" title="Permalink to this heading">¶</a></h3>
+<h3>Shared Library Initialization<a class="headerlink" href="#shared-library-initialization" title="Link to this heading">¶</a></h3>
 <p>The C back-end now generates shared libraries which can be used with
 <code class="docutils literal notranslate"><span class="pre">dlopen()</span></code>.  This behavior is in line with the libraries generated
 by the native HARP back-end.</p>
 </section>
 <section id="fixes">
-<h3>Fixes<a class="headerlink" href="#fixes" title="Permalink to this heading">¶</a></h3>
+<h3>Fixes<a class="headerlink" href="#fixes" title="Link to this heading">¶</a></h3>
 <p>Some other bugs that resulted in the generation of invalid C have
 been fixed.</p>
 <p>We now abort when applying too many arguments in C run-time.</p>
@@ -813,13 +809,13 @@ when compiled.</p>
 </section>
 </section>
 <section id="c-ffi-changes">
-<h2>C-FFI Changes<a class="headerlink" href="#c-ffi-changes" title="Permalink to this heading">¶</a></h2>
+<h2>C-FFI Changes<a class="headerlink" href="#c-ffi-changes" title="Link to this heading">¶</a></h2>
 <section id="c-variable-setters">
-<h3>C-variable setters<a class="headerlink" href="#c-variable-setters" title="Permalink to this heading">¶</a></h3>
+<h3>C-variable setters<a class="headerlink" href="#c-variable-setters" title="Link to this heading">¶</a></h3>
 <p>Setters should work with C-variables now.</p>
 </section>
 <section id="constant-slot-syntax">
-<h3>Constant Slot Syntax<a class="headerlink" href="#constant-slot-syntax" title="Permalink to this heading">¶</a></h3>
+<h3>Constant Slot Syntax<a class="headerlink" href="#constant-slot-syntax" title="Link to this heading">¶</a></h3>
 <p>You can now use <code class="docutils literal notranslate"><span class="pre">constant</span> <span class="pre">slot</span></code> when defining a <code class="docutils literal notranslate"><span class="pre">C-struct</span></code> rather than having to set <code class="docutils literal notranslate"><span class="pre">setter:</span> <span class="pre">#f</span></code>.
 This makes the syntax closer to normal class definitions:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="n">C-struct</span><span class="w"> </span><span class="nc">&lt;Point&gt;</span>
@@ -831,9 +827,9 @@ This makes the syntax closer to normal class definitions:</p>
 </section>
 </section>
 <section id="other-changes">
-<h2>Other Changes<a class="headerlink" href="#other-changes" title="Permalink to this heading">¶</a></h2>
+<h2>Other Changes<a class="headerlink" href="#other-changes" title="Link to this heading">¶</a></h2>
 <section id="running-dylan-compiler-under-gdb-with-fdmake">
-<h3>Running dylan-compiler under gdb with fdmake<a class="headerlink" href="#running-dylan-compiler-under-gdb-with-fdmake" title="Permalink to this heading">¶</a></h3>
+<h3>Running dylan-compiler under gdb with fdmake<a class="headerlink" href="#running-dylan-compiler-under-gdb-with-fdmake" title="Link to this heading">¶</a></h3>
 <p>Sometimes, it is useful to be able to run <code class="docutils literal notranslate"><span class="pre">dylan-compiler</span></code> under <code class="docutils literal notranslate"><span class="pre">gdb</span></code> while doing a bootstrap build
 using fdmake. This is now easy to do:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">FDMAKE_OPTIONS</span><span class="o">=--</span><span class="n">gdb</span> <span class="mi">3</span><span class="o">-</span><span class="n">stage</span><span class="o">-</span><span class="n">bootstrap</span>
@@ -874,7 +870,7 @@ of <code class="docutils literal notranslate"><span class="pre">dylan-compiler</
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2011-2024, Dylan Hackers
+                Copyright &#169; 2011-2026, Dylan Hackers
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -948,9 +944,9 @@ of <code class="docutils literal notranslate"><span class="pre">dylan-compiler</
       
     </aside>
   </div>
-</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=7cccf125"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
-    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+</div><script src="../_static/documentation_options.js?v=b916904f"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=5fa4622c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=35a8b989"></script>

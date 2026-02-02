@@ -272,15 +272,25 @@ explicit synchronization, as appropriate.
 The Threads class hierarchy
 ===========================
 
-.. figure:: ../images/threads.png
+.. image:: ../images/threads.png
    :align: center
+   :class: only-light
 
-   Threads class hierarchy.
+.. image:: ../images/threads-dark.png
+   :align: center
+   :class: only-dark
 
-* s - sealed  | o - open
-* p - primary | f - free
-* c - concrete | a - abstract
-* u - uninstantiable | i - instantiable
++--------------------+------------------+
+| Legend of Threads class hierarchy     |
++====================+==================+
+| s - sealed         | o - open         |
++--------------------+------------------+
+| p - primary        | f - free         |
++--------------------+------------------+
+| c - concrete       | a - abstract     |
++--------------------+------------------+
+| u - uninstantiable | i - instantiable |
++--------------------+------------------+
 
 Basic features
 ==============

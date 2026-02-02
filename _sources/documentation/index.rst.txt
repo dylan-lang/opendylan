@@ -96,7 +96,7 @@ list. Below are a few highlighted publications.
 
   https://zenodo.org/records/3742567
 
-**Extending Dylan's type system for better type inference and error detection** (by Hannes Mehnert at ILC 2010 `pdf <http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.627.5175&rep=rep1&type=pdf>`__ `bib <../_static/documentation/mehnert2010.bib>`__)
+**Extending Dylan's type system for better type inference and error detection** (by Hannes Mehnert at ILC 2010 `dl.acm.org <https://doi.org/10.1145/1869643.1869645>`__ `bib <../_static/documentation/mehnert2010.bib>`__)
     Whereas dynamic typing enables rapid prototyping and easy
     experimentation, static typing provides early error detection and
     better compile time optimization. Gradual typing provides the best
@@ -116,7 +116,7 @@ list. Below are a few highlighted publications.
 
     https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.627.5175&rep=rep1&type=pdf
 
-**D-Expressions: Lisp Power, Dylan Style** [`pdf <http://people.csail.mit.edu/jrb/Projects/dexprs.pdf>`__] [`bib <../_static/documentation/bachrach1999.bib>`__]
+**D-Expressions: Lisp Power, Dylan Style** [`pdf <https://people.csail.mit.edu/jrb/Projects/dexprs.pdf>`__] [`bib <../_static/documentation/bachrach1999.bib>`__]
     This paper aims to demonstrate that it is possible for a language
     with a rich, conventional syntax to provide Lisp-style macro power
     and simplicity. We describe a macro system and syntax manipulation
@@ -154,7 +154,6 @@ For Open Dylan Developers
    :hidden:
 
    News </news/index>
-   Cheat Sheets <cheatsheets/index>
    Publications <publications>
    Intro to Dylan </intro-dylan/index>
    CORBA Guide </corba-guide/index>

@@ -1,15 +1,15 @@
 <!doctype html>
-<html class="no-js" lang="en" data-content_root="">
+<html class="no-js" lang="en" data-content_root="../../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Notes, Warnings and Errors" href="notes-warnings-errors.html" /><link rel="prev" title="Jam-based Build System" href="../build-system.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.08.06 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>DFMC, The Dylan Flow Machine Compiler - Open Dylan</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
-    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=302659d7" />
     
@@ -243,6 +243,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../topics/porting.html">Porting to a New Target Platform</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../topics/ppml.html">The PPML library</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../topics/making-a-release.html">Release Check-list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../topics/opendylan.org.html">Maintaining opendylan.org</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../glossary.html">Glossary</a></li>
@@ -304,6 +305,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../documentation/cheatsheets/collections.html">Collections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../documentation/cheatsheets/iteration.html">Iteration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../documentation/cheatsheets/scheme.html">For Schemers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/cheatsheets/python.html">For Pythonistas</a></li>
 </ul>
 </li>
 </ul>
@@ -311,7 +313,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/drm/">Dylan Reference Manual</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://package.opendylan.org/">Package Docs</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../library-reference/index.html">Open Dylan Libraries</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Open Dylan Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../library-reference/index.html">Bundled Libraries</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Bundled Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../library-reference/language-extensions/index.html">Dylan Language Extensions</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle navigation of Dylan Language Extensions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../library-reference/language-extensions/language-differences.html">Language Differences</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../library-reference/language-extensions/define-function.html">Function Definition</a></li>
@@ -381,18 +383,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../library-reference/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../documentation/index.html">All Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of All Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../documentation/index.html">Other Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of Other Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../news/index.html">News</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../documentation/cheatsheets/index.html">Cheat Sheets</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of Cheat Sheets</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/syntax.html">Syntax</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/conditionals.html">Conditionals</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/collections.html">Collections</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/iteration.html">Iteration</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../documentation/cheatsheets/scheme.html">For Schemers</a></li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="../../documentation/publications.html">Publications</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../intro-dylan/index.html">Intro to Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of Intro to Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../intro-dylan/index.html">Intro to Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of Intro to Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/why-dylan.html">Why Dylan?</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/expressions-variables.html">Expressions &amp; Variables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/methods-generic-functions.html">Methods &amp; Generic Functions</a></li>
@@ -403,7 +397,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../intro-dylan/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../corba-guide/index.html">CORBA Guide</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of CORBA Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../corba-guide/index.html">CORBA Guide</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of CORBA Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../corba-guide/preface.html">Preface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../corba-guide/intro.html">About Open Dylan CORBA</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../corba-guide/getstart.html">Quick Start Tutorial</a></li>
@@ -417,7 +411,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../corba-guide/idl-app.html">An IDL Binding for Dylan</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../building-with-duim/index.html">DUIM Guide</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of DUIM Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../building-with-duim/index.html">DUIM Guide</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of DUIM Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/preface.html">Preface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/intro.html">Introduction</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/design.html">Designing A Simple DUIM Application</a></li>
@@ -430,7 +424,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../building-with-duim/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../duim-reference/index.html">DUIM Reference</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of DUIM Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../duim-reference/index.html">DUIM Reference</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of DUIM Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../duim-reference/conventions.html">Conventions in this Manual</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../duim-reference/geom.html">DUIM-Geometry Library</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../duim-reference/ext-geom.html">DUIM-Extended-Geometry Library</a></li>
@@ -443,7 +437,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../duim-reference/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../getting-started-ide/index.html">Getting Started / IDE</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Getting Started / IDE</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../getting-started-ide/index.html">Getting Started / IDE</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of Getting Started / IDE</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/preface.html">Preface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/quick-start.html">Quick Start</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/expanding.html">Fixing Bugs</a></li>
@@ -459,7 +453,9 @@
 <li class="toctree-l3"><a class="reference internal" href="../../getting-started-ide/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../release-notes/index.html">Release Notes</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../release-notes/index.html">Release Notes</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2026.1.html">Open Dylan 2026.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../release-notes/2025.1.html">Open Dylan 2025.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../release-notes/2024.1.html">Open Dylan 2024.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../release-notes/2023.1.html">Open Dylan 2023.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../release-notes/2022.1.html">Open Dylan 2022.1</a></li>
@@ -473,8 +469,8 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../style-guide/index.html">Style Guide</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../history/index.html">Dylan History</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" role="switch" type="checkbox"/><label for="toctree-checkbox-26"><div class="visually-hidden">Toggle navigation of Dylan History</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../../history/apple-dylan/index.html">Apple Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" role="switch" type="checkbox"/><label for="toctree-checkbox-27"><div class="visually-hidden">Toggle navigation of Apple Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../history/index.html">Dylan History</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle navigation of Dylan History</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../history/apple-dylan/index.html">Apple Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" role="switch" type="checkbox"/><label for="toctree-checkbox-26"><div class="visually-hidden">Toggle navigation of Apple Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../history/apple-dylan/apple-cambridge.html">Apple Cambridge</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../history/apple-dylan/eulogy.html">Apple Dylan Eulogy</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../history/apple-dylan/technology-release.html">Apple Dylan Technology Release</a></li>
@@ -535,7 +531,7 @@
         </div>
         <article role="main" id="furo-main-content">
           <section id="dfmc-the-dylan-flow-machine-compiler">
-<h1>DFMC, The Dylan Flow Machine Compiler<a class="headerlink" href="#dfmc-the-dylan-flow-machine-compiler" title="Permalink to this heading">¶</a></h1>
+<h1>DFMC, The Dylan Flow Machine Compiler<a class="headerlink" href="#dfmc-the-dylan-flow-machine-compiler" title="Link to this heading">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="notes-warnings-errors.html">Notes, Warnings and Errors</a><ul>
@@ -553,15 +549,139 @@
 <li class="toctree-l2"><a class="reference internal" href="notes-warnings-errors.html#responding-to-a-program-condition">Responding to a Program Condition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notes-warnings-errors.html#future-work">Future Work</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notes-warnings-errors.html#the-dfmc-conditions-api-reference">The DFMC-CONDITIONS API Reference</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="notes-warnings-errors.html#definers-for-new-program-conditions">Definers for new Program Conditions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="notes-warnings-errors.html#program-conditions">Program Conditions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="notes-warnings-errors.html#program-condition-slots">Program Condition Slots</a></li>
-<li class="toctree-l3"><a class="reference internal" href="notes-warnings-errors.html#signaling-program-conditions">Signaling Program Conditions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="notes-warnings-errors.html#preserving-program-conditions">Preserving Program Conditions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="notes-warnings-errors.html#recovery-and-restarting">Recovery and Restarting</a></li>
-<li class="toctree-l3"><a class="reference internal" href="notes-warnings-errors.html#subnotes">Subnotes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="notes-warnings-errors.html#printing-program-conditions">Printing Program Conditions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="notes-warnings-errors.html#unclassified-api">Unclassified API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notes-warnings-errors.html#definers-for-new-program-conditions">Definers for new Program Conditions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-condition-definer"><code class="docutils literal notranslate"><span class="pre">program-condition-definer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-note-definer"><code class="docutils literal notranslate"><span class="pre">program-note-definer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:performance-note-definer"><code class="docutils literal notranslate"><span class="pre">performance-note-definer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:portability-note-definer"><code class="docutils literal notranslate"><span class="pre">portability-note-definer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-error-definer"><code class="docutils literal notranslate"><span class="pre">program-error-definer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-restart-definer"><code class="docutils literal notranslate"><span class="pre">program-restart-definer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-warning-definer"><code class="docutils literal notranslate"><span class="pre">program-warning-definer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:run-time-error-warning-definer"><code class="docutils literal notranslate"><span class="pre">run-time-error-warning-definer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:serious-program-warning-definer"><code class="docutils literal notranslate"><span class="pre">serious-program-warning-definer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:style-warning-definer"><code class="docutils literal notranslate"><span class="pre">style-warning-definer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-condition-definer-definer"><code class="docutils literal notranslate"><span class="pre">program-condition-definer-definer</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="notes-warnings-errors.html#program-conditions">Program Conditions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:[program-condition]"><code class="docutils literal notranslate"><span class="pre">&lt;program-condition&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:[program-notes]"><code class="docutils literal notranslate"><span class="pre">&lt;program-notes&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:[program-note]"><code class="docutils literal notranslate"><span class="pre">&lt;program-note&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:[program-error]"><code class="docutils literal notranslate"><span class="pre">&lt;program-error&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:[program-restart]"><code class="docutils literal notranslate"><span class="pre">&lt;program-restart&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:[program-warning]"><code class="docutils literal notranslate"><span class="pre">&lt;program-warning&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:[run-time-error-warning]"><code class="docutils literal notranslate"><span class="pre">&lt;run-time-error-warning&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:[serious-program-warning]"><code class="docutils literal notranslate"><span class="pre">&lt;serious-program-warning&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:[style-warning]"><code class="docutils literal notranslate"><span class="pre">&lt;style-warning&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:[performance-note]"><code class="docutils literal notranslate"><span class="pre">&lt;performance-note&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:[portability-note]"><code class="docutils literal notranslate"><span class="pre">&lt;portability-note&gt;</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="notes-warnings-errors.html#program-condition-slots">Program Condition Slots</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:condition-compilation-stage"><code class="docutils literal notranslate"><span class="pre">condition-compilation-stage</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:condition-context-id"><code class="docutils literal notranslate"><span class="pre">condition-context-id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:condition-program-note-creator"><code class="docutils literal notranslate"><span class="pre">condition-program-note-creator</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:condition-source-location"><code class="docutils literal notranslate"><span class="pre">condition-source-location</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="notes-warnings-errors.html#signaling-program-conditions">Signaling Program Conditions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:note"><code class="docutils literal notranslate"><span class="pre">note</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:note(subclass([program-condition]))"><code class="docutils literal notranslate"><span class="pre">note(subclass(&lt;program-condition&gt;))</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:maybe-note"><code class="docutils literal notranslate"><span class="pre">maybe-note</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:raise"><code class="docutils literal notranslate"><span class="pre">raise</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:raise(subclass([program-error]))"><code class="docutils literal notranslate"><span class="pre">raise(subclass(&lt;program-error&gt;))</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:restart"><code class="docutils literal notranslate"><span class="pre">restart</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:restart(subclass([program-restart]))"><code class="docutils literal notranslate"><span class="pre">restart(subclass(&lt;program-restart&gt;))</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="notes-warnings-errors.html#preserving-program-conditions">Preserving Program Conditions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:add-program-condition"><code class="docutils literal notranslate"><span class="pre">add-program-condition</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:add-program-condition([condition])"><code class="docutils literal notranslate"><span class="pre">add-program-condition(&lt;condition&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:add-program-condition([program-condition])"><code class="docutils literal notranslate"><span class="pre">add-program-condition(&lt;program-condition&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:library-conditions-table"><code class="docutils literal notranslate"><span class="pre">library-conditions-table</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:remove-program-conditions-from!"><code class="docutils literal notranslate"><span class="pre">remove-program-conditions-from!</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="notes-warnings-errors.html#recovery-and-restarting">Recovery and Restarting</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:condition-block"><code class="docutils literal notranslate"><span class="pre">condition-block</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:*error-recovery-model*"><code class="docutils literal notranslate"><span class="pre">*error-recovery-model*</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="notes-warnings-errors.html#subnotes">Subnotes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:subnotes"><code class="docutils literal notranslate"><span class="pre">subnotes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:note-during"><code class="docutils literal notranslate"><span class="pre">note-during</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:accumulate-subnotes-during"><code class="docutils literal notranslate"><span class="pre">accumulate-subnotes-during</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:*subnotes-queue*"><code class="docutils literal notranslate"><span class="pre">*subnotes-queue*</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="notes-warnings-errors.html#printing-program-conditions">Printing Program Conditions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:*detail-level*"><code class="docutils literal notranslate"><span class="pre">*detail-level*</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:[detail-level]"><code class="docutils literal notranslate"><span class="pre">&lt;detail-level&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:format-condition"><code class="docutils literal notranslate"><span class="pre">format-condition</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:print-object([program-condition],[stream])"><code class="docutils literal notranslate"><span class="pre">print-object(&lt;program-condition&gt;,</span> <span class="pre">&lt;stream&gt;)</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="notes-warnings-errors.html#unclassified-api">Unclassified API</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:$record-program-note"><code class="docutils literal notranslate"><span class="pre">$record-program-note</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:$signal-program-error"><code class="docutils literal notranslate"><span class="pre">$signal-program-error</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:$signal-program-note"><code class="docutils literal notranslate"><span class="pre">$signal-program-note</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:[ignore-serious-note]"><code class="docutils literal notranslate"><span class="pre">&lt;ignore-serious-note&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:[program-note-filter]"><code class="docutils literal notranslate"><span class="pre">&lt;program-note-filter&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml"><code class="docutils literal notranslate"><span class="pre">convert-condition-slots-to-ppml</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([condition])"><code class="docutils literal notranslate"><span class="pre">convert-condition-slots-to-ppml(&lt;condition&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml(type-union([simple-condition],[simple-error],[simple-warning]))"><code class="docutils literal notranslate"><span class="pre">convert-condition-slots-to-ppml(type-union(&lt;simple-condition&gt;,</span> <span class="pre">&lt;simple-error&gt;,</span> <span class="pre">&lt;simple-warning&gt;))</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([program-note])"><code class="docutils literal notranslate"><span class="pre">convert-condition-slots-to-ppml(&lt;program-note&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([program-restart])"><code class="docutils literal notranslate"><span class="pre">convert-condition-slots-to-ppml(&lt;program-restart&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([program-warning])"><code class="docutils literal notranslate"><span class="pre">convert-condition-slots-to-ppml(&lt;program-warning&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([serious-program-warning])"><code class="docutils literal notranslate"><span class="pre">convert-condition-slots-to-ppml(&lt;serious-program-warning&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([program-error])"><code class="docutils literal notranslate"><span class="pre">convert-condition-slots-to-ppml(&lt;program-error&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([run-time-error-warning])"><code class="docutils literal notranslate"><span class="pre">convert-condition-slots-to-ppml(&lt;run-time-error-warning&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([style-warning])"><code class="docutils literal notranslate"><span class="pre">convert-condition-slots-to-ppml(&lt;style-warning&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([performance-note])"><code class="docutils literal notranslate"><span class="pre">convert-condition-slots-to-ppml(&lt;performance-note&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([portability-note])"><code class="docutils literal notranslate"><span class="pre">convert-condition-slots-to-ppml(&lt;portability-note&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([ignore-serious-note])"><code class="docutils literal notranslate"><span class="pre">convert-condition-slots-to-ppml(&lt;ignore-serious-note&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:convert-slots-to-ppml"><code class="docutils literal notranslate"><span class="pre">convert-slots-to-ppml</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:dfmc-continue"><code class="docutils literal notranslate"><span class="pre">dfmc-continue</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:dfmc-restart"><code class="docutils literal notranslate"><span class="pre">dfmc-restart</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:do-with-program-conditions"><code class="docutils literal notranslate"><span class="pre">do-with-program-conditions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:interesting-note?"><code class="docutils literal notranslate"><span class="pre">interesting-note?</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:interesting-note?([program-note])"><code class="docutils literal notranslate"><span class="pre">interesting-note?(&lt;program-note&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:interesting-note?([performance-note])"><code class="docutils literal notranslate"><span class="pre">interesting-note?(&lt;performance-note&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:make-program-note-filter"><code class="docutils literal notranslate"><span class="pre">make-program-note-filter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:obsolete-condition?"><code class="docutils literal notranslate"><span class="pre">obsolete-condition?</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:obsolete-condition?([program-condition])"><code class="docutils literal notranslate"><span class="pre">obsolete-condition?(&lt;program-condition&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:present-program-error"><code class="docutils literal notranslate"><span class="pre">present-program-error</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:present-program-error([condition])"><code class="docutils literal notranslate"><span class="pre">present-program-error(&lt;condition&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:present-program-error([program-note])"><code class="docutils literal notranslate"><span class="pre">present-program-error(&lt;program-note&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:present-program-note"><code class="docutils literal notranslate"><span class="pre">present-program-note</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:present-program-note([condition])"><code class="docutils literal notranslate"><span class="pre">present-program-note(&lt;condition&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:present-program-note([program-note])"><code class="docutils literal notranslate"><span class="pre">present-program-note(&lt;program-note&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-note-class-="><code class="docutils literal notranslate"><span class="pre">program-note-class-=</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-note-file-name-="><code class="docutils literal notranslate"><span class="pre">program-note-file-name-=</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-note-filter"><code class="docutils literal notranslate"><span class="pre">program-note-filter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([program-note]))"><code class="docutils literal notranslate"><span class="pre">program-note-filter(subclass(&lt;program-note&gt;))</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([condition]))"><code class="docutils literal notranslate"><span class="pre">program-note-filter(subclass(&lt;condition&gt;))</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([program-warning]))"><code class="docutils literal notranslate"><span class="pre">program-note-filter(subclass(&lt;program-warning&gt;))</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([serious-program-warning]))"><code class="docutils literal notranslate"><span class="pre">program-note-filter(subclass(&lt;serious-program-warning&gt;))</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([run-time-error-warning]))"><code class="docutils literal notranslate"><span class="pre">program-note-filter(subclass(&lt;run-time-error-warning&gt;))</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([style-warning]))"><code class="docutils literal notranslate"><span class="pre">program-note-filter(subclass(&lt;style-warning&gt;))</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([performance-note]))"><code class="docutils literal notranslate"><span class="pre">program-note-filter(subclass(&lt;performance-note&gt;))</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([portability-note]))"><code class="docutils literal notranslate"><span class="pre">program-note-filter(subclass(&lt;portability-note&gt;))</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-note-filter-setter"><code class="docutils literal notranslate"><span class="pre">program-note-filter-setter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-note-filter-setter([program-note-filter],subclass([program-condition]))"><code class="docutils literal notranslate"><span class="pre">program-note-filter-setter(&lt;program-note-filter&gt;,</span> <span class="pre">subclass(&lt;program-condition&gt;))</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-note-in"><code class="docutils literal notranslate"><span class="pre">program-note-in</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-note-location-between"><code class="docutils literal notranslate"><span class="pre">program-note-location-between</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:report-condition"><code class="docutils literal notranslate"><span class="pre">report-condition</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:serious-note?"><code class="docutils literal notranslate"><span class="pre">serious-note?</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:serious-note?([program-note])"><code class="docutils literal notranslate"><span class="pre">serious-note?(&lt;program-note&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:serious-note?([program-error])"><code class="docutils literal notranslate"><span class="pre">serious-note?(&lt;program-error&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:serious-note?([serious-program-warning])"><code class="docutils literal notranslate"><span class="pre">serious-note?(&lt;serious-program-warning&gt;)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:simple-note"><code class="docutils literal notranslate"><span class="pre">simple-note</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:simple-raise"><code class="docutils literal notranslate"><span class="pre">simple-raise</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:with-program-conditions"><code class="docutils literal notranslate"><span class="pre">with-program-conditions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:with-simple-abort-retry-restart"><code class="docutils literal notranslate"><span class="pre">with-simple-abort-retry-restart</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -632,7 +752,7 @@
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2011-2024, Dylan Hackers
+                Copyright &#169; 2011-2026, Dylan Hackers
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -652,9 +772,9 @@
       
     </aside>
   </div>
-</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=7cccf125"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
-    <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+</div><script src="../../_static/documentation_options.js?v=b916904f"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=35a8b989"></script>
