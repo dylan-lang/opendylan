@@ -385,21 +385,14 @@ The locators Module
    :value simplified-locator: An instance of :class:`<physical-locator>`.
 
 .. generic-function:: resolve-locator
-   :open:
 
-   Resolves all links, parent references (``..``), self references (``.``), and
-   removes unnecessary path separators. Similar to :func:`simplify-locator`
-   except that it consults the file system to resolve links. A
-   :class:`<file-system-error>` is signaled if for any reason the path can't be
-   resolved. Examples include non-existent directory components, access denied,
-   I/O error, etc.  In short, this function follows the semantics of POSIX
-   ``realpath(3)``.
+   .. deprecated:: 2026.2
 
-   :signature: resolve-locator (locator) => (resolved-locator)
+      :gf:`resolve-locator` is deprecated and should be replaced by calls to (or methods
+      on) :gf:`resolve-file`.  This generic function remains for backward compatibility
+      but will be removed in a future release.
 
-   :parameter locator: An instance of :class:`<physical-locator>`.
-   :value simplified-locator: An instance of :class:`<physical-locator>`.
-
+   :seealso: :gf:`resolve-file`
 
 .. generic-function:: string-as-locator
    :open:

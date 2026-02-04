@@ -604,7 +604,8 @@ properties of the file.</p>
 <li><p><a class="reference internal" href="#system:file-system:file-properties"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">file-properties</span></code></a></p></li>
 <li><p><a class="reference internal" href="#system:file-system:file-property"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">file-property</span></code></a></p></li>
 <li><p><a class="reference internal" href="#system:file-system:file-type"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">file-type</span></code></a></p></li>
-<li><p><a class="reference internal" href="#system:file-system:link-target"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">link-target</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:link-target"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">link-target</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:resolve-file"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">resolve-file</span></code></a></p></li>
 </ul>
 </section>
 <section id="file-system-locators">
@@ -1202,11 +1203,12 @@ link points to is not removed.</p>
 <dd><p>Returns a sequence of files and subdirectories contained in a directory.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
-<dd class="field-odd"><p>directory-contents <em>directory</em> =&gt; <em>locators</em></p>
+<dd class="field-odd"><p>directory-contents <em>directory</em> #key <em>resolve-links?</em> =&gt; <em>locators</em></p>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>directory</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+<li><p><strong>resolve-links?</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. The default is <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a>.</p></li>
 </ul>
 </dd>
 <dt class="field-odd">Values<span class="colon">:</span></dt>
@@ -1215,9 +1217,17 @@ link points to is not removed.</p>
 </ul>
 </dd>
 <dt class="field-even">Discussion<span class="colon">:</span></dt>
-<dd class="field-even"><p>In the result, each file is represented by a <a class="reference internal" href="locators.html#system:locators:[file-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-locator&gt;</span></code></a> and
-each directory is represented by a <a class="reference internal" href="locators.html#system:locators:[directory-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;directory-locator&gt;</span></code></a>. The “.”
-and “..” directories are not included in the result.</p>
+<dd class="field-even"><p><p>Returns a sequence of locators describing the files contained in <em>directory</em>.  The
+<code class="file docutils literal notranslate"><span class="pre">.</span></code> and <code class="file docutils literal notranslate"><span class="pre">..</span></code> directories are not included in the result.</p>
+<p>If <em>resolve-links?</em> is false then symbolic links are returned as instances of
+<a class="reference internal" href="locators.html#system:locators:[file-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-locator&gt;</span></code></a>.  If true, then symbolic links are resolved and the correct
+class of locator, <a class="reference internal" href="locators.html#system:locators:[file-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-locator&gt;</span></code></a> or <a class="reference internal" href="locators.html#system:locators:[directory-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;directory-locator&gt;</span></code></a>, is
+determined based on the file type of the (fully resolved) link target.</p>
+<p>Note that if a symbolic link points to another file in <em>directory</em> then the
+resulting sequence may contain duplicates (in the sense of naming the same file
+system entity, not in the sense of Dylan object equality) when <em>resolve-links?</em> is
+true.</p>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1356,46 +1366,31 @@ The call:</p>
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="system:file-system:expand-pathname">
 <span class="sig-name descname"><span class="pre">expand-pathname</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:file-system:expand-pathname" title="Link to this definition">¶</a></dt>
-<dd><p>Given a pathname, returns its fully expanded form.</p>
+<dd><p>Expands abbreviations in a pathname.  The implementation varies by platform.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
-<dd class="field-odd"><p>expand-pathname <em>path</em> =&gt; <em>expanded-path</em></p>
+<dd class="field-odd"><p>expand-pathname <em>pathname</em> =&gt; <em>locator</em></p>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>path</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+<li><p><strong>path</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
 </ul>
 </dd>
 <dt class="field-odd">Values<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>expanded-path</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+<li><p><strong>expanded</strong> – An instance of <a class="reference internal" href="locators.html#system:locators:[locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;locator&gt;</span></code></a>.</p></li>
 </ul>
 </dd>
-</dl>
-</dd></dl>
-
-<dl class="dylan method">
-<dt class="sig sig-object dylan-api dylan" id="system:file-system:expand-pathname([file-system-locator])">
-<span class="sig-name descname"><span class="pre">expand-pathname(&lt;file-system-locator&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#system:file-system:expand-pathname([file-system-locator])" title="Link to this definition">¶</a></dt>
-<dd><p>Expand a file path to its fully expanded form.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>path</strong> – An instance of <a class="reference internal" href="#system:file-system:[file-system-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-locator&gt;</span></code></a>.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="dylan method">
-<dt class="sig sig-object dylan-api dylan" id="system:file-system:expand-pathname([string])">
-<span class="sig-name descname"><span class="pre">expand-pathname(&lt;string&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#system:file-system:expand-pathname([string])" title="Link to this definition">¶</a></dt>
-<dd><p>Expands a pathname given as a string.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>path</strong> – An instance of <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code>.</p></li>
-</ul>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>If <em>pathname</em> is an instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> it is first converted to a
+<a class="reference internal" href="#system:file-system:[file-system-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-locator&gt;</span></code></a>.</p>
+<p>On Unix, if the first component of this locator begins with <cite>~</cite> it is replaced by
+either the specified user’s home directory (for <code class="docutils literal notranslate"><span class="pre">~user</span></code>) or the current user’s
+home directory (for <code class="docutils literal notranslate"><span class="pre">~</span></code>). Otherwise the locator is returned unmodified.  If the
+specified <code class="docutils literal notranslate"><span class="pre">~user</span></code> doesn’t exist no error is signaled and the locator is returned
+without expansion being performed.</p>
+<p>On Windows, 8.3 file names are expanded to their long form.</p>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1495,7 +1490,7 @@ already exists.</p>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>file</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
-<li><p><strong>follow-links?</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. Defaults to
+<li><p><strong>follow-links?</strong> (<em>#key</em>) – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. Defaults to
 <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a>.</p></li>
 </ul>
 </dd>
@@ -1807,9 +1802,12 @@ Posix and Microsoft systems.</p>
 </ul>
 </dd>
 <dt class="field-even">Discussion<span class="colon">:</span></dt>
-<dd class="field-even"><p>Returns the type of <em>file</em>, the specified file system entity. A
+<dd class="field-even"><p><p>Returns the type of <em>file</em>, the specified file system entity. A
 file system entity can either be a file, a directory, or a link to
 another file or directory.</p>
+<p>This function does not resolve symbolic links.  To find the file type of the link
+target call <a class="reference internal" href="#system:file-system:link-target"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">link-target</span></code></a> or <a class="reference internal" href="#system:file-system:resolve-file"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">resolve-file</span></code></a> on <em>file</em> first.</p>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1877,33 +1875,82 @@ your operation.</p>
 </dl>
 </dd></dl>
 
-<dl class="dylan function">
+<dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="system:file-system:link-target">
-<span class="sig-name descname"><span class="pre">link-target</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#system:file-system:link-target" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">link-target</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:file-system:link-target" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the target of a symbolic link.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On Windows this function is not implemented; it always signals an error.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
-<dd class="field-odd"><p>link-target <em>file</em> =&gt; <em>target</em></p>
+<dd class="field-odd"><p>link-target <em>file</em> #key <em>follow-links?</em> =&gt; <em>target</em></p>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>file</strong> – An instance of type <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+<li><p><strong>follow-links?</strong> (<em>#key</em>) – An instance of type <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>. The default is
+<a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#true"><code class="xref drm docutils literal notranslate"><span class="pre">#t</span></code></a>.</p></li>
 </ul>
 </dd>
 <dt class="field-odd">Values<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>target</strong> – An instance of type <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+<li><p><strong>target</strong> – <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> or an instance of type <a class="reference internal" href="#system:file-system:[file-system-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-locator&gt;</span></code></a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Discussion<span class="colon">:</span></dt>
-<dd class="field-even"><p>Repeatedly follows symbolic links starting with <em>file</em> until it finds a
-non-link file or directory, or a non-existent link target.</p>
+<dd class="field-even"><p><p>Returns a locator identifying the target of symbolic link <em>file</em>.</p>
+<p>Signals <a class="reference internal" href="#system:file-system:[file-system-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-error&gt;</span></code></a> if the system call to read the link target
+fails for any reason. For example, if <em>file</em> is not a symbolic link or if <em>file</em>
+does not exist.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">follow-links?</span></code> is true (the default) then links are followed until a file
+that is not a symbolic link is found, and the locator for that file is returned. If
+the final link in a chain of one or more symbolic links points to a non-existent
+file, <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> is returned.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">follow-links?</span></code> is false, no attempt is made to follow the link or to check
+whether the link target file exists.  A locator representing the target is
+returned.</p>
+</p>
 </dd>
 <dt class="field-odd">See also<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
 <li><p><a class="reference internal" href="#system:file-system:create-symbolic-link"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">create-symbolic-link</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:resolve-file"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">resolve-file</span></code></a></p></li>
 </ul>
 </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="dylan generic-function">
+<dt class="sig sig-object dylan-api dylan" id="system:file-system:resolve-file">
+<span class="sig-name descname"><span class="pre">resolve-file</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:file-system:resolve-file" title="Link to this definition">¶</a></dt>
+<dd><p>Resolves a file path to its simplest representation containing no symbolic links.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature<span class="colon">:</span></dt>
+<dd class="field-odd"><p>resolve-file <em>path</em> =&gt; <em>resolved-path</em></p>
+</dd>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
+<dd class="field-even"><p>Resolves all links, parent references (<code class="docutils literal notranslate"><span class="pre">..</span></code>), self references (<code class="docutils literal notranslate"><span class="pre">.</span></code>), and
+removes unnecessary path separators. Similar to <a class="reference internal" href="locators.html#system:locators:simplify-locator"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">simplify-locator</span></code></a> except
+that it consults the file system to resolve links. A <a class="reference internal" href="#system:file-system:[file-system-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-error&gt;</span></code></a>
+is signaled if for any reason the path can’t be resolved. Examples include
+non-existent directory components, access denied, I/O error, etc.  In short, this
+function follows the semantics of POSIX <code class="docutils literal notranslate"><span class="pre">realpath(3)</span></code>.</p>
+</dd>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Values<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>resolved-path</strong> – An instance of <a class="reference internal" href="#system:file-system:[file-system-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-locator&gt;</span></code></a>. More
+specifically, the return value will be an instance of <a class="reference internal" href="locators.html#system:locators:[file-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-locator&gt;</span></code></a> or
+<a class="reference internal" href="locators.html#system:locators:[directory-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;directory-locator&gt;</span></code></a> depending on the type of the resolved file system
+entity.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -2106,7 +2153,7 @@ it is bound to <a class="reference internal" href="#system:file-system:[microsof
 <li><p><a class="reference internal" href="#system:file-system:file-property-setter"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">file-property-setter</span></code></a></p></li>
 <li><p><a class="reference internal" href="#system:file-system:file-type"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">file-type</span></code></a></p></li>
 <li><p><a class="reference internal" href="#system:file-system:home-directory"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">home-directory</span></code></a></p></li>
-<li><p><a class="reference internal" href="#system:file-system:link-target"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">link-target</span></code></a></p></li>
+<li><p><a class="reference internal" href="#system:file-system:link-target"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">link-target</span></code></a></p></li>
 <li><p><a class="reference internal" href="#system:file-system:rename-file"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">rename-file</span></code></a></p></li>
 <li><p><a class="reference internal" href="#system:file-system:create-symbolic-link"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">create-symbolic-link</span></code></a></p></li>
 </ul>
@@ -2168,7 +2215,7 @@ file system.</p>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>old-file</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
 <li><p><strong>new-file</strong> – An instance of <a class="reference internal" href="#system:file-system:[pathname]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;pathname&gt;</span></code></a>.</p></li>
-<li><p><strong>if-exists</strong> – An instance of
+<li><p><strong>if-exists</strong> (<em>#key</em>) – An instance of
 <a class="reference internal" href="#system:file-system:[copy/rename-disposition]"><code class="xref dylan dylan-type docutils literal notranslate"><span class="pre">&lt;copy/rename-disposition&gt;</span></code></a>. Default value: <code class="docutils literal notranslate"><span class="pre">#&quot;signal&quot;</span></code>.</p></li>
 </ul>
 </dd>
@@ -2502,8 +2549,6 @@ call</p>
 <li><a class="reference internal" href="#system:file-system:do-directory"><code class="docutils literal notranslate"><span class="pre">do-directory</span></code></a></li>
 <li><a class="reference internal" href="#system:file-system:ensure-directories-exist"><code class="docutils literal notranslate"><span class="pre">ensure-directories-exist</span></code></a></li>
 <li><a class="reference internal" href="#system:file-system:expand-pathname"><code class="docutils literal notranslate"><span class="pre">expand-pathname</span></code></a></li>
-<li><a class="reference internal" href="#system:file-system:expand-pathname([file-system-locator])"><code class="docutils literal notranslate"><span class="pre">expand-pathname(&lt;file-system-locator&gt;)</span></code></a></li>
-<li><a class="reference internal" href="#system:file-system:expand-pathname([string])"><code class="docutils literal notranslate"><span class="pre">expand-pathname(&lt;string&gt;)</span></code></a></li>
 <li><a class="reference internal" href="#system:file-system:file-error-locator"><code class="docutils literal notranslate"><span class="pre">file-error-locator</span></code></a></li>
 <li><a class="reference internal" href="#system:file-system:[file-does-not-exist-error]"><code class="docutils literal notranslate"><span class="pre">&lt;file-does-not-exist-error&gt;</span></code></a></li>
 <li><a class="reference internal" href="#system:file-system:[file-error]"><code class="docutils literal notranslate"><span class="pre">&lt;file-error&gt;</span></code></a></li>
@@ -2522,6 +2567,7 @@ call</p>
 <li><a class="reference internal" href="#system:file-system:home-directory"><code class="docutils literal notranslate"><span class="pre">home-directory</span></code></a></li>
 <li><a class="reference internal" href="#system:file-system:[invalid-file-permissions-error]"><code class="docutils literal notranslate"><span class="pre">&lt;invalid-file-permissions-error&gt;</span></code></a></li>
 <li><a class="reference internal" href="#system:file-system:link-target"><code class="docutils literal notranslate"><span class="pre">link-target</span></code></a></li>
+<li><a class="reference internal" href="#system:file-system:resolve-file"><code class="docutils literal notranslate"><span class="pre">resolve-file</span></code></a></li>
 <li><a class="reference internal" href="#system:file-system:make([file-stream])"><code class="docutils literal notranslate"><span class="pre">make(&lt;file-stream&gt;)</span></code></a></li>
 <li><a class="reference internal" href="#system:file-system:[microsoft-server-locator]"><code class="docutils literal notranslate"><span class="pre">&lt;microsoft-server-locator&gt;</span></code></a></li>
 <li><a class="reference internal" href="#system:file-system:[microsoft-unc-locator]"><code class="docutils literal notranslate"><span class="pre">&lt;microsoft-unc-locator&gt;</span></code></a></li>

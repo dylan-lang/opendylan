@@ -79,7 +79,8 @@ properties of the file.
 - :func:`file-properties`
 - :func:`file-property`
 - :func:`file-type`
-- :func:`link-target`
+- :gf:`link-target`
+- :gf:`resolve-file`
 
 File system locators
 --------------------
@@ -646,16 +647,26 @@ File-System module.
 
    Returns a sequence of files and subdirectories contained in a directory.
 
-   :signature: directory-contents *directory* => *locators*
+   :signature: directory-contents *directory* #key *resolve-links?* => *locators*
 
    :parameter directory: An instance of :type:`<pathname>`.
+   :parameter #key resolve-links?: An instance of :drm:`<boolean>`. The default is :drm:`#f`.
    :value locators: A :drm:`<sequence>` of :class:`<locator>`.
 
    :description:
 
-      In the result, each file is represented by a :class:`<file-locator>` and
-      each directory is represented by a :class:`<directory-locator>`. The "."
-      and ".." directories are not included in the result.
+      Returns a sequence of locators describing the files contained in *directory*.  The
+      :file:`.` and :file:`..` directories are not included in the result.
+
+      If *resolve-links?* is false then symbolic links are returned as instances of
+      :class:`<file-locator>`.  If true, then symbolic links are resolved and the correct
+      class of locator, :class:`<file-locator>` or :class:`<directory-locator>`, is
+      determined based on the file type of the (fully resolved) link target.
+
+      Note that if a symbolic link points to another file in *directory* then the
+      resulting sequence may contain duplicates (in the sense of naming the same file
+      system entity, not in the sense of Dylan object equality) when *resolve-links?* is
+      true.
 
 .. generic-function:: directory-empty?
 
@@ -758,26 +769,25 @@ File-System module.
 
 .. generic-function:: expand-pathname
 
-   Given a pathname, returns its fully expanded form.
+   Expands abbreviations in a pathname.  The implementation varies by platform.
 
-   :signature: expand-pathname *path* => *expanded-path*
+   :signature: expand-pathname *pathname* => *locator*
 
-   :param path: An instance of :class:`<pathname>`.
-   :value expanded-path: An instance of :class:`<pathname>`.
+   :param path: An instance of :type:`<pathname>`.
+   :value expanded: An instance of :class:`<locator>`.
 
-.. method:: expand-pathname
-   :specializer: <file-system-locator>
+   :description:
 
-   Expand a file path to its fully expanded form.
+      If *pathname* is an instance of :drm:`<string>` it is first converted to a
+      :class:`<file-system-locator>`.
 
-   :param path: An instance of :class:`<file-system-locator>`.
+      On Unix, if the first component of this locator begins with `~` it is replaced by
+      either the specified user's home directory (for ``~user``) or the current user's
+      home directory (for ``~``). Otherwise the locator is returned unmodified.  If the
+      specified ``~user`` doesn't exist no error is signaled and the locator is returned
+      without expansion being performed.
 
-.. method:: expand-pathname
-   :specializer: <string>
-
-   Expands a pathname given as a string.
-
-   :param path: An instance of :class:`<string>`.
+      On Windows, 8.3 file names are expanded to their long form.
 
 .. generic-function:: file-error-locator
 
@@ -841,7 +851,7 @@ File-System module.
    :signature: file-exists? *file* #key *follow-links?* => *exists?*
 
    :parameter file: An instance of :type:`<pathname>`.
-   :parameter follow-links?: An instance of :drm:`<boolean>`. Defaults to
+   :parameter #key follow-links?: An instance of :drm:`<boolean>`. Defaults to
       :drm:`#t`.
    :value exists?: An instance of :drm:`<boolean>`.
 
@@ -1059,6 +1069,9 @@ File-System module.
      file system entity can either be a file, a directory, or a link to
      another file or directory.
 
+     This function does not resolve symbolic links.  To find the file type of the link
+     target call :gf:`link-target` or :gf:`resolve-file` on *file* first.
+
 .. type:: <file-type>
 
    The type representing all possible types of a file system entity.
@@ -1105,21 +1118,60 @@ File-System module.
      permissions set on the file are incorrect or insufficient for
      your operation.
 
-.. function:: link-target
+.. generic-function:: link-target
 
    Returns the target of a symbolic link.
 
-   :signature: link-target *file* => *target*
+   .. note:: On Windows this function is not implemented; it always signals an error.
+
+   :signature: link-target *file* #key *follow-links?* => *target*
    :parameter file: An instance of type :type:`<pathname>`.
-   :value target: An instance of type :type:`<pathname>`.
+   :parameter #key follow-links?: An instance of type :drm:`<boolean>`. The default is
+      :drm:`#t`.
+   :value target: :drm:`#f` or an instance of type :class:`<file-system-locator>`.
    :description:
 
-      Repeatedly follows symbolic links starting with *file* until it finds a
-      non-link file or directory, or a non-existent link target.
+      Returns a locator identifying the target of symbolic link *file*.
+
+      Signals :class:`<file-system-error>` if the system call to read the link target
+      fails for any reason. For example, if *file* is not a symbolic link or if *file*
+      does not exist.
+
+      If ``follow-links?`` is true (the default) then links are followed until a file
+      that is not a symbolic link is found, and the locator for that file is returned. If
+      the final link in a chain of one or more symbolic links points to a non-existent
+      file, :drm:`#f` is returned.
+
+      If ``follow-links?`` is false, no attempt is made to follow the link or to check
+      whether the link target file exists.  A locator representing the target is
+      returned.
 
    :seealso:
 
      - :func:`create-symbolic-link`
+     - :gf:`resolve-file`
+
+.. generic-function:: resolve-file
+   :open:
+
+   Resolves a file path to its simplest representation containing no symbolic links.
+
+   :signature: resolve-file *path* => *resolved-path*
+
+   :description:
+
+      Resolves all links, parent references (``..``), self references (``.``), and
+      removes unnecessary path separators. Similar to :func:`simplify-locator` except
+      that it consults the file system to resolve links. A :class:`<file-system-error>`
+      is signaled if for any reason the path can't be resolved. Examples include
+      non-existent directory components, access denied, I/O error, etc.  In short, this
+      function follows the semantics of POSIX ``realpath(3)``.
+
+   :parameter path: An instance of :type:`<pathname>`.
+   :value resolved-path: An instance of :class:`<file-system-locator>`. More
+      specifically, the return value will be an instance of :class:`<file-locator>` or
+      :class:`<directory-locator>` depending on the type of the resolved file system
+      entity.
 
 .. _make:
 
@@ -1276,7 +1328,7 @@ File-System module.
      - :func:`file-property-setter`
      - :func:`file-type`
      - :func:`home-directory`
-     - :func:`link-target`
+     - :gf:`link-target`
      - :func:`rename-file`
      - :func:`create-symbolic-link`
 
@@ -1315,7 +1367,7 @@ File-System module.
 
    :parameter old-file: An instance of :type:`<pathname>`.
    :parameter new-file: An instance of :type:`<pathname>`.
-   :parameter if-exists: An instance of
+   :parameter #key if-exists: An instance of
      :type:`<copy/rename-disposition>`. Default value: ``#"signal"``.
 
    :description:

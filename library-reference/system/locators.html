@@ -1199,27 +1199,15 @@ path.</p>
 
 <dl class="dylan generic-function">
 <dt class="sig sig-object dylan-api dylan" id="system:locators:resolve-locator">
-<span class="sig-name descname"><span class="pre">resolve-locator</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:resolve-locator" title="Link to this definition">¶</a></dt>
-<dd><p>Resolves all links, parent references (<code class="docutils literal notranslate"><span class="pre">..</span></code>), self references (<code class="docutils literal notranslate"><span class="pre">.</span></code>), and
-removes unnecessary path separators. Similar to <a class="reference internal" href="#system:locators:simplify-locator"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">simplify-locator</span></code></a>
-except that it consults the file system to resolve links. A
-<a class="reference internal" href="file-system.html#system:file-system:[file-system-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-error&gt;</span></code></a> is signaled if for any reason the path can’t be
-resolved. Examples include non-existent directory components, access denied,
-I/O error, etc.  In short, this function follows the semantics of POSIX
-<code class="docutils literal notranslate"><span class="pre">realpath(3)</span></code>.</p>
+<span class="sig-name descname"><span class="pre">resolve-locator</span></span> <em class="property"><span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#system:locators:resolve-locator" title="Link to this definition">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 2026.2: </span><a class="reference internal" href="#system:locators:resolve-locator"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">resolve-locator</span></code></a> is deprecated and should be replaced by calls to (or methods
+on) <a class="reference internal" href="file-system.html#system:file-system:resolve-file"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">resolve-file</span></code></a>.  This generic function remains for backward compatibility
+but will be removed in a future release.</p>
+</div>
 <dl class="field-list simple">
-<dt class="field-odd">Signature<span class="colon">:</span></dt>
-<dd class="field-odd"><p>resolve-locator (locator) =&gt; (resolved-locator)</p>
-</dd>
-<dt class="field-even">Parameters<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>locator</strong> – An instance of <a class="reference internal" href="#system:locators:[physical-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;physical-locator&gt;</span></code></a>.</p></li>
-</ul>
-</dd>
-<dt class="field-odd">Values<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>simplified-locator</strong> – An instance of <a class="reference internal" href="#system:locators:[physical-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;physical-locator&gt;</span></code></a>.</p></li>
-</ul>
+<dt class="field-odd">See also<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="file-system.html#system:file-system:resolve-file"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">resolve-file</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
