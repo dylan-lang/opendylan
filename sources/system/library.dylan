@@ -10,6 +10,7 @@ define library system
   use dylan;
   use common-dylan;
   use io;
+  use collections;
   export
     operating-system,
     date,
@@ -146,7 +147,7 @@ define module locators
     file-locator,
     merge-locators,
     relative-locator,
-    resolve-locator,
+    resolve-locator,            // deprecated, use resolve-file:file-system
     simplify-locator,
     subdirectory-locator;
 
@@ -255,6 +256,7 @@ define module file-system
          file-exists?,
          file-type,
          link-target,
+         resolve-file,
          delete-file,
          copy-file,
          rename-file,
@@ -333,6 +335,7 @@ define module settings-internals
 end module settings-internals;
 
 define module system-internals
+  use collectors;
   use common-dylan;
   use dylan-extensions;
   use dylan-direct-c-ffi;

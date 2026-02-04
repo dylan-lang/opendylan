@@ -61,6 +61,40 @@ end;
 
 /// File-system function test cases
 
+define test test-expand-pathname ()
+  // expand-pathname on Windows does something different.
+  // https://github.com/dylan-lang/opendylan/issues/1728
+  if ($os-name ~== #"win32")
+    let user = login-name();
+    // login-name() returns #f on GitHub runners.
+    if (user)
+      assert-equal(home-directory(),
+                   expand-pathname(concatenate("~", user)),
+                   "expand ~user");
+      assert-equal(file-locator(home-directory(), "bar"),
+                   expand-pathname(concatenate("~", user, "/bar")),
+                   "expand ~user/bar");
+      assert-equal(home-directory(),
+                   expand-pathname(concatenate("~", user, "/")),
+                   "expand ~user/");
+    end;
+    assert-equal(home-directory(), expand-pathname("~"), "expand ~");
+    assert-equal(file-locator(home-directory(), "foo"),
+                 expand-pathname("~/foo"),
+                 "expand ~/foo");
+    assert-equal("a/~/c",
+                 as(<string>, expand-pathname("a/~/c")),
+                 "expand a/~/c is no-op");
+    assert-equal("a/b/~c",
+                 as(<string>, expand-pathname("a/b/~c")),
+                 "expand a/b/~c is no-op");
+    assert-equal("~no-such-luser/foo",
+                 as(<string>, expand-pathname("~no-such-luser/foo")));
+    assert-equal("~no-such-luser",
+                 as(<string>, expand-pathname("~no-such-luser")));
+  end;
+end test;
+
 define test test-file-exists? ()
   let dir = test-temp-directory();
   let file = file-locator(dir, "file");
@@ -93,6 +127,25 @@ define test test-create-hard-link ()
   create-hard-link(old-path, new-path);
   assert-true(file-exists?(new-path));
 end;
+
+define test test-link-target ()
+  if ($os-name ~== #"win32")    // link-target is not implemented on Windows
+    let tmp = test-temp-directory();
+    let aaa = file-locator(tmp, "aaa");
+    let bbb = file-locator(tmp, "bbb");
+    let ccc = file-locator(tmp, "ccc");
+    let ddd = file-locator(tmp, "ddd");
+    write-test-file(ddd, contents: "ddd");
+    create-symbolic-link(ddd, ccc);
+    create-symbolic-link(ccc, bbb);
+    create-symbolic-link(bbb, aaa);
+    assert-equal(link-target(aaa), ddd);
+    assert-equal(link-target(aaa, follow-links?: #f), bbb);
+    assert-signals(<file-system-error>, link-target(ddd), "ddd is not a symbolic link");
+    delete-file(ddd);
+    assert-false(link-target(aaa), "link target does not exist");
+  end if;
+end test;
 
 define test test-file-type ()
   //---*** Fill this in.
@@ -151,8 +204,14 @@ define test test-file-properties ()
 end;
 
 define test test-file-property ()
-  //---*** Fill this in.
-end;
+  // login-name returns #f on GitHub Ubuntu runners.
+  if (login-name())
+    let tmpdir = test-temp-directory();
+    let file1 = file-locator(tmpdir, "file1");
+    write-test-file(file1, contents: "abc");
+    assert-equal(login-name(), file-property(file1, #"author"));
+  end;
+end test;
 
 define test test-file-property-setter ()
   //---*** Fill this in.
@@ -162,10 +221,59 @@ define test test-do-directory ()
   //---*** Fill this in.
 end;
 
-/// directory-contents is NYI currently ...
 define test test-directory-contents ()
-  //---*** Fill this in.
-end;
+  let tmpdir = test-temp-directory();
+  assert-true(empty?(directory-contents(tmpdir)));
+  let file1 = file-locator(tmpdir, "file1");
+  write-test-file(file1);
+  let dir1 = subdirectory-locator(tmpdir, "dir1");
+  create-directory(tmpdir, "dir1");
+  let link1 = file-locator(tmpdir, "link1");
+  create-symbolic-link(tmpdir.locator-directory, link1);
+
+  // Here we expect link1 to be a file locator, the link itself.
+  let contents1 = directory-contents(tmpdir);
+  assert-equal(3, contents1.size);
+  let count1 = 0;
+  for (locator in contents1)
+    select (locator.locator-name by \=)
+      "file1" =>
+        assert-instance?(<file-locator>, locator);
+        count1 := count1 + 1;
+      "dir1" =>
+        assert-instance?(<directory-locator>, locator);
+        count1 := count1 + 1;
+      "link1" =>
+        assert-instance?(<file-locator>, locator);
+        assert-equal("link1", locator.locator-name);
+        count1 := count1 + 1;
+      otherwise =>
+        assert-true(#f, "unexpected filename in contents1 %=", locator.locator-name);
+    end;
+  end;
+  assert-equal(3, count1, "didn't see all the expected files (1)");
+
+  // Here we expect link1 to resolve to a directory locator.
+  let contents2 = directory-contents(tmpdir, resolve-links?: #t);
+  assert-equal(3, contents2.size);
+  let count2 = 0;
+  for (locator in contents2)
+    select (locator.locator-name by \=)
+      "file1" =>
+        assert-instance?(<file-locator>, locator);
+        count2 := count2 + 1;
+      "dir1" =>
+        assert-instance?(<directory-locator>, locator);
+        count2 := count2 + 1;
+      tmpdir.locator-directory.locator-name =>
+        assert-instance?(<directory-locator>, locator);
+        count2 := count2 + 1;
+      otherwise =>
+        assert-true(#f, "unexpected filename in contents2 %=", locator.locator-name);
+    end;
+  end;
+  assert-equal(3, count2, "didn't see all the expected files (2)");
+end test;
 
 define test test-create-directory ()
   //---*** Fill this in.
@@ -1645,4 +1753,47 @@ define suite file-system-locators-test-suite ()
   test test-<posix-directory-locator>;
   test test-<posix-file-locator>;
   test test-<file-stream>;
+end suite;
+
+define test test-resolve-file ()
+  let tmpdir = test-temp-directory();
+  assert-signals(<file-system-error>,
+                 resolve-file(subdirectory-locator(tmpdir, "non-existent")));
+
+  create-directory(tmpdir, "foo");
+  create-directory(tmpdir, "bar");
+  let foo = subdirectory-locator(tmpdir, "foo");
+  let bar = subdirectory-locator(tmpdir, "bar");
+  let foob = subdirectory-locator(foo, "b");
+  create-directory(foo, "b");
+  let pname = as(<string>, bar);
+  assert-equal(as(<string>, resolve-file(bar)), pname);
+  for (item in list(list(#["foo"], foo),
+                    list(#["bar"], bar),
+                    list(#["foo", "..", "bar"], bar),
+                    list(#["foo", ".."], tmpdir),
+                    list(#["foo", ".", "b", "..", "..", "foo"], foo)))
+    let (subdirs, want) = apply(values, item);
+    let orig = apply(subdirectory-locator, tmpdir, subdirs);
+    let got = resolve-file(orig);
+    assert-equal(got, want, format-to-string("resolve-file(%=) => %=", orig, got));
+  end;
+
+  let link1 = file-locator(tmpdir, "link1");
+  create-symbolic-link(foo, link1);
+  assert-equal(resolve-file(foo), resolve-file(link1),
+               "resolve-file with valid link target");
+
+  let link2 = file-locator(tmpdir, "link2");
+  create-symbolic-link("nonexistent-target", link2);
+  assert-signals(<file-system-error>, resolve-file(link2),
+                 "resolve-file with non-existent link target signals");
+
+  assert-equal(working-directory(), resolve-file(as(<file-system-locator>, ".")));
+  // Not testing ".." here because it would require changing the value of
+  // working-directory() to a directory that we know has a parent.
+end test;
+
+define suite file-system-test-suite ()
+  test test-resolve-file;
 end suite;

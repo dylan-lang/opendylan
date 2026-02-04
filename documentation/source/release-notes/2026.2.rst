@@ -1,0 +1,79 @@
+*****************
+Open Dylan 2026.2
+*****************
+
+This document describes the 2026.2 release of Open Dylan, released <month>, 2026.  The
+highlights of the release are listed below.  For complete details see the `commit logs
+<https://github.com/dylan-lang/opendylan/compare/v2026.1.0...v2026.2.0>`_ for this
+release.
+
+.. note:: Some commit logs, for example for testworks and other libraries that
+          are included in Open Dylan as git submodules, may be in other
+          repositories.
+
+* Download the release: https://opendylan.org/download
+* Read documentation: https://opendylan.org
+* Report problems: https://github.com/dylan-lang/opendylan/issues
+
+
+Compiler
+========
+
+TODO
+
+Tools
+=====
+
+TODO
+
+Bundled Library Updates
+=======================
+
+Changes to libraries that are part of the `opendylan repository
+<https://github.com/dylan-lang/opendylan>`_.
+
+System
+------
+
+* :gf:`resolve-file` (in the ``file-system`` module) replaces :const:`resolve-locator`
+  (in the ``locators`` module) because it is fundamentally a file-system operation.
+
+  :gf:`resolve-file` now returns the correct class of locator, a subclass of
+  :class:`<file-locator>` or class:`<directory-locator>`, depending on the actual file
+  type of the fully resolved file.  It previously returned an instance of the same
+  class as the locator it was provided, but that is not always accurate when symbolic
+  links are followed.
+
+* :gf:`directory-contents` has a new keyword argument ``resolve-links?``.  If true,
+  symbolic links are resolved as with :gf:`resolve-file`.
+
+* :gf:`expand-pathname` is no longer called by other ``file-system`` functions.  If you
+  depended on this behavior, call :gf:`expand-pathname` directly.
+
+  On Unix, ``~`` or ``~user`` are expanded to the specified user's home directory.  The
+  exact string "~" is now correctly expanded.  :gf:`expand-pathname` now uses the thread
+  safe function ``getpwnam_r`` on Unix systems.
+
+  On Windows, 8.3 short file names are expanded.
+
+* `Issue 1408 <https://github.com/dylan-lang/opendylan/issues/1408>`_, which could result
+  in an infinite loop in :gf:`link-target`, has been fixed.  In addition, the
+  :gf:`link-target` function accepts a new keyword argument, ``follow-links?``, which
+  specifies whether to follow all links until a non-symlink file is found (the default)
+  or just return the direct target of the given symlink.
+
+Submoduled Library Updates
+==========================
+
+The following changes were made to Open Dylan dependencies that are included as Git
+submodules.
+
+TODO
+
+Contributors
+============
+
+We'd like to thank all the people that made contributions to this release and
+to surrounding libraries in the Dylan ecosystem....
+
+TODO

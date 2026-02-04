@@ -6,7 +6,8 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-///
+
+// On Windows %expand-pathname expands 8.3 short file names.
 define function %expand-pathname
     (path :: <microsoft-file-system-locator>)
  => (expanded-path :: <microsoft-file-system-locator>)
@@ -26,13 +27,13 @@ define function %expand-pathname
                                 (primitive-unwrap-machine-word(unused-address)))
                            end);
       if (path-length > $MAX_PATH | path-length = 0)
-        win32-file-system-error("expand", "%s", path)
+        win32-file-system-error("GetFullPathNameA", "%s", path)
       else
         as(object-class(path), copy-sequence(path-buffer, end: path-length))
       end
     end
   end
-end function %expand-pathname;
+end function;
 
 
 ///
@@ -65,34 +66,33 @@ define function %shorten-pathname
 end function %shorten-pathname;
 
 
-define function %resolve-locator
-    (locator :: <microsoft-file-system-locator>)
- => (resolved-locator :: <microsoft-file-system-locator>)
+define function %resolve-file
+    (path :: <string>) => (resolved :: <string>)
   with-stack-path (path-buffer)
-    let path-length = raw-as-integer
+    let new-length = raw-as-integer
       (%call-c-function ("GetFullPathNameA", c-modifiers: "__stdcall")
          (fileName :: <raw-c-pointer>,
           bufferLength :: <raw-c-unsigned-long>,
           bufferPtr :: <raw-c-pointer>,
           filePart :: <raw-c-pointer>)
          => (bufferUsed :: <raw-c-unsigned-long>)
-         (primitive-string-as-raw(as(<byte-string>, locator)),
+         (primitive-string-as-raw(path),
           integer-as-raw($MAX_PATH),
           primitive-string-as-raw(path-buffer),
           primitive-cast-raw-as-pointer(integer-as-raw(0)))
       end);
-    if (path-length = 0)
+    if (new-length = 0)
       if (win32-raw-last-error() = $ERROR_NOT_SUPPORTED)
-        locator
+        path
       else
-        win32-file-system-error("resolve", "%s", locator)
+        win32-file-system-error("resolve", "%s", path)
       end
-    elseif (path-length > $MAX_PATH)
-      win32-file-system-error("resolve", "%s", locator)
+    elseif (new-length > $MAX_PATH)
+      win32-file-system-error("resolve", "%s", path)
     elseif (~%file-exists?(locator, #t))
-      win32-file-system-error("resolve", "%s", locator)
+      win32-file-system-error("resolve", "%s", path)
     else
-      as(object-class(locator), copy-sequence(path-buffer, end: path-length))
+      copy-sequence(path-buffer, end: new-length)
     end
   end
 end function;
@@ -147,7 +147,8 @@ end function %file-type;
 
 ///
 define function %link-target
-    (link :: <microsoft-file-system-locator>) => (target :: <microsoft-file-system-locator>)
+    (link :: <microsoft-file-system-locator>, follow-links? :: <boolean>)
+ => (target :: <microsoft-file-system-locator>)
   error(make(<file-system-error>,
              format-string: "link-target is not available on this platform",
              format-arguments: #()))
