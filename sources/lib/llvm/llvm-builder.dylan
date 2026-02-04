@@ -1,6 +1,6 @@
 Module:       llvm-internals
 Author:       Peter S. Housel
-Copyright:    Original Code is Copyright 2010-2018 Gwydion Dylan Maintainers
+Copyright:    Original Code is Copyright 2010-2026 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
@@ -412,6 +412,12 @@ define method scope-dbg-file
     (scope :: <llvm-DILexicalBlock-metadata>)
  => (dbg-file :: false-or(<llvm-metadata>));
   scope.llvm-DILexicalBlock-metadata-file
+end method;
+
+define method scope-dbg-file
+    (scope :: <llvm-DILexicalBlockFile-metadata>)
+ => (dbg-file :: false-or(<llvm-metadata>));
+  scope.llvm-DILexicalBlockFile-metadata-file
 end method;
 
 define method scope-dbg-file

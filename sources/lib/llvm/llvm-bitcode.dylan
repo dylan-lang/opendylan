@@ -1,6 +1,6 @@
 Module:       llvm-internals
 Author:       Peter S. Housel
-Copyright:    Original Code is Copyright 2009-2018 Gwydion Dylan Maintainers
+Copyright:    Original Code is Copyright 2009-2026 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
@@ -1649,6 +1649,25 @@ define method write-metadata-record
                 moni(metadata.llvm-DILexicalBlock-metadata-file),
                 metadata.llvm-DILexicalBlock-metadata-line,
                 metadata.llvm-DILexicalBlock-metadata-column);
+end method;
+
+define method write-metadata-record
+    (stream :: <bitcode-stream>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
+     metadata :: <llvm-DILexicalBlockFile-metadata>)
+  => ();
+  local
+    method moni                 // metadata or null index
+         (m :: false-or(<llvm-metadata>))
+      => (id :: <integer>);
+      if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
+    end method;
+  write-record*(stream, #"LEXICAL_BLOCK_FILE",
+                if (metadata.llvm-metadata-distinct?) 1 else 0 end,
+                moni(metadata.llvm-DILexicalBlockFile-metadata-scope),
+                moni(metadata.llvm-DILexicalBlockFile-metadata-file),
+                metadata.llvm-DILexicalBlockFile-metadata-discriminator);
 end method;
 
 define method write-metadata-record

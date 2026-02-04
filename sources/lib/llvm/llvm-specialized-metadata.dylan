@@ -1,6 +1,6 @@
 Module:       llvm-internals
 Author:       Peter S. Housel
-Copyright:    Original Code is Copyright 2009-2018 Gwydion Dylan Maintainers
+Copyright:    Original Code is Copyright 2009-2026 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
@@ -249,6 +249,34 @@ define method metadata-referenced-metadata
   choose(true?,
          vector(metadata.llvm-DILexicalBlock-metadata-scope,
                 metadata.llvm-DILexicalBlock-metadata-file))
+end method;
+
+define class <llvm-DILexicalBlockFile-metadata> (<llvm-debug-info-metadata>)
+  constant slot llvm-DILexicalBlockFile-metadata-scope :: <llvm-metadata>,
+    required-init-keyword: scope:;
+  constant slot llvm-DILexicalBlockFile-metadata-file :: false-or(<llvm-metadata>),
+    init-value: #f, init-keyword: file:;
+  constant slot llvm-DILexicalBlockFile-metadata-discriminator :: <integer>,
+    required-init-keyword: discriminator:;
+end class;
+
+define method metadata-partition-key
+    (metadata :: <llvm-DILexicalBlockFile-metadata>)
+ => (key :: <vector>);
+  if (metadata.llvm-metadata-distinct?)
+    vector(metadata)
+  else
+    vector(object-class(metadata),
+           metadata.llvm-DILexicalBlockFile-metadata-discriminator)
+  end if
+end method;
+
+define method metadata-referenced-metadata
+    (metadata :: <llvm-DILexicalBlockFile-metadata>)
+ => (referenced :: <vector>);
+  choose(true?,
+         vector(metadata.llvm-DILexicalBlockFile-metadata-scope,
+                metadata.llvm-DILexicalBlockFile-metadata-file))
 end method;
 
 define class <llvm-DILocalVariable-metadata> (<llvm-debug-info-metadata>)

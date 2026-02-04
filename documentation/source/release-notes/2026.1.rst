@@ -51,6 +51,10 @@ Compiler
   thus increasing the number of threads that can be run. (No
   significant change in execution performance is expected.)
 
+* Debug information for functions with code spanning multiple source
+  files is now handled properly, fixing `Issue 1777
+  <https://github.com/dylan-lang/opendylan/issues/1777>`_.
+
 IDE
 ===
 
