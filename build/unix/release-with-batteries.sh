@@ -41,7 +41,7 @@ NEED_INSTALL_NAME=false
 SYSROOT=
 CFLAGS_ARCH=
 USE_LLD="-fuse-ld=lld"
-USE_LLD_OPTS="-DLLVM_ENABLE_LLD:BOOL=ON -DCLANG_DEFAULT_LINKER=lld"
+USE_LLD_OPTS="-DLLVM_ENABLE_LLD:BOOL=ON"
 BUILD_SRC=false
 case ${MACHINE}-${SYSTEM} in
     amd64-FreeBSD)
@@ -58,13 +58,16 @@ case ${MACHINE}-${SYSTEM} in
         ;;
     x86_64-Linux|i686-Linux)
         BUILD_SRC=:
+        TRIPLE=x86_64-unknown-linux-gnu
         TAR="tar --wildcards"
+        USE_LLD_OPTS=
         DYLAN_JOBS=$(getconf _NPROCESSORS_ONLN)
         ;;
     aarch64-Linux)
         BUILD_SRC=:
         TRIPLE=aarch64-linux-gnu
         TAR="tar --wildcards"
+        USE_LLD_OPTS=
         DYLAN_JOBS=$(getconf _NPROCESSORS_ONLN)
         ;;
     x86_64-Darwin)
