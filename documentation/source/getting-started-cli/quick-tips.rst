@@ -20,9 +20,11 @@ A Few More Quick Tips
 4. If you miss having rich command line history and similar features,
    use ``rlwrap`` with ``dylan-compiler``.
 
+5. If you're an Emacs user you may be interested in the `dylan-emacs-support
+   <https://package.opendylan.org/dylan-emacs-support>`_ package, which provides Dylan
+   editing support and DIME, an Emacs-based Dylan IDE.
+
 You should now have enough information to start working on your Dylan
 project.  The next few sections go into more detail on using
 ``dylan-compiler``, which also has an interactive mode that can make
-the edit/build/debug cycle a bit faster.  Or if you're an Emacs user
-you may prefer to jump directly to the section on the
-:doc:`dylan-mode-for-emacs`.
+the edit/build/debug cycle a bit faster.

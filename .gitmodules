@@ -46,3 +46,6 @@
 [submodule "sources/lib/columnist"]
 	path = sources/lib/columnist
 	url = https://github.com/cgay/columnist
+[submodule "sources/app/dylan-emacs-support"]
+	path = sources/app/dylan-emacs-support
+	url = https://github.com/dylan-lang/dylan-emacs-support
