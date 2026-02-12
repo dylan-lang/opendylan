@@ -26,7 +26,7 @@ jobs:
           submodules: recursive
 
       - name: Build documentation
-        uses: addnab/docker-run-action@v3
+        uses: maus007/docker-run-action-fork@v1
         with:
           image: ghcr.io/fraya/dylan-docs
           options: -v ${{ github.workspace }}/documentation:/docs
