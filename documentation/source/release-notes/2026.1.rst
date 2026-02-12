@@ -103,6 +103,13 @@ submodules.
   <https://github.com/dylan-lang/strings/compare/v2.0.0...v2.0.1>`_
 * The testworks library: `v3.3.0 -> v3.4.0
   <https://github.com/dylan-lang/testworks/compare/v3.3.0...v3.4.0>`_
+* The ``dswank`` library (the back-end for the DIME Emacs-based IDE) and the `DIME
+  documentation <https://package.opendylan.org/dylan-emacs-support>`_ have been moved to
+  the `dylan-emacs-support repository
+  <https://github.com/dylan-lang/dylan-emacs-support>`_ so that they can be maintained in
+  sync with the DIME Elisp code.  Several important bugs have been fixed for `v0.2.0
+  <https://github.com/dylan-lang/dylan-emacs-support/releases/tag/v0.2.0>`_, the version
+  distributed with this release.
 
 Contributors
 ============

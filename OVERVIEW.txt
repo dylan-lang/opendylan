@@ -116,7 +116,7 @@ sources
     deuce               - Deuce customizations for IDE.
     dfmc                - Introspection and IDE interactor - glue between DFM and environment
     dummy               - Interactor environment.
-    dswank              - SLIME back-end for Open Dylan
+    dswank              - (Git submodule) SLIME back-end for Open Dylan
     editor              - External editor support.
     framework           - Generic GUI elements.
     manager             - Client/server communication.
