@@ -8,11 +8,9 @@ In alphabetical order:
 Emacs
 -----
 
-The `dylan-emacs-support <https://github.com/dylan-lang/dylan-emacs-support>`_ repository
+The `dylan-emacs-support <https://package.opendylan.org/dylan-emacs-support>`_ package
 provides ``dylan-mode``, ``dylan-opt-mode``, ``dylan-lid-mode``, and DIME (Dylan
-Interaction Mode for Emacs).  See that repository's README for an overview and pointers
-to documentation.  Available in MELPA as the `dylan <https://melpa.org/#/dylan>`_ and
-`dime <https://melpa.org/#/dime>`_ packages.
+Interaction Mode for Emacs), an Emacs-based IDE.
 
 IntelliJ
 --------
