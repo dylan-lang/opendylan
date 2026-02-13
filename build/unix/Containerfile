@@ -1,0 +1,13 @@
+FROM debian:bookworm
+
+ENV OPENDYLAN_DEPENDS "dumb-init autoconf automake libtool build-essential bzip2 clang-14 git-core make cmake ninja-build"
+
+# Install dependencies
+RUN apt-get update \
+ && DEBIAN_FRONTEND=noninteractive apt-get -y install ${OPENDYLAN_DEPENDS} \
+ && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Add opendylan to the PATH
+ENV PATH "${PATH}:/opt/opendylan/bin"
+
+
