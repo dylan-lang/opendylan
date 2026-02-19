@@ -5,7 +5,7 @@ The simple-format Module
 .. current-library:: common-dylan
 .. current-module:: simple-format
 
-The `simple-format` module provides a subset of the functionality of the
+The ``simple-format`` module provides a subset of the functionality of the
 :doc:`format <../io/format>`, :doc:`format-out <../io/format-out>`, :doc:`print
 <../io/print>`, and :doc:`standard-io <../io/standard-io>` modules, for
 programs that just need to do simple output to the console without pulling in

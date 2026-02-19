@@ -14,14 +14,14 @@ The collectors Module
    :macrocall:
      .. parsed-literal:: 
 
-        collecting ([`name`] [as `type`])
-          [ `body` ]
+        collecting ([*name*] [as *type*])
+          [ *body* ]
         end [ collecting ]
 
    :parameter name: A Dylan variable-name *BNF*. If omitted, the collection is returned
       from the :macro:`collecting` macro call. If supplied, the caller is responsible for
       calling ``collected(name)`` to retrieve the collection before the call to
-      `collecting` terminates.
+      :macro:`collecting` terminates.
    :parameter type: A Dylan type. The default value is :drm:`<list>`.
    :parameter body: A Dylan body *BNF*.
 
