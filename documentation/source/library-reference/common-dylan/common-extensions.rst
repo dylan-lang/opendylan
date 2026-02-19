@@ -252,7 +252,7 @@ Collections
 
    :macrocall:
      .. parsed-literal:: 
-        define table `name` [ :: `type` ] = { [ `key` => `element` ]* }
+        define table *name* [ :: *type* ] = { [ *key* => *element* ]* }
 
    :parameter name: A Dylan name *bnf*.
    :parameter type: A Dylan operand *bnf*. Default value: :drm:`<table>`.
@@ -762,9 +762,9 @@ Conditions
 
    :macrocall:
      .. parsed-literal:: 
-        define last-handler (`condition`, #key `test`, `init-args`) = `handler` ;
+        define last-handler (*condition*, #key *test*, *init-args*) = *handler* ;
 
-        define last-handler `condition` = `handler`;
+        define last-handler *condition* = *handler*;
 
         define last-handler;
 
@@ -831,8 +831,8 @@ Control Flow
    :macrocall:
      .. parsed-literal:: 
 
-        iterate `name` ({`argument` = `init-value`}*)
-          [ `body` ]
+        iterate *name* ({*argument* = *init-value*}*)
+          [ *body* ]
         end [ iterate ]
 
    :parameter name: A Dylan variable-name *bnf*.
@@ -852,7 +852,7 @@ Control Flow
      wants to iterate another step. The form evaluates by calling the
      new function with the initial values specified.
 
-     Any values returned by `body` are returned from the ``iterate`` call.
+     Any values returned by *body* are returned from the ``iterate`` call.
 
    :example: Compute the factorial of 5
 
@@ -874,7 +874,7 @@ Control Flow
 
    :macrocall:
      .. parsed-literal:: 
-        when (`test`) [ `consequent` ] end [ when ]
+        when (*test*) [ *consequent* ] end [ when ]
 
    :parameter test: A Dylan expression *bnf*.
    :parameter consequent: A Dylan body *bnf*.
@@ -1294,10 +1294,10 @@ Debugging
 
    :macrocall:
      .. parsed-literal:: 
-        assert `expression` `format-string` [`format-arg`] => `false`
+        assert *expression* *format-string* [*format-arg*] => :drm:`#f`
 
      .. parsed-literal:: 
-        assert `expression` => `false`
+        assert *expression* => :drm:`#f`
 
    :parameter expression: A Dylan expression *bnf*.
    :parameter format-string: A Dylan expression *bnf*.
@@ -1331,10 +1331,10 @@ Debugging
 
    :macrocall:
      .. parsed-literal:: 
-        debug-assert `expression` `format-string` [`format-arg`] => `false`
+        debug-assert *expression* *format-string* [*format-arg*] => :drm:`#f`
 
      .. parsed-literal:: 
-        debug-assert `expression` => `false`
+        debug-assert *expression* => :drm:`#f`
 
    :parameter expression: A Dylan expression *bnf*.
    :parameter format-string: A Dylan expression *bnf*.

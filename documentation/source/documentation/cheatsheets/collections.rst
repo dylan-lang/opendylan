@@ -59,7 +59,7 @@ back to the source collection:
     threads := add(threads, thread);
 
 In cases where you are modifying a collection frequently, you may want
-to consider using a :drm:`<stretchy-vector>` rather than a `<vector>`
+to consider using a :drm:`<stretchy-vector>` rather than a :drm:`<vector>`
 or some other type of collection.
 
 Common Operations

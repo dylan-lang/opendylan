@@ -232,7 +232,6 @@ several features to make using them easier.
    :class:`<string-stream>`, calling :gf:`format` on it, and then returning the
    stream contents.
 
-
 Sequence streams and object identity
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -360,7 +359,7 @@ we can write:
    end;
 
 The symmetric macro :macro:`with-input-from-string` creates a
-:class:`<string-stream>` with direction `#"input"`, provides an
+:class:`<string-stream>` with direction ``#"input"``, provides an
 opportunity to perform operations and closes the stream.
 
 For instance:
@@ -2287,6 +2286,7 @@ are exported from the *streams* module.
 
      - :gf:`read-to-end`
 
+.. xxx unknown vv
 .. generic-function:: stream-element-type
    :open:
 
@@ -2810,14 +2810,14 @@ are exported from the *streams* module.
 
    :macrocall:
      .. parsed-literal:: 
-        with-indentation (`stream`)
-          `body`
+        with-indentation (*stream*)
+          *body*
         end
 
      .. parsed-literal:: 
 
-        with-indentation (`stream`, 4)
-          `body`
+        with-indentation (*stream*, 4)
+          *body*
         end
 
    :parameter stream: A Dylan expression *bnf*. An instance of
@@ -2855,14 +2855,14 @@ are exported from the *streams* module.
    :macrocall:
      .. parsed-literal::
 
-        with-input-from-string (stream-name = string)
-          body
+        with-input-from-string (*stream-name* = string)
+          *body*
         end
 
      .. parsed-literal::
 
-        with-input-from-string (stream-name = string, class-name)
-          body
+        with-input-from-string (*stream-name* = string, class-name)
+          *body*
         end
 
    :parameter stream-name: A Dylan variable-name *bnf*.
@@ -2873,7 +2873,7 @@ are exported from the *streams* module.
    :description:
 
      In the first use, it creates a :class:`<string-stream>` with
-     direction `#"input"` that is associated with a variable name.  In
+     direction ``#"input"`` that is associated with a variable name.  In
      the second use, it allows to specify a class for the stream type.
 
    :example:
@@ -2902,9 +2902,9 @@ are exported from the *streams* module.
    :macrocall:
      .. parsed-literal::
 
-        with-output-to-string (`stream-name`)
-          `body`
-        end => `string`
+        with-output-to-string (*stream-name*)
+          *body*
+        end => *string*
 
    :parameter stream-name: A Dylan variable-name *bnf*.
    :parameter body: A Dylan body *bnf*.
@@ -2912,7 +2912,7 @@ are exported from the *streams* module.
 
    :description:
 
-     Creates a :class:`<string-stream>` with direction `#"output"` and
+     Creates a :class:`<string-stream>` with direction ``#"output"`` and
      provides an opportunity to perform operations and close the
      stream.
 
@@ -2927,7 +2927,6 @@ are exported from the *streams* module.
    :see-also:
       :macro:`with-input-from-string`
 
-
 .. macro:: with-stream-locked
    :statement:
 
@@ -2935,9 +2934,9 @@ are exported from the *streams* module.
 
    :macrocall:
      .. parsed-literal:: 
-        with-stream-locked (`stream-var`)
-          `body`
-        end => `values`
+        with-stream-locked (*stream-var*)
+          *body*
+        end => *values*
 
    :parameter stream-var: An Dylan variable-name *bnf*.
    :parameter body: A Dylan body *bnf*.

@@ -1012,7 +1012,7 @@ In order to resolve Dylan names, they need to be mangled by the
 debugger in the same way that they were mangled by the compiler. In
 order to do this, the debugger must know the "context" (the library
 name and module name) to mangle into. For example, if the context
-specifies the dylan library and the internal module, then `*pants*`
+specifies the dylan library and the internal module, then ``*pants*``
 mangles to ``TpantsTYinternalVdylan``.
 
 .. class:: <dylan-name-context>
@@ -1154,7 +1154,7 @@ Printing and Inspecting Dylan Objects
    generates a string representation of it. Immediates and "standard"
    objects (such as strings and simple-object-vectors) will be given
    direct representations.  General instances might just be
-   represented as `[<SPAM>]`. The DM will have special knowledge of
+   represented as ``[<SPAM>]``. The DM will have special knowledge of
    (possibly a subset of) condition objects, and will print their
    formatted messages if possible.
 

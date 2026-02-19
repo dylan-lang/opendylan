@@ -50,8 +50,8 @@ The Dylan lexical grammar is changed as follows:
   |     _
 
 * underscore :subscript:`opt` is added to the second alternative of
-  the `decimal-integer`, `binary-integer`, `octal-integer`, and
-  `hex-integer` productions:
+  the *decimal-integer*, *binary-integer*, *octal-integer*, and
+  *hex-integer* productions:
 
   | binary-integer:
   |     binary-digit
@@ -70,7 +70,7 @@ The Dylan lexical grammar is changed as follows:
   |     hex-integer underscore :subscript:`opt` hex-digit
 
 The proposed change in floating point numeric syntax follows because
-the `floating-point` production references the `decimal-integer`
+the *floating-point* production references the *decimal-integer*
 production.
 
 Examples of valid numeric literals include::

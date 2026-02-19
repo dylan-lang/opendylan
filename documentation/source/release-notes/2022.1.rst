@@ -60,7 +60,7 @@ Tooling
   create registry files.
 
   .. note:: Since this release, dylan-tool was renamed to "deft". See the `deft
-            documentation <https://package.opendylan.org/deft/>` for details.
+            documentation <https://package.opendylan.org/deft/>`_ for details.
 
   .. note:: This tool is still in the relatively early stages of development.
 

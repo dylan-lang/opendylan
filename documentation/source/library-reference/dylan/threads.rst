@@ -740,9 +740,9 @@ Locks
 
    :macrocall:
      .. parsed-literal:: 
-        with-lock (`lock`, #key `keys`)
-          `body`
-        [ failure `failure-expr` ]
+        with-lock (*lock*, #key *keys*)
+          *body*
+        [ failure *failure-expr* ]
         end
 
    :param lock: An instance of :class:`<lock>`.
@@ -1028,7 +1028,7 @@ Recursive locks
 
    :signature: owned? *object* => *owned?*
 
-   :parameter object: An instance of `<recursive-lock>`.
+   :parameter object: An instance of :class:`<recursive-lock>`.
    :value owned?: An instance of :drm:`<boolean>`.
 
    :description:
@@ -1468,7 +1468,7 @@ Thread variables
    An adjective to :drm:`define variable` for defining thread variables.
 
    :macrocall:
-     .. parsed-literal:: define thread variable `bindings` = `init` ;
+     .. parsed-literal:: define thread variable *bindings* = *init* ;
 
    :description:
 
@@ -1498,8 +1498,8 @@ Dynamic binding
 
    :macrocall:
      .. parsed-literal:: 
-        dynamic-bind (`place1` = `init1`, `place2` = `init2`, ...)
-          `body`
+        dynamic-bind (*place1* = *init1*, *place2* = *init2*, ...)
+          *body*
         end
 
    :description:
@@ -1562,8 +1562,8 @@ The extended form is described below.
 
    :macrocall:
      .. parsed-literal:: 
-        dynamic-bind (`place1` = `init1`, `place2` = `init2`, ...)
-          `body`
+        dynamic-bind (*place1* = *init1*, *place2* = *init2*, ...)
+          *body*
         end
 
      (This is the same as the simple form.)
@@ -1615,7 +1615,7 @@ Locked variables
    Defines a locked variable.
 
    :macrocall:
-     .. parsed-literal:: define locked variable `bindings` = `init` ;
+     .. parsed-literal:: define locked variable *bindings* = *init* ;
 
    :description:
 
@@ -1651,10 +1651,10 @@ Conditional update
 
    :macrocall:
      .. parsed-literal:: 
-        conditional-update!(`local-name` = `place`)
-          `body`
-          [success `success-expr` ]
-          [failure `failure-expr` ]
+        conditional-update!(*local-name* = *place*)
+            *body*
+          [success *success-expr* ]
+          [failure *failure-expr* ]
         end
 
    :parameter local-name: A Dylan variable-name *bnf*.
@@ -1726,9 +1726,9 @@ Conditional update
    Atomically increments a place containing a numeric value.
 
    :macrocall:
-     .. parsed-literal:: atomic-increment!(`place`)
+     .. parsed-literal:: atomic-increment!(*place*)
 
-     .. parsed-literal:: atomic-increment!(`place`, `by`)
+     .. parsed-literal:: atomic-increment!(*place*, *by*)
 
    :parameter place: A Dylan variable-name *bnf*.
      If the implementation provides the extended form of
@@ -1773,9 +1773,9 @@ Conditional update
    Atomically decrements a place containing a numeric value.
 
    :macrocall:
-     .. parsed-literal:: atomic-decrement!(`place`)
+     .. parsed-literal:: atomic-decrement!(*place*)
 
-     .. parsed-literal:: atomic-decrement!(`place`, `by`)
+     .. parsed-literal:: atomic-decrement!(*place*, *by*)
 
    :parameter place: A Dylan variable-name *bnf*.
      If the implementation provides the extended form of
@@ -1811,10 +1811,10 @@ feature.
 
    :macrocall:
      .. parsed-literal:: 
-        conditional-update!(`local-name` = `place`)
-          `body`
-          [success `success-expr` ]
-          [failure `failure-expr` ]
+        conditional-update!(*local-name* = *place*)
+            *body*
+          [success *success-expr* ]
+          [failure *failure-expr* ]
         end
 
    :parameter local-name: A Dylan variable-name *bnf*.

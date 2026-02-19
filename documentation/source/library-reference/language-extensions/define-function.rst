@@ -32,9 +32,9 @@ implementation.
 
    :macrocall:
      .. parsed-literal:: 
-        define { `adjective` }* function `name` `parameter-list`
-          [ `body` ]
-        end [ function ] [ `name` ]
+        define { *adjective* }* function *name* *parameter-list*
+          [ *body* ]
+        end [ function ] [ *name* ]
 
    :parameter adjective: A Dylan unreserved-name *bnf*.
    :parameter name: A Dylan variable-name *bnf*.

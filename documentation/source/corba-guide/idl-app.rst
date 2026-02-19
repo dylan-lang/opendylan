@@ -28,17 +28,17 @@ This specification mentions the following documents.
    :title-reference:`Dylan Programming`, Addison Wesley, 1997.
 
 [DRM 96]
-   \L. M. Shalit, :title-reference:`The Dylan Reference Manual`,
+   "L. M. Shalit", :title-reference:`The Dylan Reference Manual`,
    Addison Wesley, 1996.
 
 [OMG 94.3.11]
-   \T. J. Mowbray, and K. L. White, OMG IDL Mapping for Common Lisp,
+   "T. J. Mowbray", and K. L. White, OMG IDL Mapping for Common Lisp,
    OMG 94.3.11, 1994.
 
 [OMG 98.07.01]
    The Common Object Request Broker: Architecture and Specification,
    Revision 2.2, formal/98-07-01,
-   <https://www.omg.org/spec/CORBA/2.2>, July 1998.
+   https://www.omg.org/spec/CORBA/2.2, July 1998.
 
 Design rationale
 ================
@@ -1465,9 +1465,10 @@ Examples
    // Dylan
    define constant <planet>
      = apply(type-union,
-   	  map(singleton, #(#"Mercury", #"Venus",
-   			   #"Earth", #"Mars", #"Jupiter", #"Saturn",
-   			   #"Uranus", #"Neptune", #"Pluto")));
+             map(singleton,
+                 #(#"Mercury", #"Venus", #"Earth",
+                   #"Mars", #"Jupiter", #"Saturn",
+                   #"Uranus", #"Neptune", #"Pluto")));
 
    define generic planet/successor
        (value :: <planet>) => (succ :: <planet>);

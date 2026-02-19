@@ -21,13 +21,13 @@ The t-lists Module
 
    :description:
 
-     The `t-lists` library is an implementation of a tail concatenate
+     The ``t-lists`` library is an implementation of a tail concatenate
      list that supports efficient append operations.
 
-     The `<t-list>` maintains a reference to the last object in the
+     The ``<t-list>`` maintains a reference to the last object in the
      list. This allows appends to happen in O(1) time.
 
-     In the Lisp world, this data structure is known as `tconc`.
+     In the Lisp world, this data structure is known as ``tconc``.
 
    :operations:
 

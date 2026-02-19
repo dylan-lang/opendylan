@@ -8,7 +8,7 @@ Adding a DFM computation
 What you have to do to add a new node class to the DFM:
 
 * Add it to ``flow-graph/computation.dylan``, and ensure that you export
-   it from ``flow-graph/flow-graph-library``.
+  it from ``flow-graph/flow-graph-library``.
 
 * Create the converters to generate it.  Likely in conversion, but
   some nodes are only created by optimizations.
@@ -20,7 +20,7 @@ What you have to do to add a new node class to the DFM:
   * all native back ends
 
 * In addition, it would be good to add any invariant checks to
-  ``flow-graph/checker.dylan.``
+  ``flow-graph/checker.dylan``.
 
 DFM block constructs
 ====================
@@ -47,24 +47,24 @@ First, let's look at an example of bind-exit.
 (That's before register assignment, to make the difference in the
 temporaries used in the merge node clear.)
 
-The <bind-exit> node establishes the place the exit jumps to, an
-<entry-state>.  This is communicated to <exit> and <end-exit-block>
-through the temporary t1.  The temporary returned by the <bind-exit>
+The ``<bind-exit>`` node establishes the place the exit jumps to, an
+``<entry-state>``.  This is communicated to ``<exit>`` and ``<end-exit-block>``
+through the temporary t1.  The temporary returned by the ``<bind-exit>``
 is set by the exit procedure.
 
 (The printing code shows up one inconsistency:  the temporary generated
-by the <bind-exit> node is actually not live after that point.  It's
+by the ``<bind-exit>`` node is actually not live after that point.  It's
 live only if the exit procedure is taken.  On the other hand, the
 entry-state is live after that point.  Perhaps which temporary is the
-generated one from a <bind-exit> node should be exchanged.)
+generated one from a ``<bind-exit>`` node should be exchanged.)
 
 The merge node combines the two temporaries that could contain the
-result of the <merge> node -- t2 by exiting, t6 by falling through.
-The <end-exit-block> node exists for at least two purposes:  to
+result of the ``<merge>`` node -- t2 by exiting, t6 by falling through.
+The ``<end-exit-block>`` node exists for at least two purposes:  to
 possibly bash the exit procedure or entry state in order to prevent
 calls outside of its dynamic scope and to stop a thread in the
 execution engine.  It references the entry state in order that it can
-be found from the <bind-exit> node.
+be found from the ``<bind-exit>`` node.
 
 Before we see the compiled code, here's the DFM code after register
 allocation:
@@ -93,7 +93,7 @@ And this is the C code:
       D T2;
       D T1;
       D T3;
-      
+
       T0 = dNprimitive_make_bind_exit_frame();
       if (setjmp(dNprimitive_frame_destination(T0))) {
         T2 = dNprimitive_frame_return_value(T0);
@@ -108,11 +108,11 @@ And this is the C code:
 
 The only gotcha (other than how setjmp works in C) is that the emission
 engine knows that there's no point in generating code for the stuff
-that follows an <exit> node;  it's a primitive form of dead code
+that follows an ``<exit>`` node;  it's a primitive form of dead code
 elimination.  So that's why the ``t2 := ^13`` and ``<end-exit-block>``
 nodes are not emitted.
 
-The call to dNprimitive_nlx unwinds all <unwind-protect> frames on the
+The call to dNprimitive_nlx unwinds all ``<unwind-protect>`` frames on the
 way back to the entry state marked by T0.  Eventually, (unless some
 cleanup calls another exit procedure) it will longjmp to the site of
 the setjmp.  The second argument to dNprimitive_nlx is shoved into the
@@ -128,7 +128,7 @@ inlined, as it was above), the generated code is:
     D L1502I () {
       D T0;
       D T1;
-      
+
       T0 = dNprimitive_make_bind_exit_frame();
       if (setjmp(dNprimitive_frame_destination(T0))) {
         T1 = dNprimitive_frame_return_value(T0);
@@ -182,7 +182,7 @@ statement.
       D T1;
       D T2;
       D T3;
-      
+
       T0 = dNprimitive_make_unwind_protect_frame();
       if (setjmp(dNprimitive_frame_destination(T0)))
         goto L2;
@@ -235,7 +235,7 @@ longer protected by the outer cleanup.
 DFM local assignment
 ====================
 
-We really want the DFM to be a `single assignment` form.  That is,
+We really want the DFM to be a "single assignment" form.  That is,
 all temporaries should be defined and then never mutated.  We want
 this because it makes many optimizations (common sub-expression
 elimination, inlining, etc) significantly easier.  See the usual set
@@ -276,7 +276,7 @@ Here's an example of what happens:
     t1 := ^42
     @a := t1
     return t0
-  
+
   begin let a = 13; a := 42; a end; => // after
     [BIND]
     t0 := ^13
@@ -287,7 +287,7 @@ Here's an example of what happens:
     return t3
 
 The eliminate-assignments pass should happen before any of the
-`interesting` optimizations, and should never need to be done twice
+"interesting" optimizations, and should never need to be done twice
 on the same piece of code.
 
 What remains to be done:
@@ -351,9 +351,9 @@ DFM multiple values
 ===================
 
 To represent multiple values, there's a new temporary class in the
-DFM, <multiple-value-temporary>.  Multiple values temporaries are not
+DFM, ``<multiple-value-temporary>``.  Multiple values temporaries are not
 interchangeable with other temporaries;  maybe we should introduce a
-<simple-temporary> class for non-multiple-value temporaries, but we
+``<simple-temporary>`` class for non-multiple-value temporaries, but we
 can do that later.  In the debugging print code, MV temporaries print
 with a * in front of them.
 
@@ -363,7 +363,7 @@ produce multiple values, notably a call.
 In order to produce efficient code, we have imposed the requirement that
 at most one MV temporary is live at a time (per thread).  This allows
 us to allocate space for all MV temporaries ahead of time, as part of
-the calling convention, in the `multiple value area`.  It is
+the calling convention, in the "multiple value area".  It is
 generally best to think of the multiple value area, which is used to
 pass multiple values across calls, as a single multiple valued
 register, which we allocate to the live MV temporary.
@@ -382,14 +382,14 @@ value temporary.
 
 To manipulate multiple values, there are five new computation classes:
 
-  <values>
+  ``<values>``
 
-    super: <computation>
+    super: ``<computation>``
     slots: fixed-values, rest-value
 
     Creates a ``<multiple-value-temporary>`` from a set of single value
     temporaries.  For now, a ``<values>`` node comes from a converter
-    for the `function macro` values;  in the future, there should
+    for the function macro values;  in the future, there should
     be only one ``<values>`` node created directly, and the rest created
     by inlining the function values from the Dylan library.  (A
     similar change needs to be made for ``<apply>``.)
@@ -404,16 +404,16 @@ To manipulate multiple values, there are five new computation classes:
         *t3 := [VALUES t0 t1 t2]
         return *t3
 
-  <extract-single-value>
+  ``<extract-single-value>``
 
-    super: <computation>
+    super: ``<computation>``
     slots: multiple-values, index, rest-vector?
 
     Produces a single-valued temporary from an MV temporary.  The
     index is used to select which multiple value is extracted;  the
     indices are numbered from 0.  If rest-vector? is true, a vector
     of the values from index on is returned, rather than just the
-    index.  (Perhaps that should be a different <computation> class.)
+    index.  (Perhaps that should be a different ``<computation>`` class.)
 
     These very commonly follow calls, extracting the single value.
     They should also appear based on optimizations of let bindings.
@@ -429,21 +429,21 @@ To manipulate multiple values, there are five new computation classes:
         *t4 := [CALLx t0(t3)] // tail call
         return *t4
 
-  <multiple-value-call>
+  ``<multiple-value-call>``
 
-    super: <function-call>
+    super: ``<function-call>``
 
-    Like an <apply> with no fixed arguments and a MV temporary as the
+    Like an ``<apply>`` with no fixed arguments and a MV temporary as the
     single (last) argument.  Constructed from ``let`` declarations
     which bind multiple values.  (This could be used for all lets, but
     I wanted to wait with that until the multiple value optimizations
     were in place.)
 
     The most important optimization with these nodes is to upgrade
-    the calls to <simple-call> or <apply> with the shape of the
+    the calls to ``<simple-call>`` or ``<apply>`` with the shape of the
     MV temporary argument is know.  If it's not known, the simplest
     code generation strategy is to extract all of the temporary
-    values and transform the call into an <apply>.
+    values and transform the call into an ``<apply>``.
 
     .. code-block:: dylan
 
@@ -460,10 +460,10 @@ To manipulate multiple values, there are five new computation classes:
         *t2 := [MV-CALLx t3(*t1)] // tail call
         return *t2
 
-  <multiple-value-spill>
-  <multiple-value-unspill>
+  ``<multiple-value-spill>``
+  ``<multiple-value-unspill>``
 
-    super: <temporary-transfer>
+    super: ``<temporary-transfer>``
 
     These instructions turn an MV temporary into a single-value
     temporary and vice-versa, for the purpose of maintaining the
@@ -546,14 +546,14 @@ First, a simple example:
     mandatory?: #t,
     before: analyze-calls;
 
-This defines a pass named `eliminate-assignments`, which runs before
+This defines a pass named ``eliminate-assignments``, which runs before
 analyze-calls is run;  it is possible to use arbitrarily many before:
 options.  The mandatory option declares that the pass is part of
 optimization level 0;  that is, it's always run.
 
-The `visit: functions` option says that the function is called for
+The ``visit: functions`` option says that the function is called for
 every function in the form being compiled.  The default is
-`visit: top-level-forms`, which corresponds to the previous behavior.
+``visit: top-level-forms``, which corresponds to the previous behavior.
 
 .. code-block:: dylan
 
@@ -565,7 +565,7 @@ every function in the form being compiled.  The default is
     triggered-by: analyze-calls,
     trigger: analyze-calls;
 
-The `visit: computations` option says that every computation (in the
+The ``visit: computations`` option says that every computation (in the
 top-level and all nested lambdas) is passed to the pass's function.
 The after: option is like before: in reverse.
 
@@ -579,7 +579,7 @@ A pass function reports that it changed something by returning any
 non-false value.
 
 
-Full catalog of options:
+Full catalog of options::
 
   visit:             What things to pass to the pass's function:
     top-level-forms    Just the top-level function.
@@ -610,7 +610,7 @@ Full catalog of options:
 
   disabled?:         Turn pass off;  overrides everything else.
 
-Convenience functions:
+Convenience functions::
 
   trace-pass(pass-name)
   untrace-pass(pass-name)

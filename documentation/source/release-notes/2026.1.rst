@@ -99,7 +99,7 @@ System
   file-system operation.
 
   :gf:`resolve-file` now returns the correct class of locator, a subclass of
-  :class:`<file-locator>` or class:`<directory-locator>`, depending on the actual file
+  :class:`<file-locator>` or :class:`<directory-locator>`, depending on the actual file
   type of the fully resolved file.  It previously returned an instance of the same
   class as the locator it was provided, but that is not always accurate when symbolic
   links are followed.
