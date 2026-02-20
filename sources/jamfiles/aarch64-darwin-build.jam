@@ -1,0 +1,14 @@
+#
+# Generated config
+#
+include $(SYSTEM_BUILD_SCRIPTS)/config.jam ;
+
+#
+# Configuration variables
+#
+CCFLAGS  += -arch arm64 -DOPEN_DYLAN_ARCH_AARCH64 ;
+
+#
+# Common build script
+#
+include $(SYSTEM_BUILD_SCRIPTS)/shared-darwin-build.jam ;

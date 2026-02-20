@@ -5,7 +5,8 @@ Files:	 library
 	 openssl-wrapper
 C-libraries: -lssl -lcrypto
 C-source-files: support.c
-Platforms: arm-linux
+Platforms: aarch64-darwin
+           arm-linux
            x86-freebsd
            x86-linux
            x86-netbsd
