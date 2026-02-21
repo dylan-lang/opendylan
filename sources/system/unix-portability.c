@@ -201,9 +201,10 @@ int system_copy_file_range(int in_fd, int out_fd, off_t in_size)
 // Store the homedir associated with `username` into `homedir`. `homedir_size` is the
 // size of the `homedir` buffer. Returns 0 on success, -1 on failure.
 int system_user_homedir (const char* username, char* homedir, int homedir_size) {
-  int passwd_bufsize = 0;
+  long passwd_bufsize = 0;
   if ((passwd_bufsize = sysconf(_SC_GETPW_R_SIZE_MAX)) == -1) {
-    return -1;
+    // No hard limit, so pick a size
+    passwd_bufsize = 2048;
   }
   char buffer[passwd_bufsize];
   struct passwd pwd;
@@ -222,9 +223,10 @@ int system_user_homedir (const char* username, char* homedir, int homedir_size) 
 // Store the username associated with `uid` into `username`. `username_size` is the size
 // of the `username` buffer.  Returns 0 on success, -1 on failure.
 int system_passwd_username_from_uid (uid_t uid, char* username, int username_size) {
-  int passwd_bufsize = 0;
+  long passwd_bufsize = 0;
   if ((passwd_bufsize = sysconf(_SC_GETPW_R_SIZE_MAX)) == -1) {
-    return -1;
+    // No hard limit, so pick a size
+    passwd_bufsize = 2048;
   }
   char buffer[passwd_bufsize];
   struct passwd pwd;
