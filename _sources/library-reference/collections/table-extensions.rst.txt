@@ -333,7 +333,7 @@ Miscellaneous
 
    :macrocall:
      .. parsed-literal:: 
-        tabling( [ `class`, ] `key` => `value`, ...)
+        tabling( [ *class*, ] *key* => *value*, ...)
 
    :parameter class:  An instance of :drm:`<class>`. Optional.
    :parameter key:    An expression.

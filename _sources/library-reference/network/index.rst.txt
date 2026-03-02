@@ -77,7 +77,7 @@ socket function that blocks.
    :statement:
 
    :macrocall:
-      .. parsed-literal:: with-socket-thread (#key `server?`) `body` end
+      .. parsed-literal:: with-socket-thread (#key *server?*) *body* end
 
    :description:
 
@@ -481,8 +481,8 @@ The <server-socket> class
 
    :macrocall:
       .. parsed-literal:: 
-         with-server-socket (`server-var` [:: `server-class` ], `keywords`)
-           `body`
+         with-server-socket (*server-var* [:: *server-class* ], *keywords*)
+           *body*
          end
 
    :description:
@@ -498,8 +498,8 @@ The <server-socket> class
 
    :macrocall:
       .. parsed-literal:: 
-         start-server ([`server-var` = ] `socket-server-instance`, `socket-var` [, `keywords` ])
-           `body`
+         start-server ([*server-var* = ] *socket-server-instance*, *socket-var* [, *keywords* ])
+           *body*
          end
 
    :description:

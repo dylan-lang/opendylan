@@ -550,15 +550,15 @@ fixed-point font, <code class="docutils literal notranslate"><span class="pre">l
 <dt>[DP 97]</dt><dd><p>Neal Feinberg, S. E. Keene, R.O. Mathews, P. T. Withington,
 <cite>Dylan Programming</cite>, Addison Wesley, 1997.</p>
 </dd>
-<dt>[DRM 96]</dt><dd><p>L. M. Shalit, <cite>The Dylan Reference Manual</cite>,
+<dt>[DRM 96]</dt><dd><p>“L. M. Shalit”, <cite>The Dylan Reference Manual</cite>,
 Addison Wesley, 1996.</p>
 </dd>
-<dt>[OMG 94.3.11]</dt><dd><p>T. J. Mowbray, and K. L. White, OMG IDL Mapping for Common Lisp,
+<dt>[OMG 94.3.11]</dt><dd><p>“T. J. Mowbray”, and K. L. White, OMG IDL Mapping for Common Lisp,
 OMG 94.3.11, 1994.</p>
 </dd>
 <dt>[OMG 98.07.01]</dt><dd><p>The Common Object Request Broker: Architecture and Specification,
 Revision 2.2, formal/98-07-01,
-&lt;<a class="reference external" href="https://www.omg.org/spec/CORBA/2.2">https://www.omg.org/spec/CORBA/2.2</a>&gt;, July 1998.</p>
+<a class="reference external" href="https://www.omg.org/spec/CORBA/2.2">https://www.omg.org/spec/CORBA/2.2</a>, July 1998.</p>
 </dd>
 </dl>
 </section>
@@ -1970,9 +1970,10 @@ enum<span class="w"> </span>planet<span class="w"> </span>{Mercury,<span class="
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="c1">// Dylan</span>
 <span class="k">define</span><span class="w"> </span><span class="nb">constant</span><span class="w"> </span><span class="nc">&lt;planet&gt;</span>
 <span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nb">apply</span><span class="p">(</span><span class="nb">type-union</span><span class="p">,</span>
-<span class="w">       </span><span class="nb">map</span><span class="p">(</span><span class="nb">singleton</span><span class="p">,</span><span class="w"> </span><span class="p">#(</span><span class="ss">#&quot;Mercury&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">#&quot;Venus&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="ss">#&quot;Earth&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">#&quot;Mars&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">#&quot;Jupiter&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">#&quot;Saturn&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="ss">#&quot;Uranus&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">#&quot;Neptune&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">#&quot;Pluto&quot;</span><span class="p">)));</span>
+<span class="w">          </span><span class="nb">map</span><span class="p">(</span><span class="nb">singleton</span><span class="p">,</span>
+<span class="w">              </span><span class="p">#(</span><span class="ss">#&quot;Mercury&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">#&quot;Venus&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">#&quot;Earth&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="ss">#&quot;Mars&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">#&quot;Jupiter&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">#&quot;Saturn&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="ss">#&quot;Uranus&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">#&quot;Neptune&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">#&quot;Pluto&quot;</span><span class="p">)));</span>
 
 <span class="k">define</span><span class="w"> </span><span class="nb">generic</span><span class="w"> </span><span class="n">planet/successor</span>
 <span class="w">    </span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;planet&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">succ</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="nc">&lt;planet&gt;</span><span class="p">);</span>

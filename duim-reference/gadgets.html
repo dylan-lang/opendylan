@@ -749,13 +749,14 @@ border and label identifying the grouping.</p>
 </section>
 <section id="overall-class-hierarchy-for-the-duim-gadgets-library">
 <h3>Overall class hierarchy for the DUIM-Gadgets library<a class="headerlink" href="#overall-class-hierarchy-for-the-duim-gadgets-library" title="Link to this heading">¶</a></h3>
-<p>&lt;object&gt;</p>
+<p><strong>TODO</strong>: Fix this section with an image.</p>
+<dl>
+<dt>::</dt><dd><p>&lt;object&gt;</p>
 <p>&lt;gadget&gt;</p>
 <p>&lt;action-gadget&gt;</p>
 <p>&lt;value-gadget&gt;</p>
-<p>See <a class="reference internal" href="#subclasses-of-value-gadget">Subclasses of &lt;value-gadget&gt;</a></p>
 <p>&lt;label&gt;</p>
-<p><a class="reference internal" href="#duim:duim-gadgets:[menu]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;menu&gt;</span></code></a></p>
+<p>&lt;menu&gt;</p>
 <p><em>&lt;tool-bar&gt;</em></p>
 <p>&lt;scroller&gt;</p>
 <p>&lt;separator&gt;</p>
@@ -765,10 +766,11 @@ border and label identifying the grouping.</p>
 <p>&lt;group-box&gt;</p>
 <p>&lt;splitter&gt;</p>
 <p>&lt;page&gt;</p>
-<p>See <a class="reference internal" href="#subclasses-of-page">Subclasses of &lt;page&gt;</a></p>
 <p>&lt;list-item&gt;</p>
 <p>&lt;tree-node&gt;</p>
 <p>&lt;table-item&gt;</p>
+</dd>
+</dl>
 </section>
 <section id="subclasses-of-value-gadget">
 <h3>Subclasses of &lt;value-gadget&gt;<a class="headerlink" href="#subclasses-of-value-gadget" title="Link to this heading">¶</a></h3>
@@ -836,7 +838,7 @@ the &lt;value-gadget&gt; class</a>.</p>
 </section>
 <section id="subclasses-of-page">
 <span id="gadgets-subclasses-of-page"></span><h3>Subclasses of &lt;page&gt;<a class="headerlink" href="#subclasses-of-page" title="Link to this heading">¶</a></h3>
-<p>The <cite>&lt;page&gt;</cite> class is the base class of gadgets that are used to display
+<p>The <a class="reference internal" href="#duim:duim-gadgets:[page]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;page&gt;</span></code></a> class is the base class of gadgets that are used to display
 a whole page of information within a “parent” element, with the page
 itself optionally containing other layouts or gadgets. Pages are used in
 situations where different sets of information (the pages themselves)
@@ -1074,12 +1076,12 @@ tab in a tab control displays a different page of information.</p>
 dialog boxes that contain several pages of information displayed as
 tabbed pages. This class is similar to <a class="reference internal" href="#duim:duim-gadgets:[tab-control-page]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;tab-control-page&gt;</span></code></a>,
 except that its use is limited to modeless dialog boxes. For more
-information about property frames, see ` &lt;frames.htm#89815&gt;`_.</p>
+information about property frames, see <a class="reference internal" href="frames.html#duim:duim-frames:[property-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;property-frame&gt;</span></code></a>.</p>
 </dd>
 <dt><a class="reference internal" href="frames.html#duim:duim-frames:[wizard-page]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;wizard-page&gt;</span></code></a></dt><dd><p>This type of page is used exclusively in wizard frames, in which the
 user is guided through a sequence of steps in order to perform a
 specified operation. For more information about wizard frames,
-see ` &lt;frames.htm#89815&gt;`_.</p>
+see <a class="reference internal" href="frames.html#duim:duim-frames:[wizard-frame]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;wizard-frame&gt;</span></code></a>.</p>
 </dd>
 </dl>
 <figure class="align-center" id="id6">
@@ -1092,7 +1094,7 @@ see ` &lt;frames.htm#89815&gt;`_.</p>
 <p class="admonition-title">Note</p>
 <p>The <a class="reference internal" href="frames.html#duim:duim-frames:[wizard-page]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;wizard-page&gt;</span></code></a> and <a class="reference internal" href="frames.html#duim:duim-frames:[property-page]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;property-page&gt;</span></code></a> classes
 are actually exposed by the DUIM-Frames library, rather than the
-DUIM-Gadgets library. See ` &lt;frames.htm#89815&gt;`_for full details
+DUIM-Gadgets library. See <a class="reference internal" href="frames.html"><span class="doc">DUIM-Frames Library</span></a> for full details
 on this library.</p>
 </div>
 </section>
@@ -1388,7 +1390,7 @@ than by making direct instances of this class.</p>
 <dt class="sig sig-object dylan-api dylan" id="duim:duim-gadgets:[button]">
 <span class="sig-name descname"><span class="pre">&lt;button&gt;</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Abstract</span> <span class="pre">Instantiable</span> <span class="pre">Class</span></em><a class="headerlink" href="#duim:duim-gadgets:[button]" title="Link to this definition">¶</a></dt>
 <dd><p>The class of all button gadgets.</p>
-<dl class="field-list">
+<dl class="field-list simple">
 <dt class="field-odd">Superclasses<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#duim:duim-gadgets:[value-gadget]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;value-gadget&gt;</span></code></a></p>
 </dd>
@@ -1436,18 +1438,8 @@ force a button to use all the available width or height, specify
 definition. See the second example below to see how this is done.</p>
 </p>
 </dd>
-<dt class="field-even">Operations<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><cite>&lt;frames.htm#56017&gt;</cite></p></li>
-<li><p><cite>&lt;frames.htm#56015&gt;</cite></p></li>
-<li><p><cite>&lt;frames.htm#24406&gt;</cite></p></li>
-<li><p><cite>&lt;frames.htm#37806&gt;</cite></p></li>
-<li><p><cite>&lt;frames.htm#48310&gt;</cite></p></li>
-<li><p><cite>&lt;frames.htm#91817&gt;</cite></p></li>
-<li><p><cite>&lt;frames.htm#56017&gt;</cite></p></li>
-</ul>
-</p>
-</dd>
+</dl>
+<dl class="field-list">
 <dt class="field-odd">Example<span class="colon">:</span></dt>
 <dd class="field-odd"><div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">contain</span>
 <span class="w">  </span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;button&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">label:</span><span class="w"> </span><span class="s">&quot;Hello&quot;</span><span class="p">,</span>
@@ -4468,10 +4460,6 @@ its size: only use images that are the size of a typical icon.</p>
 <dd class="field-even"><p><ul class="simple">
 <li><p><a class="reference internal" href="#duim:duim-gadgets:gadget-label"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">gadget-label</span></code></a></p></li>
 <li><p><a class="reference internal" href="#duim:duim-gadgets:gadget-label-setter"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">gadget-label-setter</span></code></a></p></li>
-<li><p><cite>&lt;frames.htm#74637&gt;</cite></p></li>
-<li><p><cite>&lt;frames.htm#10131&gt;</cite></p></li>
-<li><p><cite>&lt;frames.htm#68823&gt;</cite></p></li>
-<li><p><cite>&lt;frames.htm#14565&gt;</cite></p></li>
 </ul>
 </p>
 </dd>
@@ -5123,7 +5111,6 @@ command, you can use this init-keyword.</p>
 </dd>
 <dt class="field-even">Operations<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><cite>&lt;frames.htm#89020&gt;</cite></p></li>
 <li><p><a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:choose-from-dialog"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">choose-from-dialog</span></code></a></p></li>
 <li><p><a class="reference internal" href="sheets.html#duim-sheets:duim-sheets:choose-from-menu"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">choose-from-menu</span></code></a></p></li>
 <li><p><a class="reference internal" href="#duim:duim-gadgets:display-menu"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">display-menu</span></code></a></p></li>
@@ -5174,11 +5161,7 @@ have this effect.</p>
 </p>
 </dd>
 <dt class="field-even">Operations<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><cite>&lt;frames.htm#63229&gt;</cite></p></li>
-<li><p><cite>&lt;frames.htm#56600&gt;</cite></p></li>
-</ul>
-</p>
+<dd class="field-even"><p></p>
 </dd>
 <dt class="field-odd">Example<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The following example is similar to the example for
@@ -5587,17 +5570,11 @@ where the label for the page becomes the label on the tab for the page.</p>
 </p>
 </dd>
 <dt class="field-even">Operations<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><cite>&lt;frames.htm#88015&gt;</cite></p></li>
-<li><p><cite>&lt;frames.htm#89408&gt;</cite></p></li>
-</ul>
-</p>
+<dd class="field-even"><p></p>
 </dd>
 <dt class="field-odd">See also<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
-<li><p><cite>&lt;frames.htm#93333&gt;</cite></p></li>
 <li><p><a class="reference internal" href="#duim:duim-gadgets:[tab-control-page]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;tab-control-page&gt;</span></code></a></p></li>
-<li><p><cite>&lt;frames.htm#87607&gt;</cite></p></li>
 </ul>
 </p>
 </dd>
@@ -6799,8 +6776,6 @@ you create a status bar from scratch, you should not use either the
 </dd>
 <dt class="field-even">Operations<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><cite>&lt;frames.htm#32720&gt;</cite></p></li>
-<li><p><cite>&lt;frames.htm#56600&gt;</cite></p></li>
 <li><p>:gf:status-bar-label-pane`</p></li>
 <li><p>:gf:status-bar-progress-bar`</p></li>
 </ul>
@@ -6818,8 +6793,6 @@ progress bar with the given range of values.</p>
 </dd>
 <dt class="field-even">See also<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><cite>&lt;frames.htm#12376&gt;</cite></p></li>
-<li><p><cite>&lt;frames.htm#36830&gt;</cite></p></li>
 <li><p><a class="reference internal" href="#duim:duim-gadgets:gadget-documentation"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">gadget-documentation</span></code></a></p></li>
 <li><p><a class="reference internal" href="#duim:duim-gadgets:status-bar-label-pane"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">status-bar-label-pane</span></code></a></p></li>
 <li><p><a class="reference internal" href="#duim:duim-gadgets:status-bar-progress-bar"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">status-bar-progress-bar</span></code></a></p></li>
@@ -7177,8 +7150,6 @@ current page as follows:</p>
 <dd class="field-odd"><p><ul class="simple">
 <li><p><a class="reference internal" href="#duim:duim-gadgets:[page]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;page&gt;</span></code></a></p></li>
 <li><p><a class="reference internal" href="#duim:duim-gadgets:[tab-control]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;tab-control&gt;</span></code></a></p></li>
-<li><p><cite>&lt;frames.htm#93333&gt;</cite></p></li>
-<li><p><cite>&lt;frames.htm#87607&gt;</cite></p></li>
 </ul>
 </p>
 </dd>
@@ -7795,11 +7766,7 @@ window inside the application.</p>
 </p>
 </dd>
 <dt class="field-even">Operations<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><cite>&lt;frames.htm#88622&gt;</cite></p></li>
-<li><p><cite>&lt;frames.htm#56600&gt;</cite></p></li>
-</ul>
-</p>
+<dd class="field-even"><p></p>
 </dd>
 <dt class="field-odd">See also<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">

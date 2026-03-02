@@ -1322,9 +1322,9 @@ returns an instance of <a class="reference internal" href="#dylan:threads:[simpl
 <dd><p>Holds a lock while executing a body of code.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">with-lock (<cite>lock</cite>, #key <cite>keys</cite>)
-  <cite>body</cite>
-[ failure <cite>failure-expr</cite> ]
+<dd class="field-odd"><p><pre class="literal-block">with-lock (<em>lock</em>, #key <em>keys</em>)
+  <em>body</em>
+[ failure <em>failure-expr</em> ]
 end</pre>
 </p>
 </dd>
@@ -1677,7 +1677,7 @@ released as many times as it was claimed with <a class="reference internal" href
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>object</strong> – An instance of <cite>&lt;recursive-lock&gt;</cite>.</p></li>
+<li><p><strong>object</strong> – An instance of <a class="reference internal" href="#dylan:threads:[recursive-lock]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;recursive-lock&gt;</span></code></a>.</p></li>
 </ul>
 </dd>
 <dt class="field-odd">Values<span class="colon">:</span></dt>
@@ -2211,7 +2211,7 @@ notification.</p>
 <dd><p>An adjective to <a class="reference external" href="https://opendylan.org/books/drm/Definition_Macros#define_variable"><code class="xref drm docutils literal notranslate"><span class="pre">define</span> <span class="pre">variable</span></code></a> for defining thread variables.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">define thread variable <cite>bindings</cite> = <cite>init</cite> ;</pre>
+<dd class="field-odd"><p><pre class="literal-block">define thread variable <em>bindings</em> = <em>init</em> ;</pre>
 </p>
 </dd>
 <dt class="field-even">Discussion<span class="colon">:</span></dt>
@@ -2242,8 +2242,8 @@ assignment is not visible in other threads.</p>
 rebound.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">dynamic-bind (<cite>place1</cite> = <cite>init1</cite>, <cite>place2</cite> = <cite>init2</cite>, ...)
-  <cite>body</cite>
+<dd class="field-odd"><p><pre class="literal-block">dynamic-bind (<em>place1</em> = <em>init1</em>, <em>place2</em> = <em>init2</em>, ...)
+  <em>body</em>
 end</pre>
 </p>
 </dd>
@@ -2301,8 +2301,8 @@ portable code should not depend upon this feature.</p>
 are dynamically rebound.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">dynamic-bind (<cite>place1</cite> = <cite>init1</cite>, <cite>place2</cite> = <cite>init2</cite>, ...)
-  <cite>body</cite>
+<dd class="field-odd"><p><pre class="literal-block">dynamic-bind (<em>place1</em> = <em>init1</em>, <em>place2</em> = <em>init2</em>, ...)
+  <em>body</em>
 end</pre>
 <p>(This is the same as the simple form.)</p>
 </p>
@@ -2351,7 +2351,7 @@ which make use of the extended form of <a class="reference internal" href="#dyla
 <dd><p>Defines a locked variable.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">define locked variable <cite>bindings</cite> = <cite>init</cite> ;</pre>
+<dd class="field-odd"><p><pre class="literal-block">define locked variable <em>bindings</em> = <em>init</em> ;</pre>
 </p>
 </dd>
 <dt class="field-even">Discussion<span class="colon">:</span></dt>
@@ -2389,10 +2389,10 @@ assign to the variable.</p></li>
 <dd><p>Performs an atomic test-and-set operation.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">conditional-update!(<cite>local-name</cite> = <cite>place</cite>)
-  <cite>body</cite>
-  [success <cite>success-expr</cite> ]
-  [failure <cite>failure-expr</cite> ]
+<dd class="field-odd"><p><pre class="literal-block">conditional-update!(<em>local-name</em> = <em>place</em>)
+    <em>body</em>
+  [success <em>success-expr</em> ]
+  [failure <em>failure-expr</em> ]
 end</pre>
 </p>
 </dd>
@@ -2468,8 +2468,8 @@ supplied.</p>
 <dd><p>Atomically increments a place containing a numeric value.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">atomic-increment!(<cite>place</cite>)</pre>
-<pre class="literal-block">atomic-increment!(<cite>place</cite>, <cite>by</cite>)</pre>
+<dd class="field-odd"><p><pre class="literal-block">atomic-increment!(<em>place</em>)</pre>
+<pre class="literal-block">atomic-increment!(<em>place</em>, <em>by</em>)</pre>
 </p>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
@@ -2519,8 +2519,8 @@ by 2, and returns the incremented value.</p>
 <dd><p>Atomically decrements a place containing a numeric value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">atomic-decrement!(<cite>place</cite>)</pre>
-<pre class="literal-block">atomic-decrement!(<cite>place</cite>, <cite>by</cite>)</pre>
+<dd class="field-odd"><p><pre class="literal-block">atomic-decrement!(<em>place</em>)</pre>
+<pre class="literal-block">atomic-decrement!(<em>place</em>, <em>by</em>)</pre>
 </p>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
@@ -2563,10 +2563,10 @@ feature.</p>
 <dd><p>Performs an atomic test-and-set operation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">conditional-update!(<cite>local-name</cite> = <cite>place</cite>)
-  <cite>body</cite>
-  [success <cite>success-expr</cite> ]
-  [failure <cite>failure-expr</cite> ]
+<dd class="field-odd"><p><pre class="literal-block">conditional-update!(<em>local-name</em> = <em>place</em>)
+    <em>body</em>
+  [success <em>success-expr</em> ]
+  [failure <em>failure-expr</em> ]
 end</pre>
 </p>
 </dd>

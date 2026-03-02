@@ -821,7 +821,7 @@ returning a <a class="reference external" href="https://opendylan.org/books/drm/
 </pre></div>
 </div>
 <p>The symmetric macro <a class="reference internal" href="#io:streams:with-input-from-string"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">with-input-from-string</span></code></a> creates a
-<a class="reference internal" href="#io:streams:[string-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;string-stream&gt;</span></code></a> with direction <cite>#”input”</cite>, provides an
+<a class="reference internal" href="#io:streams:[string-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;string-stream&gt;</span></code></a> with direction <code class="docutils literal notranslate"><span class="pre">#&quot;input&quot;</span></code>, provides an
 opportunity to perform operations and closes the stream.</p>
 <p>For instance:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">with-input-from-string</span><span class="w"> </span><span class="p">(</span><span class="n">stream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Foobar&quot;</span><span class="p">)</span>
@@ -3855,11 +3855,11 @@ close operations to complete and signals any queued errors. If
 <span class="sig-name descname"><span class="pre">with-indentation</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#io:streams:with-indentation" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">with-indentation (<cite>stream</cite>)
-  <cite>body</cite>
+<dd class="field-odd"><p><pre class="literal-block">with-indentation (<em>stream</em>)
+  <em>body</em>
 end</pre>
-<pre class="literal-block">with-indentation (<cite>stream</cite>, 4)
-  <cite>body</cite>
+<pre class="literal-block">with-indentation (<em>stream</em>, 4)
+  <em>body</em>
 end</pre>
 </p>
 </dd>
@@ -3901,16 +3901,12 @@ around the body of code.</p>
 stream.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="n">from</span><span class="o">-</span><span class="n">string</span> <span class="p">(</span><span class="n">stream</span><span class="o">-</span><span class="n">name</span> <span class="o">=</span> <span class="n">string</span><span class="p">)</span>
-  <span class="n">body</span>
-<span class="n">end</span>
-</pre></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="n">from</span><span class="o">-</span><span class="n">string</span> <span class="p">(</span><span class="n">stream</span><span class="o">-</span><span class="n">name</span> <span class="o">=</span> <span class="n">string</span><span class="p">,</span> <span class="n">class</span><span class="o">-</span><span class="n">name</span><span class="p">)</span>
-  <span class="n">body</span>
-<span class="n">end</span>
-</pre></div>
-</div>
+<dd class="field-odd"><p><pre class="literal-block">with-input-from-string (<em>stream-name</em> = string)
+  <em>body</em>
+end</pre>
+<pre class="literal-block">with-input-from-string (<em>stream-name</em> = string, class-name)
+  <em>body</em>
+end</pre>
 </p>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
@@ -3923,7 +3919,7 @@ stream.</p>
 </dd>
 <dt class="field-odd">Discussion<span class="colon">:</span></dt>
 <dd class="field-odd"><p>In the first use, it creates a <a class="reference internal" href="#io:streams:[string-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;string-stream&gt;</span></code></a> with
-direction <cite>#”input”</cite> that is associated with a variable name.  In
+direction <code class="docutils literal notranslate"><span class="pre">#&quot;input&quot;</span></code> that is associated with a variable name.  In
 the second use, it allows to specify a class for the stream type.</p>
 </dd>
 <dt class="field-even">Example<span class="colon">:</span></dt>
@@ -3952,9 +3948,9 @@ performing a series of operations on a <a class="reference internal" href="#io:s
 close the stream.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">with-output-to-string (<cite>stream-name</cite>)
-  <cite>body</cite>
-end =&gt; <cite>string</cite></pre>
+<dd class="field-odd"><p><pre class="literal-block">with-output-to-string (<em>stream-name</em>)
+  <em>body</em>
+end =&gt; <em>string</em></pre>
 </p>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
@@ -3969,7 +3965,7 @@ end =&gt; <cite>string</cite></pre>
 </ul>
 </dd>
 <dt class="field-even">Discussion<span class="colon">:</span></dt>
-<dd class="field-even"><p>Creates a <a class="reference internal" href="#io:streams:[string-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;string-stream&gt;</span></code></a> with direction <cite>#”output”</cite> and
+<dd class="field-even"><p>Creates a <a class="reference internal" href="#io:streams:[string-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;string-stream&gt;</span></code></a> with direction <code class="docutils literal notranslate"><span class="pre">#&quot;output&quot;</span></code> and
 provides an opportunity to perform operations and close the
 stream.</p>
 </dd>
@@ -3992,9 +3988,9 @@ stream.</p>
 <dd><p>Run a body of code while the stream is locked.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">with-stream-locked (<cite>stream-var</cite>)
-  <cite>body</cite>
-end =&gt; <cite>values</cite></pre>
+<dd class="field-odd"><p><pre class="literal-block">with-stream-locked (<em>stream-var</em>)
+  <em>body</em>
+end =&gt; <em>values</em></pre>
 </p>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>

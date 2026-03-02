@@ -1199,7 +1199,7 @@ section, together with a brief description of each one:
 ``refresh-task-frame``
 
    This method can be called to refresh the task frame at any time. This
-   method is described in `Refreshing the list of tasks`_.
+   method is described in `Refreshing the list of tasks <#refreshing-the-list-of-tasks>`_.
 
 Each of these methods should be added to the file ``frame.dylan``.
 

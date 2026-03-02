@@ -617,7 +617,7 @@ or a file within the file system.</p>
 <li><p><a class="reference internal" href="#system:file-system:[file-system-directory-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-directory-locator&gt;</span></code></a></p></li>
 </ul>
 <p>The graphic below shows the file system locator hierarchy
-(dashed boxes are classes from module <cite>locators</cite>).</p>
+(dashed boxes are classes from module <code class="docutils literal notranslate"><span class="pre">locators</span></code>).</p>
 <div align="center" class="align-center"><div class="graphviz"><img src="../../_images/graphviz-bf1a863654f8762085566850035ea050e46531e4.png" alt="digraph G {
 
   fontname=&quot;Helvetica,Arial,sans-serif&quot;;
@@ -680,7 +680,7 @@ or a file within the file system.</p>
 <li><p><a class="reference internal" href="#system:file-system:[posix-file-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;posix-file-locator&gt;</span></code></a></p></li>
 </ul>
 <p>The graphic below shows the Posix file system hierarchy
-(dashed boxes are classes from module <cite>locators</cite>).</p>
+(dashed boxes are classes from module <code class="docutils literal notranslate"><span class="pre">locators</span></code>).</p>
 <div align="center" class="align-center"><div class="graphviz"><img src="../../_images/graphviz-477e935161b25f19ecfbe7acb2324f38ec125a2c.png" alt="digraph G {
   fontname=&quot;Helvetica,Arial,sans-serif&quot;;
   node  [shape=box, color=black];
@@ -763,7 +763,7 @@ or a file within the file system.</p>
 <li><p><a class="reference internal" href="#system:file-system:[microsoft-file-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;microsoft-file-locator&gt;</span></code></a></p></li>
 </ul>
 <p>The graphic below shows the Microsoft file system hierarchy
-(dashed boxes are classes from module <cite>locators</cite>).</p>
+(dashed boxes are classes from module <code class="docutils literal notranslate"><span class="pre">locators</span></code>).</p>
 <div align="center" class="align-center"><div class="graphviz"><img src="../../_images/graphviz-395bea12544bcce3784c87a292a67f3cf09d255e.png" alt="digraph G {
   fontname=&quot;Helvetica,Arial,sans-serif&quot;;
   node  [shape=box, color=black];
@@ -860,7 +860,7 @@ module.</p>
 <p>The <a class="reference external" href="https://opendylan.org/books/drm/Constructing_and_Initializing_Instances#make"><code class="xref drm docutils literal notranslate"><span class="pre">make</span></code></a> method on <a class="reference internal" href="../io/streams.html#io:streams:[file-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-stream&gt;</span></code></a> does not create
 direct instances of <a class="reference internal" href="../io/streams.html#io:streams:[file-stream]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-stream&gt;</span></code></a>, but instead an instance of
 a subclass determined by <a class="reference internal" href="../io/streams.html#io:streams:type-for-file-stream"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">type-for-file-stream</span></code></a>. See
-<a class="reference internal" href="#make">make</a> and <a class="reference internal" href="#options-when-creating-file-streams">Options when creating file streams</a> below.</p>
+<a class="reference internal" href="#system:file-system:make([file-stream])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">make</span></code></a> and <a class="reference internal" href="#options-when-creating-file-streams">Options when creating file streams</a> below.</p>
 <section id="options-when-creating-file-streams">
 <h3>Options when creating file streams<a class="headerlink" href="#options-when-creating-file-streams" title="Link to this heading">¶</a></h3>
 <p>When creating file streams, you can supply the following init-keywords
@@ -1383,7 +1383,7 @@ The call:</p>
 <dt class="field-even">Discussion<span class="colon">:</span></dt>
 <dd class="field-even"><p><p>If <em>pathname</em> is an instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></a> it is first converted to a
 <a class="reference internal" href="#system:file-system:[file-system-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-locator&gt;</span></code></a>.</p>
-<p>On Unix, if the first component of this locator begins with <cite>~</cite> it is replaced by
+<p>On Unix, if the first component of this locator begins with <code class="docutils literal notranslate"><span class="pre">~</span></code> it is replaced by
 either the specified user’s home directory (for <code class="docutils literal notranslate"><span class="pre">~user</span></code>) or the current user’s
 home directory (for <code class="docutils literal notranslate"><span class="pre">~</span></code>). Otherwise the locator is returned unmodified.  If the
 specified <code class="docutils literal notranslate"><span class="pre">~user</span></code> doesn’t exist no error is signaled and the locator is returned
@@ -1954,7 +1954,7 @@ entity.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="dylan method" id="make">
+<dl class="dylan method">
 <dt class="sig sig-object dylan-api dylan" id="system:file-system:make([file-stream])">
 <span class="sig-name descname"><span class="pre">make(&lt;file-stream&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#system:file-system:make([file-stream])" title="Link to this definition">¶</a></dt>
 <dd><p>Creates and opens a stream over a file.</p>
@@ -2326,9 +2326,9 @@ environment variable.</p>
 <dd><p>Runs a body of code within the context of a file stream.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">with-open-file (<cite>stream-var</cite> = <cite>filename</cite>, #rest <cite>keys</cite>)
-  <cite>body</cite>
-end =&gt; <cite>values</cite></pre>
+<dd class="field-odd"><p><pre class="literal-block">with-open-file (<em>stream-var</em> = <em>filename</em>, #rest <em>keys</em>)
+  <em>body</em>
+end =&gt; <em>values</em></pre>
 </p>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>

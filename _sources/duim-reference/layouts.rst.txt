@@ -162,7 +162,7 @@ are exported from the *duim-layouts* module.
 
    Allocates space within a layout for its children.
 
-   :signature: allocate-space *pane* *width height* => ()
+   :signature: allocate-space *pane* *width* *height* => ()
 
    :parameter pane: An instance of type :class:`<sheet>`.
    :parameter width: An instance of type :drm:`<integer>`.
@@ -402,7 +402,7 @@ are exported from the *duim-layouts* module.
          a pane class groups existing gadgets (or panes) to form effectively a
          new gadget, without actually creating a new class of :class:`<gadget>`.
      B.  Sometimes, a pane class implements some complex output-only sheet.
-     C.  Sometimes, a pane class implements the :class:`<sheet>` part of a `<gadgets.htm#34543>`.
+     C.  Sometimes, a pane class implements the :class:`<sheet>` part of a :class:`<gadget>`.
 
      In general, a pane is best described as a *concrete* sheet.
 

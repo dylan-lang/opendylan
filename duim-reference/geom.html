@@ -558,7 +558,7 @@ transformation classes provided by DUIM are immutable.</p></li>
 These are all subclasses of <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#error"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;error&gt;</span></code></a>.</p>
 <section id="the-region-class-and-its-subclasses">
 <h3>The &lt;region&gt; class and its subclasses<a class="headerlink" href="#the-region-class-and-its-subclasses" title="Link to this heading">¶</a></h3>
-<p>The DUIM-Geometry library exposes the &lt;region&gt; class and its subclasses as
+<p>The DUIM-Geometry library exposes the <a class="reference internal" href="#duim-geometry:duim-geometry:[region]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;region&gt;</span></code></a> class and its subclasses as
 shown in the following table . None of these subclasses have any further
 subclasses exposed in the DUIM-Geometry library, although the
 DUIM-Extended-Geometry library exposes some subclasses of <a class="reference internal" href="#duim-geometry:duim-geometry:[area]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;area&gt;</span></code></a>
@@ -566,30 +566,30 @@ and <a class="reference internal" href="#duim-geometry:duim-geometry:[path]"><co
 <div class="table-wrapper docutils container">
 <table class="docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p>&lt;region&gt;</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#duim-geometry:duim-geometry:[region]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;region&gt;</span></code></a></p></td>
 <td></td>
 </tr>
 <tr class="row-even"><td></td>
-<td><p>&lt;region-set&gt;</p></td>
+<td><p><a class="reference internal" href="#duim-geometry:duim-geometry:[region-set]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;region-set&gt;</span></code></a></p></td>
 </tr>
 <tr class="row-odd"><td></td>
-<td><p>&lt;point&gt;</p></td>
+<td><p><a class="reference internal" href="#duim-geometry:duim-geometry:[point]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;point&gt;</span></code></a></p></td>
 </tr>
 <tr class="row-even"><td></td>
-<td><p>&lt;path&gt;</p></td>
+<td><p><a class="reference internal" href="#duim-geometry:duim-geometry:[path]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;path&gt;</span></code></a></p></td>
 </tr>
 <tr class="row-odd"><td></td>
-<td><p>&lt;area&gt;</p></td>
+<td><p><a class="reference internal" href="#duim-geometry:duim-geometry:[area]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;area&gt;</span></code></a></p></td>
 </tr>
 <tr class="row-even"><td></td>
-<td><p>&lt;bounding-box&gt;</p></td>
+<td><p><a class="reference internal" href="#duim-geometry:duim-geometry:[bounding-box]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;bounding-box&gt;</span></code></a></p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <ul class="simple">
 <li><p><a class="reference internal" href="#duim-geometry:duim-geometry:[region]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;region&gt;</span></code></a> This class is used to represent any set of points.
-The:class:<cite>&lt;region&gt;</cite> class includes both bounded regions (that is, regions
+The <a class="reference internal" href="#duim-geometry:duim-geometry:[region]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;region&gt;</span></code></a> class includes both bounded regions (that is, regions
 whose edges are known) and unbounded regions (that is, regions with
 no known edges).</p></li>
 <li><p><a class="reference internal" href="#duim-geometry:duim-geometry:[region-set]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;region-set&gt;</span></code></a> This class represents a region set, that is, a set of
@@ -613,20 +613,20 @@ shown are subclasses of the <a class="reference external" href="https://opendyla
 <div class="table-wrapper docutils container">
 <table class="docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p>&lt;transform-error&gt;</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#duim-geometry:duim-geometry:[transform-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;transform-error&gt;</span></code></a></p></td>
 <td></td>
 <td></td>
 </tr>
 <tr class="row-even"><td></td>
-<td><p>&lt;transform-underspecified&gt;</p></td>
+<td><p><a class="reference internal" href="#duim-geometry:duim-geometry:[transform-underspecified]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;transform-underspecified&gt;</span></code></a></p></td>
 <td></td>
 </tr>
 <tr class="row-odd"><td></td>
 <td></td>
-<td><p>&lt;reflection-&lt;underspecified&gt;</p></td>
+<td><p><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;reflection-&lt;underspecified&gt;</span></code></p></td>
 </tr>
 <tr class="row-even"><td></td>
-<td><p>&lt;singular-transform&gt;</p></td>
+<td><p><a class="reference internal" href="#duim-geometry:duim-geometry:[singular-transform]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;singular-transform&gt;</span></code></a></p></td>
 <td></td>
 </tr>
 </tbody>
@@ -2029,8 +2029,8 @@ reflection is a transformation that turns the paper over.</p>
 </dd></dl>
 
 <dl class="dylan function">
-<dt class="sig sig-object dylan-api dylan">
-<span class="sig-name descname"><span class="pre">make-reflection-transform</span></span> <em class="property"><span class="pre">Function</span></em></dt>
+<dt class="sig sig-object dylan-api dylan" id="duim-geometry:duim-geometry:make-reflection-transform\*">
+<span class="sig-name descname"><span class="pre">make-reflection-transform\*</span></span> <em class="property"><span class="pre">Function</span></em><a class="headerlink" href="#duim-geometry:duim-geometry:make-reflection-transform\*" title="Link to this definition">¶</a></dt>
 <dd><p>Returns a transform that reflects every point through the line
 passing through the positions <em>x1,y1</em> and <em>x2,y2</em> or through the
 points <em>point1</em> and <em>point2</em>.</p>
@@ -2060,7 +2060,7 @@ of angles, but changes the sign (or handedness) of angles. If you
 think of the drawing plane on a transparent sheet of paper, a
 reflection is a transformation that turns the paper over.</p>
 <p>The function <code class="docutils literal notranslate"><span class="pre">make-reflection-transform*</span></code> is identical to
-:func:make-reflection-transform, except that it passes composite
+<a class="reference internal" href="#duim-geometry:duim-geometry:make-reflection-transform"><code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">make-reflection-transform</span></code></a>, except that it passes composite
 objects, rather than separate coordinates, in its arguments. You
 should be aware that using this function may lead to a loss of
 performance.</p>
@@ -2651,7 +2651,7 @@ error.</p>
 <dd class="field-odd"><p>&lt;object&gt;</p>
 </dd>
 <dt class="field-even">Discussion<span class="colon">:</span></dt>
-<dd class="field-even"><p><p>The class that corresponds to a set of points. The:class:<cite>&lt;region&gt;</cite>
+<dd class="field-even"><p><p>The class that corresponds to a set of points. The <a class="reference internal" href="#duim-geometry:duim-geometry:[region]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;region&gt;</span></code></a>
 class includes both bounded and unbounded regions.</p>
 <p>There is no <a class="reference external" href="https://opendylan.org/books/drm/Constructing_and_Initializing_Instances#make"><code class="xref drm docutils literal notranslate"><span class="pre">make</span></code></a> method for <a class="reference internal" href="#duim-geometry:duim-geometry:[region]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;region&gt;</span></code></a> because of the
 impossibility of a uniform way to specify the arguments to such a
@@ -2660,7 +2660,7 @@ function.</p>
 </dd>
 <dt class="field-odd">Operations<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
-<li><p><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">=</span></code></p></li>
+<li><p><a class="reference external" href="https://opendylan.org/books/drm/Equality_and_Comparison#equal"><code class="xref drm docutils literal notranslate"><span class="pre">=</span></code></a></p></li>
 <li><p><a class="reference internal" href="#duim-geometry:duim-geometry:do-regions"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">do-regions</span></code></a></p></li>
 <li><p><a class="reference internal" href="#duim-geometry:duim-geometry:region?"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">region?</span></code></a></p></li>
 <li><p><a class="reference internal" href="#duim-geometry:duim-geometry:region-contains-position?"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">region-contains-position?</span></code></a></p></li>
@@ -2704,7 +2704,7 @@ function.</p>
 </ul>
 </dd>
 <dt class="field-even">Discussion<span class="colon">:</span></dt>
-<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">#t</span></code> if <em>object</em> is a region, otherwise returns``#f``.</p>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">#t</span></code> if <em>object</em> is a region, otherwise returns <code class="docutils literal notranslate"><span class="pre">#f</span></code>.</p>
 </dd>
 <dt class="field-odd">See also<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
@@ -3950,6 +3950,7 @@ returning the original region. This is exactly equivalent to</p>
 <li><a class="reference internal" href="#duim-geometry:duim-geometry:make-bounding-box"><code class="docutils literal notranslate"><span class="pre">make-bounding-box</span></code></a></li>
 <li><a class="reference internal" href="#duim-geometry:duim-geometry:make-point"><code class="docutils literal notranslate"><span class="pre">make-point</span></code></a></li>
 <li><a class="reference internal" href="#duim-geometry:duim-geometry:make-reflection-transform"><code class="docutils literal notranslate"><span class="pre">make-reflection-transform</span></code></a></li>
+<li><a class="reference internal" href="#duim-geometry:duim-geometry:make-reflection-transform\*"><code class="docutils literal notranslate"><span class="pre">make-reflection-transform\*</span></code></a></li>
 <li><a class="reference internal" href="#duim-geometry:duim-geometry:make-rotation-transform"><code class="docutils literal notranslate"><span class="pre">make-rotation-transform</span></code></a></li>
 <li><a class="reference internal" href="#duim-geometry:duim-geometry:make-scaling-transform"><code class="docutils literal notranslate"><span class="pre">make-scaling-transform</span></code></a></li>
 <li><a class="reference internal" href="#duim-geometry:duim-geometry:make-transform"><code class="docutils literal notranslate"><span class="pre">make-transform</span></code></a></li>

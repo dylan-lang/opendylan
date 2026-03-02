@@ -93,7 +93,7 @@ or a file within the file system.
 - :class:`<file-system-directory-locator>`
 
 The graphic below shows the file system locator hierarchy
-(dashed boxes are classes from module `locators`).
+(dashed boxes are classes from module ``locators``).
 
 .. graphviz::
   :align: center
@@ -165,7 +165,7 @@ On Posix systems:
 - :class:`<posix-file-locator>`
 
 The graphic below shows the Posix file system hierarchy
-(dashed boxes are classes from module `locators`).
+(dashed boxes are classes from module ``locators``).
 
 .. graphviz::
   :align: center
@@ -257,7 +257,7 @@ On Microsoft systems:
 - :class:`<microsoft-file-locator>`
 
 The graphic below shows the Microsoft file system hierarchy
-(dashed boxes are classes from module `locators`).
+(dashed boxes are classes from module ``locators``).
 
 .. graphviz::
   :align: center
@@ -364,7 +364,7 @@ module.
 The :drm:`make` method on :class:`<file-stream>` does not create
 direct instances of :class:`<file-stream>`, but instead an instance of
 a subclass determined by :gf:`type-for-file-stream`. See
-`make`_ and `Options when creating file streams`_ below.
+:meth:`make <make(<file-stream>)>` and `Options when creating file streams`_ below.
 
 Options when creating file streams
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -781,7 +781,7 @@ File-System module.
       If *pathname* is an instance of :drm:`<string>` it is first converted to a
       :class:`<file-system-locator>`.
 
-      On Unix, if the first component of this locator begins with `~` it is replaced by
+      On Unix, if the first component of this locator begins with ``~`` it is replaced by
       either the specified user's home directory (for ``~user``) or the current user's
       home directory (for ``~``). Otherwise the locator is returned unmodified.  If the
       specified ``~user`` doesn't exist no error is signaled and the locator is returned
@@ -1173,8 +1173,6 @@ File-System module.
       :class:`<directory-locator>` depending on the type of the resolved file system
       entity.
 
-.. _make:
-
 .. method:: make
    :specializer: <file-stream>
 
@@ -1443,9 +1441,9 @@ File-System module.
 
    :macrocall:
      .. parsed-literal:: 
-        with-open-file (`stream-var` = `filename`, #rest `keys`)
-          `body`
-        end => `values`
+        with-open-file (*stream-var* = *filename*, #rest *keys*)
+          *body*
+        end => *values*
 
    :parameter stream-var: An Dylan variable-name *bnf*.
    :parameter filename: An instance of :drm:`<string>`.

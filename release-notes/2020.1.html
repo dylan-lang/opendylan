@@ -815,7 +815,7 @@ whatever way best suits your needs and the interface specification suite only
 verifies that the specification matches the implementation.</p></li>
 <li><p>A new function has been added to retrieve a unique directory for the current
 test: <code class="xref dylan dylan-func docutils literal notranslate"><span class="pre">test-temp-directory</span></code></p></li>
-<li><p>The <cite>–report</cite> command line option now accepts “full” as a value, meaning to
+<li><p>The <code class="docutils literal notranslate"><span class="pre">--report</span></code> command line option now accepts “full” as a value, meaning to
 display individual assertion results in addition to the normal output.</p></li>
 <li><p>Support for benchmarks has been improved. A new <code class="docutils literal notranslate"><span class="pre">benchmark-repeat</span></code>
 macro for use within testworks runs its body multiple times, causing
@@ -826,7 +826,7 @@ benchmark execution.</p></li>
 the XML reports but less verbose.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--report</span> <span class="pre">log</span></code> has been removed. Use <code class="docutils literal notranslate"><span class="pre">--report</span> <span class="pre">json</span></code> or <code class="docutils literal notranslate"><span class="pre">--report</span> <span class="pre">xml</span></code>
 instead.</p></li>
-<li><p>The <cite>testworks-report</cite> library has received some love and is now able to parse
+<li><p>The <code class="docutils literal notranslate"><span class="pre">testworks-report</span></code> library has received some love and is now able to parse
 json and xml reports.</p></li>
 <li><p>An error is signalled if two tests are defined with the same name. (Note that
 when using combined test suites, or using the <code class="docutils literal notranslate"><span class="pre">--load</span></code> testworks-run option

@@ -618,7 +618,7 @@ significantly improving the performance of these stream operations.</p></li>
 <a class="reference internal" href="../library-reference/system/locators.html#system:locators:resolve-locator"><code class="xref dylan dylan-const docutils literal notranslate"><span class="pre">resolve-locator</span></code></a> (in the <code class="docutils literal notranslate"><span class="pre">locators</span></code> module) because it is fundamentally a
 file-system operation.</p>
 <p><a class="reference internal" href="../library-reference/system/file-system.html#system:file-system:resolve-file"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">resolve-file</span></code></a> now returns the correct class of locator, a subclass of
-<a class="reference internal" href="../library-reference/system/locators.html#system:locators:[file-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-locator&gt;</span></code></a> or class:<cite>&lt;directory-locator&gt;</cite>, depending on the actual file
+<a class="reference internal" href="../library-reference/system/locators.html#system:locators:[file-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-locator&gt;</span></code></a> or <a class="reference internal" href="../library-reference/system/locators.html#system:locators:[directory-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;directory-locator&gt;</span></code></a>, depending on the actual file
 type of the fully resolved file.  It previously returned an instance of the same
 class as the locator it was provided, but that is not always accurate when symbolic
 links are followed.</p>

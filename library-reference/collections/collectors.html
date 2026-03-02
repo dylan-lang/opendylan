@@ -538,8 +538,8 @@
 <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#collection"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;collection&gt;</span></code></a>, a number into which values are accumulated, etc.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">collecting ([<cite>name</cite>] [as <cite>type</cite>])
-  [ <cite>body</cite> ]
+<dd class="field-odd"><p><pre class="literal-block">collecting ([<em>name</em>] [as <em>type</em>])
+  [ <em>body</em> ]
 end [ collecting ]</pre>
 </p>
 </dd>
@@ -548,7 +548,7 @@ end [ collecting ]</pre>
 <li><p><strong>name</strong> – A Dylan variable-name <em>BNF</em>. If omitted, the collection is returned
 from the <a class="reference internal" href="#collections:collectors:collecting"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">collecting</span></code></a> macro call. If supplied, the caller is responsible for
 calling <code class="docutils literal notranslate"><span class="pre">collected(name)</span></code> to retrieve the collection before the call to
-<cite>collecting</cite> terminates.</p></li>
+<a class="reference internal" href="#collections:collectors:collecting"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">collecting</span></code></a> terminates.</p></li>
 <li><p><strong>type</strong> – A Dylan type. The default value is <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#list"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;list&gt;</span></code></a>.</p></li>
 <li><p><strong>body</strong> – A Dylan body <em>BNF</em>.</p></li>
 </ul>

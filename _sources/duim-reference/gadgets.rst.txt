@@ -255,45 +255,44 @@ These are as follows:
 Overall class hierarchy for the DUIM-Gadgets library
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-<object>
+**TODO**: Fix this section with an image.
 
-<gadget>
+::
+  <object>
 
-<action-gadget>
+  <gadget>
 
-<value-gadget>
+  <action-gadget>
 
-See `Subclasses of \<value-gadget\>`_
+  <value-gadget>
 
-<label>
+  <label>
 
-:class:`<menu>`
+  <menu>
 
-*<tool-bar>*
+  *<tool-bar>*
 
-<scroller>
+  <scroller>
 
-<separator>
+  <separator>
 
-<viewport>
+  <viewport>
 
-<spacing>
+  <spacing>
 
-<border>
+  <border>
 
-<group-box>
+  <group-box>
 
-<splitter>
+  <splitter>
 
-<page>
+  <page>
 
-See `Subclasses of \<page\>`_
+  <list-item>
 
-<list-item>
+  <tree-node>
 
-<tree-node>
-
-<table-item>
+  <table-item>
 
 Subclasses of <value-gadget>
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -388,13 +387,13 @@ See `Subclasses of \<collection-gadget\>`_
 Subclasses of <page>
 ^^^^^^^^^^^^^^^^^^^^
 
-The `<page>` class is the base class of gadgets that are used to display
+The :class:`<page>` class is the base class of gadgets that are used to display
 a whole page of information within a "parent" element, with the page
 itself optionally containing other layouts or gadgets. Pages are used in
 situations where different sets of information (the pages themselves)
 need to be displayed in a common parent.
 
-The subclasses of :class:`<page>` are as shown in `Subclasses of the <page>
+The subclasses of :class:`<page>` are as shown in `Subclasses of the \<page\>
 class`_.
 
 Subclasses of the *<page>* class
@@ -674,13 +673,13 @@ page available:
    dialog boxes that contain several pages of information displayed as
    tabbed pages. This class is similar to :class:`<tab-control-page>`,
    except that its use is limited to modeless dialog boxes. For more
-   information about property frames, see ` <frames.htm#89815>`_.
+   information about property frames, see :class:`<property-frame>`.
 
 :class:`<wizard-page>`
    This type of page is used exclusively in wizard frames, in which the
    user is guided through a sequence of steps in order to perform a
    specified operation. For more information about wizard frames,
-   see ` <frames.htm#89815>`_.
+   see :class:`<wizard-frame>`.
 
 .. figure:: images/gadgets-12.png
    :align: center
@@ -689,7 +688,7 @@ page available:
 
 .. note:: The :class:`<wizard-page>` and :class:`<property-page>` classes
    are actually exposed by the DUIM-Frames library, rather than the
-   DUIM-Gadgets library. See ` <frames.htm#89815>`_for full details
+   DUIM-Gadgets library. See :doc:`frames` for full details
    on this library.
 
 Gadgets that can have children
@@ -991,15 +990,16 @@ are exported from the *duim-gadgets* module.
      ``max-width: $fill`` or ``max-height: $fill`` accordingly in the button
      definition. See the second example below to see how this is done.
 
-   :operations:
+   .. TODO
+      :operations:
 
-     - `<frames.htm#56017>`
-     - `<frames.htm#56015>`
-     - `<frames.htm#24406>`
-     - `<frames.htm#37806>`
-     - `<frames.htm#48310>`
-     - `<frames.htm#91817>`
-     - `<frames.htm#56017>`
+        - `<frames.htm#56017>`
+        - `<frames.htm#56015>`
+        - `<frames.htm#24406>`
+        - `<frames.htm#37806>`
+        - `<frames.htm#48310>`
+        - `<frames.htm#91817>`
+        - `<frames.htm#56017>`
 
    :example:
 
@@ -3328,10 +3328,12 @@ are exported from the *duim-gadgets* module.
 
      - :gf:`gadget-label`
      - :gf:`gadget-label-setter`
-     - `<frames.htm#74637>`
-     - `<frames.htm#10131>`
-     - `<frames.htm#68823>`
-     - `<frames.htm#14565>`
+
+     .. TODO
+        - `<frames.htm#74637>`
+        - `<frames.htm#10131>`
+        - `<frames.htm#68823>`
+        - `<frames.htm#14565>`
 
    :example:
 
@@ -3873,11 +3875,13 @@ are exported from the *duim-gadgets* module.
 
    :operations:
 
-     - `<frames.htm#89020>`
      - :gf:`choose-from-dialog`
      - :gf:`choose-from-menu`
      - :gf:`display-menu`
      - :gf:`menu-owner`
+
+     .. TODO
+        - `<frames.htm#89020>`
 
    :example:
 
@@ -3919,8 +3923,9 @@ are exported from the *duim-gadgets* module.
 
    :operations:
 
-     - `<frames.htm#63229>`
-     - `<frames.htm#56600>`
+     .. TODO:
+        - `<frames.htm#63229>`
+        - `<frames.htm#56600>`
 
    :example:
 
@@ -4224,14 +4229,17 @@ are exported from the *duim-gadgets* module.
 
    :operations:
 
-     - `<frames.htm#88015>`
-     - `<frames.htm#89408>`
+     .. TODO:
+        - `<frames.htm#88015>`
+        - `<frames.htm#89408>`
 
    :seealso:
 
-     - `<frames.htm#93333>`
      - :class:`<tab-control-page>`
-     - `<frames.htm#87607>`
+
+     .. TODO:
+        - `<frames.htm#93333>`
+        - `<frames.htm#87607>`
 
 .. class:: <password-field>
    :open:
@@ -5262,8 +5270,10 @@ are exported from the *duim-gadgets* module.
 
    :operations:
 
-     - `<frames.htm#32720>`
-     - `<frames.htm#56600>`
+     .. TODO:
+        - `<frames.htm#32720>`
+        - `<frames.htm#56600>`
+
      - :gf:status-bar-label-pane`
      - :gf:status-bar-progress-bar`
 
@@ -5281,8 +5291,10 @@ are exported from the *duim-gadgets* module.
 
    :seealso:
 
-     - `<frames.htm#12376>`
-     - `<frames.htm#36830>`
+     .. TODO:
+        - `<frames.htm#12376>`
+        - `<frames.htm#36830>`
+
      - :gf:`gadget-documentation`
      - :gf:`status-bar-label-pane`
      - :gf:`status-bar-progress-bar`
@@ -5577,15 +5589,17 @@ are exported from the *duim-gadgets* module.
 
      .. figure:: images/gadgets-42.png
         :align: center
-     
+
         A tab control page
 
    :seealso:
 
      - :class:`<page>`
      - :class:`<tab-control>`
-     - `<frames.htm#93333>`
-     - `<frames.htm#87607>`
+
+     .. TODO:
+        - `<frames.htm#93333>`
+        - `<frames.htm#87607>`
 
 .. generic-function:: tab-control-pages
 
@@ -6133,8 +6147,9 @@ are exported from the *duim-gadgets* module.
 
    :operations:
 
-     - `<frames.htm#88622>`
-     - `<frames.htm#56600>`
+     .. TODO:
+        - `<frames.htm#88622>`
+        - `<frames.htm#56600>`
 
    :seealso:
 

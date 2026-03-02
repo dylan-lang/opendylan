@@ -80,7 +80,7 @@ Reference
 
    :macrocall:
       .. parsed-literal:: 
-         put-property!(`plist`, `indicator`, `value`)
+         put-property!(*plist*, *indicator*, *value*)
 
    :parameter plist: An instance of :drm:`<sequence>`.
    :parameter indicator: An instance of :drm:`<object>`.
@@ -120,7 +120,7 @@ Reference
 
    :macrocall:
       .. parsed-literal:: 
-         remove-property!(`plist`, `indicator`)
+         remove-property!(*plist*, *indicator*)
 
    :parameter plist: An instance of :drm:`<sequence>`.
    :parameter indicator: An instance of :drm:`<object>`.
@@ -156,7 +156,7 @@ Reference
 
    :macrocall:
       .. parsed-literal:: 
-         with-keywords-removed(`var` = `plist`, `keywords`) `body` end
+         with-keywords-removed(*var* = *plist*, *keywords*) *body* end
 
    :parameter var: A Dylan name *BNF*.
    :parameter plist: An instance of :drm:`<sequence>`.

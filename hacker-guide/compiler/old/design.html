@@ -535,11 +535,8 @@
 <h2>Adding a DFM computation<a class="headerlink" href="#adding-a-dfm-computation" title="Link to this heading">¶</a></h2>
 <p>What you have to do to add a new node class to the DFM:</p>
 <ul class="simple">
-<li><dl class="simple">
-<dt>Add it to <code class="docutils literal notranslate"><span class="pre">flow-graph/computation.dylan</span></code>, and ensure that you export</dt><dd><p>it from <code class="docutils literal notranslate"><span class="pre">flow-graph/flow-graph-library</span></code>.</p>
-</dd>
-</dl>
-</li>
+<li><p>Add it to <code class="docutils literal notranslate"><span class="pre">flow-graph/computation.dylan</span></code>, and ensure that you export
+it from <code class="docutils literal notranslate"><span class="pre">flow-graph/flow-graph-library</span></code>.</p></li>
 <li><p>Create the converters to generate it.  Likely in conversion, but
 some nodes are only created by optimizations.</p></li>
 <li><p>Make sure all the back ends handle it.  This includes, at least:</p>
@@ -550,7 +547,7 @@ some nodes are only created by optimizations.</p></li>
 </ul>
 </li>
 <li><p>In addition, it would be good to add any invariant checks to
-<code class="docutils literal notranslate"><span class="pre">flow-graph/checker.dylan.</span></code></p></li>
+<code class="docutils literal notranslate"><span class="pre">flow-graph/checker.dylan</span></code>.</p></li>
 </ul>
 </section>
 <section id="dfm-block-constructs">
@@ -573,22 +570,22 @@ some nodes are only created by optimizations.</p></li>
 </div>
 <p>(That’s before register assignment, to make the difference in the
 temporaries used in the merge node clear.)</p>
-<p>The &lt;bind-exit&gt; node establishes the place the exit jumps to, an
-&lt;entry-state&gt;.  This is communicated to &lt;exit&gt; and &lt;end-exit-block&gt;
-through the temporary t1.  The temporary returned by the &lt;bind-exit&gt;
+<p>The <code class="docutils literal notranslate"><span class="pre">&lt;bind-exit&gt;</span></code> node establishes the place the exit jumps to, an
+<code class="docutils literal notranslate"><span class="pre">&lt;entry-state&gt;</span></code>.  This is communicated to <code class="docutils literal notranslate"><span class="pre">&lt;exit&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;end-exit-block&gt;</span></code>
+through the temporary t1.  The temporary returned by the <code class="docutils literal notranslate"><span class="pre">&lt;bind-exit&gt;</span></code>
 is set by the exit procedure.</p>
 <p>(The printing code shows up one inconsistency:  the temporary generated
-by the &lt;bind-exit&gt; node is actually not live after that point.  It’s
+by the <code class="docutils literal notranslate"><span class="pre">&lt;bind-exit&gt;</span></code> node is actually not live after that point.  It’s
 live only if the exit procedure is taken.  On the other hand, the
 entry-state is live after that point.  Perhaps which temporary is the
-generated one from a &lt;bind-exit&gt; node should be exchanged.)</p>
+generated one from a <code class="docutils literal notranslate"><span class="pre">&lt;bind-exit&gt;</span></code> node should be exchanged.)</p>
 <p>The merge node combines the two temporaries that could contain the
-result of the &lt;merge&gt; node – t2 by exiting, t6 by falling through.
-The &lt;end-exit-block&gt; node exists for at least two purposes:  to
+result of the <code class="docutils literal notranslate"><span class="pre">&lt;merge&gt;</span></code> node – t2 by exiting, t6 by falling through.
+The <code class="docutils literal notranslate"><span class="pre">&lt;end-exit-block&gt;</span></code> node exists for at least two purposes:  to
 possibly bash the exit procedure or entry state in order to prevent
 calls outside of its dynamic scope and to stop a thread in the
 execution engine.  It references the entry state in order that it can
-be found from the &lt;bind-exit&gt; node.</p>
+be found from the <code class="docutils literal notranslate"><span class="pre">&lt;bind-exit&gt;</span></code> node.</p>
 <p>Before we see the compiled code, here’s the DFM code after register
 allocation:</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="nb">block</span><span class="w"> </span><span class="p">(</span><span class="n">exit</span><span class="p">)</span><span class="w"> </span><span class="n">exit</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span><span class="w"> </span><span class="mi">13</span><span class="w"> </span><span class="k">end</span><span class="p">;</span><span class="w"> </span><span class="p">=&gt;</span>
@@ -627,10 +624,10 @@ allocation:</p>
 </div>
 <p>The only gotcha (other than how setjmp works in C) is that the emission
 engine knows that there’s no point in generating code for the stuff
-that follows an &lt;exit&gt; node;  it’s a primitive form of dead code
+that follows an <code class="docutils literal notranslate"><span class="pre">&lt;exit&gt;</span></code> node;  it’s a primitive form of dead code
 elimination.  So that’s why the <code class="docutils literal notranslate"><span class="pre">t2</span> <span class="pre">:=</span> <span class="pre">^13</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;end-exit-block&gt;</span></code>
 nodes are not emitted.</p>
-<p>The call to dNprimitive_nlx unwinds all &lt;unwind-protect&gt; frames on the
+<p>The call to dNprimitive_nlx unwinds all <code class="docutils literal notranslate"><span class="pre">&lt;unwind-protect&gt;</span></code> frames on the
 way back to the entry state marked by T0.  Eventually, (unless some
 cleanup calls another exit procedure) it will longjmp to the site of
 the setjmp.  The second argument to dNprimitive_nlx is shoved into the
@@ -740,7 +737,7 @@ longer protected by the outer cleanup.</p>
 </section>
 <section id="dfm-local-assignment">
 <h2>DFM local assignment<a class="headerlink" href="#dfm-local-assignment" title="Link to this heading">¶</a></h2>
-<p>We really want the DFM to be a <cite>single assignment</cite> form.  That is,
+<p>We really want the DFM to be a “single assignment” form.  That is,
 all temporaries should be defined and then never mutated.  We want
 this because it makes many optimizations (common sub-expression
 elimination, inlining, etc) significantly easier.  See the usual set
@@ -783,7 +780,7 @@ DFM graph and does the rewriting.</p>
 </pre></div>
 </div>
 <p>The eliminate-assignments pass should happen before any of the
-<cite>interesting</cite> optimizations, and should never need to be done twice
+“interesting” optimizations, and should never need to be done twice
 on the same piece of code.</p>
 <p>What remains to be done:</p>
 <p>We probably want to turn these primitives into DFM computations before
@@ -838,9 +835,9 @@ calls, but still not as bad as SSA conversion in general.</p>
 <section id="dfm-multiple-values">
 <h2>DFM multiple values<a class="headerlink" href="#dfm-multiple-values" title="Link to this heading">¶</a></h2>
 <p>To represent multiple values, there’s a new temporary class in the
-DFM, &lt;multiple-value-temporary&gt;.  Multiple values temporaries are not
+DFM, <code class="docutils literal notranslate"><span class="pre">&lt;multiple-value-temporary&gt;</span></code>.  Multiple values temporaries are not
 interchangeable with other temporaries;  maybe we should introduce a
-&lt;simple-temporary&gt; class for non-multiple-value temporaries, but we
+<code class="docutils literal notranslate"><span class="pre">&lt;simple-temporary&gt;</span></code> class for non-multiple-value temporaries, but we
 can do that later.  In the debugging print code, MV temporaries print
 with a * in front of them.</p>
 <p>A multiple value temporary is the result of any computation which can
@@ -848,7 +845,7 @@ produce multiple values, notably a call.</p>
 <p>In order to produce efficient code, we have imposed the requirement that
 at most one MV temporary is live at a time (per thread).  This allows
 us to allocate space for all MV temporaries ahead of time, as part of
-the calling convention, in the <cite>multiple value area</cite>.  It is
+the calling convention, in the “multiple value area”.  It is
 generally best to think of the multiple value area, which is used to
 pass multiple values across calls, as a single multiple valued
 register, which we allocate to the live MV temporary.</p>
@@ -864,13 +861,13 @@ slot for a normal temporary, which is used when spilling the multiple
 value temporary.</p>
 <p>To manipulate multiple values, there are five new computation classes:</p>
 <blockquote>
-<div><p>&lt;values&gt;</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">&lt;values&gt;</span></code></p>
 <blockquote>
-<div><p>super: &lt;computation&gt;
+<div><p>super: <code class="docutils literal notranslate"><span class="pre">&lt;computation&gt;</span></code>
 slots: fixed-values, rest-value</p>
 <p>Creates a <code class="docutils literal notranslate"><span class="pre">&lt;multiple-value-temporary&gt;</span></code> from a set of single value
 temporaries.  For now, a <code class="docutils literal notranslate"><span class="pre">&lt;values&gt;</span></code> node comes from a converter
-for the <cite>function macro</cite> values;  in the future, there should
+for the function macro values;  in the future, there should
 be only one <code class="docutils literal notranslate"><span class="pre">&lt;values&gt;</span></code> node created directly, and the rest created
 by inlining the function values from the Dylan library.  (A
 similar change needs to be made for <code class="docutils literal notranslate"><span class="pre">&lt;apply&gt;</span></code>.)</p>
@@ -884,15 +881,15 @@ similar change needs to be made for <code class="docutils literal notranslate"><
 </pre></div>
 </div>
 </div></blockquote>
-<p>&lt;extract-single-value&gt;</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;extract-single-value&gt;</span></code></p>
 <blockquote>
-<div><p>super: &lt;computation&gt;
+<div><p>super: <code class="docutils literal notranslate"><span class="pre">&lt;computation&gt;</span></code>
 slots: multiple-values, index, rest-vector?</p>
 <p>Produces a single-valued temporary from an MV temporary.  The
 index is used to select which multiple value is extracted;  the
 indices are numbered from 0.  If rest-vector? is true, a vector
 of the values from index on is returned, rather than just the
-index.  (Perhaps that should be a different &lt;computation&gt; class.)</p>
+index.  (Perhaps that should be a different <code class="docutils literal notranslate"><span class="pre">&lt;computation&gt;</span></code> class.)</p>
 <p>These very commonly follow calls, extracting the single value.
 They should also appear based on optimizations of let bindings.</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="n">g</span><span class="p">())</span><span class="w"> </span><span class="p">=&gt;</span>
@@ -906,19 +903,19 @@ They should also appear based on optimizations of let bindings.</p>
 </pre></div>
 </div>
 </div></blockquote>
-<p>&lt;multiple-value-call&gt;</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;multiple-value-call&gt;</span></code></p>
 <blockquote>
-<div><p>super: &lt;function-call&gt;</p>
-<p>Like an &lt;apply&gt; with no fixed arguments and a MV temporary as the
+<div><p>super: <code class="docutils literal notranslate"><span class="pre">&lt;function-call&gt;</span></code></p>
+<p>Like an <code class="docutils literal notranslate"><span class="pre">&lt;apply&gt;</span></code> with no fixed arguments and a MV temporary as the
 single (last) argument.  Constructed from <code class="docutils literal notranslate"><span class="pre">let</span></code> declarations
 which bind multiple values.  (This could be used for all lets, but
 I wanted to wait with that until the multiple value optimizations
 were in place.)</p>
 <p>The most important optimization with these nodes is to upgrade
-the calls to &lt;simple-call&gt; or &lt;apply&gt; with the shape of the
+the calls to <code class="docutils literal notranslate"><span class="pre">&lt;simple-call&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">&lt;apply&gt;</span></code> with the shape of the
 MV temporary argument is know.  If it’s not known, the simplest
 code generation strategy is to extract all of the temporary
-values and transform the call into an &lt;apply&gt;.</p>
+values and transform the call into an <code class="docutils literal notranslate"><span class="pre">&lt;apply&gt;</span></code>.</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">begin</span><span class="w"> </span><span class="k">let</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">();</span><span class="w"> </span><span class="n">g</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="k">end</span><span class="w"> </span><span class="p">=&gt;</span>
 <span class="w">  </span><span class="p">[</span><span class="n">BIND</span><span class="p">]</span>
 <span class="w">  </span><span class="n">t3</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">^</span><span class="p">[</span><span class="n">XEP</span><span class="w"> </span><span class="n">lambda</span><span class="w"> </span><span class="mi">741</span><span class="w"> </span><span class="p">[</span><span class="mi">743</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>
@@ -934,10 +931,10 @@ values and transform the call into an &lt;apply&gt;.</p>
 </pre></div>
 </div>
 </div></blockquote>
-<p>&lt;multiple-value-spill&gt;
-&lt;multiple-value-unspill&gt;</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;multiple-value-spill&gt;</span></code>
+<code class="docutils literal notranslate"><span class="pre">&lt;multiple-value-unspill&gt;</span></code></p>
 <blockquote>
-<div><p>super: &lt;temporary-transfer&gt;</p>
+<div><p>super: <code class="docutils literal notranslate"><span class="pre">&lt;temporary-transfer&gt;</span></code></p>
 <p>These instructions turn an MV temporary into a single-value
 temporary and vice-versa, for the purpose of maintaining the
 property that a single MV temporary is live at a time.  As much as
@@ -1007,13 +1004,13 @@ how it is called, and if it should cause other passes to run.</p>
 <span class="w">  </span><span class="k">before:</span><span class="w"> </span><span class="n">analyze-calls</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>This defines a pass named <cite>eliminate-assignments</cite>, which runs before
+<p>This defines a pass named <code class="docutils literal notranslate"><span class="pre">eliminate-assignments</span></code>, which runs before
 analyze-calls is run;  it is possible to use arbitrarily many before:
 options.  The mandatory option declares that the pass is part of
 optimization level 0;  that is, it’s always run.</p>
-<p>The <cite>visit: functions</cite> option says that the function is called for
+<p>The <code class="docutils literal notranslate"><span class="pre">visit:</span> <span class="pre">functions</span></code> option says that the function is called for
 every function in the form being compiled.  The default is
-<cite>visit: top-level-forms</cite>, which corresponds to the previous behavior.</p>
+<code class="docutils literal notranslate"><span class="pre">visit:</span> <span class="pre">top-level-forms</span></code>, which corresponds to the previous behavior.</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="n">compilation-pass</span><span class="w"> </span><span class="n">try-inlining</span><span class="p">,</span>
 <span class="w">  </span><span class="k">visit:</span><span class="w"> </span><span class="n">computations</span><span class="p">,</span>
 <span class="w">  </span><span class="k">optimization:</span><span class="w"> </span><span class="n">medium</span><span class="p">,</span>
@@ -1023,7 +1020,7 @@ every function in the form being compiled.  The default is
 <span class="w">  </span><span class="k">trigger:</span><span class="w"> </span><span class="n">analyze-calls</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>The <cite>visit: computations</cite> option says that every computation (in the
+<p>The <code class="docutils literal notranslate"><span class="pre">visit:</span> <span class="pre">computations</span></code> option says that every computation (in the
 top-level and all nested lambdas) is passed to the pass’s function.
 The after: option is like before: in reverse.</p>
 <p>The trigger: option runs the named pass if the pass being defined
@@ -1034,43 +1031,48 @@ it’s not run.  Triggered-by: is trigger: in reverse.</p>
 <p>A pass function reports that it changed something by returning any
 non-false value.</p>
 <p>Full catalog of options:</p>
-<blockquote>
-<div><dl class="simple">
-<dt>visit:             What things to pass to the pass’s function:</dt><dd><p>top-level-forms    Just the top-level function.
-functions          Every function.
-computations       Every computation in every function.</p>
-</dd>
-<dt>optimization:      What level of optimization to run this pass for?</dt><dd><p>(Choices:  mandatory, low, medium, high.)</p>
-</dd>
-</dl>
-<p>mandatory?:        Always run this pass;  overrides optimization:.</p>
-<p>before:            Run this pass before the named one.
-after:             Run this pass after the named one.</p>
-<p>trigger:           If this pass changed something, run the named pass.
-triggered-by:      If the named pass changes something, run this pass.</p>
-<p>print-before?:     Print the DFM code before calling the pass.
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>visit:             What things to pass to the pass&#39;s function:
+  top-level-forms    Just the top-level function.
+  functions          Every function.
+  computations       Every computation in every function.
+
+optimization:      What level of optimization to run this pass for?
+                   (Choices:  mandatory, low, medium, high.)
+
+mandatory?:        Always run this pass;  overrides optimization:.
+
+before:            Run this pass before the named one.
+after:             Run this pass after the named one.
+
+trigger:           If this pass changed something, run the named pass.
+triggered-by:      If the named pass changes something, run this pass.
+
+print-before?:     Print the DFM code before calling the pass.
 print-after?:      Print the DFM code after the pass is done.
-print?:            Same as print-before?: #t and print-after?: #t.</p>
-<p>check-before?:     Call ensure-invariants before calling the pass.
+print?:            Same as print-before?: #t and print-after?: #t.
+
+check-before?:     Call ensure-invariants before calling the pass.
 check-after?:      Call ensure-invariants after the pass is done.
-check?:            Same as check-before?: #t and check-after?: #t.</p>
-<p>back-end:          Turn pass on for the named back end. (Default: all)
-exclude-back-end:  Turn pass off for the named back end. (Default: none.)</p>
-<p>disabled?:         Turn pass off;  overrides everything else.</p>
-</div></blockquote>
+check?:            Same as check-before?: #t and check-after?: #t.
+
+back-end:          Turn pass on for the named back end. (Default: all)
+exclude-back-end:  Turn pass off for the named back end. (Default: none.)
+
+disabled?:         Turn pass off;  overrides everything else.
+</pre></div>
+</div>
 <p>Convenience functions:</p>
-<blockquote>
-<div><p>trace-pass(pass-name)
-untrace-pass(pass-name)</p>
-<blockquote>
-<div><p>Turns on (or off) printing and checking (both before and after)
-for the pass.</p>
-</div></blockquote>
-<p>untrace-passes()</p>
-<blockquote>
-<div><p>Calls untrace-pass for all traced passes.</p>
-</div></blockquote>
-</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">trace</span><span class="o">-</span><span class="k">pass</span><span class="p">(</span><span class="k">pass</span><span class="o">-</span><span class="n">name</span><span class="p">)</span>
+<span class="n">untrace</span><span class="o">-</span><span class="k">pass</span><span class="p">(</span><span class="k">pass</span><span class="o">-</span><span class="n">name</span><span class="p">)</span>
+
+  <span class="n">Turns</span> <span class="n">on</span> <span class="p">(</span><span class="ow">or</span> <span class="n">off</span><span class="p">)</span> <span class="n">printing</span> <span class="ow">and</span> <span class="n">checking</span> <span class="p">(</span><span class="n">both</span> <span class="n">before</span> <span class="ow">and</span> <span class="n">after</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">the</span> <span class="k">pass</span><span class="o">.</span>
+
+<span class="n">untrace</span><span class="o">-</span><span class="n">passes</span><span class="p">()</span>
+
+  <span class="n">Calls</span> <span class="n">untrace</span><span class="o">-</span><span class="k">pass</span> <span class="k">for</span> <span class="nb">all</span> <span class="n">traced</span> <span class="n">passes</span><span class="o">.</span>
+</pre></div>
+</div>
 <p>Global state:</p>
 <p>The thread-variable <code class="docutils literal notranslate"><span class="pre">*back-end*</span></code> is used with the options back-end: and
 exclude-back-end:.</p>

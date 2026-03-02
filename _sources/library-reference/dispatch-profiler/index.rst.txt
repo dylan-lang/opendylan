@@ -124,8 +124,8 @@ The DISPATCH-PROFILER module
 
    :macrocall:
      .. parsed-literal::
-        with-dispatch-profiling-report (#key `keys`)
-          `body`
+        with-dispatch-profiling-report (#key *keys*)
+          *body*
         end
 
    :param keys: Zero or more of the keywords provided by :gf:`print-dispatch-statistics`.

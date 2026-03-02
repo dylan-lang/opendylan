@@ -134,7 +134,7 @@ XEP Parameters for the Call to *func1*
 +---------------------+-----------------------------------+
 | *argcount*          | 4                                 |
 +---------------------+-----------------------------------+
-| *function*          | generic function `func1``         |
+| *function*          | generic function ``func1``        |
 +---------------------+-----------------------------------+
 
 Internal Entry Point Convention
@@ -158,7 +158,7 @@ is a closure (because the value is used by the IEP code to locate the
 environment of the closure). If the IEP is called from the XEP code,
 both the implementation parameters will always be set, even though they
 may not be necessary. For the same call to ``func1``, above, the
-parameters are described in ` <runtime.htm#12946>`_.
+parameters are described in :doc:`index`.
 
 IEP Parameters for the Call to *func1*
 

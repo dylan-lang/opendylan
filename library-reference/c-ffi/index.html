@@ -1217,11 +1217,11 @@ than some C integer types, and so the C-FFI may still signal an overflow
 error if the <code class="docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code> value, interpreted as indicated by the
 designator, has more significant bits than may be held in the indicated
 C type.</p>
-<p><a class="reference internal" href="#the-integer-designator-classes-and-their-mappings">The integer designator classes and their mappings.</a> shows all raw, plain,
+<p><a class="reference internal" href="#the-integer-designator-classes-and-their-mappings">The integer designator classes and their mappings</a> shows all raw, plain,
 and unsafe integer designator types exported from the C-FFI module.</p>
 <div class="table-wrapper docutils container" id="the-integer-designator-classes-and-their-mappings">
 <span id="index-34"></span><span id="index-34"></span><table class="docutils align-default" id="the-integer-designator-classes-and-their-mappings">
-<caption><span class="caption-text">The integer designator classes and their mappings.</span><a class="headerlink" href="#the-integer-designator-classes-and-their-mappings" title="Link to this table">¶</a></caption>
+<caption><span class="caption-text">The integer designator classes and their mappings</span><a class="headerlink" href="#the-integer-designator-classes-and-their-mappings" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Designator name</p></th>
 <th class="head"><p>C type</p></th>
@@ -1427,7 +1427,7 @@ these classes.</p>
 <p class="admonition-title">Note</p>
 <p>Pointer designator classes are defined for all the designator
 classes in <a class="reference internal" href="#the-integer-designator-classes-and-their-mappings">The integer designator classes and their
-mappings.</a>, but are not listed here. To form the name
+mappings</a>, but are not listed here. To form the name
 of the pointer designator class for a particular designator class,
 append a <code class="docutils literal notranslate"><span class="pre">*</span></code> to the part of the name enclosed in angle brackets. Thus
 for <code class="docutils literal notranslate"><span class="pre">&lt;C-int&gt;</span></code> the pointer designator class is <code class="docutils literal notranslate"><span class="pre">&lt;C-int*&gt;</span></code>.</p>
@@ -1589,7 +1589,7 @@ for a non-<em>void</em> base.</p>
 designator class name.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">define C-pointer-type <cite>pointer-class-name</cite> =&gt; <cite>designator-class-name</cite></pre>
+<dd class="field-odd"><p><pre class="literal-block">define C-pointer-type <em>pointer-class-name</em> =&gt; <em>designator-class-name</em></pre>
 </p>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
@@ -1669,9 +1669,8 @@ C-function wrapper argument.</p>
 <p>The first argument can be either a C type designator or one of the Dylan
 classes <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#boolean"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;boolean&gt;</span></code></a>, <a class="reference external" href="https://opendylan.org/books/drm/Simple_Object_Classes#character"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;character&gt;</span></code></a>, <a class="reference internal" href="../common-dylan/machine-words.html#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a>, or any subclass
 of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#number"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code></a>. For a C type designator, the value is converted to the
-Dylan class which it maps to. <em>&lt;C-</em> [<em>un</em> ]*signed-short&gt;* and <em>&lt;C-</em>
-[<em>un</em> ]*signed-char&gt;* truncate the value as well as ensuring that it is
-an <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p>
+Dylan class which it maps to. <code class="docutils literal notranslate"><span class="pre">&lt;C-[un]signed-short&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;C-[un]signed-char&gt;</span></code>
+truncate the value as well as ensuring that it is an <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p>
 </p>
 </dd>
 <dt class="field-odd">Example<span class="colon">:</span></dt>
@@ -1699,7 +1698,7 @@ analyze exactly what the type cast is doing.</p>
 <p>The functions <a class="reference internal" href="#c-ffi:c-ffi:pointer-value"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">pointer-value</span></code></a> and <a class="reference internal" href="#c-ffi:c-ffi:pointer-value-setter"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">pointer-value-setter</span></code></a>
 perform the primitive Dylan-to-C and C-to-Dylan conversions as
 documented with the designator class of the pointer’s contents type
-(see <a class="reference internal" href="#the-integer-designator-classes-and-their-mappings">The integer designator classes and their mappings.</a>). The
+(see <a class="reference internal" href="#the-integer-designator-classes-and-their-mappings">The integer designator classes and their mappings</a>). The
 C-FFI signals an error if it cannot convert the object you attempt
 to store in the pointer to a compatible type.</p>
 <p>These two functions are part of a protocol for extending the C type
@@ -2542,10 +2541,10 @@ for C types, structs and unions.</p>
 existing designator class for that type.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">define [<cite>modifiers</cite>] C-subtype <cite>name</cite> (<cite>superclasses</cite>)
-  [<cite>slot-spec</cite> ; ...] [;]
-  [<cite>type-options</cite>] [;]
-end [C-subtype] [<cite>name</cite>]</pre>
+<dd class="field-odd"><p><pre class="literal-block">define [<em>modifiers</em>] C-subtype <em>name</em> (<em>superclasses</em>)
+  [<em>slot-spec</em> ; ...] [;]
+  [<em>type-options</em>] [;]
+end [C-subtype] [<em>name</em>]</pre>
 </p>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
@@ -2564,8 +2563,8 @@ subclass of the original designator class, and is a simple wrapper
 around <a class="reference external" href="https://opendylan.org/books/drm/Definition_Macros#define_class"><code class="xref drm docutils literal notranslate"><span class="pre">define</span> <span class="pre">class</span></code></a> from which it takes its syntax. The
 superclasses, slot-specs, and <em>modifiers</em> are passed on to <a class="reference external" href="https://opendylan.org/books/drm/Definition_Macros#define_class"><code class="xref drm docutils literal notranslate"><span class="pre">define</span>
 <span class="pre">class</span></code></a> unchanged. In effect, it expands to:</p>
-<pre class="literal-block">define class <cite>name</cite> ( <cite>superclasses</cite> )
-  <cite>slot-spec</cite> ; ...
+<pre class="literal-block">define class <em>name</em> ( <em>superclasses</em> )
+  <em>slot-spec</em> ; ...
 end class;</pre>
 <span class="target" id="index-100"></span><p>In terms of C, <a class="reference internal" href="#c-ffi:c-ffi:definec-subtype"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">define</span> <span class="pre">C-subtype</span></code></a> can be thought of as
 implementing a strongly typed version of <code class="docutils literal notranslate"><span class="pre">typedef</span></code> because a new
@@ -2678,15 +2677,15 @@ place a type beneath an abstract class.</p>
 <dd><p>Allows you to define a name to which to bind a pointer designator.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">define [<cite>modifier</cite> ...] C-mapped-subtype <cite>type-name</cite> (<cite>superclass</cite> )
-  [map <cite>high-level-type</cite>
-    [, import-function: <cite>import-fun</cite> ]
-    [, export-function: <cite>export-fun</cite> ];]
-  [import-map <cite>high-level-type</cite>,
-    import-function: <cite>import-fun</cite> ;]
-  [export-map <cite>high-level-type</cite>,
-    export-function: <cite>export-fun</cite> ;]
-  [<cite>type-options</cite>]
+<dd class="field-odd"><p><pre class="literal-block">define [<em>modifier</em> ...] C-mapped-subtype <em>type-name</em> (<em>superclass</em> )
+  [map <em>high-level-type</em>
+    [, import-function: <em>import-fun</em> ]
+    [, export-function: <em>export-fun</em> ];]
+  [import-map <em>high-level-type</em>,
+    import-function: <em>import-fun</em> ;]
+  [export-map <em>high-level-type</em>,
+    export-function: <em>export-fun</em> ;]
+  [<em>type-options</em>]
 end</pre>
 </p>
 </dd>
@@ -2871,10 +2870,10 @@ subtype of <code class="docutils literal notranslate"><span class="pre">&lt;C-ma
 <dd><p>Describes C’s aggregate structures.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">define C-struct <cite>name</cite>
-  [<cite>slot-spec</cite> ; ...] [;]
-  [<cite>type-options</cite>] [;]
-end [C-struct] [<cite>name</cite>]</pre>
+<dd class="field-odd"><p><pre class="literal-block">define C-struct <em>name</em>
+  [<em>slot-spec</em> ; ...] [;]
+  [<em>type-options</em>] [;]
+end [C-struct] [<em>name</em>]</pre>
 </p>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
@@ -2902,8 +2901,8 @@ may be needed to specify an in-line structure in another structure,
 union, or array, or a value-passed structure argument or result in
 a C function.</p>
 <p>A slot-spec has the following syntax:</p>
-<pre class="literal-block">[ <cite>slot-adjective</cite> ] slot <cite>getter-name</cite> :: <cite>c-type</cite> #key <cite>setter</cite>
-  <cite>address-getter</cite>, <cite>c-name</cite>, <cite>length</cite>, <cite>width</cite></pre>
+<pre class="literal-block">[ <em>slot-adjective</em> ] slot <em>getter-name</em> :: <em>c-type</em> #key <em>setter</em>
+  <em>address-getter</em>, <em>c-name</em>, <em>length</em>, <em>width</em></pre>
 <p>The <em>slot-adjective</em> can be <em>constant</em>,  <em>array</em> or <em>bitfield</em>. The
 <em>array</em> slot adjective indicates that the slot is repeated and the
 <em>length</em> option indicates how many repetitions are
@@ -3014,10 +3013,10 @@ packing semantics of Microsoft’s <code class="docutils literal notranslate"><s
 <dd><p>Describes C union types to the <em>c-ffi</em>.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">define C-union <cite>name</cite>
-  [<cite>slot-spec</cite> ; ...] [;]
-  [<cite>type-options</cite>] [;]
-end [C-union] [<cite>name</cite>]</pre>
+<dd class="field-odd"><p><pre class="literal-block">define C-union <em>name</em>
+  [<em>slot-spec</em> ; ...] [;]
+  [<em>type-options</em>] [;]
+end [C-union] [<em>name</em>]</pre>
 </p>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
@@ -3123,11 +3122,11 @@ is a subclass of <a class="reference internal" href="#c-ffi:c-ffi:[c-pointer]"><
 <dd><p>Describes a C function to the <em>c-ffi</em>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">define C-function <cite>name</cite>
-  [<cite>parameter-spec</cite>; ...]
-  [<cite>result-spec</cite>;]
-  [<cite>function-option</cite>, ...;]
-end [C-function] [<cite>name</cite>]</pre>
+<dd class="field-odd"><p><pre class="literal-block">define C-function <em>name</em>
+  [<em>parameter-spec</em>; ...]
+  [<em>result-spec</em>;]
+  [<em>function-option</em>, ...;]
+end [C-function] [<em>name</em>]</pre>
 </p>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
@@ -3339,10 +3338,10 @@ of the Dylan function is <a class="reference internal" href="#c-ffi:c-ffi:[c-fun
 the function.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">define C-callable-wrapper [<cite>dylan-rep-name</cite>] of <cite>dylan-function</cite>
-  [<cite>parameter-spec</cite> ; ...] [;]
-  [<cite>result-spec</cite> ] [;]
-  [<cite>function-options</cite> ][;]
+<dd class="field-odd"><p><pre class="literal-block">define C-callable-wrapper [<em>dylan-rep-name</em>] of <em>dylan-function</em>
+  [<em>parameter-spec</em> ; ...] [;]
+  [<em>result-spec</em> ] [;]
+  [<em>function-options</em> ][;]
 end [C-callable-wrapper]</pre>
 </p>
 </dd>
@@ -3545,11 +3544,11 @@ of that bridge are implemented within this library.</p>
 <dd><p>Describe Objective C selectors to the <em>c-ffi</em>.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">define objc-selector <cite>name</cite>
-  [<cite>parameter-spec</cite>; ...]
-  [<cite>result-spec</cite>;]
-  [<cite>function-option</cite>, ...;]
-end [C-function] [<cite>name</cite>]</pre>
+<dd class="field-odd"><p><pre class="literal-block">define objc-selector <em>name</em>
+  [<em>parameter-spec</em>; ...]
+  [<em>result-spec</em>;]
+  [<em>function-option</em>, ...;]
+end [C-function] [<em>name</em>]</pre>
 </p>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
@@ -3599,8 +3598,8 @@ for the selector. See the Objective C bridge documentation for more details.</p>
 <dd><p>Describes C variables to the <em>c-ffi</em>.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">define C-variable <cite>getter-name</cite> :: <cite>c-type</cite>
-  #key <cite>setter</cite> <cite>c-name</cite> import: <cite>boolean</cite>
+<dd class="field-odd"><p><pre class="literal-block">define C-variable <em>getter-name</em> :: <em>c-type</em>
+  #key <em>setter</em> <em>c-name</em> import: <em>boolean</em>
 end [C-variable]</pre>
 </p>
 </dd>
@@ -3677,9 +3676,9 @@ can be used for this purpose.</p>
 the location of a C global variable.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">define C-address <cite>name</cite> :: <cite>pointer-designator-type</cite>
-  #key <cite>c-name</cite> import: <cite>boolean</cite>
-end [C-address] [<cite>name</cite>]</pre>
+<dd class="field-odd"><p><pre class="literal-block">define C-address <em>name</em> :: <em>pointer-designator-type</em>
+  #key <em>c-name</em> import: <em>boolean</em>
+end [C-address] [<em>name</em>]</pre>
 </p>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
@@ -3841,9 +3840,9 @@ serve as a deallocation facility. It must accept an address as a
 <dd><p>Allocates an object within the scope of the body of the code.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">with-stack-structure (<cite>name</cite> :: <cite>wrapper-type</cite>
-    #key <cite>element-count</cite>, <cite>extra-bytes</cite>)
-  <cite>body</cite>
+<dd class="field-odd"><p><pre class="literal-block">with-stack-structure (<em>name</em> :: <em>wrapper-type</em>
+    #key <em>element-count</em>, <em>extra-bytes</em>)
+  <em>body</em>
 end [with-stack-structure]</pre>
 </p>
 </dd>
@@ -3946,8 +3945,8 @@ and from C.</p>
 <dd><p>Passes a C pointer to the contents of a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">with-c-string (<cite>variable</cite> = <cite>string-valued-expression</cite>)
-  <cite>body</cite>
+<dd class="field-odd"><p><pre class="literal-block">with-c-string (<em>variable</em> = <em>string-valued-expression</em>)
+  <em>body</em>
 end</pre>
 </p>
 </dd>

@@ -234,8 +234,8 @@ The available method specializers are:
    :specializer: <byte-string>
    :sealed:
 
-   Returns a :class:`<byte-vector>` containing `data` interpreted as a hexadecimal
-   representation of a series of bytes.
+   Returns a :class:`<byte-vector>` containing the data in the given string interpreted
+   as a hexadecimal representation of a series of bytes.
 
    :signature: from-hexstring (string) => (result)
 

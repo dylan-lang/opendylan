@@ -584,20 +584,20 @@ the conciseness and readability of code.</p>
 </section>
 <section id="specification">
 <h2>Specification<a class="headerlink" href="#specification" title="Link to this heading">¶</a></h2>
-<p>To the <cite>operand</cite> nonterminal identifier we add the following phrase
+<p>To the <code class="docutils literal notranslate"><span class="pre">operand</span></code> nonterminal identifier we add the following phrase
 grammar rule:</p>
 <blockquote>
 <div><div class="line-block">
-<div class="line"><cite>operand</cite>: <cite>operand</cite> <code class="docutils literal notranslate"><span class="pre">[</span></code> <cite>arguments</cite> <sub>opt</sub> <code class="docutils literal notranslate"><span class="pre">]</span></code> <code class="docutils literal notranslate"><span class="pre">otherwise</span></code> <cite>otherwise-operand</cite></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">operand</span></code>: <code class="docutils literal notranslate"><span class="pre">operand</span></code> <code class="docutils literal notranslate"><span class="pre">[</span></code> <code class="docutils literal notranslate"><span class="pre">arguments</span></code> <sub>opt</sub> <code class="docutils literal notranslate"><span class="pre">]</span></code> <code class="docutils literal notranslate"><span class="pre">otherwise</span></code> <code class="docutils literal notranslate"><span class="pre">otherwise-operand</span></code></div>
 </div>
 </div></blockquote>
 <p>In addition we add the following nonterminal and phrase grammar rules:</p>
 <blockquote>
 <div><div class="line-block">
-<div class="line"><cite>otherwise-operand</cite>:</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">otherwise-operand</span></code>:</div>
 <div class="line-block">
-<div class="line"><cite>leaf</cite></div>
-<div class="line"><cite>SYMBOL</cite></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">leaf</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">SYMBOL</span></code></div>
 </div>
 </div>
 </div></blockquote>
@@ -609,8 +609,8 @@ equivalent to <code class="docutils literal notranslate"><span class="pre">eleme
 <section id="rationale">
 <h2>Rationale<a class="headerlink" href="#rationale" title="Link to this heading">¶</a></h2>
 <p>Note that to prevent parsing ambiguities the operand of the
-<code class="docutils literal notranslate"><span class="pre">otherwise</span></code> clause uses the <cite>leaf</cite> grammar nonterminal rather than
-the <cite>expression</cite> nonterminal used for function call arguments. This
+<code class="docutils literal notranslate"><span class="pre">otherwise</span></code> clause uses the <code class="docutils literal notranslate"><span class="pre">leaf</span></code> grammar nonterminal rather than
+the <code class="docutils literal notranslate"><span class="pre">expression</span></code> nonterminal used for function call arguments. This
 requires that complex default value expressions be parenthesized, but
 since in practice most supplied defaults are either literals or
 (constant) variable names this should not provide much of an

@@ -855,7 +855,7 @@ sequence that may or may not be freshly allocated. If
 to a new table object.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">define table <cite>name</cite> [ :: <cite>type</cite> ] = { [ <cite>key</cite> =&gt; <cite>element</cite> ]* }</pre>
+<dd class="field-odd"><p><pre class="literal-block">define table <em>name</em> [ :: <em>type</em> ] = { [ <em>key</em> =&gt; <em>element</em> ]* }</pre>
 </p>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
@@ -1509,9 +1509,9 @@ library <em>win32-user</em> and module <em>win32-default-handler</em>.</p></li>
 before calling <a class="reference external" href="https://opendylan.org/books/drm/Operations_on_Conditions#default-handler"><code class="xref drm docutils literal notranslate"><span class="pre">default-handler</span></code></a>.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">define last-handler (<cite>condition</cite>, #key <cite>test</cite>, <cite>init-args</cite>) = <cite>handler</cite> ;
+<dd class="field-odd"><p><pre class="literal-block">define last-handler (<em>condition</em>, #key <em>test</em>, <em>init-args</em>) = <em>handler</em> ;
 
-define last-handler <cite>condition</cite> = <cite>handler</cite>;
+define last-handler <em>condition</em> = <em>handler</em>;
 
 define last-handler;</pre>
 </p>
@@ -1581,8 +1581,8 @@ under library <em>win32-user</em> and module <em>win32-default-handler</em>.</p>
 <dd><p>Iterates over a body.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">iterate <cite>name</cite> ({<cite>argument</cite> = <cite>init-value</cite>}*)
-  [ <cite>body</cite> ]
+<dd class="field-odd"><p><pre class="literal-block">iterate <em>name</em> ({<em>argument</em> = <em>init-value</em>}*)
+  [ <em>body</em> ]
 end [ iterate ]</pre>
 </p>
 </dd>
@@ -1607,7 +1607,7 @@ occur.</p>
 step of the iteration at a time; <em>body</em> can call <em>name</em> whenever it
 wants to iterate another step. The form evaluates by calling the
 new function with the initial values specified.</p>
-<p>Any values returned by <cite>body</cite> are returned from the <code class="docutils literal notranslate"><span class="pre">iterate</span></code> call.</p>
+<p>Any values returned by <em>body</em> are returned from the <code class="docutils literal notranslate"><span class="pre">iterate</span></code> call.</p>
 </p>
 </dd>
 <dt class="field-odd">Example<span class="colon">:</span></dt>
@@ -1632,7 +1632,7 @@ new function with the initial values specified.</p>
 nothing if the test is false.</p>
 <dl class="field-list">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">when (<cite>test</cite>) [ <cite>consequent</cite> ] end [ when ]</pre>
+<dd class="field-odd"><p><pre class="literal-block">when (<em>test</em>) [ <em>consequent</em> ] end [ when ]</pre>
 </p>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
@@ -2180,8 +2180,8 @@ not give a value for <em>default</em>, this function signals an error.</p>
 <dd><p>Signals an error if the expression passed to it evaluates to false.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">assert <cite>expression</cite> <cite>format-string</cite> [<cite>format-arg</cite>] =&gt; <cite>false</cite></pre>
-<pre class="literal-block">assert <cite>expression</cite> =&gt; <cite>false</cite></pre>
+<dd class="field-odd"><p><pre class="literal-block">assert <em>expression</em> <em>format-string</em> [<em>format-arg</em>] =&gt; <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a></pre>
+<pre class="literal-block">assert <em>expression</em> =&gt; <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a></pre>
 </p>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
@@ -2223,8 +2223,8 @@ accordingly, along with any instances of <em>format-arg</em>.</p>
 but only when the code is compiled in interactive development mode.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
-<dd class="field-odd"><p><pre class="literal-block">debug-assert <cite>expression</cite> <cite>format-string</cite> [<cite>format-arg</cite>] =&gt; <cite>false</cite></pre>
-<pre class="literal-block">debug-assert <cite>expression</cite> =&gt; <cite>false</cite></pre>
+<dd class="field-odd"><p><pre class="literal-block">debug-assert <em>expression</em> <em>format-string</em> [<em>format-arg</em>] =&gt; <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a></pre>
+<pre class="literal-block">debug-assert <em>expression</em> =&gt; <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a></pre>
 </p>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>

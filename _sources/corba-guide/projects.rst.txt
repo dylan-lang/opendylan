@@ -358,7 +358,7 @@ The following keywords control other aspects of IDL compilation.
    :file:`protocol`, :file:`stubs`, and :file:`skeletons`.
 
    You can specify a prefix for these names with this ``prefix:``
-   option. The prefix will be appended with a leading `-` character.
+   option. The prefix will be appended with a leading ``-`` character.
 
    This might be useful when you want to put the project
    subdirectories/subfolders from more than one IDL file in a common
