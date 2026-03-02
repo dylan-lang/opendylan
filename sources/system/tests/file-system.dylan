@@ -196,7 +196,23 @@ define test test-copy-file ()
 end;
 
 define test test-rename-file ()
-  //---*** Fill this in.
+  let dir = test-temp-directory();
+  let orig-file = file-locator(dir, "orig");
+  write-test-file(orig-file, contents: "x");
+  assert-true(file-exists?(orig-file));
+  let new-file = file-locator(dir, "new");
+  assert-false(file-exists?(new-file));
+  rename-file(orig-file, new-file);
+  assert-false(file-exists?(orig-file));
+  assert-true(file-exists?(new-file));
+  write-test-file(orig-file, contents: "y");
+  assert-signals(<file-exists-error>,
+                 rename-file(orig-file, new-file),
+                 "if-exists: signal: is the default, and it signals the right error");
+  assert-equal("x", with-open-file (s = new-file) read-to-end(s) end);
+  rename-file(orig-file, new-file, if-exists: #"replace");
+  assert-equal("y", with-open-file (s = new-file) read-to-end(s) end);
+  assert-false(file-exists?(orig-file));
 end;
 
 define test test-file-properties ()

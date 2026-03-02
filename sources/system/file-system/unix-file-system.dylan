@@ -316,14 +316,14 @@ define function %rename-file
     (source :: <posix-file-system-locator>, destination :: <posix-file-system-locator>,
      #Key if-exists :: <copy/rename-disposition> = #"signal")
  => ()
-  // UNIX strikes again!  It's rename function always replaces the target.
-  // So, if the caller doesn't want to overwrite an existing file, we have
-  // to manually check beforehand.  (Sigh)
+  // The UNIX rename function always replaces the target so if the caller doesn't want to
+  // overwrite an existing file, we have to manually check beforehand. There is a
+  // potential race condition here.
   if (if-exists = #"signal" & file-exists?(destination))
-    error(make(<file-system-error>,
-               format-string: "File exists: Can't rename %s to %s",
-               format-arguments: list(as(<string>, source),
-                                      as(<string>, destination))))
+    error(make(<file-exists-error>,
+               locator: destination,
+               format-string: "Target file exists: Can't rename %s to %s",
+               format-arguments: list(source, destination)))
   end;
   if (primitive-raw-as-boolean
         (%call-c-function ("rename") (from :: <raw-byte-string>, to :: <raw-byte-string>)

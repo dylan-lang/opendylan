@@ -32,6 +32,13 @@ Bundled Library Updates
 Changes to libraries that are part of the `opendylan repository
 <https://github.com/dylan-lang/opendylan>`_.
 
+System
+------
+
+* :gf:`rename-file` now signals :class:`<file-exists-error>` instead of
+  :class:`<file-system-error>` if the target file exists and ``if-exists: #"signal"`` (the
+  default) is used.
+
 Submoduled Library Updates
 ==========================
 
