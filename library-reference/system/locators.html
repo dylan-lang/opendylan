@@ -1121,6 +1121,12 @@ of a path element.</p>
 <li><p><strong>merged-locator</strong> – An instance of <a class="reference internal" href="#system:locators:[physical-locator]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;physical-locator&gt;</span></code></a>.</p></li>
 </ul>
 </dd>
+<dt class="field-even">Discussion<span class="colon">:</span></dt>
+<dd class="field-even"><p>Construct a new locator from <em>locator</em> by copying missing or incomplete parts from
+<em>from-locator</em>.  Note that if <em>locator</em> is relative the resulting directory part is
+the concatenation of the directories of <em>from-locator</em> and <em>locator</em>, either of
+which may be empty.</p>
+</dd>
 </dl>
 </dd></dl>
 
