@@ -174,7 +174,7 @@ Functions
    :signature: asin(x) => y
 
    :parameter x: An instance of type :drm:`<number>`. The angle, in radians.
-                 If **x** is not in the range `[-1,+1]`, an error is signalled.
+                 If **x** is not in the range ``[-1, +1]``, an error is signalled.
    :value y: An instance of type :drm:`<number>`.
 
    Returns the arc sine of its argument. The floating point precision of
@@ -233,7 +233,7 @@ Functions
    :signature: atan(x) => y
 
    :parameter x: An instance of type :drm:`<number>`. The angle, in radians.
-                 If **x** is not in the range `[-1,+1]`, an error is signalled.
+                 If **x** is not in the range ``[-1, +1]``, an error is signalled.
    :value y: An instance of type :drm:`<number>`.
 
    Returns the arc tangent of its argument. The floating point precision of the

@@ -575,7 +575,7 @@ are exported from the *duim-frames* module.
 
    :operations:
 
-     - `=`
+     - :drm:`=`
      - :gf:`add-command`
      - :gf:`command-arguments`
      - :gf:`command-enabled?`

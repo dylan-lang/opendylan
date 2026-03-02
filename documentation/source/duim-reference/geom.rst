@@ -36,28 +36,29 @@ These are all subclasses of :drm:`<error>`.
 The <region> class and its subclasses
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The DUIM-Geometry library exposes the <region> class and its subclasses as
+The DUIM-Geometry library exposes the :class:`<region>` class and its subclasses as
 shown in the following table . None of these subclasses have any further
 subclasses exposed in the DUIM-Geometry library, although the
 DUIM-Extended-Geometry library exposes some subclasses of :class:`<area>`
 and :class:`<path>`.
 
-+----------+----------------+
-| <region> |                |
-+----------+----------------+
-|          | <region-set>   |
-+----------+----------------+
-|          | <point>        |
-+----------+----------------+
-|          | <path>         |
-+----------+----------------+
-|          | <area>         |
-+----------+----------------+
-|          | <bounding-box> |
-+----------+----------------+
++-------------------+-------------------------+
+| :class:`<region>` |                         |
+|                   |                         |
++-------------------+-------------------------+
+|                   | :class:`<region-set>`   |
++-------------------+-------------------------+
+|                   | :class:`<point>`        |
++-------------------+-------------------------+
+|                   | :class:`<path>`         |
++-------------------+-------------------------+
+|                   | :class:`<area>`         |
++-------------------+-------------------------+
+|                   | :class:`<bounding-box>` |
++-------------------+-------------------------+
 
 - :class:`<region>` This class is used to represent any set of points.
-  The:class:`<region>` class includes both bounded regions (that is, regions
+  The :class:`<region>` class includes both bounded regions (that is, regions
   whose edges are known) and unbounded regions (that is, regions with
   no known edges).
 - :class:`<region-set>` This class represents a region set, that is, a set of
@@ -79,15 +80,15 @@ certain circumstances. They are shown in the following table . All the errors
 shown are subclasses of the :drm:`<error>` class. Note that the subclasses of
 :class:`<transform-error>` are all specific to particular errors.
 
-+-------------------+----------------------------+------------------------------+
-| <transform-error> |                            |                              |
-+-------------------+----------------------------+------------------------------+
-|                   | <transform-underspecified> |                              |
-+-------------------+----------------------------+------------------------------+
-|                   |                            | <reflection-<underspecified> |
-+-------------------+----------------------------+------------------------------+
-|                   | <singular-transform>       |                              |
-+-------------------+----------------------------+------------------------------+
++----------------------------+-------------------------------------+---------------------------------------+
+| :class:`<transform-error>` |                                     |                                       |
++----------------------------+-------------------------------------+---------------------------------------+
+|                            | :class:`<transform-underspecified>` |                                       |
++----------------------------+-------------------------------------+---------------------------------------+
+|                            |                                     | :class:`<reflection-<underspecified>` |
++----------------------------+-------------------------------------+---------------------------------------+
+|                            | :class:`<singular-transform>`       |                                       |
++----------------------------+-------------------------------------+---------------------------------------+
 
 - :class:`<transform-error>` The superclass of all error conditions signalled
   when there is an error with a transform.
@@ -1065,7 +1066,7 @@ are exported from the *duim-geometry* module.
      - :func:`make-translation-transform`
      - :class:`<reflection-underspecified>`
 
-.. function:: make-reflection-transform
+.. function:: make-reflection-transform\*
 
    Returns a transform that reflects every point through the line
    passing through the positions *x1,y1* and *x2,y2* or through the
@@ -1091,7 +1092,7 @@ are exported from the *duim-geometry* module.
      reflection is a transformation that turns the paper over.
 
      The function ``make-reflection-transform*`` is identical to
-     :func:make-reflection-transform, except that it passes composite
+     :func:`make-reflection-transform`, except that it passes composite
      objects, rather than separate coordinates, in its arguments. You
      should be aware that using this function may lead to a loss of
      performance.
@@ -1509,7 +1510,7 @@ are exported from the *duim-geometry* module.
 
    :description:
 
-     The class that corresponds to a set of points. The:class:`<region>`
+     The class that corresponds to a set of points. The :class:`<region>`
      class includes both bounded and unbounded regions.
 
      There is no :drm:`make` method for :class:`<region>` because of the
@@ -1518,7 +1519,7 @@ are exported from the *duim-geometry* module.
 
    :operations:
 
-     - :gf:`=`
+     - :drm:`=`
      - :gf:`do-regions`
      - :gf:`region?`
      - :gf:`region-contains-position?`
@@ -1547,7 +1548,7 @@ are exported from the *duim-geometry* module.
 
    :description:
 
-     Returns ``#t`` if *object* is a region, otherwise returns``#f``.
+     Returns ``#t`` if *object* is a region, otherwise returns ``#f``.
 
    :seealso:
 

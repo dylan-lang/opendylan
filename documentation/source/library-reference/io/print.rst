@@ -332,8 +332,8 @@ IO library's *print* module.
 
    :macrocall:
       .. parsed-literal:: 
-         printing-object(`object`, `stream`, #key type? = #t)
-           `body`
+         printing-object(*object*, *stream*, #key *type?* = #t)
+           *body*
          end
 
    *printing-object* may be used within :gf:`print-object` to print Dylan

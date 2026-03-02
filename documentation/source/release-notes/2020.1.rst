@@ -336,7 +336,7 @@ testworks Library
 * A new function has been added to retrieve a unique directory for the current
   test: :func:`test-temp-directory`
 
-* The `--report` command line option now accepts "full" as a value, meaning to
+* The ``--report`` command line option now accepts "full" as a value, meaning to
   display individual assertion results in addition to the normal output.
 
 * Support for benchmarks has been improved. A new ``benchmark-repeat``
@@ -352,7 +352,7 @@ testworks Library
 * ``--report log`` has been removed. Use ``--report json`` or ``--report xml``
   instead.
 
-* The `testworks-report` library has received some love and is now able to parse
+* The ``testworks-report`` library has received some love and is now able to parse
   json and xml reports.
 
 * An error is signalled if two tests are defined with the same name. (Note that

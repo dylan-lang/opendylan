@@ -41,16 +41,16 @@ the conciseness and readability of code.
 Specification
 =============
 
-To the `operand` nonterminal identifier we add the following phrase
+To the ``operand`` nonterminal identifier we add the following phrase
 grammar rule:
 
-   | `operand`: `operand` ``[`` `arguments` :subscript:`opt` ``]`` ``otherwise`` `otherwise-operand`
+   | ``operand``: ``operand`` ``[`` ``arguments`` :subscript:`opt` ``]`` ``otherwise`` ``otherwise-operand``
 
 In addition we add the following nonterminal and phrase grammar rules:
 
-   | `otherwise-operand`:
-   |     `leaf`
-   |     `SYMBOL`
+   | ``otherwise-operand``:
+   |     ``leaf``
+   |     ``SYMBOL``
 
 Just as ``collection[i]`` is syntactic sugar for ``element(collection, i)``
 under the interpretation of ``element`` in force for the module
@@ -61,8 +61,8 @@ Rationale
 =========
 
 Note that to prevent parsing ambiguities the operand of the
-``otherwise`` clause uses the `leaf` grammar nonterminal rather than
-the `expression` nonterminal used for function call arguments. This
+``otherwise`` clause uses the ``leaf`` grammar nonterminal rather than
+the ``expression`` nonterminal used for function call arguments. This
 requires that complex default value expressions be parenthesized, but
 since in practice most supplied defaults are either literals or
 (constant) variable names this should not provide much of an
