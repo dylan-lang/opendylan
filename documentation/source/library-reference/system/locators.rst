@@ -344,6 +344,13 @@ The locators Module
    :parameter from-locator: An instance of :class:`<physical-locator>`.
    :value merged-locator: An instance of :class:`<physical-locator>`.
 
+   :description:
+
+      Construct a new locator from *locator* by copying missing or incomplete parts from
+      *from-locator*.  Note that if *locator* is relative the resulting directory part is
+      the concatenation of the directories of *from-locator* and *locator*, either of
+      which may be empty.
+
 .. generic-function:: open-locator
    :open:
 
