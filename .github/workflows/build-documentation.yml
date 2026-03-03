@@ -38,7 +38,7 @@ jobs:
           run: make html
 
       - name: Upload html artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: opendylan-doc-html
           path: documentation/_build/html/
