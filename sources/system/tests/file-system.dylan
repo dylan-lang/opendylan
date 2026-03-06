@@ -174,22 +174,22 @@ define test test-copy-file ()
   let tmp-dir = test-temp-directory();
   let src = write-test-file("src.txt", contents: "iota");
   let dst = file-locator(tmp-dir, "dst.txt");
-  
+
   // Copy file
-  expect-no-condition(copy-file(src, dst), 
+  expect-no-condition(copy-file(src, dst),
                       "Copy file source to destination");
 
   assert-copied-files(src, dst);
 
   // Copy file replacing destination
 
-  expect-no-condition(copy-file(src, dst, if-exists: #"replace"), 
+  expect-no-condition(copy-file(src, dst, if-exists: #"replace"),
                       "Replace destination with source");
 
   assert-copied-files(src, dst);
 
   // Copy file where destination exists
-  
+
   assert-signals(<file-exists-error>,
                  copy-file(src, dst),
                  "Signal error if destination file exists")
