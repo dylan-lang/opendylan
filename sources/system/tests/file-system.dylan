@@ -174,29 +174,45 @@ define test test-copy-file ()
   let tmp-dir = test-temp-directory();
   let src = write-test-file("src.txt", contents: "iota");
   let dst = file-locator(tmp-dir, "dst.txt");
-  
+
   // Copy file
-  expect-no-condition(copy-file(src, dst), 
+  expect-no-condition(copy-file(src, dst),
                       "Copy file source to destination");
 
   assert-copied-files(src, dst);
 
   // Copy file replacing destination
 
-  expect-no-condition(copy-file(src, dst, if-exists: #"replace"), 
+  expect-no-condition(copy-file(src, dst, if-exists: #"replace"),
                       "Replace destination with source");
 
   assert-copied-files(src, dst);
 
   // Copy file where destination exists
-  
+
   assert-signals(<file-exists-error>,
                  copy-file(src, dst),
                  "Signal error if destination file exists")
 end;
 
 define test test-rename-file ()
-  //---*** Fill this in.
+  let dir = test-temp-directory();
+  let orig-file = file-locator(dir, "orig");
+  write-test-file(orig-file, contents: "x");
+  assert-true(file-exists?(orig-file));
+  let new-file = file-locator(dir, "new");
+  assert-false(file-exists?(new-file));
+  rename-file(orig-file, new-file);
+  assert-false(file-exists?(orig-file));
+  assert-true(file-exists?(new-file));
+  write-test-file(orig-file, contents: "y");
+  assert-signals(<file-exists-error>,
+                 rename-file(orig-file, new-file),
+                 "if-exists: signal: is the default, and it signals the right error");
+  assert-equal("x", with-open-file (s = new-file) read-to-end(s) end);
+  rename-file(orig-file, new-file, if-exists: #"replace");
+  assert-equal("y", with-open-file (s = new-file) read-to-end(s) end);
+  assert-false(file-exists?(orig-file));
 end;
 
 define test test-file-properties ()
