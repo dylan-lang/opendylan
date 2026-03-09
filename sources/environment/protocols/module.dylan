@@ -19,6 +19,7 @@ define module environment-imports
     export: all;
   use streams, export: all;
   use format,  export: all;
+  use print,   export: all;
   use threads, export: all;
   use date, export: all;
   use file-system, export: all;

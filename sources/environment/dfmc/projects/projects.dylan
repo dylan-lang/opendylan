@@ -19,6 +19,13 @@ define sealed abstract primary class <dfmc-project-object>
     = make(<stretchy-object-vector>);
 end class <dfmc-project-object>;
 
+define method print-object
+    (project :: <dfmc-project-object>, stream :: <stream>) => ()
+  printing-object (project, stream)
+    print(project.%library-name, stream, escape?: #t);
+  end
+end method;
+
 define sealed primary class <dfmc-lid-project-object> (<dfmc-project-object>)
 end class <dfmc-lid-project-object>;
 
