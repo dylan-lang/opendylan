@@ -1207,9 +1207,8 @@ are exported from the *streams* module.
 
    :description:
 
-     Signalled when an output file stream creation function tries to
-     create a file that already exists. It is a subclass of
-     :class:`<file-error>`.
+     Signalled when :gf:`rename-file` or an output file stream creation function tries to
+     create a file that already exists. It is a subclass of :class:`<file-error>`.
 
    :seealso:
 

@@ -212,9 +212,17 @@ define function %rename-file
   // NOTE: We can't use MoveFileEx which provides options to control
   // the move if the target exists because MoveFileEx isn't implemented
   // in Windows 95.  (When this code was originally written, the
-  // documentation for MoveFileEx failed to mention that fact.  Sigh)
-  if (if-exists == #"replace" & %file-exists?(destination, #f))
-    %delete-file(destination)
+  // documentation for MoveFileEx failed to mention that fact.)
+  if (%file-exists?(destination, #f))
+    select (if-exists)
+      #"replace" =>
+        %delete-file(destination);
+      #"signal" =>
+        error(make(<file-exists-error>,
+                   locator: destination,
+                   format-string: "Target file exists: Can't rename %s to %s",
+                   format-arguments: list(source, destination)));
+    end;
   end;
   unless (primitive-raw-as-boolean
             (%call-c-function ("MoveFileA", c-modifiers: "__stdcall")

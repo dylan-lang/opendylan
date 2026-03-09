@@ -1374,6 +1374,9 @@ File-System module.
      action of this function is controlled by the value of *if-exists*.
      The default is to prompt you before overwriting an existing file.
 
+     With ``if-exists: #"signal"`` (the default), if the file already exists a
+     :class:`<file-exists-error>` is signaled.
+
      This operation may fail if the source and destination are not on
      the same file system.
 
