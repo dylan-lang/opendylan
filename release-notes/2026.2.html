@@ -556,6 +556,14 @@ repositories.</p>
 <section id="bundled-library-updates">
 <h2>Bundled Library Updates<a class="headerlink" href="#bundled-library-updates" title="Link to this heading">¶</a></h2>
 <p>Changes to libraries that are part of the <a class="reference external" href="https://github.com/dylan-lang/opendylan">opendylan repository</a>.</p>
+<section id="system">
+<h3>System<a class="headerlink" href="#system" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="../library-reference/system/file-system.html#system:file-system:rename-file"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">rename-file</span></code></a> now signals <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-exists-error&gt;</span></code> instead of
+<a class="reference internal" href="../library-reference/system/file-system.html#system:file-system:[file-system-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-error&gt;</span></code></a> if the target file exists and <code class="docutils literal notranslate"><span class="pre">if-exists:</span> <span class="pre">#&quot;signal&quot;</span></code> (the
+default) is used.</p></li>
+</ul>
+</section>
 </section>
 <section id="submoduled-library-updates">
 <h2>Submoduled Library Updates<a class="headerlink" href="#submoduled-library-updates" title="Link to this heading">¶</a></h2>
@@ -611,7 +619,10 @@ to surrounding libraries in the Dylan ecosystem….</p>
 <li><a class="reference internal" href="#">Open Dylan 2026.2</a><ul>
 <li><a class="reference internal" href="#compiler">Compiler</a></li>
 <li><a class="reference internal" href="#tools">Tools</a></li>
-<li><a class="reference internal" href="#bundled-library-updates">Bundled Library Updates</a></li>
+<li><a class="reference internal" href="#bundled-library-updates">Bundled Library Updates</a><ul>
+<li><a class="reference internal" href="#system">System</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#submoduled-library-updates">Submoduled Library Updates</a></li>
 <li><a class="reference internal" href="#contributors">Contributors</a></li>
 </ul>

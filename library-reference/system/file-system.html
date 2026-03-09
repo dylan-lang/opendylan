@@ -2222,6 +2222,8 @@ file system.</p>
 <dd class="field-odd"><p><p>Renames <em>old-file</em> to <em>new-file</em>. If <em>new-file</em> already exists, the
 action of this function is controlled by the value of <em>if-exists</em>.
 The default is to prompt you before overwriting an existing file.</p>
+<p>With <code class="docutils literal notranslate"><span class="pre">if-exists:</span> <span class="pre">#&quot;signal&quot;</span></code> (the default), if the file already exists a
+<a class="reference internal" href="#system:file-system:[file-exists-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-exists-error&gt;</span></code></a> is signaled.</p>
 <p>This operation may fail if the source and destination are not on
 the same file system.</p>
 </p>
