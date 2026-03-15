@@ -234,6 +234,65 @@ define method op--stack-allocate-vector
   new-vector
 end method;
 
+define method op--stack-allocate-callargs
+    (back-end :: <llvm-back-end>, count :: <integer>)
+ => (new-vector :: <llvm-value>);
+  let module = back-end.llvm-builder-module;
+  let header-words = dylan-value(#"$number-header-words");
+
+  let sov-class :: <&class> = dylan-value(#"<simple-object-vector>");
+  let instance-bytes = instance-storage-bytes(back-end, sov-class);
+  let repeated-bytes
+    = count * slot-storage-bytes(back-end, dylan-value(#"<object>"));
+  let callargs
+    = ins--alloca(back-end, $llvm-i8-type, instance-bytes + repeated-bytes,
+                  alignment: back-end-word-size(back-end));
+  let callargs-cast = op--object-pointer-cast(back-end, callargs, sov-class);
+
+  // Fill in the wrapper slot
+  let wrapper-slot-ptr
+    = ins--gep-inbounds(back-end, callargs-cast, 0, i32(0));
+  let wrapper-name
+    = emit-name(back-end, module, ^class-mm-wrapper(sov-class));
+  let wrapper = llvm-builder-global(back-end, wrapper-name);
+  ins--store(back-end, wrapper, wrapper-slot-ptr);
+
+  callargs
+end method;
+
+// Fill in the callargs vector
+define method op--callargs
+    (back-end :: <llvm-back-end>, arguments :: <sequence>)
+ => (callargs :: <llvm-value>);
+  let module = back-end.llvm-builder-module;
+  let word-size = back-end-word-size(back-end);
+  if (empty?(arguments))
+    // Return the canonical empty vector, as callargs might not exist
+    emit-reference(back-end, module, dylan-value(#"%empty-vector"))
+  else
+    let sov-class :: <&class> = dylan-value(#"<simple-object-vector>");
+    assert(llvm-builder-local-defined?(back-end, $callargs-name));
+    let callargs = llvm-builder-local(back-end, $callargs-name);
+    let callargs-cast = op--object-pointer-cast(back-end, callargs, sov-class);
+
+    // Fill in the size slot for this particular call
+    let size-slot-ptr
+      = op--getslotptr(back-end, callargs-cast, sov-class, #"size");
+    let size-ref = op--tag-integer(back-end, arguments.size);
+    ins--store(back-end, size-ref, size-slot-ptr);
+
+    // Fill in the arguments
+    for (arg in arguments, index :: <integer> from 0)
+      let slot-ptr
+        = op--getslotptr(back-end, callargs-cast, sov-class,
+                         #"vector-element", index);
+      ins--store(back-end, arg, slot-ptr, alignment: word-size);
+    end for;
+
+    callargs
+  end if
+end method;
+
 define method op--object-mm-wrapper
     (back-end :: <llvm-back-end>, object)
  => (wrapper :: <llvm-value>);
@@ -376,4 +435,61 @@ define method op--call-error-iep
                function-type: llvm-lambda-type(back-end, err-iep),
                calling-convention: llvm-calling-convention(back-end, err-iep));
   ins--unreachable(back-end);
+end method;
+
+
+/// XEP
+
+define method op--spread-xep-callargs
+    (back-end :: <llvm-back-end>, xep-argument-count :: <llvm-value>,
+     callargs :: <llvm-value>)
+ => (a0 :: <llvm-value>, a1 :: <llvm-value>, a2 :: <llvm-value>, a3 :: <llvm-value>)
+  let default-bb = make(<llvm-basic-block>);
+  let spread-switch-cases
+    = make(<vector>, size: 2 * ($direct-argument-count + 1));
+  for (count from 0 to $direct-argument-count)
+    spread-switch-cases[count * 2] := count;
+    spread-switch-cases[count * 2 + 1] := make(<llvm-basic-block>);
+  end for;
+
+  let entry-block = back-end.llvm-builder-basic-block;
+  ins--switch(back-end, xep-argument-count, default-bb, spread-switch-cases);
+
+  // Default case (can't happen)
+  ins--block(back-end, default-bb);
+  ins--call-intrinsic(back-end, "llvm.trap", vector());
+  ins--unreachable(back-end);
+
+  let spreadargs = make(<vector>, size: $direct-argument-count);
+  for (count from $direct-argument-count to 1 by -1)
+    ins--block(back-end, spread-switch-cases[count * 2 + 1]);
+
+    for (i from count below $direct-argument-count)
+      let prev-bb = spread-switch-cases[(count + 1) * 2 + 1];
+      spreadargs[i]
+        := ins--phi*(back-end,
+                     $object-pointer-undef, entry-block,
+                     spreadargs[i], prev-bb);
+    end for;
+
+    spreadargs[count - 1]
+      := call-primitive(back-end, primitive-vector-element-descriptor,
+                        callargs,
+                        llvm-back-end-value-function(back-end, count - 1));
+
+    // Fall through
+    ins--br(back-end, spread-switch-cases[count * 2 - 1]);
+  end for;
+
+  // Return block: phi instructions
+  ins--block(back-end, spread-switch-cases[1]);
+  let count-1-block = spread-switch-cases[1 * 2 + 1];
+  let phi-instructions
+    = map(method (i)
+            ins--phi*(back-end,
+                      $object-pointer-undef, entry-block,
+                      spreadargs[i], count-1-block)
+          end method,
+          range(below: $direct-argument-count));
+  apply(values, phi-instructions)
 end method;

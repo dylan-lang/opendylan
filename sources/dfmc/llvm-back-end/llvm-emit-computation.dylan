@@ -718,6 +718,15 @@ define method emit-computation
   end if;
 end method;
 
+// Calling conventions:
+// IEP: arg, arg, ..., next-methods, function [fastcc]
+// MEP: function, next-methods, arg, arg, ... [ccc]
+// Engine: engine-node, function, arg, arg, ... [ccc]
+// XEP: function, n, a0, a1, a2, a3 [fastcc]
+//      if n > 4, a0 = callargs-vector
+// Apply XEP: function, arg, arg, ... [fastcc]
+// Apply MEP: next-methods, function, arg, arg, ... [fastcc]
+
 // Call a known top-level method with no further next methods
 define method emit-call
     (back-end :: <llvm-back-end>, m :: <llvm-module>,
@@ -742,6 +751,12 @@ define method emit-call
                function-type: function-type,
                function: fn,
                calling-convention: llvm-calling-convention(back-end, f))
+end method;
+
+define method call-argument-size
+    (c :: <simple-call>, f :: <&iep>)
+ => (argument-size :: <integer>)
+  0
 end method;
 
 // Call a known top-level method with the possibility of next methods
@@ -841,10 +856,12 @@ define method emit-call
 
   // Cast to the appropriate XEP type
   let parameter-types
-    = make(<simple-object-vector>, size: c.arguments.size + 2);
-  parameter-types[0] := $llvm-object-pointer-type; // function
-  parameter-types[1] := back-end.%type-table["iWord"]; // argument count
-  fill!(parameter-types, $llvm-object-pointer-type, start: 2);
+    = vector($llvm-object-pointer-type,     // function
+             back-end.%type-table["iWord"], // argument count
+             $llvm-object-pointer-type,     // a0
+             $llvm-object-pointer-type,     // a1
+             $llvm-object-pointer-type,     // a2
+             $llvm-object-pointer-type);    // a3
   let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
   let xep-type
     = make(<llvm-function-type>,
@@ -854,12 +871,51 @@ define method emit-call
   let xep-cast
     = ins--bitcast(back-end, xep, llvm-pointer-to(back-end, xep-type));
 
-  op--call(back-end, xep-cast,
-           concatenate(vector(fn, c.arguments.size),
-                       map(curry(emit-reference, back-end, m),
-                           c.arguments)),
+  let arg-refs = map(curry(emit-reference, back-end, m), c.arguments);
+  let n = arg-refs.size;
+  let xep-args
+    = if (n > $direct-argument-count)
+        let callargs = op--callargs(back-end, arg-refs);
+        vector(fn, n,
+               callargs,
+               $object-pointer-undef,
+               $object-pointer-undef,
+               $object-pointer-undef)
+      else
+        vector(fn, n,
+               element(arg-refs, 0, default: $object-pointer-undef),
+               element(arg-refs, 1, default: $object-pointer-undef),
+               element(arg-refs, 2, default: $object-pointer-undef),
+               element(arg-refs, 3, default: $object-pointer-undef))
+      end if;
+  let parameter-attributes
+    = vector($llvm-attribute-none,           // fn
+             $llvm-attribute-none,           // argument count
+             $callargs-parameter-attributes, // a0 = callargs
+             $llvm-attribute-none,           // a1
+             $llvm-attribute-none,           // a2
+             $llvm-attribute-none);          // a3
+  let attribute-list
+    = if (n > $direct-argument-count)
+        make(<llvm-attribute-list>, parameter-attributes: parameter-attributes)
+      else
+        $llvm-empty-attribute-list
+      end if;
+  op--call(back-end, xep-cast, xep-args,
            type: return-type,
-           calling-convention: $llvm-calling-convention-c)
+           attribute-list: attribute-list,
+           calling-convention: llvm-back-end-calling-convention-fast(back-end))
+end method;
+
+define method call-argument-size
+    (c :: <simple-call>, f)
+ => (argument-size :: <integer>)
+  let n = size(c.arguments);
+  if (n > $direct-argument-count)
+    n
+  else
+    0
+  end if
 end method;
 
 // Possibly congruent calls to a generic function
@@ -871,6 +927,16 @@ define method emit-call
     let gfn = emit-reference(back-end, m, f);
     op--engine-node-call(back-end, gfn,
                          map(curry(emit-reference, back-end, m), c.arguments))
+  else
+    next-method()
+  end if
+end method;
+
+define method call-argument-size
+    (c :: <simple-call>, f :: <&generic-function>)
+ => (argument-size :: <integer>)
+  if (call-congruent?(c))
+    0
   else
     next-method()
   end if

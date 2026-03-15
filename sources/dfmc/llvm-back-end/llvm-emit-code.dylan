@@ -73,6 +73,16 @@ end method;
 
 define constant $extra-parameter-name = ".extra";
 
+// Local variable for storing an argument vector passed to entry points
+define constant $callargs-name = ".callargs";
+
+// Parameter attributes used when passing the callargs vector to an
+// entry point
+define constant $callargs-parameter-attributes
+  = llvm-attribute-merge($llvm-attribute-readonly,
+                         $llvm-attribute-noalias,
+                         $llvm-attribute-nocapture);
+
 define method emit-code
     (back-end :: <llvm-back-end>, module :: <llvm-module>, o :: <&iep>,
      #key init? = #f)
@@ -206,6 +216,16 @@ define method emit-lambda-body
               calling-convention: calling-convention,
               personality: llvm-function-personality(back-end, o));
 
+    // Determine the maximum needed call argument vector size
+    let argument-vector-size :: <integer> = 0;
+    for-computations (c in o)
+      if (instance?(c, <function-call>))
+        let effective-function = call-effective-function(c);
+        argument-vector-size
+          := max(argument-vector-size, call-argument-size(c, effective-function));
+      end if;
+    end;
+
     // Emit the entry block
     ins--block(back-end, make(<llvm-basic-block>, name: "bb.entry"));
 
@@ -244,6 +264,13 @@ define method emit-lambda-body
       // Emit debug information for the function
       emit-lambda-dbg-function(back-end, o);
 
+      // Allocate callargs if needed
+      unless (zero?(argument-vector-size))
+        let callargs
+          = op--stack-allocate-callargs(back-end, argument-vector-size);
+        ins--local(back-end, $callargs-name, callargs);
+      end unless;
+
       // Emit definitions for temporaries
       let e :: <lambda-lexical-environment> = o.environment;
       for (tmp in e.temporaries)
@@ -275,6 +302,12 @@ define method emit-lambda-body
     format(*standard-output*, "emit %s: %s\n", function-name, e);
     force-output(*standard-output*);
   end block;
+end method;
+
+define method call-argument-size
+    (c :: <call>, f)
+ => (argument-size :: <integer>)
+  0
 end method;
 
 // Calling convention for ordinary functions
