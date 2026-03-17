@@ -19,16 +19,24 @@ define function command-line-option-prefix
 end function command-line-option-prefix;
 
 define function login-name () => (name :: false-or(<string>))
-  let value = primitive-wrap-machine-word
-                (primitive-cast-pointer-as-raw
-                   (%call-c-function ("getlogin") () => (name :: <raw-byte-string>) () end));
-  if (primitive-machine-word-not-equal?(primitive-unwrap-machine-word(value),
-                                        integer-as-raw(0)))
-    primitive-raw-as-string
-      (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(value)))
-  else
-    #f
-  end
+  let maxlogname = 255 + 1;
+  with-stack-byte-storage (name-storage, maxlogname)
+    let raw-name-storage
+      = primitive-cast-raw-as-pointer
+          (primitive-unwrap-machine-word(name-storage));
+    let result
+      = primitive-wrap-machine-word
+          (%call-c-function ("getlogin_r")
+               (name :: <raw-byte-string>, size :: <raw-c-unsigned-int>)
+            => (result :: <raw-c-signed-int>)
+             (raw-name-storage, integer-as-raw(maxlogname))
+           end);
+    if (zero?(result))
+      primitive-raw-as-string(raw-name-storage)
+    else
+      #f
+    end
+  end with-stack-byte-storage
 end function login-name;
 
 define function login-group () => (group :: false-or(<string>))
