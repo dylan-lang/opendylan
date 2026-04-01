@@ -438,10 +438,10 @@ define method op--call-error-iep
 end method;
 
 
-/// XEP
+/// Calling conventions
 
-define method op--spread-xep-callargs
-    (back-end :: <llvm-back-end>, xep-argument-count :: <llvm-value>,
+define method op--spread-callargs
+    (back-end :: <llvm-back-end>, argument-count :: <llvm-value>,
      callargs :: <llvm-value>)
  => (a0 :: <llvm-value>, a1 :: <llvm-value>, a2 :: <llvm-value>, a3 :: <llvm-value>)
   let default-bb = make(<llvm-basic-block>);
@@ -453,7 +453,7 @@ define method op--spread-xep-callargs
   end for;
 
   let entry-block = back-end.llvm-builder-basic-block;
-  ins--switch(back-end, xep-argument-count, default-bb, spread-switch-cases);
+  ins--switch(back-end, argument-count, default-bb, spread-switch-cases);
 
   // Default case (can't happen)
   ins--block(back-end, default-bb);
@@ -493,3 +493,24 @@ define method op--spread-xep-callargs
           range(below: $direct-argument-count));
   apply(values, phi-instructions)
 end method;
+
+define function op--extract-argument
+    (be :: <llvm-back-end>, num :: <integer>, pos :: <integer>,
+     a0 :: <llvm-value>, a1 :: <llvm-value>,
+     a2 :: <llvm-value>, a3 :: <llvm-value>)
+ => (value :: <llvm-value>)
+  if (num > $direct-argument-count)
+    let arguments-vector
+      = op--object-pointer-cast(be, a0, #"<simple-object-vector>");
+    call-primitive(be, primitive-vector-element-descriptor,
+                   arguments-vector,
+                   llvm-back-end-value-function(be, pos))
+  else
+    select (pos)
+      0 => a0;
+      1 => a1;
+      2 => a2;
+      3 => a3;
+    end
+  end if
+end function;
