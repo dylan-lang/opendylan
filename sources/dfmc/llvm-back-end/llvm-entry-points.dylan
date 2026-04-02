@@ -538,7 +538,7 @@ end function;
 
 
 /// Apply entry point
-
+/// (Auxiliary called when emitting <apply> computations)
 define entry-point-descriptor apply-xep
     (function :: <function>, #rest arguments) => (#rest values)
   if (zero?(num))
@@ -719,6 +719,7 @@ define method op--shift-rest-arguments
   end if
 end method;
 
+/// (Auxiliary called when emitting <method-apply> computations)
 define entry-point-descriptor apply-mep
     (next :: <list>, meth :: <lambda>, #rest arguments) => (#rest values);
   let word-size = back-end-word-size(be);
@@ -954,7 +955,8 @@ end entry-point-descriptor;
 
 /// Dispatcher entry points
 
-// For direct method calls with fixed arguments only
+/// For direct method calls with fixed arguments only;
+/// chains to the IEP of the generic's single method
 define entry-point-descriptor xep
     (function :: <function>, n :: <raw-integer>,
      a0 :: <object>, a1 :: <object>, a2 :: <object>, a3 :: <object>)
@@ -999,7 +1001,8 @@ define entry-point-descriptor xep
   end ins--if
 end entry-point-descriptor;
 
-// For direct method calls with #rest
+/// For direct method calls with #rest;
+/// chains to the IEP of the generic's single method
 define entry-point-descriptor rest-xep
     (function :: <function>, n :: <raw-integer>,
      a0 :: <object>, a1 :: <object>, a2 :: <object>, a3 :: <object>)
@@ -1296,7 +1299,8 @@ define method op--rest-key-xep
   end ins--if
 end method;
 
-// For direct method calls with #key (and possibly #rest)
+/// For direct method calls with #key (and possibly #rest);
+/// chains to the IEP of the generic's single method
 // (numbered by the total number of parameters in the IEP)
 define entry-point-descriptor rest-key-xep
     (function :: <function>, n :: <raw-integer>,
