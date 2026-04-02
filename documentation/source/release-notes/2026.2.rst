@@ -19,7 +19,10 @@ release.
 Compiler
 ========
 
-TODO
+* The compiler's LLVM back-end now uses a set of function calling
+  conventions that is compatible with a wider variety of platform
+  ABIs, and which improves performance in certain situations (such as
+  dispatching methods with keyword arguments).
 
 Tools
 =====
