@@ -216,6 +216,8 @@ void RemoveDylanExceptionHandlers(void)
 
 #if defined OPEN_DYLAN_ARCH_X86_64
 #define THREAD_STATE_FLAVOR x86_THREAD_STATE64
+#elif defined OPEN_DYLAN_ARCH_AARCH64
+#define THREAD_STATE_FLAVOR ARM_THREAD_STATE64
 #endif
 
 #define STACK_ALIGNMENT 16
@@ -274,6 +276,7 @@ kern_return_t catch_mach_exception_raise_state_identity
 {
   uintptr_t handler;
   if (exception == EXC_ARITHMETIC) {
+#if defined OPEN_DYLAN_ARCH_X86_64
     switch (code[0]) {
     case EXC_I386_DIV:
       handler = (uintptr_t) &dylan_integer_divide_by_0_error;
@@ -310,14 +313,24 @@ kern_return_t catch_mach_exception_raise_state_identity
               exception, code[0], code[1]);
       abort();
     }
+#elif defined OPEN_DYLAN_ARCH_AARCH64
+    fprintf(stderr, "Unhandled exception: exception=%d code=%lld/%lld\n",
+            exception, code[0], code[1]);
+    abort();
+#endif
   }
   else if (exception == EXC_BREAKPOINT) {
-    x86_thread_state64_t *ts = (x86_thread_state64_t *) old_state;
     unw_context_t uc;
     memset(&uc, 0, sizeof uc);
 #if defined OPEN_DYLAN_ARCH_X86_64
+    x86_thread_state64_t *ts = (x86_thread_state64_t *) old_state;
     // Both of these structures begin with the x86_64 general registers
     memcpy(&uc, ts, sizeof(uintptr_t) * 18);
+#elif defined OPEN_DYLAN_ARCH_AARCH64
+    arm_thread_state64_t *ts = (arm_thread_state64_t *) old_state;
+    fprintf(stderr, "Unhandled exception: exception=%d code=%lld/%lld\n",
+            exception, code[0], code[1]);
+    abort();
 #else
 #error No thread state to unwind context conversion
 #endif
@@ -336,6 +349,8 @@ kern_return_t catch_mach_exception_raise_state_identity
   *--rsp = ts->__rip;
   ts->__rsp = (uintptr_t) rsp;
   ts->__rip = handler;
+#elif defined OPEN_DYLAN_ARCH_AARCH64
+  abort();
 #else
 #error No definition for catch_mach_exception_raise_state_identity provided
 #endif
