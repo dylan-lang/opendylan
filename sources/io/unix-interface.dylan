@@ -39,39 +39,39 @@ end function unix-close;
 
 define function unix-read
     (fd :: <integer>, data :: <buffer>, offset :: <integer>, count :: <integer>) => (result :: <integer>)
-  with-interrupt-repeat
-    raw-as-integer
-      (%call-c-function ("read")
-           (fd :: <raw-c-unsigned-int>, address :: <raw-pointer>,
-            size :: <raw-c-size-t>)
-        => (result :: <raw-c-ssize-t>)
-         (integer-as-raw(fd),
-          primitive-cast-raw-as-pointer
-            (primitive-machine-word-add
-               (primitive-cast-pointer-as-raw
-                  (primitive-repeated-slot-as-raw(data, primitive-repeated-slot-offset(data))),
-                integer-as-raw(offset))),
-          integer-as-raw(count))
-       end)
+  with-object-byte-storage (buffer-storage-address = data)
+    with-interrupt-repeat
+      raw-as-integer
+        (%call-c-function ("read")
+             (fd :: <raw-c-unsigned-int>, address :: <raw-pointer>,
+              size :: <raw-c-size-t>)
+          => (result :: <raw-c-ssize-t>)
+           (integer-as-raw(fd),
+            primitive-cast-raw-as-pointer
+              (primitive-unwrap-machine-word
+                 (u%+(buffer-storage-address, offset))),
+            integer-as-raw(count))
+        end)
+    end
   end
 end function unix-read;
 
 define function unix-write
     (fd :: <integer>, data :: <buffer>, offset :: <integer>, count :: <integer>) => (result :: <integer>)
-  with-interrupt-repeat
-    raw-as-integer
-      (%call-c-function ("write")
-           (fd :: <raw-c-unsigned-int>, address :: <raw-pointer>,
-            size :: <raw-c-size-t>)
-        => (result :: <raw-c-ssize-t>)
-         (integer-as-raw(fd),
-          primitive-cast-raw-as-pointer
-            (primitive-machine-word-add
-               (primitive-cast-pointer-as-raw
-                  (primitive-repeated-slot-as-raw(data, primitive-repeated-slot-offset(data))),
-                integer-as-raw(offset))),
-          integer-as-raw(count))
-       end)
+  with-object-byte-storage (buffer-storage-address = data)
+    with-interrupt-repeat
+      raw-as-integer
+        (%call-c-function ("write")
+             (fd :: <raw-c-unsigned-int>, address :: <raw-pointer>,
+              size :: <raw-c-size-t>)
+          => (result :: <raw-c-ssize-t>)
+           (integer-as-raw(fd),
+            primitive-cast-raw-as-pointer
+              (primitive-unwrap-machine-word
+                 (u%+(buffer-storage-address, offset))),
+            integer-as-raw(count))
+        end)
+    end
   end
 end function unix-write;
 

@@ -955,20 +955,11 @@ are exported from the *streams* module.
    :sealed:
 
    Returns the address of the raw byte storage of a :class:`<buffer>`.
+   Provided for use by :macro:`with-object-byte-storage`.
 
    :seealso:
 
      - :gf:`byte-storage-address`
-
-.. method:: byte-storage-offset-address
-   :specializer: <buffer>
-   :sealed:
-
-   Returns the address of the raw byte storage of a :class:`<buffer>`, with an offset.
-
-   :seealso:
-
-     - :gf:`byte-storage-offset-address`
 
 .. class:: <byte-string-stream>
    :open:

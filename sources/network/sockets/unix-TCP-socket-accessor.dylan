@@ -314,8 +314,10 @@ define function unix-recv
   //   >0 when that many bytes were read
   //    0 when the peer is closed
   //   -1 ($SOCKET-ERROR) for error or no bytes available
-  unix-recv-buffer(descriptor, byte-storage-offset-address(the-buffer, offset),
-                   count, 0)
+  with-object-byte-storage (buffer-storage-address = the-buffer)
+    unix-recv-buffer(descriptor, u%+(buffer-storage-address, offset),
+                     count, 0)
+  end
 end function;
 
 define method accessor-write-from
@@ -408,7 +410,10 @@ define function unix-send
     (descriptor :: <accessor-socket-descriptor>, the-buffer :: <buffer>,
      offset :: <integer>, count :: <integer> )
  => (nwritten :: <integer>)
-  unix-send-buffer(descriptor, byte-storage-offset-address(the-buffer, offset), count, 0)
+  with-object-byte-storage (buffer-storage-address = the-buffer)
+    unix-send-buffer(descriptor, u%+(buffer-storage-address, offset),
+                     count, 0)
+  end
 end function;
 
 define method accessor-newline-sequence

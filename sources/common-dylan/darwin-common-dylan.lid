@@ -5,6 +5,8 @@ Author:       Andy Armstrong
 Target-Type:  dll
 Files: library
        macros
+       byte-vector
+       byte-storage
        common-extensions
        darwin-common-extensions
        unix-common-extensions
@@ -13,7 +15,6 @@ Files: library
        random
        numerics
        format
-       byte-vector
        timers
        profiling
        transcendentals
