@@ -73,7 +73,7 @@ end method;
 
 define function user-home-directory
     (user :: <string>) => (homedir :: false-or(<string>))
-  with-storage (homedir-buffer, $path-max)
+  with-stack-byte-storage (homedir-buffer, $path-max)
     let status
       = (%call-c-function ("system_user_homedir")
            (username :: <raw-byte-string>,
@@ -89,7 +89,7 @@ define function user-home-directory
         primitive-cast-raw-as-pointer(
           primitive-unwrap-machine-word(homedir-buffer)))
     end
-  end with-storage
+  end with-stack-byte-storage
 end function;
 
 
@@ -103,7 +103,7 @@ end function %shorten-pathname;
 
 define function %resolve-file
     (path :: <string>) => (resolved :: <string>)
-  with-storage (resolved-path, $path-max)
+  with-stack-byte-storage (resolved-path, $path-max)
     let result
       = primitive-wrap-machine-word(
             primitive-cast-pointer-as-raw(
@@ -121,7 +121,7 @@ define function %resolve-file
     else
       unix-file-error("get realpath for", "%=", path);
     end
-  end with-storage
+  end with-stack-byte-storage
 end function;
 
 
@@ -391,7 +391,7 @@ define function username-from-uid (uid :: <integer>) => (username :: <string>)
   // potentially useful on Linux? MAXLOGNAME on BSD systems? Can't we all just get along?
   // POSIX sets a minumum size of 9 (byte?) characters.
   let max-username-size = 256;
-  with-storage (username-buffer, max-username-size)
+  with-stack-byte-storage (username-buffer, max-username-size)
     let status
       = (%call-c-function ("system_passwd_username_from_uid")
            (uid :: <raw-c-unsigned-int>,
@@ -411,7 +411,7 @@ define function username-from-uid (uid :: <integer>) => (username :: <string>)
                  format-string: "Can't get username for uid %d",
                  format-arguments: list(uid)))
     end
-  end with-storage
+  end with-stack-byte-storage
 end function;
 
 define method %file-property

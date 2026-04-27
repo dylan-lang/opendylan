@@ -102,7 +102,7 @@ end method native-clock-to-tm;
 /// do that with our Dylan primitives.  So, we're forced to actually allocate a small
 /// block of storage, store the time therein, and then pass the block's address.  (Sigh)
 define method native-clock-to-tm (time :: <machine-word>) => (tm :: <machine-word>)
-  with-storage (timeloc, raw-as-integer(primitive-word-size()))
+  with-stack-byte-storage (timeloc, raw-as-integer(primitive-word-size()))
     primitive-c-signed-long-at(primitive-unwrap-machine-word(timeloc),
                                integer-as-raw(0),
                                integer-as-raw(0))
@@ -118,7 +118,7 @@ define method native-clock-to-tm (time :: <machine-word>) => (tm :: <machine-wor
       error("Can't decode native clock value")
     end;
     tm
-  end with-storage
+  end with-stack-byte-storage
 end method native-clock-to-tm;
 
 define function encode-native-clock-as-date (native-clock) => (date :: <date>)

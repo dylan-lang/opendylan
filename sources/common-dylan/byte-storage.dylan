@@ -6,6 +6,26 @@ Copyright:    Original Code is Copyright 1995-2011 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 
 ///
+/// WITH-STACK-BYTE-STORAGE
+///
+
+// TODO: Detect this usage pattern in dfmc-optimizer and replace it
+// with a real stack-local allocation
+
+define macro with-stack-byte-storage
+  { with-stack-byte-storage (?:name, ?size:expression) ?:body end }
+  => { begin
+         let storage-size :: <integer> = ?size;
+         let ?name :: <machine-word> = primitive-manual-allocate(storage-size);
+         block ()
+           ?body
+         cleanup
+           primitive-manual-free(?name);
+         end;
+       end }
+end macro;
+
+///
 /// BYTE-STORAGE-ADDRESS
 ///
 

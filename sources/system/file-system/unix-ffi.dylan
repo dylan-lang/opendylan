@@ -38,7 +38,7 @@ define constant    $R_OK = #o4;
 
 define macro with-stack-stat
   { with-stack-stat (?st:name, ?file:expression) ?:body end }
-  => { with-storage (?st, $stat-size) ?body end }
+  => { with-stack-byte-storage (?st, $stat-size) ?body end }
 end macro with-stack-stat;
 
 define inline-only function st-mode (st :: <machine-word>) => (mode :: <integer>)

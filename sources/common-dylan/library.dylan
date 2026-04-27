@@ -63,7 +63,8 @@ define module byte-vector
 end module byte-vector;
 
 define module byte-storage
-  create byte-storage-address,
+  create \with-stack-byte-storage,
+         byte-storage-address,
          \with-object-byte-storage;
 end module byte-storage;
 

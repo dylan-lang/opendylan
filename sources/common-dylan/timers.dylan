@@ -43,44 +43,12 @@ define method timer-stop
     values(0, 0)
   end if
 end;
-
-define macro with-storage
-  { with-storage (?:name, ?size:expression) ?:body end }
-  => { begin
-         let ?name :: <machine-word>
-           = primitive-wrap-machine-word(integer-as-raw(0));
-         block ()
-           ?name := primitive-wrap-machine-word
-                      (primitive-cast-pointer-as-raw
-                         (%call-c-function ("MMAllocMisc")
-                            (nbytes :: <raw-c-size-t>) => (p :: <raw-c-pointer>)
-                            (integer-as-raw(?size))
-                          end));
-           if (primitive-machine-word-equal?
-                 (primitive-unwrap-machine-word(?name), integer-as-raw(0)))
-             error("unable to allocate %d bytes of storage", ?size);
-           end;
-           ?body
-         cleanup
-           if (primitive-machine-word-not-equal?
-                 (primitive-unwrap-machine-word(?name), integer-as-raw(0)))
-             %call-c-function ("MMFreeMisc")
-               (p :: <raw-c-pointer>, nbytes :: <raw-c-size-t>) => ()
-                 (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(?name)),
-                  integer-as-raw(?size))
-             end;
-             #f
-           end
-         end
-       end }
-end macro with-storage;
-
 define not-inline function %timer-current-time
     ()
  => (secs :: <machine-word>, nsecs :: <machine-word>)
   let secs :: <machine-word> = primitive-wrap-machine-word(integer-as-raw(0));
   let nsecs :: <machine-word> = primitive-wrap-machine-word(integer-as-raw(0));
-  with-storage (timeloc, 8)
+  with-stack-byte-storage (timeloc, 8)
     %call-c-function ("timer_get_point_in_time")
         (time :: <raw-c-pointer>)
      => ()
@@ -94,7 +62,7 @@ define not-inline function %timer-current-time
                primitive-c-unsigned-int-at(primitive-unwrap-machine-word(timeloc),
                                            integer-as-raw(1),
                                            integer-as-raw(0)));
-  end with-storage;
+  end with-stack-byte-storage;
   values(secs, nsecs)
 end function;
 
