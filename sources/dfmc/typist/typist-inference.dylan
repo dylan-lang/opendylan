@@ -378,6 +378,11 @@ define method type-estimate-call-from-site(call :: <primitive-call>,
           return(make(<type-estimate-values>,
                       fixed: vector(as(<type-estimate>, type))))
         end when;
+
+      fn == dylan-value(#"primitive-pin-object") =>
+        let object-te = type-estimate(first(arguments(call)));
+        return(make(<type-estimate-values>,
+                    fixed: vector(object-te)));
     end case;
 
     type-estimate-call-stupidly-from-fn(call, fn, cache)
