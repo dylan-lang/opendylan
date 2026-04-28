@@ -585,7 +585,14 @@ end;
 
 define method print-type-estimate-internals
     (teli :: <type-estimate-limited-instance>, #key stream) => ()
-  format(stream, "singleton(%s)", type-estimate-debug-name(type-estimate-singleton(teli)))
+  let singleton = type-estimate-singleton(teli);
+  if (instance?(singleton, <string>))
+    // Output quotes and prevent printing line breaks for strings.
+    // Should we limit the length?
+    format(stream, "singleton(%=)", singleton)
+  else
+    format(stream, "singleton(%s)", type-estimate-debug-name(singleton))
+  end
 end;
 
 ///
