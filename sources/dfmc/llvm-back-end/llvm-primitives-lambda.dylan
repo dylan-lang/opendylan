@@ -1,13 +1,13 @@
 Module: dfmc-llvm-back-end
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
-              Additional code is Copyright 2009-2013 Gwydion Dylan Maintainers
+              Additional code is Copyright 2009-2026 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Calling Convention
 
-define constant $maximum-argument-count = 64;
+define constant $direct-argument-count = 4;
 define constant $entry-point-argument-count = 20;
 
 // Fields in signature-properties: see ^signature-properties
@@ -520,63 +520,19 @@ define side-effecting stateless indefinite-extent can-unwind &runtime-primitive-
 
   // Read the size of the arguments vector
   let mepargs-cast = op--object-pointer-cast(be, mepargs, sov-class);
-  let vector-size
-    = call-primitive(be, primitive-vector-size-descriptor, mepargs-cast);
-
-  // Create a basic block for each case
-  let default-bb = make(<llvm-basic-block>, name: "bb.default");
-  let return-bb = make(<llvm-basic-block>, name: "bb.return");
-  let switch-cases = make(<stretchy-object-vector>);
-  for (count from 0 to $entry-point-argument-count)
-    add!(switch-cases, count);
-    add!(switch-cases, make(<llvm-basic-block>));
-  end;
-
-  // Branch to the appropriate case
-  ins--switch(be, vector-size, default-bb, switch-cases);
-
-  // Generate all of the cases
-  let result-phi-arguments = make(<stretchy-object-vector>);
-  for (count from 0 to $entry-point-argument-count)
-    ins--block(be, switch-cases[count * 2 + 1]);
-
-    let parameter-values = make(<stretchy-object-vector>);
-    // Retrieve argument values from vector
-    for (i from 0 below count)
-      add!(parameter-values,
-           call-primitive(be, primitive-vector-element-descriptor,
-                          mepargs-cast, llvm-back-end-value-function(be, i)));
-    end for;
-
-    // Chain to the MEP
-    let parameter-types
-      = vector($llvm-object-pointer-type,  // method
-               $llvm-object-pointer-type); // next-methods
-    let mep-type
-      = make(<llvm-function-type>,
-             return-type: llvm-reference-type(be, be.%mv-struct-type),
-             parameter-types: parameter-types,
-             varargs?: #t);
-    let mep-cast = ins--bitcast(be, mep, llvm-pointer-to(be, mep-type));
-    let result
-      = ins--tail-call
-          (be, mep-cast,
-           concatenate(vector(meth, next-methods), parameter-values),
-           calling-convention: $llvm-calling-convention-c);
-
-    add!(result-phi-arguments, result);
-    add!(result-phi-arguments, be.llvm-builder-basic-block);
-    ins--br(be, return-bb);
-  end for;
-
-  // Default case (too many arguments)
-  ins--block(be, default-bb);
-  ins--call-intrinsic(be, "llvm.trap", vector());
-  ins--unreachable(be);
-
-  // Return
-  ins--block(be, return-bb);
-  ins--phi(be, result-phi-arguments)
+  let mepargs-size = call-primitive(be, primitive-vector-size-descriptor,
+                                    mepargs-cast);
+  // Chain to the method's MEP
+  ins--if (be, ins--icmp-sgt(be, mepargs-size, $direct-argument-count))
+    // The vector is already what we want
+    op--chain-to-mep(be, mep, meth, next-methods, vector(mepargs),
+                     tail-call?: #t)
+  ins--else
+    // It's not what we want, so spread the args
+    let (#rest args) = op--spread-callargs(be, mepargs-size, mepargs-cast);
+    op--chain-to-mep(be, mep, meth, next-methods, args,
+                     tail-call?: #t)
+  end ins--if
 end;
 
 define side-effecting stateless indefinite-extent can-unwind &runtime-primitive-descriptor primitive-engine-node-apply-with-optionals
@@ -585,55 +541,22 @@ define side-effecting stateless indefinite-extent can-unwind &runtime-primitive-
  => (#rest values);
   let word-size = back-end-word-size(be);
   let sov-class :: <&class> = dylan-value(#"<simple-object-vector>");
+
   let args-cast = op--object-pointer-cast(be, args, sov-class);
+  let args-size = call-primitive(be, primitive-vector-size-descriptor,
+                                 args-cast);
 
-  // Read the size of the arguments vector
-  let vector-size
-    = call-primitive(be, primitive-vector-size-descriptor, args-cast);
-
-  // Create a basic block for each case
-  let default-bb = make(<llvm-basic-block>, name: "bb.default");
-  let return-bb = make(<llvm-basic-block>, name: "bb.return");
-  let switch-cases = make(<stretchy-object-vector>);
-  for (count from 0 to $entry-point-argument-count)
-    add!(switch-cases, count);
-    add!(switch-cases, make(<llvm-basic-block>, name: format-to-string("bb.arg%d", count)));
-  end;
-
-  // Branch to the appropriate case
-  ins--switch(be, vector-size, default-bb, switch-cases);
-
-  // Generate all of the cases
-  let result-phi-arguments = make(<stretchy-object-vector>);
-  for (count from 0 to $entry-point-argument-count)
-    ins--block(be, switch-cases[count * 2 + 1]);
-
-    let parameter-values = make(<stretchy-object-vector>);
-    // Retrieve argument values from vector
-    for (i from 0 below count)
-      add!(parameter-values,
-           call-primitive(be, primitive-vector-element-descriptor,
-                          args-cast, llvm-back-end-value-function(be, i)));
-    end for;
-
-    // Chain to engine node
-    let result
-      = op--chain-to-engine-entry-point(be, engine, parent, parameter-values,
-					tail-call?: #t);
-
-    add!(result-phi-arguments, result);
-    add!(result-phi-arguments, be.llvm-builder-basic-block);
-    ins--br(be, return-bb);
-  end for;
-
-  // Default case (too many arguments)
-  ins--block(be, default-bb);
-  ins--call-intrinsic(be, "llvm.trap", vector());
-  ins--unreachable(be);
-
-  // Return
-  ins--block(be, return-bb);
-  ins--phi(be, result-phi-arguments)
+  // Chain to the engine node
+  ins--if (be, ins--icmp-sgt(be, args-size, $direct-argument-count))
+    // The vector is already what we want
+    op--chain-to-engine-entry-point(be, engine, parent, vector(args),
+                                    tail-call?: #t)
+  ins--else
+    // It's not what we want, so spread the args
+    let (#rest args) = op--spread-callargs(be, args-size, args-cast);
+    op--chain-to-engine-entry-point(be, engine, parent, args,
+                                    tail-call?: #t)
+  end ins--if
 end;
 
 /*
@@ -644,120 +567,124 @@ define side-effecting stateless indefinite-extent &unimplemented-primitive-descr
 end;
 */
 
-define side-effecting stateless indefinite-extent can-unwind mapped-parameter &runtime-primitive-descriptor primitive-apply
+define side-effecting stateless indefinite-extent can-unwind &runtime-primitive-descriptor primitive-apply
     (fn :: <function>, arguments :: <simple-object-vector>)
  => (#rest values)
   let word-size = back-end-word-size(be);
   let sov-class :: <&class> = dylan-value(#"<simple-object-vector>");
   let function-class :: <&class> = dylan-value(#"<function>");
 
-  let fn-unmapped = ins--bitcast(be, fn, $llvm-object-pointer-type);
+  let fn-mapped = op--object-pointer-cast(be, fn, function-class);
 
   // Retrieve the XEP function pointer
-  let xep-slot-ptr = op--getslotptr(be, fn, function-class, #"xep");
+  let xep-slot-ptr = op--getslotptr(be, fn-mapped, function-class, #"xep");
   let xep = ins--load(be, xep-slot-ptr, alignment: word-size);
 
+  // Cast to the appropriate XEP type
+  let parameter-types
+    = vector($llvm-object-pointer-type,     // function
+             be.%type-table["iWord"],       // argument count
+             $llvm-object-pointer-type,     // a0
+             $llvm-object-pointer-type,     // a1
+             $llvm-object-pointer-type,     // a2
+             $llvm-object-pointer-type);    // a3
+  let return-type = llvm-reference-type(be, be.%mv-struct-type);
+  let xep-type
+    = make(<llvm-function-type>,
+           return-type: return-type,
+           parameter-types: parameter-types,
+           varargs?: #f);
+  let xep-cast
+    = ins--bitcast(be, xep, llvm-pointer-to(be, xep-type));
+
   // Read the size of the arguments vector
+  let arguments-vector = op--object-pointer-cast(be, arguments, sov-class);
   let arguments-size
-    = call-primitive(be, primitive-vector-size-descriptor, arguments);
+    = call-primitive(be, primitive-vector-size-descriptor, arguments-vector);
 
   // Retrieve the last argument (a vector of arguments to pass)
   let last-index = ins--sub(be, arguments-size, 1);
   let last-argument
     = call-primitive(be, primitive-vector-element-descriptor,
-                     arguments, last-index);
-  let last-argument-mapped
+                     arguments-vector, last-index);
+  let last-argument-cast
     = op--object-pointer-cast(be, last-argument, sov-class);
   let last-argument-size
     = call-primitive(be, primitive-vector-size-descriptor,
-                     last-argument-mapped);
+                     last-argument-cast);
+  let xep-argument-count = ins--add(be, last-index, last-argument-size);
 
-  // Allocate a buffer for all of the arguments
-  let argument-count = ins--add(be, last-index, last-argument-size);
-  let buf = ins--alloca(be, $llvm-object-pointer-type, argument-count,
-                        alignment: word-size);
-  let buf-cast = ins--bitcast(be, buf, $llvm-object-pointer-type);
+  ins--if (be, op--likely(be, ins--icmp-eq(be, arguments-size, 1)))
+    // We already have a complete argument vector... is that what we want?
+    let cmp
+      = ins--icmp-sgt(be, xep-argument-count, $direct-argument-count);
+    ins--if (be, cmp)
+      // It is, so call the XEP with callargs in the a0 position
+      op--call(be, xep-cast,
+               vector(fn,
+                      xep-argument-count,
+                      last-argument,
+                      $object-pointer-undef,
+                      $object-pointer-undef,
+                      $object-pointer-undef),
+               calling-convention: llvm-back-end-calling-convention-fast(be),
+               tail-call?: #t)
+    ins--else
+      // It's not what we want, so spread the args
+      let (a0, a1, a2, a3)
+        = op--spread-callargs(be, last-argument-size, last-argument-cast);
+      force-out();
+      op--call(be, xep-cast,
+               vector(fn, xep-argument-count, a0, a1, a2, a3),
+               calling-convention: llvm-back-end-calling-convention-fast(be),
+               tail-call?: #t)
+    end ins--if
+  ins--else
+    // Stack-allocate a vector for all of the arguments
+    let callargs = op--stack-allocate-vector(be, xep-argument-count);
+    let callargs-cast = op--object-pointer-cast(be, callargs, sov-class);
 
-  // Copy values from arguments into the buffer
-  let zero = llvm-back-end-value-function(be, 0);
-  let src1 = op--getslotptr(be, arguments, sov-class,
-                            #"vector-element", 0);
-  call-primitive(be, primitive-replace!-descriptor,
-                 buf-cast, zero, zero,
-                 src1, zero, zero,
-                 last-index);
+    // Copy values from arguments into the new callargs
+    let zero = llvm-back-end-value-function(be, 0);
+    let src1 = op--getslotptr(be, arguments-vector, sov-class,
+                              #"vector-element", 0);
+    let dst = op--getslotptr(be, callargs-cast, sov-class,
+                             #"vector-element", 0);
+    call-primitive(be, primitive-replace!-descriptor,
+                   dst, zero, zero,
+                   src1, zero, zero,
+                   last-index);
 
-  // Copy values from last-argument into the buffer
-  let src2 = op--getslotptr(be, last-argument-mapped, sov-class,
-                            #"vector-element", 0);
-  call-primitive(be, primitive-replace!-descriptor,
-                 buf-cast, last-index, zero,
-                 src2, zero, zero,
-                 last-argument-size);
+    // Copy values from last-argument into the new callargs
+    let src2 = op--getslotptr(be, last-argument-cast, sov-class,
+                              #"vector-element", 0);
+    call-primitive(be, primitive-replace!-descriptor,
+                   dst, last-index, zero,
+                   src2, zero, zero,
+                   last-argument-size);
 
-  // Create a basic block for each case
-  let jump-table
-    = make(<simple-object-vector>, size: 2 * $maximum-argument-count);
-  for (count from 0 below $maximum-argument-count)
-    jump-table[count * 2] := count;
-    jump-table[count * 2 + 1]
-      := make(<llvm-basic-block>, name: format-to-string("bb.arg%d", count));
-  end;
-  let default-bb = make(<llvm-basic-block>, name: "bb.default");
-  let return-bb = make(<llvm-basic-block>, name: "bb.return");
-
-  // Branch to the appropriate case
-  ins--switch(be, argument-count, default-bb, jump-table);
-
-  // Generate all of the cases
-  let result-phi-arguments = make(<stretchy-object-vector>);
-  for (count from 0 below $maximum-argument-count)
-    ins--block(be, jump-table[count * 2 + 1]);
-
-    // Common XEP parameters
-    let parameter-values = make(<simple-object-vector>, size: count + 2);
-    parameter-values[0] := fn-unmapped;
-    parameter-values[1] := argument-count;
-
-    // Retrieve argument values
-    for (i from 0 below count)
-      parameter-values[2 + i]
-        := begin
-             let element-ptr = ins--gep(be, buf, i);
-             ins--load(be, element-ptr, alignment: word-size);
-           end;
-    end for;
-
-    // Cast to the appropriate XEP type
-    let parameter-types = make(<simple-object-vector>, size: count + 2);
-    parameter-types[0] := $llvm-object-pointer-type; // function
-    parameter-types[1] := be.%type-table["iWord"]; // argument count
-    fill!(parameter-types, $llvm-object-pointer-type, start: 2);
-    let xep-type
-      = make(<llvm-function-type>,
-             return-type: llvm-reference-type(be, be.%mv-struct-type),
-             parameter-types: parameter-types,
-             varargs?: #f);
-    let xep-cast = ins--bitcast(be, xep, llvm-pointer-to(be, xep-type));
-
-    // Call the function
-    let result
-      = op--call(be, xep-cast, parameter-values,
-                 calling-convention: $llvm-calling-convention-c,
-                 tail-call?: #t);
-    add!(result-phi-arguments, result);
-    add!(result-phi-arguments, be.llvm-builder-basic-block);
-    ins--br(be, return-bb);
-  end for;
-
-  // Default case (too many arguments)
-  ins--block(be, default-bb);
-  ins--call-intrinsic(be, "llvm.trap", vector());
-  ins--unreachable(be);
-
-  // Return
-  ins--block(be, return-bb);
-  ins--phi(be, result-phi-arguments)
+    // Is this callargs vector what we want?
+    let cmp
+      = ins--icmp-sgt(be, xep-argument-count, $direct-argument-count);
+    ins--if (be, cmp)
+      op--call(be, xep-cast,
+               vector(fn, xep-argument-count,
+                      callargs,
+                      $object-pointer-undef,
+                      $object-pointer-undef,
+                      $object-pointer-undef),
+               calling-convention: llvm-back-end-calling-convention-fast(be),
+               tail-call?: #f)
+    ins--else
+      // It's not what we want, so spread them
+      let (a0, a1, a2, a3)
+        = op--spread-callargs(be, xep-argument-count, callargs-cast);
+      op--call(be, xep-cast,
+               vector(fn, xep-argument-count, a0, a1, a2, a3),
+               calling-convention: llvm-back-end-calling-convention-fast(be),
+               tail-call?: #t)
+    end ins--if
+  end ins--if
 end;
 
 // Used for calls to Dylan from C
@@ -772,10 +699,7 @@ define side-effecting stateless indefinite-extent can-unwind c-callable auxiliar
   call-primitive(be, primitive-vector-element-setter-descriptor,
                  optargs, args, llvm-back-end-value-function(be, 0));
 
-  let fn-cast = op--object-pointer-cast(be, fn, #"<function>");
-  let args-cast = op--object-pointer-cast(be, args, #"<simple-object-vector>");
-
-  let mv = call-primitive(be, primitive-apply-descriptor, fn-cast, args-cast);
+  let mv = call-primitive(be, primitive-apply-descriptor, fn, args);
   ins--extractvalue(be, mv, 0)
 end;
 

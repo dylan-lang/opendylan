@@ -350,7 +350,7 @@ define function generate-runtime
 
         // Create the debugging compile unit
         back-end.llvm-back-end-dbg-compile-unit
-          := llvm-make-dbg-compile-unit($DW-LANG-Mips-Assembler,
+          := llvm-make-dbg-compile-unit($DW-LANG-C99,
                                         dbg-file,
                                         $debug-producer,
                                         module: m);
