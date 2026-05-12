@@ -6,7 +6,7 @@ set -e
 # was also needed.
 
 # https://releases.llvm.org/
-LLVM_RELEASE=21.1.8
+LLVM_RELEASE=22.1.5
 LLVM_REL=$(echo $LLVM_RELEASE | sed s/-rc/rc/)
 
 LLVM_CLANG=$(echo $LLVM_RELEASE | sed 's/\([0-9]*\).*/\1/')
@@ -15,7 +15,7 @@ LLVM_CLANG=$(echo $LLVM_RELEASE | sed 's/\([0-9]*\).*/\1/')
 # Note: For 8.2.8 and earlier the URL was https://github.com/ivmai/bdwgc. There does
 # appear to be a forwarding pointer but not all the earlier releases (ex: 8.2.8) are
 # there.
-BDWGC_RELEASE=8.2.10
+BDWGC_RELEASE=8.2.12
 
 srcdir=`dirname $0`
 test -z "$srcdir" && srcdir=.
@@ -80,9 +80,7 @@ case ${MACHINE}-${SYSTEM} in
         DYLAN_JOBS=$(getconf _NPROCESSORS_ONLN)
         ;;
     arm64-Darwin)
-        TRIPLE=x86_64-apple-darwin
-        LLVM_TARGETS="AArch64;ARM;X86"
-        CFLAGS_ARCH="-arch x86_64"
+        TRIPLE=aarch64-apple-darwin
         NEED_LIBUNWIND=false
         NEED_INSTALL_NAME=:
         SYSROOT=" -isysroot $(xcrun --show-sdk-path)"

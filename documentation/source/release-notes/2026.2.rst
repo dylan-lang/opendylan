@@ -16,6 +16,12 @@ release.
 * Report problems: https://github.com/dylan-lang/opendylan/issues
 
 
+Platform Support
+================
+
+* On macOS, Apple Silicon (64-bit ArmV8 architecture) is now
+  directly supported, making the use of Rosetta 2 no longer necessary.
+
 Compiler
 ========
 
