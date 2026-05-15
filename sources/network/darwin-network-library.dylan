@@ -252,6 +252,7 @@ define module sockets-internals
   use format;
   use format-out;
   use byte-vector;
+  use byte-storage;
   use unix-sockets,
     rename: {socket => unix-socket,
              connect => unix-connect,

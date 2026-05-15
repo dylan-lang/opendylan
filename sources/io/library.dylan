@@ -29,6 +29,7 @@ define module streams
     export: { <byte>, <byte-character>, <unicode-character> };
   use byte-vector,
     export: { <byte-vector> };
+  use byte-storage;
 
   // Basic stream class
   create <basic-stream>;
@@ -127,6 +128,7 @@ define module streams-internals
   use dylan-extensions;
   use dylan-direct-c-ffi;
   use byte-vector;
+  use byte-storage;
   use machine-words;
   use threads;
   use streams,
@@ -340,6 +342,8 @@ end module format-out;
 
 define module io-internals
   use common-dylan;
+  use machine-words;
+  use byte-storage;
   use dylan-direct-c-ffi;
   use threads;
   use streams-internals;

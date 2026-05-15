@@ -52,6 +52,8 @@ end;
 
 define module ssl-sockets
   use common-dylan;
+  use machine-words;
+  use byte-storage;
   use c-ffi;
   use streams-internals;
   use file-system, import: { file-exists?, file-property, <pathname> };

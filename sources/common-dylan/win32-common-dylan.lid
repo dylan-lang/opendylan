@@ -8,6 +8,8 @@ RC-Files:     version.rc
 Target-Type:  dll
 Files: library
        macros
+       byte-vector
+       byte-storage
        common-extensions
        win32-common-extensions
        locators-protocol
@@ -15,7 +17,6 @@ Files: library
        random
        numerics
        format
-       byte-vector
        timers
        profiling
        transcendentals

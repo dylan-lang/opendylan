@@ -74,25 +74,27 @@ define method accessor-read-into!
         let addr = pointer-cast(<LPSOCKADDR>, inaddr);
         with-stack-structure (size-pointer :: <C-int*>)
           pointer-value(size-pointer) := size-of(<SOCKADDR-IN>);
-          let nread = win32-recv-buffer-from(the-descriptor,
-                                             byte-storage-offset-address(the-buffer, offset),
-                                             count,
-                                             0,
-                                             addr,
-                                             size-pointer);
-          if (nread == $SOCKET-ERROR)
-            win32-socket-error("win32-recv", host-address: stream.remote-host,
-                               host-port: stream.remote-port);
-          elseif ( nread == 0) // Check for EOF (nread == 0)
-            accessor.connection-closed? := #t;
-          end if;
-          // NB store addr info into accessor object for user
-          accessor.remote-host := make(<ipv4-address>,
-                                       address: make(<ipv4-network-order-address>,
-                                                     address: inaddr.sin-addr-value));
-          accessor.remote-port := accessor-ntohs(inaddr.sin-port-value);
-          // return nread
-          nread
+          with-object-byte-storage (buffer-storage-address = the-buffer)
+            let nread = win32-recv-buffer-from(the-descriptor,
+                                               u%+(buffer-storage-address, offset),
+                                               count,
+                                               0,
+                                               addr,
+                                               size-pointer);
+            if (nread == $SOCKET-ERROR)
+              win32-socket-error("win32-recv", host-address: stream.remote-host,
+                                 host-port: stream.remote-port);
+            elseif (nread == 0) // Check for EOF (nread == 0)
+              accessor.connection-closed? := #t;
+            end if;
+            // NB store addr info into accessor object for user
+            accessor.remote-host := make(<ipv4-address>,
+                                         address: make(<ipv4-network-order-address>,
+                                                       address: inaddr.sin-addr-value));
+            accessor.remote-port := accessor-ntohs(inaddr.sin-port-value);
+            // return nread
+            nread
+          end with-object-byte-storage
         end with-stack-structure;
       end with-stack-structure;
     end if;
@@ -124,18 +126,21 @@ define method accessor-write-from
         let remaining :: <buffer-index> = count;
         let addr = pointer-cast(<LPSOCKADDR>, inaddr);
         while (remaining > 0)
-          let nwritten =
-          win32-send-buffer-to(accessor.socket-descriptor,
-                               byte-storage-offset-address(buffer, offset + count - remaining),
-                               remaining,
-                               0,
-                               addr,
-                               size-of(<SOCKADDR-IN>));
-          if (nwritten == $SOCKET-ERROR)
-            win32-socket-error("win32-send", host-address: stream.remote-host,
-                               host-port: stream.remote-port)
-          end if;
-          remaining := remaining - nwritten
+          with-object-byte-storage (buffer-storage-address = buffer)
+            let nwritten
+              = win32-send-buffer-to(accessor.socket-descriptor,
+                                     u%+(buffer-storage-address,
+                                         offset + count - remaining),
+                                     remaining,
+                                     0,
+                                     addr,
+                                     size-of(<SOCKADDR-IN>));
+            if (nwritten == $SOCKET-ERROR)
+              win32-socket-error("win32-send", host-address: stream.remote-host,
+                                 host-port: stream.remote-port)
+            end if;
+            remaining := remaining - nwritten;
+          end with-object-byte-storage;
         end while;
       end with-stack-structure;
     end if;

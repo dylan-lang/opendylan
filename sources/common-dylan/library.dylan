@@ -23,6 +23,7 @@ define library common-dylan
     simple-timers,
     simple-format,
     byte-vector,
+    byte-storage,
     transcendentals;
 
   // For the test suite only.
@@ -58,10 +59,14 @@ define module byte-vector
          byte-vector-ref,
          byte-vector-ref-setter,
          copy-bytes,
-         byte-storage-address,
-         byte-storage-offset-address,
          hexstring, from-hexstring
 end module byte-vector;
+
+define module byte-storage
+  create \with-stack-byte-storage,
+         byte-storage-address,
+         \with-object-byte-storage;
+end module byte-storage;
 
 define module common-extensions
   use dylan-extensions,
@@ -96,9 +101,9 @@ define module common-extensions
     export: { \profiling,
               profiling-type-result };
   use byte-vector,
-    export: { <byte-vector>,
-              byte-storage-address,
-              byte-storage-offset-address};
+    export: { <byte-vector> };
+  use byte-storage,
+    export: { byte-storage-address };
   create <closable-object>,
          <stream>,
          close,
@@ -310,6 +315,7 @@ define module common-dylan-internals
   use threads;
   use transcendentals;
   use byte-vector;
+  use byte-storage;
   use streams-protocol;
   use locators-protocol;
   use simple-random;

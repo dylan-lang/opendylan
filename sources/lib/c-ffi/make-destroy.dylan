@@ -92,19 +92,9 @@ define macro with-c-string
   { with-c-string (?var:name = ?string:expression)
      ?:body
      end }
-    => { begin
-           let string = ?string;
-           let pinned-string = primitive-pin-object(string);
-           block ()
-             let raw-address
-               = primitive-cast-pointer-as-raw(primitive-string-as-raw(pinned-string));
-             let str-address = primitive-wrap-machine-word(raw-address);
-             let ?var = make(<c-string>, address: str-address);
-             ?body
-           cleanup
-             primitive-unpin-object(pinned-string);
-             #f
-           end;
+    => { with-object-byte-storage (str-address = ?string)
+           let ?var = make(<c-string>, address: str-address);
+           ?body
          end }
 end macro;
 

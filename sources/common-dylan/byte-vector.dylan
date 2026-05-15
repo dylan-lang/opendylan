@@ -199,35 +199,6 @@ define sealed method copy-bytes
   end if;
 end method;
 
-define open generic byte-storage-address
-    (the-buffer)
- => (result-offset :: <machine-word>);
-
-define open generic byte-storage-offset-address
-    (the-buffer, data-offset :: <integer>)
- => (result-offset :: <machine-word>);
-
-define constant <byte-vector-like> = type-union(<byte-string>, <byte-vector>);
-
-define sealed inline method byte-storage-address
-    (the-buffer :: <byte-vector-like>)
- => (result-offset :: <machine-word>)
-  primitive-wrap-machine-word
-    (primitive-cast-pointer-as-raw
-       (primitive-repeated-slot-as-raw
-          (the-buffer, primitive-repeated-slot-offset(the-buffer))))
-end method;
-
-define sealed inline method byte-storage-offset-address
-    (the-buffer :: <byte-vector-like>, data-offset :: <integer>)
- => (result-offset :: <machine-word>)
-  u%+(data-offset,
-      primitive-wrap-machine-word
-        (primitive-cast-pointer-as-raw
-           (primitive-repeated-slot-as-raw
-              (the-buffer, primitive-repeated-slot-offset(the-buffer)))))
-end method;
-
 define sealed method from-hexstring (string :: <byte-string>)
   => (result :: <byte-vector>)
   if (odd?(string.size))

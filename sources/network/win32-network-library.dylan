@@ -530,6 +530,7 @@ define module sockets-internals
   use format;
   use format-out;
   use byte-vector;
+  use byte-storage;
   use WinSock2,                          // from "winsock2.h":
     rename: {socket => win32-socket,
              connect => win32-connect,

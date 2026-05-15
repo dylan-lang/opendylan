@@ -5,39 +5,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-// Temporary storage
-
-define macro with-storage
-  { with-storage (?:name, ?size:expression) ?:body end }
-  => { begin
-         let ?name = primitive-wrap-machine-word(integer-as-raw(0));
-         let storage-size :: <integer> = ?size;
-         block ()
-           ?name := primitive-wrap-machine-word
-                      (primitive-cast-pointer-as-raw
-                         (%call-c-function ("MMAllocMisc")
-                            (nbytes :: <raw-c-size-t>) => (p :: <raw-c-pointer>)
-                            (integer-as-raw(storage-size))
-                          end));
-           if (primitive-machine-word-equal?
-                 (primitive-unwrap-machine-word(?name), integer-as-raw(0)))
-             error("unable to allocate %d bytes of storage", ?size);
-           end;
-           ?body
-         cleanup
-           if (primitive-machine-word-not-equal?
-                 (primitive-unwrap-machine-word(?name), integer-as-raw(0)))
-             %call-c-function ("MMFreeMisc")
-               (p :: <raw-c-pointer>, nbytes :: <raw-c-size-t>) => ()
-                 (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(?name)),
-                  integer-as-raw(storage-size))
-             end;
-             #f
-           end
-         end
-       end }
-end macro with-storage;
-
 define constant $os-variant = $os-name;
 define constant $os-version = "Unknown";
 
@@ -145,7 +112,7 @@ define class <application-process> (<object>)
 end class;
 
 define function make-pipe() => (read-fd :: <integer>, write-fd :: <integer>);
-  with-storage (fildes, 2 * raw-as-integer(primitive-word-size()))
+  with-stack-byte-storage (fildes, 2 * raw-as-integer(primitive-word-size()))
     let result
       = raw-as-integer
           (%call-c-function("pipe")
@@ -165,7 +132,7 @@ define function make-pipe() => (read-fd :: <integer>, write-fd :: <integer>);
                          (primitive-unwrap-machine-word(fildes),
                           integer-as-raw(1), integer-as-raw(0)));
     values(read-fd, write-fd)
-  end with-storage
+  end with-stack-byte-storage
 end function;
 
 define constant $null-device = "/dev/null";
@@ -386,7 +353,7 @@ define function run-application
       end if;
 
   let pid
-    = with-storage (argv, argv-size * raw-as-integer(primitive-word-size()))
+    = with-stack-byte-storage (argv, argv-size * raw-as-integer(primitive-word-size()))
         if (under-shell?)
           primitive-c-pointer-at(primitive-unwrap-c-pointer(argv),
                                  integer-as-raw(0), integer-as-raw(0))
@@ -473,7 +440,7 @@ define function run-application
             end;
           end if;
         end block;
-      end with-storage;
+      end with-stack-byte-storage;
 
   // Close fds that belong to the child
   do(unix-close, close-fds);
@@ -531,7 +498,7 @@ end function;
 define function %waitpid
     (wpid :: <integer>, options :: <integer>)
  => (pid :: <integer>, status :: <integer>);
-  with-storage (statusp, raw-as-integer(primitive-word-size()))
+  with-stack-byte-storage (statusp, raw-as-integer(primitive-word-size()))
     let pid
       = raw-as-integer
           (%call-c-function ("waitpid")
@@ -547,7 +514,7 @@ define function %waitpid
                                      integer-as-raw(0),
                                      integer-as-raw(0)));
     values(pid, status)
-  end with-storage
+  end with-stack-byte-storage
 end function;
 
 // The result returned from this must be freed with MMFreeMisc.

@@ -332,14 +332,17 @@ define method accessor-read-into!
      offset :: <buffer-index>, count :: <buffer-index>, #key buffer)
  => (nread :: <integer>)
   let the-buffer = buffer | stream-input-buffer(stream);
-  let r = interruptible-system-call
-    (SSL-read(accessor.socket-descriptor,
-	      byte-storage-offset-address(the-buffer, offset),
-	      count));
-  if (r < 0)
-    SSL-error(accessor.socket-descriptor, r);
-  end;
-  r
+  with-object-byte-storage (buffer-storage-address = the-buffer)
+    let r
+      = interruptible-system-call
+          (SSL-read(accessor.socket-descriptor,
+                    u%+(buffer-storage-address, offset),
+                    count));
+    if (r < 0)
+      SSL-error(accessor.socket-descriptor, r);
+    end;
+    r
+  end
 end;
 
 define method accessor-write-from
@@ -347,12 +350,17 @@ define method accessor-write-from
      offset :: <buffer-index>, count :: <buffer-index>, #key buffer,
      return-fresh-buffer?) => (nwritten :: <integer>, new-buffer :: <buffer>)
   let buffer = buffer | stream-output-buffer(stream);
-  let nwritten = interruptible-system-call
-    (SSL-write(accessor.socket-descriptor, byte-storage-offset-address(buffer, offset), count));
-  if (nwritten < 0)
-    SSL-error(accessor.socket-descriptor, nwritten);
-  end;
-  values(nwritten, buffer)
+  with-object-byte-storage (buffer-storage-address = buffer)
+    let nwritten
+      = interruptible-system-call
+          (SSL-write(accessor.socket-descriptor,
+                     u%+(buffer-storage-address, offset),
+                     count));
+    if (nwritten < 0)
+      SSL-error(accessor.socket-descriptor, nwritten);
+    end;
+    values(nwritten, buffer)
+  end
 end;
 
 define method accessor-close
