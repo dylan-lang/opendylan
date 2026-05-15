@@ -27,6 +27,7 @@ module that is very widely used.
    simple-profiling
    simple-random
    simple-timers
+   byte-storage
    transcendentals
 
 .. TODO(cgay): streams-protocol, locators-protocol.

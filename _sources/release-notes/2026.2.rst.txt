@@ -41,6 +41,15 @@ Bundled Library Updates
 Changes to libraries that are part of the `opendylan repository
 <https://github.com/dylan-lang/opendylan>`_.
 
+Common-Dylan
+------------
+
+* A new :mod:`byte-storage` module provides low-level access to
+  locally-allocated byte storage and object byte storage,
+  consolidating various ad-hoc facilities that were previously spread
+  throughout the codebase as described in `Issue 1732
+  <https://github.com/dylan-lang/opendylan/issues/1732>`_.
+
 System
 ------
 

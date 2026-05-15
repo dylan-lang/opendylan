@@ -346,6 +346,7 @@
 <li class="toctree-l3"><a class="reference internal" href="library-reference/common-dylan/simple-profiling.html">The simple-profiling Module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="library-reference/common-dylan/simple-random.html">The simple-random Module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="library-reference/common-dylan/simple-timers.html">The simple-timers Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="library-reference/common-dylan/byte-storage.html">The byte-storage Module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="library-reference/common-dylan/transcendentals.html">The transcendentals Module</a></li>
 </ul>
 </li>
@@ -2437,6 +2438,12 @@
     <em></em></td>
   </tr>
   <tr>
+    <td></td>
+    <td>
+        <a href="library-reference/common-dylan/byte-storage.html#common-dylan:byte-storage"><code class="xref">byte-storage</code></a> <em>(module)</em></td><td>
+    <em></em></td>
+  </tr>
+  <tr>
     <td><img src="_static/minus.png" class="toggler"
               id="toggle-24" style="display: none" alt="-" /></td>
     <td>
@@ -2446,56 +2453,25 @@
   <tr class="cg-24">
     <td></td>
     <td>&#160;&#160;&#160;
-        <a href="library-reference/common-dylan/byte-vector.html#common-dylan:byte-vector:byte-storage-address"><code class="xref">common-dylan:byte-vector:byte-storage-address</code></a> <em>(generic function)</em></td><td>
+        <a href="library-reference/common-dylan/byte-storage.html#common-dylan:byte-storage:byte-storage-address"><code class="xref">common-dylan:byte-storage:byte-storage-address</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
   <tr class="cg-24">
     <td></td>
     <td>&#160;&#160;&#160;
-        <a href="library-reference/common-dylan/byte-vector.html#common-dylan:byte-vector:byte-storage-address([byte-string])"><code class="xref">common-dylan:byte-vector:byte-storage-address(&lt;byte-string&gt;)</code></a> <em>(method)</em></td><td>
+        <a href="library-reference/common-dylan/byte-storage.html#common-dylan:byte-storage:byte-storage-address([byte-string])"><code class="xref">common-dylan:byte-storage:byte-storage-address(&lt;byte-string&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
   <tr class="cg-24">
     <td></td>
     <td>&#160;&#160;&#160;
-        <a href="library-reference/common-dylan/byte-vector.html#common-dylan:byte-vector:byte-storage-address([byte-vector])"><code class="xref">common-dylan:byte-vector:byte-storage-address(&lt;byte-vector&gt;)</code></a> <em>(method)</em></td><td>
+        <a href="library-reference/common-dylan/byte-storage.html#common-dylan:byte-storage:byte-storage-address([byte-vector])"><code class="xref">common-dylan:byte-storage:byte-storage-address(&lt;byte-vector&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
   <tr class="cg-24">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/io/streams.html#io:streams:byte-storage-address([buffer])"><code class="xref">io:streams:byte-storage-address(&lt;buffer&gt;)</code></a> <em>(method)</em></td><td>
-    <em></em></td>
-  </tr>
-  <tr>
-    <td><img src="_static/minus.png" class="toggler"
-              id="toggle-25" style="display: none" alt="-" /></td>
-    <td>
-        <code class="xref">byte-storage-offset-address</code></td><td>
-    <em></em></td>
-  </tr>
-  <tr class="cg-25">
-    <td></td>
-    <td>&#160;&#160;&#160;
-        <a href="library-reference/common-dylan/byte-vector.html#common-dylan:byte-vector:byte-storage-offset-address"><code class="xref">common-dylan:byte-vector:byte-storage-offset-address</code></a> <em>(generic function)</em></td><td>
-    <em></em></td>
-  </tr>
-  <tr class="cg-25">
-    <td></td>
-    <td>&#160;&#160;&#160;
-        <a href="library-reference/common-dylan/byte-vector.html#common-dylan:byte-vector:byte-storage-offset-address([byte-string])"><code class="xref">common-dylan:byte-vector:byte-storage-offset-address(&lt;byte-string&gt;)</code></a> <em>(method)</em></td><td>
-    <em></em></td>
-  </tr>
-  <tr class="cg-25">
-    <td></td>
-    <td>&#160;&#160;&#160;
-        <a href="library-reference/common-dylan/byte-vector.html#common-dylan:byte-vector:byte-storage-offset-address([byte-vector])"><code class="xref">common-dylan:byte-vector:byte-storage-offset-address(&lt;byte-vector&gt;)</code></a> <em>(method)</em></td><td>
-    <em></em></td>
-  </tr>
-  <tr class="cg-25">
-    <td></td>
-    <td>&#160;&#160;&#160;
-        <a href="library-reference/io/streams.html#io:streams:byte-storage-offset-address([buffer])"><code class="xref">io:streams:byte-storage-offset-address(&lt;buffer&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
   <tr>
@@ -2506,24 +2482,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-26" style="display: none" alt="-" /></td>
+              id="toggle-25" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">byte-vector-fill</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-26">
+  <tr class="cg-25">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/byte-vector.html#common-dylan:byte-vector:byte-vector-fill"><code class="xref">common-dylan:byte-vector:byte-vector-fill</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-26">
+  <tr class="cg-25">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/byte-vector.html#common-dylan:byte-vector:byte-vector-fill([byte-vector],[byte-character])"><code class="xref">common-dylan:byte-vector:byte-vector-fill(&lt;byte-vector&gt;, &lt;byte-character&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-26">
+  <tr class="cg-25">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/byte-vector.html#common-dylan:byte-vector:byte-vector-fill([byte-vector],[integer])"><code class="xref">common-dylan:byte-vector:byte-vector-fill(&lt;byte-vector&gt;, &lt;integer&gt;)</code></a> <em>(method)</em></td><td>
@@ -3215,18 +3191,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-27" style="display: none" alt="-" /></td>
+              id="toggle-26" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">call-debugger-function</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-27">
+  <tr class="cg-26">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:call-debugger-function"><code class="xref">debugger-manager:debugger-manager:call-debugger-function</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-27">
+  <tr class="cg-26">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:call-debugger-function([debug-target],[function])"><code class="xref">debugger-manager:debugger-manager:call-debugger-function(&lt;debug-target&gt;, &lt;function&gt;)</code></a> <em>(method)</em></td><td>
@@ -3360,30 +3336,30 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-28" style="display: none" alt="-" /></td>
+              id="toggle-27" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">ceiling</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-28">
+  <tr class="cg-27">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:ceiling"><code class="xref">dylan:dylan:ceiling</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-28">
+  <tr class="cg-27">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:ceiling([float])"><code class="xref">dylan:dylan:ceiling(&lt;float&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-28">
+  <tr class="cg-27">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:ceiling([integer])"><code class="xref">dylan:dylan:ceiling(&lt;integer&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-28">
+  <tr class="cg-27">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:ceiling([machine-number])"><code class="xref">dylan:dylan:ceiling(&lt;machine-number&gt;)</code></a> <em>(method)</em></td><td>
@@ -3391,24 +3367,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-29" style="display: none" alt="-" /></td>
+              id="toggle-28" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">ceiling/</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-29">
+  <tr class="cg-28">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:ceiling/"><code class="xref">dylan:dylan:ceiling/</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-29">
+  <tr class="cg-28">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:ceiling/([integer],[integer])"><code class="xref">dylan:dylan:ceiling/(&lt;integer&gt;, &lt;integer&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-29">
+  <tr class="cg-28">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:ceiling/([machine-number],[machine-number])"><code class="xref">dylan:dylan:ceiling/(&lt;machine-number&gt;, &lt;machine-number&gt;)</code></a> <em>(method)</em></td><td>
@@ -3572,18 +3548,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-30" style="display: none" alt="-" /></td>
+              id="toggle-29" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">close</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-30">
+  <tr class="cg-29">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/io/streams.html#io:streams:close"><code class="xref">io:streams:close</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-30">
+  <tr class="cg-29">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/io/streams.html#io:streams:close([file-stream])"><code class="xref">io:streams:close(&lt;file-stream&gt;)</code></a> <em>(method)</em></td><td>
@@ -3753,18 +3729,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-31" style="display: none" alt="-" /></td>
+              id="toggle-30" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">command-function</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-31">
+  <tr class="cg-30">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="duim-reference/frames.html#duim:duim-frames:command-function"><code class="xref">duim:duim-frames:command-function</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-31">
+  <tr class="cg-30">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/sql/index.html#sql:sql:command-function"><code class="xref">sql:sql:command-function</code></a> <em>(generic function)</em></td><td>
@@ -3820,18 +3796,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-32" style="display: none" alt="-" /></td>
+              id="toggle-31" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">common-dylan</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-32">
+  <tr class="cg-31">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/index.html#common-dylan"><code class="xref">common-dylan</code></a> <em>(library)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-32">
+  <tr class="cg-31">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/index.html#common-dylan:common-dylan"><code class="xref">common-dylan:common-dylan</code></a> <em>(module)</em></td><td>
@@ -4181,84 +4157,84 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-33" style="display: none" alt="-" /></td>
+              id="toggle-32" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">convert-condition-slots-to-ppml</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-33">
+  <tr class="cg-32">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml"><code class="xref">dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-33">
+  <tr class="cg-32">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([condition])"><code class="xref">dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml(&lt;condition&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-33">
+  <tr class="cg-32">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([ignore-serious-note])"><code class="xref">dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml(&lt;ignore-serious-note&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-33">
+  <tr class="cg-32">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([performance-note])"><code class="xref">dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml(&lt;performance-note&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-33">
+  <tr class="cg-32">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([portability-note])"><code class="xref">dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml(&lt;portability-note&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-33">
+  <tr class="cg-32">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([program-error])"><code class="xref">dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml(&lt;program-error&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-33">
+  <tr class="cg-32">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([program-note])"><code class="xref">dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml(&lt;program-note&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-33">
+  <tr class="cg-32">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([program-restart])"><code class="xref">dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml(&lt;program-restart&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-33">
+  <tr class="cg-32">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([program-warning])"><code class="xref">dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml(&lt;program-warning&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-33">
+  <tr class="cg-32">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([run-time-error-warning])"><code class="xref">dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml(&lt;run-time-error-warning&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-33">
+  <tr class="cg-32">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([serious-program-warning])"><code class="xref">dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml(&lt;serious-program-warning&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-33">
+  <tr class="cg-32">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml([style-warning])"><code class="xref">dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml(&lt;style-warning&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-33">
+  <tr class="cg-32">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml(type-union([simple-condition],[simple-error],[simple-warning]))"><code class="xref">dfmc-conditions:dfmc-conditions:convert-condition-slots-to-ppml(type-union(&lt;simple-condition&gt;, &lt;simple-error&gt;, &lt;simple-warning&gt;))</code></a> <em>(method)</em></td><td>
@@ -4290,78 +4266,78 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-34" style="display: none" alt="-" /></td>
+              id="toggle-33" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">copy-bytes</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-34">
+  <tr class="cg-33">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/byte-vector.html#common-dylan:byte-vector:copy-bytes"><code class="xref">common-dylan:byte-vector:copy-bytes</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-34">
+  <tr class="cg-33">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/byte-vector.html#common-dylan:byte-vector:copy-bytes([byte-string],[integer],[byte-string],[integer],[integer])"><code class="xref">common-dylan:byte-vector:copy-bytes(&lt;byte-string&gt;, &lt;integer&gt;, &lt;byte-string&gt;, &lt;integer&gt;, &lt;integer&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-34">
+  <tr class="cg-33">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/byte-vector.html#common-dylan:byte-vector:copy-bytes([byte-string],[integer],[byte-vector],[integer],[integer])"><code class="xref">common-dylan:byte-vector:copy-bytes(&lt;byte-string&gt;, &lt;integer&gt;, &lt;byte-vector&gt;, &lt;integer&gt;, &lt;integer&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-34">
+  <tr class="cg-33">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/byte-vector.html#common-dylan:byte-vector:copy-bytes([byte-vector],[integer],[byte-string],[integer],[integer])"><code class="xref">common-dylan:byte-vector:copy-bytes(&lt;byte-vector&gt;, &lt;integer&gt;, &lt;byte-string&gt;, &lt;integer&gt;, &lt;integer&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-34">
+  <tr class="cg-33">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/byte-vector.html#common-dylan:byte-vector:copy-bytes([byte-vector],[integer],[byte-vector],[integer],[integer])"><code class="xref">common-dylan:byte-vector:copy-bytes(&lt;byte-vector&gt;, &lt;integer&gt;, &lt;byte-vector&gt;, &lt;integer&gt;, &lt;integer&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-34">
+  <tr class="cg-33">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/byte-vector.html#common-dylan:byte-vector:copy-bytes([byte-vector],[integer],[simple-object-vector],[integer],[integer])"><code class="xref">common-dylan:byte-vector:copy-bytes(&lt;byte-vector&gt;, &lt;integer&gt;, &lt;simple-object-vector&gt;, &lt;integer&gt;, &lt;integer&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-34">
+  <tr class="cg-33">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/byte-vector.html#common-dylan:byte-vector:copy-bytes([sequence],[integer],[sequence],[integer],[integer])"><code class="xref">common-dylan:byte-vector:copy-bytes(&lt;sequence&gt;, &lt;integer&gt;, &lt;sequence&gt;, &lt;integer&gt;, &lt;integer&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-34">
+  <tr class="cg-33">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/byte-vector.html#common-dylan:byte-vector:copy-bytes([simple-object-vector],[integer],[byte-vector],[integer],[integer])"><code class="xref">common-dylan:byte-vector:copy-bytes(&lt;simple-object-vector&gt;, &lt;integer&gt;, &lt;byte-vector&gt;, &lt;integer&gt;, &lt;integer&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-34">
+  <tr class="cg-33">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/byte-vector.html#common-dylan:byte-vector:copy-bytes([string],[integer],[string],[integer],[integer])"><code class="xref">common-dylan:byte-vector:copy-bytes(&lt;string&gt;, &lt;integer&gt;, &lt;string&gt;, &lt;integer&gt;, &lt;integer&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-34">
+  <tr class="cg-33">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/byte-vector.html#common-dylan:byte-vector:copy-bytes([string],[integer],[vector],[integer],[integer])"><code class="xref">common-dylan:byte-vector:copy-bytes(&lt;string&gt;, &lt;integer&gt;, &lt;vector&gt;, &lt;integer&gt;, &lt;integer&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-34">
+  <tr class="cg-33">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/byte-vector.html#common-dylan:byte-vector:copy-bytes([vector],[integer],[string],[integer],[integer])"><code class="xref">common-dylan:byte-vector:copy-bytes(&lt;vector&gt;, &lt;integer&gt;, &lt;string&gt;, &lt;integer&gt;, &lt;integer&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-34">
+  <tr class="cg-33">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/byte-vector.html#common-dylan:byte-vector:copy-bytes([vector],[integer],[vector],[integer],[integer])"><code class="xref">common-dylan:byte-vector:copy-bytes(&lt;vector&gt;, &lt;integer&gt;, &lt;vector&gt;, &lt;integer&gt;, &lt;integer&gt;)</code></a> <em>(method)</em></td><td>
@@ -4405,24 +4381,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-35" style="display: none" alt="-" /></td>
+              id="toggle-34" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">cos</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-35">
+  <tr class="cg-34">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:cos"><code class="xref">common-dylan:transcendentals:cos</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-35">
+  <tr class="cg-34">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:cos([double-float])"><code class="xref">common-dylan:transcendentals:cos(&lt;double-float&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-35">
+  <tr class="cg-34">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:cos([single-float])"><code class="xref">common-dylan:transcendentals:cos(&lt;single-float&gt;)</code></a> <em>(method)</em></td><td>
@@ -4430,24 +4406,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-36" style="display: none" alt="-" /></td>
+              id="toggle-35" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">cosh</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-36">
+  <tr class="cg-35">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:cosh"><code class="xref">common-dylan:transcendentals:cosh</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-36">
+  <tr class="cg-35">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:cosh([double-float])"><code class="xref">common-dylan:transcendentals:cosh(&lt;double-float&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-36">
+  <tr class="cg-35">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:cosh([single-float])"><code class="xref">common-dylan:transcendentals:cosh(&lt;single-float&gt;)</code></a> <em>(method)</em></td><td>
@@ -4479,18 +4455,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-37" style="display: none" alt="-" /></td>
+              id="toggle-36" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">create-thread-event-handler</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-37">
+  <tr class="cg-36">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:create-thread-event-handler"><code class="xref">access-path:access-path:create-thread-event-handler</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-37">
+  <tr class="cg-36">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:create-thread-event-handler([access-path])"><code class="xref">access-path:access-path:create-thread-event-handler(&lt;access-path&gt;)</code></a> <em>(method)</em></td><td>
@@ -5146,24 +5122,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-38" style="display: none" alt="-" /></td>
+              id="toggle-37" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">decode-duration</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-38">
+  <tr class="cg-37">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/system/date.html#system:date:decode-duration"><code class="xref">system:date:decode-duration</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-38">
+  <tr class="cg-37">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/system/date.html#system:date:decode-duration([day/time-duration])"><code class="xref">system:date:decode-duration(&lt;day/time-duration&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-38">
+  <tr class="cg-37">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/system/date.html#system:date:decode-duration([year/month-duration])"><code class="xref">system:date:decode-duration(&lt;year/month-duration&gt;)</code></a> <em>(method)</em></td><td>
@@ -5417,24 +5393,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-39" style="display: none" alt="-" /></td>
+              id="toggle-38" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">describe-debugger-connection</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-39">
+  <tr class="cg-38">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:describe-debugger-connection"><code class="xref">access-path:access-path:describe-debugger-connection</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-39">
+  <tr class="cg-38">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:describe-debugger-connection([local-debugger-connection])"><code class="xref">access-path:access-path:describe-debugger-connection(&lt;local-debugger-connection&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-39">
+  <tr class="cg-38">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:describe-debugger-connection([remote-debugger-connection])"><code class="xref">access-path:access-path:describe-debugger-connection(&lt;remote-debugger-connection&gt;)</code></a> <em>(method)</em></td><td>
@@ -5736,18 +5712,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-40" style="display: none" alt="-" /></td>
+              id="toggle-39" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">directory-empty?</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-40">
+  <tr class="cg-39">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/system/file-system.html#system:file-system:directory-empty?"><code class="xref">system:file-system:directory-empty?</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-40">
+  <tr class="cg-39">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/system/file-system.html#system:file-system:directory-empty?([file-system-directory-locator])"><code class="xref">system:file-system:directory-empty?(&lt;file-system-directory-locator&gt;)</code></a> <em>(method)</em></td><td>
@@ -6091,48 +6067,48 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-41" style="display: none" alt="-" /></td>
+              id="toggle-40" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">dood-disk-object</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-41">
+  <tr class="cg-40">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dood/index.html#dood:dood:dood-disk-object"><code class="xref">dood:dood:dood-disk-object</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-41">
+  <tr class="cg-40">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dood/index.html#dood:dood:dood-disk-object([dood],[class])"><code class="xref">dood:dood:dood-disk-object(&lt;dood&gt;, &lt;class&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-41">
+  <tr class="cg-40">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dood/index.html#dood:dood:dood-disk-object([dood],[dood-mapped-and-owned-object])"><code class="xref">dood:dood:dood-disk-object(&lt;dood&gt;, &lt;dood-mapped-and-owned-object&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-41">
+  <tr class="cg-40">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dood/index.html#dood:dood:dood-disk-object([dood],[function])"><code class="xref">dood:dood:dood-disk-object(&lt;dood&gt;, &lt;function&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-41">
+  <tr class="cg-40">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dood/index.html#dood:dood:dood-disk-object([dood],[generic-function])"><code class="xref">dood:dood:dood-disk-object(&lt;dood&gt;, &lt;generic-function&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-41">
+  <tr class="cg-40">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dood/index.html#dood:dood:dood-disk-object([dood],[integer])"><code class="xref">dood:dood:dood-disk-object(&lt;dood&gt;, &lt;integer&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-41">
+  <tr class="cg-40">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dood/index.html#dood:dood:dood-disk-object([dood],[object])"><code class="xref">dood:dood:dood-disk-object(&lt;dood&gt;, &lt;object&gt;)</code></a> <em>(method)</em></td><td>
@@ -6158,30 +6134,30 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-42" style="display: none" alt="-" /></td>
+              id="toggle-41" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">dood-restore-proxy</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-42">
+  <tr class="cg-41">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dood/index.html#dood:dood:dood-restore-proxy"><code class="xref">dood:dood:dood-restore-proxy</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-42">
+  <tr class="cg-41">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dood/index.html#dood:dood:dood-restore-proxy([dood],[dood-class-program-binding-proxy])"><code class="xref">dood:dood:dood-restore-proxy(&lt;dood&gt;, &lt;dood-class-program-binding-proxy&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-42">
+  <tr class="cg-41">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dood/index.html#dood:dood:dood-restore-proxy([dood],[dood-program-binding-proxy])"><code class="xref">dood:dood:dood-restore-proxy(&lt;dood&gt;, &lt;dood-program-binding-proxy&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-42">
+  <tr class="cg-41">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dood/index.html#dood:dood:dood-restore-proxy([dood],[dood-program-module-proxy])"><code class="xref">dood:dood:dood-restore-proxy(&lt;dood&gt;, &lt;dood-program-module-proxy&gt;)</code></a> <em>(method)</em></td><td>
@@ -6555,18 +6531,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-43" style="display: none" alt="-" /></td>
+              id="toggle-42" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">element</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-43">
+  <tr class="cg-42">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/c-ffi/index.html#c-ffi:c-ffi:element([c-statically-typed-pointer])"><code class="xref">c-ffi:c-ffi:element(&lt;C-statically-typed-pointer&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-43">
+  <tr class="cg-42">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/documentation/example.html#skip-list:skip-list:element([skip-list])"><code class="xref">skip-list:skip-list:element(&lt;skip-list&gt;)</code></a> <em>(method)</em></td><td>
@@ -6694,18 +6670,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-44" style="display: none" alt="-" /></td>
+              id="toggle-43" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">enquire-object</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-44">
+  <tr class="cg-43">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:enquire-object"><code class="xref">debugger-manager:debugger-manager:enquire-object</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-44">
+  <tr class="cg-43">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:enquire-object([page-relative-object-table],[remote-value])"><code class="xref">debugger-manager:debugger-manager:enquire-object(&lt;page-relative-object-table&gt;, &lt;remote-value&gt;)</code></a> <em>(method)</em></td><td>
@@ -6755,30 +6731,30 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-45" style="display: none" alt="-" /></td>
+              id="toggle-44" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">even?</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-45">
+  <tr class="cg-44">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:even?([machine-word])"><code class="xref">common-dylan:machine-words:even?(&lt;machine-word&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-45">
+  <tr class="cg-44">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:even?"><code class="xref">dylan:dylan:even?</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-45">
+  <tr class="cg-44">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:even?([complex])"><code class="xref">dylan:dylan:even?(&lt;complex&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-45">
+  <tr class="cg-44">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:even?([integer])"><code class="xref">dylan:dylan:even?(&lt;integer&gt;)</code></a> <em>(method)</em></td><td>
@@ -6900,24 +6876,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-46" style="display: none" alt="-" /></td>
+              id="toggle-45" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">exp</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-46">
+  <tr class="cg-45">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:exp"><code class="xref">common-dylan:transcendentals:exp</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-46">
+  <tr class="cg-45">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:exp([double-float])"><code class="xref">common-dylan:transcendentals:exp(&lt;double-float&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-46">
+  <tr class="cg-45">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:exp([single-float])"><code class="xref">common-dylan:transcendentals:exp(&lt;single-float&gt;)</code></a> <em>(method)</em></td><td>
@@ -7027,18 +7003,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-47" style="display: none" alt="-" /></td>
+              id="toggle-46" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">&lt;file-does-not-exist-error&gt;</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-47">
+  <tr class="cg-46">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/io/streams.html#io:streams:[file-does-not-exist-error]"><code class="xref">io:streams:&lt;file-does-not-exist-error&gt;</code></a> <em>(class)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-47">
+  <tr class="cg-46">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/system/file-system.html#system:file-system:[file-does-not-exist-error]"><code class="xref">system:file-system:&lt;file-does-not-exist-error&gt;</code></a> <em>(class)</em></td><td>
@@ -7046,18 +7022,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-48" style="display: none" alt="-" /></td>
+              id="toggle-47" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">&lt;file-error&gt;</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-48">
+  <tr class="cg-47">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/io/streams.html#io:streams:[file-error]"><code class="xref">io:streams:&lt;file-error&gt;</code></a> <em>(class)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-48">
+  <tr class="cg-47">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/system/file-system.html#system:file-system:[file-error]"><code class="xref">system:file-system:&lt;file-error&gt;</code></a> <em>(class)</em></td><td>
@@ -7065,18 +7041,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-49" style="display: none" alt="-" /></td>
+              id="toggle-48" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">&lt;file-exists-error&gt;</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-49">
+  <tr class="cg-48">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/io/streams.html#io:streams:[file-exists-error]"><code class="xref">io:streams:&lt;file-exists-error&gt;</code></a> <em>(class)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-49">
+  <tr class="cg-48">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/system/file-system.html#system:file-system:[file-exists-error]"><code class="xref">system:file-system:&lt;file-exists-error&gt;</code></a> <em>(class)</em></td><td>
@@ -7276,18 +7252,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-50" style="display: none" alt="-" /></td>
+              id="toggle-49" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">file-error-locator</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-50">
+  <tr class="cg-49">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/io/streams.html#io:streams:file-error-locator"><code class="xref">io:streams:file-error-locator</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-50">
+  <tr class="cg-49">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/system/file-system.html#system:file-system:file-error-locator"><code class="xref">system:file-system:file-error-locator</code></a> <em>(generic function)</em></td><td>
@@ -7349,18 +7325,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-51" style="display: none" alt="-" /></td>
+              id="toggle-50" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">finalize</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-51">
+  <tr class="cg-50">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dylan/finalization.html#common-dylan:finalization:finalize"><code class="xref">common-dylan:finalization:finalize</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-51">
+  <tr class="cg-50">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dylan/finalization.html#common-dylan:finalization:finalize([object])"><code class="xref">common-dylan:finalization:finalize(&lt;object&gt;)</code></a> <em>(method)</em></td><td>
@@ -7476,24 +7452,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-52" style="display: none" alt="-" /></td>
+              id="toggle-51" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">first-frame-breakable-address</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-52">
+  <tr class="cg-51">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:first-frame-breakable-address"><code class="xref">access-path:access-path:first-frame-breakable-address</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-52">
+  <tr class="cg-51">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:first-frame-breakable-address([remote-function])"><code class="xref">access-path:access-path:first-frame-breakable-address(&lt;remote-function&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-52">
+  <tr class="cg-51">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:first-frame-breakable-address([remote-symbol])"><code class="xref">access-path:access-path:first-frame-breakable-address(&lt;remote-symbol&gt;)</code></a> <em>(method)</em></td><td>
@@ -7525,30 +7501,30 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-53" style="display: none" alt="-" /></td>
+              id="toggle-52" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">floor</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-53">
+  <tr class="cg-52">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:floor"><code class="xref">dylan:dylan:floor</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-53">
+  <tr class="cg-52">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:floor([float])"><code class="xref">dylan:dylan:floor(&lt;float&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-53">
+  <tr class="cg-52">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:floor([integer])"><code class="xref">dylan:dylan:floor(&lt;integer&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-53">
+  <tr class="cg-52">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:floor([machine-number])"><code class="xref">dylan:dylan:floor(&lt;machine-number&gt;)</code></a> <em>(method)</em></td><td>
@@ -7556,24 +7532,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-54" style="display: none" alt="-" /></td>
+              id="toggle-53" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">floor/</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-54">
+  <tr class="cg-53">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:floor/"><code class="xref">dylan:dylan:floor/</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-54">
+  <tr class="cg-53">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:floor/([integer],[integer])"><code class="xref">dylan:dylan:floor/(&lt;integer&gt;, &lt;integer&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-54">
+  <tr class="cg-53">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:floor/([machine-number],[machine-number])"><code class="xref">dylan:dylan:floor/(&lt;machine-number&gt;, &lt;machine-number&gt;)</code></a> <em>(method)</em></td><td>
@@ -7647,18 +7623,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-55" style="display: none" alt="-" /></td>
+              id="toggle-54" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">format</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-55">
+  <tr class="cg-54">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/io/format.html#io:format:format"><code class="xref">io:format:format</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-55">
+  <tr class="cg-54">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/io/format.html#io:format:format([byte-string])"><code class="xref">io:format:format(&lt;byte-string&gt;)</code></a> <em>(method)</em></td><td>
@@ -7678,18 +7654,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-56" style="display: none" alt="-" /></td>
+              id="toggle-55" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">format-err</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-56">
+  <tr class="cg-55">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/io/format-out.html#io:format-out:format-err"><code class="xref">io:format-out:format-err</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-56">
+  <tr class="cg-55">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/io/format-out.html#io:format-out:format-err([byte-string])"><code class="xref">io:format-out:format-err(&lt;byte-string&gt;)</code></a> <em>(method)</em></td><td>
@@ -7697,24 +7673,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-57" style="display: none" alt="-" /></td>
+              id="toggle-56" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">format-out</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-57">
+  <tr class="cg-56">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/simple-format.html#common-dylan:simple-format:format-out"><code class="xref">common-dylan:simple-format:format-out</code></a> <em>(function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-57">
+  <tr class="cg-56">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/io/format-out.html#io:format-out:format-out"><code class="xref">io:format-out:format-out</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-57">
+  <tr class="cg-56">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/io/format-out.html#io:format-out:format-out([byte-string])"><code class="xref">io:format-out:format-out(&lt;byte-string&gt;)</code></a> <em>(method)</em></td><td>
@@ -7728,24 +7704,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-58" style="display: none" alt="-" /></td>
+              id="toggle-57" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">format-to-string</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-58">
+  <tr class="cg-57">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/simple-format.html#common-dylan:simple-format:format-to-string"><code class="xref">common-dylan:simple-format:format-to-string</code></a> <em>(function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-58">
+  <tr class="cg-57">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/io/format.html#io:format:format-to-string"><code class="xref">io:format:format-to-string</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-58">
+  <tr class="cg-57">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/io/format.html#io:format:format-to-string([byte-string])"><code class="xref">io:format:format-to-string(&lt;byte-string&gt;)</code></a> <em>(method)</em></td><td>
@@ -7999,18 +7975,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-59" style="display: none" alt="-" /></td>
+              id="toggle-58" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">frame-thread</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-59">
+  <tr class="cg-58">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:frame-thread"><code class="xref">access-path:access-path:frame-thread</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-59">
+  <tr class="cg-58">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="duim-reference/frames.html#duim:duim-frames:frame-thread"><code class="xref">duim:duim-frames:frame-thread</code></a> <em>(generic function)</em></td><td>
@@ -8618,18 +8594,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-60" style="display: none" alt="-" /></td>
+              id="toggle-59" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">handle-interactor-return</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-60">
+  <tr class="cg-59">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:handle-interactor-return"><code class="xref">debugger-manager:debugger-manager:handle-interactor-return</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-60">
+  <tr class="cg-59">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:handle-interactor-return([debug-target],[remote-thread],[object])"><code class="xref">debugger-manager:debugger-manager:handle-interactor-return(&lt;debug-target&gt;, &lt;remote-thread&gt;, &lt;object&gt;)</code></a> <em>(method)</em></td><td>
@@ -8679,18 +8655,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-61" style="display: none" alt="-" /></td>
+              id="toggle-60" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">host-order</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-61">
+  <tr class="cg-60">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/network/index.html#network:sockets:host-order"><code class="xref">network:sockets:host-order</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-61">
+  <tr class="cg-60">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/network/index.html#network:sockets:host-order([ipv4-numeric-address])"><code class="xref">network:sockets:host-order(&lt;ipv4-numeric-address&gt;)</code></a> <em>(method)</em></td><td>
@@ -8698,36 +8674,36 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-62" style="display: none" alt="-" /></td>
+              id="toggle-61" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">hypot</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-62">
+  <tr class="cg-61">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:hypot"><code class="xref">common-dylan:transcendentals:hypot</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-62">
+  <tr class="cg-61">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:hypot([double-float],[double-float])"><code class="xref">common-dylan:transcendentals:hypot(&lt;double-float&gt;, &lt;double-float&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-62">
+  <tr class="cg-61">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:hypot([double-float],[single-float])"><code class="xref">common-dylan:transcendentals:hypot(&lt;double-float&gt;, &lt;single-float&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-62">
+  <tr class="cg-61">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:hypot([single-float],[double-float])"><code class="xref">common-dylan:transcendentals:hypot(&lt;single-float&gt;, &lt;double-float&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-62">
+  <tr class="cg-61">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:hypot([single-float],[single-float])"><code class="xref">common-dylan:transcendentals:hypot(&lt;single-float&gt;, &lt;single-float&gt;)</code></a> <em>(method)</em></td><td>
@@ -8993,18 +8969,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-63" style="display: none" alt="-" /></td>
+              id="toggle-62" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">&lt;invalid-file-permissions-error&gt;</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-63">
+  <tr class="cg-62">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/io/streams.html#io:streams:[invalid-file-permissions-error]"><code class="xref">io:streams:&lt;invalid-file-permissions-error&gt;</code></a> <em>(class)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-63">
+  <tr class="cg-62">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/system/file-system.html#system:file-system:[invalid-file-permissions-error]"><code class="xref">system:file-system:&lt;invalid-file-permissions-error&gt;</code></a> <em>(class)</em></td><td>
@@ -9204,18 +9180,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-64" style="display: none" alt="-" /></td>
+              id="toggle-63" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">initialize-return-tracepoint</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-64">
+  <tr class="cg-63">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:initialize-return-tracepoint"><code class="xref">debugger-manager:debugger-manager:initialize-return-tracepoint</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-64">
+  <tr class="cg-63">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:initialize-return-tracepoint([debug-target],[return-tracepoint],[remote-thread])"><code class="xref">debugger-manager:debugger-manager:initialize-return-tracepoint(&lt;debug-target&gt;, &lt;return-tracepoint&gt;, &lt;remote-thread&gt;)</code></a> <em>(method)</em></td><td>
@@ -9313,24 +9289,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-65" style="display: none" alt="-" /></td>
+              id="toggle-64" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">integral?</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-65">
+  <tr class="cg-64">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:integral?"><code class="xref">dylan:dylan:integral?</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-65">
+  <tr class="cg-64">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:integral?([complex])"><code class="xref">dylan:dylan:integral?(&lt;complex&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-65">
+  <tr class="cg-64">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:integral?([machine-number])"><code class="xref">dylan:dylan:integral?(&lt;machine-number&gt;)</code></a> <em>(method)</em></td><td>
@@ -9338,18 +9314,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-66" style="display: none" alt="-" /></td>
+              id="toggle-65" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">interaction-request-application-state</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-66">
+  <tr class="cg-65">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:interaction-request-application-state"><code class="xref">debugger-manager:debugger-manager:interaction-request-application-state</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-66">
+  <tr class="cg-65">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:interaction-request-application-state([interactor-return-breakpoint])"><code class="xref">debugger-manager:debugger-manager:interaction-request-application-state(&lt;interactor-return-breakpoint&gt;)</code></a> <em>(method)</em></td><td>
@@ -9357,18 +9333,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-67" style="display: none" alt="-" /></td>
+              id="toggle-66" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">interaction-request-application-state-setter</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-67">
+  <tr class="cg-66">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:interaction-request-application-state-setter"><code class="xref">debugger-manager:debugger-manager:interaction-request-application-state-setter</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-67">
+  <tr class="cg-66">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:interaction-request-application-state-setter([object],[interactor-return-breakpoint])"><code class="xref">debugger-manager:debugger-manager:interaction-request-application-state-setter(&lt;object&gt;, &lt;interactor-return-breakpoint&gt;)</code></a> <em>(method)</em></td><td>
@@ -9376,18 +9352,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-68" style="display: none" alt="-" /></td>
+              id="toggle-67" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">interactive-thread-break-event-handler</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-68">
+  <tr class="cg-67">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:interactive-thread-break-event-handler"><code class="xref">access-path:access-path:interactive-thread-break-event-handler</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-68">
+  <tr class="cg-67">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:interactive-thread-break-event-handler([access-path])"><code class="xref">access-path:access-path:interactive-thread-break-event-handler(&lt;access-path&gt;)</code></a> <em>(method)</em></td><td>
@@ -9419,24 +9395,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-69" style="display: none" alt="-" /></td>
+              id="toggle-68" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">interesting-note?</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-69">
+  <tr class="cg-68">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:interesting-note?"><code class="xref">dfmc-conditions:dfmc-conditions:interesting-note?</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-69">
+  <tr class="cg-68">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:interesting-note?([performance-note])"><code class="xref">dfmc-conditions:dfmc-conditions:interesting-note?(&lt;performance-note&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-69">
+  <tr class="cg-68">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:interesting-note?([program-note])"><code class="xref">dfmc-conditions:dfmc-conditions:interesting-note?(&lt;program-note&gt;)</code></a> <em>(method)</em></td><td>
@@ -9450,18 +9426,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-70" style="display: none" alt="-" /></td>
+              id="toggle-69" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">invalidate-page-relative-object-table</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-70">
+  <tr class="cg-69">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:invalidate-page-relative-object-table"><code class="xref">debugger-manager:debugger-manager:invalidate-page-relative-object-table</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-70">
+  <tr class="cg-69">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:invalidate-page-relative-object-table([page-relative-object-table])"><code class="xref">debugger-manager:debugger-manager:invalidate-page-relative-object-table(&lt;page-relative-object-table&gt;)</code></a> <em>(method)</em></td><td>
@@ -9523,18 +9499,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-71" style="display: none" alt="-" /></td>
+              id="toggle-70" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">join</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-71">
+  <tr class="cg-70">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/common-extensions.html#common-dylan:common-extensions:join"><code class="xref">common-dylan:common-extensions:join</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-71">
+  <tr class="cg-70">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/common-extensions.html#common-dylan:common-extensions:join([sequence],[sequence])"><code class="xref">common-dylan:common-extensions:join(&lt;sequence&gt;, &lt;sequence&gt;)</code></a> <em>(method)</em></td><td>
@@ -9584,18 +9560,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-72" style="display: none" alt="-" /></td>
+              id="toggle-71" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">kill-application</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-72">
+  <tr class="cg-71">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:kill-application"><code class="xref">access-path:access-path:kill-application</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-72">
+  <tr class="cg-71">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:kill-application"><code class="xref">debugger-manager:debugger-manager:kill-application</code></a> <em>(generic function)</em></td><td>
@@ -9759,24 +9735,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-73" style="display: none" alt="-" /></td>
+              id="toggle-72" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">last-frame-breakable-address</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-73">
+  <tr class="cg-72">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:last-frame-breakable-address"><code class="xref">access-path:access-path:last-frame-breakable-address</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-73">
+  <tr class="cg-72">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:last-frame-breakable-address([remote-function])"><code class="xref">access-path:access-path:last-frame-breakable-address(&lt;remote-function&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-73">
+  <tr class="cg-72">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:last-frame-breakable-address([remote-symbol])"><code class="xref">access-path:access-path:last-frame-breakable-address(&lt;remote-symbol&gt;)</code></a> <em>(method)</em></td><td>
@@ -9916,18 +9892,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-74" style="display: none" alt="-" /></td>
+              id="toggle-73" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">limited</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-74">
+  <tr class="cg-73">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:limited"><code class="xref">common-dylan:machine-words:limited</code></a> <em>(function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-74">
+  <tr class="cg-73">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:limited"><code class="xref">dylan:dylan:limited</code></a> <em>(generic function)</em></td><td>
@@ -10025,18 +10001,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-75" style="display: none" alt="-" /></td>
+              id="toggle-74" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">list-locator</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-75">
+  <tr class="cg-74">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/system/locators.html#system:locators:list-locator"><code class="xref">system:locators:list-locator</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-75">
+  <tr class="cg-74">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/system/locators.html#system:locators:list-locator([file-system-directory-locator])"><code class="xref">system:locators:list-locator(&lt;file-system-directory-locator&gt;)</code></a> <em>(method)</em></td><td>
@@ -10164,30 +10140,30 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-76" style="display: none" alt="-" /></td>
+              id="toggle-75" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">locator-name</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-76">
+  <tr class="cg-75">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/system/locators.html#system:locators:locator-name"><code class="xref">system:locators:locator-name</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-76">
+  <tr class="cg-75">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/system/locators.html#system:locators:locator-name([mailto-locator])"><code class="xref">system:locators:locator-name(&lt;mailto-locator&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-76">
+  <tr class="cg-75">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/system/locators.html#system:locators:locator-name([microsoft-unc-locator])"><code class="xref">system:locators:locator-name(&lt;microsoft-unc-locator&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-76">
+  <tr class="cg-75">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/system/locators.html#system:locators:locator-name([microsoft-volume-locator])"><code class="xref">system:locators:locator-name(&lt;microsoft-volume-locator&gt;)</code></a> <em>(method)</em></td><td>
@@ -10231,24 +10207,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-77" style="display: none" alt="-" /></td>
+              id="toggle-76" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">log</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-77">
+  <tr class="cg-76">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:log"><code class="xref">common-dylan:transcendentals:log</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-77">
+  <tr class="cg-76">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:log([double-float])"><code class="xref">common-dylan:transcendentals:log(&lt;double-float&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-77">
+  <tr class="cg-76">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:log([single-float])"><code class="xref">common-dylan:transcendentals:log(&lt;single-float&gt;)</code></a> <em>(method)</em></td><td>
@@ -10508,66 +10484,66 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-78" style="display: none" alt="-" /></td>
+              id="toggle-77" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">make</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-78">
+  <tr class="cg-77">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/c-ffi/index.html#c-ffi:c-ffi:make(subclass([c-pointer]))"><code class="xref">c-ffi:c-ffi:make(subclass(&lt;C-pointer&gt;))</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-78">
+  <tr class="cg-77">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="duim-reference/dcs.html#duim-dcs:duim-dcs:make"><code class="xref">duim-dcs:duim-dcs:make</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-78">
+  <tr class="cg-77">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="duim-reference/layouts.html#duim-layouts:duim-layouts:make([space-requirement])"><code class="xref">duim-layouts:duim-layouts:make(&lt;space-requirement&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-78">
+  <tr class="cg-77">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="duim-reference/frames.html#duim:duim-frames:make([frame])"><code class="xref">duim:duim-frames:make(&lt;frame&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-78">
+  <tr class="cg-77">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/io/streams.html#io:streams:make([byte-string-stream])"><code class="xref">io:streams:make(&lt;byte-string-stream&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-78">
+  <tr class="cg-77">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/io/streams.html#io:streams:make([sequence-stream])"><code class="xref">io:streams:make(&lt;sequence-stream&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-78">
+  <tr class="cg-77">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/io/streams.html#io:streams:make([string-stream])"><code class="xref">io:streams:make(&lt;string-stream&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-78">
+  <tr class="cg-77">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/io/streams.html#io:streams:make([unicode-string-stream])"><code class="xref">io:streams:make(&lt;unicode-string-stream&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-78">
+  <tr class="cg-77">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/system/date.html#system:date:make([date])"><code class="xref">system:date:make(&lt;date&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-78">
+  <tr class="cg-77">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/system/file-system.html#system:file-system:make([file-stream])"><code class="xref">system:file-system:make(&lt;file-stream&gt;)</code></a> <em>(method)</em></td><td>
@@ -10767,24 +10743,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-79" style="display: none" alt="-" /></td>
+              id="toggle-78" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">make-return-tracepoint</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-79">
+  <tr class="cg-78">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:make-return-tracepoint"><code class="xref">debugger-manager:debugger-manager:make-return-tracepoint</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-79">
+  <tr class="cg-78">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:make-return-tracepoint([debug-target],[entry-tracepoint],[remote-thread])"><code class="xref">debugger-manager:debugger-manager:make-return-tracepoint(&lt;debug-target&gt;, &lt;entry-tracepoint&gt;, &lt;remote-thread&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-79">
+  <tr class="cg-78">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:make-return-tracepoint([debug-target],[starting-dynamic-initialization],[remote-thread])"><code class="xref">debugger-manager:debugger-manager:make-return-tracepoint(&lt;debug-target&gt;, &lt;starting-dynamic-initialization&gt;, &lt;remote-thread&gt;)</code></a> <em>(method)</em></td><td>
@@ -11080,24 +11056,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-80" style="display: none" alt="-" /></td>
+              id="toggle-79" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">modulo</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-80">
+  <tr class="cg-79">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:modulo"><code class="xref">dylan:dylan:modulo</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-80">
+  <tr class="cg-79">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:modulo([integer],[integer])"><code class="xref">dylan:dylan:modulo(&lt;integer&gt;, &lt;integer&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-80">
+  <tr class="cg-79">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:modulo([machine-number],[machine-number])"><code class="xref">dylan:dylan:modulo(&lt;machine-number&gt;, &lt;machine-number&gt;)</code></a> <em>(method)</em></td><td>
@@ -11267,30 +11243,30 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-81" style="display: none" alt="-" /></td>
+              id="toggle-80" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">negative</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-81">
+  <tr class="cg-80">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:negative"><code class="xref">dylan:dylan:negative</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-81">
+  <tr class="cg-80">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:negative([complex])"><code class="xref">dylan:dylan:negative(&lt;complex&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-81">
+  <tr class="cg-80">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:negative([float])"><code class="xref">dylan:dylan:negative(&lt;float&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-81">
+  <tr class="cg-80">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:negative([integer])"><code class="xref">dylan:dylan:negative(&lt;integer&gt;)</code></a> <em>(method)</em></td><td>
@@ -11298,30 +11274,30 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-82" style="display: none" alt="-" /></td>
+              id="toggle-81" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">negative?</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-82">
+  <tr class="cg-81">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:negative?([machine-word])"><code class="xref">common-dylan:machine-words:negative?(&lt;machine-word&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-82">
+  <tr class="cg-81">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:negative?"><code class="xref">dylan:dylan:negative?</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-82">
+  <tr class="cg-81">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:negative?([complex])"><code class="xref">dylan:dylan:negative?(&lt;complex&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-82">
+  <tr class="cg-81">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:negative?([machine-number])"><code class="xref">dylan:dylan:negative?(&lt;machine-number&gt;)</code></a> <em>(method)</em></td><td>
@@ -11329,18 +11305,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-83" style="display: none" alt="-" /></td>
+              id="toggle-82" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">network-order</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-83">
+  <tr class="cg-82">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/network/index.html#network:sockets:network-order"><code class="xref">network:sockets:network-order</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-83">
+  <tr class="cg-82">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/network/index.html#network:sockets:network-order([ipv4-numeric-address])"><code class="xref">network:sockets:network-order(&lt;ipv4-numeric-address&gt;)</code></a> <em>(method)</em></td><td>
@@ -11414,18 +11390,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-84" style="display: none" alt="-" /></td>
+              id="toggle-83" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">note</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-84">
+  <tr class="cg-83">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:note"><code class="xref">dfmc-conditions:dfmc-conditions:note</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-84">
+  <tr class="cg-83">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:note(subclass([program-condition]))"><code class="xref">dfmc-conditions:dfmc-conditions:note(subclass(&lt;program-condition&gt;))</code></a> <em>(method)</em></td><td>
@@ -11589,18 +11565,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-85" style="display: none" alt="-" /></td>
+              id="toggle-84" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">obsolete-condition?</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-85">
+  <tr class="cg-84">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:obsolete-condition?"><code class="xref">dfmc-conditions:dfmc-conditions:obsolete-condition?</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-85">
+  <tr class="cg-84">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:obsolete-condition?([program-condition])"><code class="xref">dfmc-conditions:dfmc-conditions:obsolete-condition?(&lt;program-condition&gt;)</code></a> <em>(method)</em></td><td>
@@ -11608,18 +11584,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-86" style="display: none" alt="-" /></td>
+              id="toggle-85" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">obtain-component-name</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-86">
+  <tr class="cg-85">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:obtain-component-name"><code class="xref">debugger-manager:debugger-manager:obtain-component-name</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-86">
+  <tr class="cg-85">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:obtain-component-name([debug-target],[string])"><code class="xref">debugger-manager:debugger-manager:obtain-component-name(&lt;debug-target&gt;, &lt;string&gt;)</code></a> <em>(method)</em></td><td>
@@ -11627,30 +11603,30 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-87" style="display: none" alt="-" /></td>
+              id="toggle-86" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">odd?</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-87">
+  <tr class="cg-86">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:odd?([machine-word])"><code class="xref">common-dylan:machine-words:odd?(&lt;machine-word&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-87">
+  <tr class="cg-86">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:odd?"><code class="xref">dylan:dylan:odd?</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-87">
+  <tr class="cg-86">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:odd?([complex])"><code class="xref">dylan:dylan:odd?(&lt;complex&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-87">
+  <tr class="cg-86">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:odd?([integer])"><code class="xref">dylan:dylan:odd?(&lt;integer&gt;)</code></a> <em>(method)</em></td><td>
@@ -11706,30 +11682,30 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-88" style="display: none" alt="-" /></td>
+              id="toggle-87" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">owned?</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-88">
+  <tr class="cg-87">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dylan/threads.html#dylan:threads:owned?"><code class="xref">dylan:threads:owned?</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-88">
+  <tr class="cg-87">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dylan/threads.html#dylan:threads:owned?([read-write-lock])"><code class="xref">dylan:threads:owned?(&lt;read-write-lock&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-88">
+  <tr class="cg-87">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dylan/threads.html#dylan:threads:owned?([recursive-lock])"><code class="xref">dylan:threads:owned?(&lt;recursive-lock&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-88">
+  <tr class="cg-87">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dylan/threads.html#dylan:threads:owned?([simple-lock])"><code class="xref">dylan:threads:owned?(&lt;simple-lock&gt;)</code></a> <em>(method)</em></td><td>
@@ -12547,30 +12523,30 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-89" style="display: none" alt="-" /></td>
+              id="toggle-88" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">positive?</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-89">
+  <tr class="cg-88">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:positive?([machine-word])"><code class="xref">common-dylan:machine-words:positive?(&lt;machine-word&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-89">
+  <tr class="cg-88">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:positive?"><code class="xref">dylan:dylan:positive?</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-89">
+  <tr class="cg-88">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:positive?([complex])"><code class="xref">dylan:dylan:positive?(&lt;complex&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-89">
+  <tr class="cg-88">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:positive?([machine-number])"><code class="xref">dylan:dylan:positive?(&lt;machine-number&gt;)</code></a> <em>(method)</em></td><td>
@@ -12662,24 +12638,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-90" style="display: none" alt="-" /></td>
+              id="toggle-89" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">present-program-error</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-90">
+  <tr class="cg-89">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:present-program-error"><code class="xref">dfmc-conditions:dfmc-conditions:present-program-error</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-90">
+  <tr class="cg-89">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:present-program-error([condition])"><code class="xref">dfmc-conditions:dfmc-conditions:present-program-error(&lt;condition&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-90">
+  <tr class="cg-89">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:present-program-error([program-note])"><code class="xref">dfmc-conditions:dfmc-conditions:present-program-error(&lt;program-note&gt;)</code></a> <em>(method)</em></td><td>
@@ -12687,24 +12663,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-91" style="display: none" alt="-" /></td>
+              id="toggle-90" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">present-program-note</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-91">
+  <tr class="cg-90">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:present-program-note"><code class="xref">dfmc-conditions:dfmc-conditions:present-program-note</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-91">
+  <tr class="cg-90">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:present-program-note([condition])"><code class="xref">dfmc-conditions:dfmc-conditions:present-program-note(&lt;condition&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-91">
+  <tr class="cg-90">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:present-program-note([program-note])"><code class="xref">dfmc-conditions:dfmc-conditions:present-program-note(&lt;program-note&gt;)</code></a> <em>(method)</em></td><td>
@@ -13600,30 +13576,30 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-92" style="display: none" alt="-" /></td>
+              id="toggle-91" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">print-message</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-92">
+  <tr class="cg-91">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/io/format.html#io:format:print-message"><code class="xref">io:format:print-message</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-92">
+  <tr class="cg-91">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/io/format.html#io:format:print-message([condition])"><code class="xref">io:format:print-message(&lt;condition&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-92">
+  <tr class="cg-91">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/io/format.html#io:format:print-message([string]or[character])"><code class="xref">io:format:print-message(&lt;string&gt; or &lt;character&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-92">
+  <tr class="cg-91">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/io/format.html#io:format:print-message([symbol])"><code class="xref">io:format:print-message(&lt;symbol&gt;)</code></a> <em>(method)</em></td><td>
@@ -13631,18 +13607,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-93" style="display: none" alt="-" /></td>
+              id="toggle-92" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">print-object</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-93">
+  <tr class="cg-92">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:print-object([program-condition],[stream])"><code class="xref">dfmc-conditions:dfmc-conditions:print-object(&lt;program-condition&gt;, &lt;stream&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-93">
+  <tr class="cg-92">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/io/print.html#io:print:print-object"><code class="xref">io:print:print-object</code></a> <em>(generic function)</em></td><td>
@@ -13662,24 +13638,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-94" style="display: none" alt="-" /></td>
+              id="toggle-93" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">profile-data</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-94">
+  <tr class="cg-93">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:profile-data"><code class="xref">debugger-manager:debugger-manager:profile-data</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-94">
+  <tr class="cg-93">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:profile-data([debug-target])"><code class="xref">debugger-manager:debugger-manager:profile-data(&lt;debug-target&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-94">
+  <tr class="cg-93">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:profile-data([profile-state])"><code class="xref">debugger-manager:debugger-manager:profile-data(&lt;profile-state&gt;)</code></a> <em>(method)</em></td><td>
@@ -13699,30 +13675,30 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-95" style="display: none" alt="-" /></td>
+              id="toggle-94" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">profiling-type-result</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-95">
+  <tr class="cg-94">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/simple-profiling.html#common-dylan:simple-profiling:profiling-type-result"><code class="xref">common-dylan:simple-profiling:profiling-type-result</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-95">
+  <tr class="cg-94">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/simple-profiling.html#common-dylan:simple-profiling:profiling-type-result([profiling-state],[cpu-profiling-type])"><code class="xref">common-dylan:simple-profiling:profiling-type-result(&lt;profiling-state&gt;, &lt;cpu-profiling-type&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-95">
+  <tr class="cg-94">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/simple-profiling.html#common-dylan:simple-profiling:profiling-type-result([profiling-state],singleton(#"allocation"))"><code class="xref">common-dylan:simple-profiling:profiling-type-result(&lt;profiling-state&gt;, singleton(#&#34;allocation&#34;))</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-95">
+  <tr class="cg-94">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/simple-profiling.html#common-dylan:simple-profiling:profiling-type-result([profiling-state],singleton(#"allocation-stats"))"><code class="xref">common-dylan:simple-profiling:profiling-type-result(&lt;profiling-state&gt;, singleton(#&#34;allocation-stats&#34;))</code></a> <em>(method)</em></td><td>
@@ -13766,60 +13742,60 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-96" style="display: none" alt="-" /></td>
+              id="toggle-95" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">program-note-filter</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-96">
+  <tr class="cg-95">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-note-filter"><code class="xref">dfmc-conditions:dfmc-conditions:program-note-filter</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-96">
+  <tr class="cg-95">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([condition]))"><code class="xref">dfmc-conditions:dfmc-conditions:program-note-filter(subclass(&lt;condition&gt;))</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-96">
+  <tr class="cg-95">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([performance-note]))"><code class="xref">dfmc-conditions:dfmc-conditions:program-note-filter(subclass(&lt;performance-note&gt;))</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-96">
+  <tr class="cg-95">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([portability-note]))"><code class="xref">dfmc-conditions:dfmc-conditions:program-note-filter(subclass(&lt;portability-note&gt;))</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-96">
+  <tr class="cg-95">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([program-note]))"><code class="xref">dfmc-conditions:dfmc-conditions:program-note-filter(subclass(&lt;program-note&gt;))</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-96">
+  <tr class="cg-95">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([program-warning]))"><code class="xref">dfmc-conditions:dfmc-conditions:program-note-filter(subclass(&lt;program-warning&gt;))</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-96">
+  <tr class="cg-95">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([run-time-error-warning]))"><code class="xref">dfmc-conditions:dfmc-conditions:program-note-filter(subclass(&lt;run-time-error-warning&gt;))</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-96">
+  <tr class="cg-95">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([serious-program-warning]))"><code class="xref">dfmc-conditions:dfmc-conditions:program-note-filter(subclass(&lt;serious-program-warning&gt;))</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-96">
+  <tr class="cg-95">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-note-filter(subclass([style-warning]))"><code class="xref">dfmc-conditions:dfmc-conditions:program-note-filter(subclass(&lt;style-warning&gt;))</code></a> <em>(method)</em></td><td>
@@ -13827,18 +13803,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-97" style="display: none" alt="-" /></td>
+              id="toggle-96" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">program-note-filter-setter</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-97">
+  <tr class="cg-96">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-note-filter-setter"><code class="xref">dfmc-conditions:dfmc-conditions:program-note-filter-setter</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-97">
+  <tr class="cg-96">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:program-note-filter-setter([program-note-filter],subclass([program-condition]))"><code class="xref">dfmc-conditions:dfmc-conditions:program-note-filter-setter(&lt;program-note-filter&gt;, subclass(&lt;program-condition&gt;))</code></a> <em>(method)</em></td><td>
@@ -14212,18 +14188,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-98" style="display: none" alt="-" /></td>
+              id="toggle-97" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">raise</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-98">
+  <tr class="cg-97">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:raise"><code class="xref">dfmc-conditions:dfmc-conditions:raise</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-98">
+  <tr class="cg-97">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:raise(subclass([program-error]))"><code class="xref">dfmc-conditions:dfmc-conditions:raise(subclass(&lt;program-error&gt;))</code></a> <em>(method)</em></td><td>
@@ -14291,24 +14267,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-99" style="display: none" alt="-" /></td>
+              id="toggle-98" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">read-double-float</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-99">
+  <tr class="cg-98">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:read-double-float"><code class="xref">access-path:access-path:read-double-float</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-99">
+  <tr class="cg-98">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:read-double-float([access-path],[active-remote-register])"><code class="xref">access-path:access-path:read-double-float(&lt;access-path&gt;, &lt;active-remote-register&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-99">
+  <tr class="cg-98">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:read-double-float([access-path],[remote-value])"><code class="xref">access-path:access-path:read-double-float(&lt;access-path&gt;, &lt;remote-value&gt;)</code></a> <em>(method)</em></td><td>
@@ -14364,24 +14340,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-100" style="display: none" alt="-" /></td>
+              id="toggle-99" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">read-single-float</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-100">
+  <tr class="cg-99">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:read-single-float"><code class="xref">access-path:access-path:read-single-float</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-100">
+  <tr class="cg-99">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:read-single-float([access-path],[active-remote-register])"><code class="xref">access-path:access-path:read-single-float(&lt;access-path&gt;, &lt;active-remote-register&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-100">
+  <tr class="cg-99">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:read-single-float([access-path],[remote-value])"><code class="xref">access-path:access-path:read-single-float(&lt;access-path&gt;, &lt;remote-value&gt;)</code></a> <em>(method)</em></td><td>
@@ -14407,24 +14383,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-101" style="display: none" alt="-" /></td>
+              id="toggle-100" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">read-value</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-101">
+  <tr class="cg-100">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:read-value"><code class="xref">access-path:access-path:read-value</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-101">
+  <tr class="cg-100">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:read-value([access-path],[active-remote-register])"><code class="xref">access-path:access-path:read-value(&lt;access-path&gt;, &lt;active-remote-register&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-101">
+  <tr class="cg-100">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:read-value([access-path],[remote-value])"><code class="xref">access-path:access-path:read-value(&lt;access-path&gt;, &lt;remote-value&gt;)</code></a> <em>(method)</em></td><td>
@@ -14690,48 +14666,48 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-102" style="display: none" alt="-" /></td>
+              id="toggle-101" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">release</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-102">
+  <tr class="cg-101">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dylan/threads.html#dylan:threads:release"><code class="xref">dylan:threads:release</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-102">
+  <tr class="cg-101">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dylan/threads.html#dylan:threads:release([exclusive-lock])"><code class="xref">dylan:threads:release(&lt;exclusive-lock&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-102">
+  <tr class="cg-101">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dylan/threads.html#dylan:threads:release([notification])"><code class="xref">dylan:threads:release(&lt;notification&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-102">
+  <tr class="cg-101">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dylan/threads.html#dylan:threads:release([read-write-lock])"><code class="xref">dylan:threads:release(&lt;read-write-lock&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-102">
+  <tr class="cg-101">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dylan/threads.html#dylan:threads:release([recursive-lock])"><code class="xref">dylan:threads:release(&lt;recursive-lock&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-102">
+  <tr class="cg-101">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dylan/threads.html#dylan:threads:release([semaphore])"><code class="xref">dylan:threads:release(&lt;semaphore&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-102">
+  <tr class="cg-101">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dylan/threads.html#dylan:threads:release([simple-lock])"><code class="xref">dylan:threads:release(&lt;simple-lock&gt;)</code></a> <em>(method)</em></td><td>
@@ -14745,18 +14721,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-103" style="display: none" alt="-" /></td>
+              id="toggle-102" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">remainder</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-103">
+  <tr class="cg-102">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:remainder"><code class="xref">dylan:dylan:remainder</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-103">
+  <tr class="cg-102">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:remainder([integer],[integer])"><code class="xref">dylan:dylan:remainder(&lt;integer&gt;, &lt;integer&gt;)</code></a> <em>(method)</em></td><td>
@@ -14998,30 +14974,30 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-104" style="display: none" alt="-" /></td>
+              id="toggle-103" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">remove-all-keys!</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-104">
+  <tr class="cg-103">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/collections/table-extensions.html#collections:table-extensions:remove-all-keys!"><code class="xref">collections:table-extensions:remove-all-keys!</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-104">
+  <tr class="cg-103">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/collections/table-extensions.html#collections:table-extensions:remove-all-keys!([mutable-explicit-key-collection])"><code class="xref">collections:table-extensions:remove-all-keys!(&lt;mutable-explicit-key-collection&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-104">
+  <tr class="cg-103">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/collections/table-extensions.html#collections:table-extensions:remove-all-keys!([table])"><code class="xref">collections:table-extensions:remove-all-keys!(&lt;table&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-104">
+  <tr class="cg-103">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/common-extensions.html#common-dylan:common-extensions:remove-all-keys!"><code class="xref">common-dylan:common-extensions:remove-all-keys!</code></a> <em>(generic function)</em></td><td>
@@ -15089,18 +15065,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-105" style="display: none" alt="-" /></td>
+              id="toggle-104" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">remove-object</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-105">
+  <tr class="cg-104">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:remove-object"><code class="xref">debugger-manager:debugger-manager:remove-object</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-105">
+  <tr class="cg-104">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:remove-object([page-relative-object-table],[remote-value])"><code class="xref">debugger-manager:debugger-manager:remove-object(&lt;page-relative-object-table&gt;, &lt;remote-value&gt;)</code></a> <em>(method)</em></td><td>
@@ -15192,24 +15168,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-106" style="display: none" alt="-" /></td>
+              id="toggle-105" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">restart</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-106">
+  <tr class="cg-105">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:restart"><code class="xref">access-path:access-path:restart</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-106">
+  <tr class="cg-105">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:restart"><code class="xref">dfmc-conditions:dfmc-conditions:restart</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-106">
+  <tr class="cg-105">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:restart(subclass([program-restart]))"><code class="xref">dfmc-conditions:dfmc-conditions:restart(subclass(&lt;program-restart&gt;))</code></a> <em>(method)</em></td><td>
@@ -15259,30 +15235,30 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-107" style="display: none" alt="-" /></td>
+              id="toggle-106" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">round</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-107">
+  <tr class="cg-106">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:round"><code class="xref">dylan:dylan:round</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-107">
+  <tr class="cg-106">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:round([float])"><code class="xref">dylan:dylan:round(&lt;float&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-107">
+  <tr class="cg-106">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:round([integer])"><code class="xref">dylan:dylan:round(&lt;integer&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-107">
+  <tr class="cg-106">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:round([machine-number])"><code class="xref">dylan:dylan:round(&lt;machine-number&gt;)</code></a> <em>(method)</em></td><td>
@@ -15290,24 +15266,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-108" style="display: none" alt="-" /></td>
+              id="toggle-107" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">round/</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-108">
+  <tr class="cg-107">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:round/"><code class="xref">dylan:dylan:round/</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-108">
+  <tr class="cg-107">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:round/([integer],[integer])"><code class="xref">dylan:dylan:round/(&lt;integer&gt;, &lt;integer&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-108">
+  <tr class="cg-107">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:round/([machine-number],[machine-number])"><code class="xref">dylan:dylan:round/(&lt;machine-number&gt;, &lt;machine-number&gt;)</code></a> <em>(method)</em></td><td>
@@ -16113,18 +16089,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-109" style="display: none" alt="-" /></td>
+              id="toggle-108" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">&lt;string-table&gt;</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-109">
+  <tr class="cg-108">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/collections/table-extensions.html#collections:table-extensions:[string-table]"><code class="xref">collections:table-extensions:&lt;string-table&gt;</code></a> <em>(class)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-109">
+  <tr class="cg-108">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/common-extensions.html#common-dylan:common-extensions:[string-table]"><code class="xref">common-dylan:common-extensions:&lt;string-table&gt;</code></a> <em>(class)</em></td><td>
@@ -16252,30 +16228,30 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-110" style="display: none" alt="-" /></td>
+              id="toggle-109" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">serious-note?</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-110">
+  <tr class="cg-109">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:serious-note?"><code class="xref">dfmc-conditions:dfmc-conditions:serious-note?</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-110">
+  <tr class="cg-109">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:serious-note?([program-error])"><code class="xref">dfmc-conditions:dfmc-conditions:serious-note?(&lt;program-error&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-110">
+  <tr class="cg-109">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:serious-note?([program-note])"><code class="xref">dfmc-conditions:dfmc-conditions:serious-note?(&lt;program-note&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-110">
+  <tr class="cg-109">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/compiler/notes-warnings-errors.html#dfmc-conditions:dfmc-conditions:serious-note?([serious-program-warning])"><code class="xref">dfmc-conditions:dfmc-conditions:serious-note?(&lt;serious-program-warning&gt;)</code></a> <em>(method)</em></td><td>
@@ -16613,18 +16589,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-111" style="display: none" alt="-" /></td>
+              id="toggle-110" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">shorten-pathname</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-111">
+  <tr class="cg-110">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/system/file-system.html#system:file-system:shorten-pathname"><code class="xref">system:file-system:shorten-pathname</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-111">
+  <tr class="cg-110">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/system/file-system.html#system:file-system:shorten-pathname([file-system-locator])"><code class="xref">system:file-system:shorten-pathname(&lt;file-system-locator&gt;)</code></a> <em>(method)</em></td><td>
@@ -16668,24 +16644,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-112" style="display: none" alt="-" /></td>
+              id="toggle-111" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">sin</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-112">
+  <tr class="cg-111">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:sin"><code class="xref">common-dylan:transcendentals:sin</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-112">
+  <tr class="cg-111">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:sin([double-float])"><code class="xref">common-dylan:transcendentals:sin(&lt;double-float&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-112">
+  <tr class="cg-111">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:sin([single-float])"><code class="xref">common-dylan:transcendentals:sin(&lt;single-float&gt;)</code></a> <em>(method)</em></td><td>
@@ -16693,24 +16669,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-113" style="display: none" alt="-" /></td>
+              id="toggle-112" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">sincos</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-113">
+  <tr class="cg-112">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:sincos"><code class="xref">common-dylan:transcendentals:sincos</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-113">
+  <tr class="cg-112">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:sincos([double-float])"><code class="xref">common-dylan:transcendentals:sincos(&lt;double-float&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-113">
+  <tr class="cg-112">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:sincos([single-float])"><code class="xref">common-dylan:transcendentals:sincos(&lt;single-float&gt;)</code></a> <em>(method)</em></td><td>
@@ -16718,24 +16694,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-114" style="display: none" alt="-" /></td>
+              id="toggle-113" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">sinh</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-114">
+  <tr class="cg-113">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:sinh"><code class="xref">common-dylan:transcendentals:sinh</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-114">
+  <tr class="cg-113">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:sinh([double-float])"><code class="xref">common-dylan:transcendentals:sinh(&lt;double-float&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-114">
+  <tr class="cg-113">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:sinh([single-float])"><code class="xref">common-dylan:transcendentals:sinh(&lt;single-float&gt;)</code></a> <em>(method)</em></td><td>
@@ -16755,18 +16731,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-115" style="display: none" alt="-" /></td>
+              id="toggle-114" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">skip-list</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-115">
+  <tr class="cg-114">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/documentation/example.html#skip-list"><code class="xref">skip-list</code></a> <em>(library)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-115">
+  <tr class="cg-114">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/documentation/example.html#skip-list:skip-list"><code class="xref">skip-list:skip-list</code></a> <em>(module)</em></td><td>
@@ -16888,30 +16864,30 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-116" style="display: none" alt="-" /></td>
+              id="toggle-115" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">split</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-116">
+  <tr class="cg-115">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/common-extensions.html#common-dylan:common-extensions:split"><code class="xref">common-dylan:common-extensions:split</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-116">
+  <tr class="cg-115">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/common-extensions.html#common-dylan:common-extensions:split([sequence],[function])"><code class="xref">common-dylan:common-extensions:split(&lt;sequence&gt;, &lt;function&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-116">
+  <tr class="cg-115">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/common-extensions.html#common-dylan:common-extensions:split([sequence],[object])"><code class="xref">common-dylan:common-extensions:split(&lt;sequence&gt;, &lt;object&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-116">
+  <tr class="cg-115">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/common-extensions.html#common-dylan:common-extensions:split([sequence],[sequence])"><code class="xref">common-dylan:common-extensions:split(&lt;sequence&gt;, &lt;sequence&gt;)</code></a> <em>(method)</em></td><td>
@@ -17003,24 +16979,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-117" style="display: none" alt="-" /></td>
+              id="toggle-116" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">sqrt</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-117">
+  <tr class="cg-116">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:sqrt"><code class="xref">common-dylan:transcendentals:sqrt</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-117">
+  <tr class="cg-116">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:sqrt([double-float])"><code class="xref">common-dylan:transcendentals:sqrt(&lt;double-float&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-117">
+  <tr class="cg-116">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:sqrt([single-float])"><code class="xref">common-dylan:transcendentals:sqrt(&lt;single-float&gt;)</code></a> <em>(method)</em></td><td>
@@ -17100,18 +17076,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-118" style="display: none" alt="-" /></td>
+              id="toggle-117" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">start-profiling</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-118">
+  <tr class="cg-117">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/simple-profiling.html#common-dylan:simple-profiling:start-profiling"><code class="xref">common-dylan:simple-profiling:start-profiling</code></a> <em>(function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-118">
+  <tr class="cg-117">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:start-profiling"><code class="xref">debugger-manager:debugger-manager:start-profiling</code></a> <em>(generic function)</em></td><td>
@@ -17119,30 +17095,30 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-119" style="display: none" alt="-" /></td>
+              id="toggle-118" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">start-profiling-type</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-119">
+  <tr class="cg-118">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/simple-profiling.html#common-dylan:simple-profiling:start-profiling-type"><code class="xref">common-dylan:simple-profiling:start-profiling-type</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-119">
+  <tr class="cg-118">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/simple-profiling.html#common-dylan:simple-profiling:start-profiling-type([profiling-state],[cpu-profiling-type])"><code class="xref">common-dylan:simple-profiling:start-profiling-type(&lt;profiling-state&gt;, &lt;cpu-profiling-type&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-119">
+  <tr class="cg-118">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/simple-profiling.html#common-dylan:simple-profiling:start-profiling-type([profiling-state],singleton(#"allocation"))"><code class="xref">common-dylan:simple-profiling:start-profiling-type(&lt;profiling-state&gt;, singleton(#&#34;allocation&#34;))</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-119">
+  <tr class="cg-118">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/simple-profiling.html#common-dylan:simple-profiling:start-profiling-type([profiling-state],singleton(#"allocation-stats"))"><code class="xref">common-dylan:simple-profiling:start-profiling-type(&lt;profiling-state&gt;, singleton(#&#34;allocation-stats&#34;))</code></a> <em>(method)</em></td><td>
@@ -17234,18 +17210,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-120" style="display: none" alt="-" /></td>
+              id="toggle-119" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">stop-profiling</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-120">
+  <tr class="cg-119">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/simple-profiling.html#common-dylan:simple-profiling:stop-profiling"><code class="xref">common-dylan:simple-profiling:stop-profiling</code></a> <em>(function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-120">
+  <tr class="cg-119">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/debugger-manager.html#debugger-manager:debugger-manager:stop-profiling"><code class="xref">debugger-manager:debugger-manager:stop-profiling</code></a> <em>(generic function)</em></td><td>
@@ -17253,30 +17229,30 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-121" style="display: none" alt="-" /></td>
+              id="toggle-120" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">stop-profiling-type</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-121">
+  <tr class="cg-120">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/simple-profiling.html#common-dylan:simple-profiling:stop-profiling-type"><code class="xref">common-dylan:simple-profiling:stop-profiling-type</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-121">
+  <tr class="cg-120">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/simple-profiling.html#common-dylan:simple-profiling:stop-profiling-type([profiling-state],[cpu-profiling-type])"><code class="xref">common-dylan:simple-profiling:stop-profiling-type(&lt;profiling-state&gt;, &lt;cpu-profiling-type&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-121">
+  <tr class="cg-120">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/simple-profiling.html#common-dylan:simple-profiling:stop-profiling-type([profiling-state],singleton(#"allocation"))"><code class="xref">common-dylan:simple-profiling:stop-profiling-type(&lt;profiling-state&gt;, singleton(#&#34;allocation&#34;))</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-121">
+  <tr class="cg-120">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/simple-profiling.html#common-dylan:simple-profiling:stop-profiling-type([profiling-state],singleton(#"allocation-stats"))"><code class="xref">common-dylan:simple-profiling:stop-profiling-type(&lt;profiling-state&gt;, singleton(#&#34;allocation-stats&#34;))</code></a> <em>(method)</em></td><td>
@@ -17530,18 +17506,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-122" style="display: none" alt="-" /></td>
+              id="toggle-121" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">supports-list-locator?</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-122">
+  <tr class="cg-121">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/system/locators.html#system:locators:supports-list-locator?"><code class="xref">system:locators:supports-list-locator?</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-122">
+  <tr class="cg-121">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/system/locators.html#system:locators:supports-list-locator?([file-system-directory-locator])"><code class="xref">system:locators:supports-list-locator?(&lt;file-system-directory-locator&gt;)</code></a> <em>(method)</em></td><td>
@@ -17903,18 +17879,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-123" style="display: none" alt="-" /></td>
+              id="toggle-122" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">tabling</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-123">
+  <tr class="cg-122">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/collections/table-extensions.html#collections:table-extensions:tabling"><code class="xref">collections:table-extensions:tabling</code></a> <em>(macro)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-123">
+  <tr class="cg-122">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="duim-reference/layouts.html#duim-layouts:duim-layouts:tabling"><code class="xref">duim-layouts:duim-layouts:tabling</code></a> <em>(macro)</em></td><td>
@@ -17934,24 +17910,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-124" style="display: none" alt="-" /></td>
+              id="toggle-123" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">tan</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-124">
+  <tr class="cg-123">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:tan"><code class="xref">common-dylan:transcendentals:tan</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-124">
+  <tr class="cg-123">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:tan([double-float])"><code class="xref">common-dylan:transcendentals:tan(&lt;double-float&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-124">
+  <tr class="cg-123">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:tan([single-float])"><code class="xref">common-dylan:transcendentals:tan(&lt;single-float&gt;)</code></a> <em>(method)</em></td><td>
@@ -17959,24 +17935,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-125" style="display: none" alt="-" /></td>
+              id="toggle-124" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">tanh</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-125">
+  <tr class="cg-124">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:tanh"><code class="xref">common-dylan:transcendentals:tanh</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-125">
+  <tr class="cg-124">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:tanh([double-float])"><code class="xref">common-dylan:transcendentals:tanh(&lt;double-float&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-125">
+  <tr class="cg-124">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:tanh([single-float])"><code class="xref">common-dylan:transcendentals:tanh(&lt;single-float&gt;)</code></a> <em>(method)</em></td><td>
@@ -18098,18 +18074,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-126" style="display: none" alt="-" /></td>
+              id="toggle-125" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">thread-name</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-126">
+  <tr class="cg-125">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:thread-name"><code class="xref">access-path:access-path:thread-name</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-126">
+  <tr class="cg-125">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dylan/threads.html#dylan:threads:thread-name"><code class="xref">dylan:threads:thread-name</code></a> <em>(function)</em></td><td>
@@ -18327,30 +18303,30 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-127" style="display: none" alt="-" /></td>
+              id="toggle-126" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">truncate</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-127">
+  <tr class="cg-126">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:truncate"><code class="xref">dylan:dylan:truncate</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-127">
+  <tr class="cg-126">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:truncate([float])"><code class="xref">dylan:dylan:truncate(&lt;float&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-127">
+  <tr class="cg-126">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:truncate([integer])"><code class="xref">dylan:dylan:truncate(&lt;integer&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-127">
+  <tr class="cg-126">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:truncate([machine-number])"><code class="xref">dylan:dylan:truncate(&lt;machine-number&gt;)</code></a> <em>(method)</em></td><td>
@@ -18358,18 +18334,18 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-128" style="display: none" alt="-" /></td>
+              id="toggle-127" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">truncate/</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-128">
+  <tr class="cg-127">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:truncate/"><code class="xref">dylan:dylan:truncate/</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-128">
+  <tr class="cg-127">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:truncate/([integer],[integer])"><code class="xref">dylan:dylan:truncate/(&lt;integer&gt;, &lt;integer&gt;)</code></a> <em>(method)</em></td><td>
@@ -18863,42 +18839,42 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-129" style="display: none" alt="-" /></td>
+              id="toggle-128" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">wait-for</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-129">
+  <tr class="cg-128">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dylan/threads.html#dylan:threads:wait-for"><code class="xref">dylan:threads:wait-for</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-129">
+  <tr class="cg-128">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dylan/threads.html#dylan:threads:wait-for([notification])"><code class="xref">dylan:threads:wait-for(&lt;notification&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-129">
+  <tr class="cg-128">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dylan/threads.html#dylan:threads:wait-for([read-write-lock])"><code class="xref">dylan:threads:wait-for(&lt;read-write-lock&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-129">
+  <tr class="cg-128">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dylan/threads.html#dylan:threads:wait-for([recursive-lock])"><code class="xref">dylan:threads:wait-for(&lt;recursive-lock&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-129">
+  <tr class="cg-128">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dylan/threads.html#dylan:threads:wait-for([semaphore])"><code class="xref">dylan:threads:wait-for(&lt;semaphore&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-129">
+  <tr class="cg-128">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/dylan/threads.html#dylan:threads:wait-for([simple-lock])"><code class="xref">dylan:threads:wait-for(&lt;simple-lock&gt;)</code></a> <em>(method)</em></td><td>
@@ -19046,6 +19022,12 @@
     <td></td>
     <td>
         <a href="library-reference/dylan/threads.html#dylan:threads:with-lock"><code class="xref">with-lock</code></a> <em>(macro)</em></td><td>
+    <em></em></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+        <a href="library-reference/common-dylan/byte-storage.html#common-dylan:byte-storage:with-object-byte-storage"><code class="xref">with-object-byte-storage</code></a> <em>(macro)</em></td><td>
     <em></em></td>
   </tr>
   <tr>
@@ -19218,24 +19200,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-130" style="display: none" alt="-" /></td>
+              id="toggle-129" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">write-double-float</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-130">
+  <tr class="cg-129">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:write-double-float"><code class="xref">access-path:access-path:write-double-float</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-130">
+  <tr class="cg-129">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:write-double-float([access-path],[active-remote-register],[double-float])"><code class="xref">access-path:access-path:write-double-float(&lt;access-path&gt;, &lt;active-remote-register&gt;, &lt;double-float&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-130">
+  <tr class="cg-129">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:write-double-float([access-path],[remote-value],[double-float])"><code class="xref">access-path:access-path:write-double-float(&lt;access-path&gt;, &lt;remote-value&gt;, &lt;double-float&gt;)</code></a> <em>(method)</em></td><td>
@@ -19267,24 +19249,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-131" style="display: none" alt="-" /></td>
+              id="toggle-130" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">write-single-float</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-131">
+  <tr class="cg-130">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:write-single-float"><code class="xref">access-path:access-path:write-single-float</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-131">
+  <tr class="cg-130">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:write-single-float([access-path],[active-remote-register],[single-float])"><code class="xref">access-path:access-path:write-single-float(&lt;access-path&gt;, &lt;active-remote-register&gt;, &lt;single-float&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-131">
+  <tr class="cg-130">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:write-single-float([access-path],[remote-value],[single-float])"><code class="xref">access-path:access-path:write-single-float(&lt;access-path&gt;, &lt;remote-value&gt;, &lt;single-float&gt;)</code></a> <em>(method)</em></td><td>
@@ -19292,24 +19274,24 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-132" style="display: none" alt="-" /></td>
+              id="toggle-131" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">write-value</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-132">
+  <tr class="cg-131">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:write-value"><code class="xref">access-path:access-path:write-value</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-132">
+  <tr class="cg-131">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:write-value([access-path],[active-remote-register],[remote-value])"><code class="xref">access-path:access-path:write-value(&lt;access-path&gt;, &lt;active-remote-register&gt;, &lt;remote-value&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-132">
+  <tr class="cg-131">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="hacker-guide/runtime-manager/access-path.html#access-path:access-path:write-value([access-path],[remote-value],[remote-value])"><code class="xref">access-path:access-path:write-value(&lt;access-path&gt;, &lt;remote-value&gt;, &lt;remote-value&gt;)</code></a> <em>(method)</em></td><td>
@@ -19353,30 +19335,30 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-133" style="display: none" alt="-" /></td>
+              id="toggle-132" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">zero?</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-133">
+  <tr class="cg-132">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/machine-words.html#common-dylan:machine-words:zero?([machine-word])"><code class="xref">common-dylan:machine-words:zero?(&lt;machine-word&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-133">
+  <tr class="cg-132">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:zero?"><code class="xref">dylan:dylan:zero?</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-133">
+  <tr class="cg-132">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:zero?([complex])"><code class="xref">dylan:dylan:zero?(&lt;complex&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-133">
+  <tr class="cg-132">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:zero?([machine-number])"><code class="xref">dylan:dylan:zero?(&lt;machine-number&gt;)</code></a> <em>(method)</em></td><td>
@@ -19402,54 +19384,54 @@
   </tr>
   <tr>
     <td><img src="_static/minus.png" class="toggler"
-              id="toggle-134" style="display: none" alt="-" /></td>
+              id="toggle-133" style="display: none" alt="-" /></td>
     <td>
         <code class="xref">^</code></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-134">
+  <tr class="cg-133">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:^([double-float],[double-float])"><code class="xref">common-dylan:transcendentals:^(&lt;double-float&gt;, &lt;double-float&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-134">
+  <tr class="cg-133">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:^([double-float],[single-float])"><code class="xref">common-dylan:transcendentals:^(&lt;double-float&gt;, &lt;single-float&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-134">
+  <tr class="cg-133">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:^([single-float],[double-float])"><code class="xref">common-dylan:transcendentals:^(&lt;single-float&gt;, &lt;double-float&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-134">
+  <tr class="cg-133">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/common-dylan/transcendentals.html#common-dylan:transcendentals:^([single-float],[single-float])"><code class="xref">common-dylan:transcendentals:^(&lt;single-float&gt;, &lt;single-float&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-134">
+  <tr class="cg-133">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:^"><code class="xref">dylan:dylan:^</code></a> <em>(generic function)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-134">
+  <tr class="cg-133">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:^([complex],[complex])"><code class="xref">dylan:dylan:^(&lt;complex&gt;, &lt;complex&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-134">
+  <tr class="cg-133">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:^([float],[integer])"><code class="xref">dylan:dylan:^(&lt;float&gt;, &lt;integer&gt;)</code></a> <em>(method)</em></td><td>
     <em></em></td>
   </tr>
-  <tr class="cg-134">
+  <tr class="cg-133">
     <td></td>
     <td>&#160;&#160;&#160;
         <a href="library-reference/language-extensions/numbers.html#dylan:dylan:^([integer],[integer])"><code class="xref">dylan:dylan:^(&lt;integer&gt;, &lt;integer&gt;)</code></a> <em>(method)</em></td><td>

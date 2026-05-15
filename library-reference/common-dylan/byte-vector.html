@@ -348,6 +348,7 @@
 <li class="toctree-l3"><a class="reference internal" href="simple-profiling.html">The simple-profiling Module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="simple-random.html">The simple-random Module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="simple-timers.html">The simple-timers Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="byte-storage.html">The byte-storage Module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="transcendentals.html">The transcendentals Module</a></li>
 </ul>
 </li>
@@ -563,123 +564,6 @@
 <dd><dl class="field-list simple">
 <dt class="field-odd">Equivalent<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">limited(&lt;integer&gt;,</span> <span class="pre">min:</span> <span class="pre">0,</span> <span class="pre">max:</span> <span class="pre">255)</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="dylan generic-function">
-<dt class="sig sig-object dylan-api dylan" id="common-dylan:byte-vector:byte-storage-address">
-<span class="sig-name descname"><span class="pre">byte-storage-address</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#common-dylan:byte-vector:byte-storage-address" title="Link to this definition">¶</a></dt>
-<dd><p>Returns the address of the raw byte storage of an object.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Signature<span class="colon">:</span></dt>
-<dd class="field-odd"><p>byte-storage-address (the-buffer) =&gt; (result-offset)</p>
-</dd>
-<dt class="field-even">Parameters<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>the-buffer</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
-</ul>
-</dd>
-<dt class="field-odd">Values<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>result-offset</strong> – An instance of <a class="reference internal" href="machine-words.html#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a>.</p></li>
-</ul>
-</dd>
-<dt class="field-even">See also<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><a class="reference internal" href="../io/streams.html#io:streams:byte-storage-address([buffer])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">byte-storage-address(&lt;buffer&gt;)</span></code></a></p></li>
-<li><p><a class="reference internal" href="#common-dylan:byte-vector:byte-storage-address([byte-string])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">byte-storage-address(&lt;byte-string&gt;)</span></code></a></p></li>
-<li><p><a class="reference internal" href="#common-dylan:byte-vector:byte-storage-address([byte-vector])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">byte-storage-address(&lt;byte-vector&gt;)</span></code></a></p></li>
-<li><p><a class="reference internal" href="#common-dylan:byte-vector:byte-storage-offset-address"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">byte-storage-offset-address</span></code></a></p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="dylan method">
-<dt class="sig sig-object dylan-api dylan" id="common-dylan:byte-vector:byte-storage-address([byte-string])">
-<span class="sig-name descname"><span class="pre">byte-storage-address(&lt;byte-string&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:byte-vector:byte-storage-address([byte-string])" title="Link to this definition">¶</a></dt>
-<dd><p>Returns the address of the raw byte storage of a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">See also<span class="colon">:</span></dt>
-<dd class="field-odd"><p><ul class="simple">
-<li><p><a class="reference internal" href="#common-dylan:byte-vector:byte-storage-address"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">byte-storage-address</span></code></a></p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="dylan method">
-<dt class="sig sig-object dylan-api dylan" id="common-dylan:byte-vector:byte-storage-address([byte-vector])">
-<span class="sig-name descname"><span class="pre">byte-storage-address(&lt;byte-vector&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:byte-vector:byte-storage-address([byte-vector])" title="Link to this definition">¶</a></dt>
-<dd><p>Returns the address of the raw byte storage of a <a class="reference internal" href="#common-dylan:byte-vector:[byte-vector]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;byte-vector&gt;</span></code></a>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">See also<span class="colon">:</span></dt>
-<dd class="field-odd"><p><ul class="simple">
-<li><p><a class="reference internal" href="#common-dylan:byte-vector:byte-storage-address"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">byte-storage-address</span></code></a></p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="dylan generic-function">
-<dt class="sig sig-object dylan-api dylan" id="common-dylan:byte-vector:byte-storage-offset-address">
-<span class="sig-name descname"><span class="pre">byte-storage-offset-address</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#common-dylan:byte-vector:byte-storage-offset-address" title="Link to this definition">¶</a></dt>
-<dd><p>Returns the address of the raw byte storage of an object, with an offset.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Signature<span class="colon">:</span></dt>
-<dd class="field-odd"><p>byte-storage-offset-address (the-buffer data-offset) =&gt; (result-offset)</p>
-</dd>
-<dt class="field-even">Parameters<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>the-buffer</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
-<li><p><strong>data-offset</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Number_Classes#integer"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;integer&gt;</span></code></a>.</p></li>
-</ul>
-</dd>
-<dt class="field-odd">Values<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>result-offset</strong> – An instance of <a class="reference internal" href="machine-words.html#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a>.</p></li>
-</ul>
-</dd>
-<dt class="field-even">See also<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><a class="reference internal" href="../io/streams.html#io:streams:byte-storage-offset-address([buffer])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">byte-storage-offset-address(&lt;buffer&gt;)</span></code></a></p></li>
-<li><p><a class="reference internal" href="#common-dylan:byte-vector:byte-storage-offset-address([byte-string])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">byte-storage-offset-address(&lt;byte-string&gt;)</span></code></a></p></li>
-<li><p><a class="reference internal" href="#common-dylan:byte-vector:byte-storage-offset-address([byte-vector])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">byte-storage-offset-address(&lt;byte-vector&gt;)</span></code></a></p></li>
-<li><p><a class="reference internal" href="#common-dylan:byte-vector:byte-storage-address"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">byte-storage-address</span></code></a></p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="dylan method">
-<dt class="sig sig-object dylan-api dylan" id="common-dylan:byte-vector:byte-storage-offset-address([byte-string])">
-<span class="sig-name descname"><span class="pre">byte-storage-offset-address(&lt;byte-string&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:byte-vector:byte-storage-offset-address([byte-string])" title="Link to this definition">¶</a></dt>
-<dd><p>Returns the address of the raw byte storage of a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>, with an offset.</p>
-<dl class="field-list simple">
-<dt class="field-odd">See also<span class="colon">:</span></dt>
-<dd class="field-odd"><p><ul class="simple">
-<li><p><a class="reference internal" href="#common-dylan:byte-vector:byte-storage-offset-address"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">byte-storage-offset-address</span></code></a></p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="dylan method">
-<dt class="sig sig-object dylan-api dylan" id="common-dylan:byte-vector:byte-storage-offset-address([byte-vector])">
-<span class="sig-name descname"><span class="pre">byte-storage-offset-address(&lt;byte-vector&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:byte-vector:byte-storage-offset-address([byte-vector])" title="Link to this definition">¶</a></dt>
-<dd><p>Returns the address of the raw byte storage of a <a class="reference internal" href="#common-dylan:byte-vector:[byte-vector]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;byte-vector&gt;</span></code></a>, with an offset.</p>
-<dl class="field-list simple">
-<dt class="field-odd">See also<span class="colon">:</span></dt>
-<dd class="field-odd"><p><ul class="simple">
-<li><p><a class="reference internal" href="#common-dylan:byte-vector:byte-storage-offset-address"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">byte-storage-offset-address</span></code></a></p></li>
-</ul>
-</p>
 </dd>
 </dl>
 </dd></dl>
@@ -952,8 +836,6 @@ as a hexadecimal representation of a series of bytes.</p>
 <li><a class="reference internal" href="#">The byte-vector Module</a><ul>
 <li><a class="reference internal" href="#common-dylan:byte-vector:[byte-vector]"><code class="docutils literal notranslate"><span class="pre">&lt;byte-vector&gt;</span></code></a></li>
 <li><a class="reference internal" href="#common-dylan:byte-vector:[byte]"><code class="docutils literal notranslate"><span class="pre">&lt;byte&gt;</span></code></a></li>
-<li><a class="reference internal" href="#common-dylan:byte-vector:byte-storage-address"><code class="docutils literal notranslate"><span class="pre">byte-storage-address</span></code></a></li>
-<li><a class="reference internal" href="#common-dylan:byte-vector:byte-storage-offset-address"><code class="docutils literal notranslate"><span class="pre">byte-storage-offset-address</span></code></a></li>
 <li><a class="reference internal" href="#common-dylan:byte-vector:byte-vector-fill"><code class="docutils literal notranslate"><span class="pre">byte-vector-fill</span></code></a></li>
 <li><a class="reference internal" href="#common-dylan:byte-vector:byte-vector-ref"><code class="docutils literal notranslate"><span class="pre">byte-vector-ref</span></code></a></li>
 <li><a class="reference internal" href="#common-dylan:byte-vector:byte-vector-ref-setter"><code class="docutils literal notranslate"><span class="pre">byte-vector-ref-setter</span></code></a></li>

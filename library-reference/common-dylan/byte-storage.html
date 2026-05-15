@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Compiler Support for Threads" href="threads.html" /><link rel="prev" title="Special Features" href="special-features.html" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="The transcendentals Module" href="transcendentals.html" /><link rel="prev" title="The simple-timers Module" href="simple-timers.html" />
 
     <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
-        <title>Name Mangling - Open Dylan</title>
+        <title>The byte-storage Module - Open Dylan</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
@@ -180,7 +180,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -204,50 +204,50 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Community</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../community/index.html">Get Involved</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../download/index.html">Download</a></li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">Hacker Guide</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Hacker Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l2 has-children"><a class="reference internal" href="../documentation/index.html">Writing Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Writing Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../documentation/guidelines.html">Guidelines</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../documentation/generating.html">Generating Documentation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../documentation/doctower.html">Doctower</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../documentation/example.html">Example documentation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../hacker-guide/index.html">Hacker Guide</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Hacker Guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../hacker-guide/documentation/index.html">Writing Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Writing Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/documentation/guidelines.html">Guidelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/documentation/generating.html">Generating Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/documentation/doctower.html">Doctower</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/documentation/example.html">Example documentation</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../build-system.html">Jam-based Build System</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../compiler/index.html">DFMC, The Dylan Flow Machine Compiler</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of DFMC, The Dylan Flow Machine Compiler</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../compiler/notes-warnings-errors.html">Notes, Warnings and Errors</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../compiler/old/design.html">Compiler Design (Old)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../compiler/old/internals.html">Compiler Internals (Old)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../hacker-guide/build-system.html">Jam-based Build System</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../hacker-guide/compiler/index.html">DFMC, The Dylan Flow Machine Compiler</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of DFMC, The Dylan Flow Machine Compiler</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/compiler/notes-warnings-errors.html">Notes, Warnings and Errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/compiler/old/design.html">Compiler Design (Old)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/compiler/old/internals.html">Compiler Internals (Old)</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">The Runtime</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of The Runtime</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="object-representation.html">Object Representation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="calling-convention.html">Calling Convention</a></li>
-<li class="toctree-l3"><a class="reference internal" href="special-features.html">Special Features</a></li>
-<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">Name Mangling</a></li>
-<li class="toctree-l3"><a class="reference internal" href="threads.html">Compiler Support for Threads</a></li>
-<li class="toctree-l3"><a class="reference internal" href="startup.html">Startup</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../hacker-guide/runtime/index.html">The Runtime</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of The Runtime</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/runtime/object-representation.html">Object Representation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/runtime/calling-convention.html">Calling Convention</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/runtime/special-features.html">Special Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/runtime/mangling.html">Name Mangling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/runtime/threads.html">Compiler Support for Threads</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/runtime/startup.html">Startup</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../runtime-manager/index.html">Runtime Manager</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of Runtime Manager</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../runtime-manager/access-path.html">The ACCESS-PATH library</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../runtime-manager/debugger-manager.html">The DEBUGGER-MANAGER library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../hacker-guide/runtime-manager/index.html">Runtime Manager</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of Runtime Manager</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/runtime-manager/access-path.html">The ACCESS-PATH library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/runtime-manager/debugger-manager.html">The DEBUGGER-MANAGER library</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../duim/index.html">DUIM - Dylan User Interface Manager</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../topics/index.html">Topics</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Topics</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../topics/method-dispatch.html">Method Dispatch</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../topics/debugging.html">Debugging</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../topics/porting.html">Porting to a New Target Platform</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../topics/ppml.html">The PPML library</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../topics/making-a-release.html">Release Check-list</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../topics/opendylan.org.html">Maintaining opendylan.org</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../hacker-guide/duim/index.html">DUIM - Dylan User Interface Manager</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../hacker-guide/topics/index.html">Topics</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of Topics</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/topics/method-dispatch.html">Method Dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/topics/debugging.html">Debugging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/topics/porting.html">Porting to a New Target Platform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/topics/ppml.html">The PPML library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/topics/making-a-release.html">Release Check-list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../hacker-guide/topics/opendylan.org.html">Maintaining opendylan.org</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../glossary.html">Glossary</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../copyright.html">Copyright</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../hacker-guide/glossary.html">Glossary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../hacker-guide/copyright.html">Copyright</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../proposals/index.html">Enhancement Proposals</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of Enhancement Proposals</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -309,78 +309,78 @@
 </li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/drm/">Dylan Reference Manual</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://package.opendylan.org/">Package Docs</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../library-reference/index.html">Bundled Libraries</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Bundled Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../library-reference/language-extensions/index.html">Dylan Language Extensions</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle navigation of Dylan Language Extensions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/language-extensions/language-differences.html">Language Differences</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/language-extensions/define-function.html">Function Definition</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/language-extensions/for-iteration.html">Extensions to the FOR iteration macro</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/language-extensions/weak-tables.html">Weak tables</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/language-extensions/inlining.html">Inlining adjectives for methods, constants, functions, and slots</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/language-extensions/numbers.html">Integers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/language-extensions/object-with-elements.html">object-with-elements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/language-extensions/macro-system-extensions.html">Macro System Extensions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/language-extensions/parser-expansions.html">Parser Expansions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/language-extensions/alternative-curry-syntax.html">Alternative Curry Syntax</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/language-extensions/numeric-literals.html">Numeric Literal Syntax</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/language-extensions/string-literals.html">String Literal Syntax</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">Bundled Libraries</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Bundled Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../language-extensions/index.html">Dylan Language Extensions</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle navigation of Dylan Language Extensions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/language-differences.html">Language Differences</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/define-function.html">Function Definition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/for-iteration.html">Extensions to the FOR iteration macro</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/weak-tables.html">Weak tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/inlining.html">Inlining adjectives for methods, constants, functions, and slots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/numbers.html">Integers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/object-with-elements.html">object-with-elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/macro-system-extensions.html">Macro System Extensions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/parser-expansions.html">Parser Expansions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/alternative-curry-syntax.html">Alternative Curry Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/numeric-literals.html">Numeric Literal Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../language-extensions/string-literals.html">String Literal Syntax</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../library-reference/lid.html">LID File Format</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../library-reference/c-ffi/index.html">The c-ffi Library</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../library-reference/collections/index.html">The collections Library</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><div class="visually-hidden">Toggle navigation of The collections Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/collections/bit-set.html">The bit-set Module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/collections/bit-vector.html">The bit-vector Module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/collections/collectors.html">The collectors Module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/collections/plists.html">The plists Module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/collections/set.html">The set Module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/collections/table-extensions.html">The table-extensions Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lid.html">LID File Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-ffi/index.html">The c-ffi Library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../collections/index.html">The collections Library</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><div class="visually-hidden">Toggle navigation of The collections Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../collections/bit-set.html">The bit-set Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../collections/bit-vector.html">The bit-vector Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../collections/collectors.html">The collectors Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../collections/plists.html">The plists Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../collections/set.html">The set Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../collections/table-extensions.html">The table-extensions Module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../library-reference/coloring-stream/index.html">The coloring-stream Library</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../library-reference/common-dylan/index.html">The common-dylan Library</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of The common-dylan Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/common-dylan/byte-vector.html">The byte-vector Module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/common-dylan/common-extensions.html">The common-extensions Module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/common-dylan/machine-words.html">The machine-words Module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/common-dylan/simple-format.html">The simple-format Module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/common-dylan/simple-profiling.html">The simple-profiling Module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/common-dylan/simple-random.html">The simple-random Module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/common-dylan/simple-timers.html">The simple-timers Module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/common-dylan/byte-storage.html">The byte-storage Module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/common-dylan/transcendentals.html">The transcendentals Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../coloring-stream/index.html">The coloring-stream Library</a></li>
+<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">The common-dylan Library</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of The common-dylan Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="byte-vector.html">The byte-vector Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="common-extensions.html">The common-extensions Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="machine-words.html">The machine-words Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="simple-format.html">The simple-format Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="simple-profiling.html">The simple-profiling Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="simple-random.html">The simple-random Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="simple-timers.html">The simple-timers Module</a></li>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">The byte-storage Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transcendentals.html">The transcendentals Module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../library-reference/dispatch-profiler/index.html">The DISPATCH-PROFILER library</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../library-reference/dood/index.html">The DOOD library</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../library-reference/dylan/index.html">The dylan Library</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of The dylan Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/dylan/finalization.html">The finalization Module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/dylan/primitives.html">The dylan-primitives Module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/dylan/threads.html">The threads Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dispatch-profiler/index.html">The DISPATCH-PROFILER library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dood/index.html">The DOOD library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../dylan/index.html">The dylan Library</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of The dylan Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../dylan/finalization.html">The finalization Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dylan/primitives.html">The dylan-primitives Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dylan/threads.html">The threads Module</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../library-reference/io/index.html">The io Library</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle navigation of The io Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/io/format.html">The format Module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/io/format-out.html">The format-out Module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/io/print.html">The print and pprint Modules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/io/streams.html">The streams Module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/io/standard-io.html">The standard-io Module</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../io/index.html">The io Library</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle navigation of The io Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../io/format.html">The format Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../io/format-out.html">The format-out Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../io/print.html">The print and pprint Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../io/streams.html">The streams Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../io/standard-io.html">The standard-io Module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../library-reference/network/index.html">The network Library</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../library-reference/progress-stream/index.html">The progress-stream Library</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../library-reference/sql/index.html">The sql Library</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../library-reference/system/index.html">The system Library</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle navigation of The system Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/system/date.html">The date Module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/system/locators.html">The locators Module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/system/file-system.html">The file-system Module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../library-reference/system/operating-system.html">The operating-system Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../network/index.html">The network Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../progress-stream/index.html">The progress-stream Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sql/index.html">The sql Library</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../system/index.html">The system Library</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle navigation of The system Library</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../system/date.html">The date Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../system/locators.html">The locators Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../system/file-system.html">The file-system Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../system/operating-system.html">The operating-system Module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../library-reference/t-lists/index.html">The t-lists Library</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../library-reference/win32/index.html">The Win32 API Libraries</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../library-reference/copyright.html">Copyright</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../t-lists/index.html">The t-lists Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../win32/index.html">The Win32 API Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../copyright.html">Copyright</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../documentation/index.html">Other Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of Other Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -506,12 +506,12 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="https://github.com/dylan-lang/opendylan/blob/master/documentation/source/hacker-guide/runtime/mangling.rst?plain=true" title="View this page">
+  <a class="muted-link" href="https://github.com/dylan-lang/opendylan/blob/master/documentation/source/library-reference/common-dylan/byte-storage.rst?plain=true" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
 </div><div class="edit-this-page">
-  <a class="muted-link" href="https://github.com/dylan-lang/opendylan/edit/master/documentation/source/hacker-guide/runtime/mangling.rst" title="Edit this page">
+  <a class="muted-link" href="https://github.com/dylan-lang/opendylan/edit/master/documentation/source/library-reference/common-dylan/byte-storage.rst" title="Edit this page">
     <svg><use href="#svg-pencil"></use></svg>
     <span class="visually-hidden">Edit this page</span>
   </a>
@@ -524,173 +524,105 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="name-mangling">
-<h1>Name Mangling<a class="headerlink" href="#name-mangling" title="Link to this heading">¶</a></h1>
-<p>In Dylan, unlike C, identifier names are case insensitive. Dylan also
-permits additional characters to appear in names. As a further
-complication, Dylan provides multiple namespaces, and the namespaces are
-controlled within a two-tier hierarchy of modules and libraries.</p>
-<p>In order to make it possible to link Dylan code with tools designed to
-support more traditional languages, the Dylan compiler transforms the
-names which appear in Dylan programs to C compatible names, via a
-process called <em>mangling</em>.</p>
-<p>The library, module and identifier names are each processed, according
-to the following rules:</p>
-<ol class="arabic simple">
-<li><p>All uppercase characters are converted to lowercase.</p></li>
-<li><p>Any character which appears on the left-hand side of the table is mapped
-to the new character sequence accordingly.</p></li>
-</ol>
-<div class="table-wrapper docutils container">
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>Old</p></th>
-<th class="head"><p>New</p></th>
-<th class="head"><p>Comment</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><em>-</em></p></td>
-<td><p><em>_</em></p></td>
-<td><p>dash</p></td>
-</tr>
-<tr class="row-odd"><td><p><em>!</em></p></td>
-<td><p><em>X</em></p></td>
-<td><p>exclamation</p></td>
-</tr>
-<tr class="row-even"><td><p><em>$</em></p></td>
-<td><p><em>D</em></p></td>
-<td><p>dollar</p></td>
-</tr>
-<tr class="row-odd"><td><p><em>%</em></p></td>
-<td><p><em>P</em></p></td>
-<td><p>percent</p></td>
-</tr>
-<tr class="row-even"><td><p><em>*</em></p></td>
-<td><p><em>T</em></p></td>
-<td><p>times</p></td>
-</tr>
-<tr class="row-odd"><td><p><em>/</em></p></td>
-<td><p><em>S</em></p></td>
-<td><p>slash</p></td>
-</tr>
-<tr class="row-even"><td><p><em>&lt;</em></p></td>
-<td><p><em>L</em></p></td>
-<td><p>less</p></td>
-</tr>
-<tr class="row-odd"><td><p><em>&gt;</em></p></td>
-<td><p><em>G</em></p></td>
-<td><p>greater</p></td>
-</tr>
-<tr class="row-even"><td><p><em>?</em></p></td>
-<td><p><em>Q</em></p></td>
-<td><p>question mark</p></td>
-</tr>
-<tr class="row-odd"><td><p><em>+</em></p></td>
-<td><p><em>A</em></p></td>
-<td><p>plus</p></td>
-</tr>
-<tr class="row-even"><td><p><em>&amp;</em></p></td>
-<td><p><em>B</em></p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p><em>^</em></p></td>
-<td><p><em>C</em></p></td>
-<td><p>caret</p></td>
-</tr>
-<tr class="row-even"><td><p><em>_</em></p></td>
-<td><p><em>U</em></p></td>
-<td><p>underscore</p></td>
-</tr>
-<tr class="row-odd"><td><p><em>&#64;</em></p></td>
-<td><p><em>O</em></p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p><em>=</em></p></td>
-<td><p><em>E</em></p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p><em>~</em></p></td>
-<td><p><em>N</em></p></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>Finally, the fully mangled name is created by concatenating the
-mangled names together, along with other special markers.</p>
-<p>Example 1:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Kexecute_componentQYPtestworksVtestworks
+          <section id="the-byte-storage-module">
+<h1>The byte-storage Module<a class="headerlink" href="#the-byte-storage-module" title="Link to this heading">¶</a></h1>
+<dl class="dylan module">
+<dt class="sig sig-object dylan-api dylan" id="common-dylan:byte-storage">
+<span class="sig-name descname"><span class="pre">byte-storage</span></span> <em class="property"><span class="pre">Module</span></em><a class="headerlink" href="#common-dylan:byte-storage" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
-K                  = constant (methods are constants)
-execute_componentQ = method name (Q = ?)
-Y                  = module separator
-Ptestworks         = module name (P = %)
-V                  = library separator
-testworks          = library name
-</pre></div>
-</div>
-<p>Example 2:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Kstream_sizeYstreams_protocolVcommon_dylanMioM0I</span>
-
-<span class="n">K</span>                    <span class="o">=</span> <span class="n">constant</span>
-<span class="n">stream_size</span>          <span class="o">=</span> <span class="n">method</span> <span class="n">name</span>
-<span class="n">Y</span>                    <span class="o">=</span> <span class="n">module</span> <span class="n">separator</span>
-<span class="n">streams_protocol</span>     <span class="o">=</span> <span class="n">module</span> <span class="n">name</span>
-<span class="n">V</span>                    <span class="o">=</span> <span class="n">library</span> <span class="n">separator</span>
-<span class="n">common_dylan</span>         <span class="o">=</span> <span class="n">library</span> <span class="n">name</span>
-<span class="n">M</span>                    <span class="o">=</span> <span class="n">method</span> <span class="n">separator</span>
-<span class="n">io</span>                   <span class="o">=</span> <span class="n">library</span> <span class="n">which</span> <span class="n">defines</span> <span class="n">this</span> <span class="n">method</span>
-<span class="n">M</span>                    <span class="o">=</span> <span class="n">method</span> <span class="n">separator</span>
-<span class="mi">0</span>                    <span class="o">=</span> <span class="mi">0</span><span class="n">th</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">stream_size</span> <span class="n">generic</span>
-<span class="n">I</span>                    <span class="o">=</span> <span class="n">Internal</span> <span class="n">Entry</span> <span class="n">Point</span> <span class="p">(</span><span class="n">IEP</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>The Dylan mangling scheme takes care to omit some elements of
-the name when possible to help abbreviate the names. The usual
-things that are omitted are:</p>
-<ul class="simple">
-<li><p>The module marker and name when the module name is the same
-as the library name.</p></li>
-<li><p>The name of the library where the method is defined (between
-the method separators). This is omitted when it is the same
-as the library which defines the generic function.</p></li>
+<dl class="dylan generic-function">
+<dt class="sig sig-object dylan-api dylan" id="common-dylan:byte-storage:byte-storage-address">
+<span class="sig-name descname"><span class="pre">byte-storage-address</span></span> <em class="property"><span class="pre">Open</span> <span class="pre">Generic</span> <span class="pre">function</span></em><a class="headerlink" href="#common-dylan:byte-storage:byte-storage-address" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the address of the raw byte storage of an object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Signature<span class="colon">:</span></dt>
+<dd class="field-odd"><p>byte-storage-address (the-buffer) =&gt; (result-offset)</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>the-buffer</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>.</p></li>
 </ul>
-<p>We’ll see this in our next example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Krun_test_applicationVtestworksMM0I</span>
-
-<span class="n">K</span>                    <span class="o">=</span> <span class="n">constant</span>
-<span class="n">run_test_application</span> <span class="o">=</span> <span class="n">method</span> <span class="n">name</span>
-<span class="p">(</span><span class="n">module</span> <span class="n">marker</span> <span class="ow">and</span> <span class="n">name</span> <span class="n">omitted</span> <span class="n">when</span> <span class="n">same</span> <span class="k">as</span> <span class="n">library</span> <span class="n">name</span><span class="p">)</span>
-<span class="n">V</span>                    <span class="o">=</span> <span class="n">library</span> <span class="n">separator</span>
-<span class="n">testworks</span>            <span class="o">=</span> <span class="n">library</span> <span class="n">name</span>
-<span class="n">M</span>                    <span class="o">=</span> <span class="n">method</span> <span class="n">separator</span>
-<span class="p">(</span><span class="n">library</span> <span class="n">name</span> <span class="n">omitted</span> <span class="k">as</span> <span class="n">this</span> <span class="ow">is</span> <span class="n">defined</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">same</span> <span class="n">library</span> <span class="k">as</span> <span class="n">the</span> <span class="n">generic</span><span class="p">)</span>
-<span class="n">M</span>                    <span class="o">=</span> <span class="n">method</span> <span class="n">separator</span>
-<span class="mi">0</span>                    <span class="o">=</span> <span class="mi">0</span><span class="n">th</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">run_test_application</span> <span class="n">generic</span>
-<span class="n">I</span>                    <span class="o">=</span> <span class="n">Internal</span> <span class="n">Entry</span> <span class="n">Point</span> <span class="p">(</span><span class="n">IEP</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Bindings within the Dylan library are given special shortened forms.
-In this case, instead of the library separator <code class="docutils literal notranslate"><span class="pre">V</span></code>, the library name
-and then the <code class="docutils literal notranslate"><span class="pre">Y</span></code> module separator, we would see the library separator
-<code class="docutils literal notranslate"><span class="pre">V</span></code> and then then special <code class="docutils literal notranslate"><span class="pre">dylan</span></code> module separator <code class="docutils literal notranslate"><span class="pre">K</span></code>. Some
-modules within the <code class="docutils literal notranslate"><span class="pre">dylan</span></code> library are given special single letter
-abbreviations.  For example the <code class="docutils literal notranslate"><span class="pre">dylan</span></code> module’s name is just <code class="docutils literal notranslate"><span class="pre">d</span></code>
-and the <code class="docutils literal notranslate"><span class="pre">internal</span></code> module is <code class="docutils literal notranslate"><span class="pre">i</span></code>.</p>
-<p>Examples:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">KLempty_listGVKd</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Kcondition_format_arguments_vectorVKiI</span></code></p></li>
+</dd>
+<dt class="field-odd">Values<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>result-offset</strong> – An instance of <a class="reference internal" href="machine-words.html#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a>.</p></li>
 </ul>
-<p>See <a class="reference external" href="https://github.com/dylan-lang/opendylan/blob/master/sources/dfmc/mangling/mangling.dylan">the source</a>
-for more detail.</p>
+</dd>
+<dt class="field-even">See also<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference internal" href="../io/streams.html#io:streams:byte-storage-address([buffer])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">byte-storage-address(&lt;buffer&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:byte-storage:byte-storage-address([byte-string])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">byte-storage-address(&lt;byte-string&gt;)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#common-dylan:byte-storage:byte-storage-address([byte-vector])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">byte-storage-address(&lt;byte-vector&gt;)</span></code></a></p></li>
+<li><p><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">byte-storage-offset-address</span></code></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="dylan method">
+<dt class="sig sig-object dylan-api dylan" id="common-dylan:byte-storage:byte-storage-address([byte-string])">
+<span class="sig-name descname"><span class="pre">byte-storage-address(&lt;byte-string&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:byte-storage:byte-storage-address([byte-string])" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the address of the raw byte storage of a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#byte-string"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;byte-string&gt;</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#common-dylan:byte-storage:byte-storage-address"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">byte-storage-address</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="dylan method">
+<dt class="sig sig-object dylan-api dylan" id="common-dylan:byte-storage:byte-storage-address([byte-vector])">
+<span class="sig-name descname"><span class="pre">byte-storage-address(&lt;byte-vector&gt;)</span></span> <em class="property"><span class="pre">Sealed</span> <span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:byte-storage:byte-storage-address([byte-vector])" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the address of the raw byte storage of a <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;byte-vector&gt;</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">See also<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><a class="reference internal" href="#common-dylan:byte-storage:byte-storage-address"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">byte-storage-address</span></code></a></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="dylan macro">
+<dt class="sig sig-object dylan-api dylan" id="common-dylan:byte-storage:with-object-byte-storage">
+<span class="sig-name descname"><span class="pre">with-object-byte-storage</span></span> <em class="property"><span class="pre">Statement</span> <span class="pre">Macro</span></em><a class="headerlink" href="#common-dylan:byte-storage:with-object-byte-storage" title="Link to this definition">¶</a></dt>
+<dd><p>Provides the pinned address of the repeated byte storage of an
+object within the scope of the body of the code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Macro Call<span class="colon">:</span></dt>
+<dd class="field-odd"><p><pre class="literal-block">with-object-byte-storage (<em>name</em>  = <em>object</em>)
+  <em>body</em>
+end [with-object-byte-storage]</pre>
+</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>name</strong> – A Dylan variable name.</p></li>
+<li><p><strong>object</strong> – A Dylan object with repeated byte storage.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Discussion<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Binds <em>name</em> to the address (a <a class="reference internal" href="machine-words.html#common-dylan:machine-words:[machine-word]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;machine-word&gt;</span></code></a> as
+returned by <a class="reference internal" href="#common-dylan:byte-storage:byte-storage-address"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">byte-storage-address</span></code></a>) of the repeated byte
+storage portion of an object within the scope of <em>body</em>.
+The object is <em>pinned</em> by the garbage collector so that the
+address is valid until <em>body</em> exits.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
         </article>
@@ -698,23 +630,23 @@ for more detail.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="threads.html">
+          <a class="next-page" href="transcendentals.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Compiler Support for Threads</div>
+                <div class="title">The transcendentals Module</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="special-features.html">
+          <a class="prev-page" href="simple-timers.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Special Features</div>
+                <div class="title">The simple-timers Module</div>
                 
               </div>
             </a>
@@ -736,8 +668,28 @@ for more detail.</p>
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">The byte-storage Module</a><ul>
+<li><a class="reference internal" href="#common-dylan:byte-storage:byte-storage-address"><code class="docutils literal notranslate"><span class="pre">byte-storage-address</span></code></a></li>
+<li><a class="reference internal" href="#common-dylan:byte-storage:with-object-byte-storage"><code class="docutils literal notranslate"><span class="pre">with-object-byte-storage</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
