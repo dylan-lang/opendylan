@@ -117,16 +117,24 @@ define function unix-isatty
   (res == 1)
 end function unix-isatty;
 
-define function get-unix-error (errno :: <integer>) => (message :: <string>)
-  let message :: <byte-string>
-    = primitive-raw-as-string
-       (%call-c-function ("strerror")
-            (errno :: <raw-c-signed-int>) => (message :: <raw-byte-string>)
-          (integer-as-raw(errno))
-        end);
-  // Make a copy to avoid it being overwritten ...
-  copy-sequence(message)
-end function get-unix-error;
+define function unix-error-message
+    (errno :: <integer>)
+ => (message :: <string>)
+  let message-size = 256;
+  with-stack-byte-storage (message-storage, message-size)
+    primitive-raw-as-string
+      (%call-c-function ("io_strerror")
+           (errno :: <raw-c-signed-int>,
+            buffer :: <raw-byte-string>,
+            size :: <raw-c-unsigned-int>)
+        => (message :: <raw-byte-string>)
+         (integer-as-raw(errno),
+          primitive-cast-raw-as-pointer
+            (primitive-unwrap-machine-word(message-storage)),
+          integer-as-raw(message-size))
+       end)
+  end with-stack-byte-storage
+end function unix-error-message;
 
 
 /// HIGHER LEVEL INTERFACE
@@ -134,7 +142,7 @@ end function get-unix-error;
 define function unix-error
     (syscall :: <string>, #key errno = #f)
  => (does-not-return :: <bottom>);
-  let message :: <string> = get-unix-error (errno | unix-errno());
+  let message :: <string> = unix-error-message(errno | unix-errno());
   error("%s: %s", syscall, message);
 end function unix-error;
 

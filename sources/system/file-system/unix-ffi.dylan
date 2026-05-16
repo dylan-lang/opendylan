@@ -116,21 +116,29 @@ define function unix-errno () => (errno :: <integer>)
     (%call-c-function("io_errno") ()=>(result :: <raw-c-signed-int>)() end)
 end function;
 
-define function unix-last-error-message () => (message :: <string>)
-  let message :: <byte-string>
-    = primitive-raw-as-string
-       (%call-c-function ("strerror")
-            (errno :: <raw-c-signed-int>) => (message :: <raw-byte-string>)
-          (integer-as-raw(unix-errno()))
-        end);
-  // Make a copy to avoid it being overwritten ...
-  copy-sequence(message)
-end function unix-last-error-message;
+define function unix-error-message
+    (errno :: <integer>)
+ => (message :: <string>)
+  let message-size = 256;
+  with-stack-byte-storage (message-storage, message-size)
+    primitive-raw-as-string
+      (%call-c-function ("io_strerror")
+           (errno :: <raw-c-signed-int>,
+            buffer :: <raw-byte-string>,
+            size :: <raw-c-unsigned-int>)
+        => (message :: <raw-byte-string>)
+         (integer-as-raw(errno),
+          primitive-cast-raw-as-pointer
+            (primitive-unwrap-machine-word(message-storage)),
+          integer-as-raw(message-size))
+       end)
+  end with-stack-byte-storage
+end function unix-error-message;
 
 define function unix-file-error
     (operation :: <string>, additional-information, #rest additional-information-args)
  => (will-never-return :: <bottom>)
-  let status-message = unix-last-error-message();
+  let status-message = unix-error-message(unix-errno());
   if (additional-information)
     error(make(<file-system-error>,
                format-string: concatenate("%s: Can't %s ", additional-information),
