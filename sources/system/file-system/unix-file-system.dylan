@@ -349,9 +349,12 @@ define function %file-properties
       unix-file-error("get attributes of", "%s", file)
     else
       properties[#"size"] := st-size(st);
-      properties[#"creation-date"] := make(<date>, native-clock: st-ctime(st));
-      properties[#"access-date"] := make(<date>, native-clock: st-atime(st));
-      properties[#"modification-date"] := make(<date>, native-clock: st-mtime(st))
+      properties[#"creation-date"]
+        := make(<date>, native-clock: st-ctim-addr(st));
+      properties[#"access-date"]
+        := make(<date>, native-clock: st-atim-addr(st));
+      properties[#"modification-date"]
+        := make(<date>, native-clock: st-mtim-addr(st))
     end
   end;
   properties[#"author"] := %file-property(file, #"author");
@@ -443,7 +446,7 @@ define method %file-property
            end))
       unix-file-error("get the creation date of", "%s", file)
     else
-      make(<date>, native-clock: st-ctime(st))
+      make(<date>, native-clock: st-ctim-addr(st))
     end
   end
 end method %file-property;
@@ -460,7 +463,7 @@ define method %file-property
            end))
       unix-file-error("get the access date of", "%s", file)
     else
-      make(<date>, native-clock: st-atime(st))
+      make(<date>, native-clock: st-atim-addr(st))
     end
   end
 end method %file-property;
@@ -477,7 +480,7 @@ define method %file-property
            end))
       unix-file-error("get the modification date of", "%s", file)
     else
-      make(<date>, native-clock: st-mtime(st))
+      make(<date>, native-clock: st-mtim-addr(st))
     end
   end
 end method %file-property;

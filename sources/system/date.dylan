@@ -44,6 +44,8 @@ define method make (class == <date>, #rest init-keywords,
   if (iso8601-string)
     parse-iso8601-string(iso8601-string)
   elseif (native-clock)
+    // native-clock is a <machine-word> representing a pointer to a
+    // struct timespec on Unix, or to a FILETIME structure (Windows)
     encode-native-clock-as-date(native-clock)
   else
     next-method()

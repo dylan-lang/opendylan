@@ -1,3 +1,7 @@
+#ifdef __APPLE__
+#define _DARWIN_C_SOURCE
+#endif
+
 #include <limits.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -5,8 +9,6 @@
 /* TARGET HEADERS */
 #include <errno.h>
 #include <dirent.h>
-#include <pwd.h>
-#include <grp.h>
 #include <time.h>
 #include <sys/stat.h>
 
@@ -41,14 +43,23 @@ main(void) {
     PRINT_OFFSETOF(struct stat, st_uid,  "$st-uid-offset");
     PRINT_OFFSETOF(struct stat, st_gid,  "$st-gid-offset");
     PRINT_OFFSETOF(struct stat, st_size, "$st-size-offset");
-    PRINT_OFFSETOF(struct stat, st_atime, "$st-atime-offset");
-    PRINT_OFFSETOF(struct stat, st_mtime, "$st-mtime-offset");
-    PRINT_OFFSETOF(struct stat, st_ctime, "$st-ctime-offset");
+#if defined(_DARWIN_C_SOURCE)
+    PRINT_OFFSETOF(struct stat, st_atimespec, "$st-atim-offset");
+    PRINT_OFFSETOF(struct stat, st_mtimespec, "$st-mtim-offset");
+    PRINT_OFFSETOF(struct stat, st_ctimespec, "$st-ctim-offset");
+#else
+    PRINT_OFFSETOF(struct stat, st_atim, "$st-atim-offset");
+    PRINT_OFFSETOF(struct stat, st_mtim, "$st-mtim-offset");
+    PRINT_OFFSETOF(struct stat, st_ctim, "$st-ctim-offset");
+#endif
 
     printf("\n");
-    PRINT_OFFSETOF(struct group, gr_name, "$gr-name-offset");
+    PRINT_SIZEOF(struct timespec, "$timespec-size");
+    PRINT_OFFSETOF(struct timespec, tv_sec, "$tv-sec-offset");
+    PRINT_OFFSETOF(struct timespec, tv_nsec, "$tv-nsec-offset");
 
     printf("\n");
+    PRINT_SIZEOF(struct tm, "$tm-size");
     PRINT_OFFSETOF(struct tm, tm_sec,    "$tm-sec-offset");
     PRINT_OFFSETOF(struct tm, tm_min,    "$tm-min-offset");
     PRINT_OFFSETOF(struct tm, tm_hour,   "$tm-hour-offset");

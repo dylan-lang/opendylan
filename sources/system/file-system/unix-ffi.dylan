@@ -70,27 +70,17 @@ define inline-only function st-size (st :: <machine-word>) => (size :: <abstract
                               integer-as-raw($st-size-offset)))
 end function st-size;
 
-define inline-only function st-atime (st :: <machine-word>) => (atime :: <abstract-integer>)
-  raw-as-abstract-integer
-  (primitive-c-signed-long-at(primitive-unwrap-machine-word(st),
-                              integer-as-raw(0),
-                              integer-as-raw($st-atime-offset)))
-end function st-atime;
+define inline-only function st-atim-addr (st :: <machine-word>) => (atim-addr :: <machine-word>)
+  u%+(st, $st-atim-offset)
+end function st-atim-addr;
 
-define inline-only function st-mtime (st :: <machine-word>) => (mtime :: <abstract-integer>)
-  raw-as-abstract-integer
-  (primitive-c-signed-long-at(primitive-unwrap-machine-word(st),
-                              integer-as-raw(0),
-                              integer-as-raw($st-mtime-offset)))
-end function st-mtime;
+define inline-only function st-mtim-addr (st :: <machine-word>) => (mtim-addr :: <machine-word>)
+  u%+(st, $st-mtim-offset)
+end function st-mtim-addr;
 
-define inline-only function st-ctime (st :: <machine-word>) => (ctime :: <abstract-integer>)
-  raw-as-abstract-integer
-  (primitive-c-signed-long-at(primitive-unwrap-machine-word(st),
-                              integer-as-raw(0),
-                              integer-as-raw($st-ctime-offset)))
-end function st-ctime;
-
+define inline-only function st-ctim-addr (st :: <machine-word>) => (ctim-addr :: <machine-word>)
+  u%+(st, $st-ctim-offset)
+end function st-ctim-addr;
 
 
 define inline-only function dirent-name (dirent :: <machine-word>) => (name :: <byte-string>)

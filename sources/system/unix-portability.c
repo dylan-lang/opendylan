@@ -6,6 +6,7 @@
 #define _GNU_SOURCE
 #endif
 
+#include <time.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <signal.h>
@@ -45,6 +46,11 @@ int system_setenv(char *name, char *value, int overwrite)
 int system_unsetenv(const char *name)
 {
   return unsetenv(name);
+}
+
+int system_clock_realtime(struct timespec *tp)
+{
+  return clock_gettime(CLOCK_REALTIME, tp);
 }
 
 /* Adapted from the SBCL run-time system, which in turn is derived

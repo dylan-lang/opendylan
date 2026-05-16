@@ -16,12 +16,15 @@ define constant $st-mode-offset :: <integer> = 4;
 define constant $st-uid-offset :: <integer> = 16;
 define constant $st-gid-offset :: <integer> = 20;
 define constant $st-size-offset :: <integer> = 96;
-define constant $st-atime-offset :: <integer> = 32;
-define constant $st-mtime-offset :: <integer> = 48;
-define constant $st-ctime-offset :: <integer> = 64;
+define constant $st-atim-offset :: <integer> = 32;
+define constant $st-mtim-offset :: <integer> = 48;
+define constant $st-ctim-offset :: <integer> = 64;
 
-define constant $gr-name-offset :: <integer> = 0;
+define constant $timespec-size :: <integer> = 16;
+define constant $tv-sec-offset :: <integer> = 0;
+define constant $tv-nsec-offset :: <integer> = 8;
 
+define constant $tm-size :: <integer> = 56;
 define constant $tm-sec-offset :: <integer> = 0;
 define constant $tm-min-offset :: <integer> = 4;
 define constant $tm-hour-offset :: <integer> = 8;
