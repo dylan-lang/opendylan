@@ -92,13 +92,6 @@ define inline-only function st-ctime (st :: <machine-word>) => (ctime :: <abstra
 end function st-ctime;
 
 
-define inline-only function group-name (group :: <machine-word>) => (name :: <byte-string>)
-  primitive-raw-as-string
-    (primitive-c-pointer-at(primitive-unwrap-machine-word(group),
-                            integer-as-raw($gr-name-offset),
-                            integer-as-raw(0)))
-end function group-name;
-
 
 define inline-only function dirent-name (dirent :: <machine-word>) => (name :: <byte-string>)
   primitive-raw-as-string

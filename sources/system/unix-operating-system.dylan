@@ -40,19 +40,28 @@ define function login-name () => (name :: false-or(<string>))
 end function login-name;
 
 define function login-group () => (group :: false-or(<string>))
-  let group = primitive-wrap-machine-word
-                (%call-c-function ("getgid") () => (gid :: <raw-c-unsigned-int>) () end);
-  let value = primitive-wrap-machine-word
-                (primitive-cast-pointer-as-raw
-                   (%call-c-function ("getgrgid")
-                        (gid :: <raw-c-unsigned-int>) => (group :: <raw-c-pointer>)
-                      (primitive-unwrap-machine-word(group))
-                    end));
-  if (primitive-machine-word-not-equal?(primitive-unwrap-machine-word(value),
-                                        integer-as-raw(0)))
-    group-name(value)
-  else
-    #f
+  let raw-gid
+    = %call-c-function ("getgid") () => (gid :: <raw-c-unsigned-int>) () end;
+  let max-groupname-size = 256;
+  with-stack-byte-storage (groupname-storage, max-groupname-size)
+    let raw-name-storage
+      = primitive-cast-raw-as-pointer
+          (primitive-unwrap-machine-word(groupname-storage));
+    let result
+      = raw-as-integer
+          (%call-c-function ("system_group_name_from_gid")
+               (gid :: <raw-c-unsigned-int>,
+                name-buffer :: <raw-byte-string>,
+                name-buffer-size :: <raw-c-unsigned-int>)
+            => (status :: <raw-c-signed-int>)
+             (raw-gid, raw-name-storage,
+              integer-as-raw(max-groupname-size))
+           end);
+    if (zero?(result))
+      primitive-raw-as-string(raw-name-storage)
+    else
+      #f
+    end
   end
 end function login-group;
 

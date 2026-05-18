@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pwd.h>
+#include <grp.h>
 #include <string.h>
 
 
@@ -239,5 +240,25 @@ int system_passwd_username_from_uid (uid_t uid, char* username, int username_siz
     return -1;
   }
   strncpy(username, pwd.pw_name, len);
+  return 0;
+}
+
+int system_group_name_from_gid (gid_t gid, char *name, int name_size) {
+  long group_bufsize = 0;
+  if ((group_bufsize = sysconf(_SC_GETGR_R_SIZE_MAX)) == -1) {
+    // No hard limit, so pick a size
+    group_bufsize = 2048;
+  }
+  char buffer[group_bufsize];
+  struct group group;
+  struct group *result = NULL;
+  if (getgrgid_r(gid, &group, buffer, group_bufsize, &result) < 0 || result == NULL) {
+    return -1;
+  }
+  size_t len = strlen(group.gr_name);
+  if (len >= name_size) {
+    return -1;
+  }
+  strcpy(name, group.gr_name);
   return 0;
 }
