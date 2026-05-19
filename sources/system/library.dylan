@@ -339,6 +339,7 @@ define module system-internals
   use common-dylan;
   use dylan-extensions;
   use byte-storage;
+  use machine-words;
   use dylan-direct-c-ffi;
   use threads;
   use format;

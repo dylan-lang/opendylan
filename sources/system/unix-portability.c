@@ -6,6 +6,7 @@
 #define _GNU_SOURCE
 #endif
 
+#include <time.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <signal.h>
@@ -16,6 +17,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pwd.h>
+#include <grp.h>
 #include <string.h>
 
 
@@ -44,6 +46,11 @@ int system_setenv(char *name, char *value, int overwrite)
 int system_unsetenv(const char *name)
 {
   return unsetenv(name);
+}
+
+int system_clock_realtime(struct timespec *tp)
+{
+  return clock_gettime(CLOCK_REALTIME, tp);
 }
 
 /* Adapted from the SBCL run-time system, which in turn is derived
@@ -201,9 +208,10 @@ int system_copy_file_range(int in_fd, int out_fd, off_t in_size)
 // Store the homedir associated with `username` into `homedir`. `homedir_size` is the
 // size of the `homedir` buffer. Returns 0 on success, -1 on failure.
 int system_user_homedir (const char* username, char* homedir, int homedir_size) {
-  int passwd_bufsize = 0;
+  long passwd_bufsize = 0;
   if ((passwd_bufsize = sysconf(_SC_GETPW_R_SIZE_MAX)) == -1) {
-    return -1;
+    // No hard limit, so pick a size
+    passwd_bufsize = 2048;
   }
   char buffer[passwd_bufsize];
   struct passwd pwd;
@@ -222,9 +230,10 @@ int system_user_homedir (const char* username, char* homedir, int homedir_size) 
 // Store the username associated with `uid` into `username`. `username_size` is the size
 // of the `username` buffer.  Returns 0 on success, -1 on failure.
 int system_passwd_username_from_uid (uid_t uid, char* username, int username_size) {
-  int passwd_bufsize = 0;
+  long passwd_bufsize = 0;
   if ((passwd_bufsize = sysconf(_SC_GETPW_R_SIZE_MAX)) == -1) {
-    return -1;
+    // No hard limit, so pick a size
+    passwd_bufsize = 2048;
   }
   char buffer[passwd_bufsize];
   struct passwd pwd;
@@ -237,5 +246,25 @@ int system_passwd_username_from_uid (uid_t uid, char* username, int username_siz
     return -1;
   }
   strncpy(username, pwd.pw_name, len);
+  return 0;
+}
+
+int system_group_name_from_gid (gid_t gid, char *name, int name_size) {
+  long group_bufsize = 0;
+  if ((group_bufsize = sysconf(_SC_GETGR_R_SIZE_MAX)) == -1) {
+    // No hard limit, so pick a size
+    group_bufsize = 2048;
+  }
+  char buffer[group_bufsize];
+  struct group group;
+  struct group *result = NULL;
+  if (getgrgid_r(gid, &group, buffer, group_bufsize, &result) < 0 || result == NULL) {
+    return -1;
+  }
+  size_t len = strlen(group.gr_name);
+  if (len >= name_size) {
+    return -1;
+  }
+  strcpy(name, group.gr_name);
   return 0;
 }
