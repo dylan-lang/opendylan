@@ -57,6 +57,16 @@ System
   :class:`<file-system-error>` if the target file exists and ``if-exists: #"signal"`` (the
   default) is used.
 
+* On Unix platforms, the :gf:`current-date` function now returns
+  :class:`<date>` objects providing microsecond precision. Similarly,
+  the :gf:`current-timestamp` function now properly reflects
+  millisecond precision.
+
+* Several functions in the :lib:`system` library were previously
+  implemented on Unix platforms using C library routines that used
+  static storage, potentially compromising thread safety. These have
+  been replaced with thread-safe alternatives.
+
 Submoduled Library Updates
 ==========================
 

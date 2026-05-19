@@ -584,6 +584,14 @@ throughout the codebase as described in <a class="reference external" href="http
 <li><p><a class="reference internal" href="../library-reference/system/file-system.html#system:file-system:rename-file"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">rename-file</span></code></a> now signals <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-exists-error&gt;</span></code> instead of
 <a class="reference internal" href="../library-reference/system/file-system.html#system:file-system:[file-system-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-error&gt;</span></code></a> if the target file exists and <code class="docutils literal notranslate"><span class="pre">if-exists:</span> <span class="pre">#&quot;signal&quot;</span></code> (the
 default) is used.</p></li>
+<li><p>On Unix platforms, the <a class="reference internal" href="../library-reference/system/date.html#system:date:current-date"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">current-date</span></code></a> function now returns
+<a class="reference internal" href="../library-reference/system/date.html#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a> objects providing microsecond precision. Similarly,
+the <code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">current-timestamp</span></code> function now properly reflects
+millisecond precision.</p></li>
+<li><p>Several functions in the <code class="xref dylan dylan-lib docutils literal notranslate"><span class="pre">system</span></code> library were previously
+implemented on Unix platforms using C library routines that used
+static storage, potentially compromising thread safety. These have
+been replaced with thread-safe alternatives.</p></li>
 </ul>
 </section>
 </section>
