@@ -10,7 +10,7 @@
 #  Default is `lldb` on the path.
 # OPEN_DYLAN_LLDB_HELPER - overrides the location of the extension packages
 #  Default is ./share/opendylan/lldb/dylan relative to the OD installation directory.
-   For development use mainly.
+#  For development use mainly.
 # PYTHONPATH - this is used by LLDB itself to find the Python support packages
 #  On some systems it needs to be set manually, for example lldb-9 on Debian has
 #  PYTHONPATH=/usr/lib/llvm-9/lib/python3.7/site-packages.  Default is whatever
