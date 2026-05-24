@@ -328,9 +328,8 @@ kern_return_t catch_mach_exception_raise_state_identity
     memcpy(&uc, ts, sizeof(uintptr_t) * 18);
 #elif defined OPEN_DYLAN_ARCH_AARCH64
     arm_thread_state64_t *ts = (arm_thread_state64_t *) old_state;
-    fprintf(stderr, "Unhandled exception: exception=%d code=%lld/%lld\n",
-            exception, code[0], code[1]);
-    abort();
+    // Both of these structures begin with the aarch64 general registers
+    memcpy(&uc, ts, sizeof *ts);
 #else
 #error No thread state to unwind context conversion
 #endif
