@@ -202,23 +202,16 @@ end function;
 
 //// profile information
 
-define method print-terse-source-location
+define method print-profiling-source-location
     (s :: <stream>, src-location, src-location-context)
-  format(s, "[]");
+  new-line(s);
 end method;
 
-define method print-terse-source-location
-    (s :: <stream>, f :: <compiler-range-source-location>, sf :: false-or(<compiler-range-source-location>))
-  format(s, "[");
-  unless (sf & as(<symbol>, source-record-name(f.source-location-source-record))
-                 == as(<symbol>, source-record-name(sf.source-location-source-record)))
-    format(s, "%s ", source-record-name(f.source-location-source-record));
-  end unless;
-  format(s, "(%d, %d) - (%d, %d)]",
-         f.source-location-start-offset.source-offset-line,
-         f.source-location-start-offset.source-offset-column,
-         f.source-location-end-offset.source-offset-line,
-         f.source-location-end-offset.source-offset-column);
+define method print-profiling-source-location
+    (s :: <stream>, f :: <compiler-range-source-location>,
+     sf :: false-or(<compiler-range-source-location>))
+  let sr = f.source-location-source-record;
+  print-source-record-source-location(sr, f, s);
 end method;
 
 define method maybe-collect-and-dump-call-sites
@@ -266,40 +259,49 @@ end method;
 define method maybe-dump-call-sites
     (ld :: <library-description>, call-sites :: <object-table>) => ()
   when (*profile-all-calls?*)
-    with-profile-area-output (stream = ld, type: "calls")
+    let name = library-description-emit-name(ld);
+    with-profile-area-output (inner = ld, type: "calls")
+      let stream = make(<indenting-stream>, inner-stream: inner);
       for (lambda-call-sites keyed-by lambda in call-sites)
         print-referenced-object(lambda, stream);
-        format(stream, " ");
-        let lambda-location = find-a-source-location(lambda);
-        print-terse-source-location(stream, lambda-location, #f);
-        format(stream, "\n");
-        local method call-site-number
-                  (call-site :: <&profiling-call-site-cache-header-engine-node>) => (res :: <integer>)
-                let call = profiling-call-site-cache-header-engine-node-call(call-site);
-                let tmp  = temporary(call);
-                if (tmp)
-                  frame-offset(tmp)
-                else
-                  0
-                end if
-              end method,
-              method compare-calls (cs1 :: <&profiling-call-site-cache-header-engine-node>,
-                                    cs2 :: <&profiling-call-site-cache-header-engine-node>)
-               => (well? :: <boolean>)
-                call-site-number(cs1) < call-site-number(cs2)
-              end method;
-        sort!(lambda-call-sites, test: compare-calls);
-        for (call-site in lambda-call-sites)
-          let call = profiling-call-site-cache-header-engine-node-call(call-site);
-          format(stream, "  %= ", ^profiling-call-site-cache-header-engine-node-id(call-site));
-          let parent = ^cache-header-engine-node-parent(call-site);
-          format(stream, "(%s) ", ^debug-name(parent) | "");
-          print-terse-source-location(stream, computation-source-location(call), lambda-location);
-          format(stream, "\n");
-        end for;
+        with-indentation (stream, 2)
+          let lambda-location = find-a-source-location(lambda);
+          print-profiling-source-location(stream, lambda-location, #f);
+
+          local
+            method call-site-number
+                (call-site :: <&profiling-call-site-cache-header-engine-node>)
+             => (res :: <integer>)
+              let call = profiling-call-site-cache-header-engine-node-call(call-site);
+              let tmp  = temporary(call);
+              if (tmp)
+                frame-offset(tmp)
+              else
+                0
+              end if
+            end method,
+            method compare-calls
+                (cs1 :: <&profiling-call-site-cache-header-engine-node>,
+                 cs2 :: <&profiling-call-site-cache-header-engine-node>)
+             => (well? :: <boolean>)
+              call-site-number(cs1) < call-site-number(cs2)
+            end method;
+          sort!(lambda-call-sites, test: compare-calls);
+
+          for (call-site in lambda-call-sites)
+            let call = profiling-call-site-cache-header-engine-node-call(call-site);
+            let id = ^profiling-call-site-cache-header-engine-node-id(call-site);
+            let parent = ^cache-header-engine-node-parent(call-site);
+            format(stream, "\nCALL-SITE %s %= (%s)", name, id, ^debug-name(parent) | "");
+            with-indentation (stream, 2)
+              print-profiling-source-location(stream,
+                                              computation-source-location(call),
+                                              lambda-location);
+            end;
+          end for;
+          new-line(stream);
+        end;
       end for;
     end with-profile-area-output;
   end when;
 end method;
-
-
