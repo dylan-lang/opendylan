@@ -97,12 +97,14 @@ define concrete &class <C-function-pointer-instantiation>
     abstract-super: <C-function-pointer>;
 end &class;
 
+/*
 // need to use a new metaclass here to hold the static type
 define abstract open &class <C-statically-typed-function-pointer> (<C-function-pointer>)
   metaclass <designator-class>,
     low-level-type: <C-statically-typed-function-pointer>,
     self: <C-statically-typed-function-pointer>;
 end &class;
+*/
 
 
 define abstract &class <C-number> (<C-non-struct>)
