@@ -31,6 +31,12 @@ non-empty string when invoking the compiler:
 
   $ OPEN_DYLAN_PROFILE_ALL_CALLS=1 dylan-compiler -build write-100mb
 
+In addition to instrumenting the code for profiling, this will also
+generate call profiling dump files in the :file:`profiles`
+subdirectory of the build output directory, e.g.,
+:file:`_build/profiles/io.calls`. These files contain information that
+will allow you to tie the numbered call sites in the profiling report
+described below back to the source locations in the original code.
 
 Report Output Format
 ********************

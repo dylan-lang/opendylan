@@ -554,6 +554,12 @@ non-empty string when invoking the compiler:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nv">OPEN_DYLAN_PROFILE_ALL_CALLS</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>dylan-compiler<span class="w"> </span>-build<span class="w"> </span>write-100mb
 </pre></div>
 </div>
+<p>In addition to instrumenting the code for profiling, this will also
+generate call profiling dump files in the <code class="file docutils literal notranslate"><span class="pre">profiles</span></code>
+subdirectory of the build output directory, e.g.,
+<code class="file docutils literal notranslate"><span class="pre">_build/profiles/io.calls</span></code>. These files contain information that
+will allow you to tie the numbered call sites in the profiling report
+described below back to the source locations in the original code.</p>
 </section>
 <section id="report-output-format">
 <h2>Report Output Format<a class="headerlink" href="#report-output-format" title="Link to this heading">¶</a></h2>
