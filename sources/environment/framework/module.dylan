@@ -51,9 +51,7 @@ define module environment-framework
 
   // Object names
   export frame-object-name,
-         find-named-object,
-         *print-depth*,
-         *print-length*;
+         find-named-object;
 
   // History
   export <frame-history-mixin>,
