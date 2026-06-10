@@ -11,9 +11,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define open generic frame-object-name
     (frame :: <frame>, object) => (name :: <string>);
 
-define variable *print-length* :: <integer> = 10;
-define variable *print-depth* :: <integer> = 10;
-
 
 /// Default method
 define method frame-object-name

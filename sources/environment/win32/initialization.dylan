@@ -325,7 +325,7 @@ end;
 
 define sideways method register-opened-file
     (filename :: <file-locator>) => ()
-  with-c-string (filename = filename)
+  with-c-string (filename = as(<string>, filename))
     SHAddToRecentDocs($SHARD-PATH, filename)
   end
 end method register-opened-file;

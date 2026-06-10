@@ -6,7 +6,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library c-ffi
   use dylan;
-  use common-dylan, import: { machine-words };
+  use common-dylan, import: { machine-words, byte-storage };
   export c-ffi;
   export win32-core;
 end;
@@ -253,4 +253,5 @@ define module c-ffi-implementation
   use dylan-primitives;
   use dylan-c-ffi;
   use machine-words;
+  use byte-storage;
 end;

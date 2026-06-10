@@ -89,8 +89,6 @@ define function %resolve-file
       end
     elseif (new-length > $MAX_PATH)
       win32-file-system-error("resolve", "%s", path)
-    elseif (~%file-exists?(locator, #t))
-      win32-file-system-error("resolve", "%s", path)
     else
       copy-sequence(path-buffer, end: new-length)
     end
