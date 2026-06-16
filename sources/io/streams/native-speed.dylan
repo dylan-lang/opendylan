@@ -79,6 +79,16 @@ define macro copy-down-buffered-stream-definer
          define sealed domain do-next-output-buffer (?name);
          define sealed domain do-release-output-buffer (?name);
 
+         define sealed domain stream-input-buffer (?name);
+         define sealed domain stream-input-buffer-setter
+             (false-or(<buffer>), ?name);
+         define sealed domain stream-output-buffer (?name);
+         define sealed domain stream-output-buffer-setter
+             (false-or(<buffer>), ?name);
+         define sealed domain stream-shared-buffer (?name);
+         define sealed domain stream-shared-buffer-setter
+             (false-or(<buffer>), ?name);
+
          define sealed copy-down-method write-element
            (stream :: ?name, elt :: ?elt) => ()
            specializing
