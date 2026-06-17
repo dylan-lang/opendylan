@@ -45,13 +45,13 @@ define sealed class <general-file-stream>
   keyword encoding:;
 end class;
 
-define open class <byte-char-file-stream>
+define sealed class <byte-char-file-stream>
     (<file-stream>, <byte-char-element-stream>)
   inherited slot stream-element-type = <byte-character>;
   keyword encoding:;
 end class;
 
-define open class <byte-file-stream>
+define sealed class <byte-file-stream>
     (<file-stream>, <byte-element-stream>)
   inherited slot stream-element-type = <byte>;
   keyword encoding:;
