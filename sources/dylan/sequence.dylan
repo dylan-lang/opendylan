@@ -495,7 +495,7 @@ define function invalid-sequence-end-error
              format-arguments: list(finish, s)))
 end function invalid-sequence-end-error;
 
-define method check-start-compute-end
+define inline method check-start-compute-end
   (seq :: <sequence>, start :: <integer>, last)
       => (real-last :: <integer>);
   let seq-size = seq.size;
@@ -688,7 +688,7 @@ define method find-key
      #key skip :: <integer> = 0, failure = #f) => (key)
   for (e in collection,
        found = #f then fn(e) & ((skip := skip - 1) < 0),
-       index = -1 then index + 1,
+       index :: <integer> from -1,
        until: found)
   finally
     if (found) index else failure end if
