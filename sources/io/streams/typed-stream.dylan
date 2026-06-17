@@ -137,7 +137,7 @@ define method coerce-to-sequence
   stream.to-sequence-mapper(buffer, buf-start, sequence, seq-start, count)
 end method coerce-to-sequence;
 
-define sealed inline method coerce-to-sequence
+define inline method coerce-to-sequence
     (stream :: <byte-char-element-stream>,
      buffer :: <buffer>, buf-start :: <integer>,
      sequence :: <sequence>, seq-start :: <integer>,
@@ -145,7 +145,7 @@ define sealed inline method coerce-to-sequence
   copy-bytes(sequence, seq-start, buffer, buf-start, count)
 end method coerce-to-sequence;
 
-define sealed inline method coerce-to-sequence
+define inline method coerce-to-sequence
     (stream :: <byte-element-stream>,
      buffer :: <buffer>, buf-start :: <integer>,
      sequence :: <sequence>, seq-start :: <integer>,
@@ -176,7 +176,7 @@ define method coerce-from-sequence
   stream.from-sequence-mapper(sequence, seq-start, buffer, buf-start, count)
 end method coerce-from-sequence;
 
-define sealed inline method coerce-from-sequence
+define inline method coerce-from-sequence
     (stream :: <byte-char-element-stream>,
      buffer :: <buffer>, buf-start :: <integer>,
      sequence :: <sequence>, seq-start :: <integer>,
@@ -184,7 +184,7 @@ define sealed inline method coerce-from-sequence
   copy-bytes(buffer, buf-start, sequence, seq-start, count)
 end method coerce-from-sequence;
 
-define sealed inline method coerce-from-sequence
+define inline method coerce-from-sequence
     (stream :: <byte-element-stream>,
      buffer :: <buffer>, buf-start :: <integer>,
      sequence :: <sequence>, seq-start :: <integer>,

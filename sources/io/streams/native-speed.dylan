@@ -8,15 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define macro copy-down-stream-definer
   { define copy-down-stream ?:name element ?elt:name sequence ?seq:name }
-    => { define sealed domain coerce-to-element
-           (?name, <buffer>, <integer>);
-         define sealed domain coerce-from-element
-           (?name, <buffer>, <integer>, <object>);
-         define sealed domain coerce-to-sequence
-           (?name, <buffer>, <integer>, ?seq, <integer>, <integer>);
-         define sealed domain coerce-from-sequence
-           (?name, <buffer>, <integer>, ?seq, <integer>, <integer>);
-         define sealed domain write (?name, ?seq);
+    => { define sealed domain write (?name, ?seq);
          define sealed domain peek (?name);
          define sealed domain read (?name, <integer>);
          define sealed domain read-into!(?name, <integer>, ?seq);
