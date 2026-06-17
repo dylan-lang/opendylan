@@ -32,7 +32,7 @@ define open abstract primary class <file-stream>
      <basic-positionable-stream>)
   constant slot stream-locator,
     required-init-keyword: locator:;
-  slot accessor :: false-or(<external-stream-accessor>) = #f,
+  sealed slot accessor :: false-or(<external-stream-accessor>) = #f,
     init-keyword: accessor:;  // inherited from <external-stream>
 //   slot initial-position :: <position-type> = 0; // inherited from <basic-positionable-stream>
 //   slot current-position :: <position-type> = 0; // inherited from <basic-positionable-stream>
