@@ -304,7 +304,7 @@ define function initial-traverse-type
 end function;
 
 define function refine-partitions
-    (partitions :: <stretchy-vector>,
+    (partitions :: <stretchy-object-vector>,
      offset :: <integer>,
      partition-table :: <mutable-explicit-key-collection>,
      reference-partitions-function :: <function>)
@@ -375,7 +375,7 @@ define function topological-sort-partitions
     let instances = partitions[index - offset];
     referenced-partitions[index - offset]
       := reference-partitions-function(instances.first);
-    for (referenced-index in referenced-partitions[index - offset])
+    for (referenced-index :: <integer> in referenced-partitions[index - offset])
       if (referenced-index >= offset)
         // Referenced partitions aren't ready yet
         set-add!(referencing-partition-sets[referenced-index - offset],
@@ -417,7 +417,7 @@ define function topological-sort-partitions
     set-remove!(delayable-partitions, index - offset);
 
     // Remove restrictions and note newly ready partitions
-    for (referenced-index in referenced-partitions[index - offset])
+    for (referenced-index :: <integer> in referenced-partitions[index - offset])
       if (referenced-index >= offset)
         let referencing
           = referencing-partition-sets[referenced-index - offset];
