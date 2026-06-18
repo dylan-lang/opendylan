@@ -8,6 +8,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define abstract class <llvm-value> (<object>)
 end class;
 
+define sealed domain make (subclass(<llvm-value>));
+define sealed domain initialize (<llvm-value>);
+
 define generic llvm-value-type
     (value :: <llvm-value>) => (type :: <llvm-type>);
 
