@@ -32,7 +32,7 @@ define open abstract primary class <file-stream>
      <basic-positionable-stream>)
   constant slot stream-locator,
     required-init-keyword: locator:;
-  slot accessor :: false-or(<external-stream-accessor>) = #f,
+  sealed slot accessor :: false-or(<external-stream-accessor>) = #f,
     init-keyword: accessor:;  // inherited from <external-stream>
 //   slot initial-position :: <position-type> = 0; // inherited from <basic-positionable-stream>
 //   slot current-position :: <position-type> = 0; // inherited from <basic-positionable-stream>
@@ -45,13 +45,13 @@ define sealed class <general-file-stream>
   keyword encoding:;
 end class;
 
-define open class <byte-char-file-stream>
+define sealed class <byte-char-file-stream>
     (<file-stream>, <byte-char-element-stream>)
   inherited slot stream-element-type = <byte-character>;
   keyword encoding:;
 end class;
 
-define open class <byte-file-stream>
+define sealed class <byte-file-stream>
     (<file-stream>, <byte-element-stream>)
   inherited slot stream-element-type = <byte>;
   keyword encoding:;
@@ -62,38 +62,6 @@ define copy-down-buffered-stream <byte-char-file-stream>
 
 define copy-down-buffered-stream <byte-file-stream>
    element <byte> sequence <byte-string>;
-
-define sealed inline method coerce-to-sequence
-    (stream :: <byte-char-file-stream>,
-     buffer :: <buffer>, buf-start :: <integer>,
-     sequence :: <byte-string>, seq-start :: <integer>,
-     count :: <integer>) => ()
-  copy-bytes(sequence, seq-start, buffer, buf-start, count)
-end method coerce-to-sequence;
-
-define sealed inline method coerce-to-sequence
-    (stream :: <byte-file-stream>,
-     buffer :: <buffer>, buf-start :: <integer>,
-     sequence :: <byte-string>, seq-start :: <integer>,
-     count :: <integer>) => ()
-  copy-bytes(sequence, seq-start, buffer, buf-start, count)
-end method coerce-to-sequence;
-
-define sealed inline method coerce-from-sequence
-    (stream :: <byte-char-file-stream>,
-     buffer :: <buffer>, buf-start :: <integer>,
-     sequence :: <byte-string>, seq-start :: <integer>,
-     count :: <integer>) => ()
-  copy-bytes(buffer, buf-start, sequence, seq-start, count)
-end method coerce-from-sequence;
-
-define sealed inline method coerce-from-sequence
-    (stream :: <byte-file-stream>,
-     buffer :: <buffer>, buf-start :: <integer>,
-     sequence :: <byte-string>, seq-start :: <integer>,
-     count :: <integer>) => ()
-  copy-bytes(buffer, buf-start, sequence, seq-start, count)
-end method coerce-from-sequence;
 
 /// Creating file streams
 

@@ -8,15 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define macro copy-down-stream-definer
   { define copy-down-stream ?:name element ?elt:name sequence ?seq:name }
-    => { define sealed domain coerce-to-element
-           (?name, <buffer>, <integer>);
-         define sealed domain coerce-from-element
-           (?name, <buffer>, <integer>, <object>);
-         define sealed domain coerce-to-sequence
-           (?name, <buffer>, <integer>, ?seq, <integer>, <integer>);
-         define sealed domain coerce-from-sequence
-           (?name, <buffer>, <integer>, ?seq, <integer>, <integer>);
-         define sealed domain write (?name, ?seq);
+    => { define sealed domain write (?name, ?seq);
          define sealed domain peek (?name);
          define sealed domain read (?name, <integer>);
          define sealed domain read-into!(?name, <integer>, ?seq);
@@ -78,6 +70,16 @@ define macro copy-down-buffered-stream-definer
          define sealed domain do-get-output-buffer (?name);
          define sealed domain do-next-output-buffer (?name);
          define sealed domain do-release-output-buffer (?name);
+
+         define sealed domain stream-input-buffer (?name);
+         define sealed domain stream-input-buffer-setter
+             (false-or(<buffer>), ?name);
+         define sealed domain stream-output-buffer (?name);
+         define sealed domain stream-output-buffer-setter
+             (false-or(<buffer>), ?name);
+         define sealed domain stream-shared-buffer (?name);
+         define sealed domain stream-shared-buffer-setter
+             (false-or(<buffer>), ?name);
 
          define sealed copy-down-method write-element
            (stream :: ?name, elt :: ?elt) => ()
