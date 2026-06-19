@@ -7,7 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Temporary values
 
-define thread variable *temporary-value-table* = false-or(<object-table>) = #f;
+define thread variable *temporary-value-table* :: false-or(<object-table>) = #f;
 
 define method temporary-value
     (temporary :: <temporary>)
