@@ -206,7 +206,7 @@ define function jam-read
                 if (pos > start | metachars?)
                   loop(start, pos + 1, #t, quoting?, accumulated-string)
                 else
-                  for (pos from start below _end,
+                  for (pos :: <integer> from start below _end,
                        until: data[pos] = '\r' | data[pos] = '\n')
                   finally
                     loop(pos, pos, metachars?, quoting?,
