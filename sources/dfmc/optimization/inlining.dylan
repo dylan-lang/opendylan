@@ -483,7 +483,7 @@ define method move-code-into!
       env.inners := add!(env.inners, inner);
       inner.outer := env;
     end for;
-    for-temporary (tmp in lambda-environment(mapped-env))
+    for-temporary (tmp :: <temporary> in lambda-environment(mapped-env))
       add-temporary!(env, tmp);
       tmp.frame-offset := next-frame-offset(env);
       tmp.environment  := env;

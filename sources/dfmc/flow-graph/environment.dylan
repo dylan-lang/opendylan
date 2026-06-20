@@ -477,7 +477,7 @@ define method lambda-has-free-lexical-references? (lambda :: <&lambda>)
     for (outer-env = outer(lambda-env) then outer(outer-env),
          while: outer-env)
       if (instance?(outer-env, <lambda-lexical-environment>))
-        for-temporary (t in outer-env)
+        for-temporary (t :: <temporary> in outer-env)
           for (use in users(t))
             if (inner-environment?(environment(use), lambda-env))
               // some use of an outer temporary is inside this lambda
