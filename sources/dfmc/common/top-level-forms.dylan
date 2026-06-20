@@ -134,7 +134,7 @@ end method;
 
 define compiler-open generic form-source-location (object);
 
-define compiler-open dood-class <top-level-form> /* abstract */
+define compiler-open primary dood-class <top-level-form> /* abstract */
     (<top-level-form-properties>)
   constant slot form-compilation-record :: <compilation-record>
     = current-compilation-record();
