@@ -899,7 +899,7 @@ string.</p>
 <dl class="dylan macro">
 <dt class="sig sig-object dylan-api dylan" id="io:print:printing-object">
 <span class="sig-name descname"><span class="pre">printing-object</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#io:print:printing-object" title="Link to this definition">¶</a></dt>
-<dd><p>Wrapper around <code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">printing-logical-block</span></code>.</p>
+<dd><p>Wrapper around <a class="reference internal" href="#io:pprint:printing-logical-block"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">printing-logical-block</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Macro Call<span class="colon">:</span></dt>
 <dd class="field-odd"><p><pre class="literal-block">printing-object(<em>object</em>, <em>stream</em>, #key <em>type?</em> = #t)
@@ -1022,6 +1022,35 @@ pretty printing functions are no-ops.</p>
 </p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="dylan macro">
+<dt class="sig sig-object dylan-api dylan" id="io:pprint:printing-logical-block">
+<span class="sig-name descname"><span class="pre">printing-logical-block</span></span> <em class="property"><span class="pre">Macro</span></em><a class="headerlink" href="#io:pprint:printing-logical-block" title="Link to this definition">¶</a></dt>
+<dd><p>Wrapper around <a class="reference internal" href="#io:pprint:pprint-logical-block"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">pprint-logical-block</span></code></a> that inlines the function that would be
+passed to <a class="reference internal" href="#io:pprint:pprint-logical-block"><code class="xref dylan dylan-macro docutils literal notranslate"><span class="pre">pprint-logical-block</span></code></a> as the value of the <code class="docutils literal notranslate"><span class="pre">body:</span></code> parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Macro Call<span class="colon">:</span></dt>
+<dd class="field-odd"><p><pre class="literal-block">printing-logical-block (<em>stream</em>, #rest <em>options</em>)
+  <em>body</em>
+end</pre>
+</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">printing-logical-block</span><span class="w"> </span><span class="p">(</span><span class="n">stream</span><span class="p">,</span><span class="w"> </span><span class="k">prefix:</span><span class="w"> </span><span class="s">&quot;[&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">suffix:</span><span class="w"> </span><span class="s">&quot;]&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="n">write</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;x&quot;</span><span class="p">);</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>is equivalent to</p>
+<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">pprint-logical-block</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span>
+<span class="w">                     </span><span class="k">body:</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
+<span class="w">                             </span><span class="n">write</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;x&quot;</span><span class="p">)</span>
+<span class="w">                           </span><span class="k">end</span><span class="p">,</span>
+<span class="w">                     </span><span class="k">prefix:</span><span class="w"> </span><span class="s">&quot;[&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">suffix:</span><span class="w"> </span><span class="s">&quot;]&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="dylan function">
@@ -1213,6 +1242,7 @@ indicates that the pretty printer should never enter miser mode.</p>
 <li><a class="reference internal" href="#io:pprint:*default-line-length*"><code class="docutils literal notranslate"><span class="pre">*default-line-length*</span></code></a></li>
 <li><a class="reference internal" href="#io:pprint:pprint-indent"><code class="docutils literal notranslate"><span class="pre">pprint-indent</span></code></a></li>
 <li><a class="reference internal" href="#io:pprint:pprint-logical-block"><code class="docutils literal notranslate"><span class="pre">pprint-logical-block</span></code></a></li>
+<li><a class="reference internal" href="#io:pprint:printing-logical-block"><code class="docutils literal notranslate"><span class="pre">printing-logical-block</span></code></a></li>
 <li><a class="reference internal" href="#io:pprint:pprint-newline"><code class="docutils literal notranslate"><span class="pre">pprint-newline</span></code></a></li>
 <li><a class="reference internal" href="#io:pprint:pprint-tab"><code class="docutils literal notranslate"><span class="pre">pprint-tab</span></code></a></li>
 <li><a class="reference internal" href="#io:pprint:*print-miser-width*"><code class="docutils literal notranslate"><span class="pre">*print-miser-width*</span></code></a></li>
