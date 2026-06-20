@@ -276,7 +276,7 @@ define method literal-mergable? (sig :: <&signature>) => (well?)
 end method;
 
 define method literal-equal? (s1 :: <&signature>, s2 :: <&signature>) => (well?)
-  local method vec-equal? (v1, v2, n)
+  local method vec-equal? (v1 :: <simple-object-vector>, v2 :: <simple-object-vector>, n :: <integer>)
           block (return)
             for (i from 0 below n)
               unless (literal-equal?(v1[i], v2[i])) return(#f) end;

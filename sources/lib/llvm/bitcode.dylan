@@ -514,7 +514,8 @@ define method write-abbrev-record
                     write-vbr(stream, op.op-data, value);
                     op-index + 1;
                   #"array" =>
-                    write-vbr(stream, 6, value.size);
+                    let array-size :: <integer> = value.size;
+                    write-vbr(stream, 6, array-size);
                     let aop :: <abbrev-op> = ops[op-index + 1];
                     select (aop.op-kind)
                       #"fixed" =>

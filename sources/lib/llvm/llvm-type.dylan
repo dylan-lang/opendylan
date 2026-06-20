@@ -9,6 +9,9 @@ define abstract class <llvm-type> (<object>)
   // Nothing yet
 end class;
 
+define sealed domain make (subclass(<llvm-type>));
+define sealed domain initialize (<llvm-type>);
+
 define generic type-partition-key
     (type :: <llvm-type>)
  => (key :: <vector>, splittable? :: <boolean>);

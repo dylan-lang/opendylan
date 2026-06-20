@@ -105,9 +105,11 @@ define constant <real-node> =
 
 define inline function tracing-node?
     (node :: <real-node>) => (well? :: <boolean>)
-  if (node.environment & node.environment.lambda)
-    tracing-dfm?(node.environment.lambda)
-  end;
+  let env = node.environment;
+  if (env)
+    let f = env.lambda;
+    f & tracing-dfm?(f)
+  end
 end;
 
 //top-level-initializer VOODOO
@@ -222,7 +224,7 @@ end;
 
 define inline function trace-dfm-nodes
     (cs :: <vector>, key :: <symbol>)
-  if (cs.size > 0 & tracing-node?(cs[0]))
+  if (~empty?(cs) & tracing-node?(cs[0]))
     let props = cs[0].environment.lambda.source-properties;
     let ids = map(node-id, cs);
     let data = list(type:, key,
@@ -316,9 +318,10 @@ define method node-id (t :: <temporary>)
                   #f
                 end;
       trace-dfm-node(#"new-temporary", t, t);
-      if (t.users.size > 0)
+      let t-users = t.users;
+      if (~empty?(t-users))
         do(curry(trace-dfm-connection, #"add-temporary-user", t),
-           t.users);
+           t-users);
       end;
     end;
   end;
@@ -328,12 +331,13 @@ end;
 define method node-id (t :: <object-reference>)
  => (res :: false-or(<integer>))
   unless (instance?(t.%node-id, <integer>))
-    if (t.users.size > 0)
+    let t-users = t.users;
+    if (~empty?(t-users))
       t.%node-id := next-node-id();
-      let user = t.users.first;
+      let user = t-users.first;
       trace-dfm-object-reference(#"new-object-reference", t, user, t);
       do(curry(trace-dfm-connection, #"add-temporary-user", t),
-         t.users);
+         t-users);
     end;
   end;
   t.%node-id
@@ -343,13 +347,12 @@ end;
 define method remove-user! (t :: <object-reference>, c :: <computation>)
   next-method();
   trace-dfm-connection(#"remove-temporary-user", t, c);
-  if (t.users.size == 0)
+  if (empty?(t.users))
     trace-dfm-object-reference(#"remove-temporary", t, c, #f);
   end;
 end;
 
 define method add-user! (t :: <object-reference>, c :: <computation>)
-  let add? = (t.users.size == 0);
   next-method();
   trace-dfm-connection(#"add-temporary-user", t, c);
 end;

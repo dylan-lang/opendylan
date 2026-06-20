@@ -29,6 +29,9 @@ end method;
 define abstract class <llvm-metadata> (<object>)
 end class;
 
+define sealed domain make (subclass(<llvm-metadata>));
+define sealed domain initialize (<llvm-metadata>);
+
 define generic llvm-metadata-forward
     (value :: <llvm-metadata>)
  => (value :: <llvm-metadata>);

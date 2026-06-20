@@ -240,8 +240,9 @@ end method;
 define method emit-object-slot
     (back-end :: <llvm-back-end>, module :: <llvm-module>,
      slotd :: <&repeated-slot-descriptor>, type :: <llvm-type>, o)
- => ();
-  let repeated-size-value = ^slot-value(o, ^size-slot-descriptor(slotd));
+ => (array :: <llvm-aggregate-constant>);
+  let repeated-size-value :: <integer>
+    = ^slot-value(o, ^size-slot-descriptor(slotd));
   let (repeated-size, terminated?)
     = if (o.^object-class == dylan-value(#"<byte-string>"))
         values(repeated-size-value + 1, #t)

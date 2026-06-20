@@ -147,7 +147,7 @@ end function;
 
 define method compute-closure (env :: <lambda-lexical-environment>) => ()
   // format-out("ENV %=\n", lambda(env));
-  for-temporary (tmp in env)
+  for-temporary (tmp :: <temporary> in env)
     // format-out("  TMP %=\n", tmp);
     for (reference in tmp.users)
       // format-out("    REF %=\n", reference);
