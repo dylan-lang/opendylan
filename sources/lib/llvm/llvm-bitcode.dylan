@@ -1015,6 +1015,13 @@ define function encode-attribute-list
   encoding
 end function;
 
+// Ensure partition index is typed as an integer
+define inline-only function encode-partition-index
+    (partition-table :: <explicit-key-collection>, item)
+ => (index :: <integer>)
+  partition-table[item]
+end function;
+
 define method write-type-record
     (stream :: <bitcode-stream>, type-partition-table :: <object-table>,
      type :: <llvm-primitive-type>)
@@ -1035,7 +1042,7 @@ define method write-type-record
  => ();
   let pointee = type-forward(type.llvm-pointer-type-pointee);
   write-record*(stream, #"POINTER",
-                type-partition-table[pointee],
+                encode-partition-index(type-partition-table, pointee),
                 type.llvm-pointer-type-address-space);
 end method;
 
@@ -1047,8 +1054,8 @@ define method write-type-record
   write-abbrev-record
     (stream, #"function",
      if (type.llvm-function-type-varargs?) 1 else 0 end,
-     type-partition-table[return-type],
-     map(method (type) type-partition-table[type-forward(type)] end,
+     encode-partition-index(type-partition-table, return-type),
+     map(method (type) encode-partition-index(type-partition-table, type-forward(type)) end,
          type.llvm-function-type-parameter-types));
 end method;
 
@@ -1057,7 +1064,7 @@ define method write-type-record
      type :: <llvm-struct-type>)
  => ();
   let element-indices
-    = map(method (type) type-partition-table[type-forward(type)] end,
+    = map(method (type) encode-partition-index(type-partition-table, type-forward(type)) end,
           type.llvm-struct-type-elements);
   if (type.llvm-struct-type-name)
     // Identified struct type: write as STRUCT_NAME followed by STRUCT_NAMED
@@ -1080,7 +1087,7 @@ define method write-type-record
      type :: <llvm-union-type>)
  => ();
   write-record(stream, #"UNION",
-               map(method (type) type-partition-table[type-forward(type)] end,
+               map(method (type) encode-partition-index(type-partition-table, type-forward(type)) end,
                    type.llvm-union-type-elements))
 end method;
 
@@ -1091,7 +1098,7 @@ define method write-type-record
   let element-type = type-forward(type.llvm-array-type-element-type);
   write-record*(stream, #"ARRAY",
                 type.llvm-array-type-size,
-                type-partition-table[element-type]);
+                encode-partition-index(type-partition-table, element-type));
 end method;
 
 define method write-type-record
@@ -1101,7 +1108,7 @@ define method write-type-record
   let element-type = type-forward(type.llvm-vector-type-element-type);
   write-record*(stream, #"VECTOR",
                 type.llvm-vector-type-size,
-                type-partition-table[element-type]);
+                encode-partition-index(type-partition-table, element-type));
 end method;
 
 define method write-type-record
@@ -1226,7 +1233,7 @@ define method write-constant-record
   else
     write-record(stream, #"AGGREGATE",
                  map(method (value :: <llvm-constant-value>)
-                       value-partition-table[value-forward(value)]
+                       encode-partition-index(value-partition-table, value-forward(value))
                      end,
                      value.llvm-aggregate-constant-values))
   end if;
@@ -1282,7 +1289,7 @@ define method write-constant-record
   let operands
     = map-as(<stretchy-object-vector>,
              method (value :: <llvm-constant-value>)
-               value-partition-table[value-forward(value)]
+               encode-partition-index(value-partition-table, value-forward(value))
              end,
              value.llvm-expression-constant-operands);
   let flags = binop-flags-encoding(value);
@@ -1322,8 +1329,8 @@ define method write-constant-record
   let opval = value-forward(value.llvm-expression-constant-operands[0]);
   write-record*(stream, #"CE_CAST",
                 cast-operator-encoding(value.llvm-cast-constant-operator),
-                type-partition-table[type-forward(llvm-value-type(opval))],
-                value-partition-table[opval]);
+                encode-partition-index(type-partition-table, type-forward(llvm-value-type(opval))),
+                encode-partition-index(value-partition-table, opval));
 end method;
 
 define method write-constant-record
@@ -1337,9 +1344,9 @@ define method write-constant-record
          in value.llvm-expression-constant-operands)
     let operand = value-forward(operand);
     add!(operands,
-         type-partition-table[type-forward(llvm-value-type(operand))]);
+         encode-partition-index(type-partition-table, type-forward(llvm-value-type(operand))));
     add!(operands,
-         value-partition-table[operand]);
+         encode-partition-index(value-partition-table, operand));
   end for;
   write-record(stream,
                if (value.llvm-gep-constant-in-bounds?)
@@ -1359,9 +1366,9 @@ define method write-constant-record
   let op0val = value-forward(value.llvm-expression-constant-operands[0]);
   let op1val = value-forward(value.llvm-expression-constant-operands[1]);
   write-record*(stream, #"CE_CMP",
-                type-partition-table[type-forward(llvm-value-type(op0val))],
-                value-partition-table[op0val],
-                value-partition-table[op1val],
+                encode-partition-index(type-partition-table, type-forward(llvm-value-type(op0val))),
+                encode-partition-index(value-partition-table, op0val),
+                encode-partition-index(value-partition-table, op1val),
                 encode-predicate(value));
 end method;
 
@@ -1427,10 +1434,10 @@ define function write-constant-table
                                 op-array(), op-fixed(8));
       end if;
 
-      let current-type-partition = #f;
+      let current-type-partition :: false-or(<integer>) = #f;
       for (constant in constant-partition-exemplars)
-        let type-partition
-          = type-partition-table[type-forward(llvm-value-type(constant))];
+        let type-partition :: <integer>
+          = encode-partition-index(type-partition-table, type-forward(llvm-value-type(constant)));
         if (type-partition ~= current-type-partition)
           write-record*(stream, #"SETTYPE", type-partition);
           current-type-partition := type-partition;
@@ -1468,7 +1475,7 @@ define method write-metadata-record
   for (operand in metadata.llvm-metadata-node-values)
     if (operand)
       let operand = llvm-metadata-forward(operand);
-      add!(operands, value-partition-table[operand] + 1);
+      add!(operands, encode-partition-index(value-partition-table, operand) + 1);
     else
       add!(operands, 0);
     end if;
@@ -1503,7 +1510,7 @@ define method write-metadata-record
     method moni                 // metadata or null index
          (m :: false-or(<llvm-metadata>))
       => (id :: <integer>);
-      if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
+      if (m) encode-partition-index(value-partition-table, llvm-metadata-forward(m)) + 1 else 0 end if
     end method;
   assert(metadata.llvm-metadata-distinct?);
   write-record*(stream, #"COMPILE_UNIT",
@@ -1539,7 +1546,7 @@ define method write-metadata-record
     method moni                 // metadata or null index
          (m :: false-or(<llvm-metadata>))
       => (id :: <integer>);
-      if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
+      if (m) encode-partition-index(value-partition-table, llvm-metadata-forward(m)) + 1 else 0 end if
     end method;
   write-record*(stream, #"FILE",
                 if (metadata.llvm-metadata-distinct?) 1 else 0 end,
@@ -1559,7 +1566,7 @@ define method write-metadata-record
     method moni                 // metadata or null index
          (m :: false-or(<llvm-metadata>))
       => (id :: <integer>);
-      if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
+      if (m) encode-partition-index(value-partition-table, llvm-metadata-forward(m)) + 1 else 0 end if
     end method;
   write-record*(stream, #"BASIC_TYPE",
                 if (metadata.llvm-metadata-distinct?) 1 else 0 end,
@@ -1580,7 +1587,7 @@ define method write-metadata-record
     method moni                 // metadata or null index
          (m :: false-or(<llvm-metadata>))
       => (id :: <integer>);
-      if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
+      if (m) encode-partition-index(value-partition-table, llvm-metadata-forward(m)) + 1 else 0 end if
     end method;
   write-record*(stream, #"COMPOSITE_TYPE",
                 // logior of distinct flag with not-used-in-old-typeref flag
@@ -1613,7 +1620,7 @@ define method write-metadata-record
     method moni                 // metadata or null index
          (m :: false-or(<llvm-metadata>))
       => (id :: <integer>);
-      if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
+      if (m) encode-partition-index(value-partition-table, llvm-metadata-forward(m)) + 1 else 0 end if
     end method;
   write-record*(stream, #"DERIVED_TYPE",
                 if (metadata.llvm-metadata-distinct?) 1 else 0 end,
@@ -1641,7 +1648,7 @@ define method write-metadata-record
     method moni                 // metadata or null index
          (m :: false-or(<llvm-metadata>))
       => (id :: <integer>);
-      if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
+      if (m) encode-partition-index(value-partition-table, llvm-metadata-forward(m)) + 1 else 0 end if
     end method;
   write-record*(stream, #"LEXICAL_BLOCK",
                 if (metadata.llvm-metadata-distinct?) 1 else 0 end,
@@ -1661,7 +1668,7 @@ define method write-metadata-record
     method moni                 // metadata or null index
          (m :: false-or(<llvm-metadata>))
       => (id :: <integer>);
-      if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
+      if (m) encode-partition-index(value-partition-table, llvm-metadata-forward(m)) + 1 else 0 end if
     end method;
   write-record*(stream, #"LEXICAL_BLOCK_FILE",
                 if (metadata.llvm-metadata-distinct?) 1 else 0 end,
@@ -1680,7 +1687,7 @@ define method write-metadata-record
     method moni                 // metadata or null index
          (m :: false-or(<llvm-metadata>))
       => (id :: <integer>);
-      if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
+      if (m) encode-partition-index(value-partition-table, llvm-metadata-forward(m)) + 1 else 0 end if
     end method;
   write-record*(stream, #"LOCAL_VAR",
                 // logior of distinct flag and has-alignment-flag
@@ -1718,7 +1725,7 @@ define method write-metadata-record
     method moni                 // metadata or null index
          (m :: false-or(<llvm-metadata>))
       => (id :: <integer>);
-      if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
+      if (m) encode-partition-index(value-partition-table, llvm-metadata-forward(m)) + 1 else 0 end if
     end method;
   write-record*(stream, #"LOCATION",
                 if (metadata.llvm-metadata-distinct?) 1 else 0 end,
@@ -1739,7 +1746,7 @@ define method write-metadata-record
     method moni                 // metadata or null index
          (m :: false-or(<llvm-metadata>))
       => (id :: <integer>);
-      if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
+      if (m) encode-partition-index(value-partition-table, llvm-metadata-forward(m)) + 1 else 0 end if
     end method;
   write-record*(stream, #"SUBPROGRAM",
                 // logior of distinct flag and has-unit-flag
@@ -1776,7 +1783,7 @@ define method write-metadata-record
     method moni                 // metadata or null index
          (m :: false-or(<llvm-metadata>))
       => (id :: <integer>);
-      if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
+      if (m) encode-partition-index(value-partition-table, llvm-metadata-forward(m)) + 1 else 0 end if
     end method;
   write-record*(stream, #"SUBRANGE",
                 // logior of distinct flag with version=1
@@ -1795,7 +1802,7 @@ define method write-metadata-record
     method moni                 // metadata or null index
          (m :: false-or(<llvm-metadata>))
       => (id :: <integer>);
-      if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
+      if (m) encode-partition-index(value-partition-table, llvm-metadata-forward(m)) + 1 else 0 end if
     end method;
   write-record*(stream, #"SUBROUTINE_TYPE",
                 // logior of distinct flag with has-no-old-typerefs flag
@@ -1814,8 +1821,8 @@ define method write-metadata-record
   let value = value-forward(metadata.llvm-metadata-value);
   let type = type-forward(value.llvm-value-type);
   write-record*(stream, #"VALUE",
-                type-partition-table[type],
-                value-partition-table[value]);
+                encode-partition-index(type-partition-table, type),
+                encode-partition-index(value-partition-table, value));
 end method;
 
 
@@ -1857,7 +1864,7 @@ define function write-metadata-table
                             named.llvm-named-metadata-name));
         write-record(stream, #"NAMED_NODE",
                      map(method (operand)
-                           value-partition-table[llvm-metadata-forward(operand)]
+                           encode-partition-index(value-partition-table, llvm-metadata-forward(operand))
                          end,
                          named.llvm-named-metadata-operands));
       end for;
@@ -1875,7 +1882,7 @@ define method add-value
      value :: <llvm-metadata-value>)
   => ();
   let metadata = value.llvm-metadata-value-metadata;
-  let index = value-partition-table[llvm-metadata-forward(metadata)];
+  let index = encode-partition-index(value-partition-table, llvm-metadata-forward(metadata));
   add!(operands, instruction-index - index);
 end method;
 
@@ -1885,7 +1892,7 @@ define method add-value
      value-partition-table :: <explicit-key-collection>,
      value :: <llvm-value>)
  => ();
-  let index = value-partition-table[value-forward(value)];
+  let index = encode-partition-index(value-partition-table, value-forward(value));
   add!(operands, instruction-index - index);
 end method;
 
@@ -1894,7 +1901,7 @@ define function add-type
      type-partition-table :: <explicit-key-collection>,
      type :: <llvm-type>)
  => ();
-  add!(operands, type-partition-table[type-forward(type)]);
+  add!(operands, encode-partition-index(type-partition-table, type-forward(type)));
 end function;
 
 define function add-value-type
@@ -1905,10 +1912,10 @@ define function add-value-type
      value :: <llvm-value>)
  => ();
   let value = value-forward(value);
-  let index = value-partition-table[value];
+  let index = encode-partition-index(value-partition-table, value);
   add!(operands, instruction-index - index);
   if (index >= instruction-index)
-    add!(operands, type-partition-table[type-forward(llvm-value-type(value))]);
+    add!(operands, encode-partition-index(type-partition-table, type-forward(llvm-value-type(value))));
   end if;
 end function;
 
@@ -1949,7 +1956,7 @@ define method write-instruction-record
   add-value-type(operands, instruction-index,
                  type-partition-table, value-partition-table,
                  value.llvm-instruction-operands[0]);
-  add!(operands, type-partition-table[type-forward(llvm-value-type(value))]);
+  add!(operands, encode-partition-index(type-partition-table, type-forward(llvm-value-type(value))));
   add!(operands, cast-operator-encoding(value.llvm-cast-instruction-operator));
   write-record(stream, #"INST_CAST", operands);
 end method;
@@ -1966,7 +1973,7 @@ define method write-instruction-record
   add!(operands,
        if (value.llvm-gep-instruction-in-bounds?) 1 else 0 end);
   add!(operands,
-       type-partition-table[type-forward(value.llvm-gep-source-type)]);
+       encode-partition-index(type-partition-table, type-forward(value.llvm-gep-source-type)));
   for (operand in value.llvm-instruction-operands)
     add-value-type(operands, instruction-index,
                    type-partition-table, value-partition-table,
@@ -2125,11 +2132,11 @@ define method write-instruction-record
   let operand0 = value-forward(operands[0]);
   let record = make(<stretchy-object-vector>);
   for (i from 1 below operands.size)
-    add!(record, value-partition-table[value-forward(operands[i])]);
+    add!(record, encode-partition-index(value-partition-table, value-forward(operands[i])));
   end for;
   write-record(stream, #"INST_SWITCH",
-               type-partition-table[type-forward(llvm-value-type(operand0))],
-               instruction-index - value-partition-table[operand0],
+               encode-partition-index(type-partition-table, type-forward(llvm-value-type(operand0))),
+               instruction-index - encode-partition-index(value-partition-table, operand0),
                record);
 end method;
 
@@ -2151,16 +2158,16 @@ define method write-instruction-record
        logior(value.llvm-invoke-instruction-calling-convention, ash(1, 13)));
 
   add!(operands,
-       value-partition-table[value-forward(value.llvm-instruction-operands[0])]);
+       encode-partition-index(value-partition-table, value-forward(value.llvm-instruction-operands[0])));
   add!(operands,
-       value-partition-table[value-forward(value.llvm-instruction-operands[1])]);
+       encode-partition-index(value-partition-table, value-forward(value.llvm-instruction-operands[1])));
 
   let callee = value-forward(value.llvm-instruction-operands[2]);
   let function-pointer-type
     = type-forward(llvm-value-type(callee));
   let function-type
     = type-forward(function-pointer-type.llvm-pointer-type-pointee);
-  add!(operands, type-partition-table[function-type]);
+  add!(operands, encode-partition-index(type-partition-table, function-type));
 
   add-value-type(operands, instruction-index,
                  type-partition-table, value-partition-table,
@@ -2220,13 +2227,13 @@ define method write-instruction-record
   let operands = make(<stretchy-object-vector>);
   for (i from 0 below value.llvm-instruction-operands.size by 2)
     let operand = value.llvm-instruction-operands[i];
-    let operand-index = value-partition-table[value-forward(operand)];
+    let operand-index = encode-partition-index(value-partition-table, value-forward(operand));
     let label = value.llvm-instruction-operands[i + 1];
     add!(operands, as-signed-vbr(instruction-index - operand-index));
-    add!(operands, value-partition-table[value-forward(label)]);
+    add!(operands, encode-partition-index(value-partition-table, value-forward(label)));
   end for;
   write-record(stream, #"INST_PHI",
-               type-partition-table[type-forward(llvm-value-type(value))],
+               encode-partition-index(type-partition-table, type-forward(llvm-value-type(value))),
                operands);
 end method;
 
@@ -2254,7 +2261,7 @@ define method write-instruction-record
      value :: <llvm-landingpad-instruction>)
  => ();
   let operands = make(<stretchy-object-vector>);
-  add!(operands, type-partition-table[type-forward(llvm-value-type(value))]);
+  add!(operands, encode-partition-index(type-partition-table, type-forward(llvm-value-type(value))));
   add!(operands, if (value.llvm-landingpad-instruction-cleanup?) 1 else 0 end);
   add!(operands, value.llvm-instruction-operands.size);
   for (operand in value.llvm-instruction-operands)
@@ -2283,7 +2290,7 @@ define method write-instruction-record
                   [type-forward(value.llvm-alloca-allocated-type)],
                 type-partition-table
                   [type-forward(llvm-value-type(value.llvm-instruction-operands[0]))],
-                value-partition-table[value.llvm-instruction-operands[0]],
+                encode-partition-index(value-partition-table, value.llvm-instruction-operands[0]),
                 logior(alignment-encoding
                          (value.llvm-alloca-instruction-alignment),
                        64 /* explicit type flag */));
@@ -2523,9 +2530,9 @@ define method write-instruction-record
  => ();
   let operands = make(<stretchy-object-vector>);
   let valist = value-forward(value.llvm-instruction-operands[0]);
-  add!(operands, type-partition-table[type-forward(llvm-value-type(valist))]);
+  add!(operands, encode-partition-index(type-partition-table, type-forward(llvm-value-type(valist))));
   add-value(operands, instruction-index, value-partition-table, valist);
-  add!(operands, type-partition-table[type-forward(llvm-value-type(value))]);
+  add!(operands, encode-partition-index(type-partition-table, type-forward(llvm-value-type(value))));
   write-record(stream, #"INST_VAARG", operands);
 end method;
 
@@ -2649,7 +2656,7 @@ define function write-function
               let metadata = attachment.llvm-metadata-attachment-metadata;
               add!(operands, attachment.llvm-metadata-attachment-kind);
               add!(operands,
-                   value-partition-table[llvm-metadata-forward(metadata)]);
+                   encode-partition-index(value-partition-table, llvm-metadata-forward(metadata)));
             end for;
             write-record(stream, #"ATTACHMENT", operands);
           end unless;
@@ -2662,7 +2669,7 @@ define function write-function
               let metadata = attachment.llvm-metadata-attachment-metadata;
               add!(operands, attachment.llvm-metadata-attachment-kind);
               add!(operands,
-                   value-partition-table[llvm-metadata-forward(metadata)]);
+                   encode-partition-index(value-partition-table, llvm-metadata-forward(metadata)));
             end for;
             write-record(stream, #"ATTACHMENT", index, operands);
           end for;
@@ -2686,7 +2693,7 @@ define function write-function
                   #"entry-8"
                 end if;
             write-abbrev-record(stream, abbrev, id,
-                                value-partition-table[value-forward(value)],
+                                encode-partition-index(value-partition-table, value-forward(value)),
                                 name);
           end for;
         end with-block-output;
@@ -2859,12 +2866,12 @@ define function write-module
         let name = global.llvm-global-name;
         write-record*(stream, #"GLOBALVAR",
                       add-string(strtab-builder, name), name.size,
-                      type-partition-table[global-type],
+                      encode-partition-index(type-partition-table, global-type),
                       if (global.llvm-global-variable-constant?) 1 else 0 end,
                       if (global.llvm-global-variable-initializer)
                         let value
                           = global.llvm-global-variable-initializer;
-                        value-partition-table[value-forward(value)] + 1
+                        encode-partition-index(value-partition-table, value-forward(value)) + 1
                       else
                         0
                       end,
@@ -2897,7 +2904,7 @@ define function write-module
     //             prefixdata, personalityfn, DSO_Local]
         write-record*(stream, #"FUNCTION",
                       add-string(strtab-builder, name), name.size,
-                      type-partition-table[llvm-value-type(function)],
+                      encode-partition-index(type-partition-table, llvm-value-type(function)),
                       function.llvm-function-calling-convention,
                       if (empty?(function.llvm-function-basic-blocks))
                         1
@@ -2939,8 +2946,8 @@ define function write-module
         let aliasee = value-forward(alias.llvm-global-alias-aliasee);
         write-record*(stream, #"ALIAS",
                       add-string(strtab-builder, name), name.size,
-                      type-partition-table[alias-type],
-                      value-partition-table[aliasee],
+                      encode-partition-index(type-partition-table, alias-type),
+                      encode-partition-index(value-partition-table, aliasee),
                       linkage-encoding(alias.llvm-global-linkage-kind),
                       visibility-encoding(alias.llvm-global-visibility-kind));
       end for;
