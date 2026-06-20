@@ -436,6 +436,35 @@ IO library's *pprint* module.
      dynamic scope of a call to :macro:`pprint-logical-block`; otherwise, the
      pretty printing functions are no-ops.
 
+.. macro:: printing-logical-block
+
+   Wrapper around :macro:`pprint-logical-block` that inlines the function that would be
+   passed to :macro:`pprint-logical-block` as the value of the ``body:`` parameter.
+
+   :macrocall:
+      .. parsed-literal:: 
+         printing-logical-block (*stream*, #rest *options*)
+           *body*
+         end
+
+   Example:
+
+   .. code:: dylan
+
+      printing-logical-block (stream, prefix: "[", suffix: "]")
+        write(stream, "x");
+      end
+
+   is equivalent to
+
+   .. code:: dylan
+
+      pprint-logical-block(stream,
+                           body: method (stream)
+                                   write(stream, "x")
+                                 end,
+                           prefix: "[", suffix: "]")
+
 .. function:: pprint-newline
 
    Announces a conditional newline to the pretty printer.

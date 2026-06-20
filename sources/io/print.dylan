@@ -1020,7 +1020,8 @@ end method;
 
 define method print-object
     (object :: <sequence>, stream :: <stream>) => ()
-  let prefix = format-to-string("{%s sequence ", object.object-class.class-name | "some");
+  let class-name = object.object-class.class-name | "unknown sequence type";
+  let prefix = format-to-string("{%s ", class-name);
   printing-logical-block (stream, prefix: prefix, suffix: "}")
     print-items(object, print, stream);
   end
