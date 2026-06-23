@@ -73,10 +73,11 @@ define function search-for-entry-count
           // smallest good entry count that is not smaller than the
           // needed number of entries.
           if (lower = upper)
-            vector-element($entry-counts, lower);
+            primitive-the(<integer>, vector-element($entry-counts, lower))
           else
             let index = ash(lower + upper, -1);
-            let elt :: <integer> = vector-element($entry-counts, index);
+            let elt :: <integer>
+              = primitive-the(<integer>, vector-element($entry-counts, index));
             if (elt < needed)
               loop(index + 1, upper);
             else
@@ -97,7 +98,7 @@ define function compute-entry-count (desired :: <integer>)
     compute-entry-count(0);
   else
     let needed = max(ceiling/(desired, $grow-threshold), $minimum-entries);
-    if (needed <= vector-element($entry-counts, $entry-last))
+    if (needed <= primitive-the(<integer>, vector-element($entry-counts, $entry-last)))
       search-for-entry-count(needed);
     else
       // Signal some more specific class of error?
