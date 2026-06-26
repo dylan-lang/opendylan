@@ -34,8 +34,6 @@ define class <project-information> (<object>)
     init-keyword: major-version:;
   slot project-information-minor-version :: <integer> = 0,
     init-keyword: minor-version:;
-  slot project-information-base-address :: false-or(<machine-word>) = #f,
-    init-keyword: base-address:;
   slot project-information-remaining-keys :: false-or(<table>) = #f,
     init-keyword: remaining-keys:;
 end class <project-information>;
@@ -100,12 +98,7 @@ define function write-project-to-stream
   t[compilation-mode:] := as(<string>, p.project-information-compilation-mode);
   t[major-version:] := integer-to-string(p.project-information-major-version);
   t[minor-version:] := integer-to-string(p.project-information-minor-version);
-  if (p.project-information-base-address)
-    t[base-address:]
-      := machine-word-to-string(p.project-information-base-address, prefix: "0x");
-  else
-    remove-key!(t, base-address:);
-  end if;
+  remove-key!(t, base-address:);
 
   if (version ~= 1 & version ~= 2)
     error("attempt to write unknown project version: %d", version);
@@ -230,16 +223,6 @@ define function read-project-from-stream
       p.project-information-minor-version := i;
     else
       err("minor-version \"%s\" is not a number", list(minor-version), line: line);
-    end if;
-  end if;
-
-  let (base-address, line) = single-key((base-address:).key, base-address:);
-  if (base-address)
-    let i = string-to-machine-word(base-address, default: #f);
-    if (i)
-      p.project-information-base-address := i;
-    else
-      err("base-address \"%s\" is not a hex number", list(base-address), line: line);
     end if;
   end if;
 
