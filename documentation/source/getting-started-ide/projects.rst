@@ -685,10 +685,10 @@ of two modes: Interactive Development mode, and Production mode. See
 Link page
 ---------
 
-The **Project > Settings...** dialog's Link page controls whether a project
+The :menuselection:`Project --> Settings...` dialog's Link page controls whether a project
 is linked as an executable or as a DLL, and what its name will be. It
-also allows you to specify version information for the target, a base
-address for it, and the Windows subsystem it runs in.
+also allows you to specify version information for the target
+and the Windows subsystem it runs in.
 
 .. note:: The default linker used in Open Dylan is a GNU linker. If
    you own Microsoft Developer Studio, you can use the Microsoft linker
@@ -699,30 +699,16 @@ address for it, and the Windows subsystem it runs in.
 Target File section of the Link page
 ------------------------------------
 
-The **Project > Settings...** dialog's Link page has a Target File section
+The :menuselection:`Project --> Settings...` dialog's Link page has a Target File section
 that contains the name of the project target and the type of the target.
 The default target name is derived from the name of the project. Note
 that the name will always end in .EXE or .DLL according to the target
 type, regardless of any extension you give to the target's name.
 
-Base Address section of the Link page
--------------------------------------
-
-The **Project > Settings...** dialog's Link page has a Base Address section
-that allows you to specify a base address for your target file. This is
-the address at which the target will be loaded into memory.
-
-Windows 95, Windows 98, and Windows NT all provide a default base
-address, one for EXEs and one for DLLs, and will also relocate the
-target automatically if there is no room for it at that address. You can
-provide a value in the Base Address if you would like the target to be
-loaded at a particular location. The value should be specified in
-hexadecimal, using Dylan's *#x* prefix: for example, *#x1000000*.
-
 Version Information section of the Link page
 --------------------------------------------
 
-The **Project > Settings...** dialog's Link page has a Version Information
+The :menuselection:`Project --> Settings...` dialog's Link page has a Version Information
 section that allows you to add major and minor version numbers to a DLL
 or EXE. The values in this section are recorded in the DLL or EXE that
 the project builds. Open Dylan uses them at compile time and run
