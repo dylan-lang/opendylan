@@ -152,8 +152,7 @@ define function save-lid-info
                                      p.project-lid-location.locator-directory))
                  end;
   save-single-value(stream, #"executable", executable);
-  save-single-value(stream, #"base-address",
-                    base-address-string | compute-base-address(p, #f));
+  save-single-value(stream, #"base-address", base-address-string);
   save-single-value(stream, #"debug-command", debug-command);
   save-single-value(stream, #"debug-arguments", debug-arguments-string);
   save-single-value(stream, #"debug-machine", debug-machine);
@@ -385,41 +384,3 @@ define method destructure-flat-assoc-list (list-seq :: <sequence>, rank == 3,
 
   table
 end;
-
-
-/// All Functional Developer DLLs that may be used by user libraries reside above
-/// this address.  Consequently, it's an upper bound for the base for user
-/// libraries including our private libraries (e.g., the compiler and environment)
-define constant $top-for-user-libraries = #x64000;
-
-/// Presume that user libraries fit into 32 pages (128K)
-define constant $allowance-for-user-libraries = #x20;
-define method library-base (#key base-address = #f, #all-keys)
- => (base :: false-or(<machine-word>))
-  base-address
-end method;
-
-define method compute-base-address (project :: <lid-project>, explicit-base :: false-or(<machine-word>))
- => (computed-base :: <string>)
-  let base-address =
-    explicit-base
-    | begin
-        let baseless-libraries = 1;
-        let top = $top-for-user-libraries;
-        let projects = all-used-projects(project);
-        for (p in projects)
-          let base = apply(library-base, project-build-settings(p));
-          if (base)
-            let base :: <machine-word> = base;
-            top := min(top,
-                       as(<integer>, machine-word-unsigned-shift-right(base, 12)))
-          else
-            baseless-libraries := baseless-libraries + 1
-          end
-        end;
-        let machine-word :: <machine-word> =
-          as(<machine-word>, top - baseless-libraries * $allowance-for-user-libraries);
-        machine-word-unsigned-shift-left(machine-word, 12)
-      end begin;
-  machine-word-to-string(base-address, prefix: "0x")
-end method compute-base-address;
