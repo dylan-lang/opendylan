@@ -2,7 +2,6 @@ Library:      Win32-controls
 Synopsis:     Win32 API for Windows Common Controls.
 Executable:   DxW32CTL
 Target-type:  DLL
-Base-Address: 0x66660000
 Library-Pack: Win32
 RC-Files:     version.rc
 Major-version: 2

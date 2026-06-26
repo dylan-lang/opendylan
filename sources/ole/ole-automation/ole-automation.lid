@@ -1,7 +1,6 @@
 Library:      OLE-Automation
 Executable:   DxOLEAUT
 Target-type:  DLL
-Base-Address: 0x65580000
 Library-Pack: OLE
 RC-Files:     version.rc
 major-version: 2

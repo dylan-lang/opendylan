@@ -1,6 +1,5 @@
 Library:      OLE-Server
 Executable:   DxOLESVR
-Base-Address: 0x653E0000
 Library-Pack: OLE
 RC-Files:     version.rc
 Major-Version: 2

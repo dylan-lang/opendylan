@@ -1,6 +1,5 @@
 Library:      win32-Automation
 Target-type:  DLL
-Base-Address: 0x65590000
 Library-Pack: OLE
 major-version: 2
 minor-version: 1

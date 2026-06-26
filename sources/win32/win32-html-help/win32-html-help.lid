@@ -1,6 +1,5 @@
 Library:      Win32-HTML-Help
 Executable:   DxHTMHLP
-Base-Address: 0x66420000
 Library-Pack: Win32
 RC-Files:     version.rc
 Major-Version: 2

@@ -4,7 +4,6 @@ files:	library
 	module
         duim-gl
 	duim-gl-demo
-base-address:	0x64F80000
 start-function:	main
 linker-options:	$(guilflags)
 major-version:	2

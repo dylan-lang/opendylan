@@ -2,7 +2,6 @@ Library:      duim-core
 Synopsis:     DUIM core, for Win32
 Author:       Scott McKay, Andy Armstrong, Gary Palter
 Executable:   DxDUIM
-Base-address: 0x65e00000
 Library-Pack: GUI
 LID:          duim-core.lid
 RC-Files:     version.rc

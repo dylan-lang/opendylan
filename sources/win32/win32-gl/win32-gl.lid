@@ -2,7 +2,6 @@ Library:      win32-gl
 Synopsis:     FFI bindings for the Win32 OpenGL implementation.
 Executable:   DxW32GL
 Target-Type:  DLL
-Base-Address: 0x66300000
 Library-Pack: Win32
 RC-Files:     version.rc
 Major-Version: 2

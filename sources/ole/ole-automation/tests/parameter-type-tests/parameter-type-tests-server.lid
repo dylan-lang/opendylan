@@ -7,7 +7,6 @@ files:	library-server
 	inproc
 subprojects:	..\..\..\com\com.hdp
 	..\..\ole-automation.hdp
-base-address:	0x63EC0000
 debug-command:	regsvr32
 debug-arguments:	parameter-type-tests-server.dll
 start-function:	

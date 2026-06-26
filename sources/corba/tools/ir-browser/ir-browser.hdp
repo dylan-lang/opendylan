@@ -7,7 +7,6 @@ files:	library
 	info
 	frame
 	ir-browser
-base-address:	0x63FE0000
 debug-arguments:	-ORBinterface-repository-file u:\keithd\ir.ior
 start-function:	main
 linker-options:	$(guilflags)

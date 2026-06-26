@@ -6,7 +6,6 @@ files:	library
 	keyboard-pane
 	frame
 	plonker
-base-address:	0x64FA0000
 start-function:	main
 linker-options:	$(guilflags)
 major-version:	2

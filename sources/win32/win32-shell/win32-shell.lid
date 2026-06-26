@@ -1,7 +1,6 @@
 Library:      Win32-shell
 Synopsis:     Translation of Microsoft "shellapi.h".
 Executable:   DxW32SHL
-Base-Address: 0x664A0000
 target-type:  DLL
 Library-Pack: Win32
 RC-Files:     version.rc

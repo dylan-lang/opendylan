@@ -2,7 +2,6 @@ Library:      Win32-common
 Synopsis:     Declarations used by the other Win32 API libraries.
 Executable:   DxW32CMN
 Target-type:  DLL
-Base-Address: 0x66980000
 Library-Pack: Win32
 RC-Files:     version.rc
 Major-version: 2

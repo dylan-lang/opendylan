@@ -2,7 +2,6 @@ Library:      Win32-dialog
 Synopsis:     Win32 API for common dialog boxes
 Executable:   DxW32DLG
 Target-type:  DLL
-Base-Address: 0x66700000
 Library-Pack: Win32
 RC-Files:     version.rc
 Major-version: 2

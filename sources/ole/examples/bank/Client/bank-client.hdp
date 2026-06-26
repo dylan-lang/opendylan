@@ -6,7 +6,6 @@ files:	client-library
 	client-frame
 	client-main
 subprojects:	..\interface\bank-interface.hdp
-base-address:	0x63D00000
 linker-options:	$(guilflags)
 major-version:	2
 minor-version:	1

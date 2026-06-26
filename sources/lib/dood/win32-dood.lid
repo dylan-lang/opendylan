@@ -2,7 +2,6 @@ Library:      dood
 Synopsis:     The Dylan object-oriented database
 Author:       Jonathan Bachrach
 Executable:   DxDOOD
-Base-Address: 0x66AA0000
 Library-Pack: DOOD
 RC-Files:     version.rc
 LID:          dood.lid

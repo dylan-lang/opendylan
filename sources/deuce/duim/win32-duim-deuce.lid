@@ -2,7 +2,6 @@ Library:      duim-deuce
 Synopsis:     DUIM back-end for Deuce
 Author:       Scott McKay
 Executable:   DxDMDCE
-Base-Address: 0x65A60000
 Library-Pack: Deuce
 RC-Files:     version.rc
 LID:          duim-deuce.lid

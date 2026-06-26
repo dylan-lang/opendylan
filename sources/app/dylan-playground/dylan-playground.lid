@@ -1,7 +1,6 @@
 Library:   dylan-playground
 Author:    Andy Armstrong
 Synopsis:  A Dylan application to play around in
-Base-Address:	  0x64FE0000
 Major-Version:    2
 Minor-Version:	  1
 Compilation-Mode: loose

@@ -5,7 +5,6 @@ files:	library
 	module
 	status-buttons
 subprojects:	..\status-icons\status-icons.hdp
-base-address:	0x64FA0000
 start-function:	main
 linker-options:	$(guilflags)
 c-header-files:	taskbar-error.ico

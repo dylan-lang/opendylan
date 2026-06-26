@@ -7,7 +7,6 @@ files:	library
 	naming-service
 	binding-iterator
 	main
-base-address:	0x63FE0000
 start-function:	start-naming-service
 major-version:	2
 minor-version:	1

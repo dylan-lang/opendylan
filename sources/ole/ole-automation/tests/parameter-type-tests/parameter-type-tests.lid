@@ -7,7 +7,6 @@ files:	library
 	run
 subprojects:	..\..\..\com\com.hdp
 	..\..\ole-automation.hdp
-base-address:	0x63EC0000
 start-function:	run-suite
 major-version:	2
 minor-version:	1

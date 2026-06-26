@@ -5,7 +5,6 @@ files:	library
 	module
 	board
 	start
-base-address:	0x63FE0000
 start-function:	play-pente
 linker-options:	$(guilflags)
 major-version:	2

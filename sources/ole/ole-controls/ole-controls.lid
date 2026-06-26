@@ -3,7 +3,6 @@ Synopsis:     Windows OLE Controls low-level API (OLECTL.H and OLEPRO32.DLL)
 Author:       David N. Gray
 Executable:   DxOLECTL
 Target-type:  DLL
-Base-Address: 0x65460000
 Library-Pack: OLE
 RC-Files:     version.rc
 Major-version: 2

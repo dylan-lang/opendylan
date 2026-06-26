@@ -6,7 +6,6 @@ files:	library
 	back-end
 	frame
 	employee-explorer
-base-address:	0x64FE0000
 start-function:	main
 linker-options:	$(guilflags)
 c-header-files:	serf-eyes.ico

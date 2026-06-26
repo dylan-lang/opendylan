@@ -2,7 +2,6 @@ Library:      OLE-Control-Framework
 Synopsis:     High-level support for OLE Controls.
 Author:       David N. Gray
 Executable:   DxOLECFR
-Base-Address: 0x650e0000
 Library-Pack: OLE
 RC-Files:     version.rc
 Major-Version: 2

@@ -6,7 +6,6 @@ files:	library
 	bank-server
 	server-frame
 	init-server
-base-address:	0x64DE0000
 debug-arguments:	-ORBname-service-file c:\temp\ns.ior -location-service:shared-file
 linker-options:	$(guilflags)
 major-version:	2

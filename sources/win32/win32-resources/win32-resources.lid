@@ -16,7 +16,6 @@ Major-Version: 2
 Minor-Version: 1
 Executable:   DxW32RES
 Target-Type:  DLL
-Base-Address: 0x66560000
 Library-Pack: Win32
 RC-Files:     version.rc
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

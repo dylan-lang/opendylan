@@ -1,7 +1,6 @@
 Library:      OLE-Dialogs
 Executable:   DxOLEDLG
 Target-type:  DLL
-Base-Address: 0x65520000
 Library-Pack: OLE
 RC-Files:     version.rc
 Major-version: 2

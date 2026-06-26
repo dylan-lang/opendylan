@@ -6,7 +6,6 @@ Files:	library
 	midi
 	win32-midi
 Executable: DxMIDI
-Base-Address: 0x64a80000
 Major-Version: 2
 Minor-Version: 1
 Compilation-Mode: tight

@@ -3,7 +3,6 @@ format-version:	2
 target-type:	dll
 Library-Pack:   CORBA
 RC-Files:       version.rc
-base-address:	0x64EC0000
 files:	orb-library
 major-version:	2
 minor-version:	1

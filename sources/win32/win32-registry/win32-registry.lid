@@ -2,7 +2,6 @@ Library:      Win32-Registry
 Synopsis:     Win32 API for the System Registry.
 Executable:   DxW32REG
 Target-type:  DLL
-Base-Address: 0x665C0000
 Library-Pack: Win32
 RC-Files:     version.rc
 Major-version: 2

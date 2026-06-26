@@ -1,7 +1,6 @@
 Library:      Commands
 Synopsis:     Win32 specific options for the Functional Objects Commands library
 Author:       Scott McKay, Hugh Greene
-Base-address: 0x66B20000
 Executable:   DxCOMMND
 Library-Pack: Core
 RC-Files:     version.rc

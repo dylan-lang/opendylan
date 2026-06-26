@@ -7,7 +7,6 @@ files:	tool-scepter-library
 subprojects:	../scepter.hdp
 	../abstract-syntax-tree/scepter-ast.hdp
 	../front-end/file/scepter-file-front-end.hdp
-base-address:	0x63CA0000
 major-version:	2
 minor-version:	1
 compilation-mode:	tight
