@@ -859,25 +859,22 @@ DLLs from a third party.</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="na">Base-Address</span><span class="o">:</span><span class="w"> </span><span class="s">*address*</span>
 </pre></div>
 </div>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 2026.2: </span>Because Windows versions starting with Windows Vista and
+Windows Server 2008 implement Address Space Layout Randomization for
+improved security, providing an initial base address is no longer
+useful.</p>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This keyword is only used on Windows and is ignored on other
 platforms.</p>
 </div>
-<p>Specifies the base address of the DLL built from this Dylan library. The
-<em>address</em> must be a hexadecimal value. For convenience, you can use
-either Dylan (<code class="docutils literal notranslate"><span class="pre">#xNNNNNNNN</span></code>) or C (<code class="docutils literal notranslate"><span class="pre">0xNNNNNNNN</span></code>) notations when
-specifying the address.</p>
+<p>This keyword specifies the base address of the Windows DLL built from
+this Dylan library. If provided, <em>address</em> must be a hexadecimal value. For
+convenience, you can use either Dylan (<code class="docutils literal notranslate"><span class="pre">#xNNNNNNNN</span></code>) or C
+(<code class="docutils literal notranslate"><span class="pre">0xNNNNNNNN</span></code>) notations when specifying the address.</p>
 <p>This base address is ignored when building a <code class="docutils literal notranslate"><span class="pre">.EXE</span></code> file.</p>
-<p>If this keyword is not specified, the compiler will compute a default
-base address for the library. However, it is possible for more than one
-library to end up with the same default base address. If an application
-uses any of these libraries, all but one of them will have to be
-relocated when the application starts. This process is automatic, but
-cuts down on the amount of sharing, increases your application’s memory
-footprint, and slows down load time. In such circumstances, you may want
-to give one or more libraries an explicit base address using this
-keyword.</p>
 </section>
 <section id="linker-options">
 <h4>Linker-Options:<a class="headerlink" href="#linker-options" title="Link to this heading">¶</a></h4>

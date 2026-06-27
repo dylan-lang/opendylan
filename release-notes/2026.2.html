@@ -560,6 +560,11 @@ directly supported, making the use of Rosetta 2 no longer necessary.</p></li>
 conventions that is compatible with a wider variety of platform
 ABIs, and which improves performance in certain situations (such as
 dispatching methods with keyword arguments).</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">base-address</span></code> keyword in LID and HDP project files,
+specifying a default load address for DLLs on Windows, has been
+obsoleted. The <span class="guilabel">Base address</span> project link option in the
+IDE has been removed, and the compiler will no longer attempt to
+assign a base address automatically when projects are saved.</p></li>
 </ul>
 </section>
 <section id="tools">

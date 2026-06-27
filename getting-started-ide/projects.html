@@ -1058,10 +1058,10 @@ of two modes: Interactive Development mode, and Production mode. See
 </section>
 <section id="link-page">
 <span id="index-8"></span><span id="id2"></span><h3>Link page<a class="headerlink" href="#link-page" title="Link to this heading">¶</a></h3>
-<p>The <strong>Project &gt; Settings…</strong> dialog’s Link page controls whether a project
+<p>The <span class="menuselection">Project ‣ Settings…</span> dialog’s Link page controls whether a project
 is linked as an executable or as a DLL, and what its name will be. It
-also allows you to specify version information for the target, a base
-address for it, and the Windows subsystem it runs in.</p>
+also allows you to specify version information for the target
+and the Windows subsystem it runs in.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The default linker used in Open Dylan is a GNU linker. If
@@ -1073,27 +1073,15 @@ page.</p>
 </section>
 <section id="target-file-section-of-the-link-page">
 <h3>Target File section of the Link page<a class="headerlink" href="#target-file-section-of-the-link-page" title="Link to this heading">¶</a></h3>
-<p>The <strong>Project &gt; Settings…</strong> dialog’s Link page has a Target File section
+<p>The <span class="menuselection">Project ‣ Settings…</span> dialog’s Link page has a Target File section
 that contains the name of the project target and the type of the target.
 The default target name is derived from the name of the project. Note
 that the name will always end in .EXE or .DLL according to the target
 type, regardless of any extension you give to the target’s name.</p>
 </section>
-<section id="base-address-section-of-the-link-page">
-<h3>Base Address section of the Link page<a class="headerlink" href="#base-address-section-of-the-link-page" title="Link to this heading">¶</a></h3>
-<p>The <strong>Project &gt; Settings…</strong> dialog’s Link page has a Base Address section
-that allows you to specify a base address for your target file. This is
-the address at which the target will be loaded into memory.</p>
-<p>Windows 95, Windows 98, and Windows NT all provide a default base
-address, one for EXEs and one for DLLs, and will also relocate the
-target automatically if there is no room for it at that address. You can
-provide a value in the Base Address if you would like the target to be
-loaded at a particular location. The value should be specified in
-hexadecimal, using Dylan’s <em>#x</em> prefix: for example, <em>#x1000000</em>.</p>
-</section>
 <section id="version-information-section-of-the-link-page">
 <h3>Version Information section of the Link page<a class="headerlink" href="#version-information-section-of-the-link-page" title="Link to this heading">¶</a></h3>
-<p>The <strong>Project &gt; Settings…</strong> dialog’s Link page has a Version Information
+<p>The <span class="menuselection">Project ‣ Settings…</span> dialog’s Link page has a Version Information
 section that allows you to add major and minor version numbers to a DLL
 or EXE. The values in this section are recorded in the DLL or EXE that
 the project builds. Open Dylan uses them at compile time and run
@@ -1244,7 +1232,6 @@ console application.</p>
 <li><a class="reference internal" href="#compile-page">Compile page</a></li>
 <li><a class="reference internal" href="#link-page">Link page</a></li>
 <li><a class="reference internal" href="#target-file-section-of-the-link-page">Target File section of the Link page</a></li>
-<li><a class="reference internal" href="#base-address-section-of-the-link-page">Base Address section of the Link page</a></li>
 <li><a class="reference internal" href="#version-information-section-of-the-link-page">Version Information section of the Link page</a></li>
 <li><a class="reference internal" href="#windows-subsystem-section-of-the-link-page">Windows Subsystem section of the Link page</a></li>
 <li><a class="reference internal" href="#debug-page">Debug page</a></li>
