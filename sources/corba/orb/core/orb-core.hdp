@@ -2,7 +2,6 @@ comment:	This file is generated, please don't edit
 format-version:	2
 target-type:	dll
 Library-Pack:   CORBA
-base-address:	0x63F40000
 files:	orb-core-library
 	args
 	orb

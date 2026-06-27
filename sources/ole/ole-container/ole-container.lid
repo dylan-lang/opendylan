@@ -2,7 +2,6 @@ Library:      OLE-Container
 Synopsis:     Utility library for creating OLE container applications 
 	      using the Win32 API for the user interface.
 Executable:   DxOLECON
-Base-Address: 0x65020000
 Library-Pack: OLE
 RC-Files:     version.rc
 Major-Version: 2

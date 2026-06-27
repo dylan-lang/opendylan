@@ -2,7 +2,6 @@ Library:      DUIM-OLE-Control
 Synopsis:     Support for creating an OLE Control using DUIM.
 Executable:   DxDOLEC
 Target-type:  DLL
-Base-Address: 0x65080000
 Library-Pack: OLE
 RC-Files:     version.rc
 Major-Version: 2

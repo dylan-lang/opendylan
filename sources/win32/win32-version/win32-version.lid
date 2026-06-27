@@ -1,7 +1,6 @@
 Library:      Win32-version
 Executable:   DxW32VER
 Target-type:  DLL
-Base-Address: 0x66460000
 Library-Pack: Win32
 RC-Files:     version.rc
 Major-version: 2

@@ -2,7 +2,6 @@ Library:      Win32-user
 Synopsis:     Win32 API for window functions implemented in "USER32.DLL".
 Executable:   DxW32USR
 Target-type:  DLL
-Base-Address: 0x66860000
 Library-Pack: Win32
 RC-Files:     version.rc
 Major-version: 2

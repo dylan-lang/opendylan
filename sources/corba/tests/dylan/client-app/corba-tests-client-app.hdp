@@ -6,7 +6,6 @@ files:	corba-tests-client-app-library
 subprojects:	../client/corba-tests-client.hdp
 	../server/corba-tests-server.hdp
 executable:	corba-tests-client-app
-base-address:	0x64E60000
 major-version:	2
 minor-version:	1
 compilation-mode:	tight

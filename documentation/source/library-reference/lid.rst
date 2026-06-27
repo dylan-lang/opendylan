@@ -415,25 +415,21 @@ LID keyword
 
     Base-Address: *address*
 
+.. deprecated:: 2026.2
+   Because Windows versions starting with Windows Vista and
+   Windows Server 2008 implement Address Space Layout Randomization for
+   improved security, providing an initial base address is no longer
+   useful.
+
 .. note:: This keyword is only used on Windows and is ignored on other
    platforms.
 
-Specifies the base address of the DLL built from this Dylan library. The
-*address* must be a hexadecimal value. For convenience, you can use
-either Dylan (``#xNNNNNNNN``) or C (``0xNNNNNNNN``) notations when
-specifying the address.
+This keyword specifies the base address of the Windows DLL built from
+this Dylan library. If provided, *address* must be a hexadecimal value. For
+convenience, you can use either Dylan (``#xNNNNNNNN``) or C
+(``0xNNNNNNNN``) notations when specifying the address.
 
 This base address is ignored when building a ``.EXE`` file.
-
-If this keyword is not specified, the compiler will compute a default
-base address for the library. However, it is possible for more than one
-library to end up with the same default base address. If an application
-uses any of these libraries, all but one of them will have to be
-relocated when the application starts. This process is automatic, but
-cuts down on the amount of sharing, increases your application's memory
-footprint, and slows down load time. In such circumstances, you may want
-to give one or more libraries an explicit base address using this
-keyword.
 
 Linker-Options:
 ^^^^^^^^^^^^^^^

@@ -2,7 +2,6 @@ Library:      deuce
 Synopsis:     The Deuce ("Dylan Environment Universal Code Editor") editor
 Author:       Scott McKay
 Executable:   DxDEUCE
-Base-Address: 0x65AE0000
 Library-Pack: Deuce
 RC-Files:     version.rc
 LID:          deuce.lid

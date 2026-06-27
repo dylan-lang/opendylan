@@ -1,7 +1,6 @@
 Library:       Win32-multimedia
 Executable:    DxW32MM
 Target-Type:   DLL
-Base-Address:  0x66360000
 Library-Pack:  Win32
 RC-Files:      version.rc
 Major-Version: 2

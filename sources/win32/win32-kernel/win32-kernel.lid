@@ -2,7 +2,6 @@ Library:      Win32-kernel
 Synopsis:     Win32 API for non-GUI system services in "KERNEL32.DLL"
 Executable:   DxW32KNL
 Target-type:  DLL
-Base-Address: 0x66900000
 Library-Pack: Win32
 RC-Files:     version.rc
 Major-version: 2

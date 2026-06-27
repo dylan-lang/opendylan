@@ -85,8 +85,6 @@ define pane <link-settings-page> ()
     required-init-keyword: target-type:;
   sealed slot %interface-type :: <project-interface-type>,
     required-init-keyword: interface-type:;
-  sealed slot %base-address :: false-or(<machine-word>),
-    required-init-keyword: base-address:;
   sealed slot %major-version :: false-or(<integer>),
     required-init-keyword: major-version:;
   sealed slot %minor-version :: false-or(<integer>),
@@ -140,14 +138,6 @@ define pane <link-settings-page> ()
          value-changed-callback: method (gadget)
                                    pane.%interface-type := gadget.gadget-value
                                  end);
-  pane %base-address-pane (pane)
-    make(<text-field>,
-         enabled?: pane.%enabled?,
-         value-type: <machine-word>,
-         value: pane.%base-address,
-         value-changing-callback: method (gadget)
-                                    pane.%base-address := gadget.gadget-value
-                                  end);
   pane %major-version-pane (pane)
     make(<text-field>,
          enabled?: pane.%enabled?,
@@ -174,13 +164,6 @@ define pane <link-settings-page> ()
                              pane.%target-name-pane),
                       vector(make(<label>, label: "Type:"),
                              pane.%target-type-pane)))
-      end grouping;
-      grouping ("Base address", max-width: $fill)
-        make(<table-layout>,
-             y-spacing: 2,
-             contents:
-               vector(vector(make(<label>, label: "Address:"),
-                             pane.%base-address-pane)));
       end grouping;
       grouping ("Version information", max-width: $fill)
         make(<table-layout>,
@@ -335,7 +318,6 @@ define frame <project-settings-dialog> (<property-frame>)
            target-name:    project.project-build-filename,
            target-type:    project.project-target-type,
            interface-type: project.project-interface-type,
-           base-address:   can-be-built? & project.project-base-address,
            major-version:  can-be-built? & project.project-major-version,
            minor-version:  can-be-built? & project.project-minor-version)
     end;
@@ -411,7 +393,6 @@ define method update-project-settings
     project.project-build-filename   := link-page.%target-name;
     project.project-target-type      := link-page.%target-type;
     project.project-interface-type   := link-page.%interface-type;
-    project.project-base-address     := link-page.%base-address;
     project.project-major-version    := link-page.%major-version;
     project.project-minor-version    := link-page.%minor-version;
   end;
@@ -437,14 +418,6 @@ define method valid-project-settings?
     let target-name = link-page.%target-name;
     validate(target-name ~== #f,
              "The target file name must not be empty.");
-    // Validate DLL base address. Check the text size first so we can
-    // distinguish between no setting and bogus text.
-    let base-address = link-page.%base-address;
-    if (size(link-page.%base-address-pane.gadget-text) > 0)
-      validate(base-address ~= #f,
-               "The base address must be an unsigned hexadecimal integer,"
-                 " or you may leave it blank to have one automatically assigned.");
-    end;
     // Validate version information.
     let major-version = link-page.%major-version;
     let minor-version = link-page.%minor-version;

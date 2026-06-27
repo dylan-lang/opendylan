@@ -2,7 +2,6 @@ Library:      Win32-DDE
 Synopsis:     Win32 API for "DDE"
 Executable:   DxW32DDE
 Target-type:  DLL
-Base-Address: 0x66500000
 Library-Pack: Win32
 RC-Files:     version.rc
 Major-version: 2

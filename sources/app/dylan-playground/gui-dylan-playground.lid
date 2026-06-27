@@ -1,7 +1,6 @@
 Library:   gui-dylan-playground
 Author:    Andy Armstrong
 Synopsis:  A Dylan application to play around in
-Base-Address:	  0x64FE0000
 Linker-Options:	  $(guilflags)
 Major-Version:    2
 Minor-Version:	  1

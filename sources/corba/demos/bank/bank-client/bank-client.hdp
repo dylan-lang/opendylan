@@ -5,7 +5,6 @@ files:	library
 	module
 	bank-client
 	init-client
-base-address:	0x64FE0000
 debug-arguments:	-ORBname-service-file c:\temp\ns.ior -location-service:shared-file
 start-function:	
 linker-options:	$(guilflags)

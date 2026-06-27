@@ -2,7 +2,6 @@ Library:      network
 Author:       Andy Armstrong
 Synopsis:     Win32 version of the Functional Objects Network library
 Executable:   DxNETWRK
-Base-Address: 0x65140000
 Library-Pack: Network
 RC-Files:     version.rc
 Target-Type:  dll

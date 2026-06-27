@@ -1,6 +1,5 @@
 Library:      sql-odbc
 Executable:   DxDB
-Base-Address: 0x651E0000
 Library-Pack: ODBC
 RC-Files:     version.rc
 Major-Version: 2

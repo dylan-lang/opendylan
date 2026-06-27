@@ -1,7 +1,6 @@
 Library:      DUIM-OLE-container
 Synopsis:     Extends DUIM with the ability to create OLE container applications.
 Executable:   DxDOCON
-Base-Address: 0x65000000
 Library-Pack: OLE
 RC-Files:     version.rc
 Major-Version: 2

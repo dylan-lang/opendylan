@@ -2,7 +2,6 @@ Library:       win32-glu
 Synopsis:      Win32 bindings for the OpenGL utilities
 Executable:    DxW32GLU
 Target-Type:   DLL
-Base-Address:  0x662A0000
 Library-Pack:  Win32
 RC-Files:      version.rc
 Major-Version: 2

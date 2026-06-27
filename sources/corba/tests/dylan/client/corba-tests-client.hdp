@@ -1,7 +1,6 @@
 comment:	This file is generated, please don't edit
 format-version:	2
 target-type:	dll
-base-address:	0x63FE0000
 files:	corba-tests-client-library
 	corba-tests-client-module
 	any-client

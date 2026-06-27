@@ -7,7 +7,6 @@ subprojects:	front-end\file\scepter-file-front-end.hdp
 	back-end\dylan\scepter-dylan-back-end.hdp
 	back-end\dump\scepter-dump-back-end.hdp
 	core\scepter-core.hdp
-base-address:	0x63DE0000
 major-version:	2
 minor-version:	1
 compilation-mode:	tight

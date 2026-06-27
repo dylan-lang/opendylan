@@ -9,7 +9,6 @@ files:	orb-streams-library
 subprojects:	../utilities/orb-utilities.hdp
 	../dylan/corba-dylan.hdp
 Library-Pack:   CORBA
-base-address:	0x63FC0000
 major-version: 2
 minor-version: 1
 compilation-mode:	tight

@@ -25,4 +25,3 @@ files:	corba-tests-server-library
 	union-server
 library:	corba-tests-server
 other-files:	idl.spec
-base-address:	0x63FE0000

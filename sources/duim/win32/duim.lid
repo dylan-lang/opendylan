@@ -6,7 +6,6 @@ Files:     duim-library
 Major-version: 2
 Minor-version: 1
 Executable:    DxWDUIM
-Base-address:  0x65c00000
 Library-Pack:  GUI
 Comment:       'C-Header-Files' is a kludge to get the manifest included
 RC-Files:       version.rc

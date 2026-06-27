@@ -1,6 +1,5 @@
 Library:      DUIM-OLE-server
 Executable:   DxDOLES
-Base-Address: 0x652C0000
 Library-Pack: OLE
 RC-Files:     version.rc
 Major-Version: 2

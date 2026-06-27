@@ -4,7 +4,6 @@ files:	library
 	module
 	task-list
 	frame
-base-address:	0x64FE0000
 linker-options:	$(guilflags)
 major-version:	2
 minor-version:	1

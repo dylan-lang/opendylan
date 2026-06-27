@@ -1,7 +1,6 @@
 comment:	This file is generated, please don't edit
 format-version:	2
 target-type:	executable
-base-address:	0x63F80000
 linker-options:	$(guilflags)
 start-function:	main
 major-version:	2

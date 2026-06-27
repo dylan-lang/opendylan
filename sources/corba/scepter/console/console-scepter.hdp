@@ -7,7 +7,6 @@ files:	console-scepter-library
 	main
 subprojects:	../scepter.hdp
 	../core/scepter-core.hdp
-base-address:	0x64F20000
 debug-arguments:	/debugger /language:dump /stdout c:/users/keithd/foo.idl
 start-function:	main
 major-version:	2

@@ -45,7 +45,7 @@ define module tools-interface
          project-information-target-type, project-information-executable,
          project-information-compilation-mode,
          project-information-major-version, project-information-minor-version,
-         project-information-base-address, project-information-remaining-keys,
+         project-information-remaining-keys,
          project-information-files-setter,
          project-information-subprojects-setter,
          project-information-library-setter,
@@ -54,7 +54,6 @@ define module tools-interface
          project-information-compilation-mode-setter,
          project-information-major-version-setter,
          project-information-minor-version-setter,
-         project-information-base-address-setter,
          project-information-remaining-keys-setter;
 
   export read-keyword-pair-file, read-keyword-pair-stream;

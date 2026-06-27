@@ -13,7 +13,6 @@ files:	corba-protocol-library
 	exceptions
 	conditions
 subprojects:	../../dylan/corba-dylan.hdp
-base-address:	0x63D80000
 Library-Pack:   CORBA
 debug-arguments:	-debug
 major-version: 2

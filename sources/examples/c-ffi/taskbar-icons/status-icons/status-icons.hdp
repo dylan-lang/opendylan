@@ -7,7 +7,6 @@ files:	library
 	c-interface
 	start
 subprojects:	..\win32-taskbar\win32-taskbar.hdp
-base-address:	0x64FC0000
 start-function:	main
 linker-options:	$(guilflags)
 c-header-files:	taskbar-error.ico

@@ -1,6 +1,5 @@
 Library:       c-ffi
 Executable:    DxCFFI
-Base-Address:  0x66CE0000
 Major-Version: 2
 Minor-Version: 1
 Library-Pack:  Core

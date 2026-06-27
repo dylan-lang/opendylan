@@ -1,7 +1,6 @@
 Library:      Win32-Rich-Edit
 Executable:   DxW32RED
 Target-type:  DLL
-Base-Address: 0x66600000
 Library-Pack: Win32
 RC-Files:     version.rc
 Major-version: 2

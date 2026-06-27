@@ -6,7 +6,6 @@ files:	library
 	select-viewer
 	odbc-back-end
 	start
-base-address:	0x64FE0000
 start-function:	main
 linker-options:	$(guilflags)
 major-version:	2

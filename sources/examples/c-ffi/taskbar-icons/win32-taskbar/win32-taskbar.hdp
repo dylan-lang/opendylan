@@ -4,7 +4,6 @@ library:	win32-taskbar
 files:	library
 	module
 	win32-taskbar
-base-address:	0x64FE0000
 start-function:	main
 c-libraries:	C:\MSDEV\lib\Shell32.lib
 major-version:	2

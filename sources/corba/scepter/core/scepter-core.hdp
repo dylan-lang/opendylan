@@ -9,7 +9,6 @@ files:	scepter-core-library
 	back-end
 	error
 subprojects:	../utilities/scepter-utilities.hdp
-base-address:	0x63FE0000
 major-version:	2
 minor-version:	1
 compilation-mode:	tight

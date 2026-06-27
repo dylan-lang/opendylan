@@ -2,7 +2,6 @@ Library:      OLE
 Synopsis:     FFI interfaces to Microsoft Windows OLE features from "OLE2.H".
 Executable:   DxOLE
 Target-type:  DLL
-Base-Address: 0x65680000
 Library-Pack: OLE
 RC-Files:     version.rc
 Major-version: 2

@@ -32,7 +32,6 @@ C-Libraries: advapi32.lib
              shell32.lib
 Library-Pack: Core
 Executable:   DxSYSTEM
-Base-Address: 0x66D20000
 RC-Files:     version.rc
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.

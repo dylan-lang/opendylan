@@ -30,6 +30,12 @@ Compiler
   ABIs, and which improves performance in certain situations (such as
   dispatching methods with keyword arguments).
 
+* The ``base-address`` keyword in LID and HDP project files,
+  specifying a default load address for DLLs on Windows, has been
+  obsoleted. The :guilabel:`Base address` project link option in the
+  IDE has been removed, and the compiler will no longer attempt to
+  assign a base address automatically when projects are saved.
+
 Tools
 =====
 

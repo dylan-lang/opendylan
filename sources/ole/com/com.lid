@@ -2,7 +2,6 @@ Library:      COM
 Synopsis:     Interface to the Microsoft "Component Object Model".
 Executable:   DxCOM
 Target-Type:  DLL
-Base-Address: 0x65700000
 Library-Pack: OLE
 Major-Version: 2
 Minor-Version: 1

@@ -2,7 +2,6 @@ Library:      Win32-GDI
 Synopsis:     Win32 API for "Graphics Device Interface" in "GDI32.DLL".
 Executable:   DxW32GDI
 Target-type:  DLL
-Base-Address: 0x66760000
 Library-Pack: Win32
 RC-Files:     version.rc
 Major-version: 2

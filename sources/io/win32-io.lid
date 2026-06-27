@@ -32,7 +32,6 @@ Major-Version: 2
 Minor-Version: 1
 Target-Type:   dll
 Executable:    DxIO
-Base-Address:  0x66C00000
 RC-Files:      version.rc
 Library-Pack:  Core
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
