@@ -36,6 +36,14 @@ Compiler
   IDE has been removed, and the compiler will no longer attempt to
   assign a base address automatically when projects are saved.
 
+IDE
+===
+
+* The :menuselection:`Help --> Contents and Index` and
+  :menuselection:`Help --> Help on Selection` menu items now open the
+  https://opendylan.org web site in the default browser rather than
+  starting an outdated HTML Help file.
+
 Tools
 =====
 
