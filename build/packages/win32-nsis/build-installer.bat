@@ -1,9 +1,5 @@
 @echo off
 
-if exist "opendylan.chm" goto sources
-echo opendylan.chm not found
-goto end
-
 :SOURCES
 if exist "%OPEN_DYLAN_RELEASE_SOURCES%" goto license
 echo "cannot find release sources"

@@ -169,17 +169,6 @@ Section "${APPNAME} Core" SecOpendylanCore
   WriteUninstaller "uninstall.exe"
 SectionEnd
 
-Section "Install Documentation" SecDoc
-  SectionIn 1 2
-
-  CreateDirectory "$INSTDIR\Documentation"
-  SetOutPath "$INSTDIR\Documentation\"
-  File "opendylan.chm"
-
-  WriteRegStr HKLM "${REGISTRY_KEY}\1.0\OnlineHelp" "DocPath" "$INSTDIR\Documentation\opendylan.chm"
-  WriteRegStr HKLM "${REGISTRY_KEY}\1.0\OnlineHelp" "DocType" "HTMLHelp"
-SectionEnd
-
 Section "Associate .ddb files" SecAssocDDB
   SectionIn 1 2
 
@@ -310,8 +299,6 @@ SectionEnd
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
   !insertmacro MUI_DESCRIPTION_TEXT ${SecOpendylanCore} \
                "${APPNAME} core files (required)"
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecDoc} \
-               "Install the documentation.."
   !insertmacro MUI_DESCRIPTION_TEXT ${SecRedistributable} \
                "Copy redistributable files to separate folder. It is possible to run make-redistributable.bat later to do this."
   !insertmacro MUI_DESCRIPTION_TEXT ${SecModifyPath} \
