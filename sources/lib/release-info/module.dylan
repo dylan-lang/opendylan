@@ -26,6 +26,7 @@ define module release-info
          release-version,
          release-copyright,
          release-web-address,
+         release-help-web-address,
          release-full-name,
          release-full-copyright;
 
@@ -39,8 +40,7 @@ define module release-info
          release-library-packs-directory,
          release-templates-directory,
          release-source-templates-directory,
-         release-license-agreement-location,
-         release-help-location;
+         release-license-agreement-location;
 
   // Information accessors
   export info-author,
