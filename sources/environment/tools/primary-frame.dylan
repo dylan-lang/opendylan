@@ -178,13 +178,6 @@ define method make-help-tool-bar-buttons
               command: frame-open-playground,
               activate-callback: method (sheet)
                                    frame-open-playground(sheet-frame(sheet))
-                                 end),
-         make(<button>,
-              label: $help-bitmap,
-              documentation: $help-topics-doc,
-              command: frame-help-contents-and-index,
-              activate-callback: method (sheet)
-                                   frame-help-contents-and-index(sheet-frame(sheet))
                                  end))
 end method make-help-tool-bar-buttons;
 

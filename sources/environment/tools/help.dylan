@@ -121,9 +121,8 @@ define method do-execute-command
   frame-show-about-box(frame)
 end method do-execute-command;
 
-/// NB This filename is agreed with the doc team and will be found in the OS Help directory.
 define help-source open-dylan
-  as(<string>, release-help-location())
+  release-help-web-address()
 end help-source;
 
 define method frame-help-source
@@ -183,8 +182,6 @@ end method help-credits;
 
 /// Web site command tables
 
-define constant $download-doc-page = release-web-address();
-
 define function frame-open-dylan-web-page
     (frame :: <frame>, #key page = release-web-address()) => ()
   let location = as(<url>, page);
@@ -194,65 +191,17 @@ end function frame-open-dylan-web-page;
 
 /// Help command table
 
-define settings <documentation-settings> (<open-dylan-local-settings>)
-  key-name "OnlineHelp";
-  slot doctype :: <symbol> = #"None";
-  slot docpath :: <string> = "";
-end settings <documentation-settings>;
-
-define constant $documentation-settings = make(<documentation-settings>);
-
-define function online-doc-installed?
-    () => (installed? :: <boolean>)
-  $documentation-settings.doctype ==  #"HTMLHelp"
-end function online-doc-installed?;
-
-define function online-doc-location
-    () => (location :: false-or(<file-locator>))
-  let path = $documentation-settings.docpath;
-  $documentation-settings.doctype ~= #"None"
-    & path
-    & ~empty?(path)
-    & as(<file-locator>, path)
-end function online-doc-location;
-
 define sideways method frame-help-contents-and-index
     (frame :: <frame>) => ()
-  do-frame-help(frame, <help-on-topics>)
+  let location = as(<url>, release-help-web-address());
+  frame-open-object(frame, location);
 end method frame-help-contents-and-index;
 
 define sideways method frame-help-on-keyword
     (frame :: <frame>, keyword) => ()
-  do-frame-help(frame, <help-on-keyword>, keyword: keyword)
+  let location = as(<url>, release-help-web-address());
+  frame-open-object(frame, make(<cgi-url>, file: location, cgi-string: keyword));
 end method frame-help-on-keyword;
-
-//--- Hack because HTMLHelp doesn't seem to like multiple threads chattering away to it
-define method do-frame-help
-    (frame :: <frame>, class :: subclass(<command>), #rest initargs) => ()
-  let location = online-doc-location();
-  case
-    online-doc-installed?() =>
-      let primary = environment-primary-frame();
-      // Make sure the primary frame is in front, to make sure the Help window
-      // doesn't appear behind other windows because it is owned by the primary frame.
-      call-in-frame(primary, deiconify-frame, primary);
-      call-in-frame(primary, raise-frame, primary);
-      let command = apply(make, class, server: primary, initargs);
-      call-in-frame(primary, execute-command, command);
-    location & file-exists?(location) =>
-      frame-open-object(frame, location);
-    otherwise =>
-      if (environment-question
-            (format-to-string
-               ("%s online documentation is not installed.  "
-                  "Download it from the web?",
-                release-product-name()),
-             owner: frame,
-             exit-style: #"yes-no"))
-        frame-open-dylan-web-page(frame, page: $download-doc-page)
-      end;
-  end
-end method do-frame-help;
 
 // "Service" function, mainly for use by environment-manager library.
 define sideways method show-documentation

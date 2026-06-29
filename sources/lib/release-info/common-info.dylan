@@ -13,9 +13,10 @@ define constant $release-full-copyright =
   "\n";
 
 define constant $release-web-address = "https://opendylan.org";
+define constant $release-help-web-address
+  = "https://opendylan.org/open-dylan-ide-help";
 
 define constant $license-agreement-filename   = "License.txt";
-define constant $help-filename                = "opendylan.chm";
 
 
 /// Release constants
@@ -68,6 +69,11 @@ define function release-web-address
     () => (address :: <string>)
   $release-web-address
 end function release-web-address;
+
+define function release-help-web-address
+    () => (location :: <string>)
+  $release-help-web-address
+end function release-help-web-address;
 
 /// Library pack information
 
@@ -200,10 +206,4 @@ define function release-license-agreement-location
     () => (location :: <file-locator>)
   release-file($license-agreement-filename)
 end function release-license-agreement-location;
-
-define function release-help-location
-    () => (location :: <file-locator>)
-  release-file($help-filename,
-               directory: release-subdirectory("Documentation/"))
-end function release-help-location;
 
