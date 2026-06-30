@@ -16,6 +16,7 @@ end module;
 
 define module cv4-builder
   use dylan-and-big-ints;
+  use release-info;
   use coff-representation, export: { string-data, symbol-name };
   use coff-builder, export: all;
   export

@@ -13,6 +13,7 @@ define library harp-coff
   use big-integers;
   use collections;
   use io;
+  use release-info;
   use coff-manager;
   use coff-builder;
   use binary-outputter;
