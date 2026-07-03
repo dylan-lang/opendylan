@@ -558,6 +558,8 @@ define method initialize
     (dood :: <dood>, #rest all-keys,
      #key name, locator, if-exists, stream, backups?, segments, #all-keys)
   next-method();
+  assert($word-size = $machine-word-size,
+         "DOOD word-size must match the machine word size");
   dood-init-keys(dood) := copy-sequence(all-keys);
   unless (segments)
     dood-segments(dood)
