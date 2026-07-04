@@ -145,30 +145,32 @@ The next stage in creating our project is to decide which libraries and
 modules it is going to use. The third page of the wizard offers three
 different ways to do this. Each of the three options is described below.
 
--  Minimal If we choose this the project uses the Functional-Dylan
-   library only.
--  Functional-Dylan is a convenience library that combines the standard
-   Dylan library with a language extensions library called
-   Functional-Extensions. Thus Functional-Dylan provides a "Harlequin
-   dialect" of Dylan. (The standard Dylan library, without Harlequin's
-   extensions, is also included in the set of Open Dylan
-   libraries.)
--  Simple If we choose this the wizard presents a series of choices we
+Minimal
+   If we choose this, the project uses the :lib:`common-dylan`
+   library only. This is a convenience library that combines the
+   standard :lib:`dylan` library with several extensions modules such
+   as :mod:`dylan-extensions`. The :lib:`common-dylan` library also
+   includes the standard (unextended) :mod:`dylan` module.
+
+Simple
+   If we choose this, the wizard presents a series of choices we
    can make to determine which libraries and modules the project should
    use.
--  Custom If we choose this the wizard presents a table of all the
+
+Custom
+   If we choose this, the wizard presents a table of all the
    libraries and modules available, and allows us to select the ones we
    want our project to use.
 
-All our Hello project needs to do is print a text message saying "Hello
-World" to the standard output in an MS-DOS console window. The
-Functional-Dylan library contains a function to do this, so for our
-project we can select the Minimal button and move on to the next page in
-the wizard.
+All our Hello project needs to do is print a text message saying
+"Hello World" to the standard output in a console window. The
+:lib:`common-dylan` library contains a function to do this, so for our
+project we can select the :guilabel:`Minimal` button and move on to
+the next page in the wizard.
 
-Select **Minimal** in the Use Libraries box.
+Select :guilabel:`Minimal` in the :guilabel:`Use Libraries` box.
 
-Click **Next**.
+Click :guilabel:`Next`.
 
 We now move to the final page.
 
@@ -222,9 +224,9 @@ The default view shows the Sources page, where we can see the files
    The Hello project.
 
 The *library.dylan* file defines a Dylan library called *Hello*, which
-uses the library *harlequin-dylan*. The *module.dylan* file defines a
+uses the library :lib:`common-dylan`. The *module.dylan* file defines a
 module of the *Hello* library which is also called *Hello*, and which
-uses various modules exported from the *harlequin-dylan* library.
+uses various modules exported from the :lib:`common-dylan` library.
 
 The *Hello.dylan* file is an initial file into which we can write the
 code for our project. It contains a default start function called *main*,
@@ -763,12 +765,13 @@ Project files and LID files
 ===========================
 
 Open Dylan's project files can be exported in a portable library
-interface format called LID (library interchange description). Harlequin
-and other Dylan vendors have chosen LID as the standard interchange
-format for Dylan libraries. LID files describe libraries in a flat ASCII
-text format for ease of interchange between different Dylan systems. The
-*Core Features and Mathematics* reference volume describes the LID
-format. LID files must have the extension .LID.
+interface format called LID (library interchange description). The
+Open Dylan project and other Dylan vendors have chosen LID as the
+standard interchange format for Dylan libraries. LID files describe
+libraries in a flat ASCII text format for ease of interchange between
+different Dylan systems. The *Core Features and Mathematics* reference
+volume describes the LID format. LID files must have the extension
+.LID.
 
 Opening a LID file as a project
 -------------------------------
