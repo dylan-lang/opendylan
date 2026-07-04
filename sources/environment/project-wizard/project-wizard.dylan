@@ -1087,7 +1087,7 @@ format-to-string("libraries which %s will generate automatically from the IDL fi
              vertically (y-spacing: 4)
                make(<radio-button>, label: "&Minimal", id: #"minimal");
                indenting ($radio-indent) labels
-"Your project will use only the functional-dylan library.  There will be no more";
+"Your project will use only the common-dylan library.  There will be no";
 "more pages for choosing libraries.";
                end; end;
              end;
@@ -1919,7 +1919,7 @@ define method do-note-page-required-fields-changed
 end method;
 
 // Add some requirement for the chooser-page?  E.g., must at least include
-// dylan or functional-dylan?
+// dylan or common-dylan?
 
 // None of the fields for the header-page are required.
 
