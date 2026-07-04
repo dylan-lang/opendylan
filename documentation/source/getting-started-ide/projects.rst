@@ -692,11 +692,13 @@ is linked as an executable or as a DLL, and what its name will be. It
 also allows you to specify version information for the target
 and the Windows subsystem it runs in.
 
-.. note:: The default linker used in Open Dylan is a GNU linker. If
-   you own Microsoft Developer Studio, you can use the Microsoft linker
-   instead. To change the default linker, go to the main window and choose
-   **Options > Environment Options...**, then choose that dialog's Build
-   page.
+.. note:: The default linker used in Open Dylan is selected at
+          installation time.  To change the default linker, go to the
+          main window and choose :menuselection:`Tools --> Environment
+          Options...`, then choose that dialog's :guilabel:`Build`
+          page. The :guilabel:`Build script` option will allow you to
+          choose the Jam build script corresponding to a different
+          linker.
 
 Target File section of the Link page
 ------------------------------------
