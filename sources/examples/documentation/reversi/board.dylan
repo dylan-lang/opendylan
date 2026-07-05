@@ -253,7 +253,7 @@ define frame <reversi-frame> (<simple-frame>)
     make(<menu>,
 	 label: "Help",
 	 children: vector(make(<push-menu-button>,
-			       label: "About Functional Developer Reversi",
+			       label: "About Open Dylan Reversi",
 			       activate-callback:
 				 method (button)
 				   about-reversi(sheet-frame(button))
@@ -387,7 +387,7 @@ define method play-reversi
   let frame
     = make(<reversi-frame>,
 	   size: board-size,
-	   title: "Functional Developer Reversi");
+	   title: "Open Dylan Reversi");
   start-frame(frame);
   frame
 end method play-reversi;
@@ -460,5 +460,5 @@ define method reversi-frame-choose-algorithm
 end method reversi-frame-choose-algorithm;
 
 define method about-reversi (frame :: <reversi-frame>) => ()
-  notify-user("Functional Developer Reversi version 1.0", owner: frame)
+  notify-user("Open Dylan Reversi version 1.0", owner: frame)
 end method about-reversi;
