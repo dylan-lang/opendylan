@@ -542,17 +542,18 @@ of the project window.</p>
 <p>We now create a new project for a simple “Hello World” application that
 will run in an MS-DOS console window.</p>
 <p>We create the project by clicking the New Project (<img alt="image0" src="../_images/newproj.png" />) button in
-the main window, or by choosing <strong>File &gt; New</strong> in any window.</p>
-<p>Click the New Project button in the main window.</p>
-<p>The New Project wizard appears.</p>
+the main window, or by choosing <span class="menuselection">File ‣ New…</span> in any window.</p>
+<p>Click the <span class="guilabel">New Project</span> button in the main window.</p>
+<p>The <span class="guilabel">New Project</span> wizard appears.</p>
 <figure class="align-center" id="id4">
 <img alt="../_images/pwiz.png" src="../_images/pwiz.png" />
 <figcaption>
 <p><span class="caption-text">The New Project wizard.</span><a class="headerlink" href="#id4" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
-<p>The New Project wizard guides us through the process of creating a new
-project. Across a series of pages, it gathers the following information:</p>
+<p>The <span class="guilabel">New Project</span> wizard guides us through the process of
+creating a new project. Across a series of pages, it gathers the
+following information:</p>
 <ul class="simple">
 <li><p>The type of target file (.EXE or .DLL) that should be created when
 the project is built.</p></li>
@@ -565,9 +566,9 @@ creates a new project, consisting of the following files:</p>
 <ul class="simple">
 <li><p>A project file. The file has the same name as you give the project,
 but with a .HDP extension.</p></li>
-<li><p>A Dylan source file, called <em>library.dylan</em>, that defines a library
+<li><p>A Dylan source file, called <code class="file docutils literal notranslate"><span class="pre">library.dylan</span></code>, that defines a library
 with the same name as the project</p></li>
-<li><p>A Dylan source file, called <em>module.dylan</em>, that defines a module
+<li><p>A Dylan source file, called <code class="file docutils literal notranslate"><span class="pre">module.dylan</span></code>, that defines a module
 with the same name as the project</p></li>
 <li><p>An initial Dylan source file into which we can write application
 code. The file has the same name as the project, but with a .DYLAN
@@ -584,10 +585,10 @@ Hello, the file would be <em>Hello-info.dylan</em>.</p></li>
 code to be included in your project.</p>
 <p>And for GUI applications that use the DUIM library, there can also be:</p>
 <ul class="simple">
-<li><p>A Dylan source file, called <em>frame.dylan</em>, that defines the
+<li><p>A Dylan source file, called <code class="file docutils literal notranslate"><span class="pre">frame.dylan</span></code>, that defines the
 application’s DUIM frame and a set of default menus.</p></li>
 </ul>
-<p>The <em>frame.dylan</em> file appears only if you ask for template code to be
+<p>The <code class="file docutils literal notranslate"><span class="pre">frame.dylan</span></code> file appears only if you ask for template code to be
 included in your project. We discuss this in <a class="reference internal" href="#projects-for-gui-applications">Projects for GUI
 applications</a>.</p>
 <p>For more information on DUIM, see <em>Building Applications Using DUIM</em> and
@@ -600,7 +601,7 @@ target we want to build from the project.</p>
 Our “Hello World” application is going to be an MS-DOS console
 application, so we need to change this option setting from the default.</p>
 <p>Select “Console Application (EXE)” in the Project type box.</p>
-<p>Click <strong>Next</strong>.</p>
+<p>Click <span class="guilabel">Next</span>.</p>
 <p>We now move to the second page.</p>
 </section>
 <section id="specifying-the-project-name-and-location">
@@ -637,7 +638,7 @@ going to call the project Hello.</p>
 automatically generated project and source files.</p>
 <p>The New Project wizard will create the folder in the Location box
 automatically if it does not already exist.</p>
-<p>Click <strong>Next</strong>.</p>
+<p>Click <span class="guilabel">Next</span>.</p>
 <p>We now move to the third page.</p>
 </section>
 <section id="choosing-the-libraries-that-the-project-uses">
@@ -645,29 +646,29 @@ automatically if it does not already exist.</p>
 <p>The next stage in creating our project is to decide which libraries and
 modules it is going to use. The third page of the wizard offers three
 different ways to do this. Each of the three options is described below.</p>
-<ul class="simple">
-<li><p>Minimal If we choose this the project uses the Functional-Dylan
-library only.</p></li>
-<li><p>Functional-Dylan is a convenience library that combines the standard
-Dylan library with a language extensions library called
-Functional-Extensions. Thus Functional-Dylan provides a “Harlequin
-dialect” of Dylan. (The standard Dylan library, without Harlequin’s
-extensions, is also included in the set of Open Dylan
-libraries.)</p></li>
-<li><p>Simple If we choose this the wizard presents a series of choices we
+<dl class="simple">
+<dt>Minimal</dt><dd><p>If we choose this, the project uses the <code class="xref dylan dylan-lib docutils literal notranslate"><span class="pre">common-dylan</span></code>
+library only. This is a convenience library that combines the
+standard <code class="xref dylan dylan-lib docutils literal notranslate"><span class="pre">dylan</span></code> library with several extensions modules such
+as <code class="xref dylan dylan-mod docutils literal notranslate"><span class="pre">dylan-extensions</span></code>. The <code class="xref dylan dylan-lib docutils literal notranslate"><span class="pre">common-dylan</span></code> library also
+includes the standard (unextended) <code class="xref dylan dylan-mod docutils literal notranslate"><span class="pre">dylan</span></code> module.</p>
+</dd>
+<dt>Simple</dt><dd><p>If we choose this, the wizard presents a series of choices we
 can make to determine which libraries and modules the project should
-use.</p></li>
-<li><p>Custom If we choose this the wizard presents a table of all the
+use.</p>
+</dd>
+<dt>Custom</dt><dd><p>If we choose this, the wizard presents a table of all the
 libraries and modules available, and allows us to select the ones we
-want our project to use.</p></li>
-</ul>
-<p>All our Hello project needs to do is print a text message saying “Hello
-World” to the standard output in an MS-DOS console window. The
-Functional-Dylan library contains a function to do this, so for our
-project we can select the Minimal button and move on to the next page in
-the wizard.</p>
-<p>Select <strong>Minimal</strong> in the Use Libraries box.</p>
-<p>Click <strong>Next</strong>.</p>
+want our project to use.</p>
+</dd>
+</dl>
+<p>All our Hello project needs to do is print a text message saying
+“Hello World” to the standard output in a console window. The
+<code class="xref dylan dylan-lib docutils literal notranslate"><span class="pre">common-dylan</span></code> library contains a function to do this, so for our
+project we can select the <span class="guilabel">Minimal</span> button and move on to
+the next page in the wizard.</p>
+<p>Select <span class="guilabel">Minimal</span> in the <span class="guilabel">Use Libraries</span> box.</p>
+<p>Click <span class="guilabel">Next</span>.</p>
 <p>We now move to the final page.</p>
 </section>
 <section id="the-final-page-in-the-new-project-wizard">
@@ -689,7 +690,7 @@ additional one that Open Dylan accepts.</p>
 </figure>
 <p>Change the default keyword text as you wish, or turn the keywords off
 altogether.</p>
-<p>Click <strong>Finish</strong>.</p>
+<p>Click <span class="guilabel">Finish</span>.</p>
 <p>Now we have supplied all the information the wizard asks for, it creates
 the new Hello project and opens it.</p>
 </section>
@@ -697,7 +698,7 @@ the new Hello project and opens it.</p>
 <h3>Examining the files in the Hello project<a class="headerlink" href="#examining-the-files-in-the-hello-project" title="Link to this heading">¶</a></h3>
 <p><a class="reference internal" href="#hello-project"><span class="std std-ref">The Hello project.</span></a> shows our new Hello project.</p>
 <p>The default view shows the Sources page, where we can see the files
-<em>library.dylan</em>, <em>module.dylan</em>, and <em>Hello.dylan</em>.</p>
+<code class="file docutils literal notranslate"><span class="pre">library.dylan</span></code>, <code class="file docutils literal notranslate"><span class="pre">module.dylan</span></code>, and <code class="file docutils literal notranslate"><span class="pre">Hello.dylan</span></code>.</p>
 <figure class="align-center" id="id7">
 <span id="hello-project"></span><img alt="../_images/hellopr.png" src="../_images/hellopr.png" />
 <figcaption>
@@ -705,9 +706,9 @@ the new Hello project and opens it.</p>
 </figcaption>
 </figure>
 <p>The <em>library.dylan</em> file defines a Dylan library called <em>Hello</em>, which
-uses the library <em>harlequin-dylan</em>. The <em>module.dylan</em> file defines a
+uses the library <code class="xref dylan dylan-lib docutils literal notranslate"><span class="pre">common-dylan</span></code>. The <em>module.dylan</em> file defines a
 module of the <em>Hello</em> library which is also called <em>Hello</em>, and which
-uses various modules exported from the <em>harlequin-dylan</em> library.</p>
+uses various modules exported from the <code class="xref dylan dylan-lib docutils literal notranslate"><span class="pre">common-dylan</span></code> library.</p>
 <p>The <em>Hello.dylan</em> file is an initial file into which we can write the
 code for our project. It contains a default start function called <em>main</em>,
 and the last lines of the file call this <em>main</em> function. For more on
@@ -723,17 +724,17 @@ its argument on the standard output.</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">format-out</span><span class="p">(</span><span class="s">&quot;Hello World</span><span class="se">\\</span><span class="s">n&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Choose <strong>File &gt; Save</strong> to save the change to <em>Hello.dylan</em>.</p>
+<p>Choose <span class="menuselection">File ‣ Save</span> to save the change to <em>Hello.dylan</em>.</p>
 <p>Now we can build our “Hello World” application.</p>
-<p>Choose <strong>Project &gt; Build</strong> in the project window.</p>
-<p>Test the application by choosing <strong>Project &gt; Start</strong>.</p>
-<p>An MS-DOS console window appears, into which “Hello World” is written.
+<p>Choose <span class="menuselection">Project ‣ Build</span> in the project window.</p>
+<p>Test the application by choosing <span class="menuselection">Project ‣  Start</span>.</p>
+<p>A console window appears, into which “Hello World” is written.
 Then a notifier dialog appears to confirm that the console application
 has terminated.</p>
-<p>You can find the <em>hello.exe</em> file in the <em>bin</em> subfolder of the <em>Hello</em>
-project folder we specified on the second page of the New Project
-wizard. See <a class="reference internal" href="model.html#projects-on-disk"><span class="std std-ref">Projects on disk</span></a> for more details of where build
-products reside.</p>
+<p>You can find the <code class="file docutils literal notranslate"><span class="pre">hello.exe</span></code> file in the <code class="file docutils literal notranslate"><span class="pre">bin</span></code> subfolder
+of the <em>Hello</em> project folder we specified on the second page of the
+<span class="guilabel">New Project</span> wizard. See <a class="reference internal" href="model.html#projects-on-disk"><span class="std std-ref">Projects on disk</span></a> for more
+details of where build products reside.</p>
 </section>
 <section id="projects-for-gui-applications">
 <h3>Projects for GUI applications<a class="headerlink" href="#projects-for-gui-applications" title="Link to this heading">¶</a></h3>
@@ -745,28 +746,29 @@ creates, then build and run our GUI application.</p>
 <section id="creating-a-gui-project">
 <h3>Creating a GUI project<a class="headerlink" href="#creating-a-gui-project" title="Link to this heading">¶</a></h3>
 <p>First, we create the new project for our GUI application.</p>
-<p>Click the New Project (<img alt="image1" src="../_images/newproj.png" />) button in the main window.</p>
+<p>Click the <span class="guilabel">New Project</span> (<img alt="image1" src="../_images/newproj.png" />) button in the main window.</p>
 <p>On the first page, we want to specify the project type.</p>
 <p>Select “GUI Application (EXE)” in the Project type box.</p>
-<p>Click <strong>Next</strong>.</p>
+<p>Click <span class="guilabel">Next</span>.</p>
 <p>We now move to the second page of the wizard.</p>
 <p>Here, we want to name the project and specify a folder for its files.</p>
 <p>Name the project <em>GUI-App</em> and choose a location for it.</p>
-<p>The New Project wizard can set up some skeleton program code for our
-project, according to the project’s characteristics as we specify them.
-Template code is not relevant for all kinds of projects — for instance,
-our Hello project would not have benefited from any more initial program
-structure than it had — but the wizard will include any that is relevant
-if we check the “Include any available templates” box.</p>
-<p>Make sure the “Include any available templates” box is checked.</p>
-<p>We ignore the <strong>Advanced…</strong> button again.</p>
-<p>Click <strong>Next</strong>.</p>
+<p>The <span class="guilabel">New Project</span> wizard can set up some skeleton program
+code for our project, according to the project’s characteristics as we
+specify them.  Template code is not relevant for all kinds of projects
+— for instance, our Hello project would not have benefited from any
+more initial program structure than it had — but the wizard will
+include any that is relevant if we check the “Include any available
+templates” box.</p>
+<p>Make sure the <span class="guilabel">Include any available templates</span> box is checked.</p>
+<p>We ignore the <span class="guilabel">Advanced…</span> button again.</p>
+<p>Click <span class="guilabel">Next</span>.</p>
 <p>We now move to the third page of the wizard.</p>
 <p>When we created the Hello project, we chose the Minimal option here, to
-use only the Functional-Dylan library. Our GUI application also needs to
+use only the <code class="xref dylan dylan-lib docutils literal notranslate"><span class="pre">common-dylan</span></code> library. Our GUI application also needs to
 use other libraries for access to the native window system.</p>
-<p>Select “Simple” in the Use Libraries box.</p>
-<p>Click <strong>Next</strong>.</p>
+<p>Select <span class="guilabel">Simple</span> in the <span class="guilabel">Use Libraries</span> box.</p>
+<p>Click <span class="guilabel">Next</span>.</p>
 <p>We now proceed through a series of pages allowing us to specify our
 project requirements in high-level terms, without knowing the names of
 specific Open Dylan API libraries.</p>
@@ -778,26 +780,27 @@ libraries that Open Dylan offers.</p>
 <p>On the first page we can specify the what I/O and system support we want
 in our project. For each option, the wizard shows which libraries the
 project will use.</p>
-<p>Leave the default settings on this page as they are, and click <strong>Next</strong>.</p>
+<p>Leave the default settings on this page as they are, and click
+<span class="guilabel">Next</span>.</p>
 <p>The next page is for specifying GUI support details. Here, we can decide
 whether we want to do the window programming for the application by
 using DUIM, Open Dylan’s high-level GUI toolkit, or by using the
 Win32 API libraries described in the <em>C FFI and Win32</em> library
 reference. We want to use DUIM in this project.</p>
-<p>Select “Dylan User Interface Manager (DUIM)”.</p>
-<p>Click <strong>Next</strong>.</p>
+<p>Select <span class="guilabel">Dylan User Interface Manager (DUIM)</span>.</p>
+<p>Click <span class="guilabel">Next</span>.</p>
 <p>Now the wizard offers different pages, which we don’t explain here.
 We will keep clicking <em>Next</em> until we get to the last page of the wizard.
 This is the page for specifying source file headers, as we saw in
 <a class="reference internal" href="#the-final-page-in-the-new-project-wizard">The final page in the New Project wizard</a>.</p>
-<p>Click <strong>Next</strong> until the last page of the wizard appears.</p>
+<p>Click <span class="guilabel">Next</span> until the last page of the wizard appears.</p>
 <p>If you made any changes to this page last time, they will have been
-preserved. Whenever you click <strong>Finish</strong>, the wizard saves all these
+preserved. Whenever you click <span class="guilabel">Finish</span>, the wizard saves all these
 headers (except <em>Synopsis:</em> ) and some other details, and reinstates
 them next time you create a project. See <a class="reference internal" href="#saving-settings-in-the-new-project-wizard">Saving settings in the New
 Project wizard</a> for a list of the details that the
 wizard saves.</p>
-<p>Make any changes you want to here, and then click <strong>Finish</strong>.</p>
+<p>Make any changes you want to here, and then click <span class="guilabel">Finish</span>.</p>
 <p>The wizard creates the new GUI-App project and opens it.</p>
 </section>
 <section id="examining-and-building-the-new-gui-project">
@@ -805,10 +808,10 @@ wizard saves.</p>
 <p>Now, we examine the template code that the wizard has set up for us in
 the GUI-App project sources.</p>
 <p>The GUI-App project contains the same basic set of files as Hello. There
-is a <em>library.dylan</em> file, a <em>module.dylan</em> file, and a <em>GUI-App.dylan</em>
-file. In addition, there is a <em>GUI-App-info.dylan</em> file and a
-<em>frame.dylan</em> file.</p>
-<p>The <em>GUI-App-info.dylan</em> file appears whenever you choose “GUI
+is a <code class="file docutils literal notranslate"><span class="pre">library.dylan</span></code> file, a <code class="file docutils literal notranslate"><span class="pre">module.dylan</span></code> file, and a <code class="file docutils literal notranslate"><span class="pre">GUI-App.dylan</span></code>
+file. In addition, there is a <code class="file docutils literal notranslate"><span class="pre">GUI-App-info.dylan</span></code> file and a
+<code class="file docutils literal notranslate"><span class="pre">frame.dylan</span></code> file.</p>
+<p>The <code class="file docutils literal notranslate"><span class="pre">GUI-App-info.dylan</span></code> file appears whenever you choose “GUI
 Application (EXE)” as the target type on the first page of the wizard.
 It contains some simple code that you might want to use for identifying
 your application and its version number.</p>
@@ -818,8 +821,8 @@ windows. More knowledge of DUIM is necessary to understand the code in
 <em>frame.dylan</em> properly, but we can start by seeing what the code
 actually does when we build the project. All projects including template
 code can be built without requiring any further work.</p>
-<p>Choose <strong>Project &gt; Build</strong> in the GUI-App project window.</p>
-<p>Choose <strong>Application &gt; Start</strong>.</p>
+<p>Choose <span class="menuselection">Project ‣  Build</span> in the GUI-App project window.</p>
+<p>Choose <span class="menuselection">Project ‣  Start</span>.</p>
 <p>An application window appears.</p>
 <figure class="align-center" id="id8">
 <img alt="../_images/gui-app.png" src="../_images/gui-app.png" />
@@ -828,12 +831,14 @@ code can be built without requiring any further work.</p>
 </figcaption>
 </figure>
 <p>We can see from the window that the template code creates a skeleton
-application with File, Edit, and Help menus. There is even some
-functionality attached to the basic application. If we choose <strong>File &gt;
-New</strong>, an editor pane is initialized, into which we can type. The other
-<strong>File</strong> and <strong>Edit</strong> menu commands have their standard effects. The <strong>Help &gt;
-About</strong> command uses some of the constants from <em>GUI-App-info.dylan</em> to
-identify the application as “GUI-App Version 1.0”.</p>
+application with <span class="guilabel">File</span>, <span class="guilabel">Edit</span>, and
+<span class="guilabel">Help</span> menus. There is even some functionality attached to
+the basic application. If we choose <span class="menuselection">File ‣ New</span>, an
+editor pane is initialized, into which we can type. The other
+<span class="guilabel">File</span> and <span class="guilabel">Edit</span> menu commands have their
+standard effects. The <span class="menuselection">Help ‣ About</span> command uses some of the
+constants from <code class="file docutils literal notranslate"><span class="pre">GUI-App-info.dylan</span></code> to identify the application as
+“GUI-App Version 1.0”.</p>
 </section>
 </section>
 <section id="creating-a-project-using-the-custom-library-option">
@@ -842,7 +847,7 @@ identify the application as “GUI-App Version 1.0”.</p>
 allows complete control over the libraries and modules a project will
 use. This section explains how to choose libraries and modules using
 this option.</p>
-<p>After selecting Custom and clicking <em>Next</em>, the wizard shows a page
+<p>After selecting Custom and clicking <span class="guilabel">Next</span>, the wizard shows a page
 with three list panes. We can make selections from each list pane.</p>
 <p>At first, the only list enabled is the Choose Library Groups list.
 Because there are many libraries available in Open Dylan, the
@@ -865,25 +870,26 @@ used in a default project.</p>
 <figure class="align-center" id="id9">
 <img alt="../_images/p2frag2-0.png" src="../_images/p2frag2-0.png" />
 <figcaption>
-<p><span class="caption-text">Functional-Dylan is the default library for use in new projects.</span><a class="headerlink" href="#id9" title="Link to this image">¶</a></p>
+<p><span class="caption-text">The <code class="xref dylan dylan-lib docutils literal notranslate"><span class="pre">common-dylan</span></code> library is the default for use in new projects.</span><a class="headerlink" href="#id9" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
-<p>So, by default, a project would use the library Functional-Dylan. (Note
-that Functional-Dylan is the default library for use in new projects.
+<p>So, by default, a project would use the library <code class="xref dylan dylan-lib docutils literal notranslate"><span class="pre">common-dylan</span></code>. (Note
+that <code class="xref dylan dylan-lib docutils literal notranslate"><span class="pre">common-dylan</span></code> is the default library for use in new projects.
 Your copy of Open Dylan may have more library groups.)</p>
-<p>If we now select Functional-Dylan in the Library list, we can see which
-modules from the Functional-Dylan library a default project would
+<p>If we now select <code class="xref dylan dylan-lib docutils literal notranslate"><span class="pre">common-dylan</span></code> in the Library list, we can see which
+modules from the common-dylan library a default project would
 include.</p>
-<p>Select “Functional-Dylan” in the Library list.</p>
+<p>Select <code class="xref dylan dylan-mod docutils literal notranslate"><span class="pre">common-dylan</span></code> in the module name list.</p>
 <figure class="align-center" id="id10">
 <img alt="../_images/p2frag2_2-0.png" src="../_images/p2frag2_2-0.png" />
 <figcaption>
-<p><span class="caption-text">Default modules from Functional-Dylan for use in new projects.</span><a class="headerlink" href="#id10" title="Link to this image">¶</a></p>
+<p><span class="caption-text">Default modules from Common-Dylan for use in new projects.</span><a class="headerlink" href="#id10" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
-<p>Although the list shows that the Dylan and Functional-Extensions modules
-are not used, they are actually used indirectly, since the
-Functional-Dylan module is simply a repackaging of those two modules.</p>
+<p>Although the list shows that the <code class="xref dylan dylan-mod docutils literal notranslate"><span class="pre">dylan</span></code> and
+<a class="reference internal" href="../library-reference/common-dylan/common-extensions.html#common-dylan:common-extensions"><code class="xref dylan dylan-mod docutils literal notranslate"><span class="pre">common-extensions</span></code></a> modules are not used, they are actually used
+indirectly, since the <code class="xref dylan dylan-mod docutils literal notranslate"><span class="pre">common-dylan</span></code> module is simply a
+repackaging of those two modules.</p>
 <p>Remember that, in Dylan, the library is the unit of compilation, and
 modules are simply interfaces to functionality within a library. By
 deciding not to use a particular exported module, you will import fewer
@@ -892,41 +898,44 @@ be any smaller on disk, or in memory when it is running.</p>
 </section>
 <section id="saving-settings-in-the-new-project-wizard">
 <span id="index-2"></span><h2>Saving settings in the New Project wizard<a class="headerlink" href="#saving-settings-in-the-new-project-wizard" title="Link to this heading">¶</a></h2>
-<p>Whenever you click <strong>Finish</strong> on the last page of the New Project wizard,
-the wizard stores some of the choices and text-field settings you made
-so that they are available next time you create a project. The details
-that are saved persistently are as follows.</p>
+<p>Whenever you click <span class="guilabel">Finish</span> on the last page of the New
+Project wizard, the wizard stores some of the choices and text-field
+settings you made so that they are available next time you create a
+project. The details that are saved persistently are as follows.</p>
 <ul class="simple">
 <li><p>The parent of the folder in the Location box.</p></li>
 </ul>
 <p>The parent folder is saved in the expectation that you will want to
 create several projects in sibling folders.</p>
 <ul class="simple">
-<li><p>In the <em>Advanced…</em> dialog (see <a class="reference internal" href="#advanced-project-settings">Advanced project settings</a>),
-the contents of the Start Function box and the setting of
-Compilation Mode.</p></li>
-<li><p>The setting of the “Include any available templates” check-box.</p></li>
+<li><p>In the <span class="guilabel">Advanced…</span> dialog (see <a class="reference internal" href="#advanced-project-settings">Advanced project settings</a>),
+the contents of the <span class="guilabel">Start Function</span> box and the setting of
+<span class="guilabel">Compilation Mode</span>.</p></li>
+<li><p>The setting of the <span class="guilabel">Include any available templates</span> check-box.</p></li>
 </ul>
 <p>On the last wizard page:</p>
 <ul class="simple">
-<li><p>The contents of the Source File Headers boxes, except for <em>Synopsis:</em>.</p></li>
+<li><p>The contents of the <span class="guilabel">Source File Headers</span> boxes, except
+for <span class="guilabel">Synopsis:</span>.</p></li>
 </ul>
-<p><em>Synopsis:</em> is not saved because it is likely to change with each new
-project.</p>
+<p><span class="guilabel">Synopsis:</span> is not saved because it is likely to change with
+each new project.</p>
 <p>Nothing from the first page is saved.</p>
 </section>
 <section id="advanced-project-settings">
 <span id="index-3"></span><h2>Advanced project settings<a class="headerlink" href="#advanced-project-settings" title="Link to this heading">¶</a></h2>
-<p>The <em>Advanced…</em> button on the first page of the New Project wizard
-leads to the Advanced Project Settings dialog. The dialog has five
+<p>The <span class="guilabel">Advanced…</span> button on the first page of the New Project wizard
+leads to the <span class="guilabel">Advanced Project Settings</span> dialog. The dialog has five
 sections.</p>
-<p>The Library and Module Names section allows you to specify names for
-your project’s main library and module. The default value in both cases
-is the name of the project.</p>
-<p>The remaining sections — Start Function, Version Information, Compilation
-Mode, and Windows Subsystem — all control settings that you can both set
-here and change after creating a project by choosing <strong>Project &gt;
-Settings…</strong>. See <a class="reference internal" href="#id1">Project settings</a> for details.</p>
+<p>The <span class="guilabel">Library and Module Names</span> section allows you to specify
+names for your project’s main library and module. The default value in
+both cases is the name of the project.</p>
+<p>The remaining sections — <span class="guilabel">Start Function</span>,
+<span class="guilabel">Version Information</span>, <span class="guilabel">Compilation Mode</span>, and
+<span class="guilabel">Windows Subsystem</span> — all control settings that you can both
+set here and change after creating a project by choosing
+<span class="menuselection">Project ‣ Settings…</span>. See <a class="reference internal" href="#id1">Project settings</a> for
+details.</p>
 </section>
 <section id="adding-moving-and-deleting-project-sources">
 <h2>Adding, moving, and deleting project sources<a class="headerlink" href="#adding-moving-and-deleting-project-sources" title="Link to this heading">¶</a></h2>
@@ -934,10 +943,10 @@ Settings…</strong>. See <a class="reference internal" href="#id1">Project sett
 re-order them, and how to delete them from the project.</p>
 <section id="inserting-files-into-a-project">
 <span id="index-4"></span><h3>Inserting files into a project<a class="headerlink" href="#inserting-files-into-a-project" title="Link to this heading">¶</a></h3>
-<p>To insert a new file or subproject into a project, choose <strong>Project &gt;
-Insert File…</strong> in the project window. The project window prompts you
-with the <em>Insert File into Project</em> dialog, through which you can find a
-file to insert.</p>
+<p>To insert a new file or subproject into a project, choose
+<span class="menuselection">Project ‣ Insert File…</span> in the project window. The
+project window prompts you with the <span class="guilabel">Insert File into
+Project</span> dialog, through which you can find a file to insert.</p>
 <p>The file you choose will appear below the currently selected file in the
 list, unless you insert a subproject (a .HDP file), which will appear at
 the bottom of the list.</p>
@@ -953,18 +962,20 @@ import from the new subproject.</p>
 <section id="moving-the-position-of-a-file-within-a-project">
 <span id="index-5"></span><h3>Moving the position of a file within a project<a class="headerlink" href="#moving-the-position-of-a-file-within-a-project" title="Link to this heading">¶</a></h3>
 <p>To move a file to a new position in a project, select the file in the
-Sources page and use <strong>Project &gt; Move File Up</strong> and <strong>Project &gt; Move File
-Down</strong>.</p>
+Sources page and use <span class="menuselection">Project ‣ Move File Up</span> and
+<span class="menuselection">Project ‣ Move File Down</span>.</p>
 </section>
 <section id="deleting-files-from-a-project">
 <span id="index-6"></span><h3>Deleting files from a project<a class="headerlink" href="#deleting-files-from-a-project" title="Link to this heading">¶</a></h3>
 <p>To delete a file from a project, select the file in the Sources page and
-choose <strong>Project &gt; Remove File</strong>. You could also select <strong>Edit &gt; Cut</strong>,
-<strong>Edit &gt; Delete</strong>, or the scissors toolbar icon.</p>
+choose <span class="menuselection">Project ‣ Remove File</span>. You could also select
+<span class="menuselection">Edit ‣ Cut</span>,
+<span class="menuselection">Edit ‣ Delete</span>, or the scissors toolbar icon.</p>
 <p>Open Dylan asks you if you are sure you want to delete the file
 from the project, because you cannot undo the operation. Note that the
 file is not deleted from disk, just removed from the Sources list in the
-project. You can always put it back with <strong>Project &gt; Insert File</strong>.</p>
+project. You can always put it back with
+<span class="menuselection">Project ‣ Insert File</span>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The project window’s Definitions page shows the definitions that
@@ -981,17 +992,18 @@ compiler database to be updated.</p>
 <p>The New Project wizard always adds a <em>start function</em> to the end of the
 last file in the project.</p>
 <p>The Dylan language does not require that a program define an explicit
-start function, such as <em>main</em> in C or Java. However, when you are
-debugging or interacting, Open Dylan finds it useful to know what
-you consider to be your program’s start function. It allows the name of
-your start function to be recorded in its project information. By
-default, this name will be <em>main</em>, and corresponds to the <em>main</em>
-function that the New Project creates by default in the <em>project-name</em>
-<em>.dylan</em> file for all new projects. However, you are free to change the
-name if you like — there is nothing special about it.</p>
+start function, in contrast with <code class="docutils literal notranslate"><span class="pre">main</span></code> functions in C or
+Java. However, when you are debugging or interacting, Open Dylan finds
+it useful to know what you consider to be your program’s start
+function. It allows the name of your start function to be recorded in
+its project information. By default, this name will be <code class="docutils literal notranslate"><span class="pre">main</span></code>, and
+corresponds to the <code class="docutils literal notranslate"><span class="pre">main</span></code> function that the New Project wizard creates by
+default in the <em>project-name</em> <em>.dylan</em> file for all new
+projects. However, you are free to change the name if you like — there
+is nothing special about it.</p>
 <p>The <em>project-name</em> <em>.dylan</em> file for all new projects will contain a
 definition of <em>main</em> and a call to it. Projects that include template
-code will contain this definition of <em>main</em> :</p>
+code will contain this definition of <code class="docutils literal notranslate"><span class="pre">main</span></code> :</p>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="k">define</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">()</span>
 <span class="w">  </span><span class="n">start-template</span><span class="p">()</span>
 <span class="k">end</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">main</span><span class="p">;</span>
@@ -1011,23 +1023,25 @@ with this expression:</p>
 </pre></div>
 </div>
 <p>The name of the Start Function is one of the project settings you can
-change in the <strong>Project &gt; Settings…</strong> dialog. It appears on the Debug page
-in the Start Function section. The default name is <em>main</em>, but you can
+change in the <span class="menuselection">Project ‣ Settings…</span> dialog. It appears on the <span class="guilabel">Debug</span> page
+in the <span class="guilabel">Start Function</span> section. The default name is <code class="docutils literal notranslate"><span class="pre">main</span></code>, but you can
 change it to any valid Dylan name you like. If you do so, make sure to
-replace the call to <em>main</em> with a call to your new start function. The
+replace the call to <code class="docutils literal notranslate"><span class="pre">main</span></code> with a call to your new start function. The
 source file is not updated automatically.</p>
-<p>Note that you can make the wizard use a different start function name in
-new project files by changing the default setting in the Advanced
-Project Settings dialog. Click <strong>Advanced…</strong> on the second wizard page to
-produce the dialog. In this case, the generated project code will call
-the correct new name without requiring you to make a change by hand.</p>
+<p>Note that you can make the wizard use a different start function name
+in new project files by changing the default setting in the
+<span class="guilabel">Advanced Project Settings</span> dialog. Click
+<span class="guilabel">Advanced…</span> on the second wizard page to produce the
+dialog. In this case, the generated project code will call the correct
+new name without requiring you to make a change by hand.</p>
 <p>The debugger uses the start function name to know where to pause a
-program that you start up in interaction mode with <strong>Application &gt;
-Interact</strong> or the Interact (<img alt="image2" src="../_images/interact.png" />) toolbar button, or in debugging
-mode with <strong>Application &gt; Debug</strong>. When you start a program either way,
-the debugger allows the program to execute normally, but sets a
-breakpoint on the start function so that interaction or debugging begins
-at a point where the entire program has already been initialized.</p>
+program that you start up in interaction mode with
+<span class="menuselection">Application ‣ Interact</span> or the Interact (<img alt="image2" src="../_images/interact.png" />)
+toolbar button, or in debugging mode with <span class="menuselection">Application
+‣ Debug</span>. When you start a program either way, the debugger allows
+the program to execute normally, but sets a breakpoint on the start
+function so that interaction or debugging begins at a point where the
+entire program has already been initialized.</p>
 <p>If no start function is nominated for a project, the program pauses
 precisely before it exits but after everything in it has executed. This
 is usually what we want for a DLL, but not for an application.</p>
@@ -1046,14 +1060,15 @@ for more information on this topic.</p>
 </section>
 <section id="project-settings">
 <span id="id1"></span><h2>Project settings<a class="headerlink" href="#project-settings" title="Link to this heading">¶</a></h2>
-<p>The <strong>Project &gt; Settings…</strong> dialog allows you to set options for
-compiling, linking, and debugging projects. There are separate pages for
-each category, each described below.</p>
+<p>The <span class="menuselection">Project ‣ Settings…</span> dialog allows you to set
+options for compiling, linking, and debugging projects. There are
+separate pages for each category, each described below.</p>
 <section id="compile-page">
 <h3>Compile page<a class="headerlink" href="#compile-page" title="Link to this heading">¶</a></h3>
-<p>The <strong>Project &gt; Settings…</strong> dialog’s Compile page controls the compilation
-mode setting for the current project. Any project can be compiled in one
-of two modes: Interactive Development mode, and Production mode. See
+<p>The <span class="menuselection">Project ‣ Settings…</span> dialog’s
+<span class="guilabel">Compile</span> page controls the compilation mode setting for the
+current project. Any project can be compiled in one of two modes:
+Interactive Development mode, and Production mode. See
 <a class="reference internal" href="model.html#compilation-modes"><span class="std std-ref">Compilation modes</span></a> for details of the modes.</p>
 </section>
 <section id="link-page">
@@ -1064,11 +1079,13 @@ also allows you to specify version information for the target
 and the Windows subsystem it runs in.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The default linker used in Open Dylan is a GNU linker. If
-you own Microsoft Developer Studio, you can use the Microsoft linker
-instead. To change the default linker, go to the main window and choose
-<strong>Options &gt; Environment Options…</strong>, then choose that dialog’s Build
-page.</p>
+<p>The default linker used in Open Dylan is selected at
+installation time.  To change the default linker, go to the
+main window and choose <span class="menuselection">Tools ‣ Environment
+Options…</span>, then choose that dialog’s <span class="guilabel">Build</span>
+page. The <span class="guilabel">Build script</span> option will allow you to
+choose the Jam build script corresponding to a different
+linker.</p>
 </div>
 </section>
 <section id="target-file-section-of-the-link-page">
@@ -1090,7 +1107,7 @@ See <a class="reference internal" href="model.html#versioning"><span class="std 
 </section>
 <section id="windows-subsystem-section-of-the-link-page">
 <h3>Windows Subsystem section of the Link page<a class="headerlink" href="#windows-subsystem-section-of-the-link-page" title="Link to this heading">¶</a></h3>
-<p>The <strong>Project &gt; Settings…</strong> dialog’s Link page has a Win32 Subsystem
+<p>The <span class="menuselection">Project ‣ Settings…</span> dialog’s Link page has a Win32 Subsystem
 section that allows you to specify that the target should run in the
 “Windows GUI” (WINDOWS) subsystem or the “Windows Console” (CONSOLE)
 subsystem. You may wish to change this value if you change the code of a
@@ -1102,17 +1119,18 @@ to run in the “Windows GUI” (WINDOWS) subsystem.</p>
 </section>
 <section id="debug-page">
 <span id="index-9"></span><h3>Debug page<a class="headerlink" href="#debug-page" title="Link to this heading">¶</a></h3>
-<p>The <strong>Project &gt; Settings…</strong> dialog’s Debug page allows you to specify a
-command line with which to execute the project target, and the start
-function for the project.</p>
+<p>The <span class="menuselection">Project ‣ Settings…</span> dialog’s
+<span class="guilabel">Debug</span> page allows you to specify a command line with which
+to execute the project target, and the start function for the project.</p>
 <p>The command line facility is especially useful for testing console
 applications from within the development environment. If there are
-values in the Command Line section of this dialog when you run a project
-target with <em>Project &gt; Start</em> (and similar commands), Open Dylan
-uses them to execute the application. It creates a new process from the
-executable named in the Executable field and passes it the arguments
-from the Arguments field. Thus the values in these fields should form a
-valid MS-DOS command line when concatenated.</p>
+values in the Command Line section of this dialog when you run a
+project target with <span class="menuselection">Application ‣ Start</span> (and
+similar commands), Open Dylan uses them to execute the application. It
+creates a new process from the executable named in the Executable
+field and passes it the arguments from the Arguments field. Thus the
+values in these fields should form a valid command line when
+concatenated.</p>
 <p>See <a class="reference internal" href="#the-project-start-function">The project start function</a> for details of the start function.</p>
 <p>Another use of the Command Line section is to arrange to test and debug
 DLLs and OLE components. See <a class="reference internal" href="debug.html#debugging-techniques"><span class="std std-ref">Debugging techniques</span></a> for a description
@@ -1122,26 +1140,28 @@ of these debugging techniques.</p>
 <section id="project-files-and-lid-files">
 <span id="index-10"></span><span id="id3"></span><h2>Project files and LID files<a class="headerlink" href="#project-files-and-lid-files" title="Link to this heading">¶</a></h2>
 <p>Open Dylan’s project files can be exported in a portable library
-interface format called LID (library interchange description). Harlequin
-and other Dylan vendors have chosen LID as the standard interchange
-format for Dylan libraries. LID files describe libraries in a flat ASCII
-text format for ease of interchange between different Dylan systems. The
-<em>Core Features and Mathematics</em> reference volume describes the LID
-format. LID files must have the extension .LID.</p>
+interface format called LID (library interchange description). The
+Open Dylan project and other Dylan vendors have chosen LID as the
+standard interchange format for Dylan libraries. LID files describe
+libraries in a flat ASCII text format for ease of interchange between
+different Dylan systems. The <em>Core Features and Mathematics</em> reference
+volume describes the LID format. LID files must have the extension
+.LID.</p>
 <section id="opening-a-lid-file-as-a-project">
 <h3>Opening a LID file as a project<a class="headerlink" href="#opening-a-lid-file-as-a-project" title="Link to this heading">¶</a></h3>
 <p>When you open a LID file in the development environment, it is converted
 into a project file and opened in a project window. (This process does
 not modify the original LID file on disk.)</p>
 <p>In order to open a LID file as a text file in an editor, open the LID
-file using <strong>File &gt; Open</strong> and select the file type filter “Dylan Library
-Interchange Descriptions (as text)” before clicking <strong>Open</strong>.</p>
+file using <span class="menuselection">File ‣ Open…</span> and select the file type
+filter “Dylan Library Interchange Descriptions (as text)” before
+clicking <span class="guilabel">Open</span>.</p>
 </section>
 <section id="exporting-a-project-into-a-lid-file">
 <h3>Exporting a project into a LID file<a class="headerlink" href="#exporting-a-project-into-a-lid-file" title="Link to this heading">¶</a></h3>
 <p>To export a project as a LID file for use in other Dylan
-implementations, use <strong>File &gt; Save As</strong> and choose the file type “Dylan
-Library Interchange Descriptions”.</p>
+implementations, use <span class="menuselection">File ‣ Save As…</span> and choose the
+file type “Dylan Library Interchange Descriptions”.</p>
 <p>Note that a LID file created by export will list source files by name
 only, and without paths. In addition it will not contain any of the
 project settings, any files that are not Dylan source files (.DYLAN

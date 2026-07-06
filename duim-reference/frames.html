@@ -693,24 +693,12 @@ by the DUIM-Frames library: <a class="reference internal" href="#duim:duim-frame
 <a class="reference internal" href="gadgets.html#gadgets-subclasses-of-page"><span class="std std-ref">Subclasses of &lt;page&gt;</span></a> for an introduction to these classes.</p>
 </section>
 </section>
-<section id="duim-commands-library">
-<h2>DUIM-Commands Library<a class="headerlink" href="#duim-commands-library" title="Link to this heading">¶</a></h2>
-<p>All commands-related interfaces are now defined directly in the Commands
-library. However, these same interfaces are imported to and re-exported
-from DUIM-Frames, so they can be used in almost the same way as for
-Harlequin Dylan 1.0. You should continue to look for commands-related
-documentation in this chapter.</p>
-<p>A consequence of the introduction of the Commands library is that a
-slight change in syntax is required in the definition of commands in
-command tables. In Harlequin Dylan 1.0, two approaches could be taken
-when specifying a command in a table. For example, a menu item could be
-specified by either of the following:</p>
-<div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">menu-item</span><span class="w"> </span><span class="s">&quot;My Command&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;command&gt;</span><span class="p">,</span><span class="w"> </span><span class="k">function:</span><span class="w"> </span><span class="n">my-command</span><span class="p">),</span>
-<span class="n">menu-item</span><span class="w"> </span><span class="s">&quot;My Command&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">my-command</span><span class="p">,</span>
-</pre></div>
-</div>
-<p>Beginning with Harlequin Dylan 1.1, only the last of these may be used.
-This may require you to change some of your code.</p>
+<section id="commands-interface">
+<h2>Commands Interface<a class="headerlink" href="#commands-interface" title="Link to this heading">¶</a></h2>
+<p>The DUIM-Frames library makes extensive use of commands-related
+interfaces defined in the <code class="xref dylan dylan-lib docutils literal notranslate"><span class="pre">commands</span></code> library. These interfaces
+are imported to and re-exported from DUIM-Frames, so it is not
+necessary to import <code class="xref dylan dylan-lib docutils literal notranslate"><span class="pre">commands</span></code> explicitly.</p>
 </section>
 <section id="duim-frames-module">
 <h2>DUIM-Frames Module<a class="headerlink" href="#duim-frames-module" title="Link to this heading">¶</a></h2>
@@ -7489,7 +7477,7 @@ through.</p>
 <li><a class="reference internal" href="#subclasses-of-page">Subclasses of &lt;page&gt;</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#duim-commands-library">DUIM-Commands Library</a></li>
+<li><a class="reference internal" href="#commands-interface">Commands Interface</a></li>
 <li><a class="reference internal" href="#duim-frames-module">DUIM-Frames Module</a><ul>
 <li><a class="reference internal" href="#duim:duim-frames:=([command])"><code class="docutils literal notranslate"><span class="pre">=(&lt;command&gt;)</span></code></a></li>
 <li><a class="reference internal" href="#duim:duim-frames:add-command"><code class="docutils literal notranslate"><span class="pre">add-command</span></code></a></li>

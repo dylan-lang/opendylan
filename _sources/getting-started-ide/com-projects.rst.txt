@@ -44,423 +44,423 @@ Creating the server stubs library
 First we use the New Project wizard to create a Dylan library defining
 server-side stubs for the encryption interface.
 
-Choose **File > New...** from the main window.
+Choose :menuselection:`File --> New...` from the main window.
 
-#. Select **Project** and click **OK**.
+#. Select :guilabel:`Project` and click :guilabel:`OK`.
 
-The New Project wizard appears.
+   The New Project wizard appears.
 
-#. In the Project Type section, select "Interface to COM Type Library"
-   and click **Next**.
+#. In the Project Type section, select :guilabel:`Interface to COM Type Library`
+   and click :guilabel:`Next`.
 
-The next page allows you to name a type library to be translated. Most
-COM components store the location of their type libraries in the Windows
-Registry. These registered type libraries are listed in the Installed
-Type Libraries section of the window. You can select a type library from
-the list, or click **Browse...** in the Location pane to select a type
-library file from disk.
+   The next page allows you to name a type library to be translated. Most
+   COM components store the location of their type libraries in the Windows
+   Registry. These registered type libraries are listed in the Installed
+   Type Libraries section of the window. You can select a type library from
+   the list, or click :guilabel:`Browse...` in the Location pane to select a type
+   library file from disk.
 
-.. figure:: images/motwiz.png
-   :align: center
+   .. figure:: images/motwiz.png
+      :align: center
 
-   Choosing a type library file to convert.
+      Choosing a type library file to convert.
 
-In this case, we use a type library supplied with Open Dylan.
+   In this case, we use a type library supplied with Open Dylan.
 
-#. Click **Browse...** and navigate to the Open Dylan examples folder.
+#. Click :guilabel:`Browse...` and navigate to the Open Dylan examples folder.
 
-The folder required is called Examples and is placed under the top-level
-Open Dylan folder.
+   The folder required is called Examples and is placed under the top-level
+   Open Dylan folder.
 
-It is usually *C:\\Program Files\\Open Dylan\\Examples*.
+   It is usually :file:`C:\\Program Files\\Open Dylan\\Examples`.
 
 #. Go to the *Documentation\\RotNExample* subfolder and choose the
-   *RotNExample.tlb* file.
-#. Click **Next** to continue to the next page of the wizard.
+   :file:`RotNExample.tlb` file.
+#. Click :guilabel:`Next` to continue to the next page of the wizard.
 
-.. figure:: images/motstub.png
-   :align: center
+   .. figure:: images/motstub.png
+      :align: center
 
-   Choosing the kind of skeleton code to generate.
+      Choosing the kind of skeleton code to generate.
 
-The next page allows you to choose what kind of stubs to generate from
-the type library. There are two options:
+   The next page allows you to choose what kind of stubs to generate from
+   the type library. There are two options:
 
-Dispatch client interfaces
+   Dispatch client interfaces
+      Defines Dylan code to allow you to interface to COM servers.
 
--  Defines Dylan code to allow you to interface to COM servers.
+   Dispatch server skeletons
+      Defines Dylan code to allow you to create COM servers implementing
+      the interfaces described in the type library.
 
-Dispatch server skeletons
+   Because we are writing the server side of the application, we want to
+   generate dispatch server skeleton code.
 
--  Defines Dylan code to allow you to create COM servers implementing
-   the interfaces described in the type library.
+#. Select :guilabel:`Dispatch server skeletons`.
+#. Click :guilabel:`Next` to continue to the next page of the wizard.
 
-Because we are writing the server side of the application, we want to
-generate dispatch server skeleton code.
+   .. figure:: images/motinters.png
+      :align: center
 
-#. Select "Dispatch server skeletons".
-#. Click **Next** to continue to the next page of the wizard.
+      Choosing interfaces and classes from the type library.
 
-.. figure:: images/motinters.png
-   :align: center
+   The next page presents a list of COM classes and interfaces
+   contained in the selected type library. You can select which to
+   translate by choosing :guilabel:`Translate selected` and then
+   clicking to select individual items, dragging or using the Shift
+   key to select ranges, and using the Ctrl key to select additional
+   items. Choose :guilabel:`Translate all`, and all classes and
+   interfaces in the type library will be translated. This is
+   different from selecting all items under :guilabel:`Translate
+   selected`, because if classes or interfaces are added to the type
+   library later, they will only be translated if you selected
+   :guilabel:`Translate all`.
 
-   Choosing interfaces and classes from the type library.
-
-The next page presents a list of COM classes and interfaces contained in
-the selected type library. You can select which to translate by choosing
-"Translate selected" and then clicking to select individual items,
-dragging or using the Shift key to select ranges, and using the Ctrl key
-to select additional items. Choose "Translate all" and all classes and
-interfaces in the type library will be translated. This is different
-from selecting all items under "Translate selected" because if classes
-or interfaces are added to the type library later, they will only be
-translated if you selected "Translate all".
-
-#. Choose "Translate all", so that both the RotNExample COM class and
+#. Choose :guilabel:`Translate all`, so that both the RotNExample COM class and
    the IRotNExample interface are translated.
-#. Click **Next**.
+#. Click :guilabel:`Next:guilabel:`.
 
-Now we reach the Project Name and Location page. This and all subsequent
-pages are the same as those that you see for other kinds of project in
-the New Project wizard. Follow the remaining steps to finish defining
-the server stubs project.
+   Now we reach the :guilabel:`Project Name and Location` page. This
+   and all subsequent pages are the same as those that you see for
+   other kinds of project in the New Project wizard. Follow the
+   remaining steps to finish defining the server stubs project.
 
-#. Change the name of the project to *RotNExample-server-stubs*.
+#. Change the name of the project to ``RotNExample-server-stubs``.
 #. Choose a suitable Location for the project.
-#. Make sure that the "Dynamic Link Library (DLL)" option is chosen in
+#. Make sure that the :guilabel:`Dynamic Link Library (DLL)` option is chosen in
    the Project Settings and Templates section.
-#. Make sure that the "Include any available templates" option is *not*
+#. Make sure that the :guilabel:`Include any available templates` option is *not*
    checked.
-#. Click **Next** to continue.
+#. Click :guilabel:`Next` to continue.
 
-We are now at the Use Libraries page. We are only defining the stubs for
-the server, so we do not need any unusual libraries.
+   We are now at the Use Libraries page. We are only defining the stubs for
+   the server, so we do not need any unusual libraries.
 
-#. Choose the "Minimal" option.
-#. Click **Next** to continue.
+#. Choose the :guilabel:`Minimal` option.
+#. Click :guilabel:`Next` to continue.
 
-We are now at the final page of the New Project wizard.
+   We are now at the final page of the New Project wizard.
 
-#. Make any changes you want to the Source File Headers section.
-#. Click **Finish**.
+#. Make any changes you want to the :guilabel:`Source File Headers` section.
+#. Click :guilabel:`Finish`.
 
-The new project appears.
+   The new project appears.
 
-.. figure:: images/motproj.png
-   :align: center
+   .. figure:: images/motproj.png
+      :align: center
 
-   The server stubs project.
+      The server stubs project.
 
-In addition to the usual files, this project contains a file named
-*type-library.spec*. This is a specification file. It provides
-information to the type library tool.
+   In addition to the usual files, this project contains a file named
+   :file:`type-library.spec`. This is a specification file. It
+   provides information to the type library tool.
 
 #. Double-click on the specification file.
 
-An editor window opens on the specification file.
+   An editor window opens on the specification file.
 
-The specification file looks something like this:
+   The specification file looks something like this:
 
-.. code-block:: dylan
+   .. code-block:: dylan
 
-    Origin: COM-type-library
-    Type-library: C:\\Program Files\\Open Dylan\\Examples\\...\\RotNExample.tlb
-    Module: type-library-module
-    Module-file: type-library-module.dylan
-    Generate: dispatch-servers
-    Stub-file: stubs.dylan
+       Origin: COM-type-library
+       Type-library: C:\\Program Files\\Open Dylan\\Examples\\...\\RotNExample.tlb
+       Module: type-library-module
+       Module-file: type-library-module.dylan
+       Generate: dispatch-servers
+       Stub-file: stubs.dylan
 
-As you can see, the specification file contains all the information
-provided to the type library portion of the New Project wizard.
+   As you can see, the specification file contains all the information
+   provided to the type library portion of the New Project wizard.
 
-However, no skeleton code has yet been generated. The type library tool,
-which generates the skeleton code, only runs when you build the project.
+   However, no skeleton code has yet been generated. The type library tool,
+   which generates the skeleton code, only runs when you build the project.
 
-#. Build the project with **Project > Build**.
+#. Build the project with :menuselection:`Project --> Build`.
 
-The build process adds some new files to the project. These files were
-generated by the type library tool.
+   The build process adds some new files to the project. These files were
+   generated by the type library tool.
 
-The file *type-library-module.dylan* defines a module in which the
-translated code resides. This module exports all translated symbols. If
-you look at *module.dylan*, you will see that the main module
-re-exports all of these symbols.
+   The file :file:`type-library-module.dylan` defines a module in
+   which the translated code resides. This module exports all
+   translated symbols. If you look at :file:`module.dylan`, you will
+   see that the main module re-exports all of these symbols.
 
-The file *stubs.dylan* contains the Dylan code generated by the type
-library tool. It defines a class for an implementation of the
-IRotNExample interface, and generic functions for the methods and
-properties of the interface:
+   The file :file:`stubs.dylan` contains the Dylan code generated by the type
+   library tool. It defines a class for an implementation of the
+   ``IRotNExample`` interface, and generic functions for the methods and
+   properties of the interface:
 
-.. code-block:: dylan
+   .. code-block:: dylan
 
-    /* Dispatch interface: IRotNExample version 0.0
-     * GUID: {822ED42A-3EB1-11D2-A3CA-0060B0572A7F}
-     * Description: An example interface for Open Dylan's Getting
-     * Started manual. */
+       /* Dispatch interface: IRotNExample version 0.0
+        * GUID: {822ED42A-3EB1-11D2-A3CA-0060B0572A7F}
+        * Description: An example interface for Open Dylan's Getting
+        * Started manual. */
 
-    define open dispatch-interface <IRotNExample> (<simple-dispatch>)
-      uuid "{822ED42A-3EB1-11D2-A3CA-0060B0572A7F}";
-      virtual property IRotNExample/key :: type-union(<integer>,
-        <machine-word>), name: "key", disp-id: 12288;
-      function IRotNExample/encrypt (arg-pre :: <string>) =>
-        (arg-result :: <string>), name: "encrypt", disp-id: 24576;
-      function IRotNExample/decrypt (arg-pre :: <string>) =>
-        (arg-result :: <string>), name: "decrypt", disp-id: 24577;
-    end dispatch-interface <IRotNExample>;
-    define open generic IRotNExample/key (this :: <IRotNExample>) =>
-      (arg-result :: type-union(<integer>, <machine-word>));
-    define open generic IRotNExample/key-setter (arg-result ::
-      type-union(<integer>, <machine-word>), this :: <IRotNExample>)
-      => (arg-result :: type-union(<integer>, <machine-word>));
-    define open generic IRotNExample/encrypt (this :: <IRotNExample>,
-      arg-pre :: <string>) => (result :: <HRESULT>, arg-result ::
-      <string>);
-    define open generic IRotNExample/decrypt (this :: <IRotNExample>,
-      arg-pre :: <string>) => (result :: <HRESULT>, arg-result ::
-      <string>);
+       define open dispatch-interface <IRotNExample> (<simple-dispatch>)
+         uuid "{822ED42A-3EB1-11D2-A3CA-0060B0572A7F}";
+         virtual property IRotNExample/key :: type-union(<integer>,
+           <machine-word>), name: "key", disp-id: 12288;
+         function IRotNExample/encrypt (arg-pre :: <string>) =>
+           (arg-result :: <string>), name: "encrypt", disp-id: 24576;
+         function IRotNExample/decrypt (arg-pre :: <string>) =>
+           (arg-result :: <string>), name: "decrypt", disp-id: 24577;
+       end dispatch-interface <IRotNExample>;
+       define open generic IRotNExample/key (this :: <IRotNExample>) =>
+         (arg-result :: type-union(<integer>, <machine-word>));
+       define open generic IRotNExample/key-setter (arg-result ::
+         type-union(<integer>, <machine-word>), this :: <IRotNExample>)
+         => (arg-result :: type-union(<integer>, <machine-word>));
+       define open generic IRotNExample/encrypt (this :: <IRotNExample>,
+         arg-pre :: <string>) => (result :: <HRESULT>, arg-result ::
+         <string>);
+       define open generic IRotNExample/decrypt (this :: <IRotNExample>,
+         arg-pre :: <string>) => (result :: <HRESULT>, arg-result ::
+         <string>);
 
-This defines a class ``<IRotNExample>`` which implements the given
-interface. The implementation is not complete until methods are provided
-for the generics. This can be done by adding methods in the same
-library, or by defining a subclass of ``<IRotNExample>`` in another
-library and defining methods on the subclass. We will take the latter
-approach.
+   This defines a class ``<IRotNExample>`` which implements the given
+   interface. The implementation is not complete until methods are
+   provided for the generics. This can be done by adding methods in
+   the same library, or by defining a subclass of ``<IRotNExample>``
+   in another library and defining methods on the subclass. We will
+   take the latter approach.
 
-There is also generated code corresponding to the COM class RotNExample
-from the type library:
+   There is also generated code corresponding to the COM class RotNExample
+   from the type library:
 
-.. code-block:: dylan
+   .. code-block:: dylan
 
-    /* COM class: RotNExample version 0.0
-     * GUID: {C44502DB-3EB1-11D2-A3CA-0060B0572A7F}
-     * Description: Implementation of IRotNExample.
-     */
+       /* COM class: RotNExample version 0.0
+        * GUID: {C44502DB-3EB1-11D2-A3CA-0060B0572A7F}
+        * Description: Implementation of IRotNExample.
+        */
 
-    define constant $RotNExample-class-id = as(<REFCLSID>,
-                                               "{C44502DB-3EB1-11D2-A3CA-0060B0572A7F}");
-    /* You should define your coclass something like this:
-    define coclass $RotNExample-type-info
-      name "RotNExample";
-      uuid $RotNExample-class-id;
-      default interface <IRotNExample>;
-    end coclass;
-    */
+       define constant $RotNExample-class-id
+         = as(<REFCLSID>, "{C44502DB-3EB1-11D2-A3CA-0060B0572A7F}");
+       /* You should define your coclass something like this:
+       define coclass $RotNExample-type-info
+         name "RotNExample";
+         uuid $RotNExample-class-id;
+         default interface <IRotNExample>;
+       end coclass;
+       */
 
-Note that the ``define coclass`` is within a comment, since you may want
-to define a COM class based on a subclass of ``<IRotNExample>``.
+   Note that the ``define coclass`` is within a comment, since you may want
+   to define a COM class based on a subclass of ``<IRotNExample>``.
 
 Creating the server
 -------------------
 
 Now we create the actual server application.
 
-Choose **File > New...** from the main window.
+Choose :menuselection:`File --> New...` from the main window.
 
-#. Select *Project* and click **OK**.
+#. Select :guilabel:`Project` and click :guilabel:`OK`.
 
-The New Project wizard appears.
+   The New Project wizard appears.
 
-#. In the Project Type section, select "GUI Application (EXE)" and click
-   **Next**.
-#. Name the project *RotNExample-server*.
-#. Make sure that the "Include any available templates" option is *not*
+#. In the Project Type section, select :guilabel:`GUI Application (EXE) and click
+   :guilabel:`Next`.
+#. Name the project ``RotNExample-server``.
+#. Make sure that the :guilabel:`Include any available templates` option is *not*
    checked.
-#. Make sure that "Production mode" is selected in the Compilation Mode
-   section of the Advanced Project Settings dialog.
+#. Make sure that :guilabel:`Production mode` is selected in the :guilabel:`Compilation Mode`
+   section of the `Advanced Project Settings` dialog.
 
-This option will be set already if you have been following all steps
-from the start of this chapter.
+   This option will be set already if you have been following all steps
+   from the start of this chapter.
 
-#. Click **Next** to continue.
-#. Choose the "Simple" libraries option and click **Next** to continue.
-#. Choose the "Standard IO streams and string formatting" option from
-   "IO and system support", and click **Next**.
-#. Choose the "Win32 API" option from "GUI support", and click **Next**.
-#. Choose the "OLE Automation" option from "OLE Automation support" and
-   click **Next**.
-#. Choose the "NoneY" option from "Database support" and click **Next**.
-#. Click **Finish**.
+#. Click :guilabel:`Next` to continue.
+#. Choose the :guilabel:`Simple` libraries option and click :guilabel:`Next` to continue.
+#. Choose the :guilabel:`Standard IO streams and string formatting` option from
+   :guilabel:`IO and system support`, and click :guilabel:`Next`.
+#. Choose the :guilabel:`Win32 API` option from :guilabel:`GUI support`, and click :guilabel:`Next`.
+#. Choose the :guilabel:`OLE Automation` option from :guilabel:`OLE
+   Automation support` and click :guilabel:`Next`.
+#. Choose the :guilabel:`None` option from :guilabel:`Database
+   support` and click :guilabel:`Next`.
+#. Click :guilabel:`Finish`.
 
-The RotNExample-server project window appears.
+   The RotNExample-server project window appears.
 
-#. In the new project's window, edit *library.dylan*, and add to the
+#. In the new project's window, edit :file:`library.dylan`, and add to the
    ``define library`` declaration the following line:
 
-.. code-block:: dylan
+   .. code-block:: dylan
 
-    use RotNExample-server-stubs;
+       use RotNExample-server-stubs;
 
 #. Add the same line to the ``define module`` declaration in
-   *module.dylan*.
+   :file:`module.dylan`.
 
-To implement the IRotNExample interface, we will create a subclass of
-``<IRotNExample>``. Because ``<IRotNExample>`` was created with ``define
-dispatch-interface``, we must use ``define COM-interface`` to create
-the subclass.
+   To implement the IRotNExample interface, we will create a subclass
+   of ``<IRotNExample>``. Because ``<IRotNExample>`` was created with
+   ``define dispatch-interface``, we must use ``define COM-interface``
+   to create the subclass.
 
-.. note:: The remainder of this section of the example involves adding
-   code to *RotNExample-server.dylan*. A version of this file with all the
-   code we add in this section is available in the Open Dylan
-   installation folder, under
-   *Examples\\Documentation\\RotNExample\\RotNExample-server.dylan*. You
-   may want to copy that file into place in your project folder rather than
-   typing code in.
+   .. note:: The remainder of this section of the example involves adding
+      code to :file:`RotNExample-server.dylan`. A version of this file with all the
+      code we add in this section is available in the Open Dylan
+      installation folder, under
+      :file:`Examples\\Documentation\\RotNExample\\RotNExample-server.dylan`. You
+      may want to copy that file into place in your project folder rather than
+      typing code in.
 
-#. Add the following code to *RotNExample-server.dylan*.
+#. Add the following code to :file:`RotNExample-server.dylan`.
 
-.. code-block:: dylan
+   .. code-block:: dylan
 
-    define COM-interface <IRotN-implementation> (<IRotNExample>)
-      slot IRotNExample/key ::
-      type-union(<integer>, <machine-word>) = 13;
-    end;
+       define COM-interface <IRotN-implementation> (<IRotNExample>)
+         slot IRotNExample/key :: type-union(<integer>, <machine-word>) = 13;
+       end;
 
-If you add this by hand, make sure not to put it after the top-level
-call to *main*.
+   If you add this by hand, make sure not to put it after the top-level
+   call to *main*.
 
-We provide here an implementation for the *IRotNExample/key* slot, which
-was defined as a virtual slot in the superclass. This slot must accept
-the ``<machine-word>`` type, since any 32-bit integer which does not fit
-in the range of a Dylan :drm:`<integer>` will be passed as a
-``<machine-word>``.
+   We provide here an implementation for the *IRotNExample/key* slot, which
+   was defined as a virtual slot in the superclass. This slot must accept
+   the ``<machine-word>`` type, since any 32-bit integer which does not fit
+   in the range of a Dylan :drm:`<integer>` will be passed as a
+   ``<machine-word>``.
 
-The next task is to define the *IRotNExample/encrypt* and
-*IRotNExample/decrypt* methods. Although it is not obvious from the
-definition of ``<IRotNExample>``, these methods must take as their first
-parameter the instance of ``<IRotN-implementation>`` they operate on, and
-return as a first result a COM error code.
+   The next task is to define the *IRotNExample/encrypt* and
+   *IRotNExample/decrypt* methods. Although it is not obvious from the
+   definition of ``<IRotNExample>``, these methods must take as their first
+   parameter the instance of ``<IRotN-implementation>`` they operate on, and
+   return as a first result a COM error code.
 
-#. Add the following code to *RotNExample-server.dylan*.
+#. Add the following code to :file:`RotNExample-server.dylan`.
 
-.. code-block:: dylan
+   .. code-block:: dylan
 
-    define method IRotNExample/encrypt
-      (this :: <IRotN-implementation>, pre :: <string>)
-    => (result :: <HRESULT>, post :: <string>)
-      if (instance?(this.IRotNExample/key, <integer>))
-        let post = make(<string>, size: pre.size);
-        for (char keyed-by index in pre)
-          post[index] := rot-char-by-n(char, this.IRotNExample/key);
-        end for;
-        values($S-OK, post)
-      else
-        values($E-INVALIDARG, "")
-      end if
-    end;
+       define method IRotNExample/encrypt
+         (this :: <IRotN-implementation>, pre :: <string>)
+       => (result :: <HRESULT>, post :: <string>)
+         if (instance?(this.IRotNExample/key, <integer>))
+           let post = make(<string>, size: pre.size);
+           for (char keyed-by index in pre)
+             post[index] := rot-char-by-n(char, this.IRotNExample/key);
+           end for;
+           values($S-OK, post)
+         else
+           values($E-INVALIDARG, "")
+         end if
+       end;
 
-    define method IRotNExample/decrypt
-      (this :: <IRotN-implementation>, pre :: <string>)
-    => (result :: <HRESULT>, post :: <string>)
-      if (instance?(this.IRotNExample/key, <integer>))
-        let post = make(<string>, size: pre.size);
-        for (char keyed-by index in pre)
-          post[index] := rot-char-by-n(char, -this.IRotNExample/key);
-        end for;
-        values($S-OK, post)
-      else
-        values($E-INVALIDARG, "")
-      end if
-    end;
+       define method IRotNExample/decrypt
+         (this :: <IRotN-implementation>, pre :: <string>)
+       => (result :: <HRESULT>, post :: <string>)
+         if (instance?(this.IRotNExample/key, <integer>))
+           let post = make(<string>, size: pre.size);
+           for (char keyed-by index in pre)
+             post[index] := rot-char-by-n(char, -this.IRotNExample/key);
+           end for;
+           values($S-OK, post)
+         else
+           values($E-INVALIDARG, "")
+         end if
+       end;
 
-Note that this code is careful not to crash when *IRotNExample/key* is a
-``<machine-word>``. ``$S-OK`` represents success. ``$E-INVALIDARG`` is a
-generic failure representing some kind of invalid argument value.
+   Note that this code is careful not to crash when ``IRotNExample/key`` is a
+   ``<machine-word>``. ``$S-OK`` represents success. ``$E-INVALIDARG`` is a
+   generic failure representing some kind of invalid argument value.
 
-The above method uses the *rot-char-by-n* function, which we must also
-add.
+   The above method uses the *rot-char-by-n* function, which we must also
+   add.
 
-#. Add the following code to *RotNExample-server.dylan*.
+#. Add the following code to :file:`RotNExample-server.dylan`.
 
-.. code-block:: dylan
+   .. code-block:: dylan
 
-    define function rot-char-by-n
-      (char :: <character>, n :: <integer>)
-    => (r :: <character>)
-      let char-as-int = as(<integer>, char);
-      local method rot-if-in-range
-        (lower :: <integer>, upper :: <integer>) => ()
-        if (lower <= char-as-int & char-as-int <= upper)
-          char-as-int := lower + modulo(char-as-int - lower + n,
-                                        upper - lower + 1);
-        end if;
-      end method;
-      rot-if-in-range(as(<integer>, 'a'), as(<integer>, 'z'));
-      rot-if-in-range(as(<integer>, 'A'), as(<integer>, 'Z'));
-      as(<character>, char-as-int)
-    end;
+       define function rot-char-by-n
+         (char :: <character>, n :: <integer>)
+       => (r :: <character>)
+         let char-as-int = as(<integer>, char);
+         local method rot-if-in-range
+           (lower :: <integer>, upper :: <integer>) => ()
+           if (lower <= char-as-int & char-as-int <= upper)
+             char-as-int := lower + modulo(char-as-int - lower + n,
+                                           upper - lower + 1);
+           end if;
+         end method;
+         rot-if-in-range(as(<integer>, 'a'), as(<integer>, 'z'));
+         rot-if-in-range(as(<integer>, 'A'), as(<integer>, 'Z'));
+         as(<character>, char-as-int)
+       end;
 
-This function rotates alphabetic characters forward *n* positions,
-wrapping around if the character passes "Z". When *n* is 13, this
-implements the classic Rot13 cipher often used to hide offensive
-material on USENET.
+   This function rotates alphabetic characters forward *n* positions,
+   wrapping around if the character passes "Z". When *n* is 13, this
+   implements the classic `Rot13 <https://en.wikipedia.org/wiki/ROT13>`_
+   cipher often used to hide offensive material on Usenet.
 
-In order to create our server, we must also create a COM class for it.
+   In order to create our server, we must also create a COM class for it.
 
-#. Add the following code to *RotNExample-server.dylan*.
+#. Add the following code to :file:`RotNExample-server.dylan`.
 
-You may want to copy the ``define coclass`` code from *stubs.dylan* in
-the *RotNExample-server-stubs* project and modify it.
+   You may want to copy the ``define coclass`` code from :file:`stubs.dylan`
+   in the *RotNExample-server-stubs* project and modify it.
 
-.. code-block:: dylan
+   .. code-block:: dylan
 
-    define coclass $RotNExample-type-info
-      name "RotNExample";
-      uuid $RotNExample-class-id;
-      default interface <IRotN-implementation>;
-    end coclass;
+       define coclass $RotNExample-type-info
+         name "RotNExample";
+         uuid $RotNExample-class-id;
+         default interface <IRotN-implementation>;
+       end coclass;
 
-Now we simply have to add a Windows event loop as the main body of the
-server program.
+   Now we simply have to add a Windows event loop as the main body of the
+   server program.
 
-#. Modify the ``main`` method in *RotNExample-server.dylan* to look like
+#. Modify the ``main`` method in :file:`RotNExample-server.dylan` to look like
    the following.
 
-.. code-block:: dylan
+   .. code-block:: dylan
 
-    define method main () => ()
-      if (OLE-util-register-only?())
-        register-coclass($RotNExample-type-info,
-                         "Harlequin.RotNExample");
-      else
-        let factory :: <class-factory>
-          = make-object-factory($RotNExample-type-info);
-        with-stack-structure (pmsg :: <PMSG>)
-          while (GetMessage(pmsg, $NULL-HWND, 0, 0))
-            TranslateMessage(pmsg);
-            DispatchMessage(pmsg);
-          end while;
-        end with-stack-structure;
-        revoke-registration(factory);
-      end if;
-    end method main;
+       define method main () => ()
+         if (OLE-util-register-only?())
+           register-coclass($RotNExample-type-info,
+                            "Harlequin.RotNExample");
+         else
+           let factory :: <class-factory>
+             = make-object-factory($RotNExample-type-info);
+           with-stack-structure (pmsg :: <PMSG>)
+             while (GetMessage(pmsg, $NULL-HWND, 0, 0))
+               TranslateMessage(pmsg);
+               DispatchMessage(pmsg);
+             end while;
+           end with-stack-structure;
+           revoke-registration(factory);
+         end if;
+       end method main;
 
-With this code in place, if the server is invoked from the command line
-with */RegServer* as an argument, ``OLE-util-register-only?`` will return
-``#t``. The call to ``register-coclass`` creates a type library (with
-extension .TLB) and registers the type library and the server itself in
-the Windows registry.
+   With this code in place, if the server is invoked from the command line
+   with ``/RegServer`` as an argument, ``OLE-util-register-only?`` will return
+   ``#t``. The call to ``register-coclass`` creates a type library (with
+   extension .TLB) and registers the type library and the server itself in
+   the Windows registry.
 
-Note that the server provides no way to exit. We can make it exit
-whenever our interface object is destroyed. This is a little simplistic,
-since it does not correctly handle the case in which two servers are
-created, but it will suffice for our example.
+   Note that the server provides no way to exit. We can make it exit
+   whenever our interface object is destroyed. This is a little simplistic,
+   since it does not correctly handle the case in which two servers are
+   created, but it will suffice for our example.
 
-#. Add the following code to *RotNExample-server.dylan*.
+#. Add the following code to :file:`RotNExample-server.dylan`.
 
-.. code-block:: dylan
+   .. code-block:: dylan
 
-    define method terminate (this :: <IRotN-implementation>) => ()
-      next-method();
-      PostQuitMessage(0); // Cause main event loop to terminate.
-    end;
+       define method terminate (this :: <IRotN-implementation>) => ()
+         next-method();
+         PostQuitMessage(0); // Cause main event loop to terminate.
+       end;
 
-The ``PostQuitMessage`` call causes the next call to ``GetMessage`` (in
-the main event loop) to return ``#f``, and thus cause the program to exit.
+   The ``PostQuitMessage`` call causes the next call to ``GetMessage`` (in
+   the main event loop) to return ``#f``, and thus cause the program to exit.
 
-#. Build the project with **Project > Build**.
+#. Build the project with :menuselection:`Project --> Build`.
 
-During the build, you will be prompted for the location of the project
-file *RotNExample-server-stubs.hdp*.
+   During the build, you will be prompted for the location of the project
+   file *RotNExample-server-stubs.hdp*.
 
 Creating the client stubs library
 ---------------------------------
@@ -468,67 +468,71 @@ Creating the client stubs library
 Now we create a project for the client-side stubs of the encryption
 interface.
 
-Choose **File > New...** from the main window.
+Choose :menuselection:`File --> New...` from the main window.
 
-#. Select **Project** and click **OK**.
+#. Select :guilabel:`Project` and click :guilabel:`OK`.
 
-The New Project wizard appears.
+   The New Project wizard appears.
 
-#. In the Project Type section, select "Interface to COM Type Library"
-   and click **Next**.
-#. Click **Browse...** and navigate to the Open Dylan examples folder.
+#. In the :guilabel:`Project Type` section, select :guilabel:`Interface to COM Type Library`
+   and click :guilabel:`Next`.
+#. Click :guilabel:`Browse...` and navigate to the Open Dylan examples folder.
 
-The folder required is called Examples and is placed under the top-level
-Open Dylan folder.
+   The folder required is called Examples and is placed under the top-level
+   Open Dylan folder.
 
-It is usually *C:\\Program Files\\Open Dylan\\Examples*.
+   It is usually :file:`C:\\Program Files\\Open Dylan\\Examples`.
 
-#. Go to the *Documentation\\RotNExample* subfolder and choose the
-   *RotNExample.tlb* file.
-#. Click **Next** to continue to the next page of the wizard.
-#. Select "Dispatch client interfaces" and click **Next** to continue to
-   the next page of the wizard.
-#. Choose "Translate all" on the next page, so that both the RotNExample
-   COM class and the IRotNExample interface are translated. Click **Next**.
+#. Go to the :file:`Documentation\\RotNExample` subfolder and choose the
+   :file:RotNExample.tlb` file.
+#. Click :guilabel:`Next` to continue to the next page of the wizard.
+#. Select :guilabel:`Dispatch client interfaces` and click
+   :guilabel:`Next` to continue to the next page of the wizard.
+#. Choose :guilabel:`Translate all` on the next page, so that both the RotNExample
+   COM class and the IRotNExample interface are translated. Click :guilabel:`Next`.
 #. Change the name of the project to *RotNExample-client-stubs*.
 #. Choose a suitable Location for the project.
-#. Make sure that the "Dynamic Link Library (DLL)" option is chosen in
-   the Project Settings and Templates section.
-#. Make sure that the "Include any available templates" option is *not*
+#. Make sure that the :guilabel:`Dynamic Link Library (DLL)` option is chosen in
+   the :guilabel:`Project Settings and Templates` section.
+#. Make sure that the :guilabel:`Include any available templates` option is *not*
    chosen.
-#. Click **Next** to continue.
+#. Click :guilabel:`Next` to continue.
 
-We are now at the Use Libraries page. We are only defining the stubs for
-the client, so we do not need any unusual libraries.
+   We are now at the :guilabel:`Use Libraries` page. We are only
+   defining the stubs for the client, so we do not need any unusual
+   libraries.
 
-#. Choose the "Simple" option and click **Next**.
-#. Choose the "Standard IO streams and string formatting" option from
-   "IO and system support", and click **Next**.
-#. Choose the "Win32 API" option from "GUI support", and click **Next**.
+#. Choose the :guilabel:`Simple` option and click :guilabel:`Next`.
+#. Choose the :guilabel:`Standard IO streams and string formatting` option from
+   :guilabel:`IO and system support`, and click :guilabel:`Next`.
+#. Choose the :guilabel:`Win32 API` option from :guilabel:`GUI
+   support`, and click :guilabel:`Next`.
 
-Note that the "OLE Automation" option on the "OLE Automation support"
-page is automatically selected. That is what we want.
+   Note that the :guilabel:`OLE Automation` option on the
+   :guilabel:`OLE Automation support` page is automatically
+   selected. That is what we want.
 
-#. Click **Next**.
-#. Choose the "None" option from "Database support" and click **Next**.
+#. Click :guilabel:`Next`.
+#. Choose the :guilabel:`None` option from :guilabel:`Database
+   support` and click :guilabel:`Next`.
 
-We are now at the final page of the New Project wizard.
+   We are now at the final page of the New Project wizard.
 
 #. Make any changes you want to the Source File Headers section.
-#. Click **Finish**.
+#. Click :guilabel:`Finish`.
 
-The new project appears.
+   The new project appears.
 
-As with the server stubs project, we have to build this project to make
-the type library tool run.
+   As with the server stubs project, we have to build this project to make
+   the type library tool run.
 
-#. Build the project with **Project > Build**.
+#. Build the project with :menuselection:`Project --> Build`.
 
-As before, files are added to the project. The
-*type-library-module.dylan* file serves the same purpose as with the
-server stubs. The difference is that *stubs.dylan* contains different
-code. It defines a dispatch-client class for the *IRotNExample*
-interface:
+   As before, files are added to the project. The
+   :file:`type-library-module.dylan` file serves the same purpose as with the
+   server stubs. The difference is that :file:`stubs.dylan` contains different
+   code. It defines a dispatch-client class for the *IRotNExample*
+   interface:
 
 .. code-block:: dylan
 
@@ -548,106 +552,106 @@ interface:
         (arg-result :: <string>), name: "decrypt", disp-id: 24577;
     end dispatch-client <IRotNExample>;
 
-This defines a class ``<IRotNExample>`` which allows a client to use the
-described interface.
+   This defines a class ``<IRotNExample>`` which allows a client to use the
+   described interface.
 
-There is also generated code corresponding to the COM class RotNExample
-from the type library:
+   There is also generated code corresponding to the COM class RotNExample
+   from the type library:
 
-.. code-block:: dylan
+   .. code-block:: dylan
 
-    /* COM class: RotNExample version 0.0
-     * GUID: {C44502DB-3EB1-11D2-A3CA-0060B0572A7F}
-     * Description: Implementation of IRotNExample.
-     */
+       /* COM class: RotNExample version 0.0
+        * GUID: {C44502DB-3EB1-11D2-A3CA-0060B0572A7F}
+        * Description: Implementation of IRotNExample.
+        */
 
-    define constant $RotNExample-class-id =
-      as(<REFCLSID>, "{C44502DB-3EB1-11D2-A3CA-0060B0572A7F}");
-    define function make-RotNExample ()
-    => (default-interface :: <IRotNExample>)
-      let default-interface = make(<IRotNExample>,
-                                   class-id: $RotNExample-class-id);
-      values(default-interface)
-    end function make-RotNExample;
+       define constant $RotNExample-class-id =
+         as(<REFCLSID>, "{C44502DB-3EB1-11D2-A3CA-0060B0572A7F}");
+       define function make-RotNExample ()
+       => (default-interface :: <IRotNExample>)
+         let default-interface = make(<IRotNExample>,
+                                      class-id: $RotNExample-class-id);
+         values(default-interface)
+       end function make-RotNExample;
 
-This function creates an instance of the RotNExample COM class, and
-returns its default (and only) interface.
+   This function creates an instance of the RotNExample COM class, and
+   returns its default (and only) interface.
 
 Creating the client
 -------------------
 
 Now we create the actual client application.
 
-Choose **File > New...** from the main window.
+Choose :menuselection:`File --> New...` from the main window.
 
-#. Select **Project** and click **OK**.
+#. Select :guilabel:`Project` and click :guilabel:`OK`.
 
-The New Project wizard appears.
+   The New Project wizard appears.
 
 #. In the Project Type section, select "Console Application (EXE)" and
-   click **Next** to continue to the next wizard page.
+   click :guilabel:`Next` to continue to the next wizard page.
 #. Name the project *RotNExample-client*.
 #. Choose a suitable Location for the project.
 #. Make sure the "Include any available templates" option is *not*
    chosen.
-#. Click **Next**.
+#. Click :guilabel:`Next`.
 #. Choose the Simple libraries option, and choose the "Standard IO
    streams and string formatting" and "OLE Automation" options.
-#. Proceed to the last page of the wizard and click **Finish**.
-#. In the new project, edit *library.dylan*, and add to the ``define
+#. Proceed to the last page of the wizard and click :guilabel:`Finish`.
+#. In the new project, edit :file:`library.dylan`, and add to the ``define
    library`` declaration the following line:
 
-.. code-block:: dylan
+   .. code-block:: dylan
 
-    use RotNExample-client-stubs;
+      use RotNExample-client-stubs;
 
 #. Add the same line to the ``define module`` declaration in
-   *module.dylan*.
+   :file:module.dylan`.
 
-We now add code to make the client encrypt and decrypt a simple string
-with the default key of 13 and with the key set to 3.
+   We now add code to make the client encrypt and decrypt a simple string
+   with the default key of 13 and with the key set to 3.
 
-.. Note:: The remainder of this section of the example involves adding
-   code to *RotNExample-client.dylan*. A version of this file with all the
-   code we add in this section is available in the Open Dylan
-   installation folder, under
-   *Examples\\Documentation\\RotNExample\\RotNExample-client.dylan*. You
-   may want to copy that file into place in your project folder rather than
-   typing code in.
+   .. Note:: The remainder of this section of the example involves adding
+      code to :file:`RotNExample-client.dylan`. A version of this file
+      with all the code we add in this section is available in the Open
+      Dylan installation folder, under
+     :file:`*Examples\\Documentation\\RotNExample\\RotNExample-client.dylan`. You
+      may want to copy that file into place in your project folder rather
+      than typing code in.
 
-#. Modify the ``main`` method in *RotNExample-client.dylan* to look like
+#. Modify the ``main`` method in :file:`RotNExample-client.dylan` to look like
    the following.
 
-.. code-block:: dylan
+   .. code-block:: dylan
 
-    define method main () => ()
-      with-ole
-        format-out("Client connecting to server.\\n");
-        let server = make-RotNExample();
-        local method encrypt-and-decrypt () => ()
-          let plaintext = "And he was going ooo-la, oooooo-la...";
-          format-out("Plaintext is %=, encrypting.\\n", plaintext);
-          let ciphertext = IRotNExample/encrypt(server, plaintext);
-          format-out("Ciphertext is %=, decrypting.\\n", ciphertext);
-          let decrypted = IRotNExample/decrypt(server, ciphertext);
-          format-out("Decrypted text is %=.\\n", decrypted);
-        end method;
-        encrypt-and-decrypt();
-        server.IRotNExample/key := 3;
-        format-out("Set key to %d.\\n", server.IRotNExample/key);
-        encrypt-and-decrypt();
-        format-out("Client releasing server.\\n");
-        release(server);
-      end with-ole;
-    end method main;
+       define method main () => ()
+         with-ole
+           format-out("Client connecting to server.\\n");
+           let server = make-RotNExample();
+           local method encrypt-and-decrypt () => ()
+             let plaintext = "And he was going ooo-la, oooooo-la...";
+             format-out("Plaintext is %=, encrypting.\\n", plaintext);
+             let ciphertext = IRotNExample/encrypt(server, plaintext);
+             format-out("Ciphertext is %=, decrypting.\\n", ciphertext);
+             let decrypted = IRotNExample/decrypt(server, ciphertext);
+             format-out("Decrypted text is %=.\\n", decrypted);
+           end method;
+           encrypt-and-decrypt();
+           server.IRotNExample/key := 3;
+           format-out("Set key to %d.\\n", server.IRotNExample/key);
+           encrypt-and-decrypt();
+           format-out("Client releasing server.\\n");
+           release(server);
+         end with-ole;
+       end method main;
 
-The ``with-ole`` macro initializes OLE at entry and uninitializes it at
-exit.
+   The ``with-ole`` macro initializes OLE at entry and uninitializes it at
+   exit.
 
-#. Build the project with **Project > Build**.
+#. Build the project with :menuselection:`Project --> Build`.
 
-During the build, you will be prompted for the location of the project
-file *RotNExample-client-stubs.hdp*.
+   During the build, you will be prompted for the location of the project
+   file :file:`RotNExample-client-stubs.hdp`.
 
 Testing the client and server pair
 ----------------------------------
@@ -664,50 +668,50 @@ return ``#t``, and the server to call ``register-coclass``.
 
 Open the RotNExample-server project and build it.
 
-#. Select *Project > Settings...* in the RotNExample-server project
+#. Select :menuselection:`Project --> Settings...` in the RotNExample-server project
    window.
 
-The Project Settings dialog appears.
+   The Project Settings dialog appears.
 
 #. On the Debug page, put */RegServer* in the Arguments field, and click
-   *OK*.
+   :guilabel:`OK`.
 #. Start the RotNExample-server application.
 
-The server application registers itself and exits immediately. You can
-tell that the server has exited by watching the stop button in the
-project window become unavailable.
+   The server application registers itself and exits immediately. You
+   can tell that the server has exited by watching the stop button in
+   the project window become unavailable.
 
-Now that the server is registered, it can be invoked by the client. But
-we are going to start the server manually in the environment before
-starting the client. That way, if the server fails, we can debug it in
-the environment.
+   Now that the server is registered, it can be invoked by the
+   client. But we are going to start the server manually in the
+   environment before starting the client. That way, if the server
+   fails, we can debug it in the environment.
 
-First, however, we need to remove the */RegServer* argument from the
-project settings, so that the server can run normally.
+   First, however, we need to remove the ``/RegServer`` argument from the
+   project settings, so that the server can run normally.
 
-#. Select **Project > Settings...** in the RotNExample-server project
+#. Select :menuselection:`Project --> Settings...` in the RotNExample-server project
    window.
 
-The Project Settings dialog appears.
+   The Project Settings dialog appears.
 
-#. On the Debug page, remove */RegServer* from the Arguments field, and
-   click **OK**.
+#. On the Debug page, remove ``/RegServer`` from the Arguments field, and
+   click :guilabel:`OK`.
 #. Start RotNExample-server.
 #. Start RotNExample-client.
 
-The client should execute, and print something like this::
+   The client should execute, and print something like this::
 
-    Client connecting to server.
-    Plaintext is "And he was going ooo-la, oooooo-la...", encrypting.
-    Ciphertext is "Naq ur jnf tbvat bbb-yn, bbbbbb-yn...",
-    decrypting.
-    Decrypted text is "And he was going ooo-la, oooooo-la...".
-    Set key to 3.
-    Plaintext is "And he was going ooo-la, oooooo-la...", encrypting.
-    Ciphertext is "Dqg kh zdv jrlqj rrr-od, rrrrrr-od...",
-    decrypting.
-    Decrypted text is "And he was going ooo-la, oooooo-la...".
-    Client releasing server.
+      Client connecting to server.
+      Plaintext is "And he was going ooo-la, oooooo-la...", encrypting.
+      Ciphertext is "Naq ur jnf tbvat bbb-yn, bbbbbb-yn...",
+      decrypting.
+      Decrypted text is "And he was going ooo-la, oooooo-la...".
+      Set key to 3.
+      Plaintext is "And he was going ooo-la, oooooo-la...", encrypting.
+      Ciphertext is "Dqg kh zdv jrlqj rrr-od, rrrrrr-od...",
+      decrypting.
+      Decrypted text is "And he was going ooo-la, oooooo-la...".
+      Client releasing server.
 
 Creating vtable and dual interfaces
 ===================================

@@ -544,10 +544,9 @@ Open Dylan environment using commands such as <strong>Application &gt; Start</st
 <p>But to deliver your Dylan application to a customer or other third
 party, you will need to include in your distribution the Open Dylan
 run-time libraries that the application uses.</p>
-<p>This chapter discusses two methods of delivering Dylan applications with
-the necessary run-time libraries: using the environment to build a
-Release folder, and using Open Dylan’s stand-alone run-time library
-installer.</p>
+<p>This chapter discusses how to deliver Dylan applications with
+the necessary run-time libraries using the environment to build a
+Release folder.</p>
 <section id="building-a-release-folder">
 <h2>Building a release folder<a class="headerlink" href="#building-a-release-folder" title="Link to this heading">¶</a></h2>
 <p>To create a single folder containing everything necessary for your
@@ -560,26 +559,6 @@ subfolder of the project’s own folder.</p>
 <p>You can then distribute the entire <em>Release</em> folder as a stand-alone
 application. Read the Open Dylan license agreement for details of
 the legal side of redistributing the Open Dylan run-time libraries.</p>
-</section>
-<section id="using-the-run-time-library-installer">
-<h2>Using the run-time library installer<a class="headerlink" href="#using-the-run-time-library-installer" title="Link to this heading">¶</a></h2>
-<p>An alternative to building a single release folder is to use Open
-Dylan’s run-time library installer, a self-extracting executable that
-installs all the Open Dylan run-time libraries (DLLs) in a central
-location.</p>
-<p>The default location is</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Program</span> <span class="n">Files</span>\<span class="n">Common</span> <span class="n">Files</span>\<span class="n">Harlequin</span>\<span class="n">System</span>
-</pre></div>
-</div>
-<p>The run-time library installer also sets the PATH environment variable
-to include this folder.</p>
-<p>Your distributable application should then consist of a copy of your
-compiled application files from the project’s <em>Bin</em> folder, and the
-run-time installer.</p>
-<p>The run-time library installer is included on CD-ROM editions of
-Open Dylan, and can also be downloaded from Harlequin’s World Wide
-Web site. You can distribute the run-time installer to customers, or
-allow them to download it themselves.</p>
 </section>
 <section id="about-the-run-time-library-dlls">
 <h2>About the run-time library DLLs<a class="headerlink" href="#about-the-run-time-library-dlls" title="Link to this heading">¶</a></h2>
@@ -646,7 +625,6 @@ run-time libraries.</p>
             <ul>
 <li><a class="reference internal" href="#">Delivering Dylan Applications</a><ul>
 <li><a class="reference internal" href="#building-a-release-folder">Building a release folder</a></li>
-<li><a class="reference internal" href="#using-the-run-time-library-installer">Using the run-time library installer</a></li>
 <li><a class="reference internal" href="#about-the-run-time-library-dlls">About the run-time library DLLs</a></li>
 </ul>
 </li>
