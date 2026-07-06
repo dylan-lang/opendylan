@@ -3611,7 +3611,7 @@ are exported from the *duim-gadgets* module.
 
    :seealso:
 
-     - :class;`<list-control>`
+     - :class:`<list-control>`
      - :gf:`list-control-view`
      - :type:`<table-control-view>`
 

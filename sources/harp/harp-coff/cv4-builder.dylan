@@ -9,10 +9,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 //// Basic CodeView Housekeeping
 
-
-define constant $dylan-version
-  = "Functional DeveloperWorks (R) Dylan compiler Version 1.0";
-
 define constant $dylan-flags = #x04098010;
   // 04 = Machine: Intel 80486
   // 09 = Language Dylan
@@ -26,7 +22,7 @@ define constant $dylan-flags = #x04098010;
 define method initialize-debug-section
     (builder :: <coff-builder>,
      object-file-name :: <byte-string>,
-     #key version = $dylan-version,
+     #key version = release-full-name(),
           section-name = ".debug$S")
  => ()
   let section = select-debug-section(builder, section-name);

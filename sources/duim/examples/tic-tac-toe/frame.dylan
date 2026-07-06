@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define constant $application-name    = "Functional Developer Tic-Tac-Toe";
+define constant $application-name    = "Open Dylan Tic-Tac-Toe";
 define constant $application-version = "version 1.0";
 
 define constant $ttt-square-color    = $red;

@@ -20,19 +20,20 @@ We now create a new project for a simple "Hello World" application that
 will run in an MS-DOS console window.
 
 We create the project by clicking the New Project (|image0|) button in
-the main window, or by choosing **File > New** in any window.
+the main window, or by choosing :menuselection:`File --> New...` in any window.
 
-Click the New Project button in the main window.
+Click the :guilabel:`New Project` button in the main window.
 
-The New Project wizard appears.
+The :guilabel:`New Project` wizard appears.
 
 .. figure:: images/pwiz.png
    :align: center
 
    The New Project wizard.
 
-The New Project wizard guides us through the process of creating a new
-project. Across a series of pages, it gathers the following information:
+The :guilabel:`New Project` wizard guides us through the process of
+creating a new project. Across a series of pages, it gathers the
+following information:
 
 -  The type of target file (.EXE or .DLL) that should be created when
    the project is built.
@@ -45,9 +46,9 @@ creates a new project, consisting of the following files:
 
 -  A project file. The file has the same name as you give the project,
    but with a .HDP extension.
--  A Dylan source file, called *library.dylan*, that defines a library
+-  A Dylan source file, called :file:`library.dylan`, that defines a library
    with the same name as the project
--  A Dylan source file, called *module.dylan*, that defines a module
+-  A Dylan source file, called :file:`module.dylan`, that defines a module
    with the same name as the project
 -  An initial Dylan source file into which we can write application
    code. The file has the same name as the project, but with a .DYLAN
@@ -65,10 +66,10 @@ code to be included in your project.
 
 And for GUI applications that use the DUIM library, there can also be:
 
--  A Dylan source file, called *frame.dylan*, that defines the
+-  A Dylan source file, called :file:`frame.dylan`, that defines the
    application's DUIM frame and a set of default menus.
 
-The *frame.dylan* file appears only if you ask for template code to be
+The :file:`frame.dylan` file appears only if you ask for template code to be
 included in your project. We discuss this in `Projects for GUI
 applications`_.
 
@@ -87,7 +88,7 @@ application, so we need to change this option setting from the default.
 
 Select "Console Application (EXE)" in the Project type box.
 
-Click **Next**.
+Click :guilabel:`Next`.
 
 We now move to the second page.
 
@@ -134,7 +135,7 @@ automatically generated project and source files.
 The New Project wizard will create the folder in the Location box
 automatically if it does not already exist.
 
-Click **Next**.
+Click :guilabel:`Next`.
 
 We now move to the third page.
 
@@ -145,30 +146,32 @@ The next stage in creating our project is to decide which libraries and
 modules it is going to use. The third page of the wizard offers three
 different ways to do this. Each of the three options is described below.
 
--  Minimal If we choose this the project uses the Functional-Dylan
-   library only.
--  Functional-Dylan is a convenience library that combines the standard
-   Dylan library with a language extensions library called
-   Functional-Extensions. Thus Functional-Dylan provides a "Harlequin
-   dialect" of Dylan. (The standard Dylan library, without Harlequin's
-   extensions, is also included in the set of Open Dylan
-   libraries.)
--  Simple If we choose this the wizard presents a series of choices we
+Minimal
+   If we choose this, the project uses the :lib:`common-dylan`
+   library only. This is a convenience library that combines the
+   standard :lib:`dylan` library with several extensions modules such
+   as :mod:`dylan-extensions`. The :lib:`common-dylan` library also
+   includes the standard (unextended) :mod:`dylan` module.
+
+Simple
+   If we choose this, the wizard presents a series of choices we
    can make to determine which libraries and modules the project should
    use.
--  Custom If we choose this the wizard presents a table of all the
+
+Custom
+   If we choose this, the wizard presents a table of all the
    libraries and modules available, and allows us to select the ones we
    want our project to use.
 
-All our Hello project needs to do is print a text message saying "Hello
-World" to the standard output in an MS-DOS console window. The
-Functional-Dylan library contains a function to do this, so for our
-project we can select the Minimal button and move on to the next page in
-the wizard.
+All our Hello project needs to do is print a text message saying
+"Hello World" to the standard output in a console window. The
+:lib:`common-dylan` library contains a function to do this, so for our
+project we can select the :guilabel:`Minimal` button and move on to
+the next page in the wizard.
 
-Select **Minimal** in the Use Libraries box.
+Select :guilabel:`Minimal` in the :guilabel:`Use Libraries` box.
 
-Click **Next**.
+Click :guilabel:`Next`.
 
 We now move to the final page.
 
@@ -201,7 +204,7 @@ additional one that Open Dylan accepts.
 Change the default keyword text as you wish, or turn the keywords off
 altogether.
 
-Click **Finish**.
+Click :guilabel:`Finish`.
 
 Now we have supplied all the information the wizard asks for, it creates
 the new Hello project and opens it.
@@ -212,7 +215,7 @@ Examining the files in the Hello project
 :ref:`hello-project` shows our new Hello project.
 
 The default view shows the Sources page, where we can see the files
-*library.dylan*, *module.dylan*, and *Hello.dylan*.
+:file:`library.dylan`, :file:`module.dylan`, and :file:`Hello.dylan`.
 
 .. _hello-project:
 
@@ -222,9 +225,9 @@ The default view shows the Sources page, where we can see the files
    The Hello project.
 
 The *library.dylan* file defines a Dylan library called *Hello*, which
-uses the library *harlequin-dylan*. The *module.dylan* file defines a
+uses the library :lib:`common-dylan`. The *module.dylan* file defines a
 module of the *Hello* library which is also called *Hello*, and which
-uses various modules exported from the *harlequin-dylan* library.
+uses various modules exported from the :lib:`common-dylan` library.
 
 The *Hello.dylan* file is an initial file into which we can write the
 code for our project. It contains a default start function called *main*,
@@ -246,22 +249,22 @@ Add the following code in the definition of *main*:
 
     format-out("Hello World\\n");
 
-Choose **File > Save** to save the change to *Hello.dylan*.
+Choose :menuselection:`File --> Save` to save the change to *Hello.dylan*.
 
 Now we can build our "Hello World" application.
 
-Choose **Project > Build** in the project window.
+Choose :menuselection:`Project --> Build` in the project window.
 
-Test the application by choosing **Project > Start**.
+Test the application by choosing :menuselection:`Project -->  Start`.
 
-An MS-DOS console window appears, into which "Hello World" is written.
+A console window appears, into which "Hello World" is written.
 Then a notifier dialog appears to confirm that the console application
 has terminated.
 
-You can find the *hello.exe* file in the *bin* subfolder of the *Hello*
-project folder we specified on the second page of the New Project
-wizard. See :ref:`projects-on-disk` for more details of where build
-products reside.
+You can find the :file:`hello.exe` file in the :file:`bin` subfolder
+of the *Hello* project folder we specified on the second page of the
+:guilabel:`New Project` wizard. See :ref:`projects-on-disk` for more
+details of where build products reside.
 
 Projects for GUI applications
 -----------------------------
@@ -276,13 +279,13 @@ Creating a GUI project
 
 First, we create the new project for our GUI application.
 
-Click the New Project (|image1|) button in the main window.
+Click the :guilabel:`New Project` (|image1|) button in the main window.
 
 On the first page, we want to specify the project type.
 
 Select "GUI Application (EXE)" in the Project type box.
 
-Click **Next**.
+Click :guilabel:`Next`.
 
 We now move to the second page of the wizard.
 
@@ -290,28 +293,29 @@ Here, we want to name the project and specify a folder for its files.
 
 Name the project *GUI-App* and choose a location for it.
 
-The New Project wizard can set up some skeleton program code for our
-project, according to the project's characteristics as we specify them.
-Template code is not relevant for all kinds of projects — for instance,
-our Hello project would not have benefited from any more initial program
-structure than it had — but the wizard will include any that is relevant
-if we check the "Include any available templates" box.
+The :guilabel:`New Project` wizard can set up some skeleton program
+code for our project, according to the project's characteristics as we
+specify them.  Template code is not relevant for all kinds of projects
+— for instance, our Hello project would not have benefited from any
+more initial program structure than it had — but the wizard will
+include any that is relevant if we check the "Include any available
+templates" box.
 
-Make sure the "Include any available templates" box is checked.
+Make sure the :guilabel:`Include any available templates` box is checked.
 
-We ignore the **Advanced...** button again.
+We ignore the :guilabel:`Advanced...` button again.
 
-Click **Next**.
+Click :guilabel:`Next`.
 
 We now move to the third page of the wizard.
 
 When we created the Hello project, we chose the Minimal option here, to
-use only the Functional-Dylan library. Our GUI application also needs to
+use only the :lib:`common-dylan` library. Our GUI application also needs to
 use other libraries for access to the native window system.
 
-Select "Simple" in the Use Libraries box.
+Select :guilabel:`Simple` in the :guilabel:`Use Libraries` box.
 
-Click **Next**.
+Click :guilabel:`Next`.
 
 We now proceed through a series of pages allowing us to specify our
 project requirements in high-level terms, without knowing the names of
@@ -327,7 +331,8 @@ On the first page we can specify the what I/O and system support we want
 in our project. For each option, the wizard shows which libraries the
 project will use.
 
-Leave the default settings on this page as they are, and click **Next**.
+Leave the default settings on this page as they are, and click
+:guilabel:`Next`.
 
 The next page is for specifying GUI support details. Here, we can decide
 whether we want to do the window programming for the application by
@@ -335,25 +340,25 @@ using DUIM, Open Dylan's high-level GUI toolkit, or by using the
 Win32 API libraries described in the *C FFI and Win32* library
 reference. We want to use DUIM in this project.
 
-Select "Dylan User Interface Manager (DUIM)".
+Select :guilabel:`Dylan User Interface Manager (DUIM)`.
 
-Click **Next**.
+Click :guilabel:`Next`.
 
 Now the wizard offers different pages, which we don't explain here.
 We will keep clicking *Next* until we get to the last page of the wizard.
 This is the page for specifying source file headers, as we saw in
 `The final page in the New Project wizard`_.
 
-Click **Next** until the last page of the wizard appears.
+Click :guilabel:`Next` until the last page of the wizard appears.
 
 If you made any changes to this page last time, they will have been
-preserved. Whenever you click **Finish**, the wizard saves all these
+preserved. Whenever you click :guilabel:`Finish`, the wizard saves all these
 headers (except *Synopsis:* ) and some other details, and reinstates
 them next time you create a project. See `Saving settings in the New
 Project wizard`_ for a list of the details that the
 wizard saves.
 
-Make any changes you want to here, and then click **Finish**.
+Make any changes you want to here, and then click :guilabel:`Finish`.
 
 The wizard creates the new GUI-App project and opens it.
 
@@ -364,11 +369,11 @@ Now, we examine the template code that the wizard has set up for us in
 the GUI-App project sources.
 
 The GUI-App project contains the same basic set of files as Hello. There
-is a *library.dylan* file, a *module.dylan* file, and a *GUI-App.dylan*
-file. In addition, there is a *GUI-App-info.dylan* file and a
-*frame.dylan* file.
+is a :file:`library.dylan` file, a :file:`module.dylan` file, and a :file:`GUI-App.dylan`
+file. In addition, there is a :file:`GUI-App-info.dylan` file and a
+:file:`frame.dylan` file.
 
-The *GUI-App-info.dylan* file appears whenever you choose "GUI
+The :file:`GUI-App-info.dylan` file appears whenever you choose "GUI
 Application (EXE)" as the target type on the first page of the wizard.
 It contains some simple code that you might want to use for identifying
 your application and its version number.
@@ -380,9 +385,9 @@ windows. More knowledge of DUIM is necessary to understand the code in
 actually does when we build the project. All projects including template
 code can be built without requiring any further work.
 
-Choose **Project > Build** in the GUI-App project window.
+Choose :menuselection:`Project -->  Build` in the GUI-App project window.
 
-Choose **Application > Start**.
+Choose :menuselection:`Project -->  Start`.
 
 An application window appears.
 
@@ -392,12 +397,14 @@ An application window appears.
    The GUI-App skeleton application.
 
 We can see from the window that the template code creates a skeleton
-application with File, Edit, and Help menus. There is even some
-functionality attached to the basic application. If we choose **File >
-New**, an editor pane is initialized, into which we can type. The other
-**File** and **Edit** menu commands have their standard effects. The **Help >
-About** command uses some of the constants from *GUI-App-info.dylan* to
-identify the application as "GUI-App Version 1.0".
+application with :guilabel:`File`, :guilabel:`Edit`, and
+:guilabel:`Help` menus. There is even some functionality attached to
+the basic application. If we choose :menuselection:`File --> New`, an
+editor pane is initialized, into which we can type. The other
+:guilabel:`File` and :guilabel:`Edit` menu commands have their
+standard effects. The :menuselection:`Help --> About` command uses some of the
+constants from :file:`GUI-App-info.dylan` to identify the application as
+"GUI-App Version 1.0".
 
 Creating a project using the Custom library option
 ==================================================
@@ -407,7 +414,7 @@ allows complete control over the libraries and modules a project will
 use. This section explains how to choose libraries and modules using
 this option.
 
-After selecting Custom and clicking *Next*, the wizard shows a page
+After selecting Custom and clicking :guilabel:`Next`, the wizard shows a page
 with three list panes. We can make selections from each list pane.
 
 At first, the only list enabled is the Choose Library Groups list.
@@ -436,26 +443,27 @@ Select "Core" in the Library Group list.
 .. figure:: images/p2frag2-0.png
    :align: center
 
-   Functional-Dylan is the default library for use in new projects.
+   The :lib:`common-dylan` library is the default for use in new projects.
 
-So, by default, a project would use the library Functional-Dylan. (Note
-that Functional-Dylan is the default library for use in new projects.
+So, by default, a project would use the library :lib:`common-dylan`. (Note
+that :lib:`common-dylan` is the default library for use in new projects.
 Your copy of Open Dylan may have more library groups.)
 
-If we now select Functional-Dylan in the Library list, we can see which
-modules from the Functional-Dylan library a default project would
+If we now select :lib:`common-dylan` in the Library list, we can see which
+modules from the common-dylan library a default project would
 include.
 
-Select "Functional-Dylan" in the Library list.
+Select :mod:`common-dylan` in the module name list.
 
 .. figure:: images/p2frag2_2-0.png
    :align: center
 
-   Default modules from Functional-Dylan for use in new projects.
+   Default modules from Common-Dylan for use in new projects.
 
-Although the list shows that the Dylan and Functional-Extensions modules
-are not used, they are actually used indirectly, since the
-Functional-Dylan module is simply a repackaging of those two modules.
+Although the list shows that the :mod:`dylan` and
+:mod:`common-extensions` modules are not used, they are actually used
+indirectly, since the :mod:`common-dylan` module is simply a
+repackaging of those two modules.
 
 Remember that, in Dylan, the library is the unit of compilation, and
 modules are simply interfaces to functionality within a library. By
@@ -469,27 +477,28 @@ be any smaller on disk, or in memory when it is running.
 Saving settings in the New Project wizard
 =========================================
 
-Whenever you click **Finish** on the last page of the New Project wizard,
-the wizard stores some of the choices and text-field settings you made
-so that they are available next time you create a project. The details
-that are saved persistently are as follows.
+Whenever you click :guilabel:`Finish` on the last page of the New
+Project wizard, the wizard stores some of the choices and text-field
+settings you made so that they are available next time you create a
+project. The details that are saved persistently are as follows.
 
 -  The parent of the folder in the Location box.
 
 The parent folder is saved in the expectation that you will want to
 create several projects in sibling folders.
 
--  In the *Advanced...* dialog (see `Advanced project settings`_),
-   the contents of the Start Function box and the setting of
-   Compilation Mode.
--  The setting of the "Include any available templates" check-box.
+-  In the :guilabel:`Advanced...` dialog (see `Advanced project settings`_),
+   the contents of the :guilabel:`Start Function` box and the setting of
+   :guilabel:`Compilation Mode`.
+-  The setting of the :guilabel:`Include any available templates` check-box.
 
 On the last wizard page:
 
--  The contents of the Source File Headers boxes, except for *Synopsis:*.
+-  The contents of the :guilabel:`Source File Headers` boxes, except
+   for :guilabel:`Synopsis:`.
 
-*Synopsis:* is not saved because it is likely to change with each new
-project.
+:guilabel:`Synopsis:` is not saved because it is likely to change with
+each new project.
 
 Nothing from the first page is saved.
 
@@ -499,18 +508,20 @@ Nothing from the first page is saved.
 Advanced project settings
 =========================
 
-The *Advanced...* button on the first page of the New Project wizard
-leads to the Advanced Project Settings dialog. The dialog has five
+The :guilabel:`Advanced...` button on the first page of the New Project wizard
+leads to the :guilabel:`Advanced Project Settings` dialog. The dialog has five
 sections.
 
-The Library and Module Names section allows you to specify names for
-your project's main library and module. The default value in both cases
-is the name of the project.
+The :guilabel:`Library and Module Names` section allows you to specify
+names for your project's main library and module. The default value in
+both cases is the name of the project.
 
-The remaining sections — Start Function, Version Information, Compilation
-Mode, and Windows Subsystem — all control settings that you can both set
-here and change after creating a project by choosing **Project >
-Settings...**. See `Project settings`_ for details.
+The remaining sections — :guilabel:`Start Function`,
+:guilabel:`Version Information`, :guilabel:`Compilation Mode`, and
+:guilabel:`Windows Subsystem` — all control settings that you can both
+set here and change after creating a project by choosing
+:menuselection:`Project --> Settings...`. See `Project settings`_ for
+details.
 
 Adding, moving, and deleting project sources
 ============================================
@@ -524,10 +535,10 @@ re-order them, and how to delete them from the project.
 Inserting files into a project
 ------------------------------
 
-To insert a new file or subproject into a project, choose **Project >
-Insert File...** in the project window. The project window prompts you
-with the *Insert File into Project* dialog, through which you can find a
-file to insert.
+To insert a new file or subproject into a project, choose
+:menuselection:`Project --> Insert File...` in the project window. The
+project window prompts you with the :guilabel:`Insert File into
+Project` dialog, through which you can find a file to insert.
 
 The file you choose will appear below the currently selected file in the
 list, unless you insert a subproject (a .HDP file), which will appear at
@@ -551,8 +562,8 @@ Moving the position of a file within a project
 ----------------------------------------------
 
 To move a file to a new position in a project, select the file in the
-Sources page and use **Project > Move File Up** and **Project > Move File
-Down**.
+Sources page and use :menuselection:`Project --> Move File Up` and
+:menuselection:`Project --> Move File Down`.
 
 .. index::
    single: projects; deleting files from
@@ -561,13 +572,15 @@ Deleting files from a project
 -----------------------------
 
 To delete a file from a project, select the file in the Sources page and
-choose **Project > Remove File**. You could also select **Edit > Cut**,
-**Edit > Delete**, or the scissors toolbar icon.
+choose :menuselection:`Project --> Remove File`. You could also select
+:menuselection:`Edit --> Cut`,
+:menuselection:`Edit --> Delete`, or the scissors toolbar icon.
 
 Open Dylan asks you if you are sure you want to delete the file
 from the project, because you cannot undo the operation. Note that the
 file is not deleted from disk, just removed from the Sources list in the
-project. You can always put it back with **Project > Insert File**.
+project. You can always put it back with
+:menuselection:`Project --> Insert File`.
 
 .. note:: The project window's Definitions page shows the definitions that
    were part of the project when it was last compiled. The list is taken
@@ -589,18 +602,19 @@ The New Project wizard always adds a *start function* to the end of the
 last file in the project.
 
 The Dylan language does not require that a program define an explicit
-start function, such as *main* in C or Java. However, when you are
-debugging or interacting, Open Dylan finds it useful to know what
-you consider to be your program's start function. It allows the name of
-your start function to be recorded in its project information. By
-default, this name will be *main*, and corresponds to the *main*
-function that the New Project creates by default in the *project-name*
-*.dylan* file for all new projects. However, you are free to change the
-name if you like — there is nothing special about it.
+start function, in contrast with ``main`` functions in C or
+Java. However, when you are debugging or interacting, Open Dylan finds
+it useful to know what you consider to be your program's start
+function. It allows the name of your start function to be recorded in
+its project information. By default, this name will be ``main``, and
+corresponds to the ``main`` function that the New Project wizard creates by
+default in the *project-name* *.dylan* file for all new
+projects. However, you are free to change the name if you like — there
+is nothing special about it.
 
 The *project-name* *.dylan* file for all new projects will contain a
 definition of *main* and a call to it. Projects that include template
-code will contain this definition of *main* :
+code will contain this definition of ``main`` :
 
 .. code-block:: dylan
 
@@ -626,25 +640,27 @@ with this expression:
     end;
 
 The name of the Start Function is one of the project settings you can
-change in the **Project > Settings...** dialog. It appears on the Debug page
-in the Start Function section. The default name is *main*, but you can
+change in the :menuselection:`Project --> Settings...` dialog. It appears on the :guilabel:`Debug` page
+in the :guilabel:`Start Function` section. The default name is ``main``, but you can
 change it to any valid Dylan name you like. If you do so, make sure to
-replace the call to *main* with a call to your new start function. The
+replace the call to ``main`` with a call to your new start function. The
 source file is not updated automatically.
 
-Note that you can make the wizard use a different start function name in
-new project files by changing the default setting in the Advanced
-Project Settings dialog. Click **Advanced...** on the second wizard page to
-produce the dialog. In this case, the generated project code will call
-the correct new name without requiring you to make a change by hand.
+Note that you can make the wizard use a different start function name
+in new project files by changing the default setting in the
+:guilabel:`Advanced Project Settings` dialog. Click
+:guilabel:`Advanced...` on the second wizard page to produce the
+dialog. In this case, the generated project code will call the correct
+new name without requiring you to make a change by hand.
 
 The debugger uses the start function name to know where to pause a
-program that you start up in interaction mode with **Application >
-Interact** or the Interact (|image2|) toolbar button, or in debugging
-mode with **Application > Debug**. When you start a program either way,
-the debugger allows the program to execute normally, but sets a
-breakpoint on the start function so that interaction or debugging begins
-at a point where the entire program has already been initialized.
+program that you start up in interaction mode with
+:menuselection:`Application --> Interact` or the Interact (|image2|)
+toolbar button, or in debugging mode with :menuselection:`Application
+--> Debug`. When you start a program either way, the debugger allows
+the program to execute normally, but sets a breakpoint on the start
+function so that interaction or debugging begins at a point where the
+entire program has already been initialized.
 
 If no start function is nominated for a project, the program pauses
 precisely before it exits but after everything in it has executed. This
@@ -665,16 +681,17 @@ is usually what we want for a DLL, but not for an application.
 Project settings
 ================
 
-The **Project > Settings...** dialog allows you to set options for
-compiling, linking, and debugging projects. There are separate pages for
-each category, each described below.
+The :menuselection:`Project --> Settings...` dialog allows you to set
+options for compiling, linking, and debugging projects. There are
+separate pages for each category, each described below.
 
 Compile page
 ------------
 
-The **Project > Settings...** dialog's Compile page controls the compilation
-mode setting for the current project. Any project can be compiled in one
-of two modes: Interactive Development mode, and Production mode. See
+The :menuselection:`Project --> Settings...` dialog's
+:guilabel:`Compile` page controls the compilation mode setting for the
+current project. Any project can be compiled in one of two modes:
+Interactive Development mode, and Production mode. See
 :ref:`compilation-modes` for details of the modes.
 
 .. index::
@@ -690,11 +707,13 @@ is linked as an executable or as a DLL, and what its name will be. It
 also allows you to specify version information for the target
 and the Windows subsystem it runs in.
 
-.. note:: The default linker used in Open Dylan is a GNU linker. If
-   you own Microsoft Developer Studio, you can use the Microsoft linker
-   instead. To change the default linker, go to the main window and choose
-   **Options > Environment Options...**, then choose that dialog's Build
-   page.
+.. note:: The default linker used in Open Dylan is selected at
+          installation time.  To change the default linker, go to the
+          main window and choose :menuselection:`Tools --> Environment
+          Options...`, then choose that dialog's :guilabel:`Build`
+          page. The :guilabel:`Build script` option will allow you to
+          choose the Jam build script corresponding to a different
+          linker.
 
 Target File section of the Link page
 ------------------------------------
@@ -718,7 +737,7 @@ See :ref:`versioning` for details.
 Windows Subsystem section of the Link page
 ------------------------------------------
 
-The **Project > Settings...** dialog's Link page has a Win32 Subsystem
+The :menuselection:`Project --> Settings...` dialog's Link page has a Win32 Subsystem
 section that allows you to specify that the target should run in the
 "Windows GUI" (WINDOWS) subsystem or the "Windows Console" (CONSOLE)
 subsystem. You may wish to change this value if you change the code of a
@@ -736,18 +755,19 @@ to run in the "Windows GUI" (WINDOWS) subsystem.
 Debug page
 ----------
 
-The **Project > Settings...** dialog's Debug page allows you to specify a
-command line with which to execute the project target, and the start
-function for the project.
+The :menuselection:`Project --> Settings...` dialog's
+:guilabel:`Debug` page allows you to specify a command line with which
+to execute the project target, and the start function for the project.
 
 The command line facility is especially useful for testing console
 applications from within the development environment. If there are
-values in the Command Line section of this dialog when you run a project
-target with *Project > Start* (and similar commands), Open Dylan
-uses them to execute the application. It creates a new process from the
-executable named in the Executable field and passes it the arguments
-from the Arguments field. Thus the values in these fields should form a
-valid MS-DOS command line when concatenated.
+values in the Command Line section of this dialog when you run a
+project target with :menuselection:`Application --> Start` (and
+similar commands), Open Dylan uses them to execute the application. It
+creates a new process from the executable named in the Executable
+field and passes it the arguments from the Arguments field. Thus the
+values in these fields should form a valid command line when
+concatenated.
 
 See `The project start function`_ for details of the start function.
 
@@ -763,12 +783,13 @@ Project files and LID files
 ===========================
 
 Open Dylan's project files can be exported in a portable library
-interface format called LID (library interchange description). Harlequin
-and other Dylan vendors have chosen LID as the standard interchange
-format for Dylan libraries. LID files describe libraries in a flat ASCII
-text format for ease of interchange between different Dylan systems. The
-*Core Features and Mathematics* reference volume describes the LID
-format. LID files must have the extension .LID.
+interface format called LID (library interchange description). The
+Open Dylan project and other Dylan vendors have chosen LID as the
+standard interchange format for Dylan libraries. LID files describe
+libraries in a flat ASCII text format for ease of interchange between
+different Dylan systems. The *Core Features and Mathematics* reference
+volume describes the LID format. LID files must have the extension
+.LID.
 
 Opening a LID file as a project
 -------------------------------
@@ -778,15 +799,16 @@ into a project file and opened in a project window. (This process does
 not modify the original LID file on disk.)
 
 In order to open a LID file as a text file in an editor, open the LID
-file using **File > Open** and select the file type filter "Dylan Library
-Interchange Descriptions (as text)" before clicking **Open**.
+file using :menuselection:`File --> Open...` and select the file type
+filter "Dylan Library Interchange Descriptions (as text)" before
+clicking :guilabel:`Open`.
 
 Exporting a project into a LID file
 -----------------------------------
 
 To export a project as a LID file for use in other Dylan
-implementations, use **File > Save As** and choose the file type "Dylan
-Library Interchange Descriptions".
+implementations, use :menuselection:`File --> Save As...` and choose the
+file type "Dylan Library Interchange Descriptions".
 
 Note that a LID file created by export will list source files by name
 only, and without paths. In addition it will not contain any of the

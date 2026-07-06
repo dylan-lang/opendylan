@@ -174,28 +174,13 @@ exposed by the DUIM-Gadgets library, two of its subclasses are exposed
 by the DUIM-Frames library: :class:`<wizard-page>` and :class:`<property-page>`. See
 :ref:`gadgets-subclasses-of-page` for an introduction to these classes.
 
-DUIM-Commands Library
-=====================
+Commands Interface
+==================
 
-All commands-related interfaces are now defined directly in the Commands
-library. However, these same interfaces are imported to and re-exported
-from DUIM-Frames, so they can be used in almost the same way as for
-Harlequin Dylan 1.0. You should continue to look for commands-related
-documentation in this chapter.
-
-A consequence of the introduction of the Commands library is that a
-slight change in syntax is required in the definition of commands in
-command tables. In Harlequin Dylan 1.0, two approaches could be taken
-when specifying a command in a table. For example, a menu item could be
-specified by either of the following:
-
-.. code-block:: dylan
-
-   menu-item "My Command" = make(<command>, function: my-command),
-   menu-item "My Command" = my-command,
-
-Beginning with Harlequin Dylan 1.1, only the last of these may be used.
-This may require you to change some of your code.
+The DUIM-Frames library makes extensive use of commands-related
+interfaces defined in the :lib:`commands` library. These interfaces
+are imported to and re-exported from DUIM-Frames, so it is not
+necessary to import :lib:`commands` explicitly.
 
 DUIM-Frames Module
 ==================

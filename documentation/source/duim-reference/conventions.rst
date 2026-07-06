@@ -33,10 +33,10 @@ use the interfaces being described. If you wish, you can run these
 examples interactively by typing them into the Dylan Playground.
 
 A number of additional, longer examples are provided as part of the
-Harlequin Dylan installation, and are installed on your hard disk
+Open Dylan installation, and are installed on your hard disk
 automatically. You can look at these examples and load them into the
 environment by clicking on the examples button in the main window of the
-Harlequin Dylan environment.
+Open Dylan environment.
 
 Longer examples are also provided and discussed fully in the *Building
 Applications using DUIM*, which you should refer to for an introduction
