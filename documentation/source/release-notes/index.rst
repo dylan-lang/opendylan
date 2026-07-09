@@ -1,6 +1,7 @@
 Open Dylan Release Notes
 ========================
 
+* :doc:`2026.2`
 * :doc:`2026.1`
 * :doc:`2025.1`
 * :doc:`2024.1`
@@ -17,6 +18,7 @@ Open Dylan Release Notes
 .. toctree::
    :hidden:
 
+   2026.2
    2026.1
    2025.1
    2024.1
