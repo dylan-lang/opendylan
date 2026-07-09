@@ -22,7 +22,7 @@ define constant $license-agreement-filename   = "License.txt";
 /// Release constants
 define constant $release-product-name       = "Open Dylan";
 define constant $release-product-identifier = "opendylan";
-define constant $release-version            = "2026.2pre1";
+define constant $release-version            = "2026.2";
 
 define constant $release-copyright
   = "Copyright (c) 1997-2004, Functional Objects, Inc.\n"
