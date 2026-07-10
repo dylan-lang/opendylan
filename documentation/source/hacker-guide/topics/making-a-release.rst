@@ -13,7 +13,7 @@ now here is a manual check-list.
 #. Update submodules to the latest stable version tags and document the version
    number changes in the release notes. This command may help::
 
-     git submodule foreach --quiet 'echo -n "$name "; git describe --always --tags $sha1'
+     git submodule foreach --quiet 'echo "$name "; git describe --always --tags $sha1'
 
    What "stable" means isn't well-defined; use your discretion. The important
    point is that libraries are bundled with the release so people may use them
@@ -76,7 +76,14 @@ now here is a manual check-list.
    entire "sources" directory is copied into the release, so any uncommitted
    files or a "_build" directory could be copied.
 
-   On unix platforms::
+   On Linux::
+
+     $ git clone --recursive https://github.com/dylan-lang/opendylan
+     $ cd opendylan
+     $ git co v2019.1.0      # the tag you created above
+     $ ./build/unix/container-release.sh
+
+   On other unix platforms::
 
      $ git clone --recursive https://github.com/dylan-lang/opendylan
      $ cd opendylan
@@ -131,7 +138,7 @@ Post-release Tasks
 
 These items aren't urgent but should be done after each release.
 
-#. Bump the OD version to something plausible, like 2023.1pre. `Example pull
+#. Bump the OD version to something plausible, like 2023.1pre1. `Example pull
    request <https://github.com/dylan-lang/opendylan/pull/1465>`_.
 
 #. Create a file in which to put the release notes for the next version. See
