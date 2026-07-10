@@ -229,11 +229,11 @@ bootstrap-stage-3-statics:
 	  file="$(abs_srcdir)/sources/app/deft/sources/commands/version.dylan"; \
 	  orig=$$(mktemp); \
 	  temp=$$(mktemp); \
-	  cp -p $${file} $${orig}; \
+	  cp $${file} $${orig}; \
 	  cat $${file} | sed "s|_NO_VERSION_SET_|$${git_version} built on $$(date -Iseconds)|g" > $${temp}; \
 	  mv $${temp} $${file}; \
 	  $(BOOTSTRAP_3_ENV) $(FDMAKE) --compiler "$(BOOTSTRAP_3_COMPILER)" --unify deft-app; \
-	  cp -p $${orig} $${file}
+	  cp $${orig} $${file}
 
 BOOTSTRAP_3_LLVM_RTGVARSyes = \
         OPEN_DYLAN_LLVM_RUNTIME_GENERATOR=$(BOOTSTRAP_3_ROOT)/bin/$(RTG)

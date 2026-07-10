@@ -6,7 +6,7 @@ set -e
 # was also needed.
 
 # https://releases.llvm.org/
-LLVM_RELEASE=22.1.5
+LLVM_RELEASE=22.1.8
 LLVM_REL=$(echo $LLVM_RELEASE | sed s/-rc/rc/)
 
 LLVM_CLANG=$(echo $LLVM_RELEASE | sed 's/\([0-9]*\).*/\1/')

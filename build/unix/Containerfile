@@ -1,6 +1,6 @@
 FROM debian:bookworm
 
-ENV OPENDYLAN_DEPENDS "dumb-init autoconf automake libtool build-essential bzip2 clang-14 git-core make cmake ninja-build"
+ENV OPENDYLAN_DEPENDS "dumb-init autoconf automake libtool build-essential bzip2 clang-14 git-core make cmake ninja-build gawk zlib1g-dev libzstd-dev"
 
 # Install dependencies
 RUN apt-get update \
