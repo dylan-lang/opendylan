@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Open Dylan 2026.1" href="2026.1.html" /><link rel="prev" title="Open Dylan Release Notes" href="index.html" />
 
     <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>Open Dylan 2026.2 - Open Dylan</title>
@@ -309,7 +309,7 @@
 </li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference external" href="https://opendylan.org/books/drm/">Dylan Reference Manual</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://package.opendylan.org/">Package Docs</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../library-reference/index.html">Bundled Libraries</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of Bundled Libraries</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -383,7 +383,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../library-reference/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../documentation/index.html">Other Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of Other Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../documentation/index.html">Other Documentation</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of Other Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../news/index.html">News</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../documentation/publications.html">Publications</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../intro-dylan/index.html">Intro to Dylan</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of Intro to Dylan</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -453,7 +453,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../getting-started-ide/copyright.html">Copyright</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="index.html">Release Notes</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">Release Notes</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of Release Notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">Open Dylan 2026.2</a></li>
 <li class="toctree-l3"><a class="reference internal" href="2026.1.html">Open Dylan 2026.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="2025.1.html">Open Dylan 2025.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="2024.1.html">Open Dylan 2024.1</a></li>
@@ -532,7 +533,7 @@
         <article role="main" id="furo-main-content">
           <section id="open-dylan-2026-2">
 <h1>Open Dylan 2026.2<a class="headerlink" href="#open-dylan-2026-2" title="Link to this heading">¶</a></h1>
-<p>This document describes the 2026.2 release of Open Dylan, released &lt;month&gt;, 2026.  The
+<p>This document describes the 2026.2 release of Open Dylan, released July, 2026.  The
 highlights of the release are listed below.  For complete details see the <a class="reference external" href="https://github.com/dylan-lang/opendylan/compare/v2026.1.0...v2026.2.0">commit logs</a> for this
 release.</p>
 <div class="admonition note">
@@ -560,6 +561,8 @@ directly supported, making the use of Rosetta 2 no longer necessary.</p></li>
 conventions that is compatible with a wider variety of platform
 ABIs, and which improves performance in certain situations (such as
 dispatching methods with keyword arguments).</p></li>
+<li><p>Several phases of compilation, including Optimization, Emitting,
+and Linking, are now marginally faster.</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">base-address</span></code> keyword in LID and HDP project files,
 specifying a default load address for DLLs on Windows, has been
 obsoleted. The <span class="guilabel">Base address</span> project link option in the
@@ -576,13 +579,16 @@ assign a base address automatically when projects are saved.</p></li>
 starting an outdated HTML Help file.</p></li>
 </ul>
 </section>
-<section id="tools">
-<h2>Tools<a class="headerlink" href="#tools" title="Link to this heading">¶</a></h2>
-<p>TODO</p>
-</section>
 <section id="bundled-library-updates">
 <h2>Bundled Library Updates<a class="headerlink" href="#bundled-library-updates" title="Link to this heading">¶</a></h2>
 <p>Changes to libraries that are part of the <a class="reference external" href="https://github.com/dylan-lang/opendylan">opendylan repository</a>.</p>
+<section id="dylan">
+<h3>Dylan<a class="headerlink" href="#dylan" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>The maximum number of elements that can be stored in a
+<a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#table"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;table&gt;</span></code></a> increased from 9562387 to 463830313.</p></li>
+</ul>
+</section>
 <section id="common-dylan">
 <h3>Common-Dylan<a class="headerlink" href="#common-dylan" title="Link to this heading">¶</a></h3>
 <ul class="simple">
@@ -598,10 +604,10 @@ throughout the codebase as described in <a class="reference external" href="http
 <li><p><a class="reference internal" href="../library-reference/system/file-system.html#system:file-system:rename-file"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">rename-file</span></code></a> now signals <code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-exists-error&gt;</span></code> instead of
 <a class="reference internal" href="../library-reference/system/file-system.html#system:file-system:[file-system-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;file-system-error&gt;</span></code></a> if the target file exists and <code class="docutils literal notranslate"><span class="pre">if-exists:</span> <span class="pre">#&quot;signal&quot;</span></code> (the
 default) is used.</p></li>
-<li><p>On Unix platforms, the <a class="reference internal" href="../library-reference/system/date.html#system:date:current-date"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">current-date</span></code></a> function now returns
-<a class="reference internal" href="../library-reference/system/date.html#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a> objects providing microsecond precision. Similarly,
-the <code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">current-timestamp</span></code> function now properly reflects
-millisecond precision.</p></li>
+<li><p>On Unix platforms, the <a class="reference internal" href="../library-reference/system/date.html#system:date:current-date"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">current-date</span></code></a> function and the
+date-related file properties now return <a class="reference internal" href="../library-reference/system/date.html#system:date:[date]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;date&gt;</span></code></a> objects
+providing microsecond precision. The <code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">current-timestamp</span></code>
+function now properly reflects millisecond precision.</p></li>
 <li><p>Several functions in the <code class="xref dylan dylan-lib docutils literal notranslate"><span class="pre">system</span></code> library were previously
 implemented on Unix platforms using C library routines that used
 static storage, potentially compromising thread safety. These have
@@ -611,15 +617,17 @@ been replaced with thread-safe alternatives.</p></li>
 </section>
 <section id="submoduled-library-updates">
 <h2>Submoduled Library Updates<a class="headerlink" href="#submoduled-library-updates" title="Link to this heading">¶</a></h2>
-<p>The following changes were made to Open Dylan dependencies that are included as Git
-submodules.</p>
-<p>TODO</p>
+<p>No submodule updates occurred in this release.</p>
 </section>
 <section id="contributors">
 <h2>Contributors<a class="headerlink" href="#contributors" title="Link to this heading">¶</a></h2>
 <p>We’d like to thank all the people that made contributions to this release and
 to surrounding libraries in the Dylan ecosystem….</p>
-<p>TODO</p>
+<ul class="simple">
+<li><p>Peter S. Housel</p></li>
+<li><p>Carl Gay</p></li>
+<li><p>Bruce Mitchener</p></li>
+</ul>
 </section>
 </section>
 
@@ -628,8 +636,26 @@ to surrounding libraries in the Dylan ecosystem….</p>
       <footer>
         
         <div class="related-pages">
-          
-          
+          <a class="next-page" href="2026.1.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Open Dylan 2026.1</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="index.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Open Dylan Release Notes</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -664,8 +690,8 @@ to surrounding libraries in the Dylan ecosystem….</p>
 <li><a class="reference internal" href="#platform-support">Platform Support</a></li>
 <li><a class="reference internal" href="#compiler">Compiler</a></li>
 <li><a class="reference internal" href="#ide">IDE</a></li>
-<li><a class="reference internal" href="#tools">Tools</a></li>
 <li><a class="reference internal" href="#bundled-library-updates">Bundled Library Updates</a><ul>
+<li><a class="reference internal" href="#dylan">Dylan</a></li>
 <li><a class="reference internal" href="#common-dylan">Common-Dylan</a></li>
 <li><a class="reference internal" href="#system">System</a></li>
 </ul>

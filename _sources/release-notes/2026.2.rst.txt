@@ -2,7 +2,7 @@
 Open Dylan 2026.2
 *****************
 
-This document describes the 2026.2 release of Open Dylan, released <month>, 2026.  The
+This document describes the 2026.2 release of Open Dylan, released July, 2026.  The
 highlights of the release are listed below.  For complete details see the `commit logs
 <https://github.com/dylan-lang/opendylan/compare/v2026.1.0...v2026.2.0>`_ for this
 release.
@@ -30,6 +30,9 @@ Compiler
   ABIs, and which improves performance in certain situations (such as
   dispatching methods with keyword arguments).
 
+* Several phases of compilation, including Optimization, Emitting,
+  and Linking, are now marginally faster.
+
 * The ``base-address`` keyword in LID and HDP project files,
   specifying a default load address for DLLs on Windows, has been
   obsoleted. The :guilabel:`Base address` project link option in the
@@ -44,16 +47,17 @@ IDE
   https://opendylan.org web site in the default browser rather than
   starting an outdated HTML Help file.
 
-Tools
-=====
-
-TODO
-
 Bundled Library Updates
 =======================
 
 Changes to libraries that are part of the `opendylan repository
 <https://github.com/dylan-lang/opendylan>`_.
+
+Dylan
+-----
+
+* The maximum number of elements that can be stored in a
+  :drm:`<table>` increased from 9562387 to 463830313.
 
 Common-Dylan
 ------------
@@ -71,10 +75,10 @@ System
   :class:`<file-system-error>` if the target file exists and ``if-exists: #"signal"`` (the
   default) is used.
 
-* On Unix platforms, the :gf:`current-date` function now returns
-  :class:`<date>` objects providing microsecond precision. Similarly,
-  the :gf:`current-timestamp` function now properly reflects
-  millisecond precision.
+* On Unix platforms, the :gf:`current-date` function and the
+  date-related file properties now return :class:`<date>` objects
+  providing microsecond precision. The :gf:`current-timestamp`
+  function now properly reflects millisecond precision.
 
 * Several functions in the :lib:`system` library were previously
   implemented on Unix platforms using C library routines that used
@@ -84,10 +88,7 @@ System
 Submoduled Library Updates
 ==========================
 
-The following changes were made to Open Dylan dependencies that are included as Git
-submodules.
-
-TODO
+No submodule updates occurred in this release.
 
 Contributors
 ============
@@ -95,4 +96,6 @@ Contributors
 We'd like to thank all the people that made contributions to this release and
 to surrounding libraries in the Dylan ecosystem....
 
-TODO
+* Peter S. Housel
+* Carl Gay
+* Bruce Mitchener

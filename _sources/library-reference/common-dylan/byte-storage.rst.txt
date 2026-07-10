@@ -22,7 +22,6 @@ The byte-storage Module
      - :meth:`byte-storage-address(<buffer>)`
      - :meth:`byte-storage-address(<byte-string>)`
      - :meth:`byte-storage-address(<byte-vector>)`
-     - :gf:`byte-storage-offset-address`
 
 .. method:: byte-storage-address
    :specializer: <byte-string>
