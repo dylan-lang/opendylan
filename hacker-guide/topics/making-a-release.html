@@ -541,7 +541,7 @@ now here is a manual check-list.</p>
 a release.</p></li>
 <li><p>Update submodules to the latest stable version tags and document the version
 number changes in the release notes. This command may help:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">submodule</span> <span class="n">foreach</span> <span class="o">--</span><span class="n">quiet</span> <span class="s1">&#39;echo -n &quot;$name &quot;; git describe --always --tags $sha1&#39;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">submodule</span> <span class="n">foreach</span> <span class="o">--</span><span class="n">quiet</span> <span class="s1">&#39;echo &quot;$name &quot;; git describe --always --tags $sha1&#39;</span>
 </pre></div>
 </div>
 <p>What “stable” means isn’t well-defined; use your discretion. The important
@@ -596,7 +596,14 @@ starting at 1 for the current year, and the patch version starts at 0.</p>
 uncommitted files become part of the release tarball. In particular, the
 entire “sources” directory is copied into the release, so any uncommitted
 files or a “_build” directory could be copied.</p>
-<p>On unix platforms:</p>
+<p>On Linux:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone --recursive https://github.com/dylan-lang/opendylan
+$ cd opendylan
+$ git co v2019.1.0      # the tag you created above
+$ ./build/unix/container-release.sh
+</pre></div>
+</div>
+<p>On other unix platforms:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone --recursive https://github.com/dylan-lang/opendylan
 $ cd opendylan
 $ git co v2019.1.0      # the tag you created above
@@ -642,7 +649,7 @@ slavishly copy the format.</p>
 <h2>Post-release Tasks<a class="headerlink" href="#post-release-tasks" title="Link to this heading">¶</a></h2>
 <p>These items aren’t urgent but should be done after each release.</p>
 <ol class="arabic">
-<li><p>Bump the OD version to something plausible, like 2023.1pre. <a class="reference external" href="https://github.com/dylan-lang/opendylan/pull/1465">Example pull
+<li><p>Bump the OD version to something plausible, like 2023.1pre1. <a class="reference external" href="https://github.com/dylan-lang/opendylan/pull/1465">Example pull
 request</a>.</p></li>
 <li><p>Create a file in which to put the release notes for the next version. See
 the above example pull request.</p></li>
