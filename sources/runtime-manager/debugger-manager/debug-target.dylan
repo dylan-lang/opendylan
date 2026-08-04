@@ -242,6 +242,14 @@ define method initialize
                                       access-path: t.debug-target-access-path);
 end method;
 
+///// DEBUG-TARGET-MESSAGE
+//
+define function debug-target-message
+    (application :: <debug-target>, level :: <log-level>, object :: <object>, #rest args)
+ => ()
+  apply(access-path-message, application.debug-target-access-path, level,
+        object, args);
+end function;
 
 ///// ADDRESS-CORRESPONDS-TO-PRIMITIVE? (Internal function)
 //    Decides whether a given instruction pointer is within the definition

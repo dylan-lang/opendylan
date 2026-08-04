@@ -20,7 +20,8 @@ define method align-thread-to-source-location
     (application :: <debug-target>, thread :: <remote-thread>,
      #key interactive? = #f)
   => (success? :: <boolean>)
-  debugger-message("align-thread-to-source-location %=", thread);
+  debug-target-message(application, $debug-level,
+                       "align-thread-to-source-location %=", thread);
   let success? = #f;
   let call-frame = get-top-call-frame(application, thread);
   let obtained-context? = #f;

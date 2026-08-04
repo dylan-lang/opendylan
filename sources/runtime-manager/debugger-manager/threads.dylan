@@ -101,9 +101,10 @@ define method remote-thread-information
     dylan-thread-handle := #f;
     remote-thread-name := thread.thread-name;
   end block;
-  debugger-message("remote-thread-information %= : [%=, %=, %=, %=]", thread,
-		   dylan-thread?, remote-thread-name,
-		   dylan-thread-object, dylan-thread-handle);
+  debug-target-message(application, $debug-level,
+                       "remote-thread-information %= : [%=, %=, %=, %=]", thread,
+                       dylan-thread?, remote-thread-name,
+                       dylan-thread-object, dylan-thread-handle);
   values(dylan-thread?, remote-thread-name, dylan-thread-object, dylan-thread-handle);
 end method;
 
@@ -567,7 +568,9 @@ define method spawn-interactive-thread
     block ()
     write-value(path, running-dylan-spy-function?, as-remote-value(1));
 
-    debugger-message("spawn-interactive-thread %= on Thread %=", tname, spy-thread);
+      debug-target-message(application, $debug-level,
+                           "spawn-interactive-thread %= on Thread %=",
+                           tname, spy-thread);
 
     let address-of-name = download-byte-string(tname);
     if (address-of-name &
@@ -596,8 +599,9 @@ define method suspend-interesting-thread
 
   unless (stopped-thread.thread-suspended?)
     unless (application.application-just-interacted-on-running-thread?)
-      debugger-message("Suspending thread %= in response to debug-event",
-		       stopped-thread);
+      debug-target-message(application, $debug-level,
+                           "Suspending thread %= in response to debug-event %=",
+                           stopped-thread, stop-reason);
       suspend-thread(access-path, stopped-thread);
     end;
   end;
@@ -617,8 +621,9 @@ define method resume-selected-thread
     unless (thread-permanently-suspended?(access-path, remote-thread))
       if (remote-thread.thread-suspended?)
 	unless (application.application-just-interacted-on-running-thread?)
-	  debugger-message("Resuming thread %= in response to continuation",
-			   remote-thread);
+	  debug-target-message(application, $debug-level,
+                               "Resuming thread %= in response to continuation",
+                               remote-thread);
 	  dylan-resume-thread(access-path, remote-thread);
 	  remote-thread;
 	end;
@@ -630,18 +635,19 @@ end method;
 define method resume-all-suspended-threads
   (application :: <debug-target>)
     => (resumed-threads :: <list>)
-  debugger-message("Resuming all threads");
+  debug-target-message(application, $debug-level, "Resuming all threads");
 
   let access-path = application.debug-target-access-path;
 
   let threads = #();
 
   do-threads
-  (method(remote-thread :: <remote-thread>)
+    (method (remote-thread :: <remote-thread>)
        unless (thread-permanently-suspended?(access-path, remote-thread))
 	 if (remote-thread.thread-suspended?)
-	   debugger-message("Resuming thread %= in response to continuation",
-			    remote-thread);
+	   debug-target-message(application, $debug-level,
+                                "Resuming thread %= in response to continuation",
+                                remote-thread);
 	   dylan-resume-thread(access-path, remote-thread);
 	   threads := pair(remote-thread, threads);
 	 end if;
