@@ -84,7 +84,8 @@ define method perform-debugger-transaction
           if (application.under-management?)
           temporary-stop? := application-temporary-stop?(application);
 
-          thread-debug-message("Performing debugger transaction");
+            debug-target-message(application, $debug-level,
+                                 "Performing debugger transaction");
           block()
             application.thread-being-served := transaction-thread;
             do-transaction();
@@ -97,12 +98,12 @@ define method perform-debugger-transaction
         // Continue the application only if explicitly requested to do
         // so by clients, or if we explicitly stopped the running application
         if (continue)
-          thread-debug-message
-            ("perform-debugger-transaction: continue application");
+          debug-target-message(application, $debug-level,
+                               "perform-debugger-transaction: continue application");
           continue();
         elseif (temporary-stop?)
-          thread-debug-message
-            ("temporary-stop-reason for interrupting application");
+          debug-target-message(application, $debug-level,
+                               "temporary-stop-reason for interrupting application");
           continue-target-application(application,
                                       application.application-selected-thread);
         end if
@@ -128,7 +129,8 @@ define method manage-debugger-transaction
   with-lock (application.debugger-transaction)
     // with a lock on the current transaction, open the floodgates
     // for threads requiring debugger transactions
-    thread-debug-message("Releasing debugger-session");
+    debug-target-message(application, $debug-level,
+                         "Releasing debugger-session");
     release(application.debugger-session);
 
     // Enter a wait state for continuously serving client thread
@@ -138,13 +140,15 @@ define method manage-debugger-transaction
     while (begin
              let wait-state = #"waiting";
              while (wait-state == #"waiting")
-             thread-debug-message("Waiting for debugger-transaction-notification");
+               debug-target-message(application, $debug-level,
+                                    "Waiting for debugger-transaction-notification");
              if (wait-for(application.debugger-transaction-notification,
                           timeout: application.debugger-transaction-timeout))
                thunk := application.interruption-function;
                wait-state := thunk;
              else
-               thread-debug-message("Waiting for debugger-session");
+               debug-target-message(application, $debug-level,
+                                    "Waiting for debugger-session");
                if (wait-for(application.debugger-session, mode: #"write",
                             timeout: application.debugger-transaction-timeout))
                  wait-state := #f;
@@ -162,7 +166,8 @@ define method manage-debugger-transaction
         application.interruption-results := #[];
       end block;
 
-      thread-debug-message("Releasing interruption-evaluated");
+      debug-target-message(application, $debug-level,
+                           "Releasing interruption-evaluated");
       release(application.interruption-evaluated);
     end while;
 
@@ -173,17 +178,20 @@ define method manage-debugger-transaction
     // inclusive claims on the session before going back into
     // exclusive mode
     unless (application.debugger-session.owned?)
-      thread-debug-message("Waiting for debugger-session");
+      debug-target-message(application, $debug-level,
+                           "Waiting for debugger-session");
       wait-for(application.debugger-session, mode: #"write");
     end;
 
     // Lastly, signal all client threads that this debugger
     // transaction is now complete, in response to a request
     // to continue the stopped thread
-    thread-debug-message("Releasing debugger-transaction-complete");
+    debug-target-message(application, $debug-level,
+                         "Releasing debugger-transaction-complete");
     release-all(application.debugger-transaction-complete);
   end with-lock;
-  thread-debug-message("debugger transaction is complete");
+  debug-target-message(application, $debug-level,
+                       "debugger transaction is complete");
 end method;
 
 
@@ -195,7 +203,8 @@ define method call-debugger-function
     (application :: <target-application>, function :: <function>,
      #rest arguments)
   => (#rest results)
-  thread-debug-message("Entered CALL-DEBUGGER-FUNCTION");
+  debug-target-message(application, $debug-level,
+                       "Entered CALL-DEBUGGER-FUNCTION");
   let transaction-thread = current-thread();
   if (transaction-thread == application.manager-thread)
     apply(function, arguments)
@@ -208,10 +217,12 @@ define method call-debugger-function
       application.interruption-function :=
         method() apply(function, arguments) end;
 
-      thread-debug-message("Releasing debugger-transaction-notification");
+      debug-target-message(application, $debug-level,
+                           "Releasing debugger-transaction-notification");
       release(application.debugger-transaction-notification);
 
-      thread-debug-message("Waiting for interruption-evaluated");
+      debug-target-message(application, $debug-level,
+                           "Waiting for interruption-evaluated");
       wait-for(application.interruption-evaluated);
 
       let results = application.interruption-results;

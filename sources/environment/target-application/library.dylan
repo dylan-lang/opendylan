@@ -14,6 +14,7 @@ define library target-application
 
   use release-info;
 
+  use logging;
   use access-path;
   use debugger-manager;
 
@@ -40,6 +41,7 @@ define module target-application-internals
 
   use release-info;
 
+  use logging;
   use access-path,
     rename: { thread-name => ap-thread-name};
   use debugger-manager,
