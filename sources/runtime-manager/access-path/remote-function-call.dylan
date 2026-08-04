@@ -35,7 +35,7 @@ define method remote-call
     (ap :: <access-path>, thr :: <remote-thread>,
      function :: <remote-value>, #rest arguments)
        => (ret-addr :: <remote-value>, cookie :: <object>)
-  debugger-message("remote-call %= %=", thr, function);
+  access-path-message(ap, $debug-level, "remote-call %= %=", thr, function);
 
   let thread-was-suspended? = thr.thread-suspended?;
   if (thread-was-suspended?)
@@ -61,7 +61,7 @@ define open generic remote-call-on-connection
 define method remote-call-result
     (ap :: <access-path>, thr :: <remote-thread>)
       => (result :: <remote-value>)
-  debugger-message("remote-call-result %=", thr);
+  access-path-message(ap, $debug-level, "remote-call-result %=", thr);
   remote-call-result-on-connection(ap.connection, thr);
 end method;
 
@@ -78,7 +78,7 @@ define open generic remote-call-result-on-connection
 define method remote-restore-context
     (ap :: <access-path>, thr :: <remote-thread>, ctx :: <THREAD-CONTEXT>)
       => ()
-  debugger-message("remote-restore-context %=", thr);
+  access-path-message(ap, $debug-level, "remote-restore-context %=", thr);
   remote-restore-context-on-connection(ap.connection, thr, ctx);
   if (ctx.thread-was-suspended-by-debugger?)
     // The thread was released only for the duration of this remote
@@ -102,7 +102,8 @@ define method remote-call-spy
     (ap :: <access-path>, thr :: <remote-thread>,
      function :: <remote-value>, #rest arguments)
        => (result :: <remote-value>, aborted? :: <boolean>)
-  debugger-message("remote-call-spy %= %= %=", thr, function, arguments);
+  access-path-message(ap, $debug-level, "remote-call-spy %= %= %=",
+                      thr, function, arguments);
 
   // If the selected thread is suspended, release it for the duration
   // of the remote call.
@@ -111,7 +112,9 @@ define method remote-call-spy
   // continue to be used for spy calls while interacting on other threads
   let thread-was-permanently-suspended? = thread-permanently-suspended?(ap, thr);
   if (thread-was-permanently-suspended?)
-    debugger-message("Releasing permanent suspension on %= for spy call %=", thr, function);
+    access-path-message(ap, $debug-level,
+                        "Releasing permanent suspension on %= for spy call %=",
+                        thr, function);
     thread-permanently-suspended?(ap, thr) := #f;
   end if;
 
@@ -134,7 +137,9 @@ define method remote-call-spy
   end if;
 
   if (thread-was-permanently-suspended?)
-    debugger-message("Restoring permanent suspension on %= for spy call %=", thr, function);
+    access-path-message(ap, $debug-level,
+                        "Restoring permanent suspension on %= for spy call %=",
+                        thr, function);
     thread-permanently-suspended?(ap, thr) := #t;
   end if;
   end block;

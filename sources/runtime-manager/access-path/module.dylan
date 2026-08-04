@@ -8,9 +8,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define module access-path
-
-   use common-dylan;
-
    create
 
       ///// <access-path>
@@ -32,6 +29,8 @@ define module access-path
       stepping-locations-remote-vector-setter,
 
       $access-ok,
+
+      access-path-message,
 
       ///// Remote Objects
 
@@ -420,9 +419,6 @@ define module access-path
     nub-debug-message;
 
   create
-    *debugging-debugger?*,
-    make-debugger-stream,
-    close-debugger-stream,
     debugger-message,
     debugger-error;
 
@@ -542,9 +538,11 @@ define module access-path-implementation
   use streams, import: {<file-stream>, <stream>, force-output, close};
   use locators, import: {<file-locator>};
   use file-system;
+  use operating-system, import: {environment-variable};
   use byte-vector;
   use table-extensions, import: {<string-table>};
   use c-ffi;
+  use logging;
 
   use access-path;
   use access-path-nub;

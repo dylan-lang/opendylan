@@ -10,11 +10,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define function thread-debug-message
     (string :: <string>, #rest pants) => ()
-  if (*debugging-debugger?*)
-    let control =
-      concatenate(current-thread().thread-name | "???", " : ", string);
-    apply(debugger-message, control, pants)
-  end if
+  let control
+    = concatenate(current-thread().thread-name | "???", " : ", string);
+  apply(debugger-message, control, pants);
 end function;
 
 define constant <interruption-type>
