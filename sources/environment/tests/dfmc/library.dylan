@@ -16,6 +16,7 @@ define library dfmc-environment-test-suite
 
   use testworks;
   use channels;
+  use logging;
   use regular-expressions;
   use dylan-orb;
 
@@ -30,6 +31,7 @@ define library dfmc-environment-test-suite
   use access-path;
   use local-access-path;
   use remote-access-path;
+  use debugger-manager;
 
   export dfmc-environment-test-suite;
 end library dfmc-environment-test-suite;
