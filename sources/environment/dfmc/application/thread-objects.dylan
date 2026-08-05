@@ -101,8 +101,9 @@ end class;
 define method process-next-interaction-request
     (application :: <dfmc-application>, thread :: <remote-thread>)
   => ()
-  debugger-message("process-next-interaction-request on %=", thread);
   let target = application.application-target-app;
+  debug-target-message(target, $debug-level,
+                       "process-next-interaction-request on %=", thread);
   let path = target.debug-target-access-path;
   let state-model = thread-state-model(application, thread);
   let requests-pending? =
@@ -154,7 +155,8 @@ define method request-interaction
      context :: <runtime-context>, module :: <module-object>,
      code-string :: <byte-string>, state :: <application-state>)
  => (request :: <thread-interaction-request>)
-  debugger-message("request-interaction on %=", thread);
+  debug-target-message(application.application-target-app, $debug-level,
+                       "request-interaction on %=", thread);
   let request = make(<thread-interaction-request>,
                      string: code-string, module: module, context: context,
                      application-state: state);
@@ -349,7 +351,8 @@ define method suspend-application-thread
     unless (thread-available-for-interaction?(target, remote-thread))
       error("Cannot suspend a thread that is not ready for interaction");
     end;
-    debugger-message("Suspending environment interactive thread %=", remote-thread);
+    debug-target-message(target, $debug-level,
+                         "Suspending environment interactive thread %=", remote-thread);
     suspend-thread(path, remote-thread);
     thread-permanently-suspended?(path, remote-thread) := #t;
   end
@@ -472,8 +475,9 @@ define method request-evaluator-thread
      #key name :: <byte-string> = next-evaluator-thread-name(application),
           thread :: <remote-thread> = application.dylan-thread-manager)
  => (thread :: <remote-thread>)
-  debugger-message("request-evaluator-thread %=", name);
   let target = application.application-target-app;
+  debug-target-message(target, $debug-level,
+                       "request-evaluator-thread %=", name);
   let success? =
     spawn-interactive-thread(target, name, thread: thread);
   let stop-reason :: <stop-reason> =
@@ -493,8 +497,9 @@ end method;
 define method install-evaluator-thread
     (application :: <dfmc-application>, thread :: <remote-thread>,
      name :: <byte-string>) => ()
-  debugger-message("install-evaluator-thread %= %=", name, thread);
   let target = application.application-target-app;
+  debug-target-message(target, $debug-level,
+                       "install-evaluator-thread %= %=", name, thread);
   let path = target.debug-target-access-path;
   let state-model = thread-state-model(application, thread);
   suspend-thread(path, thread);
@@ -586,7 +591,8 @@ define method application-open-interactor-thread
 
           if (interactive-threads?)
             // If we fall through to here, spawn a new thread
-            debugger-message("application-open-interactor-thread spawning new thread");
+            debug-target-message(target, $debug-level,
+                                 "application-open-interactor-thread spawning new thread");
             create-application-thread(application, "")
           else
             // If we fall through to here, just use any thread.
@@ -599,8 +605,9 @@ define method application-open-interactor-thread
           end;
         end
       end;
-  debugger-message("application-open-interactor-thread chose Thread %=",
-                   thread.application-object-proxy);
+  debug-target-message(target, $debug-level,
+                       "application-open-interactor-thread chose Thread %=",
+                       thread.application-object-proxy);
   thread
 end method;
 
@@ -618,7 +625,8 @@ define method resume-evaluator-thread
   end if;
 
   if (thread-permanently-suspended?(path, thread))
-    debugger-message("Resuming environment interactive thread %=", thread);
+    debug-target-message(target, $debug-level,
+                         "Resuming environment interactive thread %=", thread);
     thread-permanently-suspended?(path, thread) := #f;
   end if;
 end method;
@@ -636,7 +644,8 @@ define method suspend-evaluator-thread
   let thread-trans-id = thread-state-transaction(application, thread);
 
   if (thread-trans-id & (thread-trans-id == trans-id))
-    debugger-message("Suspending environment interactive thread %=", thread);
+    debug-target-message(target, $debug-level,
+                         "Suspending environment interactive thread %=", thread);
     thread-permanently-suspended?(path, thread) := #t;
   end if;
 end method;

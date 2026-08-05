@@ -83,7 +83,7 @@ define method maybe-initialize-cpu-profiling
         & ~profile-state.state-class-profiling?
         & application.application-loaded-dylan-library?)
     let target = application.application-target-app;
-    debugger-message("Initializing CPU profiling");
+    debug-target-message(target, $debug-level, "Initializing CPU profiling");
     with-debugger-transaction (target)
       start-profiling(target, class-profiling?: #f);
       profile-state.state-profile-initialized? := #t
@@ -100,7 +100,7 @@ define method maybe-initialize-allocation-profiling
         & profile-state.state-class-profiling?
         & application.application-initialized-interactive-threads?)
     let target = application.application-target-app;
-    debugger-message("Initializing allocation profiling");
+    debug-target-message(target, $debug-level, "Initializing allocation profiling");
     //---*** Temporary hack, this may not always be what we want but
     //---*** for now switch on breakpoints on all threads
     let interactive-thread = application-open-interactor-thread(application);
@@ -144,15 +144,16 @@ define sealed method stop-profiling-application
       end;
   with-debugger-transaction (target)
     if (interactive-thread)
-      debugger-message("Stopping general class breakpoint");
+      debug-target-message(target, $debug-level, "Stopping general class breakpoint");
       let remote-thread = interactive-thread.application-object-proxy;
       clear-application-class-breakpoint
         (application, interactive-thread, #f, stop-profile?: #t);
       #f
     else
-      debugger-message("Failed to stop general class breakpoint");
-      debugger-message("  thread: %=, class profiling?: %=",
-                       interactive-thread, class-profiling?);
+      debug-target-message(target, $debug-level,
+                           "Failed to stop general class breakpoint: "
+                             "thread: %=, class-profiling?: %=",
+                           interactive-thread, class-profiling?);
     end;
     block ()
       unless (class-profiling?)
@@ -260,10 +261,10 @@ define sealed method process-thread-snapshot-frame-snapshots
                   = if (instance?(object, <application-code-object>))
                       values(object, location)
                     else
-                      debugger-message("Corrupted profile stack! Found %=",
-                                       object
-                                         & environment-object-display-name
-                                             (project, object, #f));
+                      debug-target-message
+                        (target, $debug-level,
+                         "Corrupted profile stack! Found %=",
+                         object & environment-object-display-name(project, object, #f));
                       values(#f, #f)
                     end;
                 if (object)
@@ -296,8 +297,9 @@ define sealed method process-profiling-results
     let snapshots = profile.application-profile-snapshots;
     let raw-threads = data.dm-application-profile-threads;
     let raw-snapshots = data.application-snapshots;
-    debugger-message("Processing profile results: threads=%d, snapshots=%d",
-                     raw-threads.size, raw-snapshots.size);
+    debug-target-message(target, $debug-level,
+                         "Processing profile results: threads=%d, snapshots=%d",
+                         raw-threads.size, raw-snapshots.size);
     do(method (raw-snapshot :: dm-<application-snapshot>)
          let raw-snapshots = raw-snapshot.thread-snapshots;
          let thread-snapshots
@@ -345,9 +347,10 @@ define sealed method process-profiling-results
     application-total-wall-time(profile)   := total-wall-time;
     application-total-page-faults(profile) := total-page-faults;
     reset-profile-data(target);
-    debugger-message("Returning, %d snapshots, %d threads",
-                     profile.application-profile-snapshots.size,
-                     profile.application-profile-threads.size);
+    debug-target-message(target, $debug-level,
+                         "Returning, %d snapshots, %d threads",
+                         profile.application-profile-snapshots.size,
+                         profile.application-profile-threads.size);
     profile
   else
     profile-state.state-last-profile

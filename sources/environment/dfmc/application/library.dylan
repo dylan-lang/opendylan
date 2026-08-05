@@ -12,6 +12,7 @@ define library dfmc-environment-application
   use collections;
   use io;
   use channels;
+  use logging;
 
   use environment-protocols;
   use dfmc-environment-database;
@@ -45,6 +46,7 @@ define module dfmc-application
                project-compilation-mode, project-compilation-mode-setter };
 
   use channels;
+  use logging;
   use environment-protocols,
     // Prevent name clashes with projects:projects, imported above
     // via project-manager-interface.  (Many of these are renamed but
