@@ -892,16 +892,25 @@ define sealed method stop-reason-transaction-admin
     (application :: <dfmc-application>,
      stop-reason :: <breakpoint-stop-reason>)
  => (stay-stopped? :: <boolean>)
+  let target = application.application-target-app;
   let thread :: <thread-object>
     = stop-reason-thread-object(application, stop-reason);
 
+  debug-target-message
+    (target, $debug-level,
+     "stop-reason-transaction-admin for stop %=", stop-reason);
   if (application-just-interacted?(application, thread)
-      & application.application-temporary-stop?)
+        & application.application-temporary-stop?)
+    debug-target-message(target, $debug-level,
+                         "transaction admin: invoking application callback");
     invoke-application-callback
       (application, application-just-interacted-callback, thread)
   end if;
 
   let breakpoints = current-stop-breakpoints(application, thread);
+  debug-target-message
+    (target, $debug-level, "transaction admin: breakpoints=%=",
+     breakpoints);
 
   // If we came across the special "initial" breakpoint, we need
   // to set the APPLICATION-REACHED-INTERACTION-POINT? property.
@@ -910,6 +919,9 @@ define sealed method stop-reason-transaction-admin
                & breakpoint.breakpoint-entry-function?
            end,
            breakpoints))
+    debug-target-message
+      (target, $debug-level,
+       "transaction admin: interaction point reached");
     application.application-reached-interaction-point? := #t
   end if;
 
@@ -927,6 +939,10 @@ define sealed method stop-reason-transaction-admin
       unless (instance?(breakpoint, <function-breakpoint-object>)
                 & instance?(breakpoint-info(application, breakpoint), <breakpoint-entry-info>)
                 & member?(#"out", breakpoint.breakpoint-directions))
+        debug-target-message
+          (target, $debug-level,
+           "transaction admin: destroying transient breakpoint %=",
+           breakpoint);
         destroy-breakpoint(breakpoint)
       end unless;
     end if;
@@ -934,20 +950,34 @@ define sealed method stop-reason-transaction-admin
 
   // Now is the time to re-establish function breakpoints.
   if (application.application-just-initialized?)
+    debug-target-message
+      (target, $debug-level,
+       "transaction admin: application was just initialized");
     let project = application.server-project;
     for (breakpoint :: <breakpoint-object> in project.environment-object-breakpoints)
+      debug-target-message
+        (target, $debug-level,
+         "transaction admin: establishing environment object breakpoint %=",
+         breakpoint);
       server-note-breakpoint-state-changed
          (application, breakpoint, #"destroyed");
       server-note-breakpoint-state-changed
          (application, breakpoint, #"created");
     end for;
     for (breakpoint :: <breakpoint-object> in project.source-location-breakpoints)
+      debug-target-message
+        (target, $debug-level,
+         "transaction admin: establishing source-location breakpoint %=",
+         breakpoint);
       server-note-breakpoint-state-changed
           (application, breakpoint, #"destroyed");
       server-note-breakpoint-state-changed
           (application, breakpoint, #"created");
     end for;
     if (application.application-startup-option ~== #"start")
+      debug-target-message
+        (target, $debug-level,
+         "transaction admin: establishing transient startup breakpoint");
       // If the application was started via the Debug or Interact
       // route, we must set a transient breakpoint upon the initializer
       // function, given that it exists.

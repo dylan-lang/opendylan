@@ -107,8 +107,11 @@ define method process-next-interaction-request
   let path = target.debug-target-access-path;
   let state-model = thread-state-model(application, thread);
   let requests-pending? =
-     (state-model.thread-state-interactor-queue.size > 0);
-  if (requests-pending? & thread-available-for-interaction?(target, thread))
+    (state-model.thread-state-interactor-queue.size > 0);
+  let tafi? = thread-available-for-interaction?(target, thread);
+  debug-target-message(target, $debug-level, "requests-pending?=%= tafi?(%=)=%=",
+                   requests-pending?, thread, tafi?);
+  if (requests-pending? & tafi?)
     if (thread-permanently-suspended?(path, thread))
       error("Suspended thread cannot have pending interaction requests");
     end if;
@@ -291,10 +294,12 @@ end method;
 define method create-application-thread
     (application :: <dfmc-application>, title :: <string>)
  => (thread :: <thread-object>)
+  let target = application.application-target-app;
+  debug-target-message
+    (target, $debug-level, "create-application-thread: %s", title);
   unless (application.dylan-thread-manager)
     error("Thread Manager does not exist: Cannot create a new application thread");
   end;
-  let target = application.application-target-app;
   let path = target.debug-target-access-path;
   with-debugger-transaction (target)
     block ()
@@ -670,6 +675,9 @@ define method initialize-interactive-threads
   => ()
   // Spawn these three interactive threads after
   // library initialization is complete
+  let target = application.application-target-app;
+  debug-target-message
+    (target, $debug-level, "initialize-interactive-threads %=", thread);
 
   // The Thread Manager is explicitly reserved for spawning
   // new application threads by running a particular deemed
@@ -687,10 +695,7 @@ define method initialize-interactive-threads
                              thread: thread);
 
   // Register this thread as a reserved Spy Thread in the debug-target
-  use-thread-for-spy-functions
-    (application.application-target-app,
-     spy-thread,
-     reserve?: #t);
+  use-thread-for-spy-functions(target, spy-thread, reserve?: #t);
 
   // In addition, a regular interactive thread is spawned at
   // the same time

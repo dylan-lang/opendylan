@@ -288,6 +288,10 @@ define method function-object-breakpoint-address
   let project = application.server-project;
   let source-location
     = environment-object-source-location(project, function-object);
+  debug-target-message
+    (target, $debug-level,
+     "function-object-breakpoint-address %=, source-location=%=",
+     function-object, source-location);
   case
     source-location =>
       let source-record = source-location.source-location-source-record;
@@ -300,12 +304,18 @@ define method function-object-breakpoint-address
              interactive-only?:   #f,
              entry-point-only?:   entry-point?,
              compilation-context: context);
+      debug-target-message
+        (target, $debug-level, "source-location is at %= (exact?=%=)",
+         address, exact);
       address;
     instance?(function-object, <generic-function-object>) =>
       #f;
     otherwise =>
       //---*** We need to handle entry-point? in here too!
       let proxy = ensure-application-proxy(application, function-object);
+      debug-target-message
+        (target, $debug-level, "function-object-breakpoint-address (no source) proxy=%=",
+         proxy);
       if (proxy)
         let function-value = runtime-proxy-to-remote-value(application, proxy);
         let (sig, breakpoint-address, keyword-specifiers)
@@ -320,11 +330,17 @@ define method calculate-breakpoint-address
      bp-object :: <function-breakpoint-object>,
      #key compilation-context = #f)
   => (address-we-hope :: false-or(<remote-value>))
+  let target = application.application-target-app;
   let function = bp-object.breakpoint-object;
+  debug-target-message
+    (target, $debug-level, "calculate-breakpoint-address %=, function: %=",
+     bp-object, function);
   ensure-application-proxy(application, function);
   if (instance?(function, <method-object>))
     let project = application.server-project;
     let gf = method-generic-function(project, function);
+    debug-target-message
+      (target, $debug-level, "calculate-breakpoint-address gf=%=", gf);
     gf & ensure-application-proxy(application, gf)
   end;
   ensure-application-proxy(application, function);
@@ -557,15 +573,24 @@ define method server-note-breakpoint-state-changed
      state-change :: <breakpoint-state>,
      #key use-project-proxy = application.server-project.project-proxy)
  => ()
+  let target = application.application-target-app;
+  debug-target-message
+    (target, $debug-level, "server-note-breakpoint-state-changed %= %s",
+     bp, state-change);
   unless (breakpoint-has-failed-already?(application, bp))
-    let target = application.application-target-app;
     let cc = use-project-proxy & use-project-proxy.project-browsing-context;
     with-debugger-transaction (target)
       block ()
+        debug-target-message
+          (target, $debug-level,
+           "Handling breakpoint state change to %s", state-change);
         select (state-change)
           #"created" =>
             let proxy = find-or-instantiate-proxy(application, bp,
                                                   compilation-context: cc);
+            debug-target-message
+              (target, $debug-level, "%= enabled?=%=",
+               bp, bp.breakpoint-enabled?);
             if (bp.breakpoint-enabled?)
               register-proxy-if-necessary(application, proxy)
             end;
@@ -578,6 +603,9 @@ define method server-note-breakpoint-state-changed
           #"enabled?" =>
             let proxy = find-or-instantiate-proxy(application, bp,
                                                   compilation-context: cc);
+            debug-target-message
+              (target, $debug-level, "%= enabled?=%=",
+               bp, bp.breakpoint-enabled?);
             if (bp.breakpoint-enabled?)
               register-proxy-if-necessary(application, proxy);
             else
@@ -587,7 +615,9 @@ define method server-note-breakpoint-state-changed
           otherwise => #f;
 
         end
-      exception (<breakpoint-error>)
+      exception (e :: <breakpoint-error>)
+        debug-target-message
+          (target, $debug-level, "Breakpoint state handling exception %=", e);
         if (application.application-state == #"running")
           note-breakpoint-state-changes-failed
             (application.server-project, vector(bp), state-change);
