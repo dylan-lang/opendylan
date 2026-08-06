@@ -153,7 +153,12 @@ define method dynamic-initializer-start-callback
   end if;
   if (start.entry-initialization-tracker.tracker-top-level?)
     construct-component-name-table(application);
+    debug-target-message
+      (application, $debug-level,
+       "This is top-level, doing extra initialization now");
     initialize-static-keywords(application, thread);
+    debug-target-message
+      (application, $debug-level, "Extra top-level initialization done");
   end if;
   handle-library-initialization-phase
     (application, thread,
@@ -174,6 +179,10 @@ define method dynamic-initializer-done-callback
   deregister-debug-point(application, done.corresponding-entry-tracepoint);
   done.exit-initialization-tracker.tracker-initialization-state :=
      #"dynamically-initialized";
+  debug-target-message
+    (application, $debug-level,
+     "Tracker for %s state set to dynamically-initialized (done)",
+     done.exit-initialization-tracker.tracker-remote-library.library-core-name);
   handle-library-initialization-phase
     (application, thread,
      done.exit-initialization-tracker.tracker-remote-library,
@@ -321,7 +330,9 @@ end method;
 
 define method register-dylan-library
     (application :: <debug-target>, dylan-library :: <remote-library>)
-  => ()
+ => ()
+  debug-target-message
+    (application, $debug-level, "Registering Dylan library %=", dylan-library);
   application.application-dylan-library := dylan-library;
   application.dylan-application? := #t;
   application.dylan-spy := make(<dylan-spy-catalogue>);
@@ -348,6 +359,9 @@ define constant $running-under-dylan-debugger? = "_Prunning_under_dylan_debugger
 define method register-dylan-runtime-library
     (application :: <debug-target>, runtime-library :: <remote-library>)
   => ()
+  debug-target-message
+    (application, $debug-level,
+     "Registering Dylan runtime library %=", runtime-library);
   let path = application.debug-target-access-path;
   let one = as-remote-value(1);
   application.application-dylan-runtime-library := runtime-library;
