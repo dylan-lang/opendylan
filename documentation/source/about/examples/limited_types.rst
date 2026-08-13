@@ -40,15 +40,15 @@ vectors of floating point numbers for this code:
     define constant $audio-buffer-size = 2048;
     define constant <audio-buffer> =
       limited(<vector>,
-	      of: <single-float>,
-	      size: $audio-buffer-size);
+              of: <single-float>,
+              size: $audio-buffer-size);
 
     define function mix-buffers
-	(input1 :: <audio-buffer>, input2 :: <audio-buffer>,
-	 output :: <audio-buffer>)
+        (input1 :: <audio-buffer>, input2 :: <audio-buffer>,
+         output :: <audio-buffer>)
      => ()
       for (i from 0 below $audio-buffer-size)
-	output[i] := 0.5 * input1[i] + 0.5 * input2[i];
+        output[i] := 0.5 * input1[i] + 0.5 * input2[i];
       end;
     end;
 
