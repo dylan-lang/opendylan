@@ -8,15 +8,6 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-define function thread-debug-message
-    (string :: <string>, #rest pants) => ()
-  if (*debugging-debugger?*)
-    let control =
-      concatenate(current-thread().thread-name | "???", " : ", string);
-    apply(debugger-message, control, pants)
-  end if
-end function;
-
 define constant <interruption-type>
   = type-union(<function>, <thread>, singleton(#f));
 
@@ -206,8 +197,8 @@ define method run-target-application
   local method manage-stop-reason
             (app :: <target-application>, sr :: <stop-reason>)
          => (interested? :: <boolean>)
-           thread-debug-message
-             ("Entering stop-reason callback for %=", sr);
+           debug-target-message(application, $debug-level,
+                                "Entering stop-reason callback for %=", sr);
            let stopping? :: <boolean> =
              if (instance?(sr, <temporary-internal-debugger-transaction-stop>))
                #t
@@ -218,7 +209,8 @@ define method run-target-application
                  #f
                end block;
              end if;
-           thread-debug-message("Returning %= from sr callback", stopping?);
+           debug-target-message(application, $debug-level,
+                                "Returning %= from sr callback", stopping?);
            stopping?
         end method;
 
@@ -229,7 +221,8 @@ define method run-target-application
             application-state-callback(app, #"stopped");
 
             if (dt-prolog)
-              thread-debug-message("Running debugger transaction prolog");
+              debug-target-message(application, $debug-level,
+                                   "Running debugger transaction prolog");
               block()
                 dt-prolog(app, sr)
               exception(<abort>)
@@ -243,7 +236,8 @@ define method run-target-application
 
           unless (instance?(sr, <temporary-internal-debugger-transaction-stop>))
             if (dt-epilog)
-              thread-debug-message("Running debugger transaction epilog");
+              debug-target-message(application, $debug-level,
+                                   "Running debugger transaction epilog");
               block()
                 dt-epilog(app, sr)
               exception(<abort>)

@@ -16,6 +16,7 @@ define module dfmc-environment-test-suite
   use locators;
   use file-system;
   use threads;
+  use logging;
 
   use source-records;
   use operating-system,
@@ -28,7 +29,7 @@ define module dfmc-environment-test-suite
     import: { compile-regex, regex-position };
   use dylan-orb;
 
-  use access-path, import: { debugger-message };
+  use debugger-manager, import: { debug-target-message };
 
   use environment-protocols,
     exclude: { application-filename,

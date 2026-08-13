@@ -1070,10 +1070,11 @@ define function handle-library-initialization
             application.application-just-finished-execution? := #t;
         end;
       end;
-  /*
-  debugger-message("Stopping? %=: top? %= dll? %=, dll-wrap? %=, phase %=",
-                   stop?, top-level?, dll-project?, dll-wrap?, phase);
-  */
+  let target = application.application-target-app;
+  debug-target-message(target, $debug-level,
+                       "Stopping? %=: top? %= really-top? dll? %=, dll-wrap? %=, phase %=",
+                       stop?, top-level?, really-top-level?, dll-project?, dll-wrap?,
+                       phase);
   stop?
 end function handle-library-initialization;
 

@@ -638,7 +638,8 @@ define method set-application-class-breakpoint
     else #t
     end;
 
-  debugger-message("Setting class breakpoint in stopped application");
+  debug-target-message(application, $debug-level,
+                       "Setting class breakpoint in stopped application");
   run-spy-on-thread(application,
 		    thread,
 		    application.C-spy.primitive-class-breakpoint-pending);
@@ -671,7 +672,8 @@ define method clear-application-class-breakpoint
       stop-profile? => stop-profiling-after-interaction;
       otherwise => C-interactor;
     end;
-  debugger-message("Clearing class breakpoint in stopped application");
+  debug-target-message(application, $debug-level,
+                       "Clearing class breakpoint in stopped application");
   run-spy-on-thread(application,
 		    thread,
 		    application.C-spy.primitive-class-breakpoint-pending);
@@ -687,7 +689,8 @@ end method clear-application-class-breakpoint;
 define method clear-application-class-breakpoints
     (application :: <debug-target>, thread :: <remote-thread>)
  => (transaction)
-  debugger-message("Clearing all class breakpoints in stopped application");
+  debug-target-message(application, $debug-level,
+                       "Clearing all class breakpoints in stopped application");
   run-spy-on-thread(application,
 		    thread,
 		    application.C-spy.primitive-class-breakpoint-pending);

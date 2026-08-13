@@ -11,6 +11,7 @@ define library debugger-manager
   use common-dylan;
   use big-integers;
   use collections;
+  use logging;
   use access-path;
   use tether-downloader;
   use interactive-symbol-table;
@@ -38,6 +39,7 @@ define module debugger-manager
     ///// <DEBUG-TARGET>
     <debug-target>,
     debug-target-access-path,
+    debug-target-message,
     debug-target-symbol-table,
     debug-target-compilation-context,
     debug-target-compilation-context-setter,
@@ -343,6 +345,7 @@ define module dm-internals
   use threads, rename: {thread-name => thread-name-internal};
   use dylan-extensions, import: {<double-integer>, <set>};
   use table-extensions, import: {<string-table>};
+  use logging;
   use access-path,
     import: { kill-application => kill };
   use debugger-manager;

@@ -109,13 +109,14 @@ define method handle-debug-point-event
         #f
       end if;
 
-    debugger-message("handle-debug-point-event\n"
-		     "\nTHREAD:%= TOPF:%= TOPFP:%=\n"
-		     "\nCALLINGF:%= CALLINGFP:%=\n"
-		     "\nBPCALLINGF:%= BPUSEF:%=",
-		     thread, top-frame-now, top-frame-pointer,
-		     calling-frame-now, calling-frame-pointer,
-		     bp.calling-frame, bp.used-frame);
+    debug-target-message(application, $debug-level,
+                         "handle-debug-point-event"
+                           " THREAD:%= TOPFP:%= "
+                           " CALLINGF:%= CALLINGFP:%="
+                           " BPCALLINGF:%= BPUSEF:%=",
+                         thread, top-frame-pointer,
+                         calling-frame-now, calling-frame-pointer,
+                         bp.calling-frame, bp.used-frame);
 
     if ((top-frame-pointer = bp.used-frame) |
         ((bp.calling-frame) & (calling-frame-pointer) &
@@ -272,9 +273,10 @@ define method handle-interactor-return
 	 #"running" => #t;
 	 otherwise  => #f;
        end;
-  debugger-message("handle-interactor-return %= %=",
-		   application.application-just-interacted?,
-		   application.application-running-on-code-entry?);
+  debug-target-message(application, $debug-level,
+                       "handle-interactor-return %= %=",
+                       application.application-just-interacted?,
+                       application.application-running-on-code-entry?);
   #f
 end method;
 
@@ -297,7 +299,9 @@ define method setup-interactor
      symbolic-C-entry-point :: <string>, symbolic-dll :: false-or(<string>),
      return-spec :: <symbol>, #rest args)
        => (transaction-id :: <object>)
-  debugger-message("setup-interactor %= running on %=", thread, current-thread().thread-name-internal);
+  debug-target-message(application, $debug-level,
+                       "setup-interactor %= running on %=",
+                       thread, current-thread().thread-name-internal);
 
   let recovery-manager =
       find-symbol(application.debug-target-access-path,
@@ -393,8 +397,9 @@ define method C-setup-interactor
      application :: <debug-target>, thread :: <remote-thread>,
      invoker :: <C-spy-function-descriptor>, #rest args)
        => (transaction-id :: <object>)
-  debugger-message("C-setup-interactor %= running on %=",
-		   thread, current-thread().thread-name-internal);
+  debug-target-message(application, $debug-level,
+                       "C-setup-interactor %= running on %=",
+                       thread, current-thread().thread-name-internal);
 
   locate-C-spy-function(application, invoker);
 

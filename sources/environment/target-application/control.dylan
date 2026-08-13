@@ -14,7 +14,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define method stop-target-application
     (application :: <target-application>, #key client-data = #f)
     => ()
-  thread-debug-message("Stopping target application");
+  debug-target-message(application, $debug-level,
+                       "Stopping target application");
   let stop-reason =
     make(<debugger-stop-application-stop-reason>,
          client-data: client-data);
@@ -26,7 +27,8 @@ end method;
 
 define method stop-application-request
     (application :: <target-application>) => ()
-  thread-debug-message("Stopping target application temporarily");
+  debug-target-message(application, $debug-level,
+                       "Stopping target application temporarily");
   let stop-reason :: <stop-reason> =
     make(<temporary-internal-debugger-transaction-stop>);
   stop-application
@@ -57,17 +59,21 @@ end function;
 define method continue-target-application
     (application :: <target-application>, remote-thread)
     => ()
-  debugger-message("Selected Thread is %=", remote-thread);
+  debug-target-message(application, $debug-level,
+                       "Selected Thread is %=", remote-thread);
   application.application-selected-thread := remote-thread;
 
   if (current-thread() == application.manager-thread)
     application-continuation-pending(application);
   else
-    thread-debug-message("Continuing target application");
+    debug-target-message(application, $debug-level,
+                         "Continuing target application");
     with-lock(application.debugger-transaction)
-      thread-debug-message("Releasing debugger-transaction-notification");
+      debug-target-message(application, $debug-level,
+                           "Releasing debugger-transaction-notification");
       release(application.debugger-transaction-notification);
-      thread-debug-message("Waiting for debugger-transaction-complete");
+      debug-target-message(application, $debug-level,
+                           "Waiting for debugger-transaction-complete");
       wait-for(application.debugger-transaction-complete);
     end with-lock;
   end;
@@ -92,7 +98,8 @@ define method target-application-state (application :: <target-application>)
     application.been-managed? => #"closed";
     otherwise => #"uninitialized";
   end case;
-  thread-debug-message("target-application-state is %=", state);
+  debug-target-message(application, $debug-level,
+                       "target-application-state is %=", state);
   state
 end method;
 

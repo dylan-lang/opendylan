@@ -31,6 +31,16 @@ define function dbg-machine () => (machine :: <machine>);
   end if
 end function;
 
+define function test-debugger-message
+    (string :: <string>, #rest args) => ()
+  let target = *test-application-application*.application-target-app;
+  if (target)
+    apply(debug-target-message, target, $info-level, string, args)
+  else
+    apply(debug-message, string, args);
+  end if;
+end function;
+
 define constant $project-message-queue = make(<deque>);
 define constant $project-message-notification
   = make(<notification>, lock: make(<lock>));
@@ -94,8 +104,8 @@ end function;
 define function ensure-application-at-start ()
   if (*test-application-application*
         & *test-application-application*.application-state ~== #"closed")
-    debugger-message("Application in state %s, closing",
-                     *test-application-application*.application-state);
+    test-debugger-message("Application in state %s, closing",
+                          *test-application-application*.application-state);
     close-application(*test-application*, wait-for-termination?: #t)
   end if;
 
@@ -110,7 +120,8 @@ define function ensure-application-at-start ()
                        machine: machine);
 
   iterate loop (initialized? = #f, stopped? = #t, transient-bp-count = 0)
-    debugger-message("I=%= S=%= BP=%d", initialized?, stopped?, transient-bp-count);
+    test-debugger-message("I=%= S=%= BP=%d",
+                          initialized?, stopped?, transient-bp-count);
     unless (initialized? & stopped? & zero?(transient-bp-count))
       let message = await-project-message();
       select (message by instance?)
@@ -120,11 +131,11 @@ define function ensure-application-at-start ()
           error("run-application failed for %s",
                 message.message-project.project-name);
         <application-initialized-message> =>
-          debugger-message("  Application initialized");
+          test-debugger-message("  Application initialized");
           loop(#t, stopped?, transient-bp-count);
         <application-state-changed-message> =>
           let state = *test-application-application*.application-state;
-          debugger-message("  Application state is now %s", state);
+          test-debugger-message("  Application state is now %s", state);
           if (state == #"running")
             loop(initialized?, #f, transient-bp-count);
           else
@@ -133,7 +144,7 @@ define function ensure-application-at-start ()
         <single-breakpoint-state-change-message> =>
           let breakpoint = message.message-breakpoint;
           let state = message.message-breakpoint-state;
-          debugger-message
+          test-debugger-message
             ("  Breakpoint %s (%=) state is now %s",
              breakpoint,
              environment-object-id(*test-application*, breakpoint),
@@ -150,7 +161,7 @@ define function ensure-application-at-start ()
           end if;
         <application-threads-changed-message> =>
           for (thread in *test-application-application*.application-threads)
-            debugger-message
+            test-debugger-message
               ("  Thread %s (%s) index %s state %s suspended %=",
                thread,
                environment-object-primitive-name(*test-application*, thread),
@@ -160,7 +171,7 @@ define function ensure-application-at-start ()
           end for;
           loop(initialized?, stopped?, transient-bp-count);
         otherwise =>
-          debugger-message("%=", message);
+          test-debugger-message("%=", message);
           loop(initialized?, stopped?, transient-bp-count);
       end select;
     end unless;
@@ -171,10 +182,10 @@ define function close-debugging-test-project () => ()
   close-application(*test-application-application*);
   iterate loop()
     let state = *test-application-application*.application-state;
-    debugger-message("closing, state is %s", state);
+    test-debugger-message("closing, state is %s", state);
     if (state ~== #"closed")
       let message = await-project-message();
-      debugger-message("%=", message);
+      test-debugger-message("%=", message);
       loop();
     end if;
   end iterate;
@@ -313,7 +324,7 @@ define test interactivity-test ()
     clear-project-messages();
 
     let code = item.head;
-    debugger-message("Evaluate: %s", code);
+    test-debugger-message("Evaluate: %s", code);
 
     let transaction-id
       = project-execute-code(*test-application*, code, main-thread,
@@ -325,7 +336,7 @@ define test interactivity-test ()
       select (message by instance?)
         <application-state-changed-message> =>
           let state = *test-application-application*.application-state;
-          debugger-message("  Application state is now %s", state);
+          test-debugger-message("  Application state is now %s", state);
           select (state)
             #"stopped" =>
               #f;
@@ -334,7 +345,7 @@ define test interactivity-test ()
           end select;
 
         otherwise =>
-          debugger-message("%=", message);
+          test-debugger-message("%=", message);
           loop();
       end select;
     end iterate;
@@ -354,7 +365,7 @@ define test interactivity-test ()
       let value-string
         = print-environment-object-to-string
             (*test-application*, value, namespace: module);
-      debugger-message("  %s = %s", name, value-string);
+      test-debugger-message("  %s = %s", name, value-string);
       check-true("Return value", regex-position(pattern, value-string));
     end;
     dispose-interactor-return-values(*test-application*, transaction-id);

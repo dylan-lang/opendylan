@@ -40,6 +40,7 @@ void add_boundary_cache
 char out[1024];
 
 #ifdef DEBUGGING
+#include <stdio.h>
 #define debug_me(x, y) \
   sprintf(out, x, y); \
   debugger_message(out, 0, 0);
@@ -172,9 +173,9 @@ NUBINT
     }
     else {
       if (status) {
-        debug_me("no symbol found for addr\n",0 );
+        debug_me("no symbol found for addr", 0);
       } else {
-	debug_me("Error %x\n", GetLastError());
+        debug_me("SymFromAddr error %#x", GetLastError());
       }
       return((NUBINT) 0);
     }
@@ -217,7 +218,15 @@ NUBINT nub_find_symbol_in_library
   int               i = 0;
   int               j = 0;
 
-  debug_me("nub_find_symbol_in_library",0);
+#ifdef DEBUGGING
+  // Make a NUL-terminated copy of the name
+  for (;i < name_length; ++i) {
+    extended_name[i] = name[i];
+  }
+  extended_name[i] = '\0';
+  debug_me("nub_find_symbol_in_library %s", extended_name);
+  i = 0;
+#endif
 
   ensure_debug_information_for_library(process, module);
 

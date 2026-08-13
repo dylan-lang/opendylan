@@ -35,6 +35,9 @@ define abstract class <access-path> (<object>)
   slot access-path-abstract-handle :: <object>,
     init-value: #f;
 
+  slot access-path-log :: <log>;
+  constant slot access-path-log-lock :: <lock> = make(<lock>);
+
   constant slot symbol-file-locations :: <sequence>,
     init-value: #[],
     init-keyword: symbol-file-locations:;
@@ -178,6 +181,27 @@ define open generic make-access-connection
      #key) => (conn :: <access-connection>);
 
 
+define method initialize
+    (ap :: <access-path>, #key, #all-keys) => ()
+  next-method();
+  let ap-log = get-log("access-path") | make(<log>, name: "access-path");
+  ap.access-path-log := ap-log;
+  let debug-log = environment-variable("OPEN_DYLAN_DEBUGGING_LOG");
+  if (debug-log)
+    select (debug-log by \=)
+      "trace" => ap-log.log-level := $trace-level;
+      "debug" => ap-log.log-level := $debug-level;
+      "info" => ap-log.log-level := $info-level;
+      "warn", "warning" => ap-log.log-level := $warn-level;
+      "error" => ap-log.log-level := $error-level;
+      otherwise => #f;
+    end select;
+    add-target(ap-log,
+               make(<file-log-target>,
+                    pathname: "dylan-access-path.log"));
+  end if;
+end method;
+
 ///// INITIALIZE
 //    Initializes an instance of <application-access-path>, which includes
 //    firing up the remote process.
@@ -243,59 +267,43 @@ define method initialize (ap :: <core-file-access-path>, #key) => ()
   next-method();
 end method;
 
-
-
-/// Debugging the Debugger is like groping around in the dark.
-/// These functions will allow a full report to be generated for
-/// everything that ever took place on every thread on both sides
-/// of the tether during a debugger session.
-
-
-define variable *debugging-debugger?* = #f;
-
-define variable *debugger-stream* = #f;
-
-define variable *debugger-stream-count* = 0;
-
-define function make-debugger-stream(file-name :: <byte-string>)
-  *debugging-debugger?* := #t;
-
-  *debugger-stream* :=
-    make (<file-stream>,
-	  locator:   as(<file-locator>,
-			format-to-string(concatenate(file-name, ".%d"), *debugger-stream-count*)),
-	  direction: #"output");
-
-  *debugger-stream-count* := *debugger-stream-count* + 1;
-end function;
-
-// make-debugger-stream("U:\\nosa\\dylan\\admin\\logs\\debugging");
-
-define function close-debugger-stream()
-  if (*debugger-stream*)
-    close(*debugger-stream*);
+define function access-path-message
+    (ap :: <access-path>, level :: <log-level>, object :: <object>, #rest args)
+ => ()
+  with-lock (ap.access-path-log-lock)
+    apply(log-message, level, ap.access-path-log, object, args)
   end;
 end function;
 
+// Used by the nub for printing trace-level messages
 define function debugger-message
     (string :: <string>, #rest args) => ()
-  if (*debugging-debugger?*)
-    let string :: <byte-string> = as(<byte-string>, string);
-    if (*debugger-stream*)
-      apply(format, *debugger-stream*, concatenate("\n### ", string, "\n"), args);
-      // force-output(*debugger-stream*);
-    else
-      // apply(format-out, concatenate("\n### ", string, "\n"), args);
-      apply(nub-debug-message, string, args)
-    end if;
+  let string :: <byte-string> = as(<byte-string>, string);
+  let ap
+    = with-lock (*access-path-lock*)
+        first(*current-access-paths*, default: #f)
+      end with-lock;
+  if (ap)
+    apply(access-path-message, ap, $trace-level, string, args);
+  else
+    apply(debug-message, string, args);
   end if;
 end function;
 
+// Used by the nub for printing error-level messages
+// TODO: Rectification of names
 define function nub-debug-message
     (string :: <string>, #rest args) => ()
   let string :: <byte-string> = as(<byte-string>, string);
-  apply(debug-message, string, args)
-  // apply(format-out, concatenate("\n### ", string, "\n"), args);
+  let ap
+    = with-lock (*access-path-lock*)
+        first(*current-access-paths*, default: #f)
+      end with-lock;
+  if (ap)
+    apply(access-path-message, ap, $error-level, string, args);
+  else
+    apply(debug-message, string, args);
+  end if;
 end function;
 
 define function debugger-error

@@ -205,7 +205,7 @@ define open generic unhandled-continue-application
 define method suspend-thread
     (ap :: <access-path>, thread :: <remote-thread>) => ()
   if (~thread-suspended? (thread))
-    debugger-message("suspend-thread %=", thread);
+    access-path-message(ap, $debug-level, "suspend-thread %=", thread);
     thread-suspended?(thread) := #t;
     thread-state(thread) := "Suspended by debugger";
     suspend-application-thread (ap.connection, thread);
@@ -221,7 +221,7 @@ define open generic suspend-application-thread
 define method resume-thread
     (ap :: <access-path>, thread :: <remote-thread>) => ()
   if (thread-suspended? (thread))
-    debugger-message("resume-thread %=", thread);
+    access-path-message(ap, $debug-level, "resume-thread %=", thread);
     thread-suspended?(thread) := #f;
     thread-state(thread) := "[Can't get thread state]";
     resume-application-thread (ap.connection, thread);
@@ -236,7 +236,7 @@ end method;
 
 define inline method dylan-resume-thread
     (ap :: <access-path>, thread :: <remote-thread>) => ()
-  debugger-message("resume-thread %=", thread);
+  access-path-message(ap, $debug-level, "resume-thread %=", thread);
   thread-suspended?(thread) := #f;
   thread-state(thread) := "[Can't get thread state]";
 end method;
