@@ -806,24 +806,24 @@ creating a new servant of the appropriate class:
     => (account :: BankingDemo/<account>)
      with-connection(bank.connection)
        let query = make(<sql-statement>,
-   		     text: "SELECT Limit FROM Accounts "
-   		           "WHERE Name = ?",
-   		     output-indicator: #f);
+                        text: "SELECT Limit FROM Accounts "
+                              "WHERE Name = ?",
+                        output-indicator: #f);
        let result-set = execute(query, parameters: vector(name),
-   			     result-set-policy:
-   			       $scrollable-result-set-policy);
+                                result-set-policy:
+                                  $scrollable-result-set-policy);
        if (empty? (result-set))
          error (make(BankingDemo/bank/<nonExistentAccount>));
        elseif (result-set[0][0])
          as(BankingDemo/<checkingAccount>,
-   	 PortableServer/POA/servant-to-reference
-   	   (bank.poa, make(<checkingAccount-implementation>,
-   			   bank: bank, name: name)));
+            PortableServer/POA/servant-to-reference
+              (bank.poa, make(<checkingAccount-implementation>,
+                              bank: bank, name: name)));
        else
          as(BankingDemo/<account>,
-   	 PortableServer/POA/servant-to-reference
-   	   (bank.poa, make(<account-implementation>,
-   			   bank: bank, name: name)));
+            PortableServer/POA/servant-to-reference
+              (bank.poa, make(<account-implementation>,
+                              bank: bank, name: name)));
        end if;
      end with-connection;
    end method BankingDemo/bank/retrieveAccount;
@@ -844,11 +844,11 @@ the database by executing an SQL ``delete`` statement:
     => ()
      let account
        = Portableserver/POA/reference-to-servant(bank.poa,
-   					      account-reference);
+                                                 account-reference);
      with-connection(bank.connection)
        let query = make(<sql-statement>,
-   		     text: "DELETE FROM Accounts "
-   			   "WHERE Name = ?");
+                        text: "DELETE FROM Accounts "
+                              "WHERE Name = ?");
        execute(query, parameters: vector(account.name));
      end with-connection;
    end method BankingDemo/bank/closeAccount;

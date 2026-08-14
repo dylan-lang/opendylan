@@ -10,7 +10,7 @@
 project = 'Open Dylan'
 copyright = '2011-2026, Dylan Hackers'
 author = 'Dylan Hackers'
-release = '2026.1.0'
+release = '2026.2.0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -33,6 +33,9 @@ exclude_patterns = [
 show_authors = True
 templates_path = ['_templates']
 
+# Work around https://github.com/sphinx-doc/sphinx/issues/13904 Specifically, I (cgay)
+# couldn't figure out what was causing the corba-guide docs to trigger the bug.
+default_role = 'any'
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output

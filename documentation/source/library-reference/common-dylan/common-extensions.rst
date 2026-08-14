@@ -894,7 +894,7 @@ Control Flow
      .. code-block:: dylan
 
         when (*thread-count* = 0)
-	  exit-application(0)
+           exit-application(0)
         end;
 
 Convenience

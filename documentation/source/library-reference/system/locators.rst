@@ -577,9 +577,10 @@ The locators Module
    :slot locator-username: The user identifier
    :slot locator-password: The user password
    :operations: :gf:`locator-port`,
-		:gf:`locator-default-port`
+                :gf:`locator-default-port`
 
-   The locator includes information on the protocol, host-name, port, user and password of the machine.
+   The locator includes information on the protocol, host-name, port, user and password
+   of the machine.
 
    :seealso:
       :class:`<http-server>`

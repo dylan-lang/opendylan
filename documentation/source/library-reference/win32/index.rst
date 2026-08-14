@@ -425,13 +425,13 @@ The Win32-Kernel library provides the following utility functions.
      unioned).
 
      .. index::
-	single: check-win32-result function
-	single: ensure-no-win32-error function
-	single: functions; check-win32-result
-	single: functions; ensure-no-win32-error
-	single: functions; report-win32-error
-	single: functions; win32-error-message
-	single: report-win32-error function
+        single: check-win32-result function
+        single: ensure-no-win32-error function
+        single: functions; check-win32-result
+        single: functions; ensure-no-win32-error
+        single: functions; report-win32-error
+        single: functions; win32-error-message
+        single: report-win32-error function
 
      The *error-code* argument is either a Windows a Windows error code
      (such as returned by ``GetLastError``) or an ``SCODE`` (also known
