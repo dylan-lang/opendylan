@@ -1612,7 +1612,7 @@ and the following initialization keywords::
 
 It is an error to call these functions on instances of types other
 than those mapped from the IDL union definition. Furthermore the Dylan
-protocol functions:drm:`make` and :drm:`initialize` shall be sealed
+protocol functions :drm:`make` and :drm:`initialize` shall be sealed
 over the domain of the mapped class.
 
 The initialization keywords shall be mapped as for structs. However,

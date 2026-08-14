@@ -1242,7 +1242,7 @@ File-System module.
    :superclasses: :class:`<server-locator>`
 
    :seealso: :class:`<microsoft-unc-locator>`
-	     :class:`<microsoft-volume-locator>`
+             :class:`<microsoft-volume-locator>`
 
 .. class:: <microsoft-unc-locator>
    :sealed:

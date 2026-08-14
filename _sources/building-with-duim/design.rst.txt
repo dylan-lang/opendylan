@@ -172,7 +172,7 @@ if you create instances of ``<row-layout>`` and ``<column-layout>``
 explicitly using ``make``.
 
 .. note:: You may have to resize the window to see everything.
-	  
+
 .. index::
    single: radio boxes; using
    single: using; radio boxes

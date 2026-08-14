@@ -36,7 +36,10 @@
       }
     }
   }
-</style></head>
+</style>
+  
+  <link rel="me" href="https://fosstodon.org/@DylanLang" />
+</head>
   <body>
     
     <script>
@@ -1236,24 +1239,24 @@ creating a new servant of the appropriate class:</p>
 <span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">account</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">BankingDemo/&lt;account&gt;</span><span class="p">)</span>
 <span class="w">  </span><span class="n">with-connection</span><span class="p">(</span><span class="n">bank</span><span class="p">.</span><span class="n">connection</span><span class="p">)</span>
 <span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;sql-statement&gt;</span><span class="p">,</span>
-<span class="w">                  </span><span class="k">text:</span><span class="w"> </span><span class="s">&quot;SELECT Limit FROM Accounts &quot;</span>
-<span class="w">                        </span><span class="s">&quot;WHERE Name = ?&quot;</span><span class="p">,</span>
-<span class="w">                  </span><span class="k">output-indicator:</span><span class="w"> </span><span class="l">#f</span><span class="p">);</span>
+<span class="w">                     </span><span class="k">text:</span><span class="w"> </span><span class="s">&quot;SELECT Limit FROM Accounts &quot;</span>
+<span class="w">                           </span><span class="s">&quot;WHERE Name = ?&quot;</span><span class="p">,</span>
+<span class="w">                     </span><span class="k">output-indicator:</span><span class="w"> </span><span class="l">#f</span><span class="p">);</span>
 <span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="n">result-set</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span><span class="w"> </span><span class="k">parameters:</span><span class="w"> </span><span class="nb">vector</span><span class="p">(</span><span class="n">name</span><span class="p">),</span>
-<span class="w">                          </span><span class="k">result-set-policy:</span>
-<span class="w">                            </span><span class="no">$scrollable-result-set-policy</span><span class="p">);</span>
+<span class="w">                             </span><span class="k">result-set-policy:</span>
+<span class="w">                               </span><span class="no">$scrollable-result-set-policy</span><span class="p">);</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">empty?</span><span class="w"> </span><span class="p">(</span><span class="n">result-set</span><span class="p">))</span>
 <span class="w">      </span><span class="nb">error</span><span class="w"> </span><span class="p">(</span><span class="nb">make</span><span class="p">(</span><span class="n">BankingDemo/bank/&lt;nonExistentAccount&gt;</span><span class="p">));</span>
 <span class="w">    </span><span class="k">elseif</span><span class="w"> </span><span class="p">(</span><span class="n">result-set</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
 <span class="w">      </span><span class="nb">as</span><span class="p">(</span><span class="n">BankingDemo/&lt;checkingAccount&gt;</span><span class="p">,</span>
-<span class="w">      </span><span class="n">PortableServer/POA/servant-to-reference</span>
-<span class="w">        </span><span class="p">(</span><span class="n">bank</span><span class="p">.</span><span class="n">poa</span><span class="p">,</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;checkingAccount-implementation&gt;</span><span class="p">,</span>
-<span class="w">                        </span><span class="k">bank:</span><span class="w"> </span><span class="n">bank</span><span class="p">,</span><span class="w"> </span><span class="k">name:</span><span class="w"> </span><span class="n">name</span><span class="p">)));</span>
+<span class="w">         </span><span class="n">PortableServer/POA/servant-to-reference</span>
+<span class="w">           </span><span class="p">(</span><span class="n">bank</span><span class="p">.</span><span class="n">poa</span><span class="p">,</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;checkingAccount-implementation&gt;</span><span class="p">,</span>
+<span class="w">                           </span><span class="k">bank:</span><span class="w"> </span><span class="n">bank</span><span class="p">,</span><span class="w"> </span><span class="k">name:</span><span class="w"> </span><span class="n">name</span><span class="p">)));</span>
 <span class="w">    </span><span class="k">else</span>
 <span class="w">      </span><span class="nb">as</span><span class="p">(</span><span class="n">BankingDemo/&lt;account&gt;</span><span class="p">,</span>
-<span class="w">      </span><span class="n">PortableServer/POA/servant-to-reference</span>
-<span class="w">        </span><span class="p">(</span><span class="n">bank</span><span class="p">.</span><span class="n">poa</span><span class="p">,</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;account-implementation&gt;</span><span class="p">,</span>
-<span class="w">                        </span><span class="k">bank:</span><span class="w"> </span><span class="n">bank</span><span class="p">,</span><span class="w"> </span><span class="k">name:</span><span class="w"> </span><span class="n">name</span><span class="p">)));</span>
+<span class="w">         </span><span class="n">PortableServer/POA/servant-to-reference</span>
+<span class="w">           </span><span class="p">(</span><span class="n">bank</span><span class="p">.</span><span class="n">poa</span><span class="p">,</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;account-implementation&gt;</span><span class="p">,</span>
+<span class="w">                           </span><span class="k">bank:</span><span class="w"> </span><span class="n">bank</span><span class="p">,</span><span class="w"> </span><span class="k">name:</span><span class="w"> </span><span class="n">name</span><span class="p">)));</span>
 <span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
 <span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="n">with-connection</span><span class="p">;</span>
 <span class="k">end</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">BankingDemo/bank/retrieveAccount</span><span class="p">;</span>
@@ -1271,11 +1274,11 @@ the database by executing an SQL <code class="docutils literal notranslate"><spa
 <span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">()</span>
 <span class="w">  </span><span class="k">let</span><span class="w"> </span><span class="n">account</span>
 <span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">Portableserver/POA/reference-to-servant</span><span class="p">(</span><span class="n">bank</span><span class="p">.</span><span class="n">poa</span><span class="p">,</span>
-<span class="w">                                           </span><span class="n">account-reference</span><span class="p">);</span>
+<span class="w">                                              </span><span class="n">account-reference</span><span class="p">);</span>
 <span class="w">  </span><span class="n">with-connection</span><span class="p">(</span><span class="n">bank</span><span class="p">.</span><span class="n">connection</span><span class="p">)</span>
 <span class="w">    </span><span class="k">let</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="nc">&lt;sql-statement&gt;</span><span class="p">,</span>
-<span class="w">                  </span><span class="k">text:</span><span class="w"> </span><span class="s">&quot;DELETE FROM Accounts &quot;</span>
-<span class="w">                        </span><span class="s">&quot;WHERE Name = ?&quot;</span><span class="p">);</span>
+<span class="w">                     </span><span class="k">text:</span><span class="w"> </span><span class="s">&quot;DELETE FROM Accounts &quot;</span>
+<span class="w">                           </span><span class="s">&quot;WHERE Name = ?&quot;</span><span class="p">);</span>
 <span class="w">    </span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span><span class="w"> </span><span class="k">parameters:</span><span class="w"> </span><span class="nb">vector</span><span class="p">(</span><span class="n">account</span><span class="p">.</span><span class="n">name</span><span class="p">));</span>
 <span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="n">with-connection</span><span class="p">;</span>
 <span class="k">end</span><span class="w"> </span><span class="nb">method</span><span class="w"> </span><span class="n">BankingDemo/bank/closeAccount</span><span class="p">;</span>
@@ -1525,7 +1528,7 @@ connection to the bank, and exits, terminating the server application.</p>
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=b916904f"></script>
+</div><script src="../_static/documentation_options.js?v=2b694ea4"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=5fa4622c"></script>
