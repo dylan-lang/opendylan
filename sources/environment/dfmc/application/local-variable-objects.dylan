@@ -151,21 +151,15 @@ define method variable-value
   ignore(thread);
 
   let target = application.application-target-app;
-  let val = #f;
 
   // Ensuring a debugger transaction, get the <remote-value> for the
   // local variable, and construct the right kind of environment object
   // for it.
-  perform-debugger-transaction
-     (target,
-      method ()
-        ignore(variable.application-object-proxy.is-argument?);
-        val :=
-          make-environment-object-for-runtime-value
-             (application,
-              get-local-variable-value
-                (application, variable.application-object-proxy));
-      end method);
-
-  val;
+  with-debugger-transaction (target, name: "variable-value")
+    ignore(variable.application-object-proxy.is-argument?);
+    make-environment-object-for-runtime-value
+      (application,
+       get-local-variable-value
+         (application, variable.application-object-proxy))
+  end with-debugger-transaction
 end method;

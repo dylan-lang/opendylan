@@ -18,26 +18,19 @@ define method slot-class
 
   // Within a debugger transaction, call the DM to inspect the slot.
   // Build a <class-object> for the slot's owner class.
-  perform-debugger-transaction
-     (target,
-      method ()
-        let slot-descriptor =
-          runtime-proxy-to-remote-value(application, slot-proxy);
+  with-debugger-transaction (target, name: "slot-class")
+    let slot-descriptor
+      = runtime-proxy-to-remote-value(application, slot-proxy);
 
-        // Call the DM's inspector for slots.
-        let (basic-name, basic-type, owner-class, getter, setter,
-             init-key, init-req?, init-val, specializer)
-               = remote-slot-inspect(target, slot-descriptor);
+    // Call the DM's inspector for slots.
+    let (basic-name, basic-type, owner-class, getter, setter,
+         init-key, init-req?, init-val, specializer)
+      = remote-slot-inspect(target, slot-descriptor);
 
-        // We are interested in the owner class, so build the
-        // correct environment object for it.
-        class-object
-          := make-environment-object-for-runtime-value
-               (application, owner-class)
-      end method);
-
-  // Return the environment object.
-  class-object;
+    // We are interested in the owner class, so build the
+    // correct environment object for it.
+    make-environment-object-for-runtime-value(application, owner-class)
+  end with-debugger-transaction
 end method;
 
 
@@ -47,36 +40,31 @@ end method;
 
 define method slot-getter
     (application :: <dfmc-application>, slot :: <slot-object>)
-         => (getter :: false-or(<function-object>))
+ => (getter :: false-or(<function-object>))
   let target = application.application-target-app;
   let slot-proxy = slot.application-object-proxy;
   let function-object = #f;
 
   // Within a debugger transaction, call the DM to inspect the slot.
   // Build a <function-object> for the getter function, if it exists.
-  perform-debugger-transaction
-     (target,
-      method ()
-        let slot-descriptor =
-          runtime-proxy-to-remote-value(application, slot-proxy);
+  with-debugger-transaction (target, name: "slot-getter")
+    let slot-descriptor
+      = runtime-proxy-to-remote-value(application, slot-proxy);
 
-        // Call the DM's inspector for slots.
-        let (basic-name, basic-type, owner-class, getter, setter,
-             init-key, init-req?, init-val, specializer)
-               = remote-slot-inspect(target, slot-descriptor);
+    // Call the DM's inspector for slots.
+    let (basic-name, basic-type, owner-class, getter, setter,
+         init-key, init-req?, init-val, specializer)
+      = remote-slot-inspect(target, slot-descriptor);
 
-        // We are interested in the getter function, but it might be #f.
-        // If it is a <remote-value>, then build the correct environment
-        // object.
-        if (getter)
-          function-object
-            := make-environment-object-for-runtime-value
-                 (application, getter)
-        end if
-      end method);
-
-  // Return the environment object.
-  function-object;
+    // We are interested in the getter function, but it might be #f.
+    // If it is a <remote-value>, then build the correct environment
+    // object.
+    if (getter)
+      make-environment-object-for-runtime-value(application, getter)
+    else
+      #f
+    end if
+  end with-debugger-transaction
 end method;
 
 
@@ -86,36 +74,29 @@ end method;
 
 define method slot-setter
     (application :: <dfmc-application>, slot :: <slot-object>)
-         => (setter :: false-or(<function-object>))
+ => (setter :: false-or(<function-object>))
   let target = application.application-target-app;
   let slot-proxy = slot.application-object-proxy;
-  let function-object = #f;
-
   // Within a debugger transaction, call the DM to inspect the slot.
   // Build a <function-object> for the setter function, if it exists.
-  perform-debugger-transaction
-     (target,
-      method ()
-        let slot-descriptor =
-          runtime-proxy-to-remote-value(application, slot-proxy);
+  with-debugger-transaction (target, name: "slot-getter")
+    let slot-descriptor
+      = runtime-proxy-to-remote-value(application, slot-proxy);
 
-        // Call the DM's inspector for slots.
-        let (basic-name, basic-type, owner-class, getter, setter,
-             init-key, init-req?, init-val, specializer)
-               = remote-slot-inspect(target, slot-descriptor);
+    // Call the DM's inspector for slots.
+    let (basic-name, basic-type, owner-class, getter, setter,
+         init-key, init-req?, init-val, specializer)
+      = remote-slot-inspect(target, slot-descriptor);
 
-        // We are interested in the setter function, but it might be #f.
-        // If it is a <remote-value>, then build the correct environment
-        // object.
-        if (setter)
-          function-object
-            := make-environment-object-for-runtime-value
-                 (application, setter)
-        end if
-      end method);
-
-  // Return the environment object.
-  function-object;
+    // We are interested in the setter function, but it might be #f.
+    // If it is a <remote-value>, then build the correct environment
+    // object.
+    if (setter)
+      make-environment-object-for-runtime-value(application, setter)
+    else
+      #f
+    end if
+  end with-debugger-transaction
 end method;
 
 
@@ -132,24 +113,17 @@ define method slot-type
 
   // Within a debugger transaction, call the DM to inspect the slot.
   // Build a <symbol-object> for the init-keyword, if it exists.
-  perform-debugger-transaction
-     (target,
-      method ()
-        let slot-descriptor =
-          runtime-proxy-to-remote-value(application, slot-proxy);
+  with-debugger-transaction (target, name: "slot-type")
+    let slot-descriptor
+      = runtime-proxy-to-remote-value(application, slot-proxy);
 
-        // Call the DM's inspector for slots.
+    // Call the DM's inspector for slots.
+    let (basic-name, basic-type, owner-class, getter, setter,
+         init-key, init-req?, init-val, specializer)
+      = remote-slot-inspect(target, slot-descriptor);
 
-        let (basic-name, basic-type, owner-class, getter, setter,
-             init-key, init-req?, init-val, specializer)
-               = remote-slot-inspect(target, slot-descriptor);
-
-        type := make-environment-object-for-runtime-value
-                   (application, specializer);
-
-      end method);
-
-  type
+    make-environment-object-for-runtime-value(application, specializer)
+  end with-debugger-transaction
 end method;
 
 /* -- This is currently commented-out at the protocol level, so I need

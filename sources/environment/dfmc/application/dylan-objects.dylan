@@ -13,7 +13,7 @@ define method pair-head
     (application :: <dfmc-application>, pair-object :: <pair-object>)
  => (head-object :: false-or(<application-object>))
   let target = application.application-target-app;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "pair-head")
     let pair-value
       = runtime-proxy-to-remote-value
           (application, pair-object.application-object-proxy);
@@ -31,7 +31,7 @@ define method pair-tail
     (application :: <dfmc-application>, pair-object :: <pair-object>)
  => (tail-object :: false-or(<application-object>))
   let target = application.application-target-app;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "pair-tail")
     let pair-value
       = runtime-proxy-to-remote-value
           (application, pair-object.application-object-proxy);
@@ -55,7 +55,7 @@ define method collection-size
   // end value, so we'll return #f.
   let target = application.application-target-app;
   let has-end?
-    = with-debugger-transaction (target)
+    = with-debugger-transaction (target, name: "collection-size <range>")
         let range-value
           = runtime-proxy-to-remote-value
               (application, range-object.application-object-proxy);
@@ -78,7 +78,7 @@ define method range-start
     (application :: <dfmc-application>, range-object :: <range-object>)
  => (s :: <number-object>)
   let target = application.application-target-app;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "range-start")
     let range-value
       = runtime-proxy-to-remote-value
           (application, range-object.application-object-proxy);
@@ -96,7 +96,7 @@ define method range-end
     (application :: <dfmc-application>, range-object :: <range-object>)
  => (e :: false-or(<number-object>))
   let target = application.application-target-app;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "range-end")
     let range-value
       = runtime-proxy-to-remote-value
           (application, range-object.application-object-proxy);
@@ -116,7 +116,7 @@ define method range-by
     (application :: <dfmc-application>, range-object :: <range-object>)
  => (b :: false-or(<number-object>))
   let target = application.application-target-app;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "range-by")
     let range-value
       = runtime-proxy-to-remote-value
           (application, range-object.application-object-proxy);

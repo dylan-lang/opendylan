@@ -32,17 +32,15 @@ define method do-application-registers
         end method;
 
   let target = application.application-target-app;
-  perform-debugger-transaction
-    (target,
-     method ()
-       let path = target.debug-target-access-path;
-       do-registers
-         (method (r :: <remote-register>) => ()
-            f(wrap-for-env(r))
-          end method,
-          path,
-          type: convert-category(category))
-     end method);
+  with-debugger-transaction (target, name: "do-application-registers")
+    let path = target.debug-target-access-path;
+    do-registers
+      (method (r :: <remote-register>) => ()
+         f(wrap-for-env(r))
+       end method,
+       path,
+       type: convert-category(category));
+  end with-debugger-transaction;
 end method;
 
 
@@ -54,28 +52,22 @@ define method register-contents
      #key stack-frame-context = #f)
  => (obj :: false-or(<application-object>))
   let target = application.application-target-app;
-  let obj = #f;
-  perform-debugger-transaction
-    (target,
-     method ()
-       let path = target.debug-target-access-path;
-       let reg-proxy = reg.application-object-proxy;
-       let remote-thread = thread.application-object-proxy;
-       let frame = stack-frame-context &
-                   stack-frame-context.application-object-proxy;
-       let low-level-frame =
-         if (instance?(frame, <call-frame>))
-           call-frame-description(target, frame)
-         end if;
-       let context-sensitive-register =
-         active-register(path, remote-thread, reg-proxy);
-       let value =
-         read-value(path, context-sensitive-register,
-                    stack-frame: low-level-frame);
-       obj :=
-         make-environment-object-for-runtime-value(application, value);
-     end method);
-  obj
+  with-debugger-transaction (target, name: "register-contents")
+    let path = target.debug-target-access-path;
+    let reg-proxy = reg.application-object-proxy;
+    let remote-thread = thread.application-object-proxy;
+    let frame
+      = stack-frame-context & stack-frame-context.application-object-proxy;
+    let low-level-frame
+      = if (instance?(frame, <call-frame>))
+          call-frame-description(target, frame)
+        end if;
+    let context-sensitive-register
+      = active-register(path, remote-thread, reg-proxy);
+    let value = read-value(path, context-sensitive-register,
+                           stack-frame: low-level-frame);
+    make-environment-object-for-runtime-value(application, value)
+  end with-debugger-transaction
 end method;
 
 
@@ -87,29 +79,25 @@ define method register-contents-address
      #key stack-frame-context = #f)
  => (obj :: false-or(<address-object>))
   let target = application.application-target-app;
-  let obj = #f;
-  perform-debugger-transaction
-    (target,
-     method ()
-       let path = target.debug-target-access-path;
-       let reg-proxy = reg.application-object-proxy;
-       let remote-thread = thread.application-object-proxy;
-       let frame = stack-frame-context &
-                   stack-frame-context.application-object-proxy;
-       let low-level-frame =
-         if (instance?(frame, <call-frame>))
-           call-frame-description(target, frame)
-         end if;
-       let context-sensitive-register =
-         active-register(path, remote-thread, reg-proxy);
-       let value =
-         read-value(path, context-sensitive-register,
-                    stack-frame: low-level-frame);
-       obj := make-environment-object(<address-object>,
-                                      project: application.server-project,
-                                      application-object-proxy: value);
-     end method);
-  obj
+  with-debugger-transaction (target, name: "register-contents-address")
+    let path = target.debug-target-access-path;
+    let reg-proxy = reg.application-object-proxy;
+    let remote-thread = thread.application-object-proxy;
+    let frame
+      = stack-frame-context & stack-frame-context.application-object-proxy;
+    let low-level-frame
+      = if (instance?(frame, <call-frame>))
+          call-frame-description(target, frame)
+        end if;
+    let context-sensitive-register
+      = active-register(path, remote-thread, reg-proxy);
+    let value
+      = read-value(path, context-sensitive-register,
+                   stack-frame: low-level-frame);
+    make-environment-object(<address-object>,
+                            project: application.server-project,
+                            application-object-proxy: value);
+  end with-debugger-transaction
 end method;
 
 
@@ -118,30 +106,25 @@ end method;
 define method lookup-register-by-name
     (application :: <dfmc-application>, name :: <string>)
   => (reg :: false-or(<register-object>))
-  let reg = #f;
   let target = application.application-target-app;
-  perform-debugger-transaction
-    (target,
-     method ()
-       let path = target.debug-target-access-path;
-       block ()
-         let ap-reg =
-           enumeration-code-to-register(path, name);
-         reg :=
-           make-environment-object(<register-object>,
-                                   project: application.server-project,
-                                   application-object-proxy: ap-reg);
-       exception(<error>)
-         // TODO:
-         // Obviously, this blanket error-catching is wrong! Unfortunately,
-         // the underlying access-path API signals an undisciplined error
-         // if the lookup fails. The preferred fix would be to have the
-         // access-path library signal a _documented_ condition class,
-         // which we can just catch instead of <error>.
-         // However, the following is still the correct course of
-         // action.
-         reg := #f;
-       end block;
-     end method);
-  reg
+  with-debugger-transaction (target, name: "lookup-register-by-name")
+    let path = target.debug-target-access-path;
+    block ()
+      let ap-reg
+        = enumeration-code-to-register(path, name);
+      make-environment-object(<register-object>,
+                              project: application.server-project,
+                              application-object-proxy: ap-reg)
+    exception(<error>)
+      // TODO:
+      // Obviously, this blanket error-catching is wrong! Unfortunately,
+      // the underlying access-path API signals an undisciplined error
+      // if the lookup fails. The preferred fix would be to have the
+      // access-path library signal a _documented_ condition class,
+      // which we can just catch instead of <error>.
+      // However, the following is still the correct course of
+      // action.
+      #f
+    end block;
+  end with-debugger-transaction
 end method;

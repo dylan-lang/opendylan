@@ -38,22 +38,18 @@ define method lookup-component-by-name
                                   application-object-proxy: l)
         end method;
 
-  perform-debugger-transaction
-    (target,
-     method ()
-       let path = target.debug-target-access-path;
-       component :=
-         block(return)
-           do-libraries(method (l :: <remote-library>) => ()
-                          if (l.library-core-name = name)
-                            return(wrap-for-env(l))
-                          end if
-                        end method,
-                        path);
-           return(#f)
-         end block
-     end method);
-  component
+  with-debugger-transaction (target, name: "lookup-component-by-name")
+    let path = target.debug-target-access-path;
+    block(return)
+      do-libraries(method (l :: <remote-library>) => ()
+                     if (l.library-core-name = name)
+                       return(wrap-for-env(l))
+                     end if
+                   end method,
+                   path);
+      return(#f)
+    end block
+  end with-debugger-transaction
 end method;
 
 
@@ -70,13 +66,11 @@ define method do-application-components
                                   application-object-proxy: l)
         end method;
 
-  perform-debugger-transaction
-    (target,
-     method ()
-       let path = target.debug-target-access-path;
-       do-libraries(method (l :: <remote-library>) => ()
-                      f(wrap-for-env(l))
-                    end method,
-                    path);
-     end method);
+  with-debugger-transaction (target, name: "do-applicationn-components")
+    let path = target.debug-target-access-path;
+    do-libraries(method (l :: <remote-library>) => ()
+                   f(wrap-for-env(l))
+                 end method,
+                 path);
+  end with-debugger-transaction;
 end method;

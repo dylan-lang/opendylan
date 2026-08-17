@@ -20,7 +20,7 @@ define method application-thread-restarts
     (application :: <dfmc-application>, thread :: <thread-object>)
  => (restarts :: <sequence>)
   let target = application.application-target-app;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "application-thread-restarts")
     let project = application.server-project;
     let remote-thread = thread.application-object-proxy;
     let remote-restarts
@@ -42,7 +42,7 @@ define method application-restart-message
     (application :: <dfmc-application>, rst :: <restart-object>)
  => (description :: <string>)
   let target = application.application-target-app;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "application-restart-message")
     let remote-restart = rst.application-object-proxy;
     remote-restart-description(remote-restart)
   end
@@ -64,7 +64,7 @@ define method invoke-application-restart
 
   // We must be in a debugger transaction to do this.
   perform-continuing-debugger-transaction
-     (application, remote-thread,
+     (application, remote-thread, "invoke-application-restart",
       method ()
         // Get the DM to prepare for the restart
         signal-restart-on-thread(target, remote-thread, remote-restart);

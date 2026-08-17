@@ -84,7 +84,7 @@ define method maybe-initialize-cpu-profiling
         & application.application-loaded-dylan-library?)
     let target = application.application-target-app;
     debug-target-message(target, $debug-level, "Initializing CPU profiling");
-    with-debugger-transaction (target)
+    with-debugger-transaction (target, name: "maybe-initialize-cpu-profiling")
       start-profiling(target, class-profiling?: #f);
       profile-state.state-profile-initialized? := #t
     end
@@ -104,7 +104,7 @@ define method maybe-initialize-allocation-profiling
     //---*** Temporary hack, this may not always be what we want but
     //---*** for now switch on breakpoints on all threads
     let interactive-thread = application-open-interactor-thread(application);
-    with-debugger-transaction (target)
+    with-debugger-transaction (target, name: "maybe-initialize-allocation-profiling")
       if (interactive-thread)
         set-application-class-breakpoint(application, interactive-thread, #f)
       end;
@@ -142,7 +142,7 @@ define sealed method stop-profiling-application
         //---*** for now switch on breakpoints on all threads
         application-open-interactor-thread(application);
       end;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "stop-profiling-application")
     if (interactive-thread)
       debug-target-message(target, $debug-level, "Stopping general class breakpoint");
       let remote-thread = interactive-thread.application-object-proxy;

@@ -579,7 +579,7 @@ define method server-note-breakpoint-state-changed
      bp, state-change);
   unless (breakpoint-has-failed-already?(application, bp))
     let cc = use-project-proxy & use-project-proxy.project-browsing-context;
-    with-debugger-transaction (target)
+    with-debugger-transaction (target, name: "server-note-breakpoint-state-changed")
       block ()
         debug-target-message
           (target, $debug-level,

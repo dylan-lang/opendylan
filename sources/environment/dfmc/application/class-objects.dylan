@@ -14,7 +14,7 @@ define method singleton-value
     (application :: <dfmc-application>, singleton-obj :: <singleton-object>)
  => (val :: <environment-object>)
   let target = application.application-target-app;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "singleton-value")
     let proxy = singleton-obj.application-object-proxy;
     let remote-singleton = runtime-proxy-to-remote-value(application, proxy);
 
@@ -45,7 +45,7 @@ define method do-direct-subclasses
   // Within a debugger transaction, get an exploded view of the class.
   // For each direct subclass, intern a new proxy and build an environment
   // object. Apply the supplied function to it.
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "do-direct-subclasses")
     let proxy = ensure-application-value-proxy(application, class);
     let proxy-value = runtime-proxy-to-remote-value(application, proxy);
     let (direct-subs, direct-supers, all-supers,
@@ -71,7 +71,7 @@ define method do-direct-superclasses
   // Within a debugger transaction, get an exploded view of the class.
   // For each direct superclass, intern a new proxy and build an environment
   // object. Apply the supplied function to it.
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "do-direct-superclasses")
     let proxy = ensure-application-value-proxy(application, class);
     let proxy-value = runtime-proxy-to-remote-value(application, proxy);
     let (direct-subs, direct-supers, all-supers,
@@ -97,7 +97,7 @@ define method do-direct-methods
   // Within a debugger transaction, get an exploded view of the class.
   // For each direct method, intern a new proxy and build an environment
   // object. Apply the supplied function to it.
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "do-direct-methods")
     let proxy = ensure-application-value-proxy(application, class);
     let proxy-value = runtime-proxy-to-remote-value(application, proxy);
     let (direct-subs, direct-supers, all-supers,
@@ -123,7 +123,7 @@ define method do-direct-slots
   // Within a debugger transaction, get an exploded view of the class.
   // For each direct slot, intern a new proxy and build an environment
   // object. Apply the supplied function to it.
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "do-direct-slots")
     let proxy = ensure-application-value-proxy(application, class);
     let proxy-value = runtime-proxy-to-remote-value(application, proxy);
     let (direct-subs, direct-supers, all-supers,
@@ -149,7 +149,7 @@ define method do-all-superclasses
   // Within a debugger transaction, get an exploded view of the class.
   // For each superclass, intern a new proxy and build an environment
   // object. Apply the supplied function to it.
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "do-all-superclasses")
     let proxy = ensure-application-value-proxy(application, class);
     let proxy-value = runtime-proxy-to-remote-value(application, proxy);
     let (direct-subs, direct-supers, all-supers,
@@ -175,7 +175,7 @@ define method do-all-slots
   // Within a debugger transaction, get an exploded view of the class.
   // For each slot, intern a new proxy and build an environment
   // object. Apply the supplied function to it.
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "do-all-slots")
     let proxy = ensure-application-value-proxy(application, class);
     let proxy-value = runtime-proxy-to-remote-value(application, proxy);
     let (direct-subs, direct-supers, all-supers,

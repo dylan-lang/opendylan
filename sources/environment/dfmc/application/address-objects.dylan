@@ -92,7 +92,7 @@ define method address-to-string
   let value = address.application-object-proxy;
 
   // The access-path can perform this transformation for us.
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "address-to-string")
     remote-value-as-string(path, value, numerical-base-description(format))
   end
 end method address-to-string;
@@ -109,7 +109,7 @@ define method string-to-address
   let address = $invalid-address-object;
 
   // The access-path can perform this transformation for us.
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "string-to-address")
     let value
       = string-as-remote-value(path, representation,
                                numerical-base-description(format));
@@ -127,7 +127,7 @@ define method address-application-object
   => (obj :: <application-object>)
   let target = application.application-target-app;
   let obj = address;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "address-application-object")
     let value = address.application-object-proxy;
     make-environment-object-for-runtime-value
       (application, value, address?: #t)
@@ -141,7 +141,7 @@ define method application-object-address
     (application :: <dfmc-application>, obj :: <application-object>)
  => (address :: false-or(<address-object>))
   let target = application.application-target-app;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "application-object-address")
     let proxy = obj.application-object-proxy;
     if (proxy)
       let value = runtime-proxy-to-remote-value(application, proxy);
@@ -159,7 +159,7 @@ define method indirect-address
     (application :: <dfmc-application>, address :: <address-object>)
  => (i-address :: <address-object>)
   let target = application.application-target-app;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "indirect-address")
     block ()
       let raw-addr = address.application-object-proxy;
       let path = target.debug-target-access-path;
@@ -197,7 +197,7 @@ define method address-read-application-object
     (application :: <dfmc-application>, address :: <address-object>)
  => (obj :: false-or(<application-object>))
   let target = application.application-target-app;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "address-read-application-object")
     block ()
       let raw-addr = address.application-object-proxy;
       let val = read-dylan-value(target, raw-addr);
@@ -224,7 +224,7 @@ define method address-read-memory-contents
   let target = application.application-target-app;
   let sz = to-index - from-index + 1;
   let printable-strings = make(<vector>, size: sz, fill: "");
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "address-read-memory-contents")
     let path = target.debug-target-access-path;
     let base-addr = address.application-object-proxy;
     let next-addr
