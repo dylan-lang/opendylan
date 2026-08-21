@@ -324,9 +324,10 @@ define method do-generic-function-methods
     let (sig, method-values)
       = remote-generic-function-inspect(target, generic-value);
 
-    debug-out(#"dfmc-environment-application",
-              "Generic function: signature %=, methods %=",
-              sig, method-values);
+    debug-target-message
+      (target, $debug-level,
+       "Generic function: signature %=, methods %=",
+       sig, method-values);
 
     //---*** andrewa: this won't match up with the same methods
     //---*** from the compiler database. :-(
@@ -397,8 +398,10 @@ end method;
 define method method-generic-function
     (application :: <dfmc-application>, meth :: <method-object>)
  => (parent-gf :: false-or(<generic-function-object>))
-  debug-out(#"dfmc-environment-application",
-            "Ignoring method-generic-function in application server");
+  let target = application.application-target-app;
+  debug-target-message
+    (target, $warn-level,
+     "Ignoring method-generic-function in application server");
   #f
 end method;
 

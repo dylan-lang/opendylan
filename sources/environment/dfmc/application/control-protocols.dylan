@@ -395,9 +395,11 @@ end method close-application;
 
 define method invalidate-interactive-compiler-proxies
     (application :: <dfmc-application>) => ()
+  let target = application.application-target-app;
+  debug-target-message
+    (target, $warn-level,
+     "Failing to invalidate interactive proxies!");
   //---*** Need to do this!
-  debug-out(#"dfmc-environment-application",
-            "Failing to invalidate interactive proxies!");
   /*
   let project = database.server-project;
   let object-table = compiler-object-table(database);
