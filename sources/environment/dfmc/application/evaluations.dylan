@@ -150,16 +150,11 @@ define method project-runtime-context
      #key stack-frame = #f)
         => (runtime-context)
   let target = application.application-target-app;
-  let context = #f;
   let remote-thread = thread.application-object-proxy;
   let frame = stack-frame & stack-frame.application-object-proxy;
-  perform-debugger-transaction
-     (target,
-      method ()
-        context :=
-          current-runtime-context(target, remote-thread, stack-frame: frame);
-      end method);
-  context;
+  with-debugger-transaction (target, name: "project-runtime-context")
+    current-runtime-context(target, remote-thread, stack-frame: frame)
+  end with-debugger-transaction
 end method;
 
 
@@ -224,7 +219,7 @@ define method project-execute-code
     // Otherwise, call the project manager's API to actually download the
     // expression.
     perform-continuing-debugger-transaction
-      (app, remote-thread,
+      (app, remote-thread, "project-execute-code",
        method ()
 
          let evaluation-on-suspended-thread? =
@@ -310,35 +305,31 @@ define method execute-function
   let remote-thread = thread.application-object-proxy;
   let id = #f;
 
-  perform-debugger-transaction
-      (target,
-       method ()
-         let evaluation-on-suspended-thread? =
-           thread-permanently-suspended?(path, remote-thread);
+  with-debugger-transaction (target, name: "execute-function")
+    let evaluation-on-suspended-thread?
+      = thread-permanently-suspended?(path, remote-thread);
+    if (evaluation-on-suspended-thread?)
+      resume-evaluator-thread(app, thread.application-object-proxy);
+    end;
 
-         if (evaluation-on-suspended-thread?)
-           resume-evaluator-thread(app, thread.application-object-proxy);
-         end;
+    if (evaluation-on-suspended-thread?
+          | thread-available-for-interaction?(target, remote-thread))
+      let transaction :: <interactor-return-breakpoint> = function();
+      id := transaction;
 
-         if (evaluation-on-suspended-thread?
-             | thread-available-for-interaction?(target, remote-thread))
-           let transaction :: <interactor-return-breakpoint> = function();
-           id := transaction;
+      transaction.interaction-request-application-state := state;
 
-           transaction.interaction-request-application-state := state;
+      if (evaluation-on-suspended-thread?)
+        thread-state-transaction(app, remote-thread) := transaction;
+      end;
 
-           if (evaluation-on-suspended-thread?)
-             thread-state-transaction(app, remote-thread) := transaction;
-           end;
-
-           invoke-application-callback
-             (app, application-started-interaction-callback, thread, id);
-         else
-           error("Cannot perform the requested interaction");
-         end if;
-       end method);
-
-    id
+      invoke-application-callback
+      (app, application-started-interaction-callback, thread, id);
+    else
+      error("Cannot perform the requested interaction");
+    end if;
+  end with-debugger-transaction;
+  id
 end method;
 
 
@@ -363,18 +354,16 @@ define method fetch-interactor-return-values
     element(application.interactor-results-table, id, default: #f);
   if (remote-value-seq)
     env-obj-seq := make(<vector>, size: size(remote-value-seq));
-    perform-debugger-transaction
-       (target,
-        method ()
-          for (i from 0 below size(remote-value-seq))
-            env-obj-seq[i] :=
-              pair(head(remote-value-seq[i]),
-                   make-environment-object-for-runtime-value
-                      (application, tail(remote-value-seq[i])));
-          end for;
-        end method);
+    with-debugger-transaction (target, name: "fetch-interactor-return-values")
+      for (i from 0 below size(remote-value-seq))
+        env-obj-seq[i]
+          := pair(head(remote-value-seq[i]),
+                  make-environment-object-for-runtime-value
+                    (application, tail(remote-value-seq[i])));
+      end for;
+    end with-debugger-transaction;
   end if;
-  env-obj-seq;
+  env-obj-seq
 end method;
 
 

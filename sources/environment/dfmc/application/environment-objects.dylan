@@ -14,7 +14,7 @@ define method get-environment-object-primitive-name
     (application :: <dfmc-application>, obj :: <application-object>)
  => (name :: <string>)
   let target = application.application-target-app;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "get-environment-object-primitive-name")
     let proxy = obj.application-object-proxy;
     application-proxy-primitive-name(application, proxy, decorate?: #t)
   end
@@ -24,7 +24,7 @@ define method get-environment-object-primitive-name
     (application :: <dfmc-application>, obj :: <symbol-object>)
  => (name :: <string>)
   let target = application.application-target-app;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "get-environment-object-primitive-name")
     let proxy = obj.application-object-proxy;
     application-proxy-primitive-name(application, proxy, decorate?: #f)
   end
@@ -34,7 +34,7 @@ define method get-environment-object-primitive-name
     (application :: <dfmc-application>, obj :: <number-object>)
  => (name :: <string>)
   let target = application.application-target-app;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "get-environment-object-primitive-name")
     let proxy = obj.application-object-proxy;
     application-proxy-primitive-name(application, proxy, decorate?: #f)
   end
@@ -46,7 +46,7 @@ define method number-object-to-string
           prefix? :: <boolean> = #t)
  => (name :: <string>)
   let target = application.application-target-app;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "number-object-to-string")
     let proxy = obj.application-object-proxy;
     let value = runtime-proxy-to-remote-value(application, proxy);
     let text = print-dylan-object(target, value, format: format);
@@ -68,7 +68,7 @@ define method get-environment-object-primitive-name
     (application :: <dfmc-application>, obj :: <character-object>)
  => (name :: <string>)
   let target = application.application-target-app;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "get-environment-object-primitive-name")
     let proxy = obj.application-object-proxy;
     application-proxy-primitive-name(application, proxy, decorate?: #f)
   end
@@ -78,7 +78,7 @@ define method get-environment-object-primitive-name
     (application :: <dfmc-application>, obj :: <string-object>)
  => (name :: <string>)
   let target = application.application-target-app;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "get-environment-object-primitive-name")
     let proxy = obj.application-object-proxy;
     application-proxy-primitive-name(application, proxy, decorate?: #f)
   end
@@ -88,7 +88,7 @@ define method get-environment-object-primitive-name
     (application :: <dfmc-application>, obj :: <boolean-object>)
  => (name :: <string>)
   let target = application.application-target-app;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "get-environment-object-primitive-name")
     let proxy = obj.application-object-proxy;
     application-proxy-primitive-name(application, proxy, decorate?: #f)
   end

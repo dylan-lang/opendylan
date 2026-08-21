@@ -16,17 +16,10 @@ define method find-application-proxy
   let target = application.application-target-app;
   let (binding-name, module-name, library-name)
     = definition-id-to-string-triple(id);
-  let proxy = #f;
-  perform-debugger-transaction
-    (target,
-     method ()
-       proxy :=
-         application-name-to-runtime-proxy(application,
-                                           binding-name,
-                                           module-name,
-                                           library-name)
-     end method);
-  proxy;
+  with-debugger-transaction (target, name: "find-application-proxy")
+    application-name-to-runtime-proxy
+      (application, binding-name, module-name, library-name)
+  end with-debugger-transaction;
 end method;
 
 

@@ -107,8 +107,11 @@ define method process-next-interaction-request
   let path = target.debug-target-access-path;
   let state-model = thread-state-model(application, thread);
   let requests-pending? =
-     (state-model.thread-state-interactor-queue.size > 0);
-  if (requests-pending? & thread-available-for-interaction?(target, thread))
+    (state-model.thread-state-interactor-queue.size > 0);
+  let tafi? = thread-available-for-interaction?(target, thread);
+  debug-target-message(target, $debug-level, "requests-pending?=%= tafi?(%=)=%=",
+                   requests-pending?, thread, tafi?);
+  if (requests-pending? & tafi?)
     if (thread-permanently-suspended?(path, thread))
       error("Suspended thread cannot have pending interaction requests");
     end if;
@@ -204,7 +207,7 @@ define method application-threads
   if (application-tethered?(application))
     let target = application.application-target-app;
     let path = target.debug-target-access-path;
-    with-debugger-transaction (target)
+    with-debugger-transaction (target, name: "application-threads")
       let i = 0;
       let thread-sequence
         = make(<vector>, size: number-of-active-threads(path));
@@ -241,7 +244,7 @@ define method thread-complete-stack-trace
   // has been closed), then return whatever the stack trace was the last
   // time we examined it.
 
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "thread-complete-stack-trace")
     let top-dm-frame = first-stack-frame(target, remote-thread);
     let this-frame = top-dm-frame;
     let all-frames = make(<stretchy-vector>);
@@ -291,12 +294,14 @@ end method;
 define method create-application-thread
     (application :: <dfmc-application>, title :: <string>)
  => (thread :: <thread-object>)
+  let target = application.application-target-app;
+  debug-target-message
+    (target, $debug-level, "create-application-thread: %s", title);
   unless (application.dylan-thread-manager)
     error("Thread Manager does not exist: Cannot create a new application thread");
   end;
-  let target = application.application-target-app;
   let path = target.debug-target-access-path;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "create-application-thread")
     block ()
       unless (thread-available-for-interaction?
                 (target, application.dylan-thread-manager))
@@ -343,7 +348,7 @@ define method suspend-application-thread
     error("Permission denied: This is a reserved application thread");
   end if;
 
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "suspend-application-thread")
      if (thread-permanently-suspended?(path, remote-thread))
        error("This thread has already been suspended");
      end if;
@@ -377,7 +382,7 @@ define method resume-application-thread
     error("Resume failed: this is a special thread that has been spawned for interaction");
   end if;
 
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "resume-application-thread")
      unless (thread-permanently-suspended?(path, remote-thread))
        error("This thread is not currently suspended");
      end unless;
@@ -398,7 +403,7 @@ define method thread-current-interactor-level
   => (level :: <integer>)
   let target = application.application-target-app;
   let remote-thread = thread.application-object-proxy;
-  with-debugger-transaction(target)
+  with-debugger-transaction(target, name: "thread-current-interactor-level")
     // Ask the DM for the definitive value
     get-thread-interactor-level(target, remote-thread)
   end
@@ -437,7 +442,7 @@ define method add-application-object-to-thread-history
      object :: <application-object>)
   => (history-varname :: false-or(<string>))
   let target = application.application-target-app;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "add-application-object-to-thread-history")
     let proxy = object.application-object-proxy;
     if (proxy)
       let value = runtime-proxy-to-remote-value(application, proxy);
@@ -528,7 +533,7 @@ define method application-available-interactor-thread
   => (thread-or-bust :: false-or(<thread-object>))
   let target = application.application-target-app;
   let path = target.debug-target-access-path;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "application-available-interactor-thread")
     block (return)
       do-threads(method (t :: <remote-thread>) => ()
                    if (thread-available-for-interaction?(target, t))
@@ -569,7 +574,7 @@ define method application-open-interactor-thread
   let path = target.debug-target-access-path;
   let interactive-threads? = application.dylan-thread-manager & #t;
   let thread :: <thread-object>
-    = with-debugger-transaction (target)
+    = with-debugger-transaction (target, name: "application-open-interactor-thread")
         block (return)
           do-threads(method (t :: <remote-thread>) => ()
                        unless (reserved-interactive-thread?
@@ -670,6 +675,9 @@ define method initialize-interactive-threads
   => ()
   // Spawn these three interactive threads after
   // library initialization is complete
+  let target = application.application-target-app;
+  debug-target-message
+    (target, $debug-level, "initialize-interactive-threads %=", thread);
 
   // The Thread Manager is explicitly reserved for spawning
   // new application threads by running a particular deemed
@@ -687,10 +695,7 @@ define method initialize-interactive-threads
                              thread: thread);
 
   // Register this thread as a reserved Spy Thread in the debug-target
-  use-thread-for-spy-functions
-    (application.application-target-app,
-     spy-thread,
-     reserve?: #t);
+  use-thread-for-spy-functions(target, spy-thread, reserve?: #t);
 
   // In addition, a regular interactive thread is spawned at
   // the same time

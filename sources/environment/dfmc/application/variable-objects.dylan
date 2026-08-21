@@ -106,24 +106,18 @@ define method variable-value (application :: <dfmc-application>,
                               #key thread = #f)
     => (value :: false-or(<application-object>));
   let target = application.application-target-app;
-  let value = #f;
-
-  perform-debugger-transaction
-    (target,
-     method () => ()
-       let proxy =
-          ensure-application-global-variable-proxy(application, variable);
-       let remote-value =
-         if (proxy)
-           get-application-variable-value(application, proxy);
-         else
-           dylan-runtime-unbound-marker(target)
-         end if;
-       value := make-environment-object-for-runtime-value
-                   (application, remote-value);
-     end);
-
-  value;
+  with-debugger-transaction (target, name: "variable-value")
+    let proxy
+      = ensure-application-global-variable-proxy(application, variable);
+    let remote-value
+      = if (proxy)
+          get-application-variable-value(application, proxy);
+        else
+          dylan-runtime-unbound-marker(target)
+        end if;
+    make-environment-object-for-runtime-value
+      (application, remote-value)
+  end with-debugger-transaction
 end method;
 
 
@@ -137,22 +131,17 @@ define method variable-value (application :: <dfmc-application>,
   // At the moment, constants are proxied in the same way as
   // thread-global variables, so this method is identical. This
   // may need to change one day.
-  perform-debugger-transaction
-    (target,
-     method () => ()
-       let proxy =
-          ensure-application-global-variable-proxy(application, variable);
-       let remote-value =
-         if (proxy)
-           get-application-variable-value(application, proxy);
-         else
-           dylan-runtime-unbound-marker(target)
-         end if;
-       value := make-environment-object-for-runtime-value
-                   (application, remote-value);
-     end);
-
-  value;
+  with-debugger-transaction (target, name: "variable-value")
+    let proxy
+      = ensure-application-global-variable-proxy(application, variable);
+    let remote-value
+      = if (proxy)
+          get-application-variable-value(application, proxy);
+        else
+          dylan-runtime-unbound-marker(target)
+        end if;
+    make-environment-object-for-runtime-value(application, remote-value)
+  end with-debugger-transaction
 end method;
 
 
@@ -161,25 +150,18 @@ define method variable-value (application :: <dfmc-application>,
                               #key thread = #f)
     => (value :: false-or(<application-object>));
   let target = application.application-target-app;
-  let value = #f;
-
-  perform-debugger-transaction
-    (target,
-     method () => ()
-       let proxy =
-           ensure-application-thread-variable-proxy(application, variable);
-       let remote-value =
-         if (proxy)
-           get-application-variable-value
-              (application, proxy, thread: thread.application-object-proxy);
+  with-debugger-transaction (target, name: "variable-value")
+    let proxy
+      = ensure-application-thread-variable-proxy(application, variable);
+    let remote-value
+      = if (proxy)
+          get-application-variable-value
+            (application, proxy, thread: thread.application-object-proxy);
          else
-           dylan-runtime-unbound-marker(target)
-         end if;
-       value := make-environment-object-for-runtime-value
-                   (application, remote-value);
-     end);
-
-  value;
+          dylan-runtime-unbound-marker(target)
+        end if;
+    make-environment-object-for-runtime-value(application, remote-value)
+  end with-debugger-transaction
 end method;
 
 

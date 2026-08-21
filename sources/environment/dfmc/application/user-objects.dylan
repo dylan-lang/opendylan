@@ -23,7 +23,7 @@ define method user-object-slot-value
   // find a match between the desired slot name, and the name of a slot
   // in the instance. If we find a match, we return and environment object
   // for the corresponding slot value.
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "user-object-slot-value")
     let proxy = obj.application-object-proxy;
     let class-proxy
       = exchange-value-proxy-for-browsable-class-proxy(application, proxy);
@@ -67,7 +67,7 @@ define method user-object-slot-value
   // find a match between the desired slot name, and the name of a slot
   // in the instance. If we find a match, we return and environment object
   // for the corresponding slot value.
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "user-object-slot-value")
     let proxy = obj.application-object-proxy;
     let class-proxy
       = exchange-value-proxy-for-browsable-class-proxy(application, proxy);

@@ -15,35 +15,29 @@ define method composite-object-size
      #key inherited? = #f)
         => (sz :: <integer>)
   let target = application.application-target-app;
-  let sz = 0;
 
   // Within a debugger transaction, get the proxy for this composite
   // object, and call the DM to calculate the total number of slots
   // in the object.
-  perform-debugger-transaction
-    (target,
-     method ()
-       let proxy = ro.application-object-proxy;
-       let proxy-value = runtime-proxy-to-remote-value(application, proxy);
-       let (byte-size, fixed-count, element-count)
-         = dylan-object-size(target, proxy-value);
-       let (class, incarnation, current-incarnation, immediate?)
-         = dylan-object-class(target, proxy-value);
-       let class-proxy =
-         exchange-value-proxy-for-browsable-class-proxy
-           (application, proxy);
-       if (class-proxy)
-         let (slots, navigation, repeat, count-offset, element-size,
-              element-offset, class-slot-count)
-            = class-proxy-browser-information
-                (application, class-proxy, incarnation: incarnation);
-         sz := fixed-count + class-slot-count;
-       else
-         sz := fixed-count;
-       end if;
-     end method);
-
-  sz;
+  with-debugger-transaction (target, name: "composite-object-size")
+    let proxy = ro.application-object-proxy;
+    let proxy-value = runtime-proxy-to-remote-value(application, proxy);
+    let (byte-size, fixed-count, element-count)
+      = dylan-object-size(target, proxy-value);
+    let (class, incarnation, current-incarnation, immediate?)
+      = dylan-object-class(target, proxy-value);
+    let class-proxy
+      = exchange-value-proxy-for-browsable-class-proxy(application, proxy);
+    if (class-proxy)
+      let (slots, navigation, repeat, count-offset, element-size,
+           element-offset, class-slot-count)
+        = class-proxy-browser-information
+        (application, class-proxy, incarnation: incarnation);
+      fixed-count + class-slot-count
+    else
+      fixed-count
+    end if
+  end with-debugger-transaction
 end method;
 
 
@@ -64,58 +58,55 @@ define method composite-object-contents
   // Within a debugger transaction, get the proxy for this composite
   // object, and exchange it for its class proxy. Get the browser
   // navigation info from the class, and use that to unpick the object.
-  perform-debugger-transaction
-    (target,
-     method ()
-       let proxy = ro.application-object-proxy;
-       let class-proxy =
-         exchange-value-proxy-for-browsable-class-proxy
-           (application, proxy);
-       if (class-proxy)
-         let proxy-value = runtime-proxy-to-remote-value(application, proxy);
-         let (class, incarnation, current-incarnation, immediate?)
-           = dylan-object-class(target, proxy-value);
-         let (slots, navigation, repeat, count-offset, element-size,
-              element-offset, class-slot-count)
-            = class-proxy-browser-information
-                (application, class-proxy, incarnation: incarnation);
-         let class-object =
-           runtime-proxy-to-remote-value(application, class-proxy);
-         let (byte-size, fixed-count, element-count)
-            = dylan-object-size(target, proxy-value);
-         let (class-slot-names, class-slots, class-slot-values)
-           = dylan-class-slot-storage
-                (target, class-object, use-incarnation: incarnation);
-         if (repeat)
-           names := make(<vector>, size: fixed-count + 1 + class-slot-count);
-           vals := make(<vector>, size: fixed-count + 1 + class-slot-count);
-         else
-           names := make(<vector>, size: fixed-count + class-slot-count);
-           vals := make(<vector>, size: fixed-count + class-slot-count);
-         end if;
-         let i = 0;
-         for (j from 0 below class-slot-count)
-           names[i] := class-slot-names[j];
-           vals[i] :=
-             make-environment-object-for-runtime-value
+  with-debugger-transaction (target, name: "composite-object-contents")
+    let proxy = ro.application-object-proxy;
+    let class-proxy
+      = exchange-value-proxy-for-browsable-class-proxy(application, proxy);
+    if (class-proxy)
+      let proxy-value = runtime-proxy-to-remote-value(application, proxy);
+      let (class, incarnation, current-incarnation, immediate?)
+        = dylan-object-class(target, proxy-value);
+      let (slots, navigation, repeat, count-offset, element-size,
+           element-offset, class-slot-count)
+        = class-proxy-browser-information
+        (application, class-proxy, incarnation: incarnation);
+      let class-object
+        = runtime-proxy-to-remote-value(application, class-proxy);
+      let (byte-size, fixed-count, element-count)
+        = dylan-object-size(target, proxy-value);
+      let (class-slot-names, class-slots, class-slot-values)
+        = dylan-class-slot-storage(target, class-object,
+                                   use-incarnation: incarnation);
+      if (repeat)
+        names := make(<vector>, size: fixed-count + 1 + class-slot-count);
+        vals := make(<vector>, size: fixed-count + 1 + class-slot-count);
+      else
+        names := make(<vector>, size: fixed-count + class-slot-count);
+        vals := make(<vector>, size: fixed-count + class-slot-count);
+      end if;
+      let i = 0;
+      for (j from 0 below class-slot-count)
+        names[i] := class-slot-names[j];
+        vals[i]
+          := make-environment-object-for-runtime-value
                (application, class-slot-values[i]);
-           i := i + 1;
-         end for;
-         for (name-offset-pair in slots)
-           let slot-name = head(name-offset-pair);
-           let slot-value =
-             read-dylan-value(target,
-                              indexed-remote-value(proxy-value,
-                                                   tail(name-offset-pair)));
-           names[i] := slot-name;
-           vals[i] :=
-             make-environment-object-for-runtime-value
+        i := i + 1;
+      end for;
+      for (name-offset-pair in slots)
+        let slot-name = head(name-offset-pair);
+        let slot-value
+          = read-dylan-value(target,
+                             indexed-remote-value(proxy-value,
+                                                  tail(name-offset-pair)));
+        names[i] := slot-name;
+        vals[i]
+          := make-environment-object-for-runtime-value
                (application, slot-value);
-           i := i + 1;
-         end for;
-       end if
-     end method);
+        i := i + 1;
+      end for;
+    end if
+  end with-debugger-transaction;
 
-  values(names, vals);
+  values(names, vals)
 end method;
 

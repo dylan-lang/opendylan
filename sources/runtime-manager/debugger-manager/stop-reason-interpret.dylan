@@ -42,6 +42,8 @@ define method interpret-stop-reason
   let path = application.debug-target-access-path;
   let interesting-debug-points? = #f;
 
+  debug-target-message(application, $debug-level,
+                       "Interpret stop reason %=", stop-reason);
   select (stop-reason by instance?)
     <invoke-debugger-stop-reason> =>
        // If this is a dylan-level invocation of the debugger,
@@ -361,6 +363,9 @@ define method interpret-stop-reason
       maybe-modified-stop-reason := stop-reason;
 
   end select;
+  debug-target-message
+    (application, $debug-level,
+     "Stop reason modified to %=", maybe-modified-stop-reason);
   values(maybe-modified-stop-reason, interesting-debug-points?, stop-reason);
 end method;
 

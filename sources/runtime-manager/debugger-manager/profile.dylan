@@ -473,7 +473,8 @@ define method control-profiling
 	cerror("Continue anyway",
 	       "Failed to enable class profiling")
       end;
-      debug-out(#"debugger-manager", "Class profiling enabled");
+      debug-target-message
+        (application, $info-level, "Class profiling enabled");
     interval =>
       profile-state.profile-interval := interval;
       profile-state.profile-breakpoints := #[];
@@ -561,7 +562,8 @@ define method enable-class-profiling
 		     callback: always(#f)));
     #t
   else
-    debug-out(#"debugger-manager", "Failed to start class profiling")
+    debug-target-message
+      (application, $error-level, "Failed to start class profiling")
   end
 end method enable-class-profiling;
 

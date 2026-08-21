@@ -259,8 +259,9 @@ define method instruct-thread-to-step-into
             success? := #t;
             dm-thread.stepping-mode := $thread-stepping-into;
           else
-            debug-out(#"debugger-manager",
-                      "DM: Function register live but not a function!?");
+            debug-target-message
+              (application, $error-level,
+               "DM: Function register live but not a function!?");
             success? := #f;
           end if;
         else
@@ -274,8 +275,9 @@ define method instruct-thread-to-step-into
           dm-thread.stepping-mode := $thread-stepping-into;
         end if;
       else
-        debug-out(#"debugger-manager",
-                  "DM: Destination for step-into could not be computed");
+        debug-target-message
+          (application, $error-level,
+           "DM: Destination for step-into could not be computed");
         success? := #f;
       end if
     end if;

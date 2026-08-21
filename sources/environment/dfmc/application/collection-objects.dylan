@@ -13,7 +13,7 @@ define method collection-size
     (application :: <dfmc-application>, collection :: <collection-object>)
  => (size :: <integer>)
   let target = application.application-target-app;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "collection-size")
     let proxy = collection.application-object-proxy;
     let cl = runtime-proxy-to-remote-value(application, proxy);
     remote-collection-size(target, cl)
@@ -115,7 +115,7 @@ define method do-collection-contents
   // subset of the collection. That done, construct application environment
   // objects for each key.
 
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "do-collection-contents")
     let proxy-value = runtime-proxy-to-remote-value(application, proxy);
     let (key-vals, el-vals)
       = remote-collection-inspect(target, proxy-value,

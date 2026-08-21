@@ -72,7 +72,7 @@ define method stack-frame-function
     (application :: <dfmc-application>, sf :: <stack-frame-object>)
  => (func :: false-or(<application-code-object>))
   let target = application.application-target-app;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "stack-frame-function")
     let project = application.server-project;
     let dm-frame = sf.application-object-proxy;
     let (location, exact?)
@@ -96,7 +96,7 @@ define method stack-frame-source-location
     (application :: <dfmc-application>, sf :: <stack-frame-object>)
  => (location :: false-or(<source-location>), exact? :: <boolean>)
   let target = application.application-target-app;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "stack-frame-source-location")
     let dm-frame = sf.application-object-proxy;
     source-location-from-frame-proxy(application, dm-frame)
   end
@@ -128,7 +128,7 @@ define method stack-frame-type
     (application :: <dfmc-application>, sf :: <stack-frame-object>)
  => (type :: <symbol>)
   let target = application.application-target-app;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "stack-frame-type")
     let dm-frame = sf.application-object-proxy;
     if (instance?(dm-frame, <call-frame>))
       if (dylan-call-frame?(target, dm-frame))
@@ -153,7 +153,7 @@ define method stack-frame-local-variables
     (application :: <dfmc-application>, sf :: <stack-frame-object>)
  => (locvars :: <sequence>)
   let target = application.application-target-app;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "stack-frame-local-variables")
     let dm-frame = sf.application-object-proxy;
     let var-seq = all-frame-local-variables(application, dm-frame);
     let count = size(var-seq);
@@ -177,7 +177,7 @@ define method stack-frame-local-variable-count
     (application :: <dfmc-application>, sf :: <stack-frame-object>)
  => (count :: <integer>)
   let target = application.application-target-app;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "stack-frame-local-variable-count")
     let dm-frame = sf.application-object-proxy;
     count-frame-local-variables(application, dm-frame)
   end

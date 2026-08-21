@@ -315,7 +315,8 @@ define method perform-application-transaction
  => (#rest values)
   let target = application.application-target-app;
   if (target)
-    perform-debugger-transaction(target, function)
+    perform-debugger-transaction(target, function,
+                                 name: "perform-application-transaction")
   else
     function()
   end

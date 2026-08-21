@@ -256,7 +256,7 @@ define method application-object-class
     (application :: <dfmc-application>, obj :: <application-object>)
  => (class-obj :: false-or(<class-object>))
   let target = application.application-target-app;
-  with-debugger-transaction (target)
+  with-debugger-transaction (target, name: "application-object-class")
     let proxy = obj.application-object-proxy;
     if (proxy)
       let proxy-value = runtime-proxy-to-remote-value(application, proxy);

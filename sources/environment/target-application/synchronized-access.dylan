@@ -45,7 +45,7 @@ end macro with-debugger-transaction;
 
 define method perform-debugger-transaction
     (application :: <target-application>, transaction :: <function>,
-     #key continue)
+     #key name = "?", continue)
  => (#rest results)
   if (application.performing-debugger-transaction?)
     assert(~continue,
@@ -56,6 +56,8 @@ define method perform-debugger-transaction
           block()
             transaction();
           exception(<abort>)
+            debug-target-message
+              (application, $error-level, "Aborted transaction %s", name);
             values(); // No action.
           end block;
         end method;
@@ -84,8 +86,9 @@ define method perform-debugger-transaction
           if (application.under-management?)
           temporary-stop? := application-temporary-stop?(application);
 
-            debug-target-message(application, $debug-level,
-                                 "Performing debugger transaction");
+            debug-target-message
+              (application, $debug-level,
+               "[[ debugger transaction %s", name);
           block()
             application.thread-being-served := transaction-thread;
             do-transaction();
@@ -98,14 +101,25 @@ define method perform-debugger-transaction
         // Continue the application only if explicitly requested to do
         // so by clients, or if we explicitly stopped the running application
         if (continue)
-          debug-target-message(application, $debug-level,
-                               "perform-debugger-transaction: continue application");
+          debug-target-message
+            (application, $debug-level,
+             "   debugger transaction %s: invoking continuation", name);
           continue();
+          debug-target-message
+            (application, $debug-level, "]] debugger transaction %s", name);
         elseif (temporary-stop?)
-          debug-target-message(application, $debug-level,
-                               "temporary-stop-reason for interrupting application");
+          debug-target-message
+            (application, $debug-level,
+             "]] debugger transaction %s: temporary-stop-reason "
+               "for interrupting application, continuing",
+             name);
           continue-target-application(application,
                                       application.application-selected-thread);
+        else
+          debug-target-message
+            (application, $debug-level,
+             "]] debugger transaction %s: remaining stopped",
+             name);
         end if
       end
     end with-lock;

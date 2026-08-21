@@ -60,7 +60,8 @@ end method;
 
 define method dispose-all-state (application :: <debug-target>) => ()
   let access-path = application.debug-target-access-path;
-
+  debug-target-message
+    (application, $debug-level, "dispose-all-state after transaction");
   do-threads
   (method(thr :: <remote-thread>)
     if (thr.thread-suspended?)
@@ -89,6 +90,7 @@ define method open-debugger-transaction (application :: <debug-target>)
 //    ensure-mm-function-info-initialized(application);
 //    step-all-threads-out-of-mm(application);
 //    mm-start-debugger-transaction(application);
+  debug-target-message(application, $debug-level, "open-debugger-transaction");
   application.new-debugger-transaction? := #t;
 end method;
 
@@ -98,6 +100,8 @@ end method;
 
 define method close-debugger-transaction (application :: <debug-target>)
     => ()
+  debug-target-message
+    (application, $debug-level, "close-debugger-transaction");
 //  mm-end-debugger-transaction(application);
 end method;
 

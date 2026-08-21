@@ -89,87 +89,83 @@ define method function-parameters
   // values while still within the debugger transaction (because it might
   // involve the interning of proxies and construction of environment
   // objects).
-  perform-debugger-transaction
-    (target,
-     method ()
-       let function-proxy =
-         ensure-application-value-proxy(application, func);
+  with-debugger-transaction (target, name: "function-parameters")
+    let function-proxy
+      = ensure-application-value-proxy(application, func);
 
-       // Get the actual value of the function object from its interned
-       // proxy.
-       let function-value =
-         runtime-proxy-to-remote-value(application, function-proxy);
+    // Get the actual value of the function object from its interned
+    // proxy.
+    let function-value
+      = runtime-proxy-to-remote-value(application, function-proxy);
 
-       // Call the DM's inspector for generic functions,
-       let (sig, methods) =
-         remote-generic-function-inspect(target, function-value);
+    // Call the DM's inspector for generic functions,
+    let (sig, methods)
+      = remote-generic-function-inspect(target, function-value);
 
-       // Call the DM's inspector for the signature. We are not interested
-       // in the method list for the time being, although there may come
-       // a time when we have to look at the signatures for all the methods,
-       // in order to get a union of all accepted keywords. Nasty.
-       let (reqtypes, valtypes, rtype, kwds, ktypes) =
-         remote-signature-inspect(target, sig);
+    // Call the DM's inspector for the signature. We are not interested
+    // in the method list for the time being, although there may come
+    // a time when we have to look at the signatures for all the methods,
+    // in order to get a union of all accepted keywords. Nasty.
+    let (reqtypes, valtypes, rtype, kwds, ktypes)
+      = remote-signature-inspect(target, sig);
 
-       // We now know the size of the returned sequences.
-       required := make(<vector>, size: size(reqtypes));
-       vals := make(<vector>, size: size(valtypes));
+    // We now know the size of the returned sequences.
+    required := make(<vector>, size: size(reqtypes));
+    vals := make(<vector>, size: size(valtypes));
 
-       // Iterate over the required arguments, generating <parameter> objects
-       // with invented names (based on the counter, since we don't know
-       // their real names from the runtime), and environment objects for the
-       // types.
-       for (i from 0 below size(reqtypes))
-         let name-i = format-to-string("r%d", i);
-         let type-i =
-           make-environment-object-for-runtime-value
-             (application, reqtypes[i]);
-         required[i] := make(<parameter>, name: name-i, type: type-i);
-       end for;
+    // Iterate over the required arguments, generating <parameter> objects
+    // with invented names (based on the counter, since we don't know
+    // their real names from the runtime), and environment objects for the
+    // types.
+    for (i from 0 below size(reqtypes))
+      let name-i = format-to-string("r%d", i);
+      let type-i
+        = make-environment-object-for-runtime-value
+            (application, reqtypes[i]);
+      required[i] := make(<parameter>, name: name-i, type: type-i);
+    end for;
 
-       // Iterate over the return value types in the same way.
-       for (i from 0 below size(valtypes))
-         let name-i = format-to-string("v%d", i);
-         let type-i =
-           make-environment-object-for-runtime-value
-             (application, valtypes[i]);
-         vals[i] := make(<parameter>, name: name-i, type: type-i);
-       end for;
+    // Iterate over the return value types in the same way.
+    for (i from 0 below size(valtypes))
+      let name-i = format-to-string("v%d", i);
+      let type-i
+        = make-environment-object-for-runtime-value
+            (application, valtypes[i]);
+      vals[i] := make(<parameter>, name: name-i, type: type-i);
+    end for;
 
-       // If there's a typed #rest argument, build the parameter for it.
-       if (rtype)
-         let name-r = "args";
-         let type-r =
-           make-environment-object-for-runtime-value
-             (application, rtype);
-         rest := make(<parameter>, name: name-r, type: type-r);
-       end if;
+    // If there's a typed #rest argument, build the parameter for it.
+    if (rtype)
+      let name-r = "args";
+      let type-r
+        = make-environment-object-for-runtime-value(application, rtype);
+      rest := make(<parameter>, name: name-r, type: type-r);
+    end if;
 
-       // If there are keyword arguments present, construct the optional
-       // parameters for them.
-       if (kwds)
-         keys := make(<vector>, size: size(kwds));
-         for (k from 0 below size(kwds))
-           let name-k = dylan-keyword-name(target, kwds[k]);
-           let type-k =
-             make-environment-object-for-runtime-value
-                (application, ktypes[k]);
-           let default-k = #f;  // GF's can't have defaulted keyword args!!
-                                // Only methods can.
-           //---*** need to get the real keyword
-           let key-k = name-k;
-           keys[k] := make(<optional-parameter>,
-                           name: name-k,
-                           keyword: key-k,
-                           type: type-k,
-                           default-value: default-k);
-         end for
-       end if;
-
-     end method);
+    // If there are keyword arguments present, construct the optional
+    // parameters for them.
+    if (kwds)
+      keys := make(<vector>, size: size(kwds));
+      for (k from 0 below size(kwds))
+        let name-k = dylan-keyword-name(target, kwds[k]);
+        let type-k
+          = make-environment-object-for-runtime-value
+              (application, ktypes[k]);
+        let default-k = #f;  // GF's can't have defaulted keyword args!!
+                             // Only methods can.
+        //---*** need to get the real keyword
+        let key-k = name-k;
+        keys[k] := make(<optional-parameter>,
+                        name: name-k,
+                        keyword: key-k,
+                        type: type-k,
+                        default-value: default-k);
+      end for
+    end if;
+  end with-debugger-transaction;
 
   // Assume that we've "legalized" the return values as far as possible.
-  values(required, rest, keys, all-keys?, next, vals, rest-value);
+  values(required, rest, keys, all-keys?, next, vals, rest-value)
 end method;
 
 
@@ -222,87 +218,83 @@ define method function-parameters
   // involve the interning of proxies and construction of environment
   // objects).
 
-  perform-debugger-transaction
-    (target,
-     method ()
-       let function-proxy =
-         ensure-application-value-proxy(application, func);
+  with-debugger-transaction (target, name: "function-parameters")
+    let function-proxy
+      = ensure-application-value-proxy(application, func);
 
-       // Get the actual value of the function object from its interned
-       // proxy.
-       let function-value =
-         runtime-proxy-to-remote-value(application, function-proxy);
+    // Get the actual value of the function object from its interned
+    // proxy.
+    let function-value
+      = runtime-proxy-to-remote-value(application, function-proxy);
 
-       // Call the DM's inspector for methods.
-       let (sig, iep, keyword-specifiers) =
-         remote-method-inspect(target, function-value);
+    // Call the DM's inspector for methods.
+    let (sig, iep, keyword-specifiers)
+      = remote-method-inspect(target, function-value);
 
-       // Call the DM to inspect the signature. From there, we follow most
-       // of the same procedure as for generic functions.
+    // Call the DM to inspect the signature. From there, we follow most
+    // of the same procedure as for generic functions.
+    let (reqtypes, valtypes, rtype, kwds, ktypes)
+      = remote-signature-inspect(target, sig);
 
-       let (reqtypes, valtypes, rtype, kwds, ktypes) =
-         remote-signature-inspect(target, sig);
+    // We now know the size of the returned sequences.
+    required := make(<vector>, size: size(reqtypes));
+    vals := make(<vector>, size: size(valtypes));
 
-       // We now know the size of the returned sequences.
-       required := make(<vector>, size: size(reqtypes));
-       vals := make(<vector>, size: size(valtypes));
+    // Iterate over the required arguments, generating <parameter> objects
+    // with invented names (based on the counter, since we don't know
+    // their real names from the runtime), and environment objects for the
+    // types.
+    for (i from 0 below size(reqtypes))
+      let name-i = format-to-string("r%d", i);
+      let type-i
+        = make-environment-object-for-runtime-value
+            (application, reqtypes[i]);
+      required[i] := make(<parameter>, name: name-i, type: type-i);
+    end for;
 
-       // Iterate over the required arguments, generating <parameter> objects
-       // with invented names (based on the counter, since we don't know
-       // their real names from the runtime), and environment objects for the
-       // types.
-       for (i from 0 below size(reqtypes))
-         let name-i = format-to-string("r%d", i);
-         let type-i =
-           make-environment-object-for-runtime-value
-             (application, reqtypes[i]);
-         required[i] := make(<parameter>, name: name-i, type: type-i);
-       end for;
+    // Iterate over the return value types in the same way.
+    for (i from 0 below size(valtypes))
+      let name-i = format-to-string("v%d", i);
+      let type-i
+        = make-environment-object-for-runtime-value
+            (application, valtypes[i]);
+      vals[i] := make(<parameter>, name: name-i, type: type-i);
+    end for;
 
-       // Iterate over the return value types in the same way.
-       for (i from 0 below size(valtypes))
-         let name-i = format-to-string("v%d", i);
-         let type-i =
-           make-environment-object-for-runtime-value
-             (application, valtypes[i]);
-         vals[i] := make(<parameter>, name: name-i, type: type-i);
-       end for;
-
-       // If there's a typed #rest argument, build the parameter for it.
-       if (rtype)
-         let name-r = "args";
-         let type-r =
-           make-environment-object-for-runtime-value
-             (application, rtype);
+    // If there's a typed #rest argument, build the parameter for it.
+    if (rtype)
+      let name-r = "args";
+      let type-r
+        = make-environment-object-for-runtime-value(application, rtype);
          rest := make(<parameter>, name: name-r, type: type-r);
-       end if;
+    end if;
 
-       // If there are keyword arguments present, construct the optional
-       // parameters for them. Since this is a method, we may also have a
-       // default value in the list of keyword-specifiers from the method
-       // object.
+    // If there are keyword arguments present, construct the optional
+    // parameters for them. Since this is a method, we may also have a
+    // default value in the list of keyword-specifiers from the method
+    // object.
 
-       if (kwds)
-         keys := make(<vector>, size: size(kwds));
-         for (k from 0 below size(kwds))
-           let name-k = dylan-keyword-name(target, kwds[k]);
-           let type-k =
-             make-environment-object-for-runtime-value
-                (application, ktypes[k]);
-           let default-k = get-keyword-default(kwds[k], keyword-specifiers);
-           //---*** Need to get the real value for this!
-           let key-k = name-k;
-           keys[k] := make(<optional-parameter>,
-                           name: name-k,
-                           keyword: key-k,
-                           type: type-k,
-                           default-value: default-k);
-         end for
-       end if;
-     end method);
+    if (kwds)
+      keys := make(<vector>, size: size(kwds));
+      for (k from 0 below size(kwds))
+        let name-k = dylan-keyword-name(target, kwds[k]);
+        let type-k
+          = make-environment-object-for-runtime-value
+              (application, ktypes[k]);
+        let default-k = get-keyword-default(kwds[k], keyword-specifiers);
+        //---*** Need to get the real value for this!
+        let key-k = name-k;
+        keys[k] := make(<optional-parameter>,
+                        name: name-k,
+                        keyword: key-k,
+                        type: type-k,
+                        default-value: default-k);
+      end for;
+    end if;
+    end with-debugger-transaction;
 
   // Assume that we've "legalized" the return values as far as possible.
-  values(required, rest, keys, all-keys?, next, vals, rest-value);
+  values(required, rest, keys, all-keys?, next, vals, rest-value)
 end method;
 
 
@@ -322,27 +314,26 @@ define method do-generic-function-methods
   // methods. From each of these, intern a proxy and construct the
   // environment object. Apply the supplied function to the environment
   // object.
-  perform-debugger-transaction
-     (target,
-      method ()
-        let generic-proxy =
-          ensure-application-value-proxy(application, gf);
-        let generic-value =
-          runtime-proxy-to-remote-value(application, generic-proxy);
+  with-debugger-transaction (target, name: "do-generic-function-methods")
+    let generic-proxy
+      = ensure-application-value-proxy(application, gf);
+    let generic-value
+      = runtime-proxy-to-remote-value(application, generic-proxy);
 
-        // Inspect the generic function.
-        let (sig, method-values) =
-          remote-generic-function-inspect(target, generic-value);
+    // Inspect the generic function.
+    let (sig, method-values)
+      = remote-generic-function-inspect(target, generic-value);
 
-        debug-out(#"dfmc-environment-application",
-                  "Generic function: signature %=, methods %=",
-                  sig, method-values);
+    debug-target-message
+      (target, $debug-level,
+       "Generic function: signature %=, methods %=",
+       sig, method-values);
 
-        //---*** andrewa: this won't match up with the same methods
-        //---*** from the compiler database. :-(
-        do-environment-objects-for-runtime-values
-          (do-this-one, application, method-values)
-      end method);
+    //---*** andrewa: this won't match up with the same methods
+    //---*** from the compiler database. :-(
+    do-environment-objects-for-runtime-values
+      (do-this-one, application, method-values)
+  end with-debugger-transaction;
 end method;
 
 
@@ -360,36 +351,33 @@ define method method-specializers
   // these being the specializers for the method concerned. Go through the
   // usual trauma of interning a runtime proxy for each one, and building
   // the appropriate environment object.
-  perform-debugger-transaction
-     (target,
-      method ()
-        let method-proxy =
-          ensure-application-value-proxy(application, meth);
+  with-debugger-transaction (target, name: "method-specializers")
+    let method-proxy
+      = ensure-application-value-proxy(application, meth);
 
-        let method-value =
-          runtime-proxy-to-remote-value(application, method-proxy);
+    let method-value
+      = runtime-proxy-to-remote-value(application, method-proxy);
 
-        // Call the DM's special inspector for methods. This function
-        // returns three values, but the signature is the first value, and
-        // that's the only one we want.
-        let sig = remote-method-inspect(target, method-value);
+    // Call the DM's special inspector for methods. This function
+    // returns three values, but the signature is the first value, and
+    // that's the only one we want.
+    let sig = remote-method-inspect(target, method-value);
 
-        // Call the DM's special inspector for signatures. This function
-        // returns several values, bu we are only interested in the first,
-        // so that is the only one we bind.
-        let reqtypes = remote-signature-inspect(target, sig);
+    // Call the DM's special inspector for signatures. This function
+    // returns several values, bu we are only interested in the first,
+    // so that is the only one we bind.
+    let reqtypes = remote-signature-inspect(target, sig);
 
-        // Now we know how big the return sequence is.
-        specializers := make(<vector>, size: size(reqtypes));
+    // Now we know how big the return sequence is.
+    specializers := make(<vector>, size: size(reqtypes));
 
-        // The usual story. Iterate over the sequence of specializers, and
-        // turn each one into a kosher environment object.
-        for (i from 0 below size(reqtypes))
-           specializers[i] :=
-             make-environment-object-for-runtime-value
-                (application, reqtypes[i]);
-        end for;
-      end method);
+    // The usual story. Iterate over the sequence of specializers, and
+    // turn each one into a kosher environment object.
+    for (i from 0 below size(reqtypes))
+      specializers[i]
+        := make-environment-object-for-runtime-value(application, reqtypes[i]);
+    end for;
+  end with-debugger-transaction;
 
   // Return the sequence of specializers.
   specializers;
@@ -410,8 +398,10 @@ end method;
 define method method-generic-function
     (application :: <dfmc-application>, meth :: <method-object>)
  => (parent-gf :: false-or(<generic-function-object>))
-  debug-out(#"dfmc-environment-application",
-            "Ignoring method-generic-function in application server");
+  let target = application.application-target-app;
+  debug-target-message
+    (target, $warn-level,
+     "Ignoring method-generic-function in application server");
   #f
 end method;
 

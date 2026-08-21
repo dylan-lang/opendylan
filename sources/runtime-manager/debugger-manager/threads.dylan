@@ -596,6 +596,13 @@ define method suspend-interesting-thread
     (application :: <debug-target>, stop-reason :: <internal-stop-reason>)
   let access-path = application.debug-target-access-path;
   let stopped-thread = stop-reason.stop-reason-thread;
+  debug-target-message
+    (application, $trace-level,
+     "Maybe suspend-interesting-thread %= in response to %="
+       " (suspended?=%= just-interacted?=%=)",
+     stopped-thread, stop-reason,
+     stopped-thread.thread-suspended?,
+     application.application-just-interacted-on-running-thread?);
 
   unless (stopped-thread.thread-suspended?)
     unless (application.application-just-interacted-on-running-thread?)

@@ -347,11 +347,11 @@ end method;
 // a continue callback
 
 define method perform-continuing-debugger-transaction
-    (application :: <dfmc-application>, remote-thread,
+    (application :: <dfmc-application>, remote-thread, name :: <string>,
      transaction :: <function>)
  => (#rest results)
   perform-debugger-transaction
-    (application.application-target-app, transaction,
+    (application.application-target-app, transaction, name: name,
      continue:
        method()
            continue-application-runtime(application, remote-thread)
@@ -371,7 +371,7 @@ define method close-application
     invalidate-interactive-compiler-proxies(application);
 
     perform-continuing-debugger-transaction
-      (application, #f,
+      (application, #f, "close-application",
        method ()
          kill-target-application(target);
        end);
@@ -395,9 +395,11 @@ end method close-application;
 
 define method invalidate-interactive-compiler-proxies
     (application :: <dfmc-application>) => ()
+  let target = application.application-target-app;
+  debug-target-message
+    (target, $warn-level,
+     "Failing to invalidate interactive proxies!");
   //---*** Need to do this!
-  debug-out(#"dfmc-environment-application",
-            "Failing to invalidate interactive proxies!");
   /*
   let project = database.server-project;
   let object-table = compiler-object-table(database);
@@ -456,7 +458,7 @@ define method step-application-out
   // Ensuring that a debugger transaction is in effect, tell the DM
   // to instruct the thread to perform the step-out operation.
   perform-continuing-debugger-transaction
-     (application, remote-thread,
+     (application, remote-thread, "step-application-out",
       method ()
         if (call-frame)
           instruct-thread-to-step-out(target, remote-thread,
@@ -489,7 +491,7 @@ define method step-application-over
   // Ensuring that a debugger transaction is in effect, tell the DM
   // to instruct the thread to perform the step-over operation.
   perform-continuing-debugger-transaction
-     (application, remote-thread,
+     (application, remote-thread, "step-application-over",
       method ()
         if (call-frame)
           instruct-thread-to-step-over(target, remote-thread,
@@ -514,7 +516,7 @@ define method step-application-into
   let callees =
     top-function & function-called-functions(application, top-function);
   perform-continuing-debugger-transaction
-    (application, remote-thread,
+    (application, remote-thread, "step-application-into",
      method ()
        let addresses =
          if (callees)
