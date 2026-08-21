@@ -341,7 +341,6 @@ end module debugger-manager;
 define module dm-internals
   use common-dylan;
   use simple-format;
-  use simple-debugging, import: { debug-out };
   use threads, rename: {thread-name => thread-name-internal};
   use dylan-extensions, import: {<double-integer>, <set>};
   use table-extensions, import: {<string-table>};
