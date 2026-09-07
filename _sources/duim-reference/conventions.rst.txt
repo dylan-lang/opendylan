@@ -56,7 +56,7 @@ geometry. This allows the position of elements in a window object to be
 determined correctly.
 
 The :doc:`ext-geom` module provides more extensive support for
-co-ordinate geometry that is only required for more specialist uses.
+coordinate geometry that is only required for more specialist uses.
 
 The :doc:`dcs` module provides color support to the DUIM library.
 

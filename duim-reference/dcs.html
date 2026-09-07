@@ -38,7 +38,7 @@
   }
 </style>
   
-  <link rel="me" href="https://fosstodon.org/@DylanLang" />
+  <link rel="me" href="https://fosstodon.org/@DylanLang">
 </head>
   <body>
     
@@ -550,47 +550,19 @@ images.</p>
 <section id="the-class-hierarchy-for-duim-dcs">
 <h2>The class hierarchy for DUIM-DCs<a class="headerlink" href="#the-class-hierarchy-for-duim-dcs" title="Link to this heading">¶</a></h2>
 <p>A number of base classes are exposed in the DUIM-DCs library, each of
-which is a subclass of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>. They are shown in the following table</p>
-<div class="table-wrapper docutils container">
-<table class="docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p>&lt;object&gt;</p></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="row-even"><td></td>
-<td><p>&lt;pen&gt;</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td></td>
-<td><p>&lt;brush&gt;</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td></td>
-<td><p>&lt;palette&gt;</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td></td>
-<td><p>&lt;ink&gt;</p></td>
-<td><p>See <a class="reference internal" href="#subclasses-of-ink">Subclasses of &lt;ink&gt;</a></p></td>
-</tr>
-<tr class="row-even"><td></td>
-<td><p>&lt;text-style&gt;</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td></td>
-<td></td>
-<td><p>&lt;device-font&gt;</p></td>
-</tr>
-</tbody>
-</table>
-</div>
+which is a subclass of <a class="reference external" href="https://opendylan.org/books/drm/Object_Classes#object"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;object&gt;</span></code></a>. They are shown in the following figure:</p>
+<figure class="align-center" id="id1">
+<img alt="../_images/dcs-classes.svg" src="../_images/dcs-classes.svg" />
+<figcaption>
+<p><span class="caption-text">The class hierarchy for DUIM-DCs</span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <ul class="simple">
-<li><p><a class="reference internal" href="#duim-dcs:duim-dcs:[pen]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;pen&gt;</span></code></a> This is protocol class for pens. A pen is used to draw 1
-dimensional graphics such as lines or outline, using a specific color
-or pattern.</p></li>
+<li><p><a class="reference internal" href="#duim-dcs:duim-dcs:[pen]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;pen&gt;</span></code></a> The protocol class for pens. A pen is used to
+draw one-dimensional graphics such as lines or outline, using a
+specific color or pattern.</p></li>
 <li><p><a class="reference internal" href="#duim-dcs:duim-dcs:[brush]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;brush&gt;</span></code></a> The protocol class for brushes. Brushes are used to fill in
-2 dimensional areas with a specific color or pattern.</p></li>
+two-dimensional areas with a specific color or pattern.</p></li>
 <li><p><a class="reference internal" href="#duim-dcs:duim-dcs:[palette]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;palette&gt;</span></code></a> The protocol class for palettes. A palette provides a set
 of colors which can be made available to an application.</p></li>
 <li><p><a class="reference internal" href="#duim-dcs:duim-dcs:[ink]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;ink&gt;</span></code></a> This class can be thought of as anything that can be drawn.
@@ -2376,9 +2348,9 @@ provided color names that can be looked up with <em>find-color</em>:</p>
 <li><p>yellow</p></li>
 <li><p>yellow-green</p></li>
 </ul>
-<p>Application programs can define other colors; these are provided because
-they are commonly used in the X Windows community, not because there is
-anything special about these particular colors.</p>
+<p>Application programs can define other colors; these are provided
+because they are commonly used <a class="reference external" href="https://en.wikipedia.org/wiki/X11_color_names">in the X Window System</a>, not because
+there is anything special about these particular colors.</p>
 </p>
 </dd>
 <dt class="field-odd">See also<span class="colon">:</span></dt>

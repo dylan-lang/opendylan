@@ -38,7 +38,7 @@
   }
 </style>
   
-  <link rel="me" href="https://fosstodon.org/@DylanLang" />
+  <link rel="me" href="https://fosstodon.org/@DylanLang">
 </head>
   <body>
     
@@ -672,45 +672,12 @@ additional subclasses of <a class="reference external" href="https://opendylan.o
 table . Only <a class="reference internal" href="#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a>, and <a class="reference internal" href="#duim-sheets:duim-sheets:[event]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;event&gt;</span></code></a> have any subclasses
 defined. An <a class="reference internal" href="#duim-sheets:duim-sheets:[event]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;event&gt;</span></code></a> is an object representing some sort of event. See
 <a class="reference internal" href="#subclasses-of-event">Subclasses of &lt;event&gt;</a> for details of the subclasses of <a class="reference internal" href="#duim-sheets:duim-sheets:[event]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;event&gt;</span></code></a>.</p>
-<p>Overall class hierarchy for the DUIM-Sheets library</p>
-<div class="table-wrapper docutils container">
-<table class="docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p>&lt;object&gt;</p></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="row-even"><td rowspan="9"></td>
-<td><p>&lt;sheet&gt;</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td></td>
-<td><p>&lt;display&gt;</p></td>
-</tr>
-<tr class="row-even"><td><p>&lt;port&gt;</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>&lt;clipboard&gt;</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>&lt;caret&gt;</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>&lt;pointer&gt;</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>&lt;medium&gt;</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>&lt;frame-manager&gt;</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>&lt;event&gt;</p></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
+<figure class="align-center" id="id1">
+<img alt="../_images/sheets-classes.svg" src="../_images/sheets-classes.svg" />
+<figcaption>
+<p><span class="caption-text">Overall class hierarchy for the DUIM-Sheets library</span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <ul class="simple">
 <li><p><a class="reference internal" href="#duim-sheets:duim-sheets:[sheet]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;sheet&gt;</span></code></a> As already mentioned, a sheet is the basic unit of window
 applications, and they can be nested in a parent-child hierarchy. A
@@ -761,52 +728,11 @@ will only using the default frame manager.</p></li>
 </section>
 <section id="subclasses-of-event">
 <h3>Subclasses of &lt;event&gt;<a class="headerlink" href="#subclasses-of-event" title="Link to this heading">¶</a></h3>
-<p>The following table shows the subclasses of the <a class="reference internal" href="#duim-sheets:duim-sheets:[event]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;event&gt;</span></code></a> class that are
-exposed by the DUIM-Sheets library.</p>
-<div class="table-wrapper docutils container">
-<table class="docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p>&lt;event&gt;</p></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="row-even"><td rowspan="8"></td>
-<td><p>&lt;frame-event&gt;</p></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td></td>
-<td><p>&lt;port-terminated-event&gt;</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td></td>
-<td><p>&lt;timer-event&gt;</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p>&lt;sheet-event&gt;</p></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="row-even"><td></td>
-<td><p>&lt;device-event&gt;</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td></td>
-<td><p>&lt;window-event&gt;</p></td>
-<td><p>See <a class="reference internal" href="#subclasses-of-device-event">Subclasses of &lt;device-event&gt;</a></p></td>
-</tr>
-<tr class="row-even"><td></td>
-<td></td>
-<td><p>&lt;window-configuration-event&gt;</p></td>
-</tr>
-<tr class="row-odd"><td></td>
-<td></td>
-<td><p>&lt;window-repaint-event&gt;</p></td>
-</tr>
-</tbody>
-</table>
-</div>
+<p>The following figure shows the subclasses of the <a class="reference internal" href="#duim-sheets:duim-sheets:[event]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;event&gt;</span></code></a> class
+that are exposed by the DUIM-Sheets library.</p>
+<figure class="align-center">
+<img alt="../_images/sheets-event-classes.svg" src="../_images/sheets-event-classes.svg" />
+</figure>
 <p>The classes of event that are exposed by the DUIM-Sheets library fall
 into two categories:</p>
 <ul class="simple">
@@ -852,96 +778,6 @@ drawing in a frame.</p></li>
 <p>The following table shows the subclasses of the <a class="reference internal" href="#duim-sheets:duim-sheets:[device-event]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;device-event&gt;</span></code></a> class
 that are exposed by the DUIM-Sheets library.  Device events, broadly speaking,
 describe any event that can occur on a device connected to the computer.</p>
-<div class="table-wrapper docutils container">
-<table class="docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p>&lt;device-event&gt;</p></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="row-even"><td></td>
-<td><p>&lt;pointer-event&gt;</p></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td></td>
-<td></td>
-<td><p>&lt;pointer-button-event&gt;</p></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="row-even"><td></td>
-<td></td>
-<td></td>
-<td><p>&lt;button-press-event&gt;</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td></td>
-<td></td>
-<td></td>
-<td><p>&lt;button-release-event&gt;</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td></td>
-<td></td>
-<td></td>
-<td><p>&lt;button-click-event&gt;</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td></td>
-<td></td>
-<td></td>
-<td><p>&lt;double-click-event&gt;</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td></td>
-<td></td>
-<td></td>
-<td><p>&lt;pointer-drag-event&gt;</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td></td>
-<td></td>
-<td><p>&lt;pointer-motion-event&gt;</p></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="row-even"><td></td>
-<td></td>
-<td></td>
-<td><p>&lt;pointer-drag-event&gt;</p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td></td>
-<td></td>
-<td></td>
-<td><p>&lt;pointer-boundary-event&gt;</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td></td>
-<td><p>&lt;keyboard-event&gt;</p></td>
-<td></td>
-<td></td>
-<td><p>&lt;pointer-exit-event&gt;</p></td>
-</tr>
-<tr class="row-odd"><td></td>
-<td></td>
-<td><p>&lt;key-press-event&gt;</p></td>
-<td></td>
-<td><p>&lt;pointer-enter-event&gt;</p></td>
-</tr>
-<tr class="row-even"><td></td>
-<td></td>
-<td><p>&lt;key-release-event&gt;</p></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The <a class="reference internal" href="#duim-sheets:duim-sheets:[pointer-drag-event]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;pointer-drag-event&gt;</span></code></a> class is a subclass of both
@@ -1629,10 +1465,10 @@ overlaps <em>region</em>.</p>
 <dd class="field-even"><p><p>Displays the built-in color dialog for the target platform, which allows
 the user to choose a color from the standard palette for whatever
 environment the application is running in.</p>
-<figure class="align-center" id="id1">
+<figure class="align-center" id="id2">
 <img alt="../_images/sheets-3.png" src="../_images/sheets-3.png" />
 <figcaption>
-<p><span class="caption-text">The standard Choose Color dialog</span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
+<p><span class="caption-text">The standard Choose Color dialog</span><a class="headerlink" href="#id2" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>If the <em>frame</em> argument is specified, the top-level sheet of <em>frame</em>
@@ -1787,10 +1623,10 @@ the pre-built dialog classes for your target environment.</p>
 the user to choose a file from any of the local or networked drives
 currently connected to the computer. The function returns the name of
 the file chosen by the user.</p>
-<figure class="align-center" id="id2">
+<figure class="align-center" id="id3">
 <img alt="../_images/sheets-4.png" src="../_images/sheets-4.png" />
 <figcaption>
-<p><span class="caption-text">Typical appearance of a choose-file dialog</span><a class="headerlink" href="#id2" title="Link to this image">¶</a></p>
+<p><span class="caption-text">Typical appearance of a choose-file dialog</span><a class="headerlink" href="#id3" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>If the <em>frame</em> argument is specified, the top-level sheet of <em>frame</em>
@@ -6041,10 +5877,10 @@ keyboard accelerators and mnemonics.</p>
 <dd class="field-even"><p><p>Creates and displays an alert dialog box with the specified criteria.
 Use this function as a way of easily displaying simple messages to the
 user.</p>
-<figure class="align-center" id="id3">
+<figure class="align-center" id="id4">
 <img alt="../_images/sheets-5.png" src="../_images/sheets-5.png" />
 <figcaption>
-<p><span class="caption-text">Simple output from notify-user</span><a class="headerlink" href="#id3" title="Link to this image">¶</a></p>
+<p><span class="caption-text">Simple output from notify-user</span><a class="headerlink" href="#id4" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>The <em>message-string</em> is the message that is displayed in the dialog. The

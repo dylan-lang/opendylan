@@ -38,7 +38,7 @@
   }
 </style>
   
-  <link rel="me" href="https://fosstodon.org/@DylanLang" />
+  <link rel="me" href="https://fosstodon.org/@DylanLang">
 </head>
   <body>
     
@@ -563,35 +563,17 @@ transformation classes provided by DUIM are immutable.</p></li>
 These are all subclasses of <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#error"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;error&gt;</span></code></a>.</p>
 <section id="the-region-class-and-its-subclasses">
 <h3>The &lt;region&gt; class and its subclasses<a class="headerlink" href="#the-region-class-and-its-subclasses" title="Link to this heading">¶</a></h3>
-<p>The DUIM-Geometry library exposes the <a class="reference internal" href="#duim-geometry:duim-geometry:[region]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;region&gt;</span></code></a> class and its subclasses as
-shown in the following table . None of these subclasses have any further
-subclasses exposed in the DUIM-Geometry library, although the
-DUIM-Extended-Geometry library exposes some subclasses of <a class="reference internal" href="#duim-geometry:duim-geometry:[area]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;area&gt;</span></code></a>
-and <a class="reference internal" href="#duim-geometry:duim-geometry:[path]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;path&gt;</span></code></a>.</p>
-<div class="table-wrapper docutils container">
-<table class="docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#duim-geometry:duim-geometry:[region]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;region&gt;</span></code></a></p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td></td>
-<td><p><a class="reference internal" href="#duim-geometry:duim-geometry:[region-set]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;region-set&gt;</span></code></a></p></td>
-</tr>
-<tr class="row-odd"><td></td>
-<td><p><a class="reference internal" href="#duim-geometry:duim-geometry:[point]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;point&gt;</span></code></a></p></td>
-</tr>
-<tr class="row-even"><td></td>
-<td><p><a class="reference internal" href="#duim-geometry:duim-geometry:[path]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;path&gt;</span></code></a></p></td>
-</tr>
-<tr class="row-odd"><td></td>
-<td><p><a class="reference internal" href="#duim-geometry:duim-geometry:[area]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;area&gt;</span></code></a></p></td>
-</tr>
-<tr class="row-even"><td></td>
-<td><p><a class="reference internal" href="#duim-geometry:duim-geometry:[bounding-box]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;bounding-box&gt;</span></code></a></p></td>
-</tr>
-</tbody>
-</table>
-</div>
+<p>The DUIM-Geometry library exposes the <a class="reference internal" href="#duim-geometry:duim-geometry:[region]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;region&gt;</span></code></a> class and its
+subclasses as shown in the following figure. None of these subclasses
+have any further subclasses exposed in the DUIM-Geometry library,
+although the DUIM-Extended-Geometry library exposes some subclasses of
+<a class="reference internal" href="#duim-geometry:duim-geometry:[area]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;area&gt;</span></code></a> and <a class="reference internal" href="#duim-geometry:duim-geometry:[path]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;path&gt;</span></code></a> (highlighted in grey below).</p>
+<figure class="align-center" id="id1">
+<img alt="../_images/geom-region.svg" src="../_images/geom-region.svg" />
+<figcaption>
+<p><span class="caption-text">The <code class="docutils literal notranslate"><span class="pre">&lt;region&gt;</span></code> class and its subclasses</span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <ul class="simple">
 <li><p><a class="reference internal" href="#duim-geometry:duim-geometry:[region]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;region&gt;</span></code></a> This class is used to represent any set of points.
 The <a class="reference internal" href="#duim-geometry:duim-geometry:[region]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;region&gt;</span></code></a> class includes both bounded regions (that is, regions
@@ -615,28 +597,12 @@ contains some region.</p></li>
 certain circumstances. They are shown in the following table . All the errors
 shown are subclasses of the <a class="reference external" href="https://opendylan.org/books/drm/Condition_Classes#error"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;error&gt;</span></code></a> class. Note that the subclasses of
 <a class="reference internal" href="#duim-geometry:duim-geometry:[transform-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;transform-error&gt;</span></code></a> are all specific to particular errors.</p>
-<div class="table-wrapper docutils container">
-<table class="docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#duim-geometry:duim-geometry:[transform-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;transform-error&gt;</span></code></a></p></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="row-even"><td></td>
-<td><p><a class="reference internal" href="#duim-geometry:duim-geometry:[transform-underspecified]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;transform-underspecified&gt;</span></code></a></p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td></td>
-<td></td>
-<td><p><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;reflection-&lt;underspecified&gt;</span></code></p></td>
-</tr>
-<tr class="row-even"><td></td>
-<td><p><a class="reference internal" href="#duim-geometry:duim-geometry:[singular-transform]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;singular-transform&gt;</span></code></a></p></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
+<figure class="align-center" id="id2">
+<img alt="../_images/geom-transform-error.svg" src="../_images/geom-transform-error.svg" />
+<figcaption>
+<p><span class="caption-text">The <code class="docutils literal notranslate"><span class="pre">&lt;transform-error&gt;</span></code> class and its subclasses</span><a class="headerlink" href="#id2" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <ul class="simple">
 <li><p><a class="reference internal" href="#duim-geometry:duim-geometry:[transform-error]"><code class="xref dylan dylan-class docutils literal notranslate"><span class="pre">&lt;transform-error&gt;</span></code></a> The superclass of all error conditions signalled
 when there is an error with a transform.</p></li>

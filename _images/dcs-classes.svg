@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns:xl="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns="http://www.w3.org/2000/svg" viewBox="31 -39 498 374" width="498" height="374">
+  <defs>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+  </defs>
+  <g id="Canvas_1" stroke-dasharray="none" stroke-opacity="1" fill="none" fill-opacity="1" stroke="none">
+    <title>Canvas 1</title>
+    <rect fill="white" x="31" y="-39" width="498" height="374"/>
+    <g id="Canvas_1_Layer_1">
+      <title>Layer 1</title>
+      <g id="Graphic_30">
+        <rect x="207.08984" y="-37.96875" width="56.03711" height="38" fill="white"/>
+        <rect x="207.08984" y="-37.96875" width="56.03711" height="38" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(212.08984 -32.96875)" fill="black">
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="11" xml:space="preserve">&lt;object&gt;</tspan>
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="11.34082" y="25" xml:space="preserve">ofau</tspan>
+        </text>
+      </g>
+      <g id="Graphic_27">
+        <rect x="32.421875" y="74" width="60.04492" height="38" fill="white"/>
+        <rect x="32.421875" y="74" width="60.04492" height="38" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(37.421875 79)" fill="black">
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="11" xml:space="preserve">&lt;palette&gt;</tspan>
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="15.348633" y="25" xml:space="preserve">ofai</tspan>
+        </text>
+      </g>
+      <g id="Line_26">
+        <path d="M 235.1084 .03125 L 235.1084 36.929688 L 62.444336 36.929688 L 62.444336 64.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_25">
+        <rect x="110.44434" y="74" width="54" height="38" fill="white"/>
+        <rect x="110.44434" y="74" width="54" height="38" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(115.44434 79)" fill="black">
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="4.9814453" y="11" xml:space="preserve">&lt;pen&gt;</tspan>
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="12.326172" y="25" xml:space="preserve">ofai</tspan>
+        </text>
+      </g>
+      <g id="Line_24">
+        <path d="M 235.1084 .03125 L 235.1084 36.929688 L 137.44434 36.929688 L 137.44434 64.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_23">
+        <rect x="100.08398" y="222" width="112.7207" height="38" fill="white"/>
+        <rect x="100.08398" y="222" width="112.7207" height="38" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(105.08398 227)" fill="black">
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="11" xml:space="preserve">&lt;contrasting-color&gt;</tspan>
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="42.02344" y="25" xml:space="preserve">ofci</tspan>
+        </text>
+      </g>
+      <g id="Graphic_22">
+        <rect x="194.4287" y="154.74219" width="54" height="38" fill="white"/>
+        <rect x="194.4287" y="154.74219" width="54" height="38" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(199.4287 159.74219)" fill="black">
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="1.9873047" y="11" xml:space="preserve">&lt;color&gt;</tspan>
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="12.326172" y="25" xml:space="preserve">ofai</tspan>
+        </text>
+      </g>
+      <g id="Line_21">
+        <path d="M 221.4287 192.74219 L 221.4287 207.3711 L 156.44434 207.3711 L 156.44434 212.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_20">
+        <rect x="231.0918" y="222" width="98.70508" height="38" fill="white"/>
+        <rect x="231.0918" y="222" width="98.70508" height="38" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(236.0918 227)" fill="black">
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="11" xml:space="preserve">&lt;dynamic-color&gt;</tspan>
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="35.015625" y="25" xml:space="preserve">ofci</tspan>
+        </text>
+      </g>
+      <g id="Line_19">
+        <path d="M 221.4287 192.74219 L 221.4287 207.3711 L 280.44434 207.3711 L 280.44434 212.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_18">
+        <rect x="182.42188" y="74" width="105.37305" height="38" fill="white"/>
+        <rect x="182.42188" y="74" width="105.37305" height="38" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(187.42188 79)" fill="black">
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="11" xml:space="preserve">&lt;style-descriptor&gt;</tspan>
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="38.34961" y="25" xml:space="preserve">ofci</tspan>
+        </text>
+      </g>
+      <g id="Line_17">
+        <line x1="235.1084" y1=".03125" x2="235.1084" y2="64.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_16">
+        <rect x="306.23804" y="74" width="54" height="38" fill="white"/>
+        <rect x="306.23804" y="74" width="54" height="38" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(311.23804 79)" fill="black">
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="7.322266" y="11" xml:space="preserve">&lt;ink&gt;</tspan>
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="10.322266" y="25" xml:space="preserve">ofau</tspan>
+        </text>
+      </g>
+      <g id="Line_15">
+        <path d="M 235.1084 .03125 L 235.1084 37.285156 L 333.72266 37.285156 L 333.23804 59.1 L 333.23804 64.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_14">
+        <rect x="349.75977" y="154.74219" width="56.69922" height="38" fill="white"/>
+        <rect x="349.75977" y="154.74219" width="56.69922" height="38" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(354.75977 159.74219)" fill="black">
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="11" xml:space="preserve">&lt;image&gt;</tspan>
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="11.671875" y="25" xml:space="preserve">ofau</tspan>
+        </text>
+      </g>
+      <g id="Line_13">
+        <path d="M 333.23804 112 L 333.23804 133.3711 L 378.10938 133.3711 L 378.10938 144.84219" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_12">
+        <rect x="348.4297" y="222" width="58.0293" height="38" fill="white"/>
+        <rect x="348.4297" y="222" width="58.0293" height="38" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(353.4297 227)" fill="black">
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="11" xml:space="preserve">&lt;stencil&gt;</tspan>
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="14.677734" y="25" xml:space="preserve">ofci</tspan>
+        </text>
+      </g>
+      <g id="Line_11">
+        <path d="M 378.10938 192.74219 L 378.10938 202.74219 L 377.77686 207.3711 L 377.44434 207.3711 L 377.44434 212.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_10">
+        <rect x="378.42773" y="74" width="54.0332" height="38" fill="white"/>
+        <rect x="378.42773" y="74" width="54.0332" height="38" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(383.42773 79)" fill="black">
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="11" xml:space="preserve">&lt;brush&gt;</tspan>
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="12.342773" y="25" xml:space="preserve">ofai</tspan>
+        </text>
+      </g>
+      <g id="Line_9">
+        <path d="M 235.1084 .03125 L 235.1084 36.929688 L 405.44434 36.929688 L 405.44434 64.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_8">
+        <path d="M 333.23804 112 L 333.23804 133.3711 L 221.4287 133.3711 L 221.4287 144.84219" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_7">
+        <rect x="450.43066" y="74" width="72.02734" height="38" fill="white"/>
+        <rect x="450.43066" y="74" width="72.02734" height="38" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(455.43066 79)" fill="black">
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="11" xml:space="preserve">&lt;text-style&gt;</tspan>
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="21.339844" y="25" xml:space="preserve">ofai</tspan>
+        </text>
+      </g>
+      <g id="Line_6">
+        <path d="M 235.1084 .03125 L 235.1084 36.929688 L 486.44434 36.929688 L 486.44434 64.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_5">
+        <rect x="445.0869" y="148" width="82.71484" height="38" fill="white"/>
+        <rect x="445.0869" y="148" width="82.71484" height="38" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(450.0869 153)" fill="black">
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="11" xml:space="preserve">&lt;device-font&gt;</tspan>
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="27.020508" y="25" xml:space="preserve">ofci</tspan>
+        </text>
+      </g>
+      <g id="Line_4">
+        <line x1="486.44434" y1="112" x2="486.44434" y2="138.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_3">
+        <rect x="346.75684" y="296" width="61.375" height="38" fill="white"/>
+        <rect x="346.75684" y="296" width="61.375" height="38" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(351.75684 301)" fill="black">
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="0" y="11" xml:space="preserve">&lt;pattern&gt;</tspan>
+          <tspan font-family="Helvetica" font-size="12" fill="black" x="16.350586" y="25" xml:space="preserve">ofci</tspan>
+        </text>
+      </g>
+      <g id="Line_2">
+        <line x1="377.44434" y1="260" x2="377.44434" y2="286.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+    </g>
+  </g>
+</svg>

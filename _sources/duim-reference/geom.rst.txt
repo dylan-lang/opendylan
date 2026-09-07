@@ -36,26 +36,16 @@ These are all subclasses of :drm:`<error>`.
 The <region> class and its subclasses
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The DUIM-Geometry library exposes the :class:`<region>` class and its subclasses as
-shown in the following table . None of these subclasses have any further
-subclasses exposed in the DUIM-Geometry library, although the
-DUIM-Extended-Geometry library exposes some subclasses of :class:`<area>`
-and :class:`<path>`.
+The DUIM-Geometry library exposes the :class:`<region>` class and its
+subclasses as shown in the following figure. None of these subclasses
+have any further subclasses exposed in the DUIM-Geometry library,
+although the DUIM-Extended-Geometry library exposes some subclasses of
+:class:`<area>` and :class:`<path>` (highlighted in grey below).
 
-+-------------------+-------------------------+
-| :class:`<region>` |                         |
-|                   |                         |
-+-------------------+-------------------------+
-|                   | :class:`<region-set>`   |
-+-------------------+-------------------------+
-|                   | :class:`<point>`        |
-+-------------------+-------------------------+
-|                   | :class:`<path>`         |
-+-------------------+-------------------------+
-|                   | :class:`<area>`         |
-+-------------------+-------------------------+
-|                   | :class:`<bounding-box>` |
-+-------------------+-------------------------+
+.. figure:: images/geom-region.svg
+   :align: center
+
+   The ``<region>`` class and its subclasses
 
 - :class:`<region>` This class is used to represent any set of points.
   The :class:`<region>` class includes both bounded regions (that is, regions
@@ -80,15 +70,10 @@ certain circumstances. They are shown in the following table . All the errors
 shown are subclasses of the :drm:`<error>` class. Note that the subclasses of
 :class:`<transform-error>` are all specific to particular errors.
 
-+----------------------------+-------------------------------------+---------------------------------------+
-| :class:`<transform-error>` |                                     |                                       |
-+----------------------------+-------------------------------------+---------------------------------------+
-|                            | :class:`<transform-underspecified>` |                                       |
-+----------------------------+-------------------------------------+---------------------------------------+
-|                            |                                     | :class:`<reflection-<underspecified>` |
-+----------------------------+-------------------------------------+---------------------------------------+
-|                            | :class:`<singular-transform>`       |                                       |
-+----------------------------+-------------------------------------+---------------------------------------+
+.. figure:: images/geom-transform-error.svg
+   :align: center
+
+   The ``<transform-error>`` class and its subclasses
 
 - :class:`<transform-error>` The superclass of all error conditions signalled
   when there is an error with a transform.

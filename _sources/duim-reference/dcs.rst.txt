@@ -22,29 +22,18 @@ The class hierarchy for DUIM-DCs
 ================================
 
 A number of base classes are exposed in the DUIM-DCs library, each of
-which is a subclass of :drm:`<object>`. They are shown in the following table
+which is a subclass of :drm:`<object>`. They are shown in the following figure:
 
-+----------+--------------+------------------------------+
-| <object> |              |                              |
-+----------+--------------+------------------------------+
-|          | <pen>        |                              |
-+----------+--------------+------------------------------+
-|          | <brush>      |                              |
-+----------+--------------+------------------------------+
-|          | <palette>    |                              |
-+----------+--------------+------------------------------+
-|          | <ink>        | See `Subclasses of \<ink\>`_ |
-+----------+--------------+------------------------------+
-|          | <text-style> |                              |
-+----------+--------------+------------------------------+
-|          |              | <device-font>                |
-+----------+--------------+------------------------------+
+.. figure:: images/dcs-classes.svg
+   :align: center
 
-- :class:`<pen>` This is protocol class for pens. A pen is used to draw 1
-  dimensional graphics such as lines or outline, using a specific color
-  or pattern.
+   The class hierarchy for DUIM-DCs
+
+- :class:`<pen>` The protocol class for pens. A pen is used to
+  draw one-dimensional graphics such as lines or outline, using a
+  specific color or pattern.
 - :class:`<brush>` The protocol class for brushes. Brushes are used to fill in
-  2 dimensional areas with a specific color or pattern.
+  two-dimensional areas with a specific color or pattern.
 - :class:`<palette>` The protocol class for palettes. A palette provides a set
   of colors which can be made available to an application.
 - :class:`<ink>` This class can be thought of as anything that can be drawn.
@@ -1325,9 +1314,10 @@ are exported from the *duim-dcs* module.
      - yellow
      - yellow-green
 
-     Application programs can define other colors; these are provided because
-     they are commonly used in the X Windows community, not because there is
-     anything special about these particular colors.
+     Application programs can define other colors; these are provided
+     because they are commonly used `in the X Window System
+     <https://en.wikipedia.org/wiki/X11_color_names>`_, not because
+     there is anything special about these particular colors.
 
    :seealso:
 
