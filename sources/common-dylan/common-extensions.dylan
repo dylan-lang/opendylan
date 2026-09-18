@@ -360,11 +360,12 @@ define method join
     // correctly when key is passed.  Seems the lesser of two evils.
     sequences := map(key, sequences);
   end;
+  let result-type = type-for-copy(separator);
   let length :: <integer> = sequences.size;
   if (length == 0)
-    make(type-for-copy(separator), size: 0)
+    make(result-type, size: 0)
   elseif (length == 1)
-    sequences[0]
+    as(result-type, sequences[0])
   else
     let result-size :: <integer>
       = (reduce(method (len, seq)
@@ -379,14 +380,13 @@ define method join
              else
                0
              end);
-    let first = sequences[0];
-    let result = make(type-for-copy(first), size: result-size);
+    let result = make(result-type, size: result-size);
     let result-index :: <integer> = 0;
     local method copy-to-result (seq :: <sequence>)
             result := replace-subsequence!(result, seq, start: result-index, end: result-index + seq.size);
             result-index := result-index + seq.size;
           end;
-    copy-to-result(first);
+    copy-to-result(sequences[0]);
     let max-index :: <integer> = length - 1;
     for (i :: <integer> from 1 to max-index)
       let seq :: <sequence> = sequences[i];

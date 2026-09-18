@@ -374,6 +374,17 @@ define test test-join-non-strings ()
                "join vectors, non-empty separator");
 end test;
 
+define test test-join-result-type ()
+  // Result type is always type-for-copy(separator)
+  assert-instance?(<list>,   join(#(#(1, 2), #(3, 4)), #()));
+  assert-instance?(<list>,   join(#(#[1, 2], #[3, 4]), #()));
+
+  assert-instance?(<vector>, join(#(#[1, 2], #[3, 4]), #[]));
+  assert-instance?(<vector>, join(#(#(1, 2), #(3, 4)), #[]));
+
+  assert-instance?(<string>, join(#("a", "b"), ""));
+end test;
+
 define test test-remove-all-keys! ()
   //---*** Do all collections by using dylan-test-suite collection code
 end test;
@@ -528,6 +539,7 @@ define suite common-extensions-test-suite ()
   test test-split;
   test test-join;
   test test-join-non-strings;
+  test test-join-result-type;
   test test-remove-all-keys!;
   test test-subclass;
   test test-fill-table!;

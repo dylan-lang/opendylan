@@ -546,58 +546,45 @@ Collections
    Join several sequences (e.g. strings) together, including a separator
    between each pair of adjacent sequences.
 
-   :signature: join *sequences* *separator* #key *key* *conjunction* => *joined*
-   :parameter sequences: An instance of :drm:`<sequence>`.
+   :signature: join *items* *separator* #key *key* *conjunction* => *joined*
+   :parameter items: An instance of :drm:`<sequence>`.
    :parameter separator: An instance of :drm:`<sequence>`.
    :parameter #key key: Transformation to apply to each item. Default value:
-                        :drm:`identity`.
-   :parameter #key conjunction: Last separator. Default value: #f
+      :drm:`identity`.
+   :parameter #key conjunction: The :drm:`<sequence>` to use as the separator between the
+      last two elements in *items*, or :drm:`#f` (the default) if *separator* should
+      be used.
    :value joined: An instance of :drm:`<sequence>`.
 
    :description:
 
-     Join *sequences* together, including *separator* between each sequence.
+     Join *items* together, including *separator* between each sequence, except that
+     if *conjunction* is supplied it is used between the last pair of elements.
 
-     If the first argument is empty, an empty sequence of type
-     ``type-for-copy(separator)`` is returned. If *sequences* is of size one,
-     the first element is returned. Otherwise, the resulting *joined* sequence
-     will be of the same type as *sequences*.
+     Every element in *items* is transformed by *key*, which is a function that accepts
+     one argument and returns a :drm:`<sequence>` of the appropriate type.
 
-     Every element in *sequences* is transformed by *key*, which is a function
-     that must accept one argument.
+     *separator* may be empty, in which case ``join`` simply concatenates the *items*
+     after applying *key* to each element.
 
-     If *conjunction* is not false, it is used instead of *separator* to join
-     the last pair of elements in *sequences*.
+     The return value is a sequence of type ``type-for-copy(separator)``.  This means
+     that if *separator* is a :drm:`<pair>` or :drm:`<empty-list>` the result will be a
+     sequence of type :drm:`<list>`.
 
    :example:
 
    .. code-block:: dylan
 
      join(range(from: 1, to: 3), ", ",
-          key: integer-to-string, conjunction: " and ")
-     => "1, 2 and 3"
+          key: integer-to-string,
+          conjunction: ", and ")
+     => "1, 2, and 3"
+
+     join(#("a", "b"), " & ", key: curry(concatenate, "~"))
+     => "~a & ~b"
 
    :seealso:
 
-     - :meth:`join(<sequence>, <sequence>)`
-     - :gf:`split`
-
-.. method:: join
-   :specializer: <sequence>, <sequence>
-
-   Join several sequences together, including a separator between each pair of
-   adjacent sequences.
-
-   :signature: join *sequences* *separator* #key *key* *conjunction* => *joined*
-   :parameter items: An instance of :drm:`<sequence>`.
-   :parameter separator: An instance of :drm:`<sequence>`.
-   :parameter #key key: Transformation to apply to each item. An instance of :drm:`<function>`.
-   :parameter #key conjunction: Last separator. An instance of ``false-or(<sequence>)``.
-   :value joined: An instance of :drm:`<sequence>`.
-
-   :seealso:
-
-     - :gf:`join`
      - :gf:`split`
 
 Conditions
