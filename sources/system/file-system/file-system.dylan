@@ -31,7 +31,11 @@ define sealed class <file-system-error> (<simple-error>)
 end class <file-system-error>;
 
 define sealed class <file-error> (<file-system-error>)
-  constant slot file-error-locator :: <file-system-file-locator>,
+  // One might be forgiven for thinking this slot should be type
+  // <file-system-FILE-locator>, but that isn't correct because many Unix file system
+  // functions accept pathnames that name directories and we tend to represent those in
+  // Dylan as <directory-locator>s.  Ex: rename a/ -> b/ when b/ already exists.
+  constant slot file-error-locator :: <file-system-locator>,
     required-init-keyword: locator:;
 end class <file-error>;
 

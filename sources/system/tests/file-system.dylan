@@ -215,6 +215,30 @@ define test test-rename-file ()
   assert-false(file-exists?(orig-file));
 end;
 
+define test test-rename-file/directory-exists ()
+  let dir-temp = test-temp-directory();
+  let dir-a = subdirectory-locator(dir-temp, "a");
+  let dir-b = subdirectory-locator(dir-temp, "b");
+  let dir-c = subdirectory-locator(dir-temp, "c");
+
+  // Positive test case, a/ can be renamed to non-existent b/
+  ensure-directories-exist(dir-a);
+  assert-true(file-exists?(dir-a));
+  assert-false(file-exists?(dir-b));
+  assert-no-errors(rename-file(dir-a, dir-b));
+  assert-false(file-exists?(dir-a));
+  assert-true(file-exists?(dir-b));
+
+  // Negative test case, b/ cannot be renamed to existing c/
+  ensure-directories-exist(dir-c);
+  block ()
+    rename-file(dir-b, dir-c);
+    assert-false("should never get here");
+  exception (err :: <file-exists-error>)
+    assert-equal(dir-c, err.file-error-locator);
+  end;
+end test;
+
 define test test-file-properties ()
   //---*** Fill this in.
 end;
