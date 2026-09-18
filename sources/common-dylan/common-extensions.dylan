@@ -380,7 +380,7 @@ define method join
                0
              end);
     let first = sequences[0];
-    let result = make(object-class(first), size: result-size);
+    let result = make(type-for-copy(first), size: result-size);
     let result-index :: <integer> = 0;
     local method copy-to-result (seq :: <sequence>)
             result := replace-subsequence!(result, seq, start: result-index, end: result-index + seq.size);

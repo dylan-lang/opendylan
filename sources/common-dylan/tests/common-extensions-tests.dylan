@@ -362,6 +362,18 @@ define test test-join ()
                    key: integer-to-string));
 end test;
 
+define test test-join-non-strings ()
+  assert-equal(#(1, 2, 3), join(#(#(1), #(2, 3)), #()),
+               "join lists, empty separator");
+  assert-equal(#(1, 7, 2, 3), join(#(#(1), #(2, 3)), #(7)),
+               "join lists, non-empty separator");
+
+  assert-equal(#[1, 2, 3], join(#(#[1], #[2, 3]), #[]),
+               "join vectors, empty separator");
+  assert-equal(#[1, 2, 7, 3], join(#(#[1, 2], #[3]), #[7]),
+               "join vectors, non-empty separator");
+end test;
+
 define test test-remove-all-keys! ()
   //---*** Do all collections by using dylan-test-suite collection code
 end test;
@@ -515,6 +527,7 @@ define suite common-extensions-test-suite ()
   test test-position;
   test test-split;
   test test-join;
+  test test-join-non-strings;
   test test-remove-all-keys!;
   test test-subclass;
   test test-fill-table!;
