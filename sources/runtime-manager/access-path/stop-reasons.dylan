@@ -466,6 +466,15 @@ define open generic first-debugger-invocation?
 //    stop reason event object. (Returns #f if the code indicates a
 //    timeout).
 
+define constant $timeout-handled-stop-reason
+  = make(<timeout-handled-stop-reason>);
+define constant $timeout-unhandled-stop-reason
+  = make(<timeout-unhandled-stop-reason>);
+define constant $profiler-stop-reason
+  = make(<profiler-stop-reason>);
+define constant $profiler-unhandled-stop-reason
+  = make(<profiler-unhandled-stop-reason>);
+
 define method construct-stop-reason
     (ap :: <access-path>, event-type :: <integer>,
      #key process, thread)
@@ -496,9 +505,9 @@ define method construct-stop-reason
     $timed-out =>
       stop-reason := #f;
     $timed-out-handled =>
-      stop-reason := make(<timeout-handled-stop-reason>);
+      stop-reason := $timeout-handled-stop-reason;
     $timed-out-unhandled =>
-      stop-reason := make(<timeout-unhandled-stop-reason>);
+      stop-reason := $timeout-unhandled-stop-reason;
     $create-process =>
       source-library := find-or-make-library
                           (ap, get-debug-event-library (ap.connection));
@@ -727,9 +736,9 @@ define method construct-stop-reason
                             thread: source-thread,
                             address: get-exception-address (ap.connection));
     $profiler =>
-      stop-reason := make (<profiler-stop-reason>);
+      stop-reason := $profiler-stop-reason;
     $profiler-unhandled =>
-      stop-reason := make (<profiler-unhandled-stop-reason>);
+      stop-reason := $profiler-unhandled-stop-reason;
     otherwise =>
       stop-reason := make (<unclassified-exception-stop-reason>,
                             process: source-process,
