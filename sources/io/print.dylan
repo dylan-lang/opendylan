@@ -1080,6 +1080,20 @@ define sealed method print-object
 end method;
 
 
+/// C pointers
+///
+define method print-object
+    (pointer :: <C-pointer>, stream :: <stream>) => ()
+  let class = pointer.object-class;
+  printing-logical-block (stream, prefix: "{", suffix: "}")
+    write(stream, as-lowercase(as(<byte-string>, class.debug-name)));
+    write(stream, " ");
+    let address
+      = primitive-cast-pointer-as-raw(primitive-unwrap-c-pointer(pointer));
+    write(stream, machine-word-to-string(primitive-wrap-machine-word(address)));
+  end
+end method;
+
 /// Float printing.
 ///
 
