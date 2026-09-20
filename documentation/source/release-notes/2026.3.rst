@@ -29,6 +29,19 @@ Changes to libraries that are part of the `opendylan repository
 Common-Dylan
 ------------
 
+* :gf:`join` has been `changed <https://github.com/dylan-lang/opendylan/pull/1840>`_ to
+  be more predictable by always returning a sequence of type
+  ``type-for-copy(separator)``.  This change also fixed a bug when joining lists, with a
+  list *separator*.  **This is an incompatible change that doesn't affect the common case
+  of joining strings with a string separator.**
+
+System
+------
+
+* :gf:`rename-file` has been `fixed <https://github.com/dylan-lang/opendylan/pull/1838>`_
+  such than when attempting to rename a file to a directory that already exists the
+  :class:`io:streams:<file-exists-error>` is signaled correctly, rather than causing a
+  subsequent :drm:`<type-error>`.
 
 Submoduled Library Updates
 ==========================
