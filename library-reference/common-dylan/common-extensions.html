@@ -1246,15 +1246,17 @@ rare case that can be handled by using <a class="reference internal" href="#comm
 between each pair of adjacent sequences.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Signature<span class="colon">:</span></dt>
-<dd class="field-odd"><p>join <em>sequences</em> <em>separator</em> #key <em>key</em> <em>conjunction</em> =&gt; <em>joined</em></p>
+<dd class="field-odd"><p>join <em>items</em> <em>separator</em> #key <em>key</em> <em>conjunction</em> =&gt; <em>joined</em></p>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>sequences</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
+<li><p><strong>items</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
 <li><p><strong>separator</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
 <li><p><strong>key</strong> (<em>#key</em>) – Transformation to apply to each item. Default value:
 <a class="reference external" href="https://opendylan.org/books/drm/Coercing_and_Copying_Objects#identity"><code class="xref drm docutils literal notranslate"><span class="pre">identity</span></code></a>.</p></li>
-<li><p><strong>conjunction</strong> (<em>#key</em>) – Last separator. Default value: #f</p></li>
+<li><p><strong>conjunction</strong> (<em>#key</em>) – The <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a> to use as the separator between the
+last two elements in <em>items</em>, or <a class="reference external" href="https://opendylan.org/books/drm/Other_Built-In_Objects_Defined#false"><code class="xref drm docutils literal notranslate"><span class="pre">#f</span></code></a> (the default) if <em>separator</em> should
+be used.</p></li>
 </ul>
 </dd>
 <dt class="field-odd">Values<span class="colon">:</span></dt>
@@ -1263,61 +1265,32 @@ between each pair of adjacent sequences.</p>
 </ul>
 </dd>
 <dt class="field-even">Discussion<span class="colon">:</span></dt>
-<dd class="field-even"><p><p>Join <em>sequences</em> together, including <em>separator</em> between each sequence.</p>
-<p>If the first argument is empty, an empty sequence of type
-<code class="docutils literal notranslate"><span class="pre">type-for-copy(separator)</span></code> is returned. If <em>sequences</em> is of size one,
-the first element is returned. Otherwise, the resulting <em>joined</em> sequence
-will be of the same type as <em>sequences</em>.</p>
-<p>Every element in <em>sequences</em> is transformed by <em>key</em>, which is a function
-that must accept one argument.</p>
-<p>If <em>conjunction</em> is not false, it is used instead of <em>separator</em> to join
-the last pair of elements in <em>sequences</em>.</p>
+<dd class="field-even"><p><p>Join <em>items</em> together, including <em>separator</em> between each sequence, except that
+if <em>conjunction</em> is supplied it is used between the last pair of elements.</p>
+<p>Every element in <em>items</em> is transformed by <em>key</em>, which is a function that accepts
+one argument and returns a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a> of the appropriate type.</p>
+<p><em>separator</em> may be empty, in which case <code class="docutils literal notranslate"><span class="pre">join</span></code> simply concatenates the <em>items</em>
+after applying <em>key</em> to each element.</p>
+<p>The return value is a sequence of type <code class="docutils literal notranslate"><span class="pre">type-for-copy(separator)</span></code>.  This means
+that if <em>separator</em> is a <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#pair"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;pair&gt;</span></code></a> or <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#empty-list"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;empty-list&gt;</span></code></a> the result will be a
+sequence of type <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#list"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;list&gt;</span></code></a>.</p>
 </p>
 </dd>
 <dt class="field-odd">Example<span class="colon">:</span></dt>
 <dd class="field-odd"><p></p></dd>
 </dl>
 <div class="highlight-dylan notranslate"><div class="highlight"><pre><span></span><span class="n">join</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="k">from:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="k">to:</span><span class="w"> </span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;, &quot;</span><span class="p">,</span>
-<span class="w">     </span><span class="k">key:</span><span class="w"> </span><span class="n">integer-to-string</span><span class="p">,</span><span class="w"> </span><span class="k">conjunction:</span><span class="w"> </span><span class="s">&quot; and &quot;</span><span class="p">)</span>
-<span class="p">=&gt;</span><span class="w"> </span><span class="s">&quot;1, 2 and 3&quot;</span>
+<span class="w">     </span><span class="k">key:</span><span class="w"> </span><span class="n">integer-to-string</span><span class="p">,</span>
+<span class="w">     </span><span class="k">conjunction:</span><span class="w"> </span><span class="s">&quot;, and &quot;</span><span class="p">)</span>
+<span class="p">=&gt;</span><span class="w"> </span><span class="s">&quot;1, 2, and 3&quot;</span>
+
+<span class="n">join</span><span class="p">(#(</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p">),</span><span class="w"> </span><span class="s">&quot; &amp; &quot;</span><span class="p">,</span><span class="w"> </span><span class="k">key:</span><span class="w"> </span><span class="nb">curry</span><span class="p">(</span><span class="nb">concatenate</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;~&quot;</span><span class="p">))</span>
+<span class="p">=&gt;</span><span class="w"> </span><span class="s">&quot;~a &amp; ~b&quot;</span>
 </pre></div>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">See also<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
-<li><p><a class="reference internal" href="#common-dylan:common-extensions:join([sequence],[sequence])"><code class="xref dylan dylan-meth docutils literal notranslate"><span class="pre">join(&lt;sequence&gt;,</span> <span class="pre">&lt;sequence&gt;)</span></code></a></p></li>
-<li><p><a class="reference internal" href="#common-dylan:common-extensions:split"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">split</span></code></a></p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="dylan method">
-<dt class="sig sig-object dylan-api dylan" id="common-dylan:common-extensions:join([sequence],[sequence])">
-<span class="sig-name descname"><span class="pre">join(&lt;sequence&gt;,</span> <span class="pre">&lt;sequence&gt;)</span></span> <em class="property"><span class="pre">Method</span></em><a class="headerlink" href="#common-dylan:common-extensions:join([sequence],[sequence])" title="Link to this definition">¶</a></dt>
-<dd><p>Join several sequences together, including a separator between each pair of
-adjacent sequences.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Signature<span class="colon">:</span></dt>
-<dd class="field-odd"><p>join <em>sequences</em> <em>separator</em> #key <em>key</em> <em>conjunction</em> =&gt; <em>joined</em></p>
-</dd>
-<dt class="field-even">Parameters<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>items</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
-<li><p><strong>separator</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
-<li><p><strong>key</strong> (<em>#key</em>) – Transformation to apply to each item. An instance of <a class="reference external" href="https://opendylan.org/books/drm/Function_Classes#function"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code></a>.</p></li>
-<li><p><strong>conjunction</strong> (<em>#key</em>) – Last separator. An instance of <code class="docutils literal notranslate"><span class="pre">false-or(&lt;sequence&gt;)</span></code>.</p></li>
-</ul>
-</dd>
-<dt class="field-odd">Values<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>joined</strong> – An instance of <a class="reference external" href="https://opendylan.org/books/drm/Collection_Classes#sequence"><code class="xref drm docutils literal notranslate"><span class="pre">&lt;sequence&gt;</span></code></a>.</p></li>
-</ul>
-</dd>
-<dt class="field-even">See also<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><a class="reference internal" href="#common-dylan:common-extensions:join"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">join</span></code></a></p></li>
 <li><p><a class="reference internal" href="#common-dylan:common-extensions:split"><code class="xref dylan dylan-gf docutils literal notranslate"><span class="pre">split</span></code></a></p></li>
 </ul>
 </p>
@@ -2628,7 +2601,6 @@ Making an &lt;A&gt;
 <li><a class="reference internal" href="#common-dylan:common-extensions:split([sequence],[object])"><code class="docutils literal notranslate"><span class="pre">split(&lt;sequence&gt;,</span> <span class="pre">&lt;object&gt;)</span></code></a></li>
 <li><a class="reference internal" href="#common-dylan:common-extensions:split([sequence],[sequence])"><code class="docutils literal notranslate"><span class="pre">split(&lt;sequence&gt;,</span> <span class="pre">&lt;sequence&gt;)</span></code></a></li>
 <li><a class="reference internal" href="#common-dylan:common-extensions:join"><code class="docutils literal notranslate"><span class="pre">join</span></code></a></li>
-<li><a class="reference internal" href="#common-dylan:common-extensions:join([sequence],[sequence])"><code class="docutils literal notranslate"><span class="pre">join(&lt;sequence&gt;,</span> <span class="pre">&lt;sequence&gt;)</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#conditions">Conditions</a><ul>

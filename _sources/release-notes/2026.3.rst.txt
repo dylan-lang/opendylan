@@ -1,0 +1,58 @@
+************************************
+Open Dylan 2026.3 (not yet released)
+************************************
+
+This document describes the 2026.3 release of Open Dylan, released ???, 2026.  The
+highlights of the release are listed below.  For complete details see the `commit logs
+<https://github.com/dylan-lang/opendylan/compare/v2026.2.0...v2026.3.0>`_ for this
+release.
+
+.. note:: Some commit logs, for example for testworks and other libraries that
+          are included in Open Dylan as git submodules, may be in other
+          repositories.
+
+* Download the release: https://opendylan.org/download
+* Read documentation: https://opendylan.org
+* Report problems: https://github.com/dylan-lang/opendylan/issues
+
+
+Compiler
+========
+
+
+Bundled Library Updates
+=======================
+
+Changes to libraries that are part of the `opendylan repository
+<https://github.com/dylan-lang/opendylan>`_.
+
+Common-Dylan
+------------
+
+* :gf:`join` has been `changed <https://github.com/dylan-lang/opendylan/pull/1840>`_ to
+  be more predictable by always returning a sequence of type
+  ``type-for-copy(separator)``.  This change also fixed a bug when joining lists, with a
+  list *separator*.  **This is an incompatible change that doesn't affect the common case
+  of joining strings with a string separator.**
+
+System
+------
+
+* :gf:`rename-file` has been `fixed <https://github.com/dylan-lang/opendylan/pull/1838>`_
+  such than when attempting to rename a file to a directory that already exists the
+  :class:`io:streams:<file-exists-error>` is signaled correctly, rather than causing a
+  subsequent :drm:`<type-error>`.
+
+Submoduled Library Updates
+==========================
+
+No submodule updates occurred in this release.
+
+Contributors
+============
+
+We'd like to thank all the people that made contributions to this release and
+to surrounding libraries in the Dylan ecosystem....
+
+* Peter S. Housel
+* Carl Gay
