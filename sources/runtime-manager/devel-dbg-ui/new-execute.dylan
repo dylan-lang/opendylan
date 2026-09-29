@@ -2875,9 +2875,11 @@ define method execute-debugger-command
         let prompt = "     [Y or N] > ";
         while (~valid-answer)
           format-out("%s", prompt);
+          force-out();
           attempts := attempts + 1;
           answer := read-line(*standard-input*);
           format-out("\n");
+          force-out();
           if ((instance?(answer, <string>)) &
               (size(answer) > 0) &
               (as-uppercase(answer[0]) == 'Y'))

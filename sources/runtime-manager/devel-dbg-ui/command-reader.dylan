@@ -98,6 +98,7 @@ define method read-console-commands () => ()
     command := #f;
     while(~command)
       format-out("Command> ");
+      force-out();
       let command-string = read-command();
       let seq = tokenize(command-string);
       if ((seq.size > 1) & (check-lexical-correctness(seq)))
