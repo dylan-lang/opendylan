@@ -527,7 +527,8 @@ define module access-path-implementation
   use dylan-extensions,
      import: {<machine-word>,
               <double-integer>,
-              $minimum-unsigned-machine-word, integer-as-raw},
+              $minimum-unsigned-machine-word, integer-as-raw,
+              debug-name},
      export: all;
   use dylan-primitives;
   use machine-word-lowlevel;
@@ -535,7 +536,8 @@ define module access-path-implementation
   use format;
   use format-out;
   use print;
-  use streams, import: {<file-stream>, <stream>, force-output, close};
+  use pprint;
+  use streams, import: {<file-stream>, <stream>, write, force-output, close};
   use locators, import: {<file-locator>};
   use file-system;
   use operating-system, import: {environment-variable};
