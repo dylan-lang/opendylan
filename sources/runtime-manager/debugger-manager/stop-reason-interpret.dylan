@@ -304,13 +304,6 @@ define method interpret-stop-reason
        if (lib == application.application-dylan-runtime-library)
          deregister-dylan-runtime-library(application);
        end if;
-       let tracker =
-         element(application.library-initialization-trackers,
-                 lib,
-                 default: #f);
-       if (tracker)
-         tracker.tracker-initialization-state := #"unloaded"
-       end if;
 
     <source-step-stop-reason> =>
       // We have performed a source-stepping operation. If this was

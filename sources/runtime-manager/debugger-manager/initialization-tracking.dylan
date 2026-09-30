@@ -8,17 +8,6 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-///// <INITIALIZATION-STATE>
-//    Describes the states in which a dylan library can be.
-
-define constant <initialization-state> =
-   one-of(#"uninitialized",
-          #"statically-initialized",
-          #"dynamically-initialized",
-          #"unloaded",
-          #"foreign");
-
-
 ///// <LIBRARY-INITIALIZATION-PHASE>
 //    Either START or END.
 
@@ -57,22 +46,16 @@ define abstract class <library-initialization-tracker> (<object>)
   constant slot tracker-remote-library :: <remote-library>,
     required-init-keyword: remote-library:;
 
-  slot tracker-initialization-state :: <initialization-state>;
-
   constant slot tracker-top-level? :: <boolean>,
     required-init-keyword: top-level?:;
 end class;
 
 define class <foreign-library-initialization-tracker>
     (<library-initialization-tracker>)
-  inherited slot tracker-initialization-state,
-    init-value: #"foreign";
 end class;
 
 define class <dylan-library-initialization-tracker>
     (<library-initialization-tracker>)
-  inherited slot tracker-initialization-state,
-    init-value: #"uninitialized";
 
   constant slot tracker-initialization-symbol :: <remote-symbol>,
     required-init-keyword: initializer-function:;
@@ -143,10 +126,6 @@ define method dynamic-initializer-start-callback
     (application :: <debug-target>, start :: <starting-dynamic-initialization>,
      thread :: <remote-thread>)
  => (interested? :: <boolean>)
-  ignore
-    (start.entry-initialization-tracker.tracker-initialization-state);
-  start.entry-initialization-tracker.tracker-initialization-state :=
-     #"statically-initialized";
   if (start.entry-initialization-tracker.tracker-remote-library ==
          application.application-dylan-library)
     allocate-temporary-download-block-in(application, thread);
@@ -177,8 +156,6 @@ define method dynamic-initializer-done-callback
   => (interested? :: <boolean>)
   deregister-debug-point(application, done);
   deregister-debug-point(application, done.corresponding-entry-tracepoint);
-  done.exit-initialization-tracker.tracker-initialization-state :=
-     #"dynamically-initialized";
   debug-target-message
     (application, $debug-level,
      "Tracker for %s state set to dynamically-initialized (done)",
