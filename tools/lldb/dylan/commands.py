@@ -30,6 +30,7 @@ def dylan_bt(debugger, command, result, internal_dict):
     return
 
   thread = process.GetSelectedThread()
+  selected_frame = thread.GetSelectedFrame()
 
   for frame_idx, frame in enumerate(thread):
     function = frame.GetFunction()
@@ -51,12 +52,13 @@ def dylan_bt(debugger, command, result, internal_dict):
     module = frame.GetModule().GetFileSpec().GetFilename()
     file_name = frame.GetLineEntry().GetFileSpec().GetFilename()
     line_number = frame.GetLineEntry().GetLine()
-    fmt = '  frame #{num:<4d} {func:60s} {addr:#016x}'
+    fmt = '{c} frame #{num:<4d} {func:60s} {addr:#016x}'
     if module:
       fmt += ' {mod}'
     if file_name:
       fmt += ' at {file}:{line}'
     print (fmt.format(
+      c='*' if frame.IsEqual(selected_frame) else ' ',
       num=frame_idx,
       func=function_name,
       mod=module,
