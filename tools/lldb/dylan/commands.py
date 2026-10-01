@@ -44,7 +44,8 @@ def dylan_bt(debugger, command, result, internal_dict):
       if not function_name in INTERNAL_RUNTIME_FUNCTIONS:
         is_dylan_function = True
     if not options.all_frames:
-      if not function or not is_dylan_function:
+      if (not function or not is_dylan_function) and \
+         not frame.IsEqual(selected_frame):
         continue
     if not is_dylan_function and function_name:
       function_name = '  [' + function_name + ']'
