@@ -391,16 +391,15 @@ void add_library_descriptor
 }
 
 
-DWORD lowest_base_address (LPDBGPROCESS process)
+void invalidate_library_descriptor
+  (LPDBGPROCESS          process,
+   UNLOAD_DLL_DEBUG_INFO   info)
 {
-  LPDBGLIBRARY    lib = process->LibraryList;
-  DWORD           lowest = lib->ImageInformation.ImageBase;
-  while (lib != NULL) {
-    if (lib->ImageInformation.ImageBase < lowest)
-      lowest = lib->ImageInformation.ImageBase;
-    lib = lib->Next;
+  LPDBGLIBRARY lib
+    = library_descriptor_from_base_address(process, (DWORD) info.lpBaseOfDll);
+  if (lib != process->LibraryList) {
+    lib->Valid = FALSE; // Mark it for deletion
   }
-  return(lowest);
 }
 
 
@@ -570,6 +569,7 @@ void housekeep_for_stop_reason
     break;
 
   case UNLOAD_DLL_DEBUG_EVENT:
+    invalidate_library_descriptor(process, event->u.UnloadDll);
     break;
 
   case EXCEPTION_DEBUG_EVENT:
