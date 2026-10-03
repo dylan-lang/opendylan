@@ -490,7 +490,6 @@ define method construct-stop-reason
       end unless;
     end if;
 
-  let source-library = #f;
   let stop-reason = #f;
 
   if (source-thread)
@@ -509,8 +508,10 @@ define method construct-stop-reason
     $timed-out-unhandled =>
       stop-reason := $timeout-unhandled-stop-reason;
     $create-process =>
-      source-library := find-or-make-library
-                          (ap, get-debug-event-library (ap.connection));
+      let source-library
+        = find-or-make-library(ap, get-debug-event-library(ap.connection));
+      assert(ap.libraries.size = 1);
+      assert(ap.threads.size = 1);
       stop-reason := make (<create-process-stop-reason>,
 			   process: source-process,
 			   thread: source-thread,
@@ -527,6 +528,8 @@ define method construct-stop-reason
                            exit-code:
                              get-debug-event-process-exit-code
                                (ap.connection));
+      ap.libraries.size := 0;
+      ap.threads.size := 0;
       deregister-access-path(ap);
     $exit-thread =>
       stop-reason := make (<exit-thread-stop-reason>,
@@ -537,22 +540,20 @@ define method construct-stop-reason
                                (ap.connection));
       ap.threads := remove! (ap.threads, source-thread);
     $load-dll =>
-      source-library :=
-        find-or-make-library
-          (ap, get-debug-event-library (ap.connection));
+      let source-library
+        = find-or-make-library(ap, get-debug-event-library(ap.connection));
       stop-reason := make (<load-library-stop-reason>,
                            process: source-process,
                            thread: source-thread,
                            library: source-library);
     $unload-dll =>
-      source-library :=
-        find-or-make-library
-          (ap, get-debug-event-library (ap.connection));
+      let source-library
+        = find-or-make-library(ap, get-debug-event-library(ap.connection));
       stop-reason := make (<unload-library-stop-reason>,
                            process: source-process,
                            thread: source-thread,
                            library: source-library);
-      ap.libraries := remove! (ap.libraries, source-library);
+      ap.libraries := remove!(ap.libraries, source-library);
     $output-debug-string =>
       let (string-address, string-length, string-unicode?)
         = get-debug-event-string-information(ap.connection);

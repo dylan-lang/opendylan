@@ -253,23 +253,23 @@ define open generic construct-thread-object
 define method find-or-make-thread
   (ap :: <access-path>, thread :: <NUBTHREAD>,
    #key priority)
-     => (thread :: <remote-thread>)
-  let i = 0;
-  let remote-thread = #f;
-  while ((~remote-thread) & (i < size(ap.threads)))
-    if (ap.threads[i].nub-descriptor = thread)
-      remote-thread := ap.threads[i];
-    else
-      i := i + 1;
-    end if
-  end while;
-  if (~remote-thread)
-    remote-thread :=
-      construct-thread-object
-      (ap.connection, thread, path: ap, priority: priority);
-    ap.threads := add! (ap.threads, remote-thread);
-  end if;
-  remote-thread;
+ => (thread :: <remote-thread>)
+  local
+    method compare-desc
+        (thread :: <NUBTHREAD>, remote-thread :: <remote-thread>)
+     => (match? :: <boolean>)
+      remote-thread.nub-descriptor = thread
+    end;
+  let pos = position(ap.threads, thread, test: compare-desc);
+  if (pos)
+    ap.threads[pos]
+  else
+    let remote-thread
+      = construct-thread-object
+          (ap.connection, thread, path: ap, priority: priority);
+    ap.threads := add!(ap.threads, remote-thread);
+    remote-thread
+  end if
 end method;
 
 
@@ -285,22 +285,23 @@ define open generic construct-library-object
 //    Similar to FIND-OR-MAKE-THREAD
 
 define method find-or-make-library
-  (ap :: <access-path>, lib :: <NUBLIBRARY>)
-     => (lib :: <remote-library>)
-  let i = 0;
-  let remote-library = #f;
-  while ((~remote-library) & (i < size(ap.libraries)))
-    if (ap.libraries[i].nub-descriptor = lib)
-      remote-library := ap.libraries[i];
-    else
-      i := i + 1;
-    end if
-  end while;
-  if (~remote-library)
-    remote-library := construct-library-object (ap.connection, lib);
-    ap.libraries := add! (ap.libraries, remote-library);
-  end if;
-  remote-library;
+    (ap :: <access-path>, lib :: <NUBLIBRARY>)
+ => (remote-library :: <remote-library>)
+  local
+    method compare-desc
+        (lib :: <NUBLIBRARY>, remote-library :: <remote-library>)
+     => (match? :: <boolean>)
+      remote-library.nub-descriptor = lib
+    end;
+  let pos
+    = position(ap.libraries, lib, test: compare-desc);
+  if (pos)
+    ap.libraries[pos]
+  else
+    let remote-library = construct-library-object(ap.connection, lib);
+    ap.libraries := add!(ap.libraries, remote-library);
+    remote-library
+  end if
 end method;
 
 /*
