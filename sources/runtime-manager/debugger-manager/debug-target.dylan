@@ -57,6 +57,8 @@ define open abstract class <debug-target> (<object>)
   slot debugger-generated-stop-reason :: <debugger-generated-stop-reason>
        = make(<debugger-stop-application-stop-reason>);
 
+  slot application-loading? :: <boolean>,
+    init-value: #f;
   slot up-and-running? :: <boolean>,
        init-value: #f;
 

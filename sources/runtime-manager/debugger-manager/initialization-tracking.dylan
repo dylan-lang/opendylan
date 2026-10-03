@@ -411,3 +411,76 @@ define method top-level-library-definition-name
     "unknown";
   as-lowercase(name);
 end method;
+
+define method register-library
+    (application :: <debug-target>, lib :: <remote-library>)
+  => ()
+  let needs-tracking? = #f;
+  let (dylan-lib-name, runtime-lib-name)
+    = dylan-and-runtime-library-names(application);
+  let lib-name = as-uppercase(lib.library-core-name);
+  if (lib-name = dylan-lib-name)
+    register-dylan-library(application, lib);
+    needs-tracking? := #t;
+  end if;
+  if (lib-name = runtime-lib-name)
+    register-dylan-runtime-library(application, lib);
+    needs-tracking? := #t;
+  end if;
+  let top-level? = (lib-name = application.top-level-library-name);
+  debug-target-message
+    (application, $debug-level, "Load library %=, top-level?=%= needs-tracking?=%=",
+     lib, top-level?, needs-tracking?);
+  if (top-level? | needs-tracking?)
+    let sym
+      = if (top-level?)
+          // For top-level libraries, determine whether the library
+          // is self-contained by searching for an unusual entry-point;
+          // use this entry-point for the component's initialization
+          // tracking
+          let component-sym
+            = find-symbol(application.debug-target-access-path,
+                          $standard-dylan-component-initializer,
+                          library: lib);
+          if (component-sym)
+            lib.self-contained-component? := #t;
+            component-sym
+          else
+            find-symbol(application.debug-target-access-path,
+                        $standard-dylan-initializer,
+                        library: lib);
+          end
+        else
+          find-symbol(application.debug-target-access-path,
+                      $standard-dylan-initializer,
+                      library: lib);
+        end;
+    if (sym)
+      application.library-initialization-trackers[lib]
+        := make(<dylan-library-initialization-tracker>,
+                debug-target: application,
+                remote-library: lib,
+                top-level?: top-level?,
+                initializer-function: sym);
+    else
+      application.library-initialization-trackers[lib]
+        := make(<foreign-library-initialization-tracker>,
+                debug-target: application,
+                top-level?: top-level?,
+                remote-library: lib);
+    end if;
+  end if;
+end method;
+
+define method deregister-library
+    (application :: <debug-target>, lib :: <remote-library>)
+ => ()
+  debug-target-message
+    (application, $debug-level, "Deregistering library %=", lib);
+  if (lib == application.application-dylan-library)
+    deregister-dylan-library(application);
+  end if;
+  if (lib == application.application-dylan-runtime-library)
+    deregister-dylan-runtime-library(application);
+  end if;
+end method;

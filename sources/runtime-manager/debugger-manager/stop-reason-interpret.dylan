@@ -45,6 +45,11 @@ define method interpret-stop-reason
   debug-target-message(application, $debug-level,
                        "Interpret stop reason %=", stop-reason);
   select (stop-reason by instance?)
+    <system-initialized-stop-reason> =>
+       maybe-modified-stop-reason := stop-reason;
+       application.application-loading? := #f;
+       do-libraries(curry(register-library, application), path);
+
     <invoke-debugger-stop-reason> =>
        // If this is a dylan-level invocation of the debugger,
        // generate the required high-level stop reason. Otherwise,
@@ -199,40 +204,13 @@ define method interpret-stop-reason
 
     <create-process-stop-reason> =>
        maybe-modified-stop-reason := stop-reason;
+       application.application-loading? := #t;
        application.up-and-running? := #t;
        create-thread-descriptor(application, stop-reason.stop-reason-thread);
-       application.application-primary-thread :=
-           stop-reason.stop-reason-thread;
-       let lib = stop-reason.stop-reason-executable-component;
-       application.application-executable := lib;
-       let (dylan-lib-name, runtime-lib-name)
-          = dylan-and-runtime-library-names(application);
-       let lib-name = as-uppercase(lib.library-core-name);
-       if (lib-name = dylan-lib-name)
-         register-dylan-library(application, lib)
-       end if;
-       if (lib-name = runtime-lib-name)
-         register-dylan-runtime-library(application, lib)
-       end if;
-       let top-level? = (lib-name = application.top-level-library-name);
-       let sym = find-symbol(application.debug-target-access-path,
-                             $standard-dylan-initializer,
-                             library: lib);
-       if (sym)
-         application.dylan-application? := #t;
-         application.library-initialization-trackers[lib] :=
-            make(<dylan-library-initialization-tracker>,
-                 debug-target: application,
-                 remote-library: lib,
-                 top-level?: top-level?,
-                 initializer-function: sym);
-       else
-         application.library-initialization-trackers[lib] :=
-            make(<foreign-library-initialization-tracker>,
-                 debug-target: application,
-                 remote-library: lib,
-                 top-level?: top-level?);
-       end if;
+       application.application-primary-thread
+         := stop-reason.stop-reason-thread;
+       application.application-executable
+         := stop-reason.stop-reason-executable-component;
 
     <exit-process-stop-reason> =>
        stop-profiling(application);
@@ -242,68 +220,16 @@ define method interpret-stop-reason
     <load-library-stop-reason> =>
        maybe-modified-stop-reason := stop-reason;
        let lib :: <remote-library> = stop-reason.stop-reason-library;
-       let needs-tracking? = #f;
-       let (dylan-lib-name, runtime-lib-name)
-          = dylan-and-runtime-library-names(application);
-       let lib-name = as-uppercase(lib.library-core-name);
-       if (lib-name = dylan-lib-name)
-         register-dylan-library(application, lib);
-         needs-tracking? := #t;
-       end if;
-       if (lib-name = runtime-lib-name)
-         register-dylan-runtime-library(application, lib);
-         needs-tracking? := #t;
-       end if;
-       let top-level? = (lib-name = application.top-level-library-name);
-       if (top-level? | needs-tracking?)
-	 let sym =
-	   if (top-level?)
-	     // For top-level libraries, determine whether the library
-             // is self-contained by searching for an unusual entry-point;
-             // use this entry-point for the component's initialization
-             // tracking
-	     let component-sym =
-	       find-symbol(application.debug-target-access-path,
-			   $standard-dylan-component-initializer,
-			   library: lib);
-	     if (component-sym)
-	       lib.self-contained-component? := #t;
-	       component-sym
-	     else
-	       find-symbol(application.debug-target-access-path,
-			   $standard-dylan-initializer,
-			   library: lib);
-	     end
-	   else
-	     find-symbol(application.debug-target-access-path,
-			 $standard-dylan-initializer,
-			 library: lib);
-	   end;
-         if (sym)
-           application.library-initialization-trackers[lib] :=
-              make(<dylan-library-initialization-tracker>,
-                   debug-target: application,
-                   remote-library: lib,
-                   top-level?: top-level?,
-                   initializer-function: sym);
-         else
-           application.library-initialization-trackers[lib] :=
-              make(<foreign-library-initialization-tracker>,
-                   debug-target: application,
-                   top-level?: top-level?,
-                   remote-library: lib);
-         end if;
-       end if;
+       unless (application.application-loading?)
+         register-library(application, lib);
+       end unless;
 
     <unload-library-stop-reason> =>
        maybe-modified-stop-reason := stop-reason;
        let lib = stop-reason.stop-reason-library;
-       if (lib == application.application-dylan-library)
-         deregister-dylan-library(application);
-       end if;
-       if (lib == application.application-dylan-runtime-library)
-         deregister-dylan-runtime-library(application);
-       end if;
+       unless (application.application-loading?)
+         deregister-library(application, lib);
+       end unless;
 
     <source-step-stop-reason> =>
       // We have performed a source-stepping operation. If this was
