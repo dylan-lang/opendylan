@@ -825,14 +825,6 @@ define corba-method Rtmgr/RemoteNub/stop-reason-thread
     (process);
 end corba-method;
 
-define corba-method Rtmgr/RemoteNub/first-hard-coded-breakpoint
-    (rnub :: <RemoteNub-implementation>)
- => (result :: Rtmgr/RemoteNub/<NUBINT>)
-  let process = remote-process(rnub);
-  nub-first-hard-coded-breakpoint
-  (process);
-end corba-method;
-
 define corba-method Rtmgr/RemoteNub/stop-reason-process-exit-code
     (rnub :: <RemoteNub-implementation>)
  => (result :: Rtmgr/RemoteNub/<NUBINT>)

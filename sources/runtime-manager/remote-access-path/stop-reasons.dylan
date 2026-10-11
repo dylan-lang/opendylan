@@ -153,15 +153,6 @@ define method get-exception-violation-op (conn :: <remote-access-connection>)
 end method;
 
 
-///// FIRST-DEBUGGER-INVOCATION?
-
-define method first-debugger-invocation?
-    (conn :: <remote-access-connection>) => (well? :: <boolean>)
-  let int-answer = Rtmgr/RemoteNub/first-hard-coded-breakpoint(conn.nub);
-  int-answer == 1
-end method;
-
-
 ///// CONNECTION-CAN-RECEIVE-FIRST-CHANCE
 
 define method connection-can-receive-first-chance

@@ -470,7 +470,6 @@ define module access-path-nub
     exception-is-first-chance?,
     get-exception-violation-address,
     get-exception-violation-op,
-    first-debugger-invocation?,
     connection-can-receive-first-chance,
     connection-set-first-chance,
     connection-unset-first-chance,

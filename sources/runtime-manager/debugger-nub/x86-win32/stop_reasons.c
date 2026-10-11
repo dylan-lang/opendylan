@@ -243,16 +243,9 @@ void initialize_process_exception_information (LPDBGPROCESS process)
   i = INTEGER_OVERFLOW_EXCEPTION_DBG_EVENT;
   process->ExceptionInformation[i].ReceivingFirstChance = FALSE;
   process->ExceptionInformation[i].ReceivableFirstChance = TRUE;
-  
-}
-
-NUBINT nub_first_hard_coded_breakpoint (NUB nub)
-{
-  LPDBGPROCESS   process   = (LPDBGPROCESS) nub;
-  if (process->HardCodedBreakpointCounter == 1)
-    return((NUBINT) 1);
-  else
-    return((NUBINT) 0);
+  i = SYSTEM_INITIALIZED_DBG_EVENT;
+  process->ExceptionInformation[i].ReceivingFirstChance = TRUE;
+  process->ExceptionInformation[i].ReceivableFirstChance = TRUE;
 }
 
 NUBINT stop_reason_to_nub_code (LPDEBUG_EVENT event)
@@ -437,7 +430,10 @@ NUBINT process_this_first_chance_breakpoint
     // programmatic entry to the debugger.
     thread->StoppedState = THREAD_INVOKED_DEBUGGER;
     (process->HardCodedBreakpointCounter)++;
-    return (HARD_CODED_BREAKPOINT_DBG_EVENT);
+    if (process->HardCodedBreakpointCounter == 1)
+      return SYSTEM_INITIALIZED_DBG_EVENT;
+    else
+      return HARD_CODED_BREAKPOINT_DBG_EVENT;
     break;
 
   case INTERNAL_BREAKPOINT:

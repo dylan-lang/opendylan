@@ -26,6 +26,7 @@ define constant $integer-divide-by-zero-exception    = 12;
 define constant $noncontinuable-exception            = 13;
 define constant $breakpoint-exception                = 14;
 define constant $hard-coded-breakpoint-exception     = 15;
+define constant $system-initialized-exception        = 35;
 define constant $single-step-exception               = 16;
 define constant $create-process                      = 17;
 define constant $exit-process                        = 18;
@@ -471,19 +472,6 @@ define open generic get-exception-violation-op (conn :: <access-connection>)
     => (op :: <integer>);
 
 
-///// FIRST-DEBUGGER-INVOCATION?
-//    Is this the first time that the application has signalled a hard-coded
-//    breakpoint?
-//    If so, we will assume this breakpoint to be "special", and that it
-//    is a signal that the application, and all of its shared libraries,
-//    have loaded and performed their system-level initializations. On
-//    Windows, this is true for free. Debugger nubs on other platforms,
-//    however, might need to force the generation of this stop reason.
-
-define open generic first-debugger-invocation?
-    (conn :: <access-connection>) => (well? :: <boolean>);
-
-
 ///// CONSTRUCT-STOP-REASON
 //    Given a low-level stop-reason code, this constructs a high-level
 //    stop reason event object. (Returns #f if the code indicates a
@@ -737,28 +725,26 @@ define method construct-stop-reason
                             thread: source-thread,
                             address: get-exception-address (ap.connection));
     $hard-coded-breakpoint-exception =>
-      if (first-debugger-invocation?(ap.connection))
-        stop-reason := make (<system-initialized-stop-reason>,
-                              exception-address:
-                                 get-exception-address(ap.connection),
-                              first-chance?:
-                                 exception-is-first-chance?(ap.connection),
-                              process: source-process,
-                              thread: source-thread);
-      else
-        stop-reason := make (<system-invoke-debugger-stop-reason>,
-                              exception-address:
-                                 get-exception-address(ap.connection),
-                              first-chance?:
-                                 exception-is-first-chance?(ap.connection),
-                              process: source-process,
-                              thread: source-thread);
-      end if;
+      stop-reason := make (<system-invoke-debugger-stop-reason>,
+                           exception-address:
+                             get-exception-address(ap.connection),
+                           first-chance?:
+                             exception-is-first-chance?(ap.connection),
+                           process: source-process,
+                           thread: source-thread);
     $single-step-exception =>
       stop-reason := make (<single-step-stop-reason>,
                             process: source-process,
                             thread: source-thread,
-                            address: get-exception-address (ap.connection));
+                           address: get-exception-address (ap.connection));
+    $system-initialized-exception =>
+      stop-reason := make (<system-initialized-stop-reason>,
+                           exception-address:
+                             get-exception-address(ap.connection),
+                           first-chance?:
+                             exception-is-first-chance?(ap.connection),
+                           process: source-process,
+                           thread: source-thread);
     $profiler =>
       stop-reason := $profiler-stop-reason;
     $profiler-unhandled =>
