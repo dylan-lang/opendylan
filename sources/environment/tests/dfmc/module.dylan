@@ -17,6 +17,7 @@ define module dfmc-environment-test-suite
   use file-system;
   use threads;
   use logging;
+  use set;
 
   use source-records;
   use operating-system,
