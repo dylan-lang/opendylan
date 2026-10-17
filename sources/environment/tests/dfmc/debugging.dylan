@@ -383,6 +383,96 @@ define test interactivity-test ()
   end for;
 end test;
 
+define test method-inout-breakpoint-test ()
+  ensure-application-at-start();
+
+  let threads = *test-application-application*.application-threads;
+  let main-thread
+    = find-element
+        (threads,
+         method (thread :: <thread-object>)
+           environment-object-primitive-name(*test-application*, thread)
+             = "Main thread"
+         end);
+
+  let module
+    = find-module(*test-application*, id-name($debugging-module-id));
+  let test-method
+    = find-environment-object(*test-application*,
+                              "method test-static-gf-2-alpha (<integer>, <integer>)",
+                              module: module);
+  check-instance?("test method", <method-object>, test-method);
+
+  let breakpoint
+    = make(<breakpoint-object>,
+           project: *test-application*,
+           object: test-method);
+  check-instance?("Created method breakpoint",
+                  <breakpoint-object>, breakpoint);
+
+  iterate loop (stopped-at-breakpoint? = #f)
+    let message = await-project-message();
+    select (message by instance?)
+      <application-state-changed-message> =>
+        let state = *test-application-application*.application-state;
+        test-debugger-message("  Application state is now %s", state);
+        select (state)
+          #"closed" =>
+            #f;
+          #"stopped" =>
+            let stack-trace
+              = thread-complete-stack-trace(*test-application*, main-thread);
+            let top-frame = first(stack-trace);
+            let top-function
+              = stack-frame-function(*test-application*, top-frame);
+            test-debugger-message
+              ("Stopped in %s: %s",
+               environment-object-primitive-name(*test-application*, top-function),
+               application-stop-reason-message(*test-application-application*));
+            if (*finished?*)
+              test-debugger-message("Finished");
+              check-true("Stopped in test breakpoint", stopped-at-breakpoint?);
+            else
+              check-true("Breakpoint hit test true",
+                         application-just-hit-breakpoint?
+                           (*test-application-application*, main-thread));
+              let stop-bps
+                = current-stop-breakpoints
+                    (*test-application-application*, main-thread);
+              check-equal("Stop was at test breakpoint",
+                          vector(breakpoint), stop-bps);
+
+              let equiv? = (vector(breakpoint) = stop-bps);
+
+              continue-application(*test-application*);
+
+              loop(stopped-at-breakpoint? | equiv?);
+            end if;
+          otherwise =>
+            test-debugger-message("  Application state is %s", state);
+            loop(stopped-at-breakpoint?);
+        end select;
+
+      <single-breakpoint-state-change-message> =>
+        let changed-breakpoint = message.message-breakpoint;
+        let state = message.message-breakpoint-state;
+        test-debugger-message("  Breakpoint %= state is now %s",
+                              changed-breakpoint, state);
+        if (state == #"created")
+          if (changed-breakpoint == breakpoint)
+            test-debugger-message("breakpoints created, test loop continue");
+            continue-application(*test-application*);
+          end if
+        end if;
+        loop(stopped-at-breakpoint?);
+
+      otherwise =>
+        loop(stopped-at-breakpoint?);
+    end select;
+  end iterate;
+  destroy-breakpoint(breakpoint);
+end test;
+
 define test generic-function-inout-breakpoint-test ()
   ensure-application-at-start();
 
@@ -502,5 +592,6 @@ define suite dfmc-environment-debugging-suite
   test stack-trace-test;
   test registers-test;
   test interactivity-test;
+  test method-inout-breakpoint-test;
   test generic-function-inout-breakpoint-test;
 end suite;
