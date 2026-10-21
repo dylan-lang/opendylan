@@ -68,9 +68,14 @@ define sealed method initialize
     (entry-init :: <dylan-library-initialization-tracker>, #key) => ()
   let lib = entry-init.tracker-remote-library;
   let target = entry-init.tracker-debug-target;
+  assert(target.application-loading? == #f,
+         "initialization trackers should not be installed during the initial load phase");
   let path = target.debug-target-access-path;
   let core = lib.library-core-name;
   let init-fun = entry-init.tracker-initialization-symbol;
+  debug-target-message
+    (target, $debug-level, "Installing initialization tracker for %= at %=",
+     lib, init-fun.remote-symbol-address);
   let tracer = make(<starting-dynamic-initialization>,
                     address: init-fun.remote-symbol-address,
                     callback: dynamic-initializer-start-callback,
@@ -126,6 +131,9 @@ define method dynamic-initializer-start-callback
     (application :: <debug-target>, start :: <starting-dynamic-initialization>,
      thread :: <remote-thread>)
  => (interested? :: <boolean>)
+  debug-target-message
+    (application, $debug-level, "Dynamic initializer start for %=",
+     start.entry-initialization-tracker.tracker-remote-library);
   if (start.entry-initialization-tracker.tracker-remote-library ==
          application.application-dylan-library)
     allocate-temporary-download-block-in(application, thread);
@@ -313,6 +321,8 @@ define method register-dylan-library
  => ()
   debug-target-message
     (application, $debug-level, "Registering Dylan library %=", dylan-library);
+  assert(application.application-dylan-library == #f,
+         "the dylan library should only be initialized once");
   application.application-dylan-library := dylan-library;
   application.dylan-application? := #t;
   application.dylan-spy := make(<dylan-spy-catalogue>);
@@ -342,6 +352,8 @@ define method register-dylan-runtime-library
   debug-target-message
     (application, $debug-level,
      "Registering Dylan runtime library %=", runtime-library);
+  assert(application.application-dylan-runtime-library == #f,
+         "the dylan runtime library should only be initialized once");
   let path = application.debug-target-access-path;
   let one = as-remote-value(1);
   application.application-dylan-runtime-library := runtime-library;
