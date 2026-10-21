@@ -350,7 +350,9 @@ end class;
 
 define method wait-for-stop-reason
     (ap :: <access-path>, #key timeout = #f, profile-interval = #f)
-      => (maybe-sr :: false-or(<stop-reason>))
+ => (maybe-sr :: false-or(<stop-reason>))
+  assert(ap.state == #"running" | ap.state == #"dead",
+         "Can not wait for a non-running application");
   let sr = #f;
   if (timeout)
     sr := wait-for-stop-reason-with-timeout (ap.connection, timeout,
