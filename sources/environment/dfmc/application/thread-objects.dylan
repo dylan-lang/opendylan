@@ -672,7 +672,10 @@ end method;
 
 define method initialize-interactive-threads
     (application :: <dfmc-application>, thread :: <remote-thread>)
-  => ()
+ => ()
+  assert(application.application-initialized-interactive-threads? == #f,
+         "the interactive threads should only be spawned once");
+
   // Spawn these three interactive threads after
   // library initialization is complete
   let target = application.application-target-app;

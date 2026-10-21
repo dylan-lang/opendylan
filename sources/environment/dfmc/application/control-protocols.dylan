@@ -152,10 +152,11 @@ define method run-application
           else
             dll-project? & dll-wrap? & phase == #"end"
           end;
-      debug-target-message(target, $debug-level,
-                           "Preparing %=: top? %=, dll? %=, dll-wrap? %=, phase %=",
-                           prepare-for-interaction?, top-level?,
-                           dll-project?, dll-wrap?, phase);
+      debug-target-message
+        (target, $debug-level,
+         "Preparing %=: for-interaction? %= top? %=, dll? %=, dll-wrap? %=, phase %=",
+         lib, prepare-for-interaction?, top-level?,
+         dll-project?, dll-wrap?, phase);
       if (prepare-for-interaction?)
         initialize-interactive-threads(application, thread);
         maybe-initialize-allocation-profiling(application)
