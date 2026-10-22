@@ -54,11 +54,6 @@ int equal_cv_names (CV_HEADER *rec, BYTE l, char *name);
 // Returns non-zero if the name of the symbolic record is equal to the
 // given length-prefixed name.
 
-void release_library_coff_map(LPDBGPROCESS process, LPDBGLIBRARY module);
-// Imported from coff_map.c.
-// Disposes of all memory that was allocated to hold COFF symbol and string
-// tables in the image.
-
 DWORD number_of_codeview_subsections (PIMAGE_DEBUG_INFORMATION info)
 {
   SS_DIR_HEADER *ss_dir_header;

@@ -83,4 +83,6 @@ void print_coff_symbol_name
 void debug_print_coff_symbols
     (LPDBGLIBRARY module);
 
-
+// Disposes of all memory that was allocated to hold COFF symbol and string
+// tables in the image.
+void release_library_coff_map(LPDBGPROCESS process, LPDBGLIBRARY module);

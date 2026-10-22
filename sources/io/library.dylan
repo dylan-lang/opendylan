@@ -306,6 +306,7 @@ define module print-internals
   use threads;
   use dylan-extensions;
   use dylan-primitives;
+  use dylan-c-ffi;
   use byte-vector;
   use format-internals;
   use streams-internals;

@@ -410,6 +410,7 @@ define method note-application-thread-message
   let thread :: false-or(<thread-object>)
     = stop-reason-thread-object(application, stop-reason);
   let message :: <string> = compose-application-message(application, stop-reason);
+  application.application-stop-reason-message := message;
   invoke-application-callback
     (application, application-thread-message-callback,
      thread, message)
@@ -436,13 +437,6 @@ end method note-application-process-finished;
 /// APPLICATION-STOP-REASON-MESSAGE (environment-protocols)
 
 define constant $depth-indentation = 2;
-
-define sealed method application-stop-reason-message
-    (application :: <dfmc-application>)
- => (message :: false-or(<string>))
-  let stop-reason = application.application-stop-reason;
-  stop-reason & compose-application-message(application, stop-reason)
-end method application-stop-reason-message;
 
 define method compose-application-message
     (application :: <dfmc-application>, stop-reason :: <stop-reason>)
@@ -1044,6 +1038,7 @@ define function finish-debugging-transaction
     (application :: <dfmc-application>, stop-reason :: <stop-reason>)
  => ()
   application.application-stop-reason := #f;
+  application.application-stop-reason-message := #f;
   application.application-just-initialized? := #f;
   application.application-reached-interaction-point? := #f;
   application.application-just-finished-execution? := #f;

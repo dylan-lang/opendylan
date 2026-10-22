@@ -109,7 +109,7 @@ void checked_free(void*);
 
 // These MUST agree with the codes specified in the Access Path.
 
-#define MAX_EVENT_TYPES 35
+#define MAX_EVENT_TYPES 36
 #define TIMED_OUT 0
 #define TIMED_OUT_HANDLED 32
 #define TIMED_OUT_UNHANDLED 33
@@ -128,6 +128,7 @@ void checked_free(void*);
 #define NONCONTINUABLE_EXCEPTION_DBG_EVENT 13
 #define BREAKPOINT_EXCEPTION_DBG_EVENT 14
 #define HARD_CODED_BREAKPOINT_DBG_EVENT 15
+#define SYSTEM_INITIALIZED_DBG_EVENT 35
 #define SINGLE_STEP_DBG_EVENT 16
 #define CREATE_PROCESS_DBG_EVENT 17
 #define EXIT_PROCESS_DBG_EVENT 18
@@ -152,9 +153,9 @@ void checked_free(void*);
 // that the debugger nub should simply filter out this event because it's
 // uninteresting.
 
-#define FILTER_HANDLED_DBG_EVENT 35
-#define FILTER_UNHANDLED_DBG_EVENT 36
-#define SPY_RETURN_DBG_EVENT 37
+#define FILTER_HANDLED_DBG_EVENT 36
+#define FILTER_UNHANDLED_DBG_EVENT 37
+#define SPY_RETURN_DBG_EVENT 38
 
 #define EXCEPTIONS_HANDLED 1
 #define EXCEPTIONS_UNHANDLED 2

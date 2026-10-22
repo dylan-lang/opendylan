@@ -10,6 +10,7 @@ define library dfmc-environment-test-suite
   use common-dylan;
   use io;
   use system;
+  use collections;
   use progress-stream;
 
   use source-records;

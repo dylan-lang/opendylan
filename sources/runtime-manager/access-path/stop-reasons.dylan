@@ -26,6 +26,7 @@ define constant $integer-divide-by-zero-exception    = 12;
 define constant $noncontinuable-exception            = 13;
 define constant $breakpoint-exception                = 14;
 define constant $hard-coded-breakpoint-exception     = 15;
+define constant $system-initialized-exception        = 35;
 define constant $single-step-exception               = 16;
 define constant $create-process                      = 17;
 define constant $exit-process                        = 18;
@@ -75,6 +76,17 @@ end class;
 
 define abstract sealed class <basic-stop-reason> (<internal-stop-reason>)
 end class;
+
+
+define method print-object
+    (stop :: <basic-stop-reason>, stream :: <stream>) => ()
+  printing-logical-block (stream, prefix: "{", suffix: "}")
+    let obj-class = stop.object-class;
+    write(stream, obj-class.debug-name);
+    write(stream, " instance thread: ");
+    print-object(stop.stop-reason-thread, stream);
+  end;
+end method;
 
 
 ///// <LANGUAGE-LEVEL-STOP-REASON>
@@ -179,6 +191,18 @@ define abstract class <debug-point-stop-reason> (<basic-stop-reason>)
   constant slot stop-reason-debug-point-address :: <remote-value>,
     required-init-keyword: address:;
 end class;
+
+define method print-object
+    (stop :: <debug-point-stop-reason>, stream :: <stream>) => ()
+  printing-logical-block (stream, prefix: "{", suffix: "}")
+    let obj-class = stop.object-class;
+    write(stream, obj-class.debug-name);
+    write(stream, " instance thread: ");
+    print-object(stop.stop-reason-thread, stream);
+    write(stream, ", address: ");
+    print-object(stop.stop-reason-debug-point-address, stream);
+  end;
+end;
 
 define class <breakpoint-stop-reason> (<debug-point-stop-reason>)
 end class;
@@ -326,7 +350,9 @@ end class;
 
 define method wait-for-stop-reason
     (ap :: <access-path>, #key timeout = #f, profile-interval = #f)
-      => (maybe-sr :: false-or(<stop-reason>))
+ => (maybe-sr :: false-or(<stop-reason>))
+  assert(ap.state == #"running" | ap.state == #"dead",
+         "Can not wait for a non-running application");
   let sr = #f;
   if (timeout)
     sr := wait-for-stop-reason-with-timeout (ap.connection, timeout,
@@ -448,23 +474,19 @@ define open generic get-exception-violation-op (conn :: <access-connection>)
     => (op :: <integer>);
 
 
-///// FIRST-DEBUGGER-INVOCATION?
-//    Is this the first time that the application has signalled a hard-coded
-//    breakpoint?
-//    If so, we will assume this breakpoint to be "special", and that it
-//    is a signal that the application, and all of its shared libraries,
-//    have loaded and performed their system-level initializations. On
-//    Windows, this is true for free. Debugger nubs on other platforms,
-//    however, might need to force the generation of this stop reason.
-
-define open generic first-debugger-invocation?
-    (conn :: <access-connection>) => (well? :: <boolean>);
-
-
 ///// CONSTRUCT-STOP-REASON
 //    Given a low-level stop-reason code, this constructs a high-level
 //    stop reason event object. (Returns #f if the code indicates a
 //    timeout).
+
+define constant $timeout-handled-stop-reason
+  = make(<timeout-handled-stop-reason>);
+define constant $timeout-unhandled-stop-reason
+  = make(<timeout-unhandled-stop-reason>);
+define constant $profiler-stop-reason
+  = make(<profiler-stop-reason>);
+define constant $profiler-unhandled-stop-reason
+  = make(<profiler-unhandled-stop-reason>);
 
 define method construct-stop-reason
     (ap :: <access-path>, event-type :: <integer>,
@@ -481,7 +503,6 @@ define method construct-stop-reason
       end unless;
     end if;
 
-  let source-library = #f;
   let stop-reason = #f;
 
   if (source-thread)
@@ -496,12 +517,14 @@ define method construct-stop-reason
     $timed-out =>
       stop-reason := #f;
     $timed-out-handled =>
-      stop-reason := make(<timeout-handled-stop-reason>);
+      stop-reason := $timeout-handled-stop-reason;
     $timed-out-unhandled =>
-      stop-reason := make(<timeout-unhandled-stop-reason>);
+      stop-reason := $timeout-unhandled-stop-reason;
     $create-process =>
-      source-library := find-or-make-library
-                          (ap, get-debug-event-library (ap.connection));
+      let source-library
+        = find-or-make-library(ap, get-debug-event-library(ap.connection));
+      assert(ap.libraries.size = 1);
+      assert(ap.threads.size = 1);
       stop-reason := make (<create-process-stop-reason>,
 			   process: source-process,
 			   thread: source-thread,
@@ -518,6 +541,8 @@ define method construct-stop-reason
                            exit-code:
                              get-debug-event-process-exit-code
                                (ap.connection));
+      ap.libraries.size := 0;
+      ap.threads.size := 0;
       deregister-access-path(ap);
     $exit-thread =>
       stop-reason := make (<exit-thread-stop-reason>,
@@ -528,22 +553,20 @@ define method construct-stop-reason
                                (ap.connection));
       ap.threads := remove! (ap.threads, source-thread);
     $load-dll =>
-      source-library :=
-        find-or-make-library
-          (ap, get-debug-event-library (ap.connection));
+      let source-library
+        = find-or-make-library(ap, get-debug-event-library(ap.connection));
       stop-reason := make (<load-library-stop-reason>,
                            process: source-process,
                            thread: source-thread,
                            library: source-library);
     $unload-dll =>
-      source-library :=
-        find-or-make-library
-          (ap, get-debug-event-library (ap.connection));
+      let source-library
+        = find-or-make-library(ap, get-debug-event-library(ap.connection));
       stop-reason := make (<unload-library-stop-reason>,
                            process: source-process,
                            thread: source-thread,
                            library: source-library);
-      ap.libraries := remove! (ap.libraries, source-library);
+      ap.libraries := remove!(ap.libraries, source-library);
     $output-debug-string =>
       let (string-address, string-length, string-unicode?)
         = get-debug-event-string-information(ap.connection);
@@ -704,32 +727,30 @@ define method construct-stop-reason
                             thread: source-thread,
                             address: get-exception-address (ap.connection));
     $hard-coded-breakpoint-exception =>
-      if (first-debugger-invocation?(ap.connection))
-        stop-reason := make (<system-initialized-stop-reason>,
-                              exception-address:
-                                 get-exception-address(ap.connection),
-                              first-chance?:
-                                 exception-is-first-chance?(ap.connection),
-                              process: source-process,
-                              thread: source-thread);
-      else
-        stop-reason := make (<system-invoke-debugger-stop-reason>,
-                              exception-address:
-                                 get-exception-address(ap.connection),
-                              first-chance?:
-                                 exception-is-first-chance?(ap.connection),
-                              process: source-process,
-                              thread: source-thread);
-      end if;
+      stop-reason := make (<system-invoke-debugger-stop-reason>,
+                           exception-address:
+                             get-exception-address(ap.connection),
+                           first-chance?:
+                             exception-is-first-chance?(ap.connection),
+                           process: source-process,
+                           thread: source-thread);
     $single-step-exception =>
       stop-reason := make (<single-step-stop-reason>,
                             process: source-process,
                             thread: source-thread,
-                            address: get-exception-address (ap.connection));
+                           address: get-exception-address (ap.connection));
+    $system-initialized-exception =>
+      stop-reason := make (<system-initialized-stop-reason>,
+                           exception-address:
+                             get-exception-address(ap.connection),
+                           first-chance?:
+                             exception-is-first-chance?(ap.connection),
+                           process: source-process,
+                           thread: source-thread);
     $profiler =>
-      stop-reason := make (<profiler-stop-reason>);
+      stop-reason := $profiler-stop-reason;
     $profiler-unhandled =>
-      stop-reason := make (<profiler-unhandled-stop-reason>);
+      stop-reason := $profiler-unhandled-stop-reason;
     otherwise =>
       stop-reason := make (<unclassified-exception-stop-reason>,
                             process: source-process,

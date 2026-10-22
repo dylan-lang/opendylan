@@ -831,12 +831,6 @@ define debugger-nub-interface nub-stop-reason-process
        c-name: "nub_stop_reason_process";
 end debugger-nub-interface;
 
-define debugger-nub-interface nub-first-hard-coded-breakpoint
-       parameter nub              :: <NUB>;
-       result is-first            :: <NUBINT>;
-       c-name: "nub_first_hard_coded_breakpoint";
-end debugger-nub-interface;
-
 define debugger-nub-interface nub-stop-reason-thread
        parameter nub              :: <NUB>;
        result thread              :: <NUBTHREAD>;

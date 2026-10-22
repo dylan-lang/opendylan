@@ -205,6 +205,8 @@ void continue_application (NUB nub, int handling)
   LPDBGTHREAD    main_thread = process->ThreadList;
   LPDBGTHREAD    this_thread = main_thread;
   LPDBGTHREAD    last_thread = main_thread;
+  LPDBGLIBRARY   this_library = process->LibraryList;
+  LPDBGLIBRARY   last_library = process->LibraryList;
 
   // Apply specialized "continue" behaviour to each thread in turn.
 
@@ -262,6 +264,25 @@ void continue_application (NUB nub, int handling)
     }
   }
 
+  // Clean out invalidated (unloaded) libraries
+  while (this_library != NULL) {
+    if (!this_library->Valid) {
+      // Drop a node out of the list
+      last_library->Next = this_library->Next;
+
+      release_library_debug_map(process, this_library);
+      release_library_coff_map(process, this_library);
+      CloseHandle(this_library->ImageInformation.ImageFileHandle);
+      free(this_library);
+
+      this_library = last_library->Next;
+    }
+    else {
+      // This one lives on.
+      last_library = this_library;
+      this_library = this_library->Next;
+    }
+  }
 }
 
 

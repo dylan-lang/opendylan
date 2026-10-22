@@ -376,9 +376,6 @@ RNUB stop_reason_process
 RNUBTHREAD stop_reason_thread
   ();
 
-NUBINT first_hard_coded_breakpoint
-  ();
-
 NUBINT stop_reason_process_exit_code
   ();
 

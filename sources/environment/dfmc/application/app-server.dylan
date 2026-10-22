@@ -58,6 +58,8 @@ define sealed class <dfmc-application> (<application>)
 
   slot application-stop-reason :: false-or(<stop-reason>) = #f;
 
+  sealed slot application-stop-reason-message :: false-or(<string>) = #f;
+
   // phoward added the following slots
 
   slot application-tether-status :: <application-startup-option> = #"start";

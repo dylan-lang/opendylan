@@ -8,17 +8,6 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-///// <INITIALIZATION-STATE>
-//    Describes the states in which a dylan library can be.
-
-define constant <initialization-state> =
-   one-of(#"uninitialized",
-          #"statically-initialized",
-          #"dynamically-initialized",
-          #"unloaded",
-          #"foreign");
-
-
 ///// <LIBRARY-INITIALIZATION-PHASE>
 //    Either START or END.
 
@@ -57,22 +46,16 @@ define abstract class <library-initialization-tracker> (<object>)
   constant slot tracker-remote-library :: <remote-library>,
     required-init-keyword: remote-library:;
 
-  slot tracker-initialization-state :: <initialization-state>;
-
   constant slot tracker-top-level? :: <boolean>,
     required-init-keyword: top-level?:;
 end class;
 
 define class <foreign-library-initialization-tracker>
     (<library-initialization-tracker>)
-  inherited slot tracker-initialization-state,
-    init-value: #"foreign";
 end class;
 
 define class <dylan-library-initialization-tracker>
     (<library-initialization-tracker>)
-  inherited slot tracker-initialization-state,
-    init-value: #"uninitialized";
 
   constant slot tracker-initialization-symbol :: <remote-symbol>,
     required-init-keyword: initializer-function:;
@@ -85,9 +68,14 @@ define sealed method initialize
     (entry-init :: <dylan-library-initialization-tracker>, #key) => ()
   let lib = entry-init.tracker-remote-library;
   let target = entry-init.tracker-debug-target;
+  assert(target.application-loading? == #f,
+         "initialization trackers should not be installed during the initial load phase");
   let path = target.debug-target-access-path;
   let core = lib.library-core-name;
   let init-fun = entry-init.tracker-initialization-symbol;
+  debug-target-message
+    (target, $debug-level, "Installing initialization tracker for %= at %=",
+     lib, init-fun.remote-symbol-address);
   let tracer = make(<starting-dynamic-initialization>,
                     address: init-fun.remote-symbol-address,
                     callback: dynamic-initializer-start-callback,
@@ -143,10 +131,9 @@ define method dynamic-initializer-start-callback
     (application :: <debug-target>, start :: <starting-dynamic-initialization>,
      thread :: <remote-thread>)
  => (interested? :: <boolean>)
-  ignore
-    (start.entry-initialization-tracker.tracker-initialization-state);
-  start.entry-initialization-tracker.tracker-initialization-state :=
-     #"statically-initialized";
+  debug-target-message
+    (application, $debug-level, "Dynamic initializer start for %=",
+     start.entry-initialization-tracker.tracker-remote-library);
   if (start.entry-initialization-tracker.tracker-remote-library ==
          application.application-dylan-library)
     allocate-temporary-download-block-in(application, thread);
@@ -177,8 +164,6 @@ define method dynamic-initializer-done-callback
   => (interested? :: <boolean>)
   deregister-debug-point(application, done);
   deregister-debug-point(application, done.corresponding-entry-tracepoint);
-  done.exit-initialization-tracker.tracker-initialization-state :=
-     #"dynamically-initialized";
   debug-target-message
     (application, $debug-level,
      "Tracker for %s state set to dynamically-initialized (done)",
@@ -336,6 +321,8 @@ define method register-dylan-library
  => ()
   debug-target-message
     (application, $debug-level, "Registering Dylan library %=", dylan-library);
+  assert(application.application-dylan-library == #f,
+         "the dylan library should only be initialized once");
   application.application-dylan-library := dylan-library;
   application.dylan-application? := #t;
   application.dylan-spy := make(<dylan-spy-catalogue>);
@@ -365,6 +352,8 @@ define method register-dylan-runtime-library
   debug-target-message
     (application, $debug-level,
      "Registering Dylan runtime library %=", runtime-library);
+  assert(application.application-dylan-runtime-library == #f,
+         "the dylan runtime library should only be initialized once");
   let path = application.debug-target-access-path;
   let one = as-remote-value(1);
   application.application-dylan-runtime-library := runtime-library;
@@ -433,4 +422,77 @@ define method top-level-library-definition-name
     application.top-level-component-name |
     "unknown";
   as-lowercase(name);
+end method;
+
+define method register-library
+    (application :: <debug-target>, lib :: <remote-library>)
+  => ()
+  let needs-tracking? = #f;
+  let (dylan-lib-name, runtime-lib-name)
+    = dylan-and-runtime-library-names(application);
+  let lib-name = as-uppercase(lib.library-core-name);
+  if (lib-name = dylan-lib-name)
+    register-dylan-library(application, lib);
+    needs-tracking? := #t;
+  end if;
+  if (lib-name = runtime-lib-name)
+    register-dylan-runtime-library(application, lib);
+    needs-tracking? := #t;
+  end if;
+  let top-level? = (lib-name = application.top-level-library-name);
+  debug-target-message
+    (application, $debug-level, "Load library %=, top-level?=%= needs-tracking?=%=",
+     lib, top-level?, needs-tracking?);
+  if (top-level? | needs-tracking?)
+    let sym
+      = if (top-level?)
+          // For top-level libraries, determine whether the library
+          // is self-contained by searching for an unusual entry-point;
+          // use this entry-point for the component's initialization
+          // tracking
+          let component-sym
+            = find-symbol(application.debug-target-access-path,
+                          $standard-dylan-component-initializer,
+                          library: lib);
+          if (component-sym)
+            lib.self-contained-component? := #t;
+            component-sym
+          else
+            find-symbol(application.debug-target-access-path,
+                        $standard-dylan-initializer,
+                        library: lib);
+          end
+        else
+          find-symbol(application.debug-target-access-path,
+                      $standard-dylan-initializer,
+                      library: lib);
+        end;
+    if (sym)
+      application.library-initialization-trackers[lib]
+        := make(<dylan-library-initialization-tracker>,
+                debug-target: application,
+                remote-library: lib,
+                top-level?: top-level?,
+                initializer-function: sym);
+    else
+      application.library-initialization-trackers[lib]
+        := make(<foreign-library-initialization-tracker>,
+                debug-target: application,
+                top-level?: top-level?,
+                remote-library: lib);
+    end if;
+  end if;
+end method;
+
+define method deregister-library
+    (application :: <debug-target>, lib :: <remote-library>)
+ => ()
+  debug-target-message
+    (application, $debug-level, "Deregistering library %=", lib);
+  if (lib == application.application-dylan-library)
+    deregister-dylan-library(application);
+  end if;
+  if (lib == application.application-dylan-runtime-library)
+    deregister-dylan-runtime-library(application);
+  end if;
 end method;

@@ -177,22 +177,6 @@ define method get-exception-violation-op (conn :: <local-access-connection>)
 end method;
 
 
-///// FIRST-DEBUGGER-INVOCATION?
-//    Is this the first time that the application has signalled a hard-coded
-//    breakpoint?
-//    If so, we will assume this breakpoint to be "special", and that it
-//    is a signal that the application, and all of its shared libraries,
-//    have loaded and performed their system-level initializations. On
-//    Windows, this is true for free. Debugger nubs on other platforms,
-//    however, might need to force the generation of this stop reason.
-
-define method first-debugger-invocation?
-    (conn :: <local-access-connection>) => (well? :: <boolean>)
-  let int-answer = nub-first-hard-coded-breakpoint(conn.connection-process);
-  int-answer == 1
-end method;
-
-
 ///// CONNECTION-CAN-RECEIVE-FIRST-CHANCE
 //    Calls the nub to determine whether an exception is first-chance
 //    receivable.

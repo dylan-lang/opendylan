@@ -12,9 +12,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    and extra formatting. Use as a direct substitute for format-out
 
 define method debugger-message (s :: <string>, #rest stuff)
-       format-out (";;; ");
-       apply (format-out, s, stuff);
-       format-out ("\n")
+  format-out(";;; ");
+  apply(format-out, s, stuff);
+  format-out("\n");
+  force-out();
 end method;
 
 

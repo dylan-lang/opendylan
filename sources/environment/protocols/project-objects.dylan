@@ -1224,7 +1224,7 @@ define method %find-environment-object
 end method %find-environment-object;
 
 define method find-environment-object
-    (project :: <project-object>, id :: <definition-id>,
+    (project :: <project-object>, id :: <id>,
      #rest keys,
      #key, #all-keys)
  => (object :: false-or(<environment-object>))
