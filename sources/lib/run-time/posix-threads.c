@@ -562,11 +562,13 @@ dylan_value primitive_thread_join_single(dylan_value t)
 
   assert(thread != NULL);
 
+  /* Acquire the join lock */
   if (pthread_mutex_lock(&thread_join_lock) != 0) {
     MSG0("thread-join-single: error obtaining thread join lock\n");
     return GENERAL_ERROR;
   }
 
+  /* Make sure the thread isn't already part of a join operation */
   state = (uintptr_t)thread->handle1;
   if (state & MARKED || state & JOINED) {
     pthread_mutex_unlock(&thread_join_lock);
@@ -574,18 +576,27 @@ dylan_value primitive_thread_join_single(dylan_value t)
     return GENERAL_ERROR;
   }
 
+  /* Mark the thread as joining */
+  state = (uintptr_t)thread->handle1;
   thread->handle1 = (void *)(state | MARKED);
-  completed = state & COMPLETED;
-  while (!completed) {
-    if (pthread_cond_wait(&thread_exit_event, &thread_join_lock)) {
-      MSG0("thread-join-single: error waiting for thread exit event\n");
-      return GENERAL_ERROR;
+
+  /* Spin until the thread is joined */
+  do {
+    state = (uintptr_t)thread->handle1;
+    completed = state & COMPLETED;
+    if(!completed) {
+      if (pthread_cond_wait(&thread_exit_event, &thread_join_lock)) {
+        MSG0("thread-join-single: error waiting for thread exit event\n");
+        return GENERAL_ERROR;
+      }
     }
-    completed = (uintptr_t)thread->handle1 & COMPLETED;
-  }
+  } while (!completed);
 
-  thread->handle1 = (void *)((uintptr_t)thread->handle1 ^ (JOINED | MARKED));
+  /* Mark the thread as joined and remove the join mark */
+  state = (uintptr_t)thread->handle1;
+  thread->handle1 = (void *)((state | JOINED) & ~MARKED);
 
+  /* Release the join lock */
   if (pthread_mutex_unlock(&thread_join_lock) != 0) {
     MSG0("thread-join-single: error releasing thread join lock\n");
     return GENERAL_ERROR;
@@ -610,14 +621,13 @@ dylan_value primitive_thread_join_multiple(dylan_value v)
   size  = ((uintptr_t)(thread_vector->size)) >> 2;
   threads = (volatile DTHREAD **)(thread_vector->data);
 
+  /* Acquire the join lock */
   if (pthread_mutex_lock(&thread_join_lock)) {
     MSG0("thread-join-multiple: error obtaining thread join lock\n");
     return GENERAL_ERROR;
   }
 
-  /* Make sure none of the threads is already
-   * part of a join operation
-   */
+  /* Ensure none of the threads are already joining or joined */
   for (i = 0; i < size; i++) {
     state = (uintptr_t)threads[i]->handle1;
     if (state & MARKED || state & JOINED) {
@@ -626,42 +636,42 @@ dylan_value primitive_thread_join_multiple(dylan_value v)
     }
   }
 
-  /* Now mark the threads as being part of a join
-   */
+  /* Now mark the threads as joining */
   for (i = 0; i < size; i++) {
     state = (uintptr_t)threads[i]->handle1;
     threads[i]->handle1 = (void *)(state | MARKED);
   }
 
-  for (i = 0; i < size; i++) {
-    state = (uintptr_t)threads[i]->handle1;
-    if (state & COMPLETED) {
-      joined_thread = threads[i];
-      break;
-    }
-  }
-
-  while (joined_thread == NULL) {
-    if (pthread_cond_wait(&thread_exit_event, &thread_join_lock)) {
-      MSG0("thread-join-multiple: error waiting for thread exit event\n");
-      return GENERAL_ERROR;
-    }
+  /* Spin until a thread is joined */
+  do {
+    /* Check thread states */
     for (i = 0; i < size; i++) {
-      if ((uintptr_t)threads[i]->handle1 & COMPLETED) {
+      state = (uintptr_t)threads[i]->handle1;
+      if (state & COMPLETED) {
         joined_thread = threads[i];
         break;
       }
     }
-  }
+    /* Wait for join condition unless we already found a thread */
+    if(joined_thread == NULL) {
+      if (pthread_cond_wait(&thread_exit_event, &thread_join_lock)) {
+        MSG0("thread-join-multiple: error waiting for thread exit event\n");
+        return GENERAL_ERROR;
+      }
+    }
+  } while (joined_thread == NULL);
 
+  /* Mark the joined thread as such */
   state = (uintptr_t)joined_thread->handle1;
   joined_thread->handle1 = (void *)(state | JOINED);
 
+  /* Remove join mark on all the threads so we can retry */
   for (i = 0; i < size; i++) {
     state = (uintptr_t)threads[i]->handle1;
-    threads[i]->handle1 = (void *)(state ^ MARKED);
+    threads[i]->handle1 = (void *)(state & ~MARKED);
   }
 
+  /* Release the join lock */
   if (pthread_mutex_unlock(&thread_join_lock) != 0) {
     MSG0("thread-join-multiple: error releasing thread join lock\n");
     return GENERAL_ERROR;
@@ -673,12 +683,9 @@ dylan_value primitive_thread_join_multiple(dylan_value v)
 /* 4.5 */
 void primitive_detach_thread(dylan_value t)
 {
-  DTHREAD* thread = t;
-  THREAD* rthread;
-  assert(thread != NULL);
-  rthread = (THREAD*)(thread->handle2);
+  DTHREAD    *thread = (DTHREAD *)t;
 
-  pthread_detach(rthread->tid);
+  assert(thread != NULL);
 }
 
 /* 5 */
