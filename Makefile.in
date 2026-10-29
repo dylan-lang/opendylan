@@ -393,6 +393,7 @@ dist: 3-stage-bootstrap
 
 TEST_LIBS = \
 	libraries-test-suite \
+        c-ffi-test-suite \
 	dfmc-reader-test-suite \
 	strings-test-suite \
 	duim-test-suite \

@@ -350,6 +350,10 @@ define method make
   end;
 end;
 
+define generic C-unicode-string-constant
+    (string :: <string>)
+ => (value :: <C-unicode-string>);
+
 define method C-unicode-string-constant
     (string :: <byte-string>) => (value :: <C-unicode-string>)
   as(<C-unicode-string>, string);
