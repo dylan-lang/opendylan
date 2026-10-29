@@ -217,6 +217,10 @@ end interface-specification-suite;
 define suite c-ffi-module-test-suite ()
   test c-type-import;
   test variable-address-test;
+  test c-struct-test;
+  test bug-134;
+  test bug-213;
+  test bug-414;
 end suite;
 
 define suite c-ffi-test-suite ()
