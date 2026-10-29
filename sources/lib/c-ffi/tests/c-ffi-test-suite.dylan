@@ -215,6 +215,7 @@ define interface-specification-suite c-ffi-specification-suite ()
 end interface-specification-suite;
 
 define suite c-ffi-module-test-suite ()
+  test c-type-import;
 end suite;
 
 define suite c-ffi-test-suite ()
