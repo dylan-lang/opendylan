@@ -6,6 +6,7 @@ files:     c-ffi-test-suite-library
            c-string-tests
            c-function-tests
            c-callable-tests
+           c-dylan-object-tests
            c-ffi-test-suite
 C-Source-Files: c-types.c
                 c-variable.c

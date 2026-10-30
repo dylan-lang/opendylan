@@ -271,6 +271,7 @@ define suite c-ffi-module-test-suite ()
   test bug-321;
   test bug-313;
   test c-callable-test;
+  test c-dylan-object-test;
   test bug-290;
   test bug-17;
 end suite;
