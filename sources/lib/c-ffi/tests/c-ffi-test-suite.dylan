@@ -221,6 +221,8 @@ define suite c-ffi-module-test-suite ()
   test bug-134;
   test bug-213;
   test bug-414;
+  test c-string-test;
+  test bug-393;
   test c-function-test;
   test c-function-indirect;
   test bug-217;
