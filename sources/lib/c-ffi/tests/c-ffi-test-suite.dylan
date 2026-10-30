@@ -214,6 +214,48 @@ define interface-specification-suite c-ffi-specification-suite ()
   constant <ffi-integer-or-machine-word> :: <type>;
 end interface-specification-suite;
 
+/// Miscellaneous tests
+
+//
+// -------------
+// tests for bug 290
+
+define c-pointer-type <c-char**> => <c-char*>;
+
+define variable *arg-vec* :: <C-char**> = make(<C-char**>, element-count: 2);
+
+define test bug-290 ()
+  check-true("bug 290 pointer value setter works",
+             pointer-value(*arg-vec*, index: 1) := null-pointer(<C-char*>));
+end;
+
+//
+// -------------
+// tests for bug 17
+
+
+define C-struct <bar>
+  slot foo :: <C-int>;
+end;
+ignorable(foo, foo-setter);
+
+define C-pointer-type <bar-p> => <bar>;
+
+define c-subtype <bar-bar> (<bar-p>)
+  slot fff :: <integer>, init-value: 5;
+end;
+ignorable(fff, fff-setter);
+
+define test bug-17 ()
+  check-instance?("bug 17 make regular pointer",
+                  <bar-p>, make(<bar-p>)); // this works fine
+  check-instance?("bug 17 make pointer subtype",
+                  <bar-bar>, make(<bar-bar>)); // failed
+end;
+
+
+/// Test suites
+
 define suite c-ffi-module-test-suite ()
   test c-type-import;
   test variable-address-test;
@@ -229,6 +271,8 @@ define suite c-ffi-module-test-suite ()
   test bug-321;
   test bug-313;
   test c-callable-test;
+  test bug-290;
+  test bug-17;
 end suite;
 
 define suite c-ffi-test-suite ()
