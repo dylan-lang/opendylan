@@ -43,6 +43,11 @@ System
   :class:`io:streams:<file-exists-error>` is signaled correctly, rather than causing a
   subsequent :drm:`<type-error>`.
 
+C-FFI
+-----
+
+* The :lib:`c-ffi` library now has a test suite that can be run via ``make check``.
+
 Submoduled Library Updates
 ==========================
 
