@@ -27,9 +27,9 @@ define macro numeric-properties-predicate-definer
   { define numeric-properties-predicate ?:name (?domain:name) }
   => { define open generic ?name (x :: <object>) => (result :: <boolean>);
        define sealed domain ?name (?domain) }
-  // Default sealed domain to <complex>
+  // Default sealed domain to <machine-number>
   { define numeric-properties-predicate ?:name }
-  => { define numeric-properties-predicate ?name (<complex>) }
+  => { define numeric-properties-predicate ?name (<machine-number>) }
 end macro numeric-properties-predicate-definer;
 
 define numeric-properties-predicate zero?;
@@ -47,56 +47,91 @@ define macro binary-arithmetic-function-definer
   => { define open generic ?name (x :: <object>, y :: <object>)
          => (#rest values :: <object>);
        define sealed domain ?name (?domain1, ?domain2) }
-  // Default sealed domain to (<complex>, <complex>)
+  // Default sealed domain to (<machine-number>, <machine-number>)
   { define binary-arithmetic-function ?:name }
-  => { define binary-arithmetic-function ?name (<complex>, <complex>) }
+  => { define binary-arithmetic-function ?name (<machine-number>, <machine-number>) }
 end macro binary-arithmetic-function-definer;
 
 define binary-arithmetic-function \+;
 define binary-arithmetic-function \-;
 define binary-arithmetic-function \*;
 define binary-arithmetic-function \/;
-define binary-arithmetic-function \^ (<complex>, <integer>);
+define binary-arithmetic-function \^ (<machine-number>, <integer>);
 
 define macro unary-arithmetic-function-definer
   { define unary-arithmetic-function ?:name (?domain:name) }
   => { define open generic ?name (x :: <object>)
          => (#rest values :: <object>);
        define sealed domain ?name (?domain) }
-  // Default sealed domain to <complex>
+  // Default sealed domain to <machine-number>
   { define unary-arithmetic-function ?:name }
-  => { define unary-arithmetic-function ?name (<complex>) }
+  => { define unary-arithmetic-function ?name (<machine-number>) }
 end macro unary-arithmetic-function-definer;
 
 define unary-arithmetic-function negative;
 define unary-arithmetic-function abs;
 
-define generic floor
-    (real :: <machine-number>) => (result :: <integer>, remainder :: <machine-number>);
-define generic ceiling
-    (real :: <machine-number>) => (result :: <integer>, remainder :: <machine-number>);
-define generic round
-    (real :: <machine-number>) => (result :: <integer>, remainder :: <machine-number>);
-define generic truncate
-    (real :: <machine-number>) => (result :: <integer>, remainder :: <machine-number>);
+define macro unary-division-function-definer
+  { define unary-division-function ?:name (?domain:name) }
+  => { define open generic ?name (real :: <real>)
+         => (result :: <integer>, remainder :: <real>);
+       define sealed domain ?name (?domain) }
+  // Default sealed domain to <machine-number>
+  { define unary-division-function ?:name }
+  => { define unary-division-function ?name (<machine-number>) }
+end macro unary-division-function-definer;
 
-define generic floor/
-    (real1 :: <machine-number>, real2 :: <machine-number>)
- => (result :: <integer>, remainder :: <machine-number>);
-define generic ceiling/
-    (real1 :: <machine-number>, real2 :: <machine-number>)
- => (result :: <integer>, remainder :: <machine-number>);
-define generic round/
-    (real1 :: <machine-number>, real2 :: <machine-number>)
- => (result :: <integer>, remainder :: <machine-number>);
-define generic truncate/
-    (real1 :: <machine-number>, real2 :: <machine-number>)
- => (result :: <integer>, remainder :: <machine-number>);
+define unary-division-function floor;
+define unary-division-function ceiling;
+define unary-division-function round;
+define unary-division-function truncate;
 
-define generic modulo
-    (real1 :: <machine-number>, real2 :: <machine-number>) => (result :: <machine-number>);
-define generic remainder
-    (real1 :: <machine-number>, real2 :: <machine-number>) => (result :: <machine-number>);
+define macro binary-division-function-definer
+  { define binary-division-function ?:name (?domain1:name, ?domain2:name) }
+  => { define open generic ?name (real1 :: <real>, real2 :: <real>)
+         => (#rest values :: <object>);
+       define sealed domain ?name (?domain1, ?domain2) }
+  // Default sealed domain to (<machine-number>, <machine-number>)
+  { define binary-division-function ?:name }
+  => { define binary-division-function ?name (<machine-number>, <machine-number>) }
+end macro binary-division-function-definer;
+
+define binary-division-function floor/;
+define binary-division-function ceiling/;
+define binary-division-function round/;
+define binary-division-function truncate/;
+define binary-division-function modulo;
+define binary-division-function remainder;
+
+define open generic ash (integer1 :: <abstract-integer>, count :: <integer>)
+ => (#rest values :: <object>);
+define sealed domain ash (<machine-number>);
+
+define open generic lsh (integer1 :: <abstract-integer>, count :: <integer>)
+ => (#rest values :: <object>);
+define sealed domain lsh (<machine-number>);
+
+define macro n-ary-logical-function-definer
+  { define n-ary-logical-function ?:name (?domain:name) }
+  => { define open generic ?name (#rest integers :: <abstract-integer>)
+         => (#rest values :: <object>);
+       define sealed domain ?name (?domain) }
+  // Default sealed domain to (<machine-number>)
+  { define n-ary-logical-function ?:name }
+  => { define n-ary-logical-function ?name (<machine-number>) }
+end macro n-ary-logical-function-definer;
+
+define n-ary-logical-function logior;
+define n-ary-logical-function logxor;
+define n-ary-logical-function logand;
+
+define open generic lognot (integer1 :: <abstract-integer>)
+ => (#rest values :: <object>);
+define sealed domain lognot (<machine-number>);
+
+define open generic logbit? (index :: <integer>, integer :: <abstract-integer>)
+ => (#rest values :: <object>);
+define sealed domain logbit? (<integer>, <machine-number>);
 
 //// CONDITIONS
 
