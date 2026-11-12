@@ -19,6 +19,8 @@ release.
 Compiler
 ========
 
+* The LLVM compiler back-end now supports compiling code that accesses
+  bitfield slots of :lib:`c-ffi` ``C-struct`` objects.
 
 Bundled Library Updates
 =======================
