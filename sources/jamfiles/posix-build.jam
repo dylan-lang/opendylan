@@ -29,6 +29,7 @@
 # Configuration variables
 #
 SEPARATE ?= true ;              # Separate compilation of *.c/*.bc output
+COVERAGE ?= ;                   # Code coverage
 
 MKF     ?= dylanmakefile.mkf ;
 
@@ -41,6 +42,11 @@ SUFMKF  ?= .mkf ;               # build-system files
 if $(COMPILER_BACK_END) = llvm {
   CCFLAGS += $(LLVM_GC_CFLAGS) -fexceptions ;
   SUFOUT  ?= .bc ;             # DFMC output suffix
+  if $(COVERAGE) {
+    CCFLAGS += --coverage ;
+    LINKFLAGSDLL += --coverage ;
+    LINKFLAGSEXE += --coverage ;
+  }
 } else if $(COMPILER_BACK_END) = c {
   CCFLAGS += $(C_GC_CFLAGS) ;
   SUFOUT  ?= .c ;
@@ -509,6 +515,15 @@ rule ObjectPkgConfigCcFlags
 #
 # Build rules and actions
 #
+
+if $(COVERAGE) {
+  # Replace Cc rule so that gcov files are written in the proper build
+  # directory
+  actions Cc
+  {
+    cd "$(<:D)" && $(CC) -c -o "$(<:D=)" $(CCFLAGS) $(CCDEFS) $(CCHDRS) "$(>)"
+  }
+}
 
 rule LinkDLL {
   Depends $(<) : $(>) ;
