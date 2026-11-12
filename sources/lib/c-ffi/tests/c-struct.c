@@ -11,10 +11,8 @@ typedef struct max
   minimal max_1;
   unsigned char max_2;
   minimal max_3[7];
-  /*
-  unsigned max_4:4;
+  signed max_4:4;
   unsigned max_5:12;
-  */
   unsigned char max_6;
   unsigned char *max_7;
 } maximal;
@@ -31,4 +29,14 @@ size_t struct_minimal_size()
 size_t struct_maximal_size()
 {
   return sizeof(maximal);
+}
+
+int struct_incr_max_4(maximal *m, int i)
+{
+  return m->max_4 += i;
+}
+
+unsigned struct_incr_max_5(maximal *m, unsigned u)
+{
+  return m->max_5 += u;
 }

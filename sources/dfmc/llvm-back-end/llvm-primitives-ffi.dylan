@@ -96,16 +96,40 @@ define raw-accessor-primitive(be, c-unsigned-short, <raw-c-unsigned-short>, #f);
 define raw-accessor-primitive(be, c-size-t, <raw-c-size-t>, #f);
 
 define macro raw-field-primitive-definer
-  { define raw-field-primitive (?be:name, ?:name, ?raw-value-type:name) }
-    => { define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor "primitive-" ## ?name ## "-field"
+  { define raw-field-primitive (?be:name, ?:name, ?raw-value-type:name, ?sext:expression) }
+    => { define side-effect-free stateless dynamic-extent &primitive-descriptor "primitive-" ## ?name ## "-field"
              (pointer :: <raw-pointer>,
 	      byte-offset :: <raw-integer>,
 	      bit-offset :: <raw-integer>,
 	      bit-size :: <raw-integer>)
           => (value :: ?raw-value-type);
-           //---*** Fill this in...
+           let pointer
+             = if (instance?(pointer.llvm-value-type, <llvm-integer-type>))
+                 ins--inttoptr(?be, pointer, $llvm-i8*-type)
+               else
+                 pointer
+               end;
+           let type
+             = llvm-reference-type(?be, dylan-value(?#"raw-value-type"));
+           let pointer-byte-off = ins--gep(?be, pointer, byte-offset);
+           let pointer-cast
+             = ins--bitcast(?be, pointer-byte-off, llvm-pointer-to(?be, type));
+           let value = ins--load(?be, pointer-cast);
+           let shifted = ins--lshr(?be, value, bit-offset);
+           let mask = ins--sub(?be, ins--shl(?be, 1, bit-size), 1);
+           if (?sext)
+             // Hacker's Delight (2nd ed.) section 2-6 (Sign Extension),
+             // first formulation:
+             //   logand(shifted + sign-bit, mask) - sign-bit
+             let sign-bit = ins--shl(?be, 1, ins--sub(?be, bit-size, 1));
+             ins--sub(?be,
+                      ins--and(?be, ins--add(?be, shifted, sign-bit), mask),
+                      sign-bit)
+           else
+             ins--and(?be, shifted, mask)
+           end if
          end;
-         define side-effecting stateless dynamic-extent &unimplemented-primitive-descriptor
+         define side-effecting stateless dynamic-extent &primitive-descriptor
              "primitive-" ## ?name ## "-field-setter"
              (new :: ?raw-value-type,
               pointer :: <raw-pointer>,
@@ -113,10 +137,27 @@ define macro raw-field-primitive-definer
               bit-offset :: <raw-integer>,
               bit-size :: <raw-integer>)
           => (value :: ?raw-value-type);
-           //---*** Fill this in...
+           let pointer
+             = if (instance?(pointer.llvm-value-type, <llvm-integer-type>))
+                 ins--inttoptr(?be, pointer, $llvm-i8*-type)
+               else
+                 pointer
+               end;
+           let type = llvm-reference-type(?be, dylan-value(?#"raw-value-type"));
+           let pointer-byte-off = ins--gep(?be, pointer, byte-offset);
+           let pointer-cast
+             = ins--bitcast(?be, pointer-byte-off, llvm-pointer-to(?be, type));
+           let value = ins--load(?be, pointer-cast);
+           let new-shifted = ins--shl(?be, new, bit-offset);
+           let mask = ins--sub(?be, ins--shl(?be, 1, bit-size), 1);
+           let mask-shifted = ins--shl(?be, mask, bit-offset);
+           let anti-mask-shifted = ins--xor(?be, mask-shifted, -1);
+           let value-masked = ins--and(?be, value, anti-mask-shifted);
+           ins--store(?be, ins--or(?be, value-masked, new-shifted), pointer-cast);
+           new
          end }
 end macro;
 
-define raw-field-primitive (be, c-unsigned, <raw-c-unsigned-long>);
-define raw-field-primitive (be, c-signed, <raw-c-signed-long>);
-define raw-field-primitive (be, c-int, <raw-c-unsigned-int>);
+define raw-field-primitive (be, c-unsigned, <raw-c-unsigned-long>, #f);
+define raw-field-primitive (be, c-signed, <raw-c-signed-long>, #t);
+define raw-field-primitive (be, c-int, <raw-c-unsigned-int>, #f);

@@ -8,8 +8,8 @@ define c-struct <maximal>
   slot max-1 :: <minimal>, address-getter: max-1*;
   slot max-2 :: <C-unsigned-char>, address-getter: max-2*;
   array slot max-3 :: <minimal>, length: 7, address-getter: max-3*;
-  // bitfield slot max-4 :: <c-unsigned-int>, width: 4;
-  // bitfield slot max-5 :: <c-unsigned-int>, width: 12;
+  bitfield slot max-4 :: <c-signed-int>, width: 4;
+  bitfield slot max-5 :: <c-unsigned-int>, width: 12;
   slot max-6 :: <C-unsigned-char>, address-getter: max-6*, setter: #f;
   slot max-7 :: <C-unsigned-char*>, address-getter: max-7*;
   pointer-type-name: <maximal*>;
@@ -37,6 +37,20 @@ end;
 define c-function struct-maximal-size
   result r :: <C-size-t>;
   c-name: "struct_maximal_size";
+end;
+
+define c-function struct-incr-max-4
+  parameter m :: <minimal*>;
+  parameter i :: <C-signed-int>;
+  result r :: <C-signed-int>;
+  c-name: "struct_incr_max_4";
+end;
+
+define c-function struct-incr-max-5
+  parameter m :: <minimal*>;
+  parameter ui :: <C-unsigned-int>;
+  result r :: <C-unsigned-int>;
+  c-name: "struct_incr_max_5";
 end;
 
 /// try some C-struct in different ways
@@ -76,6 +90,19 @@ define test c-struct-test ()
   maximal-struct-minimal.slot-1 := 20261029;
   check-equal("embedded simple struct slot value",
               20261029, maximal-struct-minimal.slot-1);
+
+  maximal-struct.max-4 := -7;
+  maximal-struct.max-5 := 1024;
+
+  let max-4-incr = struct-incr-max-4(maximal-struct, 1);
+  check-equal("Bitfield increment max_4 return", -6, max-4-incr);
+  check-equal("Bitfield increment max_4 field",
+              max-4-incr, maximal-struct.max-4);
+
+  let max-5-incr = struct-incr-max-5(maximal-struct, 1);
+  check-equal("Bitfield increment max_5 return", 1025, max-5-incr);
+  check-equal("Bitfield increment max_5 field",
+              max-5-incr, maximal-struct.max-5);
 
   // !@#$ Need more tests to see if accessors get the same thing as C code
   //      for corresponding C structs
